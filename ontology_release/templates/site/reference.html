@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head">
+    <div>
+      <h2>Ontology Reference</h2>
+      <p>Single-page reference for the H2KG PEMFC Catalyst Layer Application Ontology, with stable release and source endpoints.</p>
+    </div>
+    <input class="filter-input" data-table-filter="reference-vocab-table" placeholder="Filter vocabulary">
+  </div>
+  <div class="chip-row">
+    <a href="#reference-iris">Reference IRIs</a>
+    <a href="#reference-metadata">Metadata</a>
+    <a href="#reference-classes">Classes</a>
+    <a href="#reference-properties">Properties</a>
+    <a href="#reference-vocabulary">Vocabulary</a>
+    <a href="#reference-examples">Examples</a>
+  </div>
+</section>
+
+<section id="reference-iris" class="card">
+  <h2>Reference IRIs</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>Label</th><th>Canonical IRI</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      {% for row in endpoint_rows %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.purpose }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="reference-metadata" class="grid two">
+  <article class="card">
+    <h2>Ontology Metadata</h2>
+    <table class="data-table">
+      <tbody>
+        {% for row in metadata_rows %}
+        <tr><th>{{ row.label }}</th><td>{{ row.value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </article>
+  <article class="card">
+    <h2>Imports and Namespaces</h2>
+    <h3>Imports</h3>
+    <ul class="simple-list">
+      {% for item in imports %}
+      <li><code>{{ item }}</code></li>
+      {% endfor %}
+      {% if not imports %}
+      <li>No explicit imports were declared in the schema graph.</li>
+      {% endif %}
+    </ul>
+    <h3>Namespaces</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Prefix</th><th>Namespace</th><th>Count</th></tr>
+      </thead>
+      <tbody>
+        {% for row in namespace_rows %}
+        <tr>
+          <td><code>{{ row.prefix }}</code></td>
+          <td><code>{{ row.namespace }}</code></td>
+          <td>{{ row.count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </article>
+</section>
+
+<section id="reference-classes" class="card">
+  <div class="section-head">
+    <div>
+      <h2>Classes</h2>
+      <p>Asserted schema classes with definitions and external alignment proposals.</p>
+    </div>
+    <input class="filter-input" data-table-filter="reference-class-table" placeholder="Filter classes">
+  </div>
+  <table id="reference-class-table" class="data-table searchable">
+    <thead>
+      <tr><th>Label</th><th>IRI</th><th>Definition</th><th>Superclasses</th><th>Mappings</th></tr>
+    </thead>
+    <tbody>
+      {% for row in class_rows %}
+      <tr id="{{ row.anchor }}">
+        <td>{{ row.label }}</td>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.definition }}</td>
+        <td>{{ row.superclasses }}</td>
+        <td>{{ row.mappings }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="reference-properties" class="card">
+  <div class="section-head">
+    <div>
+      <h2>Properties</h2>
+      <p>Asserted object, datatype, and annotation properties.</p>
+    </div>
+    <input class="filter-input" data-table-filter="reference-property-table" placeholder="Filter properties">
+  </div>
+  <table id="reference-property-table" class="data-table searchable">
+    <thead>
+      <tr><th>Label</th><th>IRI</th><th>Kind</th><th>Domain</th><th>Range</th><th>Mappings</th></tr>
+    </thead>
+    <tbody>
+      {% for row in property_rows %}
+      <tr id="{{ row.anchor }}">
+        <td>{{ row.label }}</td>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.kind }}</td>
+        <td>{{ row.domain }}</td>
+        <td>{{ row.range }}</td>
+        <td>{{ row.mappings }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="reference-vocabulary" class="card">
+  <h2>Controlled Vocabulary</h2>
+  <p>Curated local named terms retained in the `h2kg` namespace and published separately from the asserted schema.</p>
+  <table id="reference-vocab-table" class="data-table searchable">
+    <thead>
+      <tr><th>Label</th><th>IRI</th><th>Type</th><th>Definition</th><th>Mappings</th></tr>
+    </thead>
+    <tbody>
+      {% for row in vocabulary_rows %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.kind }}</td>
+        <td>{{ row.definition }}</td>
+        <td>{{ row.mappings }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="reference-examples" class="card">
+  <h2>Separated Examples</h2>
+  <p>These example individuals and data-like nodes are published separately from the asserted schema.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>IRI</th><th>Kind</th><th>Label</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      {% for row in example_rows %}
+      <tr>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.kind }}</td>
+        <td>{{ row.label }}</td>
+        <td>{{ row.notes }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

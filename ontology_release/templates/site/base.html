@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} | {{ site.title }}</title>
+  <meta name="description" content="{{ site.tagline }}">
+  <link rel="stylesheet" href="{{ base_path }}/assets/site.css">
+  <script defer src="{{ base_path }}/assets/site.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="hero">
+      <div class="hero__band"></div>
+      <div class="hero__content">
+        <p class="eyebrow">{{ site.subtitle }}</p>
+        <h1>{{ site.title }}</h1>
+        <p class="lede">{{ site.tagline }}</p>
+        <div class="meta-row">
+          <span>Version {{ site.version }}</span>
+          <span>{{ site.license_label }}</span>
+          <span>{{ site.prefix }}</span>
+        </div>
+      </div>
+    </header>
+    <nav class="nav">
+      <a href="{{ base_path }}/index.html">Overview</a>
+      <a href="{{ base_path }}/hydrogen-ontology.html">Reference</a>
+      <a href="{{ base_path }}/pages/user-guide.html">User Guide</a>
+      <a href="{{ base_path }}/pages/ontology-overview.html">Ontology</a>
+      <a href="{{ base_path }}/pages/class-index.html">Classes</a>
+      <a href="{{ base_path }}/pages/property-index.html">Properties</a>
+      <a href="{{ base_path }}/pages/alignment.html">Alignment</a>
+      <a href="{{ base_path }}/pages/examples.html">Examples</a>
+      <a href="{{ base_path }}/pages/release.html">Release</a>
+    </nav>
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+      <p>{{ site.title }}. Generated locally by the AIMWORKS ontology release pipeline.</p>
+    </footer>
+  </div>
+</body>
+</html>

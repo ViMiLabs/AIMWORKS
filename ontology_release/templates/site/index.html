@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid two">
+  <article class="card">
+    <h2>Positioning</h2>
+    <p>{{ overview.description }}</p>
+    <ul class="simple-list">
+      <li>Ontology IRI: <code>{{ overview.ontology_iri }}</code></li>
+      <li>Namespace mode: <code>{{ overview.namespace_mode }}</code></li>
+      <li>Schema terms: <strong>{{ overview.schema_term_count }}</strong></li>
+      <li>Controlled vocabulary terms: <strong>{{ overview.vocabulary_count }}</strong></li>
+      <li>Separated examples or data nodes: <strong>{{ overview.example_count }}</strong></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h2>Release Readiness</h2>
+    <div class="score">{{ release_score }}</div>
+    <p>{{ readiness_summary }}</p>
+    <ul class="simple-list">
+      {% for blocker in blockers %}
+      <li>{{ blocker }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="grid three">
+  {% for box in cards %}
+  <article class="card">
+    <h3>{{ box.title }}</h3>
+    <p>{{ box.body }}</p>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="card">
+  <h2>Namespaces</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>Prefix</th><th>Namespace</th><th>Local terms</th></tr>
+    </thead>
+    <tbody>
+      {% for row in namespace_rows %}
+      <tr>
+        <td><code>{{ row.prefix }}</code></td>
+        <td><code>{{ row.namespace }}</code></td>
+        <td>{{ row.count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

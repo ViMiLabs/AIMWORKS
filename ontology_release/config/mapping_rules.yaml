@@ -1,0 +1,101 @@
+thresholds:
+  equivalent: 96
+  subclass: 88
+  close_match: 74
+  weak_match: 62
+weights:
+  lexical_similarity: 0.65
+  source_priority: 0.2
+  token_overlap: 0.15
+source_boosts:
+  emmo_core: 1.0
+  echo: 1.0
+  qudt_schema: 0.98
+  qudt_units: 1.0
+  qudt_quantitykinds: 1.0
+  chebi: 0.97
+  provo: 0.96
+  dcterms: 0.96
+  vann: 0.92
+  oeo: 0.82
+classification:
+  controlled_vocabulary_anchor_classes:
+    - NormalizationBasis
+    - ReferenceElectrode
+    - Unit
+    - Parameter
+    - Property
+  quantity_value_patterns:
+    - QuantityValue
+    - QV
+    - Value
+  ephemeral_identifier_patterns:
+    - '^_'
+    - 'nodeID://'
+    - '/generated/'
+    - '/observation/'
+  example_identifier_patterns:
+    - Experiment
+    - Measurement
+    - Dataset
+    - Sample
+    - Process
+type_compatibility:
+  class:
+    - class
+  object_property:
+    - object_property
+  datatype_property:
+    - datatype_property
+  annotation_property:
+    - annotation_property
+  controlled_vocabulary_term:
+    - class
+    - controlled_vocabulary_term
+lexical_policies:
+  chemical_tokens:
+    - platinum
+    - pt
+    - oxygen
+    - hydrogen
+    - water
+    - ionomer
+    - carbon
+    - nafion
+  quantity_kind_tokens:
+    - conductivity
+    - voltage
+    - resistance
+    - frequency
+    - current
+    - current density
+    - porosity
+    - thickness
+    - time
+    - pressure
+  unit_tokens:
+    - volt
+    - ohm
+    - percent
+    - hertz
+    - second
+    - minute
+    - hour
+    - bar
+    - watt
+    - ampere
+    - meter
+  provenance_tokens:
+    - creator
+    - contributor
+    - identifier
+    - source
+    - provenance
+    - metadata
+    - used
+relations:
+  strong_class: owl:equivalentClass
+  strong_property: owl:equivalentProperty
+  default_class: rdfs:subClassOf
+  default_property: rdfs:subPropertyOf
+  vocabulary: skos:closeMatch

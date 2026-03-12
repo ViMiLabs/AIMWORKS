@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid two">
+  <article class="card">
+    <h2>Release Bundle</h2>
+    <ul class="simple-list">
+      {% for item in release_files %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>FAIR Scores</h2>
+    <ul class="simple-list">
+      {% for item in fair_rows %}
+      <li>{{ item.dimension }}: <strong>{{ item.score }}</strong></li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="card">
+  <h2>Validation Summary</h2>
+  <ul class="simple-list">
+    {% for line in validation_lines %}
+    <li>{{ line }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Alignment Review</h2>
+  <p>Conservative alignment proposals against EMMO, ECHO, QUDT, ChEBI, PROV-O, Dublin Core Terms, and VANN.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Local term</th><th>Type</th><th>Relation</th><th>Target</th><th>Source</th><th>Score</th></tr>
+    </thead>
+    <tbody>
+      {% for row in mappings %}
+      <tr>
+        <td><code>{{ row.local_iri }}</code></td>
+        <td>{{ row.local_type }}</td>
+        <td>{{ row.relation }}</td>
+        <td><code>{{ row.target_iri }}</code></td>
+        <td>{{ row.source_id }}</td>
+        <td>{{ row.score }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
