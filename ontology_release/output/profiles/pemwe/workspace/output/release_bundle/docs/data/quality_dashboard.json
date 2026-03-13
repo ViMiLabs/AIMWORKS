@@ -1,28 +1,42 @@
 {
   "fair_rows": [
     {
-      "label": "Findable",
+      "label": "F / Findable",
       "value": "100 / 100",
       "status": "good",
-      "detail": "Findable readiness score from the release preflight checks."
+      "detail": "Separated F component of the release FAIR readiness score."
     },
     {
-      "label": "Accessible",
+      "label": "A / Accessible",
       "value": "100 / 100",
       "status": "good",
-      "detail": "Accessible readiness score from the release preflight checks."
+      "detail": "Separated A component of the release FAIR readiness score."
     },
     {
-      "label": "Interoperable",
+      "label": "I / Interoperable",
       "value": "100 / 100",
       "status": "good",
-      "detail": "Interoperable readiness score from the release preflight checks."
+      "detail": "Separated I component of the release FAIR readiness score."
     },
     {
-      "label": "Reusable",
+      "label": "R / Reusable",
       "value": "80 / 100",
       "status": "watch",
-      "detail": "Reusable readiness score from the release preflight checks."
+      "detail": "Separated R component of the release FAIR readiness score."
+    }
+  ],
+  "transparency_rows": [
+    {
+      "label": "OOPS! ontology pitfall hook",
+      "value": "disabled",
+      "status": "watch",
+      "detail": "OOPS! integration is configured but disabled by default for offline-safe local releases. Not counted in the numeric F/A/I/R score."
+    },
+    {
+      "label": "FOOPS! FAIR assessment hook",
+      "value": "disabled",
+      "status": "watch",
+      "detail": "FOOPS! integration is configured but disabled by default for offline-safe local releases. Not counted in the numeric F/A/I/R score."
     }
   ],
   "validation_rows": [
@@ -96,8 +110,8 @@
     },
     {
       "label": "Placeholder-style definitions",
-      "value": "601",
-      "status": "watch",
+      "value": "0",
+      "status": "good",
       "detail": "Generated definitions that still need expert editorial review."
     },
     {
@@ -152,7 +166,7 @@
     }
   ],
   "recommendations": [
-    "Prioritize expert review of generated placeholder definitions before treating the release as a mature public vocabulary.",
+    "Current structural validation is healthy; focus next on richer public examples and query support.",
     "Audit source content to remove local file-based namespace leakage before external publication.",
     "Review unmapped controlled vocabulary rows to decide which terms should remain local and which need better external alignment."
   ]

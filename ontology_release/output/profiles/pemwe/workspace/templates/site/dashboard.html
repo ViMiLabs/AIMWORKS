@@ -27,6 +27,14 @@
     </ul>
   </article>
   <article class="check-card">
+    <h2>Transparency Hooks</h2>
+    <ul class="simple-list">
+      {% for row in transparency_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="check-card">
     <h2>Validation Signals</h2>
     <ul class="simple-list">
       {% for row in validation_rows %}

@@ -207,9 +207,10 @@ h3 {
   letter-spacing: -0.02em;
 }
 h1 {
-  font-size: clamp(2.9rem, 6vw, 5rem);
+  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
   margin: 0.15rem 0 0.8rem;
-  max-width: 12ch;
+  max-width: 16ch;
+  text-wrap: balance;
 }
 h2 {
   margin-top: 0;
@@ -776,17 +777,20 @@ def _mapping_lookup(review_rows: list[dict[str, Any]]) -> dict[str, list[str]]:
     return lookup
 
 
-def _term_row(term: Any, mapping_lookup: dict[str, list[str]]) -> dict[str, str]:
+def _term_row(term: Any, mapping_lookup: dict[str, list[str]], namespace_policy: dict[str, Any]) -> dict[str, str]:
     return {
         "label": _clean_text(term.label),
         "iri": term.iri,
         "definition": _clean_text(term.definition or term.comment or "No definition recorded."),
         "deprecated": "Deprecated" if getattr(term, "deprecated", False) else "Active",
         "superclasses": ", ".join(_clean_values(term.superclasses)) or "None",
+        "superclasses_html": _external_value_list_html(term.superclasses, namespace_policy),
         "mappings": ", ".join(_clean_values(mapping_lookup.get(term.iri, []))) or "None",
         "kind": _clean_text(term.term_type).replace("_", " "),
         "domain": ", ".join(_clean_values(term.domains)) or "None",
+        "domain_html": _external_value_list_html(term.domains, namespace_policy),
         "range": ", ".join(_clean_values(term.ranges)) or "None",
+        "range_html": _external_value_list_html(term.ranges, namespace_policy),
         "anchor": local_name(term.iri),
     }
 
@@ -836,7 +840,14 @@ def _public_namespace_rows(inspection_report: dict[str, Any], namespace_policy: 
         if not prefix:
             prefix = f"ns{synthetic_index}"
             synthetic_index += 1
-        rows.append({"prefix": prefix, "namespace": namespace, "count": row["count"]})
+        rows.append(
+            {
+                "prefix": prefix,
+                "namespace": namespace,
+                "count": row["count"],
+                "href": namespace if _is_web_url(namespace) and not namespace.startswith(namespace_policy["ontology_iri"]) else "",
+            }
+        )
     return rows[:18], hidden_local
 
 
@@ -868,11 +879,11 @@ def _mapping_stats(review_rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 def _placeholder_definition_count(rows: list[dict[str, str]]) -> int:
     prefixes = (
-        "A class in the H2KG PEMFC Catalyst Layer Application Ontology",
-        "An object property in the H2KG PEMFC Catalyst Layer Application Ontology",
-        "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology",
-        "An annotation property used by the H2KG PEMFC Catalyst Layer Application Ontology",
-        "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology",
+        "A class in the H2KG ontology release",
+        "An object property in the H2KG ontology release",
+        "A datatype property in the H2KG ontology release",
+        "An annotation property used by the H2KG ontology release",
+        "A curated controlled term in the H2KG ontology release",
         "A local ontology term representing",
     )
     return sum(1 for row in rows if row["definition"].startswith(prefixes))
@@ -1049,6 +1060,30 @@ def _html_table(headers: list[str], rows: list[list[str]]) -> str:
     return f"<table class='data-table'><thead><tr>{header_html}</tr></thead><tbody>{''.join(row_html)}</tbody></table>"
 
 
+def _is_web_url(value: str) -> bool:
+    text = _clean_text(value)
+    return text.startswith("https://") or text.startswith("http://")
+
+
+def _href_html(href: str, label: str | None = None, code: bool = False) -> str:
+    target = _clean_text(href)
+    text = _clean_text(label or href)
+    inner = f"<code>{escape(text)}</code>" if code else escape(text)
+    return f"<a href='{escape(target, quote=True)}'>{inner}</a>"
+
+
+def _external_value_list_html(values: list[str], namespace_policy: dict[str, Any]) -> str:
+    rendered: list[str] = []
+    for value in _clean_values(values):
+        if _is_web_url(value) and not value.startswith(namespace_policy["ontology_iri"]):
+            rendered.append(_href_html(value, value, code=True))
+        elif _is_web_url(value):
+            rendered.append(f"<code>{escape(value)}</code>")
+        else:
+            rendered.append(escape(value))
+    return ", ".join(rendered) or "None"
+
+
 def build_docs(
     schema_graph: Graph,
     controlled_vocabulary_graph: Graph,
@@ -1133,9 +1168,9 @@ def build_docs(
     mapping_lookup = _mapping_lookup(review_rows)
     schema_terms = extract_local_terms(schema_graph, namespace_policy, classifications)
     vocabulary_terms = extract_local_terms(controlled_vocabulary_graph, namespace_policy, classifications)
-    classes = [_term_row(term, mapping_lookup) for term in schema_terms if term.term_type == "class"]
-    properties = [_term_row(term, mapping_lookup) for term in schema_terms if term.term_type != "class"]
-    vocabulary_rows = [_term_row(term, mapping_lookup) for term in vocabulary_terms]
+    classes = [_term_row(term, mapping_lookup, namespace_policy) for term in schema_terms if term.term_type == "class"]
+    properties = [_term_row(term, mapping_lookup, namespace_policy) for term in schema_terms if term.term_type != "class"]
+    vocabulary_rows = [_term_row(term, mapping_lookup, namespace_policy) for term in vocabulary_terms]
     classes.sort(key=lambda item: item["label"].lower())
     properties.sort(key=lambda item: item["label"].lower())
     vocabulary_rows.sort(key=lambda item: item["label"].lower())
@@ -1182,7 +1217,25 @@ def build_docs(
         {"href": "pages/visualizations.html", "title": "Visuals", "body": "Presents lightweight release architecture and quality-oriented visual summaries."},
         {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, and release provenance."},
     ]
-    quality_signals = [
+    fair_dimension_signals = [
+        {
+            "label": f"{row.get('acronym', row['dimension'][:1])} / {row['dimension']}",
+            "value": f"{row['score']} / 100",
+            "status": _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7),
+            "detail": f"Separated {row.get('acronym', row['dimension'][:1])} component of the FAIR readiness score.",
+        }
+        for row in fair_scores["dimensions"]
+    ]
+    transparency_signals = [
+        {
+            "label": row["label"],
+            "value": row["status"],
+            "status": "good" if row["status"] == "reachable" else "watch",
+            "detail": f"{row['details']} Not counted in the numeric F/A/I/R score.",
+        }
+        for row in fair_scores.get("transparency_checks", [])
+    ]
+    quality_signals = fair_dimension_signals + [
         {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%", "status": _status_for_ratio(baseline_definition_coverage, 0.85, 0.6), "detail": "Coverage in the original mixed ontology before enrichment."},
         {"label": "Release missing definitions", "value": str(validation_report["missing_definition_count"]), "status": _status_for_count(int(validation_report["missing_definition_count"])), "detail": "Structural completeness after enrichment and validation."},
         {"label": "Generated annotations", "value": str(metadata_report.get("generated_annotations", 0)), "status": "watch" if metadata_report.get("generated_annotations", 0) else "good", "detail": "Generated annotations improve coverage but still require expert review."},
@@ -1190,14 +1243,14 @@ def build_docs(
         {"label": "Placeholder-style definitions", "value": str(placeholder_definition_count), "status": "watch" if placeholder_definition_count else "good", "detail": "Generated definitions that still need editorial improvement."},
         {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
         {"label": "w3id artifacts ready", "value": "Yes" if (root / "output" / "w3id" / ".htaccess").exists() else "No", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists()), "detail": "Redirect templates and content-negotiation notes are available."},
-    ]
+    ] + transparency_signals
     endpoint_rows = reference_iri_rows(namespace_policy, release_profile)
     metadata_rows = [
         {"label": "Title", "value": _graph_text(schema_graph, ontology_node, [DCTERMS.title]) or release_profile["project"]["title"]},
         {"label": "Ontology IRI", "value": namespace_policy["ontology_iri"]},
         {"label": "Version", "value": str(release_profile["release"]["version"])},
         {"label": "Namespace mode", "value": namespace_policy["namespace_mode"]},
-        {"label": "License", "value": release_profile["release"]["ontology_license"]},
+        {"label": "License", "value": release_profile["release"]["ontology_license"], "href": release_profile["release"]["ontology_license"] if _is_web_url(release_profile["release"]["ontology_license"]) else ""},
         {"label": "Creators", "value": ", ".join(creators) or "Not recorded"},
         {"label": "Contributors", "value": ", ".join(contributors) or "Not recorded"},
     ]
@@ -1334,6 +1387,7 @@ def build_docs(
             base_path="..",
             release_files=release_files[:140],
             fair_rows=fair_scores["dimensions"],
+            transparency_rows=fair_scores.get("transparency_checks", []),
             validation_lines=[
                 f"Overall status: {validation_report['overall_status']}",
                 f"SHACL conforms: {validation_report['shacl_conforms']}",
@@ -1374,12 +1428,16 @@ def build_docs(
     resource_html = (
         "<ul class='simple-list'>"
         + "".join(
-            f"<li><strong>{escape(row['label'])}</strong>: <a href='{escape(_clean_text(row['value']))}'>{escape(_clean_text(row['value']))}</a></li>"
+            (
+                f"<li><strong>{escape(row['label'])}</strong>: {_href_html(row['href'], row['value'])}</li>"
+                if row.get("href")
+                else f"<li><strong>{escape(row['label'])}</strong>: <code>{escape(_clean_text(row['value']))}</code></li>"
+            )
             for row in [
-                {"label": "Repository", "value": resources_cfg.get("repository_url", "")},
-                {"label": "Issue tracker", "value": resources_cfg.get("issue_tracker", "")},
-                {"label": "Pages URL", "value": resources_cfg.get("pages_url", "")},
-                {"label": "Stable ontology IRI", "value": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"])},
+                {"label": "Repository", "value": resources_cfg.get("repository_url", ""), "href": resources_cfg.get("repository_url", "")},
+                {"label": "Issue tracker", "value": resources_cfg.get("issue_tracker", ""), "href": resources_cfg.get("issue_tracker", "")},
+                {"label": "Pages URL", "value": resources_cfg.get("pages_url", ""), "href": resources_cfg.get("pages_url", "")},
+                {"label": "Stable ontology IRI", "value": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"]), "href": ""},
             ]
             if row["value"]
         )
@@ -1486,7 +1544,7 @@ def build_docs(
 
     import_catalog_rows = import_catalog
     import_catalog_html = _html_table(
-        ["Source", "Category", "Version", "Enabled", "Base IRI", "Fetch"],
+        ["Source", "Category", "Version", "Enabled", "Base IRI", "Fetch", "Source URL"],
         [
             [
                 escape(_clean_text(row["title"])),
@@ -1495,6 +1553,7 @@ def build_docs(
                 escape(str(row["enabled"])),
                 f"<code>{escape(_clean_text(row['base_iri']))}</code>",
                 escape(_clean_text(row["fetch_kind"])),
+                _href_html(row["fetch_location"], row["fetch_location"], code=True) if _is_web_url(row.get("fetch_location", "")) else f"<code>{escape(_clean_text(row.get('fetch_location', '')))}</code>",
             ]
             for row in import_catalog_rows
         ],
@@ -1571,7 +1630,7 @@ def build_docs(
     citation_badges = (
         f"<div class='chip-row'><span class='metric-pill'>Release {escape(citation_version)}</span>"
         f"<span class='metric-pill'>DOI {escape(doi_value)}</span>"
-        f"<span class='metric-pill'>License {escape(_clean_text(release_profile['release']['ontology_license']))}</span>"
+        f"<span class='metric-pill'>License {_href_html(release_profile['release']['ontology_license'], _clean_text(release_profile['release']['ontology_license'])) if _is_web_url(release_profile['release']['ontology_license']) else escape(_clean_text(release_profile['release']['ontology_license']))}</span>"
         f"<span class='metric-pill'>FAIR {escape(str(fair_scores['overall']))}</span></div>"
     )
     cite_html = (
@@ -1685,10 +1744,10 @@ ex:run-001 a h2kg:Measurement ;
         + _html_table(
             ["Artifact", "Path", "Purpose"],
             [
-                ["JSON-LD measurement example", "<code>../data/example_measurement.jsonld</code>", "Minimal measurement-oriented JSON-LD bundle."],
-                ["CSV experiment example", "<code>../data/example_measurement.csv</code>", "Small tabular experiment fragment."],
-                ["CSV-to-RDF example", "<code>../data/example_measurement.ttl</code>", "RDF translation of the CSV fragment."],
-                ["Notebook starter", "<code>../data/example_release_notebook.ipynb</code>", "Programmatic inspection starter notebook."],
+                ["JSON-LD measurement example", _href_html("../data/example_measurement.jsonld", "../data/example_measurement.jsonld", code=True), "Minimal measurement-oriented JSON-LD bundle."],
+                ["CSV experiment example", _href_html("../data/example_measurement.csv", "../data/example_measurement.csv", code=True), "Small tabular experiment fragment."],
+                ["CSV-to-RDF example", _href_html("../data/example_measurement.ttl", "../data/example_measurement.ttl", code=True), "RDF translation of the CSV fragment."],
+                ["Notebook starter", _href_html("../data/example_release_notebook.ipynb", "../data/example_release_notebook.ipynb", code=True), "Programmatic inspection starter notebook."],
             ],
         )
     )
@@ -1726,8 +1785,17 @@ ex:run-001 a h2kg:Measurement ;
 
     quality_dashboard = {
         "fair_rows": [
-            {"label": row["dimension"], "value": f"{row['score']} / 100", "status": _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7), "detail": f"{row['dimension']} readiness score from the release preflight checks."}
+            {"label": f"{row.get('acronym', row['dimension'][:1])} / {row['dimension']}", "value": f"{row['score']} / 100", "status": _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7), "detail": f"Separated {row.get('acronym', row['dimension'][:1])} component of the release FAIR readiness score."}
             for row in fair_scores["dimensions"]
+        ],
+        "transparency_rows": [
+            {
+                "label": row["label"],
+                "value": row["status"],
+                "status": "good" if row["status"] == "reachable" else "watch",
+                "detail": f"{row['details']} Not counted in the numeric F/A/I/R score.",
+            }
+            for row in fair_scores.get("transparency_checks", [])
         ],
         "validation_rows": [
             {"label": "Overall validation status", "value": validation_report["overall_status"], "status": "good" if validation_report["overall_status"] == "pass" else "watch", "detail": "Combined metadata, mapping, namespace, and SHACL status."},
@@ -1772,6 +1840,7 @@ ex:run-001 a h2kg:Measurement ;
             release_score=fair_scores["overall"],
             release_ready=fair_scores.get("release_ready", False),
             fair_rows=quality_dashboard["fair_rows"],
+            transparency_rows=quality_dashboard["transparency_rows"],
             validation_rows=quality_dashboard["validation_rows"],
             hygiene_rows=quality_dashboard["hygiene_rows"],
             publication_rows=quality_dashboard["publication_rows"],

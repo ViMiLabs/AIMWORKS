@@ -87,7 +87,10 @@
       <table class="data-table">
         <tbody>
           {% for row in metadata_rows %}
-          <tr><th>{{ row.label }}</th><td>{{ row.value }}</td></tr>
+          <tr>
+            <th>{{ row.label }}</th>
+            <td>{% if row.href %}<a href="{{ row.href }}"><code>{{ row.value }}</code></a>{% else %}{{ row.value }}{% endif %}</td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -99,7 +102,7 @@
     <h3>Imports</h3>
     <ul class="simple-list">
       {% for item in imports %}
-      <li><code>{{ item }}</code></li>
+      <li><a href="{{ item }}"><code>{{ item }}</code></a></li>
       {% endfor %}
       {% if not imports %}
       <li>No explicit imports were declared in the schema graph.</li>
@@ -112,13 +115,13 @@
           <tr><th>Prefix</th><th>Namespace</th><th>Count</th></tr>
         </thead>
         <tbody>
-          {% for row in namespace_rows %}
-          <tr>
-            <td><code>{{ row.prefix }}</code></td>
-            <td><code>{{ row.namespace }}</code></td>
-            <td>{{ row.count }}</td>
-          </tr>
-          {% endfor %}
+        {% for row in namespace_rows %}
+        <tr>
+          <td><code>{{ row.prefix }}</code></td>
+          <td>{% if row.href %}<a href="{{ row.href }}"><code>{{ row.namespace }}</code></a>{% else %}<code>{{ row.namespace }}</code>{% endif %}</td>
+          <td>{{ row.count }}</td>
+        </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>
@@ -146,7 +149,7 @@
           <td><code>{{ row.iri }}</code></td>
           <td>{{ row.deprecated }}</td>
           <td>{{ row.definition }}</td>
-          <td>{{ row.superclasses }}</td>
+          <td>{{ row.superclasses_html | safe }}</td>
           <td>{{ row.mappings }}</td>
         </tr>
         {% endfor %}
@@ -176,8 +179,8 @@
           <td><code>{{ row.iri }}</code></td>
           <td>{{ row.deprecated }}</td>
           <td>{{ row.kind }}</td>
-          <td>{{ row.domain }}</td>
-          <td>{{ row.range }}</td>
+          <td>{{ row.domain_html | safe }}</td>
+          <td>{{ row.range_html | safe }}</td>
           <td>{{ row.mappings }}</td>
         </tr>
         {% endfor %}

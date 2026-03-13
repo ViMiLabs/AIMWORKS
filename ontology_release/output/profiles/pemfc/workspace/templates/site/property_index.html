@@ -27,8 +27,8 @@
         <td><code>{{ row.iri }}</code></td>
         <td>{{ row.deprecated }}</td>
         <td>{{ row.kind }}</td>
-        <td>{{ row.domain }}</td>
-        <td>{{ row.range }}</td>
+        <td>{{ row.domain_html | safe }}</td>
+        <td>{{ row.range_html | safe }}</td>
         <td>{{ row.mappings }}</td>
       </tr>
       {% endfor %}

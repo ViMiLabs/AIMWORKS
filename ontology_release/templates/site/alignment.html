@@ -50,7 +50,7 @@
         <td><code>{{ row.local_iri }}</code></td>
         <td>{{ row.local_type }}</td>
         <td>{{ row.relation }}</td>
-        <td><code>{{ row.target_iri }}</code></td>
+        <td>{% if row.target_iri %}<a href="{{ row.target_iri }}"><code>{{ row.target_iri }}</code></a>{% else %}<code></code>{% endif %}</td>
         <td>{{ row.source_id }}</td>
         <td>{{ row.score }}</td>
       </tr>

@@ -158,7 +158,7 @@ def _assemble_multi_publication(base_root: Path, built_profiles: list[dict[str, 
             }
         )
 
-    landing_title = site_cfg.get("title", "Hydrogen Technology Ontology")
+    landing_title = site_cfg.get("title", "H2KG — Ontology for Hydrogen Electrochemical Systems")
     landing_subtitle = site_cfg.get("subtitle", "Multi-profile ontology publication")
     landing_html = _landing_html(landing_title, landing_subtitle, profile_cards)
     write_text(publication_root / "index.html", landing_html)
@@ -225,7 +225,7 @@ def _landing_html(title: str, subtitle: str, cards: list[dict[str, str]]) -> str
     }}
     main {{ max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 3rem; }}
     h1, h2 {{ font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }}
-    h1 {{ margin: 0 0 0.5rem; font-size: clamp(2.2rem, 5vw, 3.2rem); }}
+    h1 {{ margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }}
     p {{ color: var(--muted); line-height: 1.55; }}
     .grid {{ display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }}
     .card {{ background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }}

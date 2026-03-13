@@ -19,7 +19,7 @@
           <p class="lede">{{ site.tagline }}</p>
           <div class="meta-row">
             <span>Version {{ site.version }}</span>
-            <span>{{ site.license_label }}</span>
+            <span>{% if site.license_label.startswith('http') %}<a href="{{ site.license_label }}">{{ site.license_label }}</a>{% else %}{{ site.license_label }}{% endif %}</span>
             <span>{{ site.prefix }}</span>
           </div>
         {% if site.actions %}

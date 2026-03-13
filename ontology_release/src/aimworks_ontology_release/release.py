@@ -312,7 +312,17 @@ def run_pipeline(
     generate_w3id_artifacts(configs["namespace_policy"], configs["release_profile"], root)
     _write_import_catalog(configs["source_ontologies"], root)
 
-    provisional_fair = {"overall": 0, "dimensions": [{"dimension": "Findable", "score": 0}, {"dimension": "Accessible", "score": 0}, {"dimension": "Interoperable", "score": 0}, {"dimension": "Reusable", "score": 0}], "blockers": []}
+    provisional_fair = {
+        "overall": 0,
+        "dimensions": [
+            {"acronym": "F", "dimension": "Findable", "score": 0},
+            {"acronym": "A", "dimension": "Accessible", "score": 0},
+            {"acronym": "I", "dimension": "Interoperable", "score": 0},
+            {"acronym": "R", "dimension": "Reusable", "score": 0},
+        ],
+        "blockers": [],
+        "transparency_checks": [],
+    }
     build_docs(
         split_graphs["schema"],
         split_graphs["controlled_vocabulary"],

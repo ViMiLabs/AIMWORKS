@@ -42,9 +42,16 @@
   </article>
   <article class="card">
     <h2>FAIR Scores</h2>
+    <p>Numeric FAIR reporting is separated into F, A, I, and R. OOPS! and FOOPS! are listed as transparency hooks and are not added to the base score.</p>
     <ul class="simple-list">
       {% for item in fair_rows %}
-      <li>{{ item.dimension }}: <strong>{{ item.score }}</strong></li>
+      <li>{{ item.acronym }} ({{ item.dimension }}): <strong>{{ item.score }}</strong></li>
+      {% endfor %}
+    </ul>
+    <h3>Transparency Hooks</h3>
+    <ul class="simple-list">
+      {% for item in transparency_rows %}
+      <li>{{ item.label }}: <strong>{{ item.status }}</strong>. {{ item.details }}</li>
       {% endfor %}
     </ul>
   </article>

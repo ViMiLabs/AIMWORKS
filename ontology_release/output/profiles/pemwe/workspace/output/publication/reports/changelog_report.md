@@ -2,7 +2,7 @@
 
 ## 2026.3.0 (2026-03-12)
 
-Public-ready Hydrogen Technology Ontology release baseline.
+Public-ready H2KG — Ontology for Hydrogen Electrochemical Systems release baseline.
 
 ### Changes
 

@@ -52,10 +52,10 @@ def compute_fair_scores(root: Path) -> dict[str, Any]:
     )
 
     dimensions = [
-        {"dimension": "Findable", "score": findable},
-        {"dimension": "Accessible", "score": accessible},
-        {"dimension": "Interoperable", "score": interoperable},
-        {"dimension": "Reusable", "score": reusable},
+        {"acronym": "F", "dimension": "Findable", "score": findable},
+        {"acronym": "A", "dimension": "Accessible", "score": accessible},
+        {"acronym": "I", "dimension": "Interoperable", "score": interoperable},
+        {"acronym": "R", "dimension": "Reusable", "score": reusable},
     ]
     overall = round(sum(item["score"] for item in dimensions) / len(dimensions), 1)
     blockers = validation["mapping_issues"] + validation["namespace_violations"]
@@ -64,7 +64,27 @@ def compute_fair_scores(root: Path) -> dict[str, Any]:
     if not validation["shacl_conforms"]:
         blockers.append("SHACL validation still reports unresolved constraints.")
     release_ready = overall >= 75 and not blockers
-    return {"dimensions": dimensions, "overall": overall, "release_ready": release_ready, "blockers": blockers}
+    transparency_checks = [
+        {
+            "label": "OOPS! ontology pitfall hook",
+            "status": validation.get("oops_checks", {}).get("status", "not_reported"),
+            "details": validation.get("oops_checks", {}).get("details", "No OOPS! result was recorded."),
+            "counted_in_score": False,
+        },
+        {
+            "label": "FOOPS! FAIR assessment hook",
+            "status": validation.get("foops_checks", {}).get("status", "not_reported"),
+            "details": validation.get("foops_checks", {}).get("details", "No FOOPS! result was recorded."),
+            "counted_in_score": False,
+        },
+    ]
+    return {
+        "dimensions": dimensions,
+        "overall": overall,
+        "release_ready": release_ready,
+        "blockers": blockers,
+        "transparency_checks": transparency_checks,
+    }
 
 
 def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
@@ -77,7 +97,10 @@ def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
         "## Dimension Scores",
         "",
     ]
-    fair_lines.extend(f"- {item['dimension']}: {item['score']} / 100" for item in scores["dimensions"])
+    fair_lines.extend(f"- {item['acronym']} ({item['dimension']}): {item['score']} / 100" for item in scores["dimensions"])
+    fair_lines.extend(["", "## External Transparency Hooks", ""])
+    fair_lines.append("- OOPS! and FOOPS! are reported separately for transparency and are not added to the numeric F/A/I/R score.")
+    fair_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
     fair_lines.extend(["", "## Blocking Issues", ""])
     if scores["blockers"]:
         fair_lines.extend(f"- {item}" for item in scores["blockers"])
@@ -94,7 +117,10 @@ def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
         "## Criteria",
         "",
     ]
-    release_lines.extend(f"- {item['dimension']}: {item['score']} / 100" for item in scores["dimensions"])
+    release_lines.extend(f"- {item['acronym']} ({item['dimension']}): {item['score']} / 100" for item in scores["dimensions"])
+    release_lines.extend(["", "## External Transparency Hooks", ""])
+    release_lines.append("- OOPS! and FOOPS! are tracked separately from the numeric FAIR score so the base F/A/I/R calculation stays reproducible offline.")
+    release_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
     release_lines.extend(["", "## Required Follow-up", ""])
     if scores["blockers"]:
         release_lines.extend(f"- {item}" for item in scores["blockers"])
