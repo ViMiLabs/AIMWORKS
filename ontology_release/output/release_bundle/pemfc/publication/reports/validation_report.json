@@ -19,14 +19,110 @@
     "details": "EMMOntoPy is not installed; optional EMMO convention checks were skipped."
   },
   "oops_checks": {
-    "status": "disabled",
-    "details": "OOPS! integration is configured but disabled by default for offline-safe local releases.",
-    "service_url": "https://oops.linkeddata.es/rest"
+    "status": "assessed",
+    "details": "OOPS! assessed the ontology and reported 1 pitfalls.",
+    "service_url": "https://oops.linkeddata.es/",
+    "service_endpoint": "https://oops.linkeddata.es/rest",
+    "pitfall_count": 1,
+    "pitfalls": [
+      {
+        "code": "P10",
+        "name": "Missing disjointness",
+        "importance": "Important",
+        "affected_elements": 1,
+        "description": "The ontology lacks disjoint axioms between classes or between properties that should be defined as disjoint. This pitfall is related with the guidelines provided in [6], [2] and [7].\t"
+      }
+    ],
+    "severity_counts": {
+      "Important": 1
+    },
+    "messages": []
   },
   "foops_checks": {
-    "status": "disabled",
-    "details": "FOOPS! integration is configured but disabled by default for offline-safe local releases.",
-    "service_url": "https://foops.linkeddata.es/FAIR_validator"
+    "status": "assessed",
+    "details": "FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible.",
+    "service_url": "https://foops.linkeddata.es/FAIR_validator.html",
+    "service_endpoint": "https://foops.linkeddata.es/assessOntologyFile",
+    "catalogue_url": "https://w3id.org/foops/catalogue",
+    "mode": "file",
+    "ontology_uri": "https://w3id.org/h2kg/hydrogen-ontology",
+    "ontology_title": "Hydrogen Experiments Ontology – Low-Pt PEMFC Cathode Catalyst Layers",
+    "ontology_license": "https://creativecommons.org/licenses/by/4.0/",
+    "resource_found": "ontology",
+    "overall_score": 86.1,
+    "dimension_scores": [
+      {
+        "acronym": "F",
+        "dimension": "Findable",
+        "score": 100.0,
+        "passed": 10,
+        "total": 10,
+        "status": "assessed",
+        "principles": [
+          "F1",
+          "F2",
+          "F3"
+        ]
+      },
+      {
+        "acronym": "A",
+        "dimension": "Accessible",
+        "score": null,
+        "passed": 0,
+        "total": 0,
+        "status": "not_assessed",
+        "principles": []
+      },
+      {
+        "acronym": "I",
+        "dimension": "Interoperable",
+        "score": 100.0,
+        "passed": 3,
+        "total": 3,
+        "status": "assessed",
+        "principles": [
+          "I1",
+          "I2"
+        ]
+      },
+      {
+        "acronym": "R",
+        "dimension": "Reusable",
+        "score": 90.7,
+        "passed": 78,
+        "total": 86,
+        "status": "assessed",
+        "principles": [
+          "R1",
+          "R1.1",
+          "R1.2"
+        ]
+      }
+    ],
+    "check_count": 15,
+    "failed_checks": [
+      {
+        "abbreviation": "OM2",
+        "category": "Reusable",
+        "title": "Ontology declares recommended metadata",
+        "status": "error",
+        "explanation": "The following metadata was not found: citation"
+      },
+      {
+        "abbreviation": "OM3",
+        "category": "Reusable",
+        "title": "Ontology declares detailed metadata",
+        "status": "error",
+        "explanation": "The following metadata was not found: doi, publisher, logo, status, issued. Warning: The following OPTIONAL detailed metadata could not be found: previous version, backwards compatibility. Please consider adding them if appropriate."
+      },
+      {
+        "abbreviation": "OM5_2",
+        "category": "Reusable",
+        "title": "Ontology declares detailed provenance metadata",
+        "status": "error",
+        "explanation": "The following provenance information was not found: issued, publisher"
+      }
+    ]
   },
   "resolver_checks": [
     {
@@ -34,210 +130,210 @@
       "iri": "https://w3id.org/h2kg/hydrogen-ontology",
       "accept": "text/html",
       "local_artifact": "output\\docs\\hydrogen-ontology.html",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Ontology IRI",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology",
       "accept": "text/turtle",
       "local_artifact": "output\\docs\\hydrogen-ontology.html",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Ontology IRI",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology",
       "accept": "application/ld+json",
       "local_artifact": "output\\docs\\hydrogen-ontology.html",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Source",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/source",
       "accept": "text/html",
       "local_artifact": "output\\publication\\source\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Source",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/source",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\source\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Source",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/source",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\source\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/inferred",
       "accept": "text/html",
       "local_artifact": "output\\publication\\inferred\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/inferred",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\inferred\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/inferred",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\inferred\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Latest",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/latest",
       "accept": "text/html",
       "local_artifact": "output\\publication\\latest\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Latest",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/latest",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\latest\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Latest",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/latest",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\latest\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Context",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/context",
       "accept": "text/html",
       "local_artifact": "output\\publication\\context\\context.jsonld",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Context",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/context",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\context\\context.jsonld",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Context",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/context",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\context\\context.jsonld",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned release",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0",
       "accept": "text/html",
       "local_artifact": "output\\publication\\2026.3.0\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned release",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\2026.3.0\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned release",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\2026.3.0\\ontology.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0/inferred",
       "accept": "text/html",
       "local_artifact": "output\\publication\\2026.3.0\\inferred.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0/inferred",
       "accept": "text/turtle",
       "local_artifact": "output\\publication\\2026.3.0\\inferred.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     },
     {
       "label": "Versioned inferred",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology/2026.3.0/inferred",
       "accept": "application/ld+json",
       "local_artifact": "output\\publication\\2026.3.0\\inferred.ttl",
-      "local_artifact_exists": true,
-      "status": "local_ready",
+      "local_artifact_exists": false,
+      "status": "missing_local_artifact",
       "http_status": null,
-      "details": "Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false."
+      "details": "Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false."
     }
   ],
   "overall_status": "pass"

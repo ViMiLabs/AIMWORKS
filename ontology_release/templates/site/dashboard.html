@@ -35,6 +35,26 @@
     </ul>
   </article>
   <article class="check-card">
+    <h2>FOOPS! Assessment</h2>
+    <ul class="simple-list">
+      {% for row in external_fair_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
+      {% else %}
+      <li>No live FOOPS! score was recorded in this build.</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="check-card">
+    <h2>OOPS! Pitfalls</h2>
+    <ul class="simple-list">
+      {% for row in oops_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
+      {% else %}
+      <li>No live OOPS! pitfall result was recorded in this build.</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="check-card">
     <h2>Validation Signals</h2>
     <ul class="simple-list">
       {% for row in validation_rows %}

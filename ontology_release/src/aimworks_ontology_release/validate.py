@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 from rdflib import Graph, URIRef
-from rdflib.namespace import OWL, RDFS, SKOS
+from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from .extract import extract_local_terms
 from .inspect import find_ontology_node
@@ -69,22 +70,246 @@ def _run_emmo_check() -> dict[str, Any]:
     return _optional_check("skipped", "EMMOntoPy is not installed; optional EMMO convention checks were skipped.")
 
 
-def _run_service_hook(name: str, url: str, enabled: bool) -> dict[str, Any]:
-    if not enabled:
-        return _optional_check("disabled", f"{name} integration is configured but disabled by default for offline-safe local releases.", {"service_url": url})
-    if importlib.util.find_spec("requests") is None:
-        return _optional_check("skipped", f"requests is not installed; the optional {name} service hook was skipped.", {"service_url": url})
+def _safe_int(value: Any, default: int = 0) -> int:
     try:
-        import requests
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
-        response = requests.get(url, timeout=5)
+
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _as_text(data: Any) -> str:
+    if isinstance(data, bytes):
+        return data.decode("utf-8")
+    return str(data)
+
+
+def _graph_text_objects(graph: Graph, subject: URIRef, predicate_suffix: str) -> list[str]:
+    return [str(obj) for predicate, obj in graph.predicate_objects(subject) if str(predicate).endswith(predicate_suffix)]
+
+
+def _first_graph_text(graph: Graph, subject: URIRef, predicate_suffix: str) -> str:
+    values = _graph_text_objects(graph, subject, predicate_suffix)
+    return values[0] if values else ""
+
+
+def _foops_dimension_rows(checks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    aggregates: dict[str, dict[str, Any]] = defaultdict(lambda: {"passed": 0, "total": 0, "checks": 0, "principles": set()})
+    for row in checks:
+        category = str(row.get("category_id") or "").strip() or "Unknown"
+        passed = _safe_int(row.get("total_passed_tests"), 1 if row.get("status") == "ok" else 0)
+        total = _safe_int(row.get("total_tests_run"), 1)
+        bucket = aggregates[category]
+        bucket["passed"] += max(passed, 0)
+        bucket["total"] += max(total, 0)
+        bucket["checks"] += 1
+        principle = str(row.get("principle_id") or "").strip()
+        if principle:
+            bucket["principles"].add(principle)
+    ordered = [("F", "Findable"), ("A", "Accessible"), ("I", "Interoperable"), ("R", "Reusable")]
+    rows: list[dict[str, Any]] = []
+    for acronym, dimension in ordered:
+        bucket = aggregates.get(dimension)
+        if not bucket or bucket["total"] == 0:
+            rows.append(
+                {
+                    "acronym": acronym,
+                    "dimension": dimension,
+                    "score": None,
+                    "passed": 0,
+                    "total": 0,
+                    "status": "not_assessed",
+                    "principles": [],
+                }
+            )
+            continue
+        rows.append(
+            {
+                "acronym": acronym,
+                "dimension": dimension,
+                "score": round((bucket["passed"] / bucket["total"]) * 100, 1),
+                "passed": bucket["passed"],
+                "total": bucket["total"],
+                "status": "assessed",
+                "principles": sorted(bucket["principles"]),
+            }
+        )
+    return rows
+
+
+def _run_foops_assessment(schema_graph: Graph, release_profile: dict[str, Any], validation_cfg: dict[str, Any]) -> dict[str, Any]:
+    homepage_url = validation_cfg.get("foops_url", "https://foops.linkeddata.es/FAIR_validator.html")
+    catalogue_url = validation_cfg.get("foops_catalogue_url", "https://w3id.org/foops/catalogue")
+    if not validation_cfg.get("enable_foops", False):
+        return _optional_check("disabled", "FOOPS! integration is configured but disabled.", {"service_url": homepage_url, "catalogue_url": catalogue_url})
+    if importlib.util.find_spec("requests") is None:
+        return _optional_check("skipped", "requests is not installed; the FOOPS! assessment was skipped.", {"service_url": homepage_url, "catalogue_url": catalogue_url})
+
+    import requests
+
+    mode = str(validation_cfg.get("foops_mode", "file")).strip().lower() or "file"
+    timeout_seconds = _safe_int(validation_cfg.get("foops_timeout_seconds"), 180)
+    assess_uri_url = validation_cfg.get("foops_assess_uri_url", "https://foops.linkeddata.es/assessOntology")
+    assess_file_url = validation_cfg.get("foops_assess_file_url", "https://foops.linkeddata.es/assessOntologyFile")
+    resources_cfg = release_profile.get("documentation", {}).get("resources", {})
+    target_uri = str(validation_cfg.get("foops_target_uri") or resources_cfg.get("ontology_homepage_iri") or "").strip()
+    request_target = assess_file_url
+
+    try:
+        if mode == "uri":
+            if not target_uri:
+                return _optional_check(
+                    "skipped",
+                    "FOOPS! URI mode was requested, but no public ontology URI was configured.",
+                    {"service_url": homepage_url, "catalogue_url": catalogue_url, "mode": mode},
+                )
+            request_target = assess_uri_url
+            response = requests.post(request_target, json={"ontologyUri": target_uri}, timeout=timeout_seconds)
+        else:
+            turtle_payload = _as_text(schema_graph.serialize(format="turtle")).encode("utf-8")
+            response = requests.post(
+                request_target,
+                files={"file": ("ontology.ttl", turtle_payload, "text/turtle")},
+                timeout=timeout_seconds,
+            )
+        response.raise_for_status()
+        payload = response.json()
+        checks = payload.get("checks", [])
+        dimension_rows = _foops_dimension_rows(checks if isinstance(checks, list) else [])
+        failed_checks = [
+            {
+                "abbreviation": str(row.get("abbreviation") or ""),
+                "category": str(row.get("category_id") or ""),
+                "title": str(row.get("title") or ""),
+                "status": str(row.get("status") or ""),
+                "explanation": str(row.get("explanation") or ""),
+            }
+            for row in checks
+            if str(row.get("status") or "").lower() != "ok"
+        ][:12]
+        overall_score = round(_safe_float(payload.get("overall_score")) * 100, 1)
+        unassessed_dimensions = [row["dimension"] for row in dimension_rows if row["score"] is None]
+        details = f"FOOPS! assessment completed in {mode} mode with an overall score of {overall_score} / 100."
+        if unassessed_dimensions:
+            details += f" The following dimensions were not assessed in this mode: {', '.join(unassessed_dimensions)}."
         return _optional_check(
-            "reachable" if response.ok else "warning",
-            f"{name} service responded with HTTP {response.status_code}.",
-            {"service_url": url, "http_status": response.status_code},
+            "assessed",
+            details,
+            {
+                "service_url": homepage_url,
+                "service_endpoint": request_target,
+                "catalogue_url": catalogue_url,
+                "mode": mode,
+                "ontology_uri": payload.get("ontology_URI", target_uri),
+                "ontology_title": payload.get("ontology_title", ""),
+                "ontology_license": payload.get("ontology_license", ""),
+                "resource_found": payload.get("resource_found", ""),
+                "overall_score": overall_score,
+                "dimension_scores": dimension_rows,
+                "check_count": len(checks) if isinstance(checks, list) else 0,
+                "failed_checks": failed_checks,
+            },
         )
     except Exception as exc:
-        return _optional_check("warning", f"{name} service hook could not be executed: {exc}", {"service_url": url})
+        return _optional_check(
+            "warning",
+            f"FOOPS! assessment could not be completed: {exc}",
+            {
+                "service_url": homepage_url,
+                "service_endpoint": request_target,
+                "catalogue_url": catalogue_url,
+                "mode": mode,
+            },
+        )
+
+
+def _run_oops_assessment(schema_graph: Graph, validation_cfg: dict[str, Any]) -> dict[str, Any]:
+    homepage_url = validation_cfg.get("oops_homepage_url", "https://oops.linkeddata.es/")
+    service_url = validation_cfg.get("oops_url", "https://oops.linkeddata.es/rest")
+    if not validation_cfg.get("enable_oops", False):
+        return _optional_check("disabled", "OOPS! integration is configured but disabled.", {"service_url": homepage_url, "service_endpoint": service_url})
+    if importlib.util.find_spec("requests") is None:
+        return _optional_check("skipped", "requests is not installed; the OOPS! assessment was skipped.", {"service_url": homepage_url, "service_endpoint": service_url})
+
+    import requests
+
+    try:
+        rdf_xml = _as_text(schema_graph.serialize(format="xml")).replace("]]>", "]]]]><![CDATA[>")
+        body = (
+            '<?xml version="1.0" encoding="UTF-8"?>'
+            "<OOPSRequest>"
+            "<OntologyUrl></OntologyUrl>"
+            f"<OntologyContent><![CDATA[{rdf_xml}]]></OntologyContent>"
+            "<Pitfalls>10</Pitfalls>"
+            "<OutputFormat>RDF/XML</OutputFormat>"
+            "</OOPSRequest>"
+        )
+        response = requests.post(
+            service_url,
+            data=body.encode("utf-8"),
+            headers={"Content-Type": "text/xml; charset=UTF-8"},
+            timeout=_safe_int(validation_cfg.get("oops_timeout_seconds"), 180),
+        )
+        response.raise_for_status()
+        graph = Graph()
+        graph.parse(data=_as_text(response.text), format="xml")
+        pitfall_nodes = {subject for subject, obj in graph.subject_objects(RDF.type) if str(obj).endswith("#pitfall")}
+        if not pitfall_nodes:
+            pitfall_nodes = {subject for subject, predicate, _ in graph if str(predicate).endswith("hasCode")}
+        pitfalls: list[dict[str, Any]] = []
+        severity_counts: dict[str, int] = defaultdict(int)
+        for node in pitfall_nodes:
+            code = _first_graph_text(graph, node, "hasCode")
+            name = _first_graph_text(graph, node, "hasName")
+            importance = _first_graph_text(graph, node, "hasImportanceLevel") or "Unspecified"
+            affected = _safe_int(_first_graph_text(graph, node, "hasNumberAffectedElements"))
+            description = _first_graph_text(graph, node, "hasDescription")
+            severity_counts[importance] += 1
+            pitfalls.append(
+                {
+                    "code": code,
+                    "name": name,
+                    "importance": importance,
+                    "affected_elements": affected,
+                    "description": description,
+                }
+            )
+        pitfalls.sort(key=lambda row: (row["code"], row["name"]))
+        message_nodes = [subject for subject in graph.subjects() if _graph_text_objects(graph, subject, "hasMessage") or _graph_text_objects(graph, subject, "hasTitle")]
+        messages: list[str] = []
+        for node in message_nodes:
+            title = _first_graph_text(graph, node, "hasTitle")
+            detail_lines = _graph_text_objects(graph, node, "hasMessage")
+            if title:
+                messages.append(title)
+            messages.extend(detail_lines)
+        details = f"OOPS! assessed the ontology and reported {len(pitfalls)} pitfalls."
+        if messages and len(pitfalls) == 0:
+            details = " ".join(messages[:2])
+        return _optional_check(
+            "assessed" if pitfalls or not messages else "warning",
+            details,
+            {
+                "service_url": homepage_url,
+                "service_endpoint": service_url,
+                "pitfall_count": len(pitfalls),
+                "pitfalls": pitfalls[:20],
+                "severity_counts": dict(sorted(severity_counts.items())),
+                "messages": messages[:6],
+            },
+        )
+    except Exception as exc:
+        return _optional_check(
+            "warning",
+            f"OOPS! assessment could not be completed: {exc}",
+            {"service_url": homepage_url, "service_endpoint": service_url},
+        )
 
 
 def _resolver_check_rows(namespace_policy: dict[str, Any], release_profile: dict[str, Any], root: Path) -> list[dict[str, Any]]:
@@ -186,8 +411,8 @@ def validate_release(
     owl_consistency = _run_owl_consistency_check(schema_graph, controlled_vocabulary_graph, root)
     emmo_checks = _run_emmo_check()
     validation_cfg = release_profile.get("validation", {})
-    oops_checks = _run_service_hook("OOPS!", validation_cfg.get("oops_url", "https://oops.linkeddata.es/rest"), bool(validation_cfg.get("enable_oops", False)))
-    foops_checks = _run_service_hook("FOOPS!", validation_cfg.get("foops_url", "https://foops.linkeddata.es/FAIR_validator"), bool(validation_cfg.get("enable_foops", False)))
+    oops_checks = _run_oops_assessment(schema_graph, validation_cfg)
+    foops_checks = _run_foops_assessment(schema_graph, release_profile, validation_cfg)
     resolver_checks = _resolver_check_rows(namespace_policy, release_profile, root)
     report = {
         "syntax_ok": True,
@@ -210,6 +435,8 @@ def validate_release(
 
 def write_validation_outputs(report: dict[str, Any], root: Path) -> None:
     write_json(root / "output" / "reports" / "validation_report.json", report)
+    foops_checks = report["foops_checks"]
+    oops_checks = report["oops_checks"]
     lines = [
         "# Validation Report",
         "",
@@ -243,12 +470,33 @@ def write_validation_outputs(report: dict[str, Any], root: Path) -> None:
     lines.extend(
         [
             "",
+            "## External Service Assessments",
+            "",
+            f"- OOPS!: {oops_checks['details']}",
+            f"- OOPS! link: {oops_checks.get('service_url', '')}",
+            f"- FOOPS!: {foops_checks['details']}",
+            f"- FOOPS! link: {foops_checks.get('service_url', '')}",
+            "",
+        ]
+    )
+    if "pitfall_count" in oops_checks:
+        lines.append(f"- OOPS! pitfall count: **{oops_checks['pitfall_count']}**")
+        for importance, count in sorted(oops_checks.get("severity_counts", {}).items()):
+            lines.append(f"- OOPS! {importance}: {count}")
+    if "overall_score" in foops_checks:
+        lines.append(f"- FOOPS! overall score: **{foops_checks['overall_score']} / 100**")
+        for row in foops_checks.get("dimension_scores", []):
+            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
+            lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
+    if foops_checks.get("catalogue_url"):
+        lines.append(f"- FOOPS! test catalogue: {foops_checks['catalogue_url']}")
+    lines.extend(
+        [
+            "",
             "## Optional Hooks",
             "",
             f"- OWL consistency: {report['owl_consistency']['details']}",
             f"- EMMO checks: {report['emmo_checks']['details']}",
-            f"- OOPS!: {report['oops_checks']['details']}",
-            f"- FOOPS!: {report['foops_checks']['details']}",
             "",
             "## Resolver Checks",
             "",

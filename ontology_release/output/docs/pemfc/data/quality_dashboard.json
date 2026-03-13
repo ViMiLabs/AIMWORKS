@@ -27,16 +27,62 @@
   ],
   "transparency_rows": [
     {
-      "label": "OOPS! ontology pitfall hook",
-      "value": "disabled",
-      "status": "watch",
-      "detail": "OOPS! integration is configured but disabled by default for offline-safe local releases. Not counted in the numeric F/A/I/R score."
+      "label": "OOPS! ontology pitfall scan",
+      "value": "assessed",
+      "status": "good",
+      "detail": "OOPS! assessed the ontology and reported 1 pitfalls. Service: <a href='https://oops.linkeddata.es/'><code>https://oops.linkeddata.es/</code></a>. Not counted in the numeric F/A/I/R score."
     },
     {
-      "label": "FOOPS! FAIR assessment hook",
-      "value": "disabled",
+      "label": "FOOPS! FAIR assessment",
+      "value": "assessed",
+      "status": "good",
+      "detail": "FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible. Service: <a href='https://foops.linkeddata.es/FAIR_validator.html'><code>https://foops.linkeddata.es/FAIR_validator.html</code></a>. Catalogue: <a href='https://w3id.org/foops/catalogue'><code>https://w3id.org/foops/catalogue</code></a>. Not counted in the numeric F/A/I/R score."
+    }
+  ],
+  "external_fair_rows": [
+    {
+      "label": "FOOPS! overall",
+      "value": "86.1 / 100",
+      "status": "good",
+      "detail": "Actual FOOPS! assessment in file mode. Validator: <a href='https://foops.linkeddata.es/FAIR_validator.html'><code>https://foops.linkeddata.es/FAIR_validator.html</code></a>. Catalogue: <a href='https://w3id.org/foops/catalogue'><code>https://w3id.org/foops/catalogue</code></a>."
+    },
+    {
+      "label": "FOOPS! F / Findable",
+      "value": "100.0 / 100",
+      "status": "good",
+      "detail": "Returned directly by the FOOPS! service."
+    },
+    {
+      "label": "FOOPS! A / Accessible",
+      "value": "not assessed",
       "status": "watch",
-      "detail": "FOOPS! integration is configured but disabled by default for offline-safe local releases. Not counted in the numeric F/A/I/R score."
+      "detail": "Returned directly by the FOOPS! service."
+    },
+    {
+      "label": "FOOPS! I / Interoperable",
+      "value": "100.0 / 100",
+      "status": "good",
+      "detail": "Returned directly by the FOOPS! service."
+    },
+    {
+      "label": "FOOPS! R / Reusable",
+      "value": "90.7 / 100",
+      "status": "good",
+      "detail": "Returned directly by the FOOPS! service."
+    }
+  ],
+  "oops_rows": [
+    {
+      "label": "OOPS! pitfall count",
+      "value": "1",
+      "status": "watch",
+      "detail": "OOPS! assessed the ontology and reported 1 pitfalls. Service: <a href='https://oops.linkeddata.es/'><code>https://oops.linkeddata.es/</code></a>."
+    },
+    {
+      "label": "OOPS! Important",
+      "value": "1",
+      "status": "watch",
+      "detail": "Pitfalls grouped by the importance level returned by OOPS!."
     }
   ],
   "validation_rows": [
@@ -90,15 +136,15 @@
     },
     {
       "label": "OOPS! hook",
-      "value": "disabled",
-      "status": "watch",
-      "detail": "OOPS! integration is configured but disabled by default for offline-safe local releases."
+      "value": "assessed",
+      "status": "good",
+      "detail": "OOPS! assessed the ontology and reported 1 pitfalls."
     },
     {
       "label": "FOOPS! hook",
-      "value": "disabled",
-      "status": "watch",
-      "detail": "FOOPS! integration is configured but disabled by default for offline-safe local releases."
+      "value": "assessed",
+      "status": "good",
+      "detail": "FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible."
     }
   ],
   "hygiene_rows": [
@@ -141,23 +187,23 @@
     },
     {
       "label": "Machine-readable source",
-      "value": "ready",
-      "status": "good"
+      "value": "missing",
+      "status": "action"
     },
     {
       "label": "Inferred serialization",
-      "value": "ready",
-      "status": "good"
+      "value": "missing",
+      "status": "action"
     },
     {
       "label": "JSON-LD context",
-      "value": "ready",
-      "status": "good"
+      "value": "missing",
+      "status": "action"
     },
     {
       "label": "Release bundle",
-      "value": "ready",
-      "status": "good"
+      "value": "missing",
+      "status": "action"
     },
     {
       "label": "w3id artifacts",

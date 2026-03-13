@@ -70,13 +70,21 @@ def temp_project(package_root: Path) -> Iterator[Path]:
         sample_jsonld = sample_jsonld.decode("utf-8")
     (tmp_path / "input" / "ONTOLOGY_PEMFC.jsonld").write_text(sample_jsonld, encoding="utf-8")
     (tmp_path / "input" / "ONTOLOGY_PEMWE.jsonld").write_text(sample_jsonld, encoding="utf-8")
+    release_profile_path = tmp_path / "config" / "release_profile.yaml"
+    release_profile_text = release_profile_path.read_text(encoding="utf-8")
+    release_profile_text = release_profile_text.replace("  enable_oops: true", "  enable_oops: false")
+    release_profile_text = release_profile_text.replace("  enable_foops: true", "  enable_foops: false")
+    release_profile_path.write_text(release_profile_text, encoding="utf-8")
     yield tmp_path
     shutil.rmtree(tmp_path, ignore_errors=True)
 
 
 @pytest.fixture()
 def configs(package_root: Path):
-    return load_configs(package_root)
+    loaded = load_configs(package_root)
+    loaded["release_profile"]["validation"]["enable_oops"] = False
+    loaded["release_profile"]["validation"]["enable_foops"] = False
+    return loaded
 
 
 @pytest.fixture()

@@ -64,26 +64,50 @@ def compute_fair_scores(root: Path) -> dict[str, Any]:
     if not validation["shacl_conforms"]:
         blockers.append("SHACL validation still reports unresolved constraints.")
     release_ready = overall >= 75 and not blockers
+    oops_result = validation.get("oops_checks", {})
+    foops_result = validation.get("foops_checks", {})
     transparency_checks = [
         {
-            "label": "OOPS! ontology pitfall hook",
-            "status": validation.get("oops_checks", {}).get("status", "not_reported"),
-            "details": validation.get("oops_checks", {}).get("details", "No OOPS! result was recorded."),
+            "label": "OOPS! ontology pitfall scan",
+            "status": oops_result.get("status", "not_reported"),
+            "details": oops_result.get("details", "No OOPS! result was recorded."),
             "counted_in_score": False,
+            "service_url": oops_result.get("service_url", ""),
         },
         {
-            "label": "FOOPS! FAIR assessment hook",
-            "status": validation.get("foops_checks", {}).get("status", "not_reported"),
-            "details": validation.get("foops_checks", {}).get("details", "No FOOPS! result was recorded."),
+            "label": "FOOPS! FAIR assessment",
+            "status": foops_result.get("status", "not_reported"),
+            "details": foops_result.get("details", "No FOOPS! result was recorded."),
             "counted_in_score": False,
+            "service_url": foops_result.get("service_url", ""),
+            "catalogue_url": foops_result.get("catalogue_url", ""),
         },
     ]
+    external_scores = {
+        "foops": {
+            "status": foops_result.get("status", "not_reported"),
+            "overall_score": foops_result.get("overall_score"),
+            "dimension_scores": foops_result.get("dimension_scores", []),
+            "details": foops_result.get("details", "No FOOPS! result was recorded."),
+            "service_url": foops_result.get("service_url", ""),
+            "catalogue_url": foops_result.get("catalogue_url", ""),
+            "mode": foops_result.get("mode", ""),
+        },
+        "oops": {
+            "status": oops_result.get("status", "not_reported"),
+            "pitfall_count": oops_result.get("pitfall_count"),
+            "severity_counts": oops_result.get("severity_counts", {}),
+            "details": oops_result.get("details", "No OOPS! result was recorded."),
+            "service_url": oops_result.get("service_url", ""),
+        },
+    }
     return {
         "dimensions": dimensions,
         "overall": overall,
         "release_ready": release_ready,
         "blockers": blockers,
         "transparency_checks": transparency_checks,
+        "external_scores": external_scores,
     }
 
 
@@ -101,6 +125,21 @@ def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
     fair_lines.extend(["", "## External Transparency Hooks", ""])
     fair_lines.append("- OOPS! and FOOPS! are reported separately for transparency and are not added to the numeric F/A/I/R score.")
     fair_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
+    foops = scores.get("external_scores", {}).get("foops", {})
+    oops = scores.get("external_scores", {}).get("oops", {})
+    fair_lines.extend(["", "## External Service Results", ""])
+    if foops.get("overall_score") is not None:
+        fair_lines.append(f"- FOOPS! overall score: **{foops['overall_score']} / 100**")
+        for row in foops.get("dimension_scores", []):
+            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
+            fair_lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
+    else:
+        fair_lines.append("- FOOPS! did not return a score in this run.")
+    if oops.get("pitfall_count") is not None:
+        fair_lines.append(f"- OOPS! pitfall count: **{oops['pitfall_count']}**")
+        fair_lines.extend(f"- OOPS! {level}: {count}" for level, count in sorted(oops.get("severity_counts", {}).items()))
+    else:
+        fair_lines.append("- OOPS! did not return a pitfall count in this run.")
     fair_lines.extend(["", "## Blocking Issues", ""])
     if scores["blockers"]:
         fair_lines.extend(f"- {item}" for item in scores["blockers"])
@@ -121,6 +160,19 @@ def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
     release_lines.extend(["", "## External Transparency Hooks", ""])
     release_lines.append("- OOPS! and FOOPS! are tracked separately from the numeric FAIR score so the base F/A/I/R calculation stays reproducible offline.")
     release_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
+    release_lines.extend(["", "## External Service Results", ""])
+    if foops.get("overall_score") is not None:
+        release_lines.append(f"- FOOPS! overall score: **{foops['overall_score']} / 100**")
+        for row in foops.get("dimension_scores", []):
+            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
+            release_lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
+    else:
+        release_lines.append("- FOOPS! did not return a score in this run.")
+    if oops.get("pitfall_count") is not None:
+        release_lines.append(f"- OOPS! pitfall count: **{oops['pitfall_count']}**")
+        release_lines.extend(f"- OOPS! {level}: {count}" for level, count in sorted(oops.get("severity_counts", {}).items()))
+    else:
+        release_lines.append("- OOPS! did not return a pitfall count in this run.")
     release_lines.extend(["", "## Required Follow-up", ""])
     if scores["blockers"]:
         release_lines.extend(f"- {item}" for item in scores["blockers"])

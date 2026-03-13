@@ -13,8 +13,18 @@
 ## External Transparency Hooks
 
 - OOPS! and FOOPS! are tracked separately from the numeric FAIR score so the base F/A/I/R calculation stays reproducible offline.
-- OOPS! ontology pitfall hook: **disabled**. OOPS! integration is configured but disabled by default for offline-safe local releases.
-- FOOPS! FAIR assessment hook: **disabled**. FOOPS! integration is configured but disabled by default for offline-safe local releases.
+- OOPS! ontology pitfall scan: **assessed**. OOPS! assessed the ontology and reported 1 pitfalls.
+- FOOPS! FAIR assessment: **assessed**. FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible.
+
+## External Service Results
+
+- FOOPS! overall score: **86.1 / 100**
+- FOOPS! F (Findable): 100.0 / 100
+- FOOPS! A (Accessible): not assessed
+- FOOPS! I (Interoperable): 100.0 / 100
+- FOOPS! R (Reusable): 90.7 / 100
+- OOPS! pitfall count: **1**
+- OOPS! Important: 1
 
 ## Required Follow-up
 

@@ -285,14 +285,21 @@ documentation:
     active: true
 validation:
   enable_network_checks: false
-  enable_oops: false
-  enable_foops: false
+  enable_oops: true
+  enable_foops: true
+  foops_mode: file
   resolver_accept_headers:
   - text/html
   - text/turtle
   - application/ld+json
+  oops_homepage_url: https://oops.linkeddata.es/
   oops_url: https://oops.linkeddata.es/rest
-  foops_url: https://foops.linkeddata.es/FAIR_validator
+  oops_timeout_seconds: 180
+  foops_url: https://foops.linkeddata.es/FAIR_validator.html
+  foops_assess_uri_url: https://foops.linkeddata.es/assessOntology
+  foops_assess_file_url: https://foops.linkeddata.es/assessOntologyFile
+  foops_catalogue_url: https://w3id.org/foops/catalogue
+  foops_timeout_seconds: 180
   theme:
     accent: '#0f766e'
     accent_soft: '#ccfbf1'

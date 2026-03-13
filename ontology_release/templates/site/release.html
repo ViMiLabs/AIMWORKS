@@ -51,7 +51,30 @@
     <h3>Transparency Hooks</h3>
     <ul class="simple-list">
       {% for item in transparency_rows %}
-      <li>{{ item.label }}: <strong>{{ item.status }}</strong>. {{ item.details }}</li>
+      <li>{{ item.label }}: <strong>{{ item.status }}</strong>. {{ item.detail }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>FOOPS! Assessment</h2>
+    <ul class="simple-list">
+      {% for row in external_fair_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
+      {% else %}
+      <li>No live FOOPS! score was recorded in this build.</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>OOPS! Pitfalls</h2>
+    <ul class="simple-list">
+      {% for row in oops_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
+      {% else %}
+      <li>No live OOPS! pitfall result was recorded in this build.</li>
       {% endfor %}
     </ul>
   </article>

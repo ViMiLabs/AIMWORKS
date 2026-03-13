@@ -1226,21 +1226,98 @@ def build_docs(
         }
         for row in fair_scores["dimensions"]
     ]
+    external_scores = fair_scores.get("external_scores", {})
+    foops_external = external_scores.get("foops", {})
+    oops_external = external_scores.get("oops", {})
     transparency_signals = [
         {
             "label": row["label"],
             "value": row["status"],
-            "status": "good" if row["status"] == "reachable" else "watch",
-            "detail": f"{row['details']} Not counted in the numeric F/A/I/R score.",
+            "status": "good" if row["status"] in {"reachable", "assessed"} else "watch",
+            "detail": (
+                f"{row['details']} "
+                + (
+                    f"Service: {_href_html(row['service_url'], row['service_url'], code=True)}. "
+                    if row.get("service_url")
+                    else ""
+                )
+                + (
+                    f"Catalogue: {_href_html(row['catalogue_url'], row['catalogue_url'], code=True)}. "
+                    if row.get("catalogue_url")
+                    else ""
+                )
+                + "Not counted in the numeric F/A/I/R score."
+            ),
         }
         for row in fair_scores.get("transparency_checks", [])
     ]
+    external_fair_rows: list[dict[str, str]] = []
+    if foops_external.get("overall_score") is not None:
+        external_fair_rows.append(
+            {
+                "label": "FOOPS! overall",
+                "value": f"{foops_external['overall_score']} / 100",
+                "status": _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7),
+                "detail": (
+                    f"Actual FOOPS! assessment in {foops_external.get('mode', 'unspecified')} mode. "
+                    + (
+                        f"Validator: {_href_html(foops_external['service_url'], foops_external['service_url'], code=True)}. "
+                        if foops_external.get("service_url")
+                        else ""
+                    )
+                    + (
+                        f"Catalogue: {_href_html(foops_external['catalogue_url'], foops_external['catalogue_url'], code=True)}."
+                        if foops_external.get("catalogue_url")
+                        else ""
+                    )
+                ),
+            }
+        )
+        for row in foops_external.get("dimension_scores", []):
+            row_status = "watch" if row.get("score") is None else _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7)
+            value = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
+            external_fair_rows.append(
+                {
+                    "label": f"FOOPS! {row.get('acronym', row['dimension'][:1])} / {row['dimension']}",
+                    "value": value,
+                    "status": row_status,
+                    "detail": "Returned directly by the FOOPS! service.",
+                }
+            )
+    oops_rows: list[dict[str, str]] = []
+    if oops_external.get("pitfall_count") is not None:
+        oops_rows.append(
+            {
+                "label": "OOPS! pitfall count",
+                "value": str(oops_external["pitfall_count"]),
+                "status": _status_for_count(int(oops_external["pitfall_count"])),
+                "detail": (
+                    f"{oops_external.get('details', '')} "
+                    + (
+                        f"Service: {_href_html(oops_external['service_url'], oops_external['service_url'], code=True)}."
+                        if oops_external.get("service_url")
+                        else ""
+                    )
+                ),
+            }
+        )
+        for level, count in sorted(oops_external.get("severity_counts", {}).items()):
+            oops_rows.append(
+                {
+                    "label": f"OOPS! {level}",
+                    "value": str(count),
+                    "status": _status_for_count(int(count)),
+                    "detail": "Pitfalls grouped by the importance level returned by OOPS!.",
+                }
+            )
     quality_signals = fair_dimension_signals + [
         {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%", "status": _status_for_ratio(baseline_definition_coverage, 0.85, 0.6), "detail": "Coverage in the original mixed ontology before enrichment."},
         {"label": "Release missing definitions", "value": str(validation_report["missing_definition_count"]), "status": _status_for_count(int(validation_report["missing_definition_count"])), "detail": "Structural completeness after enrichment and validation."},
         {"label": "Generated annotations", "value": str(metadata_report.get("generated_annotations", 0)), "status": "watch" if metadata_report.get("generated_annotations", 0) else "good", "detail": "Generated annotations improve coverage but still require expert review."},
         {"label": "Hidden local file namespaces", "value": str(hidden_local_namespace_count), "status": "watch" if hidden_local_namespace_count else "good", "detail": "Local file-based namespaces are removed from the public namespace table."},
         {"label": "Placeholder-style definitions", "value": str(placeholder_definition_count), "status": "watch" if placeholder_definition_count else "good", "detail": "Generated definitions that still need editorial improvement."},
+        {"label": "FOOPS! overall", "value": "not assessed" if foops_external.get("overall_score") is None else f"{foops_external['overall_score']} / 100", "status": "watch" if foops_external.get("overall_score") is None else _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7), "detail": foops_external.get("details", "No FOOPS! result was recorded.")},
+        {"label": "OOPS! pitfalls", "value": "not assessed" if oops_external.get("pitfall_count") is None else str(oops_external["pitfall_count"]), "status": "watch" if oops_external.get("pitfall_count") is None else _status_for_count(int(oops_external["pitfall_count"])), "detail": oops_external.get("details", "No OOPS! result was recorded.")},
         {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
         {"label": "w3id artifacts ready", "value": "Yes" if (root / "output" / "w3id" / ".htaccess").exists() else "No", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists()), "detail": "Redirect templates and content-negotiation notes are available."},
     ] + transparency_signals
@@ -1275,6 +1352,8 @@ def build_docs(
         {"label": "Release page", "href": "pages/release.html", "value": "Publication layout and release bundle overview"},
         {"label": "GitHub repository", "href": resources_cfg.get("repository_url", ""), "value": resources_cfg.get("repository_url", "")},
         {"label": "Pages URL", "href": resources_cfg.get("pages_url", ""), "value": resources_cfg.get("pages_url", "")},
+        {"label": "OOPS!", "href": oops_external.get("service_url", ""), "value": oops_external.get("service_url", "")},
+        {"label": "FOOPS!", "href": foops_external.get("service_url", ""), "value": foops_external.get("service_url", "")},
     ]
 
     index_template = env.get_template("index.html")
@@ -1387,7 +1466,9 @@ def build_docs(
             base_path="..",
             release_files=release_files[:140],
             fair_rows=fair_scores["dimensions"],
-            transparency_rows=fair_scores.get("transparency_checks", []),
+            transparency_rows=transparency_signals,
+            external_fair_rows=external_fair_rows,
+            oops_rows=oops_rows,
             validation_lines=[
                 f"Overall status: {validation_report['overall_status']}",
                 f"SHACL conforms: {validation_report['shacl_conforms']}",
@@ -1438,6 +1519,8 @@ def build_docs(
                 {"label": "Issue tracker", "value": resources_cfg.get("issue_tracker", ""), "href": resources_cfg.get("issue_tracker", "")},
                 {"label": "Pages URL", "value": resources_cfg.get("pages_url", ""), "href": resources_cfg.get("pages_url", "")},
                 {"label": "Stable ontology IRI", "value": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"]), "href": ""},
+                {"label": "OOPS!", "value": oops_external.get("service_url", ""), "href": oops_external.get("service_url", "")},
+                {"label": "FOOPS!", "value": foops_external.get("service_url", ""), "href": foops_external.get("service_url", "")},
             ]
             if row["value"]
         )
@@ -1788,15 +1871,9 @@ ex:run-001 a h2kg:Measurement ;
             {"label": f"{row.get('acronym', row['dimension'][:1])} / {row['dimension']}", "value": f"{row['score']} / 100", "status": _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7), "detail": f"Separated {row.get('acronym', row['dimension'][:1])} component of the release FAIR readiness score."}
             for row in fair_scores["dimensions"]
         ],
-        "transparency_rows": [
-            {
-                "label": row["label"],
-                "value": row["status"],
-                "status": "good" if row["status"] == "reachable" else "watch",
-                "detail": f"{row['details']} Not counted in the numeric F/A/I/R score.",
-            }
-            for row in fair_scores.get("transparency_checks", [])
-        ],
+        "transparency_rows": transparency_signals,
+        "external_fair_rows": external_fair_rows,
+        "oops_rows": oops_rows,
         "validation_rows": [
             {"label": "Overall validation status", "value": validation_report["overall_status"], "status": "good" if validation_report["overall_status"] == "pass" else "watch", "detail": "Combined metadata, mapping, namespace, and SHACL status."},
             {"label": "SHACL conforms", "value": str(validation_report["shacl_conforms"]), "status": _status_for_flag(bool(validation_report["shacl_conforms"])), "detail": "Local release SHACL shapes."},
@@ -1806,8 +1883,8 @@ ex:run-001 a h2kg:Measurement ;
             {"label": "Mapping issues", "value": str(len(validation_report["mapping_issues"])), "status": _status_for_count(len(validation_report["mapping_issues"])), "detail": "Mappings that conflict with local term typing."},
             {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
             {"label": "EMMO checks", "value": validation_report["emmo_checks"]["status"], "status": "good" if validation_report["emmo_checks"]["status"] == "available" else "watch", "detail": validation_report["emmo_checks"]["details"]},
-            {"label": "OOPS! hook", "value": validation_report["oops_checks"]["status"], "status": "good" if validation_report["oops_checks"]["status"] == "reachable" else "watch", "detail": validation_report["oops_checks"]["details"]},
-            {"label": "FOOPS! hook", "value": validation_report["foops_checks"]["status"], "status": "good" if validation_report["foops_checks"]["status"] == "reachable" else "watch", "detail": validation_report["foops_checks"]["details"]},
+            {"label": "OOPS! hook", "value": validation_report["oops_checks"]["status"], "status": "good" if validation_report["oops_checks"]["status"] in {"reachable", "assessed"} else "watch", "detail": validation_report["oops_checks"]["details"]},
+            {"label": "FOOPS! hook", "value": validation_report["foops_checks"]["status"], "status": "good" if validation_report["foops_checks"]["status"] in {"reachable", "assessed"} else "watch", "detail": validation_report["foops_checks"]["details"]},
         ],
         "hygiene_rows": [
             {"label": "Preferred prefix in public table", "value": namespace_policy["preferred_namespace_prefix"], "status": "good", "detail": "Public docs normalize the preferred namespace prefix for the local ontology."},
@@ -1841,6 +1918,8 @@ ex:run-001 a h2kg:Measurement ;
             release_ready=fair_scores.get("release_ready", False),
             fair_rows=quality_dashboard["fair_rows"],
             transparency_rows=quality_dashboard["transparency_rows"],
+            external_fair_rows=quality_dashboard["external_fair_rows"],
+            oops_rows=quality_dashboard["oops_rows"],
             validation_rows=quality_dashboard["validation_rows"],
             hygiene_rows=quality_dashboard["hygiene_rows"],
             publication_rows=quality_dashboard["publication_rows"],

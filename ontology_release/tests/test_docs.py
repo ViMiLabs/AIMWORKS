@@ -32,3 +32,6 @@ def test_docs_generation(temp_project):
     assert "Run query" in queries_page
     assert "data-query-source" in queries_page
     assert "data-run-preset" in queries_page
+    quality_page = (temp_project / "output" / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
+    assert "https://oops.linkeddata.es/" in quality_page
+    assert "https://foops.linkeddata.es/FAIR_validator.html" in quality_page
