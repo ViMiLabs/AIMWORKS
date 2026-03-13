@@ -27,3 +27,8 @@ def test_docs_generation(temp_project):
     assert (temp_project / "output" / "docs" / "data" / "example_release_notebook.ipynb").exists()
     assert (temp_project / "output" / "publication" / "source" / "ontology.ttl").exists()
     assert (temp_project / "output" / "publication" / "latest" / "ontology.ttl").exists()
+    queries_page = (temp_project / "output" / "docs" / "pages" / "queries.html").read_text(encoding="utf-8")
+    assert "Query Console" in queries_page
+    assert "Run query" in queries_page
+    assert "data-query-source" in queries_page
+    assert "data-run-preset" in queries_page

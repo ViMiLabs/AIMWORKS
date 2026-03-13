@@ -1,73 +1,100 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="card">
-  <div class="section-head">
-    <div>
-      <h2>Ontology Reference</h2>
-      <p>Single-page reference for the H2KG PEMFC Catalyst Layer Application Ontology, with stable release and source endpoints.</p>
+<section class="landing-grid">
+  <article class="card card--feature">
+    <p class="section-kicker">Single-page reference</p>
+    <h2>Ontology Reference</h2>
+    <p class="lede">A release-oriented reference for the H2KG PEMFC Catalyst Layer Application Ontology, with working publication downloads and a stable IRI contract documented for future namespace registration.</p>
+    <div class="chip-row">
+      <a href="#reference-iris">Reference IRIs</a>
+      <a href="#reference-metadata">Metadata</a>
+      <a href="#reference-classes">Classes</a>
+      <a href="#reference-properties">Properties</a>
+      <a href="#reference-vocabulary">Vocabulary</a>
+      <a href="#reference-examples">Examples</a>
     </div>
-    <input class="filter-input" data-table-filter="reference-vocab-table" placeholder="Filter vocabulary">
-  </div>
-  <div class="chip-row">
-    <a href="#reference-iris">Reference IRIs</a>
-    <a href="#reference-metadata">Metadata</a>
-    <a href="#reference-classes">Classes</a>
-    <a href="#reference-properties">Properties</a>
-    <a href="#reference-vocabulary">Vocabulary</a>
-    <a href="#reference-examples">Examples</a>
-  </div>
-</section>
-
-<section class="grid two">
-  <article class="card">
-    <h2>Release Downloads</h2>
-    <ul class="simple-list">
-      {% for row in download_rows %}
-      <li><a href="{{ row.href }}">{{ row.label }}</a>: {{ row.detail }}</li>
-      {% endfor %}
-    </ul>
   </article>
-  <article class="card">
-    <h2>Coverage Signals</h2>
-    <ul class="simple-list">
+  <article class="card card--accent">
+    <p class="section-kicker">Coverage signals</p>
+    <h2>Release Health</h2>
+    <div class="mini-grid">
       {% for row in coverage_rows %}
-      <li><strong>{{ row.label }}</strong>: {{ row.value }}</li>
+      <div class="mini-stat">
+        <span>{{ row.label }}</span>
+        <strong>{{ row.value }}</strong>
+      </div>
       {% endfor %}
-    </ul>
+    </div>
     <p>{{ curation_note }}</p>
   </article>
 </section>
 
 <section id="reference-iris" class="card">
-  <h2>Reference IRIs</h2>
-  <table class="data-table">
-    <thead>
-      <tr><th>Label</th><th>Canonical IRI</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-      {% for row in endpoint_rows %}
-      <tr>
-        <td>{{ row.label }}</td>
-        <td><code>{{ row.iri }}</code></td>
-        <td>{{ row.purpose }}</td>
-      </tr>
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Canonical contract</p>
+      <h2>Reference IRIs</h2>
+    </div>
+  </div>
+  <div class="table-shell">
+    <table class="data-table">
+      <thead>
+        <tr><th>Label</th><th>Canonical IRI</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        {% for row in endpoint_rows %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.purpose }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <p class="section-kicker">Live publication files</p>
+    <h2>Release Downloads</h2>
+    <div class="feature-list">
+      {% for row in download_rows %}
+      <a class="feature-item" href="{{ row.href }}">
+        <h3>{{ row.label }}</h3>
+        <p>{{ row.detail }}</p>
+      </a>
       {% endfor %}
-    </tbody>
-  </table>
+    </div>
+  </article>
+  <article class="card card--quiet">
+    <p class="section-kicker">Editorial note</p>
+    <h2>Curated release posture</h2>
+    <p>{{ curation_note }}</p>
+    <ul class="simple-list">
+      <li>The download links in this page target the generated publication tree directly, so they work before any `w3id` namespace registration.</li>
+      <li>The canonical IRI table still records the intended stable public contract for later redirect registration.</li>
+      <li>The schema, curated vocabulary, and examples remain published as separate modules by design.</li>
+    </ul>
+  </article>
 </section>
 
 <section id="reference-metadata" class="grid two">
   <article class="card">
+    <p class="section-kicker">Core metadata</p>
     <h2>Ontology Metadata</h2>
-    <table class="data-table">
-      <tbody>
-        {% for row in metadata_rows %}
-        <tr><th>{{ row.label }}</th><td>{{ row.value }}</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-shell">
+      <table class="data-table">
+        <tbody>
+          {% for row in metadata_rows %}
+          <tr><th>{{ row.label }}</th><td>{{ row.value }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </article>
   <article class="card">
+    <p class="section-kicker">Imports and namespaces</p>
     <h2>Imports and Namespaces</h2>
     <h3>Imports</h3>
     <ul class="simple-list">
@@ -79,117 +106,135 @@
       {% endif %}
     </ul>
     <h3>Namespaces</h3>
-    <table class="data-table">
-      <thead>
-        <tr><th>Prefix</th><th>Namespace</th><th>Count</th></tr>
-      </thead>
-      <tbody>
-        {% for row in namespace_rows %}
-        <tr>
-          <td><code>{{ row.prefix }}</code></td>
-          <td><code>{{ row.namespace }}</code></td>
-          <td>{{ row.count }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-shell">
+      <table class="data-table">
+        <thead>
+          <tr><th>Prefix</th><th>Namespace</th><th>Count</th></tr>
+        </thead>
+        <tbody>
+          {% for row in namespace_rows %}
+          <tr>
+            <td><code>{{ row.prefix }}</code></td>
+            <td><code>{{ row.namespace }}</code></td>
+            <td>{{ row.count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </article>
 </section>
 
 <section id="reference-classes" class="card">
   <div class="section-head">
     <div>
+      <p class="section-kicker">Schema layer</p>
       <h2>Classes</h2>
       <p>Asserted schema classes with definitions and external alignment proposals.</p>
     </div>
     <input class="filter-input" data-table-filter="reference-class-table" placeholder="Filter classes">
   </div>
-  <table id="reference-class-table" class="data-table searchable">
-    <thead>
-      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Definition</th><th>Superclasses</th><th>Mappings</th></tr>
-    </thead>
-    <tbody>
-      {% for row in class_rows %}
-      <tr id="{{ row.anchor }}">
-        <td>{{ row.label }}</td>
-        <td><code>{{ row.iri }}</code></td>
-        <td>{{ row.deprecated }}</td>
-        <td>{{ row.definition }}</td>
-        <td>{{ row.superclasses }}</td>
-        <td>{{ row.mappings }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-shell">
+    <table id="reference-class-table" class="data-table searchable">
+      <thead>
+        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Definition</th><th>Superclasses</th><th>Mappings</th></tr>
+      </thead>
+      <tbody>
+        {% for row in class_rows %}
+        <tr id="{{ row.anchor }}">
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.deprecated }}</td>
+          <td>{{ row.definition }}</td>
+          <td>{{ row.superclasses }}</td>
+          <td>{{ row.mappings }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section id="reference-properties" class="card">
   <div class="section-head">
     <div>
+      <p class="section-kicker">Schema layer</p>
       <h2>Properties</h2>
       <p>Asserted object, datatype, and annotation properties.</p>
     </div>
     <input class="filter-input" data-table-filter="reference-property-table" placeholder="Filter properties">
   </div>
-  <table id="reference-property-table" class="data-table searchable">
-    <thead>
-      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Kind</th><th>Domain</th><th>Range</th><th>Mappings</th></tr>
-    </thead>
-    <tbody>
-      {% for row in property_rows %}
-      <tr id="{{ row.anchor }}">
-        <td>{{ row.label }}</td>
-        <td><code>{{ row.iri }}</code></td>
-        <td>{{ row.deprecated }}</td>
-        <td>{{ row.kind }}</td>
-        <td>{{ row.domain }}</td>
-        <td>{{ row.range }}</td>
-        <td>{{ row.mappings }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-shell">
+    <table id="reference-property-table" class="data-table searchable">
+      <thead>
+        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Kind</th><th>Domain</th><th>Range</th><th>Mappings</th></tr>
+      </thead>
+      <tbody>
+        {% for row in property_rows %}
+        <tr id="{{ row.anchor }}">
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.deprecated }}</td>
+          <td>{{ row.kind }}</td>
+          <td>{{ row.domain }}</td>
+          <td>{{ row.range }}</td>
+          <td>{{ row.mappings }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section id="reference-vocabulary" class="card">
+  <p class="section-kicker">Curated terms</p>
   <h2>Controlled Vocabulary</h2>
   <p>Curated local named terms retained in the `h2kg` namespace and published separately from the asserted schema.</p>
-  <table id="reference-vocab-table" class="data-table searchable">
-    <thead>
-      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Type</th><th>Definition</th><th>Mappings</th></tr>
-    </thead>
-    <tbody>
-      {% for row in vocabulary_rows %}
-      <tr>
-        <td>{{ row.label }}</td>
-        <td><code>{{ row.iri }}</code></td>
-        <td>{{ row.deprecated }}</td>
-        <td>{{ row.kind }}</td>
-        <td>{{ row.definition }}</td>
-        <td>{{ row.mappings }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="section-head">
+    <div></div>
+    <input class="filter-input" data-table-filter="reference-vocab-table" placeholder="Filter vocabulary">
+  </div>
+  <div class="table-shell">
+    <table id="reference-vocab-table" class="data-table searchable">
+      <thead>
+        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Type</th><th>Definition</th><th>Mappings</th></tr>
+      </thead>
+      <tbody>
+        {% for row in vocabulary_rows %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.deprecated }}</td>
+          <td>{{ row.kind }}</td>
+          <td>{{ row.definition }}</td>
+          <td>{{ row.mappings }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section id="reference-examples" class="card">
+  <p class="section-kicker">Examples module</p>
   <h2>Separated Examples</h2>
   <p>These example individuals and data-like nodes are published separately from the asserted schema.</p>
-  <table class="data-table">
-    <thead>
-      <tr><th>IRI</th><th>Kind</th><th>Label</th><th>Notes</th></tr>
-    </thead>
-    <tbody>
-      {% for row in example_rows %}
-      <tr>
-        <td><code>{{ row.iri }}</code></td>
-        <td>{{ row.kind }}</td>
-        <td>{{ row.label }}</td>
-        <td>{{ row.notes }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-shell">
+    <table class="data-table">
+      <thead>
+        <tr><th>IRI</th><th>Kind</th><th>Label</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        {% for row in example_rows %}
+        <tr>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.kind }}</td>
+          <td>{{ row.label }}</td>
+          <td>{{ row.notes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 {% endblock %}

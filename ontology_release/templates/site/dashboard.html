@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="grid two">
-  <article class="card">
+<section class="landing-grid">
+  <article class="card card--feature">
     <h2>Release Readiness</h2>
     <div class="score">{{ release_score }}</div>
     <p>Release ready: <strong>{{ release_ready }}</strong></p>
     <p>This dashboard separates structural release completeness from the remaining editorial and curation work.</p>
   </article>
-  <article class="card">
+  <article class="card card--accent">
     <h2>Next Recommendations</h2>
     <ul class="simple-list">
       {% for item in recommendations %}

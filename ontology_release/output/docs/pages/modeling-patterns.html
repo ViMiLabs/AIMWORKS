@@ -12,66 +12,102 @@
   <div class="site-shell">
     <header class="hero">
       <div class="hero__band"></div>
-      <div class="hero__content">
-        <p class="eyebrow">EMMO-aligned release package for low-Pt PEMFC cathode catalyst-layer experiments and provenance-rich data</p>
-        <h1>H2KG PEMFC Catalyst Layer Application Ontology</h1>
-        <p class="lede">FAIR, EMMO-aligned documentation generated from the release pipeline</p>
-        <div class="meta-row">
-          <span>Version 2026.3.0</span>
-          <span>https://creativecommons.org/licenses/by/4.0/</span>
-          <span>h2kg</span>
+      <div class="hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">EMMO-aligned release package for low-Pt PEMFC cathode catalyst-layer experiments and provenance-rich data</p>
+          <h1>H2KG PEMFC Catalyst Layer Application Ontology</h1>
+          <p class="lede">FAIR, EMMO-aligned documentation generated from the release pipeline</p>
+          <div class="meta-row">
+            <span>Version 2026.3.0</span>
+            <span>https://creativecommons.org/licenses/by/4.0/</span>
+            <span>h2kg</span>
+          </div>
+          
+          <div class="action-row">
+            
+            
+            <a href="../hydrogen-ontology.html" class="primary">Browse reference</a>
+            
+            
+            
+            <a href="../pages/release.html" class="">Release artifacts</a>
+            
+            
+            
+            <a href="https://github.com/ViMiLabs/AIMWORKS" class="">GitHub repository</a>
+            
+            
+          </div>
+          
         </div>
-        
-        <div class="action-row">
-          
-          <a href="https://w3id.org/h2kg/hydrogen-ontology" class="primary">Stable ontology IRI</a>
-          
-          <a href="https://github.com/ViMiLabs/AIMWORKS" class="">GitHub repository</a>
-          
-          <a href="https://w3id.org/h2kg/hydrogen-ontology/source" class="">Source TTL</a>
-          
-        </div>
-        
+        <aside class="hero__panel">
+          <p class="hero__label">Publication profile</p>
+          <p class="hero__note">An EMMO-aligned application ontology release for PEMFC catalyst-layer experiments, measurements, curated vocabulary, and publication-grade provenance.</p>
+          <div class="hero-fact-grid">
+            
+            <div class="hero-fact">
+              <span>Release</span>
+              <strong>2026.3.0</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Namespace</span>
+              <strong>h2kg</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Validation</span>
+              <strong>PASS</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>FAIR score</span>
+              <strong>95.0</strong>
+            </div>
+            
+          </div>
+        </aside>
       </div>
     </header>
-    <nav class="nav">
-      
-      <a href="../index.html">Home</a>
-      
-      <a href="../hydrogen-ontology.html">Reference</a>
-      
-      <a href="../pages/user-guide.html">User Guide</a>
-      
-      <a href="../pages/ontology-overview.html">About</a>
-      
-      <a href="../pages/scope-and-faq.html">Scope and FAQ</a>
-      
-      <a href="../pages/modeling-patterns.html">Patterns</a>
-      
-      <a href="../pages/queries.html">Queries</a>
-      
-      <a href="../pages/import-guide.html">Import</a>
-      
-      <a href="../pages/cite.html">Cite</a>
-      
-      <a href="../pages/visualizations.html">Visuals</a>
-      
-      <a href="../pages/quality-dashboard.html">Quality</a>
-      
-      <a href="../pages/release.html">Release</a>
-      
-      <a href="../pages/class-index.html">Classes</a>
-      <a href="../pages/property-index.html">Properties</a>
-      <a href="../pages/alignment.html">Alignment</a>
-      <a href="../pages/examples.html">Examples</a>
-    </nav>
+    <div class="nav-shell">
+      <nav class="nav">
+        
+        <a href="../index.html">Home</a>
+        
+        <a href="../hydrogen-ontology.html">Reference</a>
+        
+        <a href="../pages/user-guide.html">User Guide</a>
+        
+        <a href="../pages/ontology-overview.html">About</a>
+        
+        <a href="../pages/scope-and-faq.html">Scope and FAQ</a>
+        
+        <a href="../pages/modeling-patterns.html">Patterns</a>
+        
+        <a href="../pages/queries.html">Queries</a>
+        
+        <a href="../pages/import-guide.html">Import</a>
+        
+        <a href="../pages/cite.html">Cite</a>
+        
+        <a href="../pages/visualizations.html">Visuals</a>
+        
+        <a href="../pages/quality-dashboard.html">Quality</a>
+        
+        <a href="../pages/release.html">Release</a>
+        
+      </nav>
+    </div>
     <main class="content">
       
-<article class="card prose">
+<section class="card card--feature">
+  <p class="section-kicker">Documentation page</p>
   <h2>Modeling Patterns</h2>
   
   <p class="lede">Recommended patterns for measurement, materials, process, provenance, and release publication in H2KG.</p>
   
+</section>
+<article class="card prose">
   <p>The patterns below are intended to keep H2KG conservative, reviewable, and interoperable with the external ontologies it reuses.</p><div class='feature-list'><article class='feature-item'><h3>Measurement Event Pattern</h3><p>Use an H2KG measurement class to relate an experimental activity to instruments, parameters, outputs, and normalization context.</p><ul class='simple-list'><li>Model the measurement process as a class or activity-like concept aligned to EMMO or ECHO where appropriate.</li><li>Link the measurement to instruments with properties such as `usesInstrument`.</li><li>Keep raw quantity values and example measurement nodes outside the core schema module.</li></ul></article><article class='feature-item'><h3>Material and Process Pattern</h3><p>Represent catalyst-layer materials, manufacturing steps, and outputs with explicit process input and output relations.</p><ul class='simple-list'><li>Preserve local catalyst-layer specific material concepts in the `h2kg` namespace.</li><li>Reuse broader process or material semantics from EMMO and ECHO where the match is justified.</li><li>Keep curated named materials in the controlled vocabulary module rather than the asserted schema.</li></ul></article><article class='feature-item'><h3>Provenance and Release Pattern</h3><p>Publish ontology releases with explicit versioning, citation metadata, and stable machine-readable endpoints.</p><ul class='simple-list'><li>Keep the canonical ontology IRI stable and publish version-specific endpoints separately.</li><li>Record release metadata, creator and contributor information, and validation status.</li><li>Publish both asserted and inferred serializations together with FAIR and validation reports.</li></ul></article></div>
 </article>
 

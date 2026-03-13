@@ -12,33 +12,47 @@
   <div class="site-shell">
     <header class="hero">
       <div class="hero__band"></div>
-      <div class="hero__content">
-        <p class="eyebrow">{{ site.subtitle }}</p>
-        <h1>{{ site.title }}</h1>
-        <p class="lede">{{ site.tagline }}</p>
-        <div class="meta-row">
-          <span>Version {{ site.version }}</span>
-          <span>{{ site.license_label }}</span>
-          <span>{{ site.prefix }}</span>
+      <div class="hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">{{ site.subtitle }}</p>
+          <h1>{{ site.title }}</h1>
+          <p class="lede">{{ site.tagline }}</p>
+          <div class="meta-row">
+            <span>Version {{ site.version }}</span>
+            <span>{{ site.license_label }}</span>
+            <span>{{ site.prefix }}</span>
+          </div>
+          {% if site.actions %}
+          <div class="action-row">
+            {% for item in site.actions %}
+            {% if item.href %}
+            <a href="{% if item.href.startswith('http') %}{{ item.href }}{% else %}{{ base_path }}/{{ item.href }}{% endif %}" class="{% if item.primary %}primary{% endif %}">{{ item.label }}</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        {% if site.actions %}
-        <div class="action-row">
-          {% for item in site.actions %}
-          <a href="{{ item.href }}" class="{% if item.primary %}primary{% endif %}">{{ item.label }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
+        <aside class="hero__panel">
+          <p class="hero__label">Publication profile</p>
+          <p class="hero__note">{{ site.hero_note }}</p>
+          <div class="hero-fact-grid">
+            {% for fact in site.hero_facts %}
+            <div class="hero-fact">
+              <span>{{ fact.label }}</span>
+              <strong>{{ fact.value }}</strong>
+            </div>
+            {% endfor %}
+          </div>
+        </aside>
       </div>
     </header>
-    <nav class="nav">
-      {% for item in site.nav %}
-      <a href="{{ base_path }}/{{ item.href }}">{{ item.label }}</a>
-      {% endfor %}
-      <a href="{{ base_path }}/pages/class-index.html">Classes</a>
-      <a href="{{ base_path }}/pages/property-index.html">Properties</a>
-      <a href="{{ base_path }}/pages/alignment.html">Alignment</a>
-      <a href="{{ base_path }}/pages/examples.html">Examples</a>
-    </nav>
+    <div class="nav-shell">
+      <nav class="nav">
+        {% for item in site.nav %}
+        <a href="{{ base_path }}/{{ item.href }}">{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+    </div>
     <main class="content">
       {% block content %}{% endblock %}
     </main>

@@ -125,12 +125,98 @@ documentation:
           FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
         }
         ORDER BY ?label
+    - id: CQ4
+      question: Which local schema terms are currently marked as deprecated?
+      answer: Use this query to identify terms that remain resolvable but should no longer be used for new annotations.
+      sparql: |
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+        SELECT ?term ?label ?type
+        WHERE {
+          VALUES ?type { owl:Class owl:ObjectProperty owl:DatatypeProperty owl:AnnotationProperty }
+          ?term a ?type ;
+            owl:deprecated true .
+          OPTIONAL { ?term rdfs:label ?label }
+          FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
+        }
+        ORDER BY ?type ?label
+    - id: CQ5
+      question: Which local properties declare domain and range constraints?
+      answer: This query helps reviewers inspect modeling constraints and detect properties that may need stronger domain or range curation.
+      sparql: |
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+        SELECT ?property ?propertyLabel ?kind ?domain ?range
+        WHERE {
+          VALUES ?kind { owl:ObjectProperty owl:DatatypeProperty }
+          ?property a ?kind .
+          OPTIONAL { ?property rdfs:label ?propertyLabel }
+          OPTIONAL { ?property rdfs:domain ?domain }
+          OPTIONAL { ?property rdfs:range ?range }
+          FILTER(STRSTARTS(STR(?property), "https://w3id.org/h2kg/hydrogen-ontology#"))
+        }
+        ORDER BY ?kind ?propertyLabel
+    - id: CQ6
+      question: Which mapped local terms point to QUDT resources?
+      answer: Use this to review unit and quantity-kind reuse in the alignment output.
+      sparql: |
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?local ?localLabel ?relation ?qudt
+        WHERE {
+          VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }
+          ?local ?relation ?qudt .
+          OPTIONAL { ?local rdfs:label ?localLabel }
+          FILTER(STRSTARTS(STR(?local), "https://w3id.org/h2kg/hydrogen-ontology#"))
+          FILTER(CONTAINS(LCASE(STR(?qudt)), "qudt"))
+        }
+        ORDER BY ?localLabel ?relation
+    - id: CQ7
+      question: Which mapped local terms point to ChEBI resources?
+      answer: This query highlights chemical-entity reuse and helps check whether chemistry terms are externally aligned where appropriate.
+      sparql: |
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?local ?localLabel ?relation ?chebi
+        WHERE {
+          VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }
+          ?local ?relation ?chebi .
+          OPTIONAL { ?local rdfs:label ?localLabel }
+          FILTER(STRSTARTS(STR(?local), "https://w3id.org/h2kg/hydrogen-ontology#"))
+          FILTER(CONTAINS(LCASE(STR(?chebi)), "chebi"))
+        }
+        ORDER BY ?localLabel ?relation
+    - id: CQ8
+      question: Which local classes and properties still miss labels or textual definitions?
+      answer: This is a quality-control query for publication editing, focused on local schema terms.
+      sparql: |
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?term ?type
+        WHERE {
+          VALUES ?type { owl:Class owl:ObjectProperty owl:DatatypeProperty owl:AnnotationProperty }
+          ?term a ?type .
+          FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
+          FILTER NOT EXISTS { ?term rdfs:label ?label }
+          FILTER NOT EXISTS { ?term rdfs:comment ?comment }
+          FILTER NOT EXISTS { ?term skos:definition ?definition }
+        }
+        ORDER BY ?type ?term
   query_guide:
-    introduction: Start with competency-question-driven SPARQL examples before exposing a full public endpoint. H2KG benefits most from queries that demonstrate separation of schema, vocabulary, examples, mappings, and release metadata.
+    introduction: Use the interactive query console to execute SPARQL directly in the browser against the selected ontology modules. H2KG benefits most from queries that make schema, vocabulary, mappings, examples, and release metadata explicit.
     notes:
-      - Publish ready-made example queries together with short explanations of what each result means for ontology users.
-      - When a public endpoint is added, keep it read-only and document which graphs are queryable.
-      - Pair every query example with a narrative domain use case so the site remains understandable to non-ontology specialists.
+      - Start with the term finder or a preset, then refine the query in the console and rerun.
+      - Keep sources explicit; asserted schema, controlled vocabulary, alignments, inferred export, and examples answer different questions.
+      - Use `LIMIT` in exploratory queries to keep browser execution responsive for end users.
+      - Pair each query preset with a domain interpretation so non-ontology users understand the result context.
   governance:
     editorial_policy:
       - Preserve stable public IRIs by default and avoid breaking local PEMFC terms without a migration note.

@@ -1,20 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="grid two">
-  <article class="card">
-    <h2>Positioning</h2>
-    <p>{{ overview.description }}</p>
-    <ul class="simple-list">
-      <li>Ontology IRI: <code>{{ overview.ontology_iri }}</code></li>
-      <li>Namespace mode: <code>{{ overview.namespace_mode }}</code></li>
-      <li>Schema terms: <strong>{{ overview.schema_term_count }}</strong></li>
-      <li>Controlled vocabulary terms: <strong>{{ overview.vocabulary_count }}</strong></li>
-      <li>Separated examples or data nodes: <strong>{{ overview.example_count }}</strong></li>
-      <li>Release date: <strong>{{ overview.release_date }}</strong></li>
-    </ul>
+<section class="landing-grid">
+  <article class="card card--feature">
+    <p class="section-kicker">Application ontology release</p>
+    <h2>PEMFC catalyst-layer experiments, materials, data, and provenance</h2>
+    <p class="lede">{{ overview.description }}</p>
+    <div class="mini-grid">
+      <div class="mini-stat">
+        <span>Ontology IRI</span>
+        <strong><code>{{ overview.ontology_iri }}</code></strong>
+      </div>
+      <div class="mini-stat">
+        <span>Namespace mode</span>
+        <strong>{{ overview.namespace_mode }}</strong>
+      </div>
+      <div class="mini-stat">
+        <span>Schema terms</span>
+        <strong>{{ overview.schema_term_count }}</strong>
+      </div>
+      <div class="mini-stat">
+        <span>Vocabulary terms</span>
+        <strong>{{ overview.vocabulary_count }}</strong>
+      </div>
+      <div class="mini-stat">
+        <span>Examples separated</span>
+        <strong>{{ overview.example_count }}</strong>
+      </div>
+      <div class="mini-stat">
+        <span>Release date</span>
+        <strong>{{ overview.release_date }}</strong>
+      </div>
+    </div>
   </article>
-  <article class="card">
-    <h2>Release Readiness</h2>
+  <article class="card card--accent">
+    <p class="section-kicker">Release readiness</p>
     <div class="score">{{ release_score }}</div>
     <p>{{ readiness_summary }}</p>
     <ul class="simple-list">
@@ -26,7 +45,12 @@
 </section>
 
 <section class="card">
-  <h2>Release Highlights</h2>
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">At a glance</p>
+      <h2>Release Highlights</h2>
+    </div>
+  </div>
   <div class="kpi-grid">
     {% for item in highlights %}
     <article class="kpi">
@@ -40,25 +64,35 @@
 
 <section class="grid three">
   {% for box in cards %}
-  <article class="card">
+  <article class="card card--quiet">
+    <p class="section-kicker">Portal focus</p>
     <h3>{{ box.title }}</h3>
     <p>{{ box.body }}</p>
   </article>
   {% endfor %}
 </section>
 
-<section class="grid three">
-  {% for item in module_cards %}
-  <article class="card">
-    <h3>{{ item.title }}</h3>
-    <div class="svg-frame">{{ item.svg | safe }}</div>
-  </article>
-  {% endfor %}
+<section class="card">
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Release architecture</p>
+      <h2>Published Modules</h2>
+    </div>
+  </div>
+  <div class="grid three">
+    {% for item in module_cards %}
+    <article class="card card--quiet">
+      <h3>{{ item.title }}</h3>
+      <div class="svg-frame">{{ item.svg | safe }}</div>
+    </article>
+    {% endfor %}
+  </div>
 </section>
 
 <section class="grid two">
   <article class="card">
-    <h2>Domain Use Cases</h2>
+    <p class="section-kicker">Domain fit</p>
+    <h2>Use Cases</h2>
     <ul class="simple-list">
       {% for item in use_cases %}
       <li>{{ item }}</li>
@@ -66,6 +100,7 @@
     </ul>
   </article>
   <article class="card">
+    <p class="section-kicker">Audience</p>
     <h2>Who Should Use H2KG</h2>
     <ul class="simple-list">
       {% for item in audiences %}
@@ -77,28 +112,45 @@
 
 <section class="grid two">
   <article class="card">
+    <p class="section-kicker">Start here</p>
     <h2>Quick Links</h2>
-    <ul class="simple-list">
+    <div class="feature-list">
       {% for row in resource_rows %}
-      <li><strong>{{ row.label }}</strong>: <a href="{{ row.value }}">{{ row.value }}</a></li>
+      {% if row.href %}
+      <a class="feature-item" href="{% if row.href.startswith('http') %}{{ row.href }}{% else %}{{ base_path }}/{{ row.href }}{% endif %}">
+        <h3>{{ row.label }}</h3>
+        <p>{{ row.value }}</p>
+      </a>
+      {% endif %}
       {% endfor %}
-    </ul>
+    </div>
   </article>
   <article class="card">
+    <p class="section-kicker">Practical guidance</p>
     <h2>Publication Guidance</h2>
-    <ul class="simple-list">
-      <li><a href="{{ base_path }}/pages/import-guide.html">How to import the ontology modules</a></li>
-      <li><a href="{{ base_path }}/pages/cite.html">How to cite the ontology and software package</a></li>
-      <li><a href="{{ base_path }}/pages/worked-examples.html">Download worked JSON-LD, CSV, RDF, and notebook examples</a></li>
-    </ul>
+    <div class="feature-list">
+      <a class="feature-item" href="{{ base_path }}/pages/import-guide.html">
+        <h3>How to import</h3>
+        <p>Use working release files now, with stable endpoint policy documented for later namespace registration.</p>
+      </a>
+      <a class="feature-item" href="{{ base_path }}/pages/cite.html">
+        <h3>How to cite</h3>
+        <p>Find ontology and software citation guidance, versioning context, and release metadata.</p>
+      </a>
+      <a class="feature-item" href="{{ base_path }}/pages/worked-examples.html">
+        <h3>Worked examples</h3>
+        <p>Download JSON-LD, CSV, RDF, and notebook examples oriented to actual H2KG usage.</p>
+      </a>
+    </div>
   </article>
 </section>
 
 <section class="card">
   <div class="section-head">
     <div>
-      <h2>Public-Facing Quality Signals</h2>
-      <p>These indicators help separate structural release completeness from the remaining editorial work needed for a mature ontology publication.</p>
+      <p class="section-kicker">Public quality</p>
+      <h2>Quality Signals</h2>
+      <p>These indicators separate structural completeness from the editorial work still needed for a mature public ontology publication.</p>
     </div>
   </div>
   <div class="grid three">
@@ -114,7 +166,12 @@
 </section>
 
 <section class="card">
-  <h2>Featured Pages</h2>
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Explore the portal</p>
+      <h2>Featured Pages</h2>
+    </div>
+  </div>
   <div class="feature-list">
     {% for item in featured_pages %}
     <article class="feature-item">
@@ -126,7 +183,12 @@
 </section>
 
 <section class="card">
-  <h2>Competency Questions Preview</h2>
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Competency questions</p>
+      <h2>Preview</h2>
+    </div>
+  </div>
   <div class="feature-list">
     {% for row in competency_preview %}
     <article class="feature-item">
@@ -138,20 +200,27 @@
 </section>
 
 <section class="card">
-  <h2>Namespaces</h2>
-  <table class="data-table">
-    <thead>
-      <tr><th>Prefix</th><th>Namespace</th><th>Local terms</th></tr>
-    </thead>
-    <tbody>
-      {% for row in namespace_rows %}
-      <tr>
-        <td><code>{{ row.prefix }}</code></td>
-        <td><code>{{ row.namespace }}</code></td>
-        <td>{{ row.count }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Namespace hygiene</p>
+      <h2>Namespaces</h2>
+    </div>
+  </div>
+  <div class="table-shell">
+    <table class="data-table">
+      <thead>
+        <tr><th>Prefix</th><th>Namespace</th><th>Local terms</th></tr>
+      </thead>
+      <tbody>
+        {% for row in namespace_rows %}
+        <tr>
+          <td><code>{{ row.prefix }}</code></td>
+          <td><code>{{ row.namespace }}</code></td>
+          <td>{{ row.count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 {% endblock %}
