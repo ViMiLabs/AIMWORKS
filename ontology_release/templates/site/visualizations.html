@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Release-Oriented Visual Summaries</h2>
+  <p>These visuals are intentionally lightweight. They explain release structure and curation signals without pretending to replace a full ontology graph browser.</p>
+</section>
+
+{% for row in visualizations %}
+<section class="diagram-card">
+  <h2>{{ row.title }}</h2>
+  <p>{{ row.body }}</p>
+  <div class="svg-frame">{{ row.svg | safe }}</div>
+</section>
+{% endfor %}
+{% endblock %}

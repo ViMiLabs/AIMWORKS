@@ -26,6 +26,16 @@ def test_validation_runs(sample_graph, classifications, configs, package_root):
         configs["namespace_policy"],
         package_root,
     )
-    report = validate_release(graphs["schema"], graphs["controlled_vocabulary"], alignments, classifications, configs["namespace_policy"], package_root)
+    report = validate_release(
+        graphs["schema"],
+        graphs["controlled_vocabulary"],
+        alignments,
+        classifications,
+        configs["namespace_policy"],
+        configs["release_profile"],
+        package_root,
+    )
     assert report["syntax_ok"] is True
     assert report["overall_status"] in {"pass", "warning"}
+    assert "owl_consistency" in report
+    assert "resolver_checks" in report

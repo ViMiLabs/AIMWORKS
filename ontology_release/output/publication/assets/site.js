@@ -9,3 +9,19 @@ document.querySelectorAll("[data-table-filter]").forEach((input) => {
     });
   });
 });
+
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const target = document.getElementById(button.dataset.copyTarget);
+    if (!target) return;
+    try {
+      await navigator.clipboard.writeText(target.textContent);
+      const label = button.textContent;
+      button.textContent = "Copied";
+      setTimeout(() => { button.textContent = label; }, 1200);
+    } catch (error) {
+      button.textContent = "Copy failed";
+      setTimeout(() => { button.textContent = "Copy query"; }, 1200);
+    }
+  });
+});

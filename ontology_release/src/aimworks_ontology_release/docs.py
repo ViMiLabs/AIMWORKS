@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -10,7 +11,7 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS
 from .extract import collect_examples, extract_local_terms
 from .inspect import find_ontology_node
 from .publication import reference_iri_rows
-from .utils import ensure_dir, local_name, write_json, write_text
+from .utils import ensure_dir, load_yaml, local_name, normalize_space, read_json, write_json, write_text
 
 
 SITE_CSS = """
@@ -45,6 +46,10 @@ h2 { margin-top: 0; font-size: 1.8rem; }
 .lede { max-width: 62ch; color: var(--muted); font-size: 1.1rem; }
 .meta-row { display: flex; gap: 0.8rem; flex-wrap: wrap; color: var(--muted); font-size: 0.92rem; }
 .meta-row span { background: rgba(255,255,255,0.7); border: 1px solid var(--line); padding: 0.28rem 0.6rem; border-radius: 999px; }
+.action-row { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.action-row a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); padding: 0.48rem 0.9rem; border-radius: 999px; background: rgba(255,255,255,0.88); }
+.action-row a.primary { background: linear-gradient(135deg, var(--accent), #f59e0b); border-color: transparent; color: white; }
+.action-row a:hover { border-color: var(--accent); color: var(--accent); }
 .nav { display: flex; gap: 0.55rem; flex-wrap: wrap; margin: 1rem 0 1.4rem; }
 .nav a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); padding: 0.45rem 0.85rem; border-radius: 999px; background: rgba(255,255,255,0.84); }
 .nav a:hover { border-color: var(--accent); color: var(--accent); }
@@ -52,17 +57,41 @@ h2 { margin-top: 0; font-size: 1.8rem; }
 .grid { display: grid; gap: 1rem; }
 .grid.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid.four { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .card { background: rgba(255,255,255,0.85); border: 1px solid rgba(203,213,225,0.86); border-radius: 1.25rem; padding: 1.15rem; box-shadow: 0 16px 40px rgba(15,23,42,0.05); }
 .score { display: inline-flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #f59e0b); color: white; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem; }
 .simple-list { margin: 0; padding-left: 1.1rem; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .chip-row a { text-decoration: none; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.35rem 0.7rem; font-size: 0.88rem; }
+.metric-pill { display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.82); padding: 0.32rem 0.68rem; font-size: 0.88rem; color: var(--muted); }
+.status-pill { display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.32rem 0.68rem; font-size: 0.84rem; }
+.status-good { color: #166534; background: rgba(220,252,231,0.7); border-color: rgba(22,101,52,0.2); }
+.status-watch { color: #a16207; background: rgba(254,243,199,0.76); border-color: rgba(161,98,7,0.2); }
+.status-action { color: #b91c1c; background: rgba(254,226,226,0.76); border-color: rgba(185,28,28,0.2); }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+.kpi { padding: 1rem; border: 1px solid var(--line); border-radius: 1rem; background: rgba(255,255,255,0.86); }
+.kpi__value { display: block; font-size: 1.65rem; font-weight: 700; margin-bottom: 0.2rem; }
+.kpi__label { display: block; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.kpi__detail { margin: 0.25rem 0 0; font-size: 0.92rem; color: var(--muted); }
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .data-table th, .data-table td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--line); vertical-align: top; }
 .data-table th { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .filter-input { width: min(320px, 100%); padding: 0.7rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; background: white; }
 .section-head { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1rem; flex-wrap: wrap; }
 .prose p, .prose li { max-width: 72ch; }
+.prose details { background: rgba(255,255,255,0.78); border: 1px solid var(--line); border-radius: 1rem; padding: 0.8rem 1rem; margin: 0.75rem 0; }
+.prose summary { cursor: pointer; font-weight: 700; }
+.feature-list { display: grid; gap: 0.8rem; }
+.feature-item { border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: rgba(255,255,255,0.8); }
+.timeline { display: grid; gap: 0.8rem; }
+.timeline__item { border-left: 3px solid var(--accent); padding-left: 1rem; }
+.query-card, .diagram-card, .check-card { border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: rgba(255,255,255,0.82); }
+.copy-row { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
+.copy-button { border: 1px solid var(--line); border-radius: 999px; background: white; padding: 0.45rem 0.85rem; cursor: pointer; }
+.copy-button:hover { border-color: var(--accent); color: var(--accent); }
+.svg-frame { border: 1px solid var(--line); border-radius: 1rem; background: white; padding: 0.5rem; overflow-x: auto; }
+.check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; }
+.callout { border-left: 4px solid var(--accent); padding: 0.9rem 1rem; background: rgba(236,254,255,0.86); border-radius: 0.75rem; }
 .footer { color: var(--muted); font-size: 0.92rem; padding-top: 1rem; }
 @media (max-width: 720px) {
   .nav { gap: 0.4rem; }
@@ -82,13 +111,29 @@ document.querySelectorAll("[data-table-filter]").forEach((input) => {
     });
   });
 });
+
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const target = document.getElementById(button.dataset.copyTarget);
+    if (!target) return;
+    try {
+      await navigator.clipboard.writeText(target.textContent);
+      const label = button.textContent;
+      button.textContent = "Copied";
+      setTimeout(() => { button.textContent = label; }, 1200);
+    } catch (error) {
+      button.textContent = "Copy failed";
+      setTimeout(() => { button.textContent = "Copy query"; }, 1200);
+    }
+  });
+});
 """
 
 
 def _graph_text(graph: Graph, subject: URIRef, predicates: list[URIRef]) -> str:
     for predicate in predicates:
         for obj in graph.objects(subject, predicate):
-            return str(obj)
+            return _clean_text(obj)
     return ""
 
 
@@ -97,22 +142,281 @@ def _mapping_lookup(review_rows: list[dict[str, Any]]) -> dict[str, list[str]]:
     for row in review_rows:
         if not row.get("target_iri"):
             continue
-        lookup.setdefault(row["local_iri"], []).append(f"{row['relation']} -> {row['target_label']}")
+        lookup.setdefault(row["local_iri"], []).append(f"{_clean_text(row['relation'])} -> {_clean_text(row['target_label'])}")
     return lookup
 
 
 def _term_row(term: Any, mapping_lookup: dict[str, list[str]]) -> dict[str, str]:
     return {
-        "label": term.label,
+        "label": _clean_text(term.label),
         "iri": term.iri,
-        "definition": term.definition or term.comment or "No definition recorded.",
-        "superclasses": ", ".join(term.superclasses) or "None",
-        "mappings": ", ".join(mapping_lookup.get(term.iri, [])) or "None",
-        "kind": term.term_type,
-        "domain": ", ".join(term.domains) or "None",
-        "range": ", ".join(term.ranges) or "None",
+        "definition": _clean_text(term.definition or term.comment or "No definition recorded."),
+        "deprecated": "Deprecated" if getattr(term, "deprecated", False) else "Active",
+        "superclasses": ", ".join(_clean_values(term.superclasses)) or "None",
+        "mappings": ", ".join(_clean_values(mapping_lookup.get(term.iri, []))) or "None",
+        "kind": _clean_text(term.term_type).replace("_", " "),
+        "domain": ", ".join(_clean_values(term.domains)) or "None",
+        "range": ", ".join(_clean_values(term.ranges)) or "None",
         "anchor": local_name(term.iri),
     }
+
+
+_MOJIBAKE_REPLACEMENTS = {
+    "â€“": "-",
+    "â€”": "-",
+    "â€˜": "'",
+    "â€™": "'",
+    "â€œ": '"',
+    "â€": '"',
+    "Â ": " ",
+    "Â": "",
+}
+
+
+def _clean_text(value: Any) -> str:
+    text = str(value or "")
+    for old, new in _MOJIBAKE_REPLACEMENTS.items():
+        text = text.replace(old, new)
+    return normalize_space(text)
+
+
+def _clean_values(values: list[str]) -> list[str]:
+    rows: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        cleaned = _clean_text(value)
+        if cleaned and cleaned not in seen:
+            seen.add(cleaned)
+            rows.append(cleaned)
+    return rows
+
+
+def _public_namespace_rows(inspection_report: dict[str, Any], namespace_policy: dict[str, Any]) -> tuple[list[dict[str, Any]], int]:
+    rows: list[dict[str, Any]] = []
+    hidden_local = 0
+    synthetic_index = 1
+    for row in inspection_report["namespace_rows"]:
+        namespace = row["namespace"]
+        if namespace.startswith("file:///"):
+            hidden_local += int(row["count"])
+            continue
+        prefix = _clean_text(row.get("prefix", ""))
+        if not prefix and namespace == namespace_policy["preferred_namespace_uri"]:
+            prefix = namespace_policy["preferred_namespace_prefix"]
+        if not prefix:
+            prefix = f"ns{synthetic_index}"
+            synthetic_index += 1
+        rows.append({"prefix": prefix, "namespace": namespace, "count": row["count"]})
+    return rows[:18], hidden_local
+
+
+def _mapping_stats(review_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    mapped = 0
+    unmapped = 0
+    apply_default = 0
+    source_counts: dict[str, int] = {}
+    relation_counts: dict[str, int] = {}
+    for row in review_rows:
+        if row.get("target_iri"):
+            mapped += 1
+            source_id = _clean_text(row.get("source_id", "")) or "unspecified"
+            relation = _clean_text(row.get("relation", "")) or "unspecified"
+            source_counts[source_id] = source_counts.get(source_id, 0) + 1
+            relation_counts[relation] = relation_counts.get(relation, 0) + 1
+            if _clean_text(row.get("apply_default", "")).lower() == "yes":
+                apply_default += 1
+        else:
+            unmapped += 1
+    return {
+        "mapped": mapped,
+        "unmapped": unmapped,
+        "apply_default": apply_default,
+        "sources": [{"label": key, "count": value} for key, value in sorted(source_counts.items(), key=lambda item: (-item[1], item[0]))],
+        "relations": [{"label": key, "count": value} for key, value in sorted(relation_counts.items(), key=lambda item: (-item[1], item[0]))],
+    }
+
+
+def _placeholder_definition_count(rows: list[dict[str, str]]) -> int:
+    prefixes = (
+        "A class in the H2KG PEMFC Catalyst Layer Application Ontology",
+        "An object property in the H2KG PEMFC Catalyst Layer Application Ontology",
+        "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology",
+        "An annotation property used by the H2KG PEMFC Catalyst Layer Application Ontology",
+        "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology",
+        "A local ontology term representing",
+    )
+    return sum(1 for row in rows if row["definition"].startswith(prefixes))
+
+
+def _status_for_ratio(value: float, good: float, watch: float) -> str:
+    if value >= good:
+        return "good"
+    if value >= watch:
+        return "watch"
+    return "action"
+
+
+def _status_for_count(value: int) -> str:
+    if value == 0:
+        return "good"
+    if value <= 5:
+        return "watch"
+    return "action"
+
+
+def _status_for_flag(value: bool) -> str:
+    return "good" if value else "action"
+
+
+def _list_html(items: list[str]) -> str:
+    return "<ul class='simple-list'>" + "".join(f"<li>{escape(_clean_text(item))}</li>" for item in items) + "</ul>"
+
+
+def _faq_html(items: list[dict[str, str]]) -> str:
+    html = []
+    for row in items:
+        html.append(
+            f"<details><summary>{escape(_clean_text(row['question']))}</summary><p>{escape(_clean_text(row['answer']))}</p></details>"
+        )
+    return "".join(html)
+
+
+def _pattern_html(items: list[dict[str, Any]]) -> str:
+    cards = []
+    for row in items:
+        bullets = "".join(f"<li>{escape(_clean_text(item))}</li>" for item in row.get("bullets", []))
+        cards.append(
+            f"<article class='feature-item'><h3>{escape(_clean_text(row['title']))}</h3><p>{escape(_clean_text(row['description']))}</p><ul class='simple-list'>{bullets}</ul></article>"
+        )
+    return "<div class='feature-list'>" + "".join(cards) + "</div>"
+
+
+def _timeline_html(items: list[dict[str, str]]) -> str:
+    blocks = []
+    for row in items:
+        blocks.append(
+            f"<div class='timeline__item'><h3>{escape(_clean_text(row['title']))}</h3><p>{escape(_clean_text(row['detail']))}</p></div>"
+        )
+    return "<div class='timeline'>" + "".join(blocks) + "</div>"
+
+
+def _simple_svg_card(title: str, subtitle: str, value: str, fill: str) -> str:
+    return f"""
+<svg viewBox="0 0 320 180" width="100%" role="img" aria-label="{escape(title)}">
+  <rect width="320" height="180" rx="28" fill="#ffffff"></rect>
+  <rect x="20" y="20" width="280" height="140" rx="24" fill="{fill}" stroke="#cbd5e1"></rect>
+  <text x="42" y="62" font-size="16" font-family="Trebuchet MS" fill="#0f172a">{escape(title)}</text>
+  <text x="42" y="108" font-size="36" font-family="Trebuchet MS" font-weight="700" fill="#115e59">{escape(value)}</text>
+  <text x="42" y="138" font-size="13" font-family="Trebuchet MS" fill="#475569">{escape(subtitle)}</text>
+</svg>
+"""
+
+
+def _bar_chart_svg(title: str, rows: list[dict[str, Any]], color: str = "#0f766e") -> str:
+    if not rows:
+        rows = [{"label": "No data", "count": 0}]
+    max_count = max(int(row.get("count", 0)) for row in rows) or 1
+    bar_rows = []
+    for index, row in enumerate(rows[:8]):
+        y = 48 + index * 36
+        width = int(360 * int(row.get("count", 0)) / max_count) if max_count else 0
+        label = escape(_clean_text(row.get("label", "")))
+        count = escape(str(row.get("count", 0)))
+        bar_rows.append(
+            f"""
+  <text x="24" y="{y}" font-size="13" font-family="Trebuchet MS" fill="#0f172a">{label}</text>
+  <rect x="180" y="{y - 14}" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
+  <rect x="180" y="{y - 14}" width="{width}" height="16" rx="8" fill="{color}"></rect>
+  <text x="560" y="{y}" font-size="12" font-family="Trebuchet MS" fill="#475569">{count}</text>
+"""
+        )
+    height = max(180, 72 + len(rows[:8]) * 36)
+    return f"""
+<svg viewBox="0 0 600 {height}" width="100%" role="img" aria-label="{escape(title)}">
+  <rect width="600" height="{height}" rx="24" fill="#ffffff"></rect>
+  <text x="24" y="24" font-size="15" font-family="Trebuchet MS" fill="#0f172a">{escape(title)}</text>
+  {''.join(bar_rows)}
+</svg>
+"""
+
+
+def _import_graph_svg(import_rows: list[dict[str, Any]]) -> str:
+    enabled_rows = [row for row in import_rows if row.get("enabled")]
+    cards = []
+    edges = []
+    center_x, center_y = 320, 80
+    cards.append(f'<rect x="{center_x - 100}" y="{center_y - 28}" width="200" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect>')
+    cards.append(f'<text x="{center_x}" y="{center_y + 4}" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">H2KG asserted schema</text>')
+    positions = [(70, 200), (240, 200), (410, 200), (580, 200), (155, 300), (325, 300), (495, 300)]
+    for row, (x, y) in zip(enabled_rows[:7], positions):
+        cards.append(f'<rect x="{x - 70}" y="{y - 24}" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect>')
+        cards.append(f'<text x="{x}" y="{y + 4}" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">{escape(_clean_text(row["title"]))}</text>')
+        edges.append(f'<line x1="{center_x}" y1="{center_y + 28}" x2="{x}" y2="{y - 28}" stroke="#0f766e" stroke-width="2.5"></line>')
+    return f"""
+<svg viewBox="0 0 650 360" width="100%" role="img" aria-label="Import graph">
+  <rect width="650" height="360" rx="24" fill="#ffffff"></rect>
+  {''.join(edges)}
+  {''.join(cards)}
+  <text x="24" y="336" font-size="12" font-family="Trebuchet MS" fill="#475569">Configured import and alignment source overview for the active release profile.</text>
+</svg>
+"""
+
+
+def _process_pattern_svg() -> str:
+    return """
+<svg viewBox="0 0 760 240" width="100%" role="img" aria-label="Process, data, and provenance pattern">
+  <rect width="760" height="240" rx="24" fill="#ffffff"></rect>
+  <rect x="40" y="70" width="150" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect>
+  <rect x="300" y="50" width="170" height="64" rx="18" fill="#f0fdf4" stroke="#94a3b8"></rect>
+  <rect x="300" y="150" width="170" height="64" rx="18" fill="#fff7ed" stroke="#94a3b8"></rect>
+  <rect x="570" y="70" width="150" height="56" rx="18" fill="#fef3c7" stroke="#94a3b8"></rect>
+  <text x="115" y="104" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Material / input</text>
+  <text x="385" y="88" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Measurement / process</text>
+  <text x="385" y="188" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Data / quantity values</text>
+  <text x="645" y="104" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Agent / provenance</text>
+  <line x1="190" y1="98" x2="300" y2="82" stroke="#0f766e" stroke-width="3"></line>
+  <line x1="385" y1="114" x2="385" y2="150" stroke="#0f766e" stroke-width="3"></line>
+  <line x1="470" y1="82" x2="570" y2="98" stroke="#0f766e" stroke-width="3"></line>
+  <text x="226" y="78" font-size="12" font-family="Trebuchet MS" fill="#475569">hasInputMaterial</text>
+  <text x="398" y="136" font-size="12" font-family="Trebuchet MS" fill="#475569">hasOutputData / hasQuantityValue</text>
+  <text x="498" y="76" font-size="12" font-family="Trebuchet MS" fill="#475569">prov:wasAssociatedWith</text>
+  <text x="24" y="218" font-size="12" font-family="Trebuchet MS" fill="#475569">Release pattern: keep processes and schema in the asserted module, and publish example data-like nodes separately.</text>
+</svg>
+"""
+
+
+def _term_neighborhood_svg(classes: list[dict[str, str]], properties: list[dict[str, str]]) -> str:
+    focus = next((row for row in classes if "measurement" in row["label"].lower()), classes[0] if classes else None)
+    if focus is None:
+        return _simple_svg_card("Neighborhood unavailable", "No class rows were available for visualization.", "0", "#f8fafc")
+    related = [row for row in properties if focus["iri"] in {row["domain"], row["range"]} or focus["label"].lower() in row["domain"].lower()]
+    related = related[:6]
+    cards = [
+        '<rect x="280" y="80" width="200" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect>',
+        f'<text x="380" y="114" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">{escape(focus["label"])}</text>',
+    ]
+    positions = [(120, 40), (120, 170), (380, 190), (640, 170), (640, 40), (380, 10)]
+    edges = []
+    for row, (x, y) in zip(related, positions):
+        cards.append(f'<rect x="{x - 90}" y="{y}" width="180" height="44" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect>')
+        cards.append(f'<text x="{x}" y="{y + 26}" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">{escape(_clean_text(row["label"]))}</text>')
+        edges.append(f'<line x1="380" y1="108" x2="{x}" y2="{y + 22}" stroke="#0f766e" stroke-width="2.5"></line>')
+    return f"""
+<svg viewBox="0 0 760 260" width="100%" role="img" aria-label="Term neighborhood">
+  <rect width="760" height="260" rx="24" fill="#ffffff"></rect>
+  {''.join(edges)}
+  {''.join(cards)}
+  <text x="24" y="236" font-size="12" font-family="Trebuchet MS" fill="#475569">Property neighborhood preview around a representative measurement-focused class.</text>
+</svg>
+"""
+
+
+def _html_table(headers: list[str], rows: list[list[str]]) -> str:
+    header_html = "".join(f"<th>{escape(item)}</th>" for item in headers)
+    row_html = []
+    for row in rows:
+        row_html.append("<tr>" + "".join(f"<td>{cell}</td>" for cell in row) + "</tr>")
+    return f"<table class='data-table'><thead><tr>{header_html}</tr></thead><tbody>{''.join(row_html)}</tbody></table>"
 
 
 def build_docs(
@@ -126,6 +430,8 @@ def build_docs(
     classifications: dict[str, Any],
     release_profile: dict[str, Any],
     namespace_policy: dict[str, Any],
+    source_registry: dict[str, Any],
+    namespace_policy_raw: dict[str, Any],
     root: Path,
 ) -> None:
     output_dir = root / "output" / "docs"
@@ -134,13 +440,40 @@ def build_docs(
     data_dir = ensure_dir(output_dir / "data")
 
     env = Environment(loader=FileSystemLoader(str(root / "templates" / "site")))
+    documentation_cfg = release_profile.get("documentation", {})
+    resources_cfg = documentation_cfg.get("resources", {})
+    split_report = read_json(root / "output" / "reports" / "split_report.json")
+    metadata_report = read_json(root / "output" / "reports" / "metadata_report.json")
+    import_catalog = read_json(root / "output" / "reports" / "import_catalog.json") if (root / "output" / "reports" / "import_catalog.json").exists() else []
+    changelog_payload = read_json(root / "output" / "reports" / "changelog_report.json") if (root / "output" / "reports" / "changelog_report.json").exists() else {"entries": []}
+    citation_meta = load_yaml(root / "CITATION.cff") if (root / "CITATION.cff").exists() else {}
+    zenodo_meta = read_json(root / ".zenodo.json") if (root / ".zenodo.json").exists() else {}
     site = {
         "title": release_profile["project"]["title"],
         "subtitle": release_profile["project"]["subtitle"],
-        "tagline": release_profile["documentation"]["site_tagline"],
+        "tagline": documentation_cfg["site_tagline"],
         "version": release_profile["release"]["version"],
         "license_label": release_profile["release"]["ontology_license"],
         "prefix": namespace_policy["preferred_namespace_prefix"],
+        "nav": [
+            {"href": "index.html", "label": "Home"},
+            {"href": release_profile["publication"]["reference_page"], "label": "Reference"},
+            {"href": "pages/user-guide.html", "label": "User Guide"},
+            {"href": "pages/ontology-overview.html", "label": "About"},
+            {"href": "pages/scope-and-faq.html", "label": "Scope and FAQ"},
+            {"href": "pages/modeling-patterns.html", "label": "Patterns"},
+            {"href": "pages/queries.html", "label": "Queries"},
+            {"href": "pages/import-guide.html", "label": "Import"},
+            {"href": "pages/cite.html", "label": "Cite"},
+            {"href": "pages/visualizations.html", "label": "Visuals"},
+            {"href": "pages/quality-dashboard.html", "label": "Quality"},
+            {"href": "pages/release.html", "label": "Release"},
+        ],
+        "actions": [
+            {"href": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"]), "label": "Stable ontology IRI", "primary": True},
+            {"href": resources_cfg.get("repository_url", ""), "label": "GitHub repository", "primary": False},
+            {"href": f"{namespace_policy['ontology_iri'].rstrip('/')}/source", "label": "Source TTL", "primary": False},
+        ],
     }
     write_text(assets_dir / "site.css", SITE_CSS)
     write_text(assets_dir / "site.js", SITE_JS)
@@ -157,30 +490,59 @@ def build_docs(
     vocabulary_rows.sort(key=lambda item: item["label"].lower())
 
     ontology_node = find_ontology_node(schema_graph, namespace_policy) or URIRef(namespace_policy["ontology_iri"])
-    creators = [str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.creator)]
-    contributors = [str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.contributor)]
-    imports = [str(obj) for obj in schema_graph.objects(ontology_node, OWL.imports)]
-    namespace_rows = []
-    prefix_lookup = {str(namespace): prefix for prefix, namespace in schema_graph.namespaces()}
-    for row in inspection_report["namespace_rows"][:18]:
-        namespace_rows.append({"prefix": prefix_lookup.get(row["namespace"], ""), "namespace": row["namespace"], "count": row["count"]})
+    creators = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.creator)])
+    contributors = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.contributor)])
+    imports = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, OWL.imports)])
+    namespace_rows, hidden_local_namespace_count = _public_namespace_rows(inspection_report, namespace_policy)
+    mapping_stats = _mapping_stats(review_rows)
+    placeholder_definition_count = _placeholder_definition_count(classes + properties + vocabulary_rows)
+    baseline_definition_coverage = float(inspection_report.get("definition_coverage", 0.0))
 
     overview = {
-        "description": _graph_text(schema_graph, ontology_node, [DCTERMS.description, DCTERMS.abstract]),
+        "description": _graph_text(schema_graph, ontology_node, [DCTERMS.description, DCTERMS.abstract]) or _clean_text(documentation_cfg.get("landing_intro", "")),
+        "landing_intro": _clean_text(documentation_cfg.get("landing_intro", "")),
         "ontology_iri": namespace_policy["ontology_iri"],
         "namespace_mode": namespace_policy["namespace_mode"],
-        "schema_term_count": inspection_report["schema_term_count"],
-        "vocabulary_count": inspection_report["category_counts"].get("controlled_vocabulary_term", 0),
-        "example_count": inspection_report["category_counts"].get("example_individual", 0) + inspection_report["category_counts"].get("quantity_value_data_node", 0),
+        "schema_term_count": len(classes) + len(properties),
+        "vocabulary_count": len(vocabulary_rows),
+        "example_count": split_report.get("example_subject_count", 0),
+        "release_date": release_profile["release"]["release_date"],
     }
     cards = [
-        {"title": "Alignment Stack", "body": "Primary alignment targets are EMMO, ECHO, QUDT, ChEBI, PROV-O, Dublin Core Terms, and VANN."},
-        {"title": "IRI Policy", "body": "The default publication profile preserves the existing hash namespace for backward compatibility and safer first release publishing."},
-        {"title": "Release Assets", "body": "The bundle includes machine-readable RDF, static HTML documentation, versioned publication endpoints, validation reports, FAIR reports, and w3id redirect templates."},
+        {"title": "Alignment Stack", "body": "Primary semantic anchors are EMMO, ECHO, QUDT, ChEBI, PROV-O, Dublin Core Terms, and VANN."},
+        {"title": "IRI Policy", "body": "The default profile preserves the current hash namespace and existing local term IRIs for safer first-release publication."},
+        {"title": "Release Assets", "body": "The publication includes machine-readable RDF, static HTML docs, versioned endpoints, FAIR reports, validation outputs, and w3id templates."},
+    ]
+    highlights = [
+        {"label": "Schema terms", "value": str(len(classes) + len(properties)), "detail": "Asserted local classes and properties published as the schema module."},
+        {"label": "Controlled vocabulary", "value": str(len(vocabulary_rows)), "detail": "Curated named terms kept outside the asserted schema."},
+        {"label": "Examples separated", "value": str(split_report.get("example_subject_count", 0)), "detail": "Example or data-like resources removed from the schema module."},
+        {"label": "Mapped rows", "value": str(mapping_stats["mapped"]), "detail": "Review rows that have a target IRI in the mapping review output."},
+        {"label": "FAIR score", "value": str(fair_scores["overall"]), "detail": "Aggregate pre-publication FAIR readiness signal."},
+        {"label": "Validation", "value": validation_report["overall_status"].upper(), "detail": "Current release validation state."},
+    ]
+    featured_pages = [
+        {"href": "pages/scope-and-faq.html", "title": "Scope and FAQ", "body": "Explains what H2KG covers, what it does not cover, and why release modules are separated."},
+        {"href": "pages/modeling-patterns.html", "title": "Modeling Patterns", "body": "Documents the preferred patterns for measurement, materials, process, provenance, and publication."},
+        {"href": "pages/queries.html", "title": "Queries", "body": "Provides competency-question-driven SPARQL examples and release-query guidance."},
+        {"href": "pages/import-catalog.html", "title": "Import Catalog", "body": "Shows configured source ontologies, reuse targets, fetch modes, and version labels for the release stack."},
+        {"href": "pages/worked-examples.html", "title": "Worked Examples", "body": "Provides JSON-LD, CSV-to-RDF, and notebook-style examples for ontology users and data stewards."},
+        {"href": "pages/quality-dashboard.html", "title": "Quality Dashboard", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
+        {"href": "pages/visualizations.html", "title": "Visuals", "body": "Presents lightweight release architecture and quality-oriented visual summaries."},
+        {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, and release provenance."},
+    ]
+    quality_signals = [
+        {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%", "status": _status_for_ratio(baseline_definition_coverage, 0.85, 0.6), "detail": "Coverage in the original mixed ontology before enrichment."},
+        {"label": "Release missing definitions", "value": str(validation_report["missing_definition_count"]), "status": _status_for_count(int(validation_report["missing_definition_count"])), "detail": "Structural completeness after enrichment and validation."},
+        {"label": "Generated annotations", "value": str(metadata_report.get("generated_annotations", 0)), "status": "watch" if metadata_report.get("generated_annotations", 0) else "good", "detail": "Generated annotations improve coverage but still require expert review."},
+        {"label": "Hidden local file namespaces", "value": str(hidden_local_namespace_count), "status": "watch" if hidden_local_namespace_count else "good", "detail": "Local file-based namespaces are removed from the public namespace table."},
+        {"label": "Placeholder-style definitions", "value": str(placeholder_definition_count), "status": "watch" if placeholder_definition_count else "good", "detail": "Generated definitions that still need editorial improvement."},
+        {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
+        {"label": "w3id artifacts ready", "value": "Yes" if (root / "output" / "w3id" / ".htaccess").exists() else "No", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists()), "detail": "Redirect templates and content-negotiation notes are available."},
     ]
     endpoint_rows = reference_iri_rows(namespace_policy, release_profile)
     metadata_rows = [
-        {"label": "Title", "value": _graph_text(schema_graph, ontology_node, [DCTERMS.title])},
+        {"label": "Title", "value": _graph_text(schema_graph, ontology_node, [DCTERMS.title]) or release_profile["project"]["title"]},
         {"label": "Ontology IRI", "value": namespace_policy["ontology_iri"]},
         {"label": "Version", "value": str(release_profile["release"]["version"])},
         {"label": "Namespace mode", "value": namespace_policy["namespace_mode"]},
@@ -188,20 +550,52 @@ def build_docs(
         {"label": "Creators", "value": ", ".join(creators) or "Not recorded"},
         {"label": "Contributors", "value": ", ".join(contributors) or "Not recorded"},
     ]
+    download_rows = [
+        {"label": "Asserted source (Turtle)", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/source", "detail": "Canonical asserted ontology serialization via the stable source endpoint."},
+        {"label": "Inferred release", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/inferred", "detail": "Inferred schema and mappings export via the stable inferred endpoint."},
+        {"label": "Latest alias", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/latest", "detail": "Stable latest asserted release alias."},
+        {"label": "JSON-LD context", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/context", "detail": "Stable JSON-LD context endpoint for consumers."},
+        {"label": "Versioned release", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/{release_profile['release']['version']}", "detail": "Version-pinned asserted release endpoint."},
+        {"label": "Versioned inferred", "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/{release_profile['release']['version']}/inferred", "detail": "Version-pinned inferred release endpoint."},
+    ]
+    coverage_rows = [
+        {"label": "Source label coverage", "value": f"{float(inspection_report['label_coverage']) * 100:.1f}%"},
+        {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%"},
+        {"label": "Generated annotations", "value": str(metadata_report.get("generated_annotations", 0))},
+        {"label": "Validation status", "value": validation_report["overall_status"]},
+        {"label": "Resolver checks", "value": str(len(validation_report.get("resolver_checks", [])))},
+    ]
 
     index_template = env.get_template("index.html")
     write_text(
         output_dir / "index.html",
         index_template.render(
-            page_title="Overview",
+            page_title="Home",
             site=site,
             base_path=".",
             overview=overview,
             release_score=fair_scores["overall"],
-            readiness_summary="Release readiness combines metadata quality, validation, documentation, mappings, and publication support.",
+            readiness_summary="H2KG is published as a conservative ontology release package with explicit separation of schema, curated vocabulary, and example or data-like content.",
             blockers=fair_scores["blockers"][:8] or ["No blocking issues detected."],
             cards=cards,
+            highlights=highlights,
+            featured_pages=featured_pages,
+            quality_signals=quality_signals,
             namespace_rows=namespace_rows,
+            use_cases=documentation_cfg.get("use_cases", []),
+            audiences=documentation_cfg.get("audiences", []),
+            resource_rows=[
+                {"label": "Repository", "value": resources_cfg.get("repository_url", "")},
+                {"label": "Issue tracker", "value": resources_cfg.get("issue_tracker", "")},
+                {"label": "Pages URL", "value": resources_cfg.get("pages_url", "")},
+                {"label": "Ontology homepage IRI", "value": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"])},
+            ],
+            competency_preview=documentation_cfg.get("competency_questions", [])[:2],
+            module_cards=[
+                {"title": "Schema module", "svg": _simple_svg_card("Schema module", "Local asserted classes and properties", str(len(classes) + len(properties)), "#ecfeff")},
+                {"title": "Controlled vocabulary", "svg": _simple_svg_card("Controlled vocabulary", "Curated domain terms kept outside the schema", str(len(vocabulary_rows)), "#f0fdf4")},
+                {"title": "Examples separated", "svg": _simple_svg_card("Examples separated", "Example and data-like resources in a separate module", str(split_report.get("example_subject_count", 0)), "#fff7ed")},
+            ],
         ),
     )
 
@@ -227,24 +621,64 @@ def build_docs(
             property_rows=properties,
             vocabulary_rows=vocabulary_rows,
             example_rows=example_rows,
+            download_rows=download_rows,
+            coverage_rows=coverage_rows,
+            curation_note="The release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
         ),
     )
 
     examples_template = env.get_template("examples.html")
-    write_text(pages_dir / "examples.html", examples_template.render(page_title="Examples", site=site, base_path="..", examples=example_rows))
+    write_text(
+        pages_dir / "examples.html",
+        examples_template.render(
+            page_title="Examples",
+            site=site,
+            base_path="..",
+            examples=example_rows,
+            split_notes=split_report.get("notes", []),
+        ),
+    )
 
     alignment_template = env.get_template("alignment.html")
-    write_text(pages_dir / "alignment.html", alignment_template.render(page_title="Alignment", site=site, base_path="..", mappings=review_rows[:200]))
+    local_keep_rows = [
+        {
+            "local_label": _clean_text(row.get("local_label", "")),
+            "local_iri": row.get("local_iri", ""),
+            "local_type": _clean_text(row.get("local_type", "")),
+            "rationale": _clean_text(row.get("rationale", "No mapping rationale recorded.")),
+        }
+        for row in review_rows
+        if not row.get("target_iri")
+    ][:120]
+    write_text(
+        pages_dir / "alignment.html",
+        alignment_template.render(
+            page_title="Alignment",
+            site=site,
+            base_path="..",
+            mappings=review_rows[:250],
+            mapping_stats=mapping_stats,
+            local_keep_rows=local_keep_rows,
+        ),
+    )
 
     release_template = env.get_template("release.html")
     release_files = [str(path.relative_to(root / "output")) for path in sorted((root / "output").rglob("*")) if path.is_file()]
+    publication_rows = [
+        {"label": "HTML reference page", "value": "ready" if (output_dir / release_profile["publication"]["reference_page"]).exists() else "missing", "status": _status_for_flag((output_dir / release_profile["publication"]["reference_page"]).exists())},
+        {"label": "Machine-readable source", "value": "ready" if (root / "output" / "publication" / "source" / "ontology.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "source" / "ontology.ttl").exists())},
+        {"label": "Inferred serialization", "value": "ready" if (root / "output" / "publication" / "inferred" / "ontology.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "inferred" / "ontology.ttl").exists())},
+        {"label": "JSON-LD context", "value": "ready" if (root / "output" / "publication" / "context" / "context.jsonld").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "context" / "context.jsonld").exists())},
+        {"label": "Release bundle", "value": "ready" if (root / "output" / "release_bundle" / "manifest.json").exists() else "missing", "status": _status_for_flag((root / "output" / "release_bundle" / "manifest.json").exists())},
+        {"label": "w3id artifacts", "value": "ready" if (root / "output" / "w3id" / ".htaccess").exists() else "missing", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists())},
+    ]
     write_text(
         pages_dir / "release.html",
         release_template.render(
             page_title="Release",
             site=site,
             base_path="..",
-            release_files=release_files[:120],
+            release_files=release_files[:140],
             fair_rows=fair_scores["dimensions"],
             validation_lines=[
                 f"Overall status: {validation_report['overall_status']}",
@@ -252,6 +686,9 @@ def build_docs(
                 f"Missing labels: {validation_report['missing_label_count']}",
                 f"Missing definitions: {validation_report['missing_definition_count']}",
             ],
+            timeline_rows=documentation_cfg.get("release_story", []),
+            endpoint_rows=endpoint_rows,
+            publication_rows=publication_rows,
         ),
     )
 
@@ -268,22 +705,464 @@ def build_docs(
   <li><code>validate</code> runs metadata, namespace, mapping, and SHACL checks.</li>
 </ul>
 """
-    write_text(pages_dir / "user-guide.html", page_template.render(page_title="User Guide", site=site, base_path="..", heading="User Guide", content_html=user_guide_html))
+    write_text(
+        pages_dir / "user-guide.html",
+        page_template.render(
+            page_title="User Guide",
+            site=site,
+            base_path="..",
+            heading="User Guide",
+            summary="Operational guidance for running and reviewing the H2KG release pipeline.",
+            content_html=user_guide_html,
+        ),
+    )
 
-    overview_html = "<ul>"
-    overview_html += f"<li>Ontology IRI: <code>{namespace_policy['ontology_iri']}</code></li>"
-    overview_html += f"<li>Version: <code>{release_profile['release']['version']}</code></li>"
-    overview_html += f"<li>Creators: {', '.join(creators) or 'Not recorded'}</li>"
-    overview_html += f"<li>Imports: {', '.join(imports) or 'None declared in schema module'}</li>"
-    overview_html += f"<li>License: <code>{release_profile['release']['ontology_license']}</code></li>"
-    overview_html += f"<li>Namespace URI: <code>{namespace_policy['preferred_namespace_uri']}</code></li>"
-    overview_html += "</ul>"
+    resource_html = (
+        "<ul class='simple-list'>"
+        + "".join(
+            f"<li><strong>{escape(row['label'])}</strong>: <a href='{escape(_clean_text(row['value']))}'>{escape(_clean_text(row['value']))}</a></li>"
+            for row in [
+                {"label": "Repository", "value": resources_cfg.get("repository_url", "")},
+                {"label": "Issue tracker", "value": resources_cfg.get("issue_tracker", "")},
+                {"label": "Pages URL", "value": resources_cfg.get("pages_url", "")},
+                {"label": "Stable ontology IRI", "value": resources_cfg.get("ontology_homepage_iri", namespace_policy["ontology_iri"])},
+            ]
+            if row["value"]
+        )
+        + "</ul>"
+    )
+    overview_html = (
+        f"<p>{escape(overview['landing_intro'])}</p>"
+        + "<h3>Core release facts</h3>"
+        + "<ul class='simple-list'>"
+        + f"<li>Ontology IRI: <code>{escape(namespace_policy['ontology_iri'])}</code></li>"
+        + f"<li>Version: <code>{escape(str(release_profile['release']['version']))}</code></li>"
+        + f"<li>Creators: {escape(', '.join(creators) or 'Not recorded')}</li>"
+        + f"<li>Imports: {escape(', '.join(imports) or 'None declared in schema module')}</li>"
+        + f"<li>License: <code>{escape(release_profile['release']['ontology_license'])}</code></li>"
+        + f"<li>Namespace URI: <code>{escape(namespace_policy['preferred_namespace_uri'])}</code></li>"
+        + "</ul>"
+        + "<h3>Resource links</h3>"
+        + resource_html
+    )
     write_text(
         pages_dir / "ontology-overview.html",
-        page_template.render(page_title="Ontology Overview", site=site, base_path="..", heading="Ontology Overview", content_html=overview_html),
+        page_template.render(
+            page_title="Ontology Overview",
+            site=site,
+            base_path="..",
+            heading="Ontology Overview",
+            summary="What H2KG is, what it models, and which public release resources are available.",
+            content_html=overview_html,
+        ),
+    )
+
+    scope_html = (
+        "<h3>In scope</h3>"
+        + _list_html(documentation_cfg.get("scope", {}).get("in_scope", []))
+        + "<h3>Out of scope</h3>"
+        + _list_html(documentation_cfg.get("scope", {}).get("out_of_scope", []))
+        + "<h3>Frequently asked questions</h3>"
+        + _faq_html(documentation_cfg.get("faq", []))
+    )
+    write_text(
+        pages_dir / "scope-and-faq.html",
+        page_template.render(
+            page_title="Scope and FAQ",
+            site=site,
+            base_path="..",
+            heading="Scope and FAQ",
+            summary="A concise explanation of H2KG scope, non-scope, and common release questions.",
+            content_html=scope_html,
+        ),
+    )
+
+    patterns_html = (
+        "<p>The patterns below are intended to keep H2KG conservative, reviewable, and interoperable with the external ontologies it reuses.</p>"
+        + _pattern_html(documentation_cfg.get("modeling_patterns", []))
+    )
+    write_text(
+        pages_dir / "modeling-patterns.html",
+        page_template.render(
+            page_title="Modeling Patterns",
+            site=site,
+            base_path="..",
+            heading="Modeling Patterns",
+            summary="Recommended patterns for measurement, materials, process, provenance, and release publication in H2KG.",
+            content_html=patterns_html,
+        ),
+    )
+
+    provenance_html = (
+        "<p>H2KG publishes both a source-oriented and a release-oriented provenance story. The release is intentionally conservative: it preserves local PEMFC concepts while documenting alignments, validation, and FAIR readiness.</p>"
+        + _timeline_html(documentation_cfg.get("release_story", []))
+    )
+    write_text(
+        pages_dir / "provenance-history.html",
+        page_template.render(
+            page_title="Provenance and History",
+            site=site,
+            base_path="..",
+            heading="Provenance and History",
+            summary="Release story, publication checkpoints, and why H2KG uses a conservative ontology release process.",
+            content_html=provenance_html,
+        ),
+    )
+
+    governance_cfg = documentation_cfg.get("governance", {})
+    governance_html = (
+        "<h3>Editorial policy</h3>"
+        + _list_html(governance_cfg.get("editorial_policy", []))
+        + "<h3>Contribution path</h3>"
+        + _list_html(governance_cfg.get("contribution_path", []))
+        + "<h3>Versioning policy</h3>"
+        + _list_html(governance_cfg.get("versioning_policy", []))
+    )
+    write_text(
+        pages_dir / "governance.html",
+        page_template.render(
+            page_title="Governance",
+            site=site,
+            base_path="..",
+            heading="Governance",
+            summary="Editorial, contribution, and versioning guidance for H2KG ontology maintenance and release governance.",
+            content_html=governance_html,
+        ),
+    )
+
+    import_catalog_rows = import_catalog
+    import_catalog_html = _html_table(
+        ["Source", "Category", "Version", "Enabled", "Base IRI", "Fetch"],
+        [
+            [
+                escape(_clean_text(row["title"])),
+                escape(_clean_text(row["category"])),
+                escape(_clean_text(row["version_label"])),
+                escape(str(row["enabled"])),
+                f"<code>{escape(_clean_text(row['base_iri']))}</code>",
+                escape(_clean_text(row["fetch_kind"])),
+            ]
+            for row in import_catalog_rows
+        ],
+    )
+    write_text(
+        pages_dir / "import-catalog.html",
+        page_template.render(
+            page_title="Import Catalog",
+            site=site,
+            base_path="..",
+            heading="Import Catalog",
+            summary="Configured reuse targets and source ontologies for the active H2KG release profile.",
+            content_html=(
+                "<p>This catalog explains which external ontologies are configured as primary, fallback, or optional alignment sources for the release pipeline.</p>"
+                + import_catalog_html
+            ),
+        ),
+    )
+
+    namespace_policy_html = (
+        "<h3>Active release profile</h3>"
+        + _list_html(
+            [
+                f"Active profile: {namespace_policy_raw['active_profile']}",
+                f"Ontology IRI: {namespace_policy['ontology_iri']}",
+                f"Term namespace: {namespace_policy['term_namespace']}",
+                f"Namespace mode: {namespace_policy['namespace_mode']}",
+                f"Preserve legacy IRIs: {namespace_policy['preserve_legacy_iris']}",
+                f"Allow namespace migration: {namespace_policy['allow_namespace_migration']}",
+            ]
+        )
+        + "<h3>Policy notes</h3>"
+        + _list_html(documentation_cfg.get("namespace_policy_notes", []))
+        + "<h3>Migration configuration</h3>"
+        + _list_html(
+            [
+                f"Migration enabled: {namespace_policy_raw.get('migration', {}).get('enabled', False)}",
+                f"New public base: {namespace_policy_raw.get('migration', {}).get('new_public_base', 'None')}",
+                f"Alias map file: {namespace_policy_raw.get('migration', {}).get('alias_map_file', '')}",
+            ]
+        )
+    )
+    write_text(
+        pages_dir / "namespace-policy.html",
+        page_template.render(
+            page_title="Namespace Policy",
+            site=site,
+            base_path="..",
+            heading="Namespace Policy",
+            summary="Stable IRI and namespace policy for the active H2KG publication profile.",
+            content_html=namespace_policy_html,
+        ),
+    )
+
+    deprecation_html = (
+        "<p>H2KG treats deprecation as an explicit release-governed activity rather than a silent cleanup step.</p>"
+        + _list_html(documentation_cfg.get("deprecation_policy", []))
+    )
+    write_text(
+        pages_dir / "deprecation-policy.html",
+        page_template.render(
+            page_title="Deprecation Policy",
+            site=site,
+            base_path="..",
+            heading="Deprecation Policy",
+            summary="Rules for deprecating, replacing, and migrating ontology terms without silently breaking public identifiers.",
+            content_html=deprecation_html,
+        ),
+    )
+
+    citation_title = _clean_text(citation_meta.get("preferred-citation", {}).get("title") or citation_meta.get("title") or release_profile["project"]["title"])
+    citation_version = _clean_text(citation_meta.get("preferred-citation", {}).get("version") or citation_meta.get("version") or release_profile["release"]["version"])
+    doi_value = _clean_text(str(release_profile.get("citation", {}).get("doi") or zenodo_meta.get("doi") or "pending"))
+    citation_badges = (
+        f"<div class='chip-row'><span class='metric-pill'>Release {escape(citation_version)}</span>"
+        f"<span class='metric-pill'>DOI {escape(doi_value)}</span>"
+        f"<span class='metric-pill'>License {escape(_clean_text(release_profile['release']['ontology_license']))}</span>"
+        f"<span class='metric-pill'>FAIR {escape(str(fair_scores['overall']))}</span></div>"
+    )
+    cite_html = (
+        citation_badges
+        + "<h3>Preferred ontology citation</h3>"
+        + f"<p><strong>{escape(citation_title)}</strong>, version {escape(citation_version)}.</p>"
+        + "<h3>How to cite</h3>"
+        + _list_html(documentation_cfg.get("citation_guidance", []))
+        + "<h3>Software package citation</h3>"
+        + f"<p>{escape(_clean_text(citation_meta.get('title', 'H2KG release pipeline')))} ({escape(_clean_text(str(citation_meta.get('version', release_profile['release']['version']))))}).</p>"
+    )
+    write_text(
+        pages_dir / "cite.html",
+        page_template.render(
+            page_title="How to Cite",
+            site=site,
+            base_path="..",
+            heading="How to Cite",
+            summary="Citation guidance for both the ontology release and the release-preparation software package.",
+            content_html=cite_html,
+        ),
+    )
+
+    import_snippet = f"""@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<https://example.org/my-ontology> a owl:Ontology ;
+  owl:imports <{namespace_policy['ontology_iri']}> .
+"""
+    rdflib_snippet = f"""from rdflib import Graph
+
+graph = Graph()
+graph.parse("{namespace_policy['ontology_iri']}/source", format="turtle")
+"""
+    import_html = (
+        "<h3>Import guidance</h3>"
+        + _list_html(documentation_cfg.get("import_guidance", []))
+        + "<h3>OWL import example</h3>"
+        + f"<pre><code>{escape(import_snippet)}</code></pre>"
+        + "<h3>rdflib example</h3>"
+        + f"<pre><code>{escape(rdflib_snippet)}</code></pre>"
+        + "<h3>Stable release endpoints</h3>"
+        + _html_table(
+            ["Label", "IRI"],
+            [[escape(row["label"]), f"<code>{escape(row['iri'])}</code>"] for row in endpoint_rows],
+        )
+    )
+    write_text(
+        pages_dir / "import-guide.html",
+        page_template.render(
+            page_title="How to Import",
+            site=site,
+            base_path="..",
+            heading="How to Import",
+            summary="Practical import and programmatic access guidance for the H2KG ontology release modules.",
+            content_html=import_html,
+        ),
+    )
+
+    jsonld_example = {
+        "@context": {
+            "h2kg": namespace_policy["preferred_namespace_uri"],
+            "label": "http://www.w3.org/2000/01/rdf-schema#label",
+            "usesInstrument": {"@id": f"{namespace_policy['term_namespace']}usesInstrument", "@type": "@id"},
+            "hasOutputData": {"@id": f"{namespace_policy['term_namespace']}hasOutputData", "@type": "@id"},
+        },
+        "@id": "https://example.org/h2kg/demo/measurement-1",
+        "@type": f"{namespace_policy['preferred_namespace_prefix']}:Measurement",
+        "label": "Example ORR catalyst-layer measurement",
+        "usesInstrument": "https://example.org/h2kg/demo/instrument-1",
+        "hasOutputData": "https://example.org/h2kg/demo/data-1",
+    }
+    csv_example = "sample_id,instrument,current_density,unit\nrun-001,potentiostat-a,1.23,A-PER-CM2\n"
+    csv_ttl_example = f"""@prefix ex: <https://example.org/h2kg/demo/> .
+@prefix h2kg: <{namespace_policy['term_namespace']}> .
+
+ex:run-001 a h2kg:Measurement ;
+  h2kg:usesInstrument ex:potentiostat-a ;
+  h2kg:hasOutputData ex:data-1 .
+"""
+    notebook_example = {
+        "cells": [
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": ["# H2KG release notebook starter\n", "Load the asserted schema and inspect a few mapped terms.\n"],
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "from rdflib import Graph\n",
+                    "g = Graph()\n",
+                    f"g.parse('{namespace_policy['ontology_iri']}/source', format='turtle')\n",
+                    "len(g)\n",
+                ],
+            },
+        ],
+        "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}},
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+    write_json(data_dir / "example_measurement.jsonld", jsonld_example)
+    write_text(data_dir / "example_measurement.csv", csv_example)
+    write_text(data_dir / "example_measurement.ttl", csv_ttl_example)
+    write_json(data_dir / "example_release_notebook.ipynb", notebook_example)
+    worked_examples_html = (
+        "<p>These researcher-facing examples show how H2KG can be used in practical data and release workflows.</p>"
+        + _list_html(documentation_cfg.get("researcher_extras", []))
+        + "<h3>Downloadable examples</h3>"
+        + _html_table(
+            ["Artifact", "Path", "Purpose"],
+            [
+                ["JSON-LD measurement example", "<code>../data/example_measurement.jsonld</code>", "Minimal measurement-oriented JSON-LD bundle."],
+                ["CSV experiment example", "<code>../data/example_measurement.csv</code>", "Small tabular experiment fragment."],
+                ["CSV-to-RDF example", "<code>../data/example_measurement.ttl</code>", "RDF translation of the CSV fragment."],
+                ["Notebook starter", "<code>../data/example_release_notebook.ipynb</code>", "Programmatic inspection starter notebook."],
+            ],
+        )
+    )
+    write_text(
+        pages_dir / "worked-examples.html",
+        page_template.render(
+            page_title="Worked Examples",
+            site=site,
+            base_path="..",
+            heading="Worked Examples",
+            summary="Researcher-facing JSON-LD, CSV-to-RDF, and notebook examples for H2KG release usage.",
+            content_html=worked_examples_html,
+        ),
+    )
+
+    changelog_entry = changelog_payload.get("entries", [{}])[0] if changelog_payload.get("entries") else {}
+    changelog_html = (
+        f"<p><strong>{escape(_clean_text(changelog_entry.get('version', 'current')))}</strong> ({escape(_clean_text(changelog_entry.get('date', '')))}): {escape(_clean_text(changelog_entry.get('summary', '')))}</p>"
+        + "<h3>Changes</h3>"
+        + _list_html(changelog_entry.get("changes", []))
+        + "<h3>Notes</h3>"
+        + _list_html(changelog_entry.get("notes", []))
+    )
+    write_text(
+        pages_dir / "changelog.html",
+        page_template.render(
+            page_title="Changelog",
+            site=site,
+            base_path="..",
+            heading="Changelog",
+            summary="Release-oriented summary of what changed in the current H2KG publication baseline.",
+            content_html=changelog_html,
+        ),
+    )
+
+    quality_dashboard = {
+        "fair_rows": [
+            {"label": row["dimension"], "value": f"{row['score']} / 100", "status": _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7), "detail": f"{row['dimension']} readiness score from the release preflight checks."}
+            for row in fair_scores["dimensions"]
+        ],
+        "validation_rows": [
+            {"label": "Overall validation status", "value": validation_report["overall_status"], "status": "good" if validation_report["overall_status"] == "pass" else "watch", "detail": "Combined metadata, mapping, namespace, and SHACL status."},
+            {"label": "SHACL conforms", "value": str(validation_report["shacl_conforms"]), "status": _status_for_flag(bool(validation_report["shacl_conforms"])), "detail": "Local release SHACL shapes."},
+            {"label": "Missing labels", "value": str(validation_report["missing_label_count"]), "status": _status_for_count(int(validation_report["missing_label_count"])), "detail": "Release-time missing labels after enrichment."},
+            {"label": "Missing definitions", "value": str(validation_report["missing_definition_count"]), "status": _status_for_count(int(validation_report["missing_definition_count"])), "detail": "Release-time missing definitions or comments after enrichment."},
+            {"label": "Namespace violations", "value": str(len(validation_report["namespace_violations"])), "status": _status_for_count(len(validation_report["namespace_violations"])), "detail": "Violations against the active namespace policy."},
+            {"label": "Mapping issues", "value": str(len(validation_report["mapping_issues"])), "status": _status_for_count(len(validation_report["mapping_issues"])), "detail": "Mappings that conflict with local term typing."},
+            {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
+            {"label": "EMMO checks", "value": validation_report["emmo_checks"]["status"], "status": "good" if validation_report["emmo_checks"]["status"] == "available" else "watch", "detail": validation_report["emmo_checks"]["details"]},
+            {"label": "OOPS! hook", "value": validation_report["oops_checks"]["status"], "status": "good" if validation_report["oops_checks"]["status"] == "reachable" else "watch", "detail": validation_report["oops_checks"]["details"]},
+            {"label": "FOOPS! hook", "value": validation_report["foops_checks"]["status"], "status": "good" if validation_report["foops_checks"]["status"] == "reachable" else "watch", "detail": validation_report["foops_checks"]["details"]},
+        ],
+        "hygiene_rows": [
+            {"label": "Preferred prefix in public table", "value": namespace_policy["preferred_namespace_prefix"], "status": "good", "detail": "Public docs normalize the preferred namespace prefix for the local ontology."},
+            {"label": "Placeholder-style definitions", "value": str(placeholder_definition_count), "status": "watch" if placeholder_definition_count else "good", "detail": "Generated definitions that still need expert editorial review."},
+            {"label": "Imports declared in schema", "value": str(len(imports)), "status": "good" if imports else "watch", "detail": "Imported ontologies explicitly declared in the schema module."},
+            {"label": "Baseline metadata gaps", "value": str(len(inspection_report.get('metadata_missing', []))), "status": "watch" if inspection_report.get("metadata_missing") else "good", "detail": "Source-ontology metadata gaps before enrichment."},
+            {"label": "Configured import sources", "value": str(len(import_catalog_rows)), "status": "good" if import_catalog_rows else "watch", "detail": "Configured primary, fallback, and optional reuse targets for the release."},
+        ],
+        "publication_rows": publication_rows,
+        "recommendations": [
+            "Prioritize expert review of generated placeholder definitions before treating the release as a mature public vocabulary."
+            if placeholder_definition_count
+            else "Current structural validation is healthy; focus next on richer public examples and query support.",
+            "Audit source content to remove local file-based namespace leakage before external publication."
+            if hidden_local_namespace_count
+            else "Public namespace hygiene is acceptable for release display.",
+            "Review unmapped controlled vocabulary rows to decide which terms should remain local and which need better external alignment."
+            if mapping_stats["unmapped"]
+            else "Mapped and unmapped vocabulary balance looks stable for a conservative first release.",
+        ],
+    }
+
+    dashboard_template = env.get_template("dashboard.html")
+    write_text(
+        pages_dir / "quality-dashboard.html",
+        dashboard_template.render(
+            page_title="Quality Dashboard",
+            site=site,
+            base_path="..",
+            release_score=fair_scores["overall"],
+            release_ready=fair_scores.get("release_ready", False),
+            fair_rows=quality_dashboard["fair_rows"],
+            validation_rows=quality_dashboard["validation_rows"],
+            hygiene_rows=quality_dashboard["hygiene_rows"],
+            publication_rows=quality_dashboard["publication_rows"],
+            recommendations=quality_dashboard["recommendations"],
+        ),
+    )
+
+    queries_template = env.get_template("queries.html")
+    write_text(
+        pages_dir / "queries.html",
+        queries_template.render(
+            page_title="Queries",
+            site=site,
+            base_path="..",
+            query_intro=_clean_text(documentation_cfg.get("query_guide", {}).get("introduction", "")),
+            query_notes=documentation_cfg.get("query_guide", {}).get("notes", []),
+            competency_questions=documentation_cfg.get("competency_questions", []),
+        ),
+    )
+
+    visualizations_template = env.get_template("visualizations.html")
+    visualization_rows = [
+        {"title": "Ontology module overview", "body": "Release overview of asserted schema, controlled vocabulary, and separated example content.", "svg": _simple_svg_card("Schema/vocabulary split", "Release modularization overview", str(len(classes) + len(vocabulary_rows)), "#ecfeff")},
+        {"title": "Import graph", "body": "Configured primary, fallback, and optional external ontologies for the active release profile.", "svg": _import_graph_svg(import_catalog_rows)},
+        {"title": "Mapping coverage by source", "body": "External source ontologies currently contributing reviewed mappings.", "svg": _bar_chart_svg("Mapping coverage by source ontology", mapping_stats["sources"])},
+        {"title": "Process, data, and provenance pattern", "body": "A publication-oriented modeling pattern for materials, measurements, outputs, and provenance.", "svg": _process_pattern_svg()},
+        {"title": "Measurement neighborhood", "body": "Representative term neighborhood around a measurement-focused schema class.", "svg": _term_neighborhood_svg(classes, properties)},
+        {"title": "Alignment relation mix", "body": "Reviewed relation types used across conservative mappings.", "svg": _bar_chart_svg("Alignment relation types", mapping_stats["relations"], "#d97706")},
+    ]
+    write_text(
+        pages_dir / "visualizations.html",
+        visualizations_template.render(
+            page_title="Visualizations",
+            site=site,
+            base_path="..",
+            visualizations=visualization_rows,
+        ),
     )
 
     write_json(data_dir / "classes.json", classes)
     write_json(data_dir / "properties.json", properties)
     write_json(data_dir / "mappings.json", review_rows)
     write_json(data_dir / "reference_iris.json", endpoint_rows)
+    write_json(data_dir / "quality_dashboard.json", quality_dashboard)
+    write_json(data_dir / "query_examples.json", documentation_cfg.get("competency_questions", []))
+    write_json(data_dir / "visualizations.json", [{"title": item["title"], "body": item["body"]} for item in visualization_rows])
+    write_json(data_dir / "import_catalog.json", import_catalog_rows)
+    write_json(data_dir / "local_keep_rows.json", local_keep_rows)

@@ -19,6 +19,7 @@ class LocalTerm:
     category: str
     definition: str
     comment: str
+    deprecated: bool
     superclasses: list[str]
     domains: list[str]
     ranges: list[str]
@@ -61,6 +62,7 @@ def extract_local_terms(
             category=record.category,
             definition=definition,
             comment=comment,
+            deprecated=any(str(obj).lower() == "true" for obj in graph.objects(subject, OWL.deprecated)),
             superclasses=[as_uri_text(obj) for obj in graph.objects(subject, RDFS.subClassOf)],
             domains=[as_uri_text(obj) for obj in graph.objects(subject, RDFS.domain)],
             ranges=[as_uri_text(obj) for obj in graph.objects(subject, RDFS.range)],

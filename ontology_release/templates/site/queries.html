@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Competency-Question-Driven Querying</h2>
+  <p>{{ query_intro }}</p>
+  <ul class="simple-list">
+    {% for item in query_notes %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% for row in competency_questions %}
+<section class="query-card">
+  <div class="query-meta">
+    <span class="metric-pill">{{ row.id }}</span>
+    <span class="metric-pill">SPARQL example</span>
+  </div>
+  <h2>{{ row.question }}</h2>
+  <p>{{ row.answer }}</p>
+  <pre><code id="{{ row.id }}">{{ row.sparql }}</code></pre>
+  <div class="copy-row">
+    <button class="copy-button" data-copy-target="{{ row.id }}">Copy query</button>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

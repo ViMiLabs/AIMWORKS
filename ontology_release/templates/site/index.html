@@ -10,6 +10,7 @@
       <li>Schema terms: <strong>{{ overview.schema_term_count }}</strong></li>
       <li>Controlled vocabulary terms: <strong>{{ overview.vocabulary_count }}</strong></li>
       <li>Separated examples or data nodes: <strong>{{ overview.example_count }}</strong></li>
+      <li>Release date: <strong>{{ overview.release_date }}</strong></li>
     </ul>
   </article>
   <article class="card">
@@ -24,6 +25,19 @@
   </article>
 </section>
 
+<section class="card">
+  <h2>Release Highlights</h2>
+  <div class="kpi-grid">
+    {% for item in highlights %}
+    <article class="kpi">
+      <span class="kpi__value">{{ item.value }}</span>
+      <span class="kpi__label">{{ item.label }}</span>
+      <p class="kpi__detail">{{ item.detail }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
 <section class="grid three">
   {% for box in cards %}
   <article class="card">
@@ -31,6 +45,96 @@
     <p>{{ box.body }}</p>
   </article>
   {% endfor %}
+</section>
+
+<section class="grid three">
+  {% for item in module_cards %}
+  <article class="card">
+    <h3>{{ item.title }}</h3>
+    <div class="svg-frame">{{ item.svg | safe }}</div>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Domain Use Cases</h2>
+    <ul class="simple-list">
+      {% for item in use_cases %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>Who Should Use H2KG</h2>
+    <ul class="simple-list">
+      {% for item in audiences %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Quick Links</h2>
+    <ul class="simple-list">
+      {% for row in resource_rows %}
+      <li><strong>{{ row.label }}</strong>: <a href="{{ row.value }}">{{ row.value }}</a></li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>Publication Guidance</h2>
+    <ul class="simple-list">
+      <li><a href="{{ base_path }}/pages/import-guide.html">How to import the ontology modules</a></li>
+      <li><a href="{{ base_path }}/pages/cite.html">How to cite the ontology and software package</a></li>
+      <li><a href="{{ base_path }}/pages/worked-examples.html">Download worked JSON-LD, CSV, RDF, and notebook examples</a></li>
+    </ul>
+  </article>
+</section>
+
+<section class="card">
+  <div class="section-head">
+    <div>
+      <h2>Public-Facing Quality Signals</h2>
+      <p>These indicators help separate structural release completeness from the remaining editorial work needed for a mature ontology publication.</p>
+    </div>
+  </div>
+  <div class="grid three">
+    {% for item in quality_signals %}
+    <article class="check-card">
+      <div class="status-pill status-{{ item.status }}">{{ item.status | upper }}</div>
+      <h3>{{ item.label }}</h3>
+      <p><strong>{{ item.value }}</strong></p>
+      <p>{{ item.detail }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card">
+  <h2>Featured Pages</h2>
+  <div class="feature-list">
+    {% for item in featured_pages %}
+    <article class="feature-item">
+      <h3><a href="{{ base_path }}/{{ item.href }}">{{ item.title }}</a></h3>
+      <p>{{ item.body }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card">
+  <h2>Competency Questions Preview</h2>
+  <div class="feature-list">
+    {% for row in competency_preview %}
+    <article class="feature-item">
+      <h3>{{ row.id }}: {{ row.question }}</h3>
+      <p>{{ row.answer }}</p>
+    </article>
+    {% endfor %}
+  </div>
 </section>
 
 <section class="card">

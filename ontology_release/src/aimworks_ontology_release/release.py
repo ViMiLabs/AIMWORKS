@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import shutil
 from pathlib import Path
 from typing import Any
@@ -69,6 +70,111 @@ def _build_inferred_graph(schema_graph: Graph, alignments_graph: Graph) -> Graph
     for subject, obj in closure(RDFS.subPropertyOf):
         graph.add((subject, RDFS.subPropertyOf, obj))
     return graph
+
+
+def _source_version_label(cfg: dict[str, Any]) -> str:
+    fetch_cfg = cfg.get("fetch", {})
+    url = str(fetch_cfg.get("url") or fetch_cfg.get("path") or "")
+    match = re.search(r"(\d+\.\d+(?:\.\d+)*)", url)
+    if match:
+        return match.group(1)
+    if "/master/" in url or url.endswith("/master"):
+        return "rolling/master"
+    if "/main/" in url or url.endswith("/main"):
+        return "rolling/main"
+    if fetch_cfg.get("kind") == "configurable":
+        return "configurable"
+    if url:
+        return "unversioned"
+    return "unspecified"
+
+
+def _write_import_catalog(source_config: dict[str, Any], root: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for source_id, cfg in source_config.get("sources", {}).items():
+        fetch_cfg = cfg.get("fetch", {})
+        rows.append(
+            {
+                "source_id": source_id,
+                "title": cfg.get("title", source_id),
+                "category": cfg.get("category", ""),
+                "enabled": bool(cfg.get("enabled", False)),
+                "optional": bool(cfg.get("optional", False)),
+                "priority": cfg.get("priority", ""),
+                "base_iri": cfg.get("base_iri", ""),
+                "fetch_kind": fetch_cfg.get("kind", ""),
+                "fetch_location": fetch_cfg.get("url") or fetch_cfg.get("path") or "",
+                "version_label": _source_version_label(cfg),
+                "allow_remote": bool(fetch_cfg.get("allow_remote", False)),
+            }
+        )
+    write_json(root / "output" / "reports" / "import_catalog.json", rows)
+    lines = ["# Import Catalog", "", "Configured source ontologies and release-time reuse targets.", ""]
+    for row in rows:
+        lines.extend(
+            [
+                f"## {row['title']}",
+                "",
+                f"- Source ID: `{row['source_id']}`",
+                f"- Category: `{row['category']}`",
+                f"- Enabled: `{row['enabled']}`",
+                f"- Optional: `{row['optional']}`",
+                f"- Version label: `{row['version_label']}`",
+                f"- Base IRI: `{row['base_iri']}`",
+                f"- Fetch kind: `{row['fetch_kind']}`",
+                f"- Fetch location: `{row['fetch_location']}`",
+                "",
+            ]
+        )
+    write_text(root / "output" / "reports" / "import_catalog.md", "\n".join(lines) + "\n")
+    return rows
+
+
+def _write_changelog_report(
+    release_profile: dict[str, Any],
+    split_report: dict[str, Any],
+    enrichment_report: dict[str, Any],
+    mapping_review: list[dict[str, Any]],
+    validation_report: dict[str, Any],
+    fair_scores: dict[str, Any],
+    root: Path,
+) -> dict[str, Any]:
+    version = str(release_profile["release"]["version"])
+    release_date = str(release_profile["release"]["release_date"])
+    mapped_rows = sum(1 for row in mapping_review if row.get("target_iri"))
+    entry = {
+        "version": version,
+        "date": release_date,
+        "summary": "Initial public-ready H2KG PEMFC catalyst-layer release package baseline.",
+        "changes": [
+            f"Separated {split_report['schema_subject_count']} schema subjects, {split_report['controlled_vocabulary_subject_count']} controlled vocabulary subjects, and {split_report['example_subject_count']} example or data-like subjects.",
+            f"Generated or normalized {enrichment_report['generated_annotations']} annotations and metadata updates for version {version}.",
+            f"Published {mapped_rows} mapped review rows across the alignment outputs.",
+            f"Validation status is {validation_report['overall_status']} with SHACL conforms set to {validation_report['shacl_conforms']}.",
+            f"Overall FAIR readiness score is {fair_scores['overall']} / 100.",
+        ],
+        "notes": [
+            "No prior published ontology version was registered in the current release profile, so this release acts as the initial curated public baseline.",
+            "Placeholder definitions and unmapped local vocabulary terms remain explicit editorial follow-up items rather than being hidden.",
+        ],
+    }
+    payload = {"entries": [entry]}
+    write_json(root / "output" / "reports" / "changelog_report.json", payload)
+    lines = [
+        "# Changelog",
+        "",
+        f"## {entry['version']} ({entry['date']})",
+        "",
+        entry["summary"],
+        "",
+        "### Changes",
+        "",
+    ]
+    lines.extend(f"- {item}" for item in entry["changes"])
+    lines.extend(["", "### Notes", ""])
+    lines.extend(f"- {item}" for item in entry["notes"])
+    write_text(root / "output" / "reports" / "changelog_report.md", "\n".join(lines) + "\n")
+    return payload
 
 
 def _mirror_release_artifacts(root: Path) -> None:
@@ -188,6 +294,7 @@ def run_pipeline(
         alignments_graph,
         classifications,
         configs["namespace_policy"],
+        configs["release_profile"],
         root,
     )
     write_validation_outputs(validation_report, root)
@@ -202,6 +309,7 @@ def run_pipeline(
     write_json(root / "output" / "ontology" / "context.jsonld", context_payload)
 
     generate_w3id_artifacts(configs["namespace_policy"], configs["release_profile"], root)
+    _write_import_catalog(configs["source_ontologies"], root)
 
     provisional_fair = {"overall": 0, "dimensions": [{"dimension": "Findable", "score": 0}, {"dimension": "Accessible", "score": 0}, {"dimension": "Interoperable", "score": 0}, {"dimension": "Reusable", "score": 0}], "blockers": []}
     build_docs(
@@ -215,11 +323,14 @@ def run_pipeline(
         classifications,
         configs["release_profile"],
         configs["namespace_policy"],
+        configs["source_ontologies"],
+        configs["namespace_policy_raw"],
         root,
     )
 
     fair_scores = compute_fair_scores(root)
     write_fair_reports(fair_scores, root)
+    _write_changelog_report(configs["release_profile"], split_report, enrichment_report, mapping_review, validation_report, fair_scores, root)
     build_docs(
         split_graphs["schema"],
         split_graphs["controlled_vocabulary"],
@@ -231,6 +342,8 @@ def run_pipeline(
         classifications,
         configs["release_profile"],
         configs["namespace_policy"],
+        configs["source_ontologies"],
+        configs["namespace_policy_raw"],
         root,
     )
     build_publication_layout(root, configs["release_profile"], configs["namespace_policy"], context_payload)

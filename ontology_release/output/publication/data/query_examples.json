@@ -1,0 +1,20 @@
+[
+  {
+    "id": "CQ1",
+    "question": "Which measurement classes in H2KG record instrument usage and produce data outputs?",
+    "answer": "Use the schema module to traverse local measurement classes and the object properties that relate measurements to instruments and outputs.",
+    "sparql": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?measurement ?measurementLabel ?property ?propertyLabel\nWHERE {\n  ?measurement a owl:Class ;\n    rdfs:label ?measurementLabel .\n  FILTER(CONTAINS(LCASE(STR(?measurementLabel)), \"measurement\"))\n  ?property rdfs:domain ?measurement ;\n    rdfs:label ?propertyLabel .\n}\nORDER BY ?measurementLabel ?propertyLabel\n"
+  },
+  {
+    "id": "CQ2",
+    "question": "Which local terms are aligned to EMMO, ECHO, QUDT, ChEBI, or PROV-O?",
+    "answer": "Query the alignments graph to review proposed reuse and local terms that remain intentionally specific to H2KG.",
+    "sparql": "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?local ?relation ?external\nWHERE {\n  VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }\n  ?local ?relation ?external .\n  FILTER(STRSTARTS(STR(?local), \"https://w3id.org/h2kg/hydrogen-ontology#\"))\n}\nORDER BY ?local ?relation\n"
+  },
+  {
+    "id": "CQ3",
+    "question": "Which controlled vocabulary terms were kept local because no safe external mapping was found?",
+    "answer": "Review the mapping review output for local vocabulary terms without a target IRI and use that list to prioritize curation.",
+    "sparql": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?term ?label\nWHERE {\n  ?term rdfs:label ?label .\n  FILTER(STRSTARTS(STR(?term), \"https://w3id.org/h2kg/hydrogen-ontology#\"))\n}\nORDER BY ?label\n"
+  }
+]

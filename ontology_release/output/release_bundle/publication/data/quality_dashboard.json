@@ -1,0 +1,159 @@
+{
+  "fair_rows": [
+    {
+      "label": "Findable",
+      "value": "100 / 100",
+      "status": "good",
+      "detail": "Findable readiness score from the release preflight checks."
+    },
+    {
+      "label": "Accessible",
+      "value": "100 / 100",
+      "status": "good",
+      "detail": "Accessible readiness score from the release preflight checks."
+    },
+    {
+      "label": "Interoperable",
+      "value": "100 / 100",
+      "status": "good",
+      "detail": "Interoperable readiness score from the release preflight checks."
+    },
+    {
+      "label": "Reusable",
+      "value": "80 / 100",
+      "status": "watch",
+      "detail": "Reusable readiness score from the release preflight checks."
+    }
+  ],
+  "validation_rows": [
+    {
+      "label": "Overall validation status",
+      "value": "pass",
+      "status": "good",
+      "detail": "Combined metadata, mapping, namespace, and SHACL status."
+    },
+    {
+      "label": "SHACL conforms",
+      "value": "True",
+      "status": "good",
+      "detail": "Local release SHACL shapes."
+    },
+    {
+      "label": "Missing labels",
+      "value": "0",
+      "status": "good",
+      "detail": "Release-time missing labels after enrichment."
+    },
+    {
+      "label": "Missing definitions",
+      "value": "0",
+      "status": "good",
+      "detail": "Release-time missing definitions or comments after enrichment."
+    },
+    {
+      "label": "Namespace violations",
+      "value": "0",
+      "status": "good",
+      "detail": "Violations against the active namespace policy."
+    },
+    {
+      "label": "Mapping issues",
+      "value": "0",
+      "status": "good",
+      "detail": "Mappings that conflict with local term typing."
+    },
+    {
+      "label": "OWL consistency hook",
+      "value": "skipped",
+      "status": "watch",
+      "detail": "owlready2 is not installed; OWL consistency loading and reasoner hooks were skipped."
+    },
+    {
+      "label": "EMMO checks",
+      "value": "skipped",
+      "status": "watch",
+      "detail": "EMMOntoPy is not installed; optional EMMO convention checks were skipped."
+    },
+    {
+      "label": "OOPS! hook",
+      "value": "disabled",
+      "status": "watch",
+      "detail": "OOPS! integration is configured but disabled by default for offline-safe local releases."
+    },
+    {
+      "label": "FOOPS! hook",
+      "value": "disabled",
+      "status": "watch",
+      "detail": "FOOPS! integration is configured but disabled by default for offline-safe local releases."
+    }
+  ],
+  "hygiene_rows": [
+    {
+      "label": "Preferred prefix in public table",
+      "value": "h2kg",
+      "status": "good",
+      "detail": "Public docs normalize the preferred namespace prefix for the local ontology."
+    },
+    {
+      "label": "Placeholder-style definitions",
+      "value": "1883",
+      "status": "watch",
+      "detail": "Generated definitions that still need expert editorial review."
+    },
+    {
+      "label": "Imports declared in schema",
+      "value": "0",
+      "status": "watch",
+      "detail": "Imported ontologies explicitly declared in the schema module."
+    },
+    {
+      "label": "Baseline metadata gaps",
+      "value": "1",
+      "status": "watch",
+      "detail": "Source-ontology metadata gaps before enrichment."
+    },
+    {
+      "label": "Configured import sources",
+      "value": "11",
+      "status": "good",
+      "detail": "Configured primary, fallback, and optional reuse targets for the release."
+    }
+  ],
+  "publication_rows": [
+    {
+      "label": "HTML reference page",
+      "value": "ready",
+      "status": "good"
+    },
+    {
+      "label": "Machine-readable source",
+      "value": "ready",
+      "status": "good"
+    },
+    {
+      "label": "Inferred serialization",
+      "value": "ready",
+      "status": "good"
+    },
+    {
+      "label": "JSON-LD context",
+      "value": "ready",
+      "status": "good"
+    },
+    {
+      "label": "Release bundle",
+      "value": "ready",
+      "status": "good"
+    },
+    {
+      "label": "w3id artifacts",
+      "value": "ready",
+      "status": "good"
+    }
+  ],
+  "recommendations": [
+    "Prioritize expert review of generated placeholder definitions before treating the release as a mature public vocabulary.",
+    "Audit source content to remove local file-based namespace leakage before external publication.",
+    "Review unmapped controlled vocabulary rows to decide which terms should remain local and which need better external alignment."
+  ]
+}

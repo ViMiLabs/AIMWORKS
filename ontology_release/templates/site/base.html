@@ -21,18 +21,23 @@
           <span>{{ site.license_label }}</span>
           <span>{{ site.prefix }}</span>
         </div>
+        {% if site.actions %}
+        <div class="action-row">
+          {% for item in site.actions %}
+          <a href="{{ item.href }}" class="{% if item.primary %}primary{% endif %}">{{ item.label }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
       </div>
     </header>
     <nav class="nav">
-      <a href="{{ base_path }}/index.html">Overview</a>
-      <a href="{{ base_path }}/hydrogen-ontology.html">Reference</a>
-      <a href="{{ base_path }}/pages/user-guide.html">User Guide</a>
-      <a href="{{ base_path }}/pages/ontology-overview.html">Ontology</a>
+      {% for item in site.nav %}
+      <a href="{{ base_path }}/{{ item.href }}">{{ item.label }}</a>
+      {% endfor %}
       <a href="{{ base_path }}/pages/class-index.html">Classes</a>
       <a href="{{ base_path }}/pages/property-index.html">Properties</a>
       <a href="{{ base_path }}/pages/alignment.html">Alignment</a>
       <a href="{{ base_path }}/pages/examples.html">Examples</a>
-      <a href="{{ base_path }}/pages/release.html">Release</a>
     </nav>
     <main class="content">
       {% block content %}{% endblock %}

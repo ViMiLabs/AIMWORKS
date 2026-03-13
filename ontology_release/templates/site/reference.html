@@ -18,6 +18,26 @@
   </div>
 </section>
 
+<section class="grid two">
+  <article class="card">
+    <h2>Release Downloads</h2>
+    <ul class="simple-list">
+      {% for row in download_rows %}
+      <li><a href="{{ row.href }}">{{ row.label }}</a>: {{ row.detail }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>Coverage Signals</h2>
+    <ul class="simple-list">
+      {% for row in coverage_rows %}
+      <li><strong>{{ row.label }}</strong>: {{ row.value }}</li>
+      {% endfor %}
+    </ul>
+    <p>{{ curation_note }}</p>
+  </article>
+</section>
+
 <section id="reference-iris" class="card">
   <h2>Reference IRIs</h2>
   <table class="data-table">
@@ -86,13 +106,14 @@
   </div>
   <table id="reference-class-table" class="data-table searchable">
     <thead>
-      <tr><th>Label</th><th>IRI</th><th>Definition</th><th>Superclasses</th><th>Mappings</th></tr>
+      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Definition</th><th>Superclasses</th><th>Mappings</th></tr>
     </thead>
     <tbody>
       {% for row in class_rows %}
       <tr id="{{ row.anchor }}">
         <td>{{ row.label }}</td>
         <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.deprecated }}</td>
         <td>{{ row.definition }}</td>
         <td>{{ row.superclasses }}</td>
         <td>{{ row.mappings }}</td>
@@ -112,13 +133,14 @@
   </div>
   <table id="reference-property-table" class="data-table searchable">
     <thead>
-      <tr><th>Label</th><th>IRI</th><th>Kind</th><th>Domain</th><th>Range</th><th>Mappings</th></tr>
+      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Kind</th><th>Domain</th><th>Range</th><th>Mappings</th></tr>
     </thead>
     <tbody>
       {% for row in property_rows %}
       <tr id="{{ row.anchor }}">
         <td>{{ row.label }}</td>
         <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.deprecated }}</td>
         <td>{{ row.kind }}</td>
         <td>{{ row.domain }}</td>
         <td>{{ row.range }}</td>
@@ -134,13 +156,14 @@
   <p>Curated local named terms retained in the `h2kg` namespace and published separately from the asserted schema.</p>
   <table id="reference-vocab-table" class="data-table searchable">
     <thead>
-      <tr><th>Label</th><th>IRI</th><th>Type</th><th>Definition</th><th>Mappings</th></tr>
+      <tr><th>Label</th><th>IRI</th><th>Status</th><th>Type</th><th>Definition</th><th>Mappings</th></tr>
     </thead>
     <tbody>
       {% for row in vocabulary_rows %}
       <tr>
         <td>{{ row.label }}</td>
         <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.deprecated }}</td>
         <td>{{ row.kind }}</td>
         <td>{{ row.definition }}</td>
         <td>{{ row.mappings }}</td>

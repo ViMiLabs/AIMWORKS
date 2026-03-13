@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Import | H2KG PEMFC Catalyst Layer Application Ontology</title>
+  <meta name="description" content="FAIR, EMMO-aligned documentation generated from the release pipeline">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script defer src="../assets/site.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="hero">
+      <div class="hero__band"></div>
+      <div class="hero__content">
+        <p class="eyebrow">EMMO-aligned release package for low-Pt PEMFC cathode catalyst-layer experiments and provenance-rich data</p>
+        <h1>H2KG PEMFC Catalyst Layer Application Ontology</h1>
+        <p class="lede">FAIR, EMMO-aligned documentation generated from the release pipeline</p>
+        <div class="meta-row">
+          <span>Version 2026.3.0</span>
+          <span>https://creativecommons.org/licenses/by/4.0/</span>
+          <span>h2kg</span>
+        </div>
+        
+        <div class="action-row">
+          
+          <a href="https://w3id.org/h2kg/hydrogen-ontology" class="primary">Stable ontology IRI</a>
+          
+          <a href="https://github.com/ViMiLabs/AIMWORKS" class="">GitHub repository</a>
+          
+          <a href="https://w3id.org/h2kg/hydrogen-ontology/source" class="">Source TTL</a>
+          
+        </div>
+        
+      </div>
+    </header>
+    <nav class="nav">
+      
+      <a href="../index.html">Home</a>
+      
+      <a href="../hydrogen-ontology.html">Reference</a>
+      
+      <a href="../pages/user-guide.html">User Guide</a>
+      
+      <a href="../pages/ontology-overview.html">About</a>
+      
+      <a href="../pages/scope-and-faq.html">Scope and FAQ</a>
+      
+      <a href="../pages/modeling-patterns.html">Patterns</a>
+      
+      <a href="../pages/queries.html">Queries</a>
+      
+      <a href="../pages/import-guide.html">Import</a>
+      
+      <a href="../pages/cite.html">Cite</a>
+      
+      <a href="../pages/visualizations.html">Visuals</a>
+      
+      <a href="../pages/quality-dashboard.html">Quality</a>
+      
+      <a href="../pages/release.html">Release</a>
+      
+      <a href="../pages/class-index.html">Classes</a>
+      <a href="../pages/property-index.html">Properties</a>
+      <a href="../pages/alignment.html">Alignment</a>
+      <a href="../pages/examples.html">Examples</a>
+    </nav>
+    <main class="content">
+      
+<article class="card prose">
+  <h2>How to Import</h2>
+  
+  <p class="lede">Practical import and programmatic access guidance for the H2KG ontology release modules.</p>
+  
+  <h3>Import guidance</h3><ul class='simple-list'><li>Import the asserted schema module when you need the curated ontology structure without example individuals.</li><li>Use the inferred serialization for exploration, quality review, or graph analytics, not as a substitute for editorial curation.</li><li>Keep the controlled vocabulary and example modules separate unless your downstream use case explicitly requires them.</li></ul><h3>OWL import example</h3><pre><code>@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+&lt;https://example.org/my-ontology&gt; a owl:Ontology ;
+  owl:imports &lt;https://w3id.org/h2kg/hydrogen-ontology&gt; .
+</code></pre><h3>rdflib example</h3><pre><code>from rdflib import Graph
+
+graph = Graph()
+graph.parse(&quot;https://w3id.org/h2kg/hydrogen-ontology/source&quot;, format=&quot;turtle&quot;)
+</code></pre><h3>Stable release endpoints</h3><table class='data-table'><thead><tr><th>Label</th><th>IRI</th></tr></thead><tbody><tr><td>Ontology IRI</td><td><code>https://w3id.org/h2kg/hydrogen-ontology</code></td></tr><tr><td>Asserted Source</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/source</code></td></tr><tr><td>Inferred Source</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/inferred</code></td></tr><tr><td>Latest Release</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/latest</code></td></tr><tr><td>JSON-LD Context</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/context</code></td></tr><tr><td>Versioned Release</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/2026.3.0</code></td></tr><tr><td>Versioned Inferred</td><td><code>https://w3id.org/h2kg/hydrogen-ontology/2026.3.0/inferred</code></td></tr></tbody></table>
+</article>
+
+    </main>
+    <footer class="footer">
+      <p>H2KG PEMFC Catalyst Layer Application Ontology. Generated locally by the AIMWORKS ontology release pipeline.</p>
+    </footer>
+  </div>
+</body>
+</html>
