@@ -71,7 +71,7 @@ def build_publication_layout(
 <head>
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="0; url={reference_page}">
-  <title>H2KG PEMFC Catalyst Layer Application Ontology</title>
+  <title>{release_profile['project']['title']}</title>
 </head>
 <body>
   <p>Redirecting to <a href="{reference_page}">{reference_page}</a>.</p>

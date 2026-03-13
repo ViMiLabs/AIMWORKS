@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "ontology_release/**"
+      - "input/**"
       - ".github/workflows/ontology-pages.yml"
 
 permissions:
@@ -28,7 +29,7 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -e .
       - name: Build docs
-        run: python -m aimworks_ontology_release.cli docs --input input/current_ontology.jsonld
+        run: python -m aimworks_ontology_release.cli docs-all
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

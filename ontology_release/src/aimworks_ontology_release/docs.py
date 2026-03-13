@@ -976,7 +976,7 @@ def _import_graph_svg(import_rows: list[dict[str, Any]]) -> str:
     edges = []
     center_x, center_y = 320, 80
     cards.append(f'<rect x="{center_x - 100}" y="{center_y - 28}" width="200" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect>')
-    cards.append(f'<text x="{center_x}" y="{center_y + 4}" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">H2KG asserted schema</text>')
+    cards.append(f'<text x="{center_x}" y="{center_y + 4}" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Asserted schema module</text>')
     positions = [(70, 200), (240, 200), (410, 200), (580, 200), (155, 300), (325, 300), (495, 300)]
     for row, (x, y) in zip(enabled_rows[:7], positions):
         cards.append(f'<rect x="{x - 70}" y="{y - 24}" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect>')
@@ -1078,6 +1078,17 @@ def build_docs(
     changelog_payload = read_json(root / "output" / "reports" / "changelog_report.json") if (root / "output" / "reports" / "changelog_report.json").exists() else {"entries": []}
     citation_meta = load_yaml(root / "CITATION.cff") if (root / "CITATION.cff").exists() else {}
     zenodo_meta = read_json(root / ".zenodo.json") if (root / ".zenodo.json").exists() else {}
+    profile_label = _clean_text(documentation_cfg.get("profile_label", "Ontology Profile"))
+    profile_heading = _clean_text(documentation_cfg.get("profile_heading", f"{profile_label} Ontology Profile"))
+    profile_intro = _clean_text(documentation_cfg.get("landing_intro", ""))
+    platform_title = _clean_text(release_profile["project"]["title"])
+    profile_switch = documentation_cfg.get("profile_switch", [])
+    hero_note = _clean_text(
+        documentation_cfg.get(
+            "hero_note",
+            f"An EMMO-aligned application ontology release profile for {profile_label} concepts, measurements, curated vocabulary, and publication-ready provenance.",
+        )
+    )
     site = {
         "title": release_profile["project"]["title"],
         "subtitle": release_profile["project"]["subtitle"],
@@ -1085,13 +1096,16 @@ def build_docs(
         "version": release_profile["release"]["version"],
         "license_label": release_profile["release"]["ontology_license"],
         "prefix": namespace_policy["preferred_namespace_prefix"],
-        "hero_note": "An EMMO-aligned application ontology release for PEMFC catalyst-layer experiments, measurements, curated vocabulary, and publication-grade provenance.",
+        "hero_note": hero_note,
         "hero_facts": [
+            {"label": "Profile", "value": profile_label},
             {"label": "Release", "value": str(release_profile["release"]["version"])},
             {"label": "Namespace", "value": namespace_policy["preferred_namespace_prefix"]},
             {"label": "Validation", "value": validation_report["overall_status"].upper()},
             {"label": "FAIR score", "value": str(fair_scores["overall"])},
         ],
+        "profile_switch": profile_switch,
+        "profile_label": profile_label,
         "nav": [
             {"href": "index.html", "label": "Home"},
             {"href": release_profile["publication"]["reference_page"], "label": "Reference"},
@@ -1136,8 +1150,8 @@ def build_docs(
     baseline_definition_coverage = float(inspection_report.get("definition_coverage", 0.0))
 
     overview = {
-        "description": _graph_text(schema_graph, ontology_node, [DCTERMS.description, DCTERMS.abstract]) or _clean_text(documentation_cfg.get("landing_intro", "")),
-        "landing_intro": _clean_text(documentation_cfg.get("landing_intro", "")),
+        "description": _graph_text(schema_graph, ontology_node, [DCTERMS.description, DCTERMS.abstract]) or profile_intro,
+        "landing_intro": profile_intro,
         "ontology_iri": namespace_policy["ontology_iri"],
         "namespace_mode": namespace_policy["namespace_mode"],
         "schema_term_count": len(classes) + len(properties),
@@ -1147,8 +1161,8 @@ def build_docs(
     }
     cards = [
         {"title": "Alignment Stack", "body": "Primary semantic anchors are EMMO, ECHO, QUDT, ChEBI, PROV-O, Dublin Core Terms, and VANN."},
-        {"title": "IRI Policy", "body": "The default profile preserves the current hash namespace and existing local term IRIs for safer first-release publication."},
-        {"title": "Release Assets", "body": "The publication includes machine-readable RDF, static HTML docs, versioned endpoints, FAIR reports, validation outputs, and w3id templates."},
+        {"title": "IRI Policy", "body": f"The {profile_label} profile preserves existing local IRIs by default unless namespace migration is explicitly enabled."},
+        {"title": "Release Assets", "body": f"The {platform_title} publication includes RDF modules, static docs, versioned endpoints, FAIR reports, validation outputs, and w3id templates."},
     ]
     highlights = [
         {"label": "Schema terms", "value": str(len(classes) + len(properties)), "detail": "Asserted local classes and properties published as the schema module."},
@@ -1159,7 +1173,7 @@ def build_docs(
         {"label": "Validation", "value": validation_report["overall_status"].upper(), "detail": "Current release validation state."},
     ]
     featured_pages = [
-        {"href": "pages/scope-and-faq.html", "title": "Scope and FAQ", "body": "Explains what H2KG covers, what it does not cover, and why release modules are separated."},
+        {"href": "pages/scope-and-faq.html", "title": "Scope and FAQ", "body": f"Explains what the {profile_label} profile covers, what it does not cover, and why release modules are separated."},
         {"href": "pages/modeling-patterns.html", "title": "Modeling Patterns", "body": "Documents the preferred patterns for measurement, materials, process, provenance, and publication."},
         {"href": "pages/queries.html", "title": "Queries", "body": "Provides competency-question-driven SPARQL examples and release-query guidance."},
         {"href": "pages/import-catalog.html", "title": "Import Catalog", "body": "Shows configured source ontologies, reuse targets, fetch modes, and version labels for the release stack."},
@@ -1217,9 +1231,10 @@ def build_docs(
             page_title="Home",
             site=site,
             base_path=".",
+            profile_heading=profile_heading,
             overview=overview,
             release_score=fair_scores["overall"],
-            readiness_summary="H2KG is published as a conservative ontology release package with explicit separation of schema, curated vocabulary, and example or data-like content.",
+            readiness_summary=f"{profile_label} is published as a conservative ontology release package with explicit separation of schema, curated vocabulary, and example or data-like content.",
             blockers=fair_scores["blockers"][:8] or ["No blocking issues detected."],
             cards=cards,
             highlights=highlights,
@@ -1262,7 +1277,7 @@ def build_docs(
             example_rows=example_rows,
             download_rows=download_rows,
             coverage_rows=coverage_rows,
-            curation_note="The release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
+            curation_note=f"The {profile_label} release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
         ),
     )
 
@@ -1351,7 +1366,7 @@ def build_docs(
             site=site,
             base_path="..",
             heading="User Guide",
-            summary="Operational guidance for running and reviewing the H2KG release pipeline.",
+            summary=f"Operational guidance for running and reviewing the {profile_label} release pipeline.",
             content_html=user_guide_html,
         ),
     )
@@ -1391,7 +1406,7 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Ontology Overview",
-            summary="What H2KG is, what it models, and which public release resources are available.",
+            summary=f"What the {profile_label} profile is, what it models, and which public release resources are available.",
             content_html=overview_html,
         ),
     )
@@ -1411,13 +1426,13 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Scope and FAQ",
-            summary="A concise explanation of H2KG scope, non-scope, and common release questions.",
+            summary=f"A concise explanation of {profile_label} scope, non-scope, and common release questions.",
             content_html=scope_html,
         ),
     )
 
     patterns_html = (
-        "<p>The patterns below are intended to keep H2KG conservative, reviewable, and interoperable with the external ontologies it reuses.</p>"
+        f"<p>The patterns below are intended to keep the {profile_label} profile conservative, reviewable, and interoperable with the external ontologies it reuses.</p>"
         + _pattern_html(documentation_cfg.get("modeling_patterns", []))
     )
     write_text(
@@ -1427,13 +1442,13 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Modeling Patterns",
-            summary="Recommended patterns for measurement, materials, process, provenance, and release publication in H2KG.",
+            summary=f"Recommended patterns for measurement, materials, process, provenance, and release publication in the {profile_label} profile.",
             content_html=patterns_html,
         ),
     )
 
     provenance_html = (
-        "<p>H2KG publishes both a source-oriented and a release-oriented provenance story. The release is intentionally conservative: it preserves local PEMFC concepts while documenting alignments, validation, and FAIR readiness.</p>"
+        f"<p>{platform_title} publishes both a source-oriented and a release-oriented provenance story. The release is intentionally conservative: it preserves profile-specific local concepts while documenting alignments, validation, and FAIR readiness.</p>"
         + _timeline_html(documentation_cfg.get("release_story", []))
     )
     write_text(
@@ -1443,7 +1458,7 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Provenance and History",
-            summary="Release story, publication checkpoints, and why H2KG uses a conservative ontology release process.",
+            summary=f"Release story, publication checkpoints, and why the {profile_label} profile uses a conservative ontology release process.",
             content_html=provenance_html,
         ),
     )
@@ -1464,7 +1479,7 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Governance",
-            summary="Editorial, contribution, and versioning guidance for H2KG ontology maintenance and release governance.",
+            summary=f"Editorial, contribution, and versioning guidance for {profile_label} ontology maintenance and release governance.",
             content_html=governance_html,
         ),
     )
@@ -1491,7 +1506,7 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Import Catalog",
-            summary="Configured reuse targets and source ontologies for the active H2KG release profile.",
+            summary=f"Configured reuse targets and source ontologies for the active {profile_label} release profile.",
             content_html=(
                 "<p>This catalog explains which external ontologies are configured as primary, fallback, or optional alignment sources for the release pipeline.</p>"
                 + import_catalog_html
@@ -1529,13 +1544,13 @@ def build_docs(
             site=site,
             base_path="..",
             heading="Namespace Policy",
-            summary="Stable IRI and namespace policy for the active H2KG publication profile.",
+            summary=f"Stable IRI and namespace policy for the active {profile_label} publication profile.",
             content_html=namespace_policy_html,
         ),
     )
 
     deprecation_html = (
-        "<p>H2KG treats deprecation as an explicit release-governed activity rather than a silent cleanup step.</p>"
+        f"<p>The {profile_label} profile treats deprecation as an explicit release-governed activity rather than a silent cleanup step.</p>"
         + _list_html(documentation_cfg.get("deprecation_policy", []))
     )
     write_text(
@@ -1566,7 +1581,7 @@ def build_docs(
         + "<h3>How to cite</h3>"
         + _list_html(documentation_cfg.get("citation_guidance", []))
         + "<h3>Software package citation</h3>"
-        + f"<p>{escape(_clean_text(citation_meta.get('title', 'H2KG release pipeline')))} ({escape(_clean_text(str(citation_meta.get('version', release_profile['release']['version']))))}).</p>"
+        + f"<p>{escape(_clean_text(citation_meta.get('title', f'{platform_title} release pipeline')))} ({escape(_clean_text(str(citation_meta.get('version', release_profile['release']['version']))))}).</p>"
     )
     write_text(
         pages_dir / "cite.html",
@@ -1609,7 +1624,7 @@ graph.parse("{namespace_policy['ontology_iri']}/source", format="turtle")
             site=site,
             base_path="..",
             heading="How to Import",
-            summary="Practical import and programmatic access guidance for the H2KG ontology release modules.",
+            summary=f"Practical import and programmatic access guidance for the {profile_label} ontology release modules.",
             content_html=import_html,
         ),
     )
@@ -1640,7 +1655,7 @@ ex:run-001 a h2kg:Measurement ;
             {
                 "cell_type": "markdown",
                 "metadata": {},
-                "source": ["# H2KG release notebook starter\n", "Load the asserted schema and inspect a few mapped terms.\n"],
+                "source": [f"# {platform_title} release notebook starter\n", "Load the asserted schema and inspect a few mapped terms.\n"],
             },
             {
                 "cell_type": "code",
@@ -1664,7 +1679,7 @@ ex:run-001 a h2kg:Measurement ;
     write_text(data_dir / "example_measurement.ttl", csv_ttl_example)
     write_json(data_dir / "example_release_notebook.ipynb", notebook_example)
     worked_examples_html = (
-        "<p>These researcher-facing examples show how H2KG can be used in practical data and release workflows.</p>"
+        f"<p>These researcher-facing examples show how the {profile_label} profile can be used in practical data and release workflows.</p>"
         + _list_html(documentation_cfg.get("researcher_extras", []))
         + "<h3>Downloadable examples</h3>"
         + _html_table(
@@ -1684,7 +1699,7 @@ ex:run-001 a h2kg:Measurement ;
             site=site,
             base_path="..",
             heading="Worked Examples",
-            summary="Researcher-facing JSON-LD, CSV-to-RDF, and notebook examples for H2KG release usage.",
+            summary=f"Researcher-facing JSON-LD, CSV-to-RDF, and notebook examples for {profile_label} release usage.",
             content_html=worked_examples_html,
         ),
     )
@@ -1704,7 +1719,7 @@ ex:run-001 a h2kg:Measurement ;
             site=site,
             base_path="..",
             heading="Changelog",
-            summary="Release-oriented summary of what changed in the current H2KG publication baseline.",
+            summary=f"Release-oriented summary of what changed in the current {profile_label} publication baseline.",
             content_html=changelog_html,
         ),
     )

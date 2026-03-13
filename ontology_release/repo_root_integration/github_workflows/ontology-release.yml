@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "ontology_release/**"
+      - "input/**"
       - ".github/workflows/ontology-release.yml"
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
       - name: Run tests
         run: python -m pytest
       - name: Build ontology release
-        run: python -m aimworks_ontology_release.cli release --input input/current_ontology.jsonld
+        run: python -m aimworks_ontology_release.cli release-all
       - name: Upload release bundle
         uses: actions/upload-artifact@v4
         with:

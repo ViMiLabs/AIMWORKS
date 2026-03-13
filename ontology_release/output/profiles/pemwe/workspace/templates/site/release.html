@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Release Story</h2>
+  <div class="timeline">
+    {% for row in timeline_rows %}
+    <div class="timeline__item">
+      <h3>{{ row.title }}</h3>
+      <p>{{ row.detail }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Publication Endpoints</h2>
+    <ul class="simple-list">
+      {% for row in endpoint_rows %}
+      <li><code>{{ row.iri }}</code>: {{ row.purpose }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>Publication Checks</h2>
+    <ul class="simple-list">
+      {% for row in publication_rows %}
+      <li><span class="status-pill status-{{ row.status }}">{{ row.value }}</span> {{ row.label }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Release Bundle</h2>
+    <ul class="simple-list">
+      {% for item in release_files %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <article class="card">
+    <h2>FAIR Scores</h2>
+    <ul class="simple-list">
+      {% for item in fair_rows %}
+      <li>{{ item.dimension }}: <strong>{{ item.score }}</strong></li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<section class="card">
+  <h2>Validation Summary</h2>
+  <ul class="simple-list">
+    {% for line in validation_lines %}
+    <li>{{ line }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

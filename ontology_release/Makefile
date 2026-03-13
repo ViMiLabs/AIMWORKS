@@ -1,42 +1,51 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m aimworks_ontology_release.cli
-INPUT = input/current_ontology.jsonld
+PROFILE ?= pemfc
 
-.PHONY: install inspect split map enrich annotate docs validate fair release run test clean
+.PHONY: install profiles inspect split map enrich annotate docs docs-all validate fair release release-all run test clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
 	$(PYTHON) -m pip install -e .
 
+profiles:
+	$(CLI) profiles
+
 inspect:
-	$(CLI) inspect --input $(INPUT)
+	$(CLI) inspect --profile $(PROFILE)
 
 split:
-	$(CLI) split --input $(INPUT)
+	$(CLI) split --profile $(PROFILE)
 
 map:
-	$(CLI) map --input $(INPUT)
+	$(CLI) map --profile $(PROFILE)
 
 enrich:
-	$(CLI) enrich --input $(INPUT)
+	$(CLI) enrich --profile $(PROFILE)
 
 annotate:
-	$(CLI) annotate --input $(INPUT)
+	$(CLI) annotate --profile $(PROFILE)
 
 docs:
-	$(CLI) docs --input $(INPUT)
+	$(CLI) docs --profile $(PROFILE)
+
+docs-all:
+	$(CLI) docs-all
 
 validate:
-	$(CLI) validate --input $(INPUT)
+	$(CLI) validate --profile $(PROFILE)
 
 fair:
-	$(CLI) fair --input $(INPUT)
+	$(CLI) fair --profile $(PROFILE)
 
 release:
-	$(CLI) release --input $(INPUT)
+	$(CLI) release --profile $(PROFILE)
+
+release-all:
+	$(CLI) release-all
 
 run:
-	$(CLI) run --input $(INPUT) --build-docs --build-release --fair-check
+	$(CLI) run --all-profiles --build-docs --build-release --fair-check
 
 test:
 	$(PYTHON) -m pytest

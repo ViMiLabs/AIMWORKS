@@ -1,0 +1,134 @@
+default_timeout_seconds: 15
+cache_directory: cache/sources
+sources:
+  emmo_core:
+    title: EMMO Core
+    enabled: true
+    optional: false
+    priority: 1.0
+    category: primary
+    base_iri: https://w3id.org/emmo#
+    fetch:
+      kind: remote_rdf
+      url: https://raw.githubusercontent.com/emmo-repo/EMMO/master/emmo.ttl
+      cache_file: emmo_core.ttl
+      allow_remote: false
+  echo:
+    title: EMMO Electrochemistry
+    enabled: true
+    optional: false
+    priority: 1.0
+    category: primary
+    base_iri: https://purls.helmholtz-metadaten.de/echo/
+    fetch:
+      kind: remote_rdf
+      url: https://raw.githubusercontent.com/emmo-repo/domain-electrochemistry/master/electrochemistry.ttl
+      cache_file: echo.ttl
+      allow_remote: false
+  qudt_schema:
+    title: QUDT Schema
+    enabled: true
+    optional: false
+    priority: 0.98
+    category: primary
+    base_iri: http://qudt.org/schema/qudt/
+    fetch:
+      kind: remote_rdf
+      url: https://qudt.org/3.1.1/schema/qudt
+      cache_file: qudt_schema.ttl
+      allow_remote: false
+  qudt_units:
+    title: QUDT Units
+    enabled: true
+    optional: false
+    priority: 0.99
+    category: primary
+    base_iri: http://qudt.org/vocab/unit/
+    fetch:
+      kind: remote_rdf
+      url: https://qudt.org/3.1.1/vocab/unit
+      cache_file: qudt_units.ttl
+      allow_remote: false
+  qudt_quantitykinds:
+    title: QUDT Quantity Kinds
+    enabled: true
+    optional: false
+    priority: 0.99
+    category: primary
+    base_iri: http://qudt.org/vocab/quantitykind/
+    fetch:
+      kind: remote_rdf
+      url: https://qudt.org/3.1.1/vocab/quantitykind
+      cache_file: qudt_quantitykinds.ttl
+      allow_remote: false
+  chebi:
+    title: ChEBI
+    enabled: true
+    optional: false
+    priority: 0.97
+    category: primary
+    base_iri: http://purl.obolibrary.org/obo/CHEBI_
+    fetch:
+      kind: ols4
+      url: https://www.ebi.ac.uk/ols4/api/search
+      allow_remote: false
+  provo:
+    title: PROV-O
+    enabled: true
+    optional: false
+    priority: 0.96
+    category: primary
+    base_iri: http://www.w3.org/ns/prov#
+    fetch:
+      kind: remote_rdf
+      url: https://www.w3.org/ns/prov-o.ttl
+      cache_file: prov-o.ttl
+      allow_remote: false
+  dcterms:
+    title: Dublin Core Terms
+    enabled: true
+    optional: false
+    priority: 0.96
+    category: primary
+    base_iri: http://purl.org/dc/terms/
+    fetch:
+      kind: remote_rdf
+      url: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/dublin_core_terms.ttl
+      cache_file: dcterms.ttl
+      allow_remote: false
+  vann:
+    title: VANN
+    enabled: true
+    optional: false
+    priority: 0.94
+    category: primary
+    base_iri: http://purl.org/vocab/vann/
+    fetch:
+      kind: remote_rdf
+      url: http://purl.org/vocab/vann/vann-vocab-20100607.rdf
+      cache_file: vann.rdf
+      allow_remote: false
+  oeo:
+    title: Open Energy Ontology
+    enabled: true
+    optional: true
+    priority: 0.82
+    category: fallback
+    base_iri: http://openenergy-platform.org/ontology/oeo/
+    fetch:
+      kind: remote_rdf
+      url: https://raw.githubusercontent.com/OpenEnergyPlatform/ontology/master/oeo.ttl
+      cache_file: oeo.ttl
+      allow_remote: false
+  pemfc_specific:
+    title: Optional PEMFC-specific source ontology
+    enabled: false
+    optional: true
+    priority: 0.99
+    category: configurable
+    base_iri: null
+    fetch:
+      kind: configurable
+      path: null
+      url: null
+      allow_remote: false

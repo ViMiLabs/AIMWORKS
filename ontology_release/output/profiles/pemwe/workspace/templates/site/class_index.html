@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head">
+    <div>
+      <h2>Class Index</h2>
+      <p>Local schema classes with definitions, hierarchy, and alignment proposals.</p>
+    </div>
+    <input class="filter-input" data-table-filter="class-table" placeholder="Filter classes">
+  </div>
+  <table id="class-table" class="data-table searchable">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>IRI</th>
+        <th>Status</th>
+        <th>Definition</th>
+        <th>Superclasses</th>
+        <th>Mappings</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in classes %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.deprecated }}</td>
+        <td>{{ row.definition }}</td>
+        <td>{{ row.superclasses }}</td>
+        <td>{{ row.mappings }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

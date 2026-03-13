@@ -146,6 +146,7 @@ def configured_paths(root: Path | None = None) -> dict[str, Path]:
         "examples_output": base / "output" / "examples",
         "docs_output": base / "output" / "docs",
         "release_bundle": base / "output" / "release_bundle",
+        "profiles_output": base / "output" / "profiles",
         "w3id_output": base / "output" / "w3id",
         "ontology_dir": base / "ontology",
         "templates": base / "templates",
@@ -159,6 +160,7 @@ def load_configs(root: Path | None = None) -> dict[str, Any]:
     config_dir = paths["config"]
     namespace_data = load_yaml(config_dir / "namespace_policy.yaml")
     active_profile = namespace_data["profiles"][namespace_data["active_profile"]]
+    ontology_profiles = load_yaml(config_dir / "ontology_profiles.yaml")
     return {
         "source_ontologies": load_yaml(config_dir / "source_ontologies.yaml"),
         "release_profile": load_yaml(config_dir / "release_profile.yaml"),
@@ -166,6 +168,7 @@ def load_configs(root: Path | None = None) -> dict[str, Any]:
         "mapping_rules": load_yaml(config_dir / "mapping_rules.yaml"),
         "namespace_policy": active_profile,
         "namespace_policy_raw": namespace_data,
+        "ontology_profiles": ontology_profiles,
     }
 
 

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import shutil
+import uuid
 from pathlib import Path
+from typing import Iterator
 
 import pytest
 
@@ -49,7 +51,11 @@ def sample_graph():
 
 
 @pytest.fixture()
-def temp_project(tmp_path: Path, package_root: Path) -> Path:
+def temp_project(package_root: Path) -> Iterator[Path]:
+    temp_root = package_root / "pytest-cache-files-fixtures"
+    temp_root.mkdir(parents=True, exist_ok=True)
+    tmp_path = temp_root / f"testproj-{uuid.uuid4().hex[:12]}"
+    tmp_path.mkdir(parents=True, exist_ok=False)
     for dirname in ["config", "templates", "shapes"]:
         shutil.copytree(package_root / dirname, tmp_path / dirname)
     for filename in ["CITATION.cff", ".zenodo.json", ".nojekyll", "README.md"]:
@@ -59,7 +65,13 @@ def temp_project(tmp_path: Path, package_root: Path) -> Path:
     (tmp_path / "ontology").mkdir(exist_ok=True)
     (tmp_path / "cache" / "sources").mkdir(parents=True, exist_ok=True)
     (tmp_path / "input" / "sample.ttl").write_text(SAMPLE_TTL, encoding="utf-8")
-    return tmp_path
+    sample_jsonld = graph_from_text(SAMPLE_TTL, "turtle").serialize(format="json-ld")
+    if isinstance(sample_jsonld, bytes):
+        sample_jsonld = sample_jsonld.decode("utf-8")
+    (tmp_path / "input" / "ONTOLOGY_PEMFC.jsonld").write_text(sample_jsonld, encoding="utf-8")
+    (tmp_path / "input" / "ONTOLOGY_PEMWE.jsonld").write_text(sample_jsonld, encoding="utf-8")
+    yield tmp_path
+    shutil.rmtree(tmp_path, ignore_errors=True)
 
 
 @pytest.fixture()

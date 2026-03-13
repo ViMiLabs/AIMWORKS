@@ -36,7 +36,7 @@ def _build_imports_graph(namespace_policy: dict[str, Any], source_config: dict[s
     graph = Graph()
     ontology_node = URIRef(namespace_policy["ontology_iri"] + "/imports")
     graph.add((ontology_node, RDF.type, OWL.Ontology))
-    graph.add((ontology_node, DCTERMS.title, Literal("H2KG imports module", lang="en")))
+    graph.add((ontology_node, DCTERMS.title, Literal("Hydrogen technology imports module", lang="en")))
     for source_id, cfg in source_config.get("sources", {}).items():
         if cfg.get("enabled") and cfg.get("category") == "primary" and source_id not in {"qudt_units", "qudt_quantitykinds", "chebi"}:
             graph.add((ontology_node, OWL.imports, URIRef(cfg["base_iri"])))
@@ -141,11 +141,12 @@ def _write_changelog_report(
 ) -> dict[str, Any]:
     version = str(release_profile["release"]["version"])
     release_date = str(release_profile["release"]["release_date"])
+    project_title = str(release_profile["project"]["title"])
     mapped_rows = sum(1 for row in mapping_review if row.get("target_iri"))
     entry = {
         "version": version,
         "date": release_date,
-        "summary": "Initial public-ready H2KG PEMFC catalyst-layer release package baseline.",
+        "summary": f"Public-ready {project_title} release baseline.",
         "changes": [
             f"Separated {split_report['schema_subject_count']} schema subjects, {split_report['controlled_vocabulary_subject_count']} controlled vocabulary subjects, and {split_report['example_subject_count']} example or data-like subjects.",
             f"Generated or normalized {enrichment_report['generated_annotations']} annotations and metadata updates for version {version}.",

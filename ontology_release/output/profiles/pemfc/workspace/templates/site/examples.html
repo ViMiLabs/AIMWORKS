@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Why These Resources Are Separate</h2>
+  <ul class="simple-list">
+    {% for item in split_notes %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Examples and Separated Data-like Content</h2>
+  <p>The release pipeline separates example individuals, quantity-value nodes, and ephemeral measurement content from the core schema. This page previews a bounded subset.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>IRI</th><th>Type</th><th>Label</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      {% for row in examples %}
+      <tr>
+        <td><code>{{ row.iri }}</code></td>
+        <td>{{ row.kind }}</td>
+        <td>{{ row.label }}</td>
+        <td>{{ row.notes }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
