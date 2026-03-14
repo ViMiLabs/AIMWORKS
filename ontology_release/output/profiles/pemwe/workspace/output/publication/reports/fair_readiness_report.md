@@ -13,18 +13,13 @@
 ## External Transparency Hooks
 
 - OOPS! and FOOPS! are reported separately for transparency and are not added to the numeric F/A/I/R score.
-- OOPS! ontology pitfall scan: **assessed**. OOPS! assessed the ontology and reported 1 pitfalls.
-- FOOPS! FAIR assessment: **assessed**. FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible.
+- OOPS! ontology pitfall scan: **warning**. OOPS! assessment could not be completed: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")))
+- FOOPS! FAIR assessment: **warning**. FOOPS! assessment could not be completed: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")))
 
 ## External Service Results
 
-- FOOPS! overall score: **86.1 / 100**
-- FOOPS! F (Findable): 100.0 / 100
-- FOOPS! A (Accessible): not assessed
-- FOOPS! I (Interoperable): 100.0 / 100
-- FOOPS! R (Reusable): 90.7 / 100
-- OOPS! pitfall count: **1**
-- OOPS! Important: 1
+- FOOPS! did not return a score in this run.
+- OOPS! did not return a pitfall count in this run.
 
 ## Blocking Issues
 

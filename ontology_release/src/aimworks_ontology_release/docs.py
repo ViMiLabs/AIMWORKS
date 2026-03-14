@@ -5,11 +5,12 @@ from pathlib import Path
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
-from rdflib import Graph, URIRef
+from rdflib import BNode, Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS
 
 from .extract import collect_examples, extract_local_terms
 from .inspect import find_ontology_node
+from .io import load_graph
 from .publication import reference_iri_rows
 from .utils import ensure_dir, load_yaml, local_name, normalize_space, read_json, write_json, write_text
 
@@ -761,6 +762,278 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
 """
 
 
+_EXPLORER_CATEGORY_STYLES: dict[str, dict[str, str | int]] = {
+    "Ontology": {"color": "#7c3aed", "size": 30},
+    "Class": {"color": "#2563eb", "size": 24},
+    "ObjectProperty": {"color": "#dc2626", "size": 20},
+    "DatatypeProperty": {"color": "#059669", "size": 20},
+    "AnnotationProperty": {"color": "#0891b2", "size": 18},
+    "Individual": {"color": "#0f766e", "size": 16},
+    "BlankNode": {"color": "#6b7280", "size": 12},
+    "External": {"color": "#a16207", "size": 14},
+    "Other": {"color": "#64748b", "size": 12},
+}
+
+_EXPLORER_SCHEMA_PREDICATES = {
+    RDFS.subClassOf,
+    RDFS.subPropertyOf,
+    RDFS.domain,
+    RDFS.range,
+    OWL.inverseOf,
+    OWL.equivalentClass,
+    OWL.equivalentProperty,
+    OWL.sameAs,
+    SKOS.exactMatch,
+    SKOS.closeMatch,
+    SKOS.relatedMatch,
+    SKOS.broadMatch,
+    SKOS.narrowMatch,
+}
+
+
+def _load_optional_graph(path: Path) -> Graph:
+    if not path.exists():
+        return Graph()
+    try:
+        return load_graph(path)
+    except Exception:
+        return Graph()
+
+
+def _node_identifier(node: Any) -> str | None:
+    if isinstance(node, URIRef):
+        return str(node)
+    if isinstance(node, BNode):
+        return f"_:{node}"
+    return None
+
+
+def _qname_or_local(graph: Graph, node: URIRef) -> str:
+    try:
+        return graph.qname(node)
+    except Exception:
+        return local_name(str(node))
+
+
+def _graph_node_label(graph: Graph, node: Any) -> str:
+    if isinstance(node, BNode):
+        return f"blank:{str(node)[:8]}"
+    label = _graph_text(graph, node, [RDFS.label, SKOS.prefLabel, DCTERMS.title])
+    return label or _qname_or_local(graph, node)
+
+
+def _graph_node_description(graph: Graph, node: Any) -> str:
+    if not isinstance(node, URIRef):
+        return "Blank node content generated from the release graph."
+    return _graph_text(graph, node, [SKOS.definition, RDFS.comment, DCTERMS.description, DCTERMS.abstract]) or "No definition or comment recorded."
+
+
+def _namespace_for_iri(iri: str) -> str:
+    if "#" in iri:
+        return iri.rsplit("#", 1)[0] + "#"
+    if "/" in iri:
+        return iri.rsplit("/", 1)[0] + "/"
+    return iri
+
+
+def _is_local_uri(iri: str, namespace_policy: dict[str, Any]) -> bool:
+    prefixes = {
+        _clean_text(namespace_policy.get("preferred_namespace_uri", "")),
+        _clean_text(namespace_policy.get("term_namespace", "")),
+        _clean_text(namespace_policy.get("ontology_iri", "")),
+        _clean_text(namespace_policy.get("public_html_base", "")),
+    }
+    return any(prefix and iri.startswith(prefix) for prefix in prefixes)
+
+
+def _node_category(
+    node: Any,
+    classes: set[Any],
+    object_properties: set[Any],
+    datatype_properties: set[Any],
+    annotation_properties: set[Any],
+    ontologies: set[Any],
+    individuals: set[Any],
+    namespace_policy: dict[str, Any],
+) -> str:
+    if isinstance(node, BNode):
+        return "BlankNode"
+    if node in ontologies:
+        return "Ontology"
+    if node in classes:
+        return "Class"
+    if node in object_properties:
+        return "ObjectProperty"
+    if node in datatype_properties:
+        return "DatatypeProperty"
+    if node in annotation_properties:
+        return "AnnotationProperty"
+    if node in individuals:
+        return "Individual"
+    if isinstance(node, URIRef) and not _is_local_uri(str(node), namespace_policy):
+        return "External"
+    return "Other"
+
+
+def _build_graph_explorer_payload(
+    module_rows: list[dict[str, Any]],
+    namespace_policy: dict[str, Any],
+    profile_label: str,
+) -> dict[str, Any]:
+    combined = Graph()
+    node_objects: dict[str, Any] = {}
+    node_modules: dict[str, set[str]] = {}
+    triples_preview: list[dict[str, Any]] = []
+    preview_budget = 520
+
+    for row in module_rows:
+        graph: Graph = row["graph"]
+        module_id = row["id"]
+        for triple in graph:
+            combined.add(triple)
+            subject, predicate, obj = triple
+            subject_id = _node_identifier(subject)
+            if subject_id:
+                node_objects.setdefault(subject_id, subject)
+                node_modules.setdefault(subject_id, set()).add(module_id)
+            object_id = _node_identifier(obj)
+            if object_id:
+                node_objects.setdefault(object_id, obj)
+                node_modules.setdefault(object_id, set()).add(module_id)
+            if len(triples_preview) < preview_budget:
+                triples_preview.append(
+                    {
+                        "module": module_id,
+                        "subject": str(subject),
+                        "predicate": str(predicate),
+                        "object": str(obj),
+                        "subject_label": _graph_node_label(combined, subject) if isinstance(subject, (URIRef, BNode)) else _clean_text(subject),
+                        "predicate_label": _qname_or_local(combined, predicate),
+                        "object_label": _graph_node_label(combined, obj) if isinstance(obj, (URIRef, BNode)) else _clean_text(obj),
+                        "object_is_literal": isinstance(obj, Literal),
+                    }
+                )
+
+    classes = set(combined.subjects(RDF.type, OWL.Class)) | set(combined.subjects(RDF.type, RDFS.Class))
+    object_properties = set(combined.subjects(RDF.type, OWL.ObjectProperty))
+    datatype_properties = set(combined.subjects(RDF.type, OWL.DatatypeProperty))
+    annotation_properties = set(combined.subjects(RDF.type, OWL.AnnotationProperty))
+    ontologies = set(combined.subjects(RDF.type, OWL.Ontology))
+    typed_nodes = {subject for subject, _, _ in combined.triples((None, RDF.type, None)) if isinstance(subject, (URIRef, BNode))}
+    individuals = typed_nodes.difference(classes | object_properties | datatype_properties | annotation_properties | ontologies)
+
+    for node in classes | object_properties | datatype_properties | annotation_properties | ontologies | individuals:
+        node_id = _node_identifier(node)
+        if not node_id:
+            continue
+        node_objects.setdefault(node_id, node)
+        node_modules.setdefault(node_id, set())
+
+    nodes: list[dict[str, Any]] = []
+    for node_id, node in node_objects.items():
+        category = _node_category(
+            node,
+            classes,
+            object_properties,
+            datatype_properties,
+            annotation_properties,
+            ontologies,
+            individuals,
+            namespace_policy,
+        )
+        style = _EXPLORER_CATEGORY_STYLES.get(category, _EXPLORER_CATEGORY_STYLES["Other"])
+        iri = str(node) if isinstance(node, URIRef) else node_id
+        nodes.append(
+            {
+                "id": node_id,
+                "iri": iri,
+                "name": _graph_node_label(combined, node),
+                "qname": _qname_or_local(combined, node) if isinstance(node, URIRef) else node_id,
+                "value": iri,
+                "category": category,
+                "description": _graph_node_description(combined, node),
+                "modules": sorted(node_modules.get(node_id, set())),
+                "local": True if isinstance(node, BNode) else _is_local_uri(iri, namespace_policy),
+                "namespace": _namespace_for_iri(iri) if isinstance(node, URIRef) else "_:blank-node",
+                "symbolSize": int(style["size"]),
+                "color": str(style["color"]),
+            }
+        )
+    nodes.sort(key=lambda row: (row["name"].lower(), row["id"]))
+
+    links: list[dict[str, Any]] = []
+    seen_links: set[tuple[str, str, str, str, str]] = set()
+    for row in module_rows:
+        graph = row["graph"]
+        module_id = row["id"]
+        for subject, predicate, obj in graph:
+            subject_id = _node_identifier(subject)
+            object_id = _node_identifier(obj)
+            if not subject_id or not object_id:
+                continue
+            if predicate == RDF.type:
+                edge_family = "type"
+            elif predicate in _EXPLORER_SCHEMA_PREDICATES:
+                edge_family = "schema"
+            elif predicate in object_properties:
+                edge_family = "object_property"
+            else:
+                continue
+            key = (subject_id, str(predicate), object_id, module_id, edge_family)
+            if key in seen_links:
+                continue
+            seen_links.add(key)
+            links.append(
+                {
+                    "source": subject_id,
+                    "target": object_id,
+                    "value": _qname_or_local(combined, predicate),
+                    "predicate": str(predicate),
+                    "module": module_id,
+                    "edgeFamily": edge_family,
+                }
+            )
+    links.sort(key=lambda row: (row["module"], row["edgeFamily"], row["value"], row["source"], row["target"]))
+
+    module_summaries: list[dict[str, Any]] = []
+    for row in module_rows:
+        module_id = row["id"]
+        module_summaries.append(
+            {
+                "id": module_id,
+                "label": row["label"],
+                "description": row["description"],
+                "path": row["path"],
+                "fallback": row.get("fallback", ""),
+                "default": bool(row.get("default", False)),
+                "triple_count": len(row["graph"]),
+                "node_count": sum(1 for node in nodes if module_id in node["modules"]),
+                "edge_count": sum(1 for link in links if link["module"] == module_id),
+            }
+        )
+
+    return {
+        "profile_label": profile_label,
+        "overview": {
+            "profile_label": profile_label,
+            "node_count": len(nodes),
+            "edge_count": len(links),
+            "module_count": len(module_rows),
+            "local_node_count": sum(1 for node in nodes if node["local"]),
+            "external_node_count": sum(1 for node in nodes if not node["local"]),
+            "triple_count": sum(len(row["graph"]) for row in module_rows),
+        },
+        "categories": [
+            {"name": name, "color": str(style["color"])}
+            for name, style in _EXPLORER_CATEGORY_STYLES.items()
+        ],
+        "modules": module_summaries,
+        "nodes": nodes,
+        "links": links,
+        "triples": triples_preview,
+    }
+
+
 def _graph_text(graph: Graph, subject: URIRef, predicates: list[URIRef]) -> str:
     for predicate in predicates:
         for obj in graph.objects(subject, predicate):
@@ -809,6 +1082,7 @@ _MOJIBAKE_REPLACEMENTS = {
 
 def _clean_text(value: Any) -> str:
     text = str(value or "")
+    text = text.replace("â€”", "—").replace("â€“", "-")
     for old, new in _MOJIBAKE_REPLACEMENTS.items():
         text = text.replace(old, new)
     return normalize_space(text)
@@ -1125,11 +1399,11 @@ def build_docs(
         )
     )
     site = {
-        "title": release_profile["project"]["title"],
-        "subtitle": release_profile["project"]["subtitle"],
-        "tagline": documentation_cfg["site_tagline"],
+        "title": _clean_text(release_profile["project"]["title"]),
+        "subtitle": _clean_text(release_profile["project"]["subtitle"]),
+        "tagline": _clean_text(documentation_cfg["site_tagline"]),
         "version": release_profile["release"]["version"],
-        "license_label": release_profile["release"]["ontology_license"],
+        "license_label": _clean_text(release_profile["release"]["ontology_license"]),
         "prefix": namespace_policy["preferred_namespace_prefix"],
         "hero_note": hero_note,
         "hero_facts": [
@@ -1163,6 +1437,8 @@ def build_docs(
     }
     write_text(assets_dir / "site.css", SITE_CSS)
     write_text(assets_dir / "site.js", SITE_JS)
+    write_text(assets_dir / "visuals.css", (root / "templates" / "site" / "assets" / "visuals.css").read_text(encoding="utf-8"))
+    write_text(assets_dir / "visuals.js", (root / "templates" / "site" / "assets" / "visuals.js").read_text(encoding="utf-8"))
     write_text(output_dir / ".nojekyll", "")
 
     mapping_lookup = _mapping_lookup(review_rows)
@@ -1214,7 +1490,7 @@ def build_docs(
         {"href": "pages/import-catalog.html", "title": "Import Catalog", "body": "Shows configured source ontologies, reuse targets, fetch modes, and version labels for the release stack."},
         {"href": "pages/worked-examples.html", "title": "Worked Examples", "body": "Provides JSON-LD, CSV-to-RDF, and notebook-style examples for ontology users and data stewards."},
         {"href": "pages/quality-dashboard.html", "title": "Quality Dashboard", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
-        {"href": "pages/visualizations.html", "title": "Visuals", "body": "Presents lightweight release architecture and quality-oriented visual summaries."},
+        {"href": "pages/visualizations.html", "title": "Visuals", "body": "Provides an interactive ontology graph explorer with search, module-aware filtering, triples preview, and source inspection."},
         {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, and release provenance."},
     ]
     fair_dimension_signals = [
@@ -1979,6 +2255,37 @@ ex:run-001 a h2kg:Measurement ;
         ),
     )
 
+    explorer_module_rows = [
+        {
+            **query_sources[0],
+            "id": "schema",
+            "description": "Asserted local schema terms and ontology header metadata.",
+            "graph": schema_graph,
+        },
+        {
+            **query_sources[1],
+            "id": "vocabulary",
+            "description": "Curated named terms published outside the asserted schema module.",
+            "graph": controlled_vocabulary_graph,
+        },
+        {
+            **query_sources[2],
+            "description": "Reviewed alignment assertions to external ontologies and vocabularies.",
+            "graph": _load_optional_graph(root / "output" / "mappings" / "alignments.ttl"),
+        },
+        {
+            **query_sources[3],
+            "description": "Separated example and data-like content retained for demonstration and tutorials.",
+            "graph": examples_graph,
+        },
+        {
+            **query_sources[4],
+            "description": "Optional inferred export generated by the release pipeline.",
+            "graph": _load_optional_graph(root / "output" / "ontology" / "inferred.ttl"),
+        },
+    ]
+    explorer_payload = _build_graph_explorer_payload(explorer_module_rows, namespace_policy, profile_label)
+
     visualizations_template = env.get_template("visualizations.html")
     visualization_rows = [
         {"title": "Ontology module overview", "body": "Release overview of asserted schema, controlled vocabulary, and separated example content.", "svg": _simple_svg_card("Schema/vocabulary split", "Release modularization overview", str(len(classes) + len(vocabulary_rows)), "#ecfeff")},
@@ -1994,6 +2301,9 @@ ex:run-001 a h2kg:Measurement ;
             page_title="Visualizations",
             site=site,
             base_path="..",
+            explorer_data_path="../data/graph_explorer.json",
+            explorer_overview=explorer_payload["overview"],
+            explorer_modules=explorer_payload["modules"],
             visualizations=visualization_rows,
         ),
     )
@@ -2004,6 +2314,7 @@ ex:run-001 a h2kg:Measurement ;
     write_json(data_dir / "reference_iris.json", endpoint_rows)
     write_json(data_dir / "quality_dashboard.json", quality_dashboard)
     write_json(data_dir / "query_examples.json", documentation_cfg.get("competency_questions", []))
+    write_json(data_dir / "graph_explorer.json", explorer_payload)
     write_json(data_dir / "visualizations.json", [{"title": item["title"], "body": item["body"]} for item in visualization_rows])
     write_json(data_dir / "import_catalog.json", import_catalog_rows)
     write_json(data_dir / "local_keep_rows.json", local_keep_rows)

@@ -21,7 +21,10 @@ def test_docs_generation(temp_project):
     assert (temp_project / "output" / "docs" / "pages" / "queries.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "quality-dashboard.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "visualizations.html").exists()
+    assert (temp_project / "output" / "docs" / "assets" / "visuals.css").exists()
+    assert (temp_project / "output" / "docs" / "assets" / "visuals.js").exists()
     assert (temp_project / "output" / "docs" / "data" / "import_catalog.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "graph_explorer.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.jsonld").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.csv").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_release_notebook.ipynb").exists()
@@ -35,3 +38,7 @@ def test_docs_generation(temp_project):
     quality_page = (temp_project / "output" / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
     assert "https://oops.linkeddata.es/" in quality_page
     assert "https://foops.linkeddata.es/FAIR_validator.html" in quality_page
+    visuals_page = (temp_project / "output" / "docs" / "pages" / "visualizations.html").read_text(encoding="utf-8")
+    assert "Ontology Graph Explorer" in visuals_page
+    assert "data-visual-explorer" in visuals_page
+    assert "Full Graph" in visuals_page

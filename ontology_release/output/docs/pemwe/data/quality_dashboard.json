@@ -28,63 +28,19 @@
   "transparency_rows": [
     {
       "label": "OOPS! ontology pitfall scan",
-      "value": "assessed",
-      "status": "good",
-      "detail": "OOPS! assessed the ontology and reported 1 pitfalls. Service: <a href='https://oops.linkeddata.es/'><code>https://oops.linkeddata.es/</code></a>. Not counted in the numeric F/A/I/R score."
+      "value": "warning",
+      "status": "watch",
+      "detail": "OOPS! assessment could not be completed: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by ProxyError('Unable to connect to proxy', NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))) Service: <a href='https://oops.linkeddata.es/'><code>https://oops.linkeddata.es/</code></a>. Not counted in the numeric F/A/I/R score."
     },
     {
       "label": "FOOPS! FAIR assessment",
-      "value": "assessed",
-      "status": "good",
-      "detail": "FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible. Service: <a href='https://foops.linkeddata.es/FAIR_validator.html'><code>https://foops.linkeddata.es/FAIR_validator.html</code></a>. Catalogue: <a href='https://w3id.org/foops/catalogue'><code>https://w3id.org/foops/catalogue</code></a>. Not counted in the numeric F/A/I/R score."
+      "value": "warning",
+      "status": "watch",
+      "detail": "FOOPS! assessment could not be completed: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by ProxyError('Unable to connect to proxy', NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))) Service: <a href='https://foops.linkeddata.es/FAIR_validator.html'><code>https://foops.linkeddata.es/FAIR_validator.html</code></a>. Catalogue: <a href='https://w3id.org/foops/catalogue'><code>https://w3id.org/foops/catalogue</code></a>. Not counted in the numeric F/A/I/R score."
     }
   ],
-  "external_fair_rows": [
-    {
-      "label": "FOOPS! overall",
-      "value": "86.1 / 100",
-      "status": "good",
-      "detail": "Actual FOOPS! assessment in file mode. Validator: <a href='https://foops.linkeddata.es/FAIR_validator.html'><code>https://foops.linkeddata.es/FAIR_validator.html</code></a>. Catalogue: <a href='https://w3id.org/foops/catalogue'><code>https://w3id.org/foops/catalogue</code></a>."
-    },
-    {
-      "label": "FOOPS! F / Findable",
-      "value": "100.0 / 100",
-      "status": "good",
-      "detail": "Returned directly by the FOOPS! service."
-    },
-    {
-      "label": "FOOPS! A / Accessible",
-      "value": "not assessed",
-      "status": "watch",
-      "detail": "Returned directly by the FOOPS! service."
-    },
-    {
-      "label": "FOOPS! I / Interoperable",
-      "value": "100.0 / 100",
-      "status": "good",
-      "detail": "Returned directly by the FOOPS! service."
-    },
-    {
-      "label": "FOOPS! R / Reusable",
-      "value": "90.7 / 100",
-      "status": "good",
-      "detail": "Returned directly by the FOOPS! service."
-    }
-  ],
-  "oops_rows": [
-    {
-      "label": "OOPS! pitfall count",
-      "value": "1",
-      "status": "watch",
-      "detail": "OOPS! assessed the ontology and reported 1 pitfalls. Service: <a href='https://oops.linkeddata.es/'><code>https://oops.linkeddata.es/</code></a>."
-    },
-    {
-      "label": "OOPS! Important",
-      "value": "1",
-      "status": "watch",
-      "detail": "Pitfalls grouped by the importance level returned by OOPS!."
-    }
-  ],
+  "external_fair_rows": [],
+  "oops_rows": [],
   "validation_rows": [
     {
       "label": "Overall validation status",
@@ -136,15 +92,15 @@
     },
     {
       "label": "OOPS! hook",
-      "value": "assessed",
-      "status": "good",
-      "detail": "OOPS! assessed the ontology and reported 1 pitfalls."
+      "value": "warning",
+      "status": "watch",
+      "detail": "OOPS! assessment could not be completed: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by ProxyError('Unable to connect to proxy', NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\")))"
     },
     {
       "label": "FOOPS! hook",
-      "value": "assessed",
-      "status": "good",
-      "detail": "FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible."
+      "value": "warning",
+      "status": "watch",
+      "detail": "FOOPS! assessment could not be completed: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by ProxyError('Unable to connect to proxy', NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\")))"
     }
   ],
   "hygiene_rows": [
@@ -187,23 +143,23 @@
     },
     {
       "label": "Machine-readable source",
-      "value": "missing",
-      "status": "action"
+      "value": "ready",
+      "status": "good"
     },
     {
       "label": "Inferred serialization",
-      "value": "missing",
-      "status": "action"
+      "value": "ready",
+      "status": "good"
     },
     {
       "label": "JSON-LD context",
-      "value": "missing",
-      "status": "action"
+      "value": "ready",
+      "status": "good"
     },
     {
       "label": "Release bundle",
-      "value": "missing",
-      "status": "action"
+      "value": "ready",
+      "status": "good"
     },
     {
       "label": "w3id artifacts",
