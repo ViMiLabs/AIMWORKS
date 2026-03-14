@@ -7,9 +7,9 @@
 <section class="visual-shell" data-visual-explorer data-visual-data="{{ explorer_data_path }}">
   <section class="card card--feature visual-hero">
     <div>
-      <p class="eyebrow">Interactive explorer</p>
-      <h2>Ontology Graph Explorer</h2>
-      <p class="visual-hero__lede">Browse the published ontology as an interactive graph, filter it by module, search term neighborhoods, inspect typed relationships, and read the raw RDF release sources directly from the Visuals page.</p>
+      <p class="eyebrow">Visual explorer</p>
+      <h2>Term Finder</h2>
+      <p class="visual-hero__lede">Find a local ontology term, then inspect only that node, its direct neighbors, and the visible relations that connect them. The page stays intentionally focused so the graph remains readable.</p>
       <div class="meta-row" style="margin-top: 1rem;">
         <span>Profile {{ explorer_overview.profile_label }}</span>
         <span>Published modules {{ explorer_overview.module_count }}</span>
@@ -17,82 +17,54 @@
       </div>
     </div>
     <div class="visual-kpi-grid">
-      <div class="visual-kpi"><span>Nodes</span><strong>{{ explorer_overview.node_count }}</strong></div>
-      <div class="visual-kpi"><span>Edges</span><strong>{{ explorer_overview.edge_count }}</strong></div>
-      <div class="visual-kpi"><span>Local nodes</span><strong>{{ explorer_overview.local_node_count }}</strong></div>
-      <div class="visual-kpi"><span>External nodes</span><strong>{{ explorer_overview.external_node_count }}</strong></div>
+      <div class="visual-kpi"><span>Local terms</span><strong>{{ explorer_overview.local_node_count }}</strong></div>
+      <div class="visual-kpi"><span>Visible relations</span><strong data-visual-count="edges">0</strong></div>
+      <div class="visual-kpi"><span>Active modules</span><strong data-visual-count="modules">{{ explorer_overview.module_count }}</strong></div>
+      <div class="visual-kpi"><span>Search results</span><strong data-visual-count="results">0</strong></div>
     </div>
   </section>
 
   <section class="visual-layout">
     <aside class="visual-sidebar">
       <section class="visual-panel">
-        <p class="eyebrow">Graph controls</p>
-        <h2>Source Modules</h2>
-        <p>Select which release modules participate in the explorer. The page stays fully local to the published artifacts.</p>
-        <div class="visual-module-grid">
-          {% for module in explorer_modules %}
-          <label class="visual-module">
-            <input type="checkbox" data-module-toggle value="{{ module.id }}" {% if module.default %}checked{% endif %}>
-            <span>
-              <strong>{{ module.label }}</strong>
-              <small>{{ module.description }}</small>
-            </span>
-            <span class="visual-module__meta">{{ module.triple_count }} triples</span>
-          </label>
-          {% endfor %}
+        <p class="eyebrow">Find a term</p>
+        <h2>Search</h2>
+        <p>Search local H2KG labels, local names, IRI fragments, and definitions. Results are ranked to prefer exact local matches.</p>
+        <div class="visual-field">
+          <label for="visual-search-input">Search for a term</label>
+          <input id="visual-search-input" type="search" data-visual-search placeholder="e.g., ionomer, Measurement, ACAmplitude, usesInstrument">
         </div>
+        <div class="visual-field">
+          <label>Release modules</label>
+          <div class="visual-module-grid">
+            {% for module in explorer_modules %}
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="{{ module.id }}" {% if module.default %}checked{% endif %}>
+              <span>
+                <strong>{{ module.label }}</strong>
+                <small>{{ module.description }}</small>
+              </span>
+              <span class="visual-module__meta">{{ module.triple_count }} triples</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <label class="visual-option visual-option--compact">
+          <input type="checkbox" data-visual-toggle="showExternalNeighbors">
+          Show directly linked external terms
+        </label>
       </section>
 
       <section class="visual-panel">
-        <p class="eyebrow">View options</p>
-        <h3>Rendering</h3>
-        <div class="visual-control-grid">
-          <div class="visual-field">
-            <label for="visual-layout-select">Layout</label>
-            <select id="visual-layout-select" data-visual-layout>
-              <option value="force">Force layout</option>
-              <option value="circular">Circular layout</option>
-            </select>
-          </div>
-          <div class="visual-option-list">
-            <label class="visual-option"><input type="checkbox" data-visual-toggle="hideExternal" checked>Hide external vocabularies</label>
-            <label class="visual-option"><input type="checkbox" data-visual-toggle="includeBNodes">Include blank nodes</label>
-            <label class="visual-option"><input type="checkbox" data-visual-toggle="showSchemaEdges" checked>Show schema edges</label>
-            <label class="visual-option"><input type="checkbox" data-visual-toggle="showObjectPropertyEdges" checked>Show object-property edges</label>
-            <label class="visual-option"><input type="checkbox" data-visual-toggle="showTypeEdges">Show <code>rdf:type</code> edges</label>
+        <div class="visual-section-heading">
+          <div>
+            <p class="eyebrow">Matches</p>
+            <h3>Search results</h3>
+            <p>Choose one term to render its one-hop neighborhood.</p>
           </div>
         </div>
-        <div class="visual-legend">
-          {% for category in ["Ontology", "Class", "ObjectProperty", "DatatypeProperty", "AnnotationProperty", "Individual", "BlankNode", "External", "Other"] %}
-          <span class="visual-legend__item" data-legend-item="{{ category }}"></span>
-          {% endfor %}
-        </div>
-      </section>
-
-      <section class="visual-panel">
-        <p class="eyebrow">Search settings</p>
-        <h3>Subset Finder</h3>
-        <p>Filter the selected graph by label, qname, IRI, or definition and inspect the resulting neighborhood.</p>
-        <div class="visual-search-grid">
-          <div class="visual-field visual-search-grid__main">
-            <label for="visual-search-input">Search graph</label>
-            <input id="visual-search-input" type="search" data-visual-search placeholder="e.g., measurement, catalyst, ionomer, usesInstrument">
-          </div>
-          <label class="visual-option"><input type="checkbox" data-search-toggle="includeNeighbors" checked>Include 1-hop neighbors</label>
-          <label class="visual-option"><input type="checkbox" data-search-toggle="includeLinksAmongResults" checked>Include links among results</label>
-          <div class="visual-field">
-            <label for="visual-max-nodes">Max nodes</label>
-            <input id="visual-max-nodes" type="number" data-search-max min="50" max="2000" step="50" value="400">
-          </div>
-        </div>
-      </section>
-
-      <section class="visual-panel">
-        <p class="eyebrow">Inspector</p>
-        <h3>Selected node</h3>
-        <div class="visual-inspector__body" data-visual-inspector>
-          <div class="visual-empty">Click a node in the graph to inspect its label, IRI, module membership, description, and local neighborhood.</div>
+        <div class="visual-results" data-search-results>
+          <div class="visual-empty">Start typing to search the local ontology terms.</div>
         </div>
       </section>
     </aside>
@@ -101,126 +73,35 @@
       <section class="visual-stage">
         <div class="visual-stage__head">
           <div>
-            <p class="eyebrow">Explorer status</p>
-            <h2>Published graph view</h2>
-            <p>The counts below update with the selected modules and display options.</p>
+            <p class="eyebrow">Neighborhood view</p>
+            <h2>Selected term graph</h2>
+            <p>The graph shows the selected term and its directly connected neighbors only. Blank nodes are excluded.</p>
           </div>
           <div class="visual-status">
-            <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">{{ explorer_overview.node_count }}</strong></span>
-            <span class="metric-pill">Visible edges <strong data-visual-count="edges">{{ explorer_overview.edge_count }}</strong></span>
-            <span class="metric-pill">Active modules <strong data-visual-count="modules">{{ explorer_overview.module_count }}</strong></span>
+            <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">0</strong></span>
+            <span class="metric-pill">Visible edges <strong data-visual-count="edges-inline">0</strong></span>
           </div>
         </div>
-        <div class="visual-tabs" role="tablist" aria-label="Visual explorer tabs">
-          <button class="visual-tab is-active" type="button" data-visual-tab="graph">Full Graph</button>
-          <button class="visual-tab" type="button" data-visual-tab="search">Search</button>
-          <button class="visual-tab" type="button" data-visual-tab="summary">Summary</button>
-          <button class="visual-tab" type="button" data-visual-tab="triples">Triples</button>
-          <button class="visual-tab" type="button" data-visual-tab="source">Source</button>
-        </div>
+        <div class="visual-chart" data-visual-chart="term"></div>
       </section>
 
-      <section class="visual-stage" data-visual-panel="graph">
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Graph canvas</p>
-            <h2>Full ontology graph</h2>
-            <p>Renders the currently selected subset of the release graph with schema and object-property relationships.</p>
+      <section class="visual-detail-grid">
+        <section class="visual-panel">
+          <p class="eyebrow">Term details</p>
+          <h3>Annotations and mapping</h3>
+          <div class="visual-inspector__body" data-visual-inspector>
+            <div class="visual-empty">Select a search result to inspect its label, class, units, mappings, and release metadata.</div>
           </div>
-        </div>
-        <div class="visual-chart" data-visual-chart="graph"></div>
-      </section>
-
-      <section class="visual-stage" data-visual-panel="search" hidden>
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Search view</p>
-            <h2>Matched term neighborhoods</h2>
-            <p>Use the same published graph, filtered by your search query and optional one-hop expansion.</p>
+        </section>
+        <section class="visual-panel">
+          <p class="eyebrow">Visible relations</p>
+          <h3>Connected edges</h3>
+          <div class="visual-table-shell" data-visual-relations>
+            <div class="visual-empty">Visible relations will appear here after you select a term.</div>
           </div>
-        </div>
-        <div class="visual-chart" data-visual-chart="search"></div>
-        <div class="visual-subsections">
-          <div class="visual-table-section">
-            <div class="visual-section-heading">
-              <div><h3>Matched nodes</h3><p>Terms that directly match the current query.</p></div>
-            </div>
-            <div class="visual-table-shell" data-search-matches></div>
-          </div>
-          <div class="visual-table-section">
-            <div class="visual-section-heading">
-              <div><h3>Edges in this view</h3><p>Relationships retained in the currently filtered search result.</p></div>
-            </div>
-            <div class="visual-table-shell" data-search-edges></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="visual-stage" data-visual-panel="summary" hidden>
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Summary tables</p>
-            <h2>Typed inventory</h2>
-            <p>Tables update with the selected modules and the current display filters.</p>
-          </div>
-        </div>
-        <div class="visual-table-grid" data-summary-sections></div>
-      </section>
-
-      <section class="visual-stage" data-visual-panel="triples" hidden>
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Triples preview</p>
-            <h2>Published RDF sample</h2>
-            <p>First rows from the selected modules, intended for quick inspection rather than full download.</p>
-          </div>
-        </div>
-        <div class="visual-table-shell" data-triples-table></div>
-      </section>
-
-      <section class="visual-stage" data-visual-panel="source" hidden>
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Raw sources</p>
-            <h2>Module source reader</h2>
-            <p>Inspect the serialized TTL sources directly from the publication tree. This works best from the deployed Pages site or a local HTTP server.</p>
-          </div>
-        </div>
-        <div class="visual-source-toolbar">
-          <div class="visual-field">
-            <label for="visual-source-select">Source module</label>
-            <select id="visual-source-select" data-source-select>
-              {% for module in explorer_modules %}
-              <option value="{{ module.id }}">{{ module.label }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="action-row"><a href="#" data-source-download>Download module</a></div>
-        </div>
-        <p class="visual-source-status" data-source-status>Loading source preview...</p>
-        <pre class="visual-source-code"><code data-source-code>Preparing source preview...</code></pre>
+        </section>
       </section>
     </section>
-  </section>
-
-  <section class="card">
-    <div class="visual-section-heading">
-      <div>
-        <p class="eyebrow">Release snapshots</p>
-        <h2>Supplementary publication visuals</h2>
-        <p>Curated release-oriented summaries remain available below the interactive explorer for governance and reporting contexts.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="grid two">
-    {% for row in visualizations %}
-    <section class="diagram-card">
-      <h2>{{ row.title }}</h2>
-      <p>{{ row.body }}</p>
-      <div class="svg-frame">{{ row.svg | safe }}</div>
-    </section>
-    {% endfor %}
   </section>
 </section>
 {% endblock %}

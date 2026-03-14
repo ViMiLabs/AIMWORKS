@@ -3,51 +3,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!root) return;
 
   const dataPath = root.dataset.visualData;
-  const graphPanel = root.querySelector('[data-visual-panel="graph"]');
-  const searchPanel = root.querySelector('[data-visual-panel="search"]');
-  const summaryPanel = root.querySelector('[data-visual-panel="summary"]');
-  const triplesPanel = root.querySelector('[data-visual-panel="triples"]');
-  const sourcePanel = root.querySelector('[data-visual-panel="source"]');
-  const graphChartEl = root.querySelector('[data-visual-chart="graph"]');
-  const searchChartEl = root.querySelector('[data-visual-chart="search"]');
-  const summarySectionsEl = root.querySelector("[data-summary-sections]");
-  const triplesTableEl = root.querySelector("[data-triples-table]");
-  const matchesTableEl = root.querySelector("[data-search-matches]");
-  const edgesTableEl = root.querySelector("[data-search-edges]");
-  const inspectorEl = root.querySelector("[data-visual-inspector]");
-  const sourceSelectEl = root.querySelector("[data-source-select]");
-  const sourceStatusEl = root.querySelector("[data-source-status]");
-  const sourceCodeEl = root.querySelector("[data-source-code]");
-  const sourceDownloadEl = root.querySelector("[data-source-download]");
+  const chartEl = root.querySelector('[data-visual-chart="term"]');
   const searchInputEl = root.querySelector("[data-visual-search]");
-  const layoutSelectEl = root.querySelector("[data-visual-layout]");
-  const maxNodesEl = root.querySelector("[data-search-max]");
+  const resultsEl = root.querySelector("[data-search-results]");
+  const inspectorEl = root.querySelector("[data-visual-inspector]");
+  const relationsEl = root.querySelector("[data-visual-relations]");
   const countNodesEl = root.querySelector('[data-visual-count="nodes"]');
   const countEdgesEl = root.querySelector('[data-visual-count="edges"]');
+  const countEdgesInlineEl = root.querySelector('[data-visual-count="edges-inline"]');
   const countModulesEl = root.querySelector('[data-visual-count="modules"]');
-  const tabs = Array.from(root.querySelectorAll("[data-visual-tab]"));
-  const panels = {
-    graph: graphPanel,
-    search: searchPanel,
-    summary: summaryPanel,
-    triples: triplesPanel,
-    source: sourcePanel,
-  };
+  const countResultsEl = root.querySelector('[data-visual-count="results"]');
 
   let payload = null;
-  let graphChart = null;
-  let searchChart = null;
+  let chart = null;
 
   const state = {
-    hideExternal: true,
-    includeBNodes: false,
-    showSchemaEdges: true,
-    showObjectPropertyEdges: true,
-    showTypeEdges: false,
-    includeNeighbors: true,
-    includeLinksAmongResults: true,
-    layout: "force",
-    maxNodes: 400,
+    selectedId: null,
+    showExternalNeighbors: false,
   };
 
   const escapeHtml = (value) => String(value ?? "")
@@ -57,160 +29,123 @@ document.addEventListener("DOMContentLoaded", () => {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-  const nodeMapFromPayload = () => new Map((payload?.nodes || []).map((node) => [node.id, node]));
+  const normalize = (value) => String(value || "").trim().toLowerCase();
   const activeModules = () => Array.from(root.querySelectorAll("[data-module-toggle]:checked")).map((input) => input.value);
 
-  function renderLegend() {
-    const legendSlots = root.querySelectorAll("[data-legend-item]");
-    if (!payload) return;
-    const styleMap = new Map(payload.categories.map((row) => [row.name, row.color]));
-    legendSlots.forEach((slot) => {
-      const name = slot.dataset.legendItem;
-      const color = styleMap.get(name) || "#94a3b8";
-      slot.innerHTML = `<span class="visual-legend__swatch" style="background:${escapeHtml(color)}"></span><span>${escapeHtml(name)}</span>`;
-    });
-  }
-
   function syncState() {
-    state.layout = layoutSelectEl.value;
-    state.maxNodes = Number(maxNodesEl.value) || 400;
     root.querySelectorAll("[data-visual-toggle]").forEach((input) => {
       state[input.dataset.visualToggle] = input.checked;
     });
-    root.querySelectorAll("[data-search-toggle]").forEach((input) => {
-      state[input.dataset.searchToggle] = input.checked;
-    });
   }
 
-  function nodeAllowed(node) {
-    if (!state.includeBNodes && node.category === "BlankNode") return false;
-    if (state.hideExternal && !node.local) return false;
-    return true;
-  }
-
-  function edgeAllowed(link) {
-    if (link.edgeFamily === "schema" && !state.showSchemaEdges) return false;
-    if (link.edgeFamily === "object_property" && !state.showObjectPropertyEdges) return false;
-    if (link.edgeFamily === "type" && !state.showTypeEdges) return false;
-    return true;
+  function ensureChart() {
+    if (chart) return chart;
+    chart = echarts.init(chartEl, null, { renderer: "canvas" });
+    return chart;
   }
 
   function buildBaseView() {
     syncState();
     const selectedModules = new Set(activeModules());
-    const nodes = payload.nodes || [];
-    const seededIds = new Set();
-    nodes.forEach((node) => {
-      if (node.modules.some((moduleId) => selectedModules.has(moduleId))) {
-        seededIds.add(node.id);
-      }
+    const nodes = (payload.nodes || []).filter((node) => {
+      if (node.category === "BlankNode") return false;
+      return node.modules.some((moduleId) => selectedModules.has(moduleId));
     });
-    let links = (payload.links || []).filter((link) => selectedModules.has(link.module) && edgeAllowed(link));
-    links.forEach((link) => {
-      seededIds.add(link.source);
-      seededIds.add(link.target);
+    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+    const links = (payload.links || []).filter((link) => {
+      if (!selectedModules.has(link.module)) return false;
+      return nodeMap.has(link.source) && nodeMap.has(link.target);
     });
-    const filteredNodes = nodes.filter((node) => seededIds.has(node.id) && nodeAllowed(node));
-    const allowedIds = new Set(filteredNodes.map((node) => node.id));
     return {
-      nodes: filteredNodes,
-      links: links.filter((link) => allowedIds.has(link.source) && allowedIds.has(link.target)),
-      nodeMap: nodeMapFromPayload(),
+      nodes,
+      links,
+      nodeMap,
       selectedModules: Array.from(selectedModules),
     };
   }
 
-  function filterGraphByQuery(baseView, query) {
-    const q = String(query || "").trim().toLowerCase();
-    if (!q) {
-      return { nodes: [], links: [], matchedRows: [], edgeRows: [] };
-    }
-    const nodeById = new Map(baseView.nodes.map((node) => [node.id, node]));
-    const matches = (node) => {
-      const haystack = [node.name, node.id, node.value, node.description, node.qname].join(" ").toLowerCase();
-      return haystack.includes(q);
-    };
-    const matchedIds = new Set(baseView.nodes.filter(matches).map((node) => node.id));
-    if (!matchedIds.size) {
-      return { nodes: [], links: [], matchedRows: [], edgeRows: [] };
+  function searchCandidates(view) {
+    return view.nodes.filter((node) => node.local && node.category !== "Ontology");
+  }
+
+  function scoreNode(node, query) {
+    const q = normalize(query);
+    if (!q) return 0;
+
+    const label = normalize(node.name);
+    const qname = normalize(node.qname);
+    const iri = normalize(node.iri);
+    const details = normalize(node.search_text || node.description || "");
+    let score = 0;
+
+    if (label === q || qname === q) score += 120;
+    if (label.startsWith(q) || qname.startsWith(q)) score += 80;
+    if (label.includes(q) || qname.includes(q)) score += 55;
+    if (iri.includes(q)) score += 35;
+    if (details.includes(q)) score += 20;
+    if (normalize(node.display_class).includes(q)) score += 12;
+    if (node.local) score += 8;
+
+    return score;
+  }
+
+  function searchResults(view, query) {
+    const q = normalize(query);
+    if (!q) return [];
+    return searchCandidates(view)
+      .map((node) => ({ node, score: scoreNode(node, q) }))
+      .filter((row) => row.score > 0)
+      .sort((left, right) => {
+        if (right.score !== left.score) return right.score - left.score;
+        return left.node.name.localeCompare(right.node.name);
+      })
+      .slice(0, 16)
+      .map((row) => row.node);
+  }
+
+  function buildNeighborhood(view, seedId) {
+    const seed = view.nodeMap.get(seedId);
+    if (!seed) {
+      return { seed: null, nodes: [], links: [], nodeMap: new Map() };
     }
 
-    const keepIds = new Set(matchedIds);
-    const keptLinks = [];
-    baseView.links.forEach((link) => {
-      if (matchedIds.has(link.source) || matchedIds.has(link.target)) {
-        keptLinks.push(link);
-        if (state.includeNeighbors) {
-          keepIds.add(link.source);
-          keepIds.add(link.target);
-        }
-      }
-    });
-    if (state.includeLinksAmongResults) {
-      baseView.links.forEach((link) => {
-        if (keepIds.has(link.source) && keepIds.has(link.target)) {
-          keptLinks.push(link);
-        }
+    let links = view.links.filter((link) => link.source === seedId || link.target === seedId);
+    if (!state.showExternalNeighbors) {
+      links = links.filter((link) => {
+        const neighborId = link.source === seedId ? link.target : link.source;
+        const neighbor = view.nodeMap.get(neighborId);
+        return !neighbor || neighbor.local || neighbor.id === seedId;
       });
     }
 
-    const uniqueLinks = [];
-    const seenLinks = new Set();
-    keptLinks.forEach((link) => {
-      const key = `${link.source}|${link.predicate}|${link.target}|${link.module}|${link.edgeFamily}`;
-      if (seenLinks.has(key)) return;
-      seenLinks.add(key);
-      uniqueLinks.push(link);
+    const nodeIds = new Set([seedId]);
+    links.forEach((link) => {
+      nodeIds.add(link.source);
+      nodeIds.add(link.target);
     });
 
-    let orderedIds = Array.from(keepIds);
-    if (orderedIds.length > state.maxNodes) {
-      const prioritized = [...matchedIds, ...orderedIds.filter((id) => !matchedIds.has(id))];
-      orderedIds = prioritized.slice(0, state.maxNodes);
-    }
-    const limitedIds = new Set(orderedIds);
-    const filteredNodes = orderedIds.map((id) => nodeById.get(id)).filter(Boolean);
-    const filteredLinks = uniqueLinks.filter((link) => limitedIds.has(link.source) && limitedIds.has(link.target));
+    const nodes = Array.from(nodeIds)
+      .map((id) => view.nodeMap.get(id))
+      .filter(Boolean)
+      .sort((left, right) => {
+        if (left.id === seedId) return -1;
+        if (right.id === seedId) return 1;
+        return left.name.localeCompare(right.name);
+      });
+    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+
     return {
-      nodes: filteredNodes,
-      links: filteredLinks,
-      matchedRows: Array.from(matchedIds)
-        .map((id) => nodeById.get(id))
-        .filter(Boolean)
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((node) => ({
-          label: node.name,
-          iri: node.iri,
-          category: node.category,
-          modules: node.modules.join(", "),
-        })),
-      edgeRows: filteredLinks.map((link) => ({
-        source: nodeById.get(link.source)?.name || link.source,
-        predicate: link.value,
-        target: nodeById.get(link.target)?.name || link.target,
-        module: link.module,
-      })),
+      seed,
+      nodes,
+      links: links.filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target)),
+      nodeMap,
     };
   }
 
-  function chartOption(nodes, links, title, subtitle) {
-    const categoryIndex = new Map(payload.categories.map((category, index) => [category.name, index]));
-    const showLabels = nodes.length <= 110;
-    const showEdgeLabels = links.length <= 160;
+  function chartOption(graph) {
+    const categoryIndex = new Map((payload.categories || []).map((category, index) => [category.name, index]));
+    const showEdgeLabels = graph.links.length <= 16;
     return {
-      title: {
-        text: title,
-        subtext: subtitle,
-        left: "center",
-        top: 14,
-        textStyle: {
-          fontFamily: "Iowan Old Style, Palatino Linotype, Georgia, serif",
-          fontSize: 24,
-          color: "#0e1a21",
-          fontWeight: 700,
-        },
-        subtextStyle: { color: "#56636c", fontSize: 12 },
-      },
       tooltip: {
         trigger: "item",
         backgroundColor: "rgba(12, 26, 35, 0.96)",
@@ -219,54 +154,60 @@ document.addEventListener("DOMContentLoaded", () => {
         formatter: (params) => {
           if (params.dataType === "edge") {
             const data = params.data;
-            return `<strong>${escapeHtml(data.value || data.predicate)}</strong><br>${escapeHtml(data.source)} → ${escapeHtml(data.target)}<br>Module: ${escapeHtml(data.module)}`;
+            return `<strong>${escapeHtml(data.value || data.predicate)}</strong><br>${escapeHtml(data.sourceLabel)} -> ${escapeHtml(data.targetLabel)}`;
           }
           const data = params.data;
-          return `<strong>${escapeHtml(data.name)}</strong><br>${escapeHtml(data.category)}<br><code>${escapeHtml(data.iri)}</code>`;
+          return `<strong>${escapeHtml(data.name)}</strong><br>${escapeHtml(data.display_class || data.category)}<br><code>${escapeHtml(data.iri)}</code>`;
         },
       },
-      legend: [{
-        data: payload.categories.map((category) => category.name),
-        orient: "vertical",
-        left: 10,
-        top: 70,
-        itemGap: 14,
-        textStyle: { color: "#56636c" },
-      }],
-      animationDurationUpdate: 900,
+      animationDurationUpdate: 700,
       animationEasingUpdate: "quarticOut",
       series: [{
         type: "graph",
-        layout: state.layout,
+        layout: "force",
         roam: true,
         draggable: true,
         focusNodeAdjacency: true,
         edgeSymbol: ["none", "arrow"],
         edgeSymbolSize: [4, 10],
-        data: nodes.map((node) => ({
+        data: graph.nodes.map((node) => ({
           ...node,
           category: categoryIndex.get(node.category) ?? 0,
-          symbolSize: node.symbolSize,
-          itemStyle: { color: node.color, shadowBlur: 12, shadowColor: "rgba(14, 26, 33, 0.14)" },
-          label: { show: showLabels, formatter: node.name, color: "#10242d", fontSize: 11 },
-        })),
-        links: links.map((link) => ({
-          ...link,
-          lineStyle: {
-            width: link.edgeFamily === "object_property" ? 1.4 : 1.8,
-            opacity: 0.86,
-            curveness: link.edgeFamily === "type" ? 0.08 : 0.16,
-            color: link.edgeFamily === "object_property" ? "#1f7a7a" : link.edgeFamily === "schema" ? "#ca6d2c" : "#64748b",
+          symbolSize: node.id === graph.seed.id ? 34 : Math.max(16, Number(node.symbolSize || 18)),
+          itemStyle: {
+            color: node.id === graph.seed.id ? "#ca6d2c" : node.color,
+            shadowBlur: node.id === graph.seed.id ? 20 : 12,
+            shadowColor: "rgba(14, 26, 33, 0.16)",
+          },
+          label: {
+            show: true,
+            formatter: node.name,
+            color: "#10242d",
+            fontSize: node.id === graph.seed.id ? 13 : 11,
           },
         })),
-        categories: payload.categories.map((category) => ({ name: category.name, itemStyle: { color: category.color } })),
-        force: { repulsion: 220, edgeLength: [90, 180], gravity: 0.06, friction: 0.22 },
-        circular: { rotateLabel: true },
-        lineStyle: { opacity: 0.86 },
+        links: graph.links.map((link) => ({
+          ...link,
+          sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
+          targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
+          lineStyle: {
+            width: link.edgeFamily === "schema" ? 2 : 1.6,
+            opacity: 0.88,
+            curveness: 0.12,
+            color: link.edgeFamily === "schema" ? "#ca6d2c" : link.edgeFamily === "object_property" ? "#1f7a7a" : "#64748b",
+          },
+        })),
+        categories: (payload.categories || []).map((category) => ({ name: category.name, itemStyle: { color: category.color } })),
+        force: {
+          repulsion: 260,
+          edgeLength: [110, 180],
+          gravity: 0.08,
+          friction: 0.2,
+        },
         edgeLabel: {
           show: showEdgeLabels,
           formatter: (params) => params.data.value,
-          backgroundColor: "rgba(255, 255, 255, 0.86)",
+          backgroundColor: "rgba(255, 255, 255, 0.88)",
           borderRadius: 4,
           padding: [2, 4, 2, 4],
           color: "#243a44",
@@ -275,11 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
         emphasis: { focus: "adjacency", lineStyle: { width: 3 } },
       }],
     };
-  }
-
-  function ensureChart(chart, element) {
-    if (chart) return chart;
-    return echarts.init(element, null, { renderer: "canvas" });
   }
 
   function renderTable(headers, rows, emptyMessage) {
@@ -291,26 +227,52 @@ document.addEventListener("DOMContentLoaded", () => {
     return `<table class="data-table"><thead><tr>${headerHtml}</tr></thead><tbody>${rowHtml}</tbody></table>`;
   }
 
-  function showInspector(node, baseView) {
-    if (!node) {
-      inspectorEl.innerHTML = '<div class="visual-empty">Click a node in the graph to inspect its label, IRI, module membership, description, and local neighborhood.</div>';
+  function renderResults(rows) {
+    countResultsEl.textContent = String(rows.length);
+    if (!rows.length) {
+      resultsEl.innerHTML = '<div class="visual-empty">No local terms match the current search.</div>';
       return;
     }
-    const relatedLinks = baseView.links.filter((link) => link.source === node.id || link.target === node.id).slice(0, 8);
-    const relationRows = relatedLinks.length
-      ? `<div class="visual-inspector__section"><strong>Visible relations</strong><ul class="simple-list">${relatedLinks.map((link) => {
-          const sourceLabel = baseView.nodeMap.get(link.source)?.name || link.source;
-          const targetLabel = baseView.nodeMap.get(link.target)?.name || link.target;
-          return `<li><code>${escapeHtml(link.value)}</code>: ${escapeHtml(sourceLabel)} → ${escapeHtml(targetLabel)}</li>`;
-        }).join("")}</ul></div>`
-      : "";
+
+    resultsEl.innerHTML = rows.map((node) => `
+      <button class="visual-result ${node.id === state.selectedId ? "is-active" : ""}" type="button" data-result-id="${escapeHtml(node.id)}">
+        <strong>${escapeHtml(node.name)}</strong>
+        <small>${escapeHtml(node.display_class || node.category)}</small>
+        <div class="visual-result__meta">
+          <span class="visual-badge">${escapeHtml(node.modules.join(", "))}</span>
+          <span class="visual-badge">${escapeHtml(node.qname || node.iri)}</span>
+        </div>
+      </button>
+    `).join("");
+
+    resultsEl.querySelectorAll("[data-result-id]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.selectedId = button.dataset.resultId;
+        renderAll();
+      });
+    });
+  }
+
+  function renderInspector(node) {
+    if (!node) {
+      inspectorEl.innerHTML = '<div class="visual-empty">Select a search result to inspect its label, class, units, mappings, and release metadata.</div>';
+      return;
+    }
+
+    const detailSections = [];
+    if (node.units) detailSections.push(`<div class="visual-inspector__section"><strong>Units</strong><p>${escapeHtml(node.units)}</p></div>`);
+    if (node.superclasses) detailSections.push(`<div class="visual-inspector__section"><strong>Superclasses</strong><p>${escapeHtml(node.superclasses)}</p></div>`);
+    if (node.domain) detailSections.push(`<div class="visual-inspector__section"><strong>Domain</strong><p>${escapeHtml(node.domain)}</p></div>`);
+    if (node.range) detailSections.push(`<div class="visual-inspector__section"><strong>Range</strong><p>${escapeHtml(node.range)}</p></div>`);
+    if (node.mappings_text) detailSections.push(`<div class="visual-inspector__section"><strong>Mappings</strong><p>${escapeHtml(node.mappings_text)}</p></div>`);
+
     inspectorEl.innerHTML = `
       <div>
         <h3>${escapeHtml(node.name)}</h3>
         <div class="visual-inspector__meta">
-          <span class="visual-chip">${escapeHtml(node.category)}</span>
+          <span class="visual-chip">${escapeHtml(node.display_class || node.category)}</span>
           <span class="visual-chip">${node.local ? "Local" : "External"}</span>
-          ${node.modules.map((moduleId) => `<span class="visual-chip">${escapeHtml(moduleId)}</span>`).join("")}
+          <span class="visual-chip">${escapeHtml(node.deprecated || "Active")}</span>
         </div>
       </div>
       <div class="visual-inspector__section">
@@ -318,227 +280,90 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><a href="${escapeHtml(node.iri)}"><code>${escapeHtml(node.iri)}</code></a></p>
       </div>
       <div class="visual-inspector__section">
-        <strong>Description</strong>
-        <p>${escapeHtml(node.description)}</p>
-      </div>
-      <div class="visual-inspector__section">
         <strong>QName / local form</strong>
         <p><code>${escapeHtml(node.qname)}</code></p>
       </div>
-      ${relationRows}
+      <div class="visual-inspector__section">
+        <strong>Definition</strong>
+        <p>${escapeHtml(node.description || "No definition or comment recorded.")}</p>
+      </div>
+      <div class="visual-inspector__section">
+        <strong>Source modules</strong>
+        <p>${escapeHtml(node.modules.join(", "))}</p>
+      </div>
+      ${detailSections.join("")}
     `;
   }
 
-  function bindInspector(chart, baseView) {
-    chart.off("click");
-    chart.on("click", (params) => {
-      if (params.dataType !== "node") return;
-      showInspector(params.data, baseView);
-    });
-  }
+  function renderRelations(graph) {
+    const rows = graph.links.map((link) => ({
+      source: graph.nodeMap.get(link.source)?.name || link.source,
+      predicate: link.value,
+      target: graph.nodeMap.get(link.target)?.name || link.target,
+      module: link.module,
+    }));
 
-  function renderCounts(baseView) {
-    countNodesEl.textContent = String(baseView.nodes.length);
-    countEdgesEl.textContent = String(baseView.links.length);
-    countModulesEl.textContent = String(baseView.selectedModules.length);
-  }
-
-  function renderGraph(baseView) {
-    if (graphPanel.hidden || graphChartEl.clientWidth <= 0) return;
-    if (!baseView.nodes.length || !baseView.links.length) {
-      graphChartEl.innerHTML = '<div class="visual-empty">No nodes or edges are available with the current filters. Try enabling more modules or turning off the external-vocabulary filter.</div>';
-      if (graphChart) {
-        graphChart.dispose();
-        graphChart = null;
-      }
-      showInspector(null, baseView);
-      return;
-    }
-    graphChartEl.innerHTML = "";
-    graphChart = ensureChart(graphChart, graphChartEl);
-    graphChart.setOption(chartOption(baseView.nodes, baseView.links, "Ontology graph", "Module-aware view of the current published release"), true);
-    bindInspector(graphChart, baseView);
-  }
-
-  function renderSearch(baseView) {
-    const result = filterGraphByQuery(baseView, searchInputEl.value);
-    if (!searchPanel.hidden && searchChartEl.clientWidth > 0) {
-      if (!searchInputEl.value.trim()) {
-        searchChartEl.innerHTML = '<div class="visual-empty">Type a term to build a filtered search graph from the currently selected modules.</div>';
-        if (searchChart) {
-          searchChart.dispose();
-          searchChart = null;
-        }
-      } else if (!result.nodes.length) {
-        searchChartEl.innerHTML = '<div class="visual-empty">No matches found for the current query. Try a broader term or loosen the filters.</div>';
-        if (searchChart) {
-          searchChart.dispose();
-          searchChart = null;
-        }
-      } else {
-        searchChartEl.innerHTML = "";
-        searchChart = ensureChart(searchChart, searchChartEl);
-        searchChart.setOption(chartOption(result.nodes, result.links, `Search view: ${searchInputEl.value.trim()}`, "Matched terms plus optional one-hop context"), true);
-        bindInspector(searchChart, {
-          ...baseView,
-          nodes: result.nodes,
-          links: result.links,
-          nodeMap: new Map(result.nodes.map((node) => [node.id, node])),
-        });
-      }
-    }
-    matchesTableEl.innerHTML = renderTable(
-      [
-        { label: "Label", render: (row) => escapeHtml(row.label) },
-        { label: "IRI", render: (row) => `<code>${escapeHtml(row.iri)}</code>` },
-        { label: "Category", render: (row) => escapeHtml(row.category) },
-        { label: "Modules", render: (row) => escapeHtml(row.modules) },
-      ],
-      result.matchedRows,
-      "No matched nodes yet."
-    );
-    edgesTableEl.innerHTML = renderTable(
+    relationsEl.innerHTML = renderTable(
       [
         { label: "Source", render: (row) => escapeHtml(row.source) },
         { label: "Predicate", render: (row) => `<code>${escapeHtml(row.predicate)}</code>` },
         { label: "Target", render: (row) => escapeHtml(row.target) },
         { label: "Module", render: (row) => escapeHtml(row.module) },
       ],
-      result.edgeRows,
-      "No visible edges in the current search view."
-    );
-  }
-
-  function renderSummary(baseView) {
-    const sections = [
-      { key: "Class", title: "Classes" },
-      { key: "ObjectProperty", title: "Object properties" },
-      { key: "DatatypeProperty", title: "Datatype properties" },
-      { key: "AnnotationProperty", title: "Annotation properties" },
-      { key: "Individual", title: "Individuals and controlled terms" },
-    ];
-    summarySectionsEl.innerHTML = sections.map((section) => {
-      const rows = baseView.nodes
-        .filter((node) => node.category === section.key)
-        .sort((a, b) => a.name.localeCompare(b.name));
-      return `
-        <section class="visual-table-section">
-          <div class="visual-section-heading">
-            <div>
-              <h3>${escapeHtml(section.title)}</h3>
-              <p>${rows.length} rows in the current filtered view.</p>
-            </div>
-          </div>
-          <div class="visual-table-shell">
-            ${renderTable(
-              [
-                { label: "Label", render: (row) => escapeHtml(row.name) },
-                { label: "IRI", render: (row) => `<code>${escapeHtml(row.iri)}</code>` },
-                { label: "Scope", render: (row) => escapeHtml(row.local ? "Local" : "External") },
-                { label: "Modules", render: (row) => escapeHtml(row.modules.join(", ")) },
-                { label: "Description", render: (row) => escapeHtml(row.description) },
-              ],
-              rows,
-              `No ${section.title.toLowerCase()} are visible with the current filters.`
-            )}
-          </div>
-        </section>
-      `;
-    }).join("");
-  }
-
-  function renderTriples(baseView) {
-    const allowedModules = new Set(baseView.selectedModules);
-    const rows = (payload.triples || []).filter((row) => allowedModules.has(row.module)).slice(0, 320);
-    triplesTableEl.innerHTML = renderTable(
-      [
-        { label: "Module", render: (row) => escapeHtml(row.module) },
-        { label: "Subject", render: (row) => `<code>${escapeHtml(row.subject_label)}</code>` },
-        { label: "Predicate", render: (row) => `<code>${escapeHtml(row.predicate_label)}</code>` },
-        { label: "Object", render: (row) => row.object_is_literal ? escapeHtml(row.object) : `<code>${escapeHtml(row.object_label)}</code>` },
-      ],
       rows,
-      "No triples are available for the selected modules."
+      "Visible relations will appear here after you select a term."
     );
   }
 
-  async function fetchFirstAvailable(urls) {
-    for (const url of urls) {
-      if (!url) continue;
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          return { text: await response.text(), url };
-        }
-      } catch (error) {
-      }
-    }
-    throw new Error("Unable to load module source from the available publication paths.");
-  }
+  function renderGraph(graph) {
+    countNodesEl.textContent = String(graph.nodes.length);
+    countEdgesEl.textContent = String(graph.links.length);
+    countEdgesInlineEl.textContent = String(graph.links.length);
 
-  async function renderSource() {
-    if (!payload) return;
-    const modules = payload.modules || [];
-    const preferred = sourceSelectEl.value || activeModules()[0] || modules[0]?.id;
-    const module = modules.find((row) => row.id === preferred) || modules[0];
-    if (!module) {
-      sourceStatusEl.textContent = "No source modules are available.";
-      sourceCodeEl.textContent = "";
+    if (!graph.seed) {
+      chartEl.innerHTML = '<div class="visual-empty">Search for a local term to render its one-hop neighborhood.</div>';
+      if (chart) {
+        chart.dispose();
+        chart = null;
+      }
       return;
     }
-    sourceSelectEl.value = module.id;
-    sourceDownloadEl.href = module.path || "#";
-    sourceStatusEl.textContent = `Loading ${module.label}...`;
-    try {
-      const loaded = await fetchFirstAvailable([module.path, module.fallback]);
-      sourceStatusEl.innerHTML = `Showing <strong>${escapeHtml(module.label)}</strong> from <code>${escapeHtml(loaded.url)}</code>.`;
-      sourceCodeEl.textContent = loaded.text;
-    } catch (error) {
-      sourceStatusEl.textContent = "Source preview is unavailable from this page context. Use the deployed Pages URL or a local static HTTP server.";
-      sourceCodeEl.textContent = "";
-    }
-  }
 
-  function setActiveTab(tabId) {
-    tabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.visualTab === tabId));
-    Object.entries(panels).forEach(([key, panel]) => {
-      panel.hidden = key !== tabId;
-    });
-    requestAnimationFrame(() => {
-      if (graphChart) graphChart.resize();
-      if (searchChart) searchChart.resize();
-      renderAll();
+    chartEl.innerHTML = "";
+    const instance = ensureChart();
+    instance.setOption(chartOption(graph), true);
+    instance.off("click");
+    instance.on("click", (params) => {
+      if (params.dataType !== "node") return;
+      renderInspector(params.data);
     });
   }
 
   function renderAll() {
     if (!payload) return;
-    const baseView = buildBaseView();
-    renderCounts(baseView);
-    renderGraph(baseView);
-    renderSearch(baseView);
-    renderSummary(baseView);
-    renderTriples(baseView);
-    if (!sourcePanel.hidden) {
-      renderSource();
+
+    const view = buildBaseView();
+    countModulesEl.textContent = String(view.selectedModules.length);
+
+    const results = searchResults(view, searchInputEl.value);
+    const resultIds = new Set(results.map((node) => node.id));
+    if (!resultIds.has(state.selectedId)) {
+      state.selectedId = results[0]?.id || null;
     }
+
+    renderResults(results);
+    const graph = buildNeighborhood(view, state.selectedId);
+    renderGraph(graph);
+    renderInspector(graph.seed);
+    renderRelations(graph);
   }
 
-  root.querySelectorAll("[data-module-toggle], [data-visual-toggle], [data-search-toggle]").forEach((input) => {
+  root.querySelectorAll("[data-module-toggle], [data-visual-toggle]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
-  layoutSelectEl.addEventListener("change", renderAll);
-  maxNodesEl.addEventListener("input", renderAll);
   searchInputEl.addEventListener("input", renderAll);
-  sourceSelectEl.addEventListener("change", () => {
-    if (payload) renderSource();
-  });
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => setActiveTab(tab.dataset.visualTab));
-  });
   window.addEventListener("resize", () => {
-    if (graphChart) graphChart.resize();
-    if (searchChart) searchChart.resize();
+    if (chart) chart.resize();
   });
 
   fetch(dataPath)
@@ -548,20 +373,13 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((json) => {
       payload = json;
-      renderLegend();
-      const defaultSource = (payload.modules || []).find((module) => module.default) || (payload.modules || [])[0];
-      if (defaultSource) {
-        sourceSelectEl.value = defaultSource.id;
-      }
       renderAll();
     })
     .catch((error) => {
       const message = escapeHtml(error.message);
-      graphChartEl.innerHTML = `<div class="visual-empty">${message}</div>`;
-      searchChartEl.innerHTML = `<div class="visual-empty">${message}</div>`;
-      summarySectionsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
-      triplesTableEl.innerHTML = `<div class="visual-empty">${message}</div>`;
-      sourceStatusEl.textContent = error.message;
-      sourceCodeEl.textContent = "";
+      chartEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      resultsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      inspectorEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      relationsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
     });
 });

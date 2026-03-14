@@ -11,8 +11,9 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS
 from .extract import collect_examples, extract_local_terms
 from .inspect import find_ontology_node
 from .io import load_graph
+from .normalize import humanize_identifier
 from .publication import reference_iri_rows
-from .utils import ensure_dir, load_yaml, local_name, normalize_space, read_json, write_json, write_text
+from .utils import QUDT, ensure_dir, load_yaml, local_name, normalize_space, read_json, write_json, write_text
 
 
 SITE_CSS = """
@@ -803,8 +804,6 @@ def _load_optional_graph(path: Path) -> Graph:
 def _node_identifier(node: Any) -> str | None:
     if isinstance(node, URIRef):
         return str(node)
-    if isinstance(node, BNode):
-        return f"_:{node}"
     return None
 
 
@@ -1050,7 +1049,67 @@ def _mapping_lookup(review_rows: list[dict[str, Any]]) -> dict[str, list[str]]:
     return lookup
 
 
-def _term_row(term: Any, mapping_lookup: dict[str, list[str]], namespace_policy: dict[str, Any]) -> dict[str, str]:
+def _term_class_label(term: Any) -> str:
+    generic = {
+        "Thing",
+        "Resource",
+        "NamedIndividual",
+        "Ontology",
+        "Class",
+        "ObjectProperty",
+        "DatatypeProperty",
+        "AnnotationProperty",
+        "Concept",
+    }
+    candidates: list[str] = []
+    for value in list(getattr(term, "types", [])) + list(getattr(term, "superclasses", [])):
+        name = _clean_text(local_name(value))
+        if not name or name in generic:
+            continue
+        humanized = humanize_identifier(name)
+        if humanized not in candidates:
+            candidates.append(humanized)
+    if candidates:
+        return candidates[0]
+    if getattr(term, "category", "") == "controlled_vocabulary_term":
+        return "Controlled term"
+    return _clean_text(getattr(term, "term_type", "")).replace("_", " ") or "Unspecified"
+
+
+def _term_units(graph: Graph, term_iri: str) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    seen: set[str] = set()
+    subject = URIRef(term_iri)
+    quantity_nodes = [obj for predicate, obj in graph.predicate_objects(subject) if local_name(predicate) == "hasQuantityValue"]
+    for quantity_node in quantity_nodes:
+        for unit in graph.objects(quantity_node, QUDT.unit):
+            unit_iri = str(unit)
+            label = (
+                _graph_text(graph, unit, [RDFS.label, SKOS.prefLabel])
+                if isinstance(unit, URIRef)
+                else _clean_text(unit)
+            ) or humanize_identifier(local_name(unit))
+            key = f"{unit_iri}|{label}"
+            if key in seen:
+                continue
+            seen.add(key)
+            rows.append(
+                {
+                    "label": label,
+                    "iri": unit_iri if isinstance(unit, URIRef) else "",
+                    "html": _href_html(unit_iri, label) if isinstance(unit, URIRef) and _is_web_url(unit_iri) else escape(label),
+                }
+            )
+    return rows
+
+
+def _term_row(
+    term: Any,
+    mapping_lookup: dict[str, list[str]],
+    namespace_policy: dict[str, Any],
+    graph: Graph,
+) -> dict[str, str]:
+    unit_rows = _term_units(graph, term.iri)
     return {
         "label": _clean_text(term.label),
         "iri": term.iri,
@@ -1060,12 +1119,62 @@ def _term_row(term: Any, mapping_lookup: dict[str, list[str]], namespace_policy:
         "superclasses_html": _external_value_list_html(term.superclasses, namespace_policy),
         "mappings": ", ".join(_clean_values(mapping_lookup.get(term.iri, []))) or "None",
         "kind": _clean_text(term.term_type).replace("_", " "),
+        "class_label": _term_class_label(term),
         "domain": ", ".join(_clean_values(term.domains)) or "None",
         "domain_html": _external_value_list_html(term.domains, namespace_policy),
         "range": ", ".join(_clean_values(term.ranges)) or "None",
         "range_html": _external_value_list_html(term.ranges, namespace_policy),
+        "units": ", ".join(row["label"] for row in unit_rows) or "—",
+        "units_html": ", ".join(row["html"] for row in unit_rows) or "—",
         "anchor": local_name(term.iri),
     }
+
+
+def _enrich_explorer_nodes(payload: dict[str, Any], detail_rows: list[dict[str, str]]) -> dict[str, Any]:
+    detail_lookup = {row["iri"]: row for row in detail_rows}
+    for node in payload.get("nodes", []):
+        detail = detail_lookup.get(node.get("iri", ""))
+        if not detail:
+            node["display_class"] = _clean_text(node.get("category", ""))
+            node["units"] = ""
+            node["mappings_text"] = ""
+            node["domain"] = ""
+            node["range"] = ""
+            node["superclasses"] = ""
+            node["deprecated"] = "Active"
+            node["search_text"] = " ".join(
+                part
+                for part in [node.get("name", ""), node.get("qname", ""), node.get("iri", ""), node.get("description", "")]
+                if part
+            )
+            continue
+        node["display_class"] = detail["class_label"]
+        node["definition"] = detail["definition"]
+        node["description"] = detail["definition"] or node.get("description", "")
+        node["units"] = "" if detail["units"] in {"Not specified", "â€”", "—"} else detail["units"]
+        node["units_html"] = "" if detail["units"] in {"Not specified", "â€”", "—"} else detail["units_html"]
+        node["mappings_text"] = "" if detail["mappings"] == "None" else detail["mappings"]
+        node["domain"] = "" if detail["domain"] == "None" else detail["domain"]
+        node["range"] = "" if detail["range"] == "None" else detail["range"]
+        node["superclasses"] = "" if detail["superclasses"] == "None" else detail["superclasses"]
+        node["deprecated"] = detail["deprecated"]
+        node["search_text"] = " ".join(
+            part
+            for part in [
+                node.get("name", ""),
+                node.get("qname", ""),
+                node.get("iri", ""),
+                node.get("description", ""),
+                node.get("display_class", ""),
+                node.get("units", ""),
+                node.get("mappings_text", ""),
+                node.get("domain", ""),
+                node.get("range", ""),
+                node.get("superclasses", ""),
+            ]
+            if part
+        )
+    return payload
 
 
 _MOJIBAKE_REPLACEMENTS = {
@@ -1438,15 +1547,20 @@ def build_docs(
     write_text(assets_dir / "site.css", SITE_CSS)
     write_text(assets_dir / "site.js", SITE_JS)
     write_text(assets_dir / "visuals.css", (root / "templates" / "site" / "assets" / "visuals.css").read_text(encoding="utf-8"))
-    write_text(assets_dir / "visuals.js", (root / "templates" / "site" / "assets" / "visuals.js").read_text(encoding="utf-8"))
+    write_text(assets_dir / "visuals.js", (root / "templates" / "site" / "assets" / "term-finder.js").read_text(encoding="utf-8"))
     write_text(output_dir / ".nojekyll", "")
 
     mapping_lookup = _mapping_lookup(review_rows)
     schema_terms = extract_local_terms(schema_graph, namespace_policy, classifications)
     vocabulary_terms = extract_local_terms(controlled_vocabulary_graph, namespace_policy, classifications)
-    classes = [_term_row(term, mapping_lookup, namespace_policy) for term in schema_terms if term.term_type == "class"]
-    properties = [_term_row(term, mapping_lookup, namespace_policy) for term in schema_terms if term.term_type != "class"]
-    vocabulary_rows = [_term_row(term, mapping_lookup, namespace_policy) for term in vocabulary_terms]
+    vocabulary_context_graph = Graph()
+    for triple in controlled_vocabulary_graph:
+        vocabulary_context_graph.add(triple)
+    for triple in examples_graph:
+        vocabulary_context_graph.add(triple)
+    classes = [_term_row(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type == "class"]
+    properties = [_term_row(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type != "class"]
+    vocabulary_rows = [_term_row(term, mapping_lookup, namespace_policy, vocabulary_context_graph) for term in vocabulary_terms]
     classes.sort(key=lambda item: item["label"].lower())
     properties.sort(key=lambda item: item["label"].lower())
     vocabulary_rows.sort(key=lambda item: item["label"].lower())
@@ -2285,6 +2399,7 @@ ex:run-001 a h2kg:Measurement ;
         },
     ]
     explorer_payload = _build_graph_explorer_payload(explorer_module_rows, namespace_policy, profile_label)
+    explorer_payload = _enrich_explorer_nodes(explorer_payload, classes + properties + vocabulary_rows)
 
     visualizations_template = env.get_template("visualizations.html")
     visualization_rows = [
