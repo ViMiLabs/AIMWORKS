@@ -791,6 +791,18 @@ _EXPLORER_SCHEMA_PREDICATES = {
     SKOS.narrowMatch,
 }
 
+_EXPLORER_EXCLUDED_PREDICATES = {
+    RDFS.isDefinedBy,
+    DCTERMS.license,
+    DCTERMS.source,
+    OWL.versionIRI,
+}
+
+_EXPLORER_PROVENANCE_PREDICATES = {
+    URIRef("http://www.w3.org/ns/prov#used"),
+    URIRef("http://www.w3.org/ns/prov#wasGeneratedBy"),
+}
+
 
 def _load_optional_graph(path: Path) -> Graph:
     if not path.exists():
@@ -818,7 +830,14 @@ def _graph_node_label(graph: Graph, node: Any) -> str:
     if isinstance(node, BNode):
         return f"blank:{str(node)[:8]}"
     label = _graph_text(graph, node, [RDFS.label, SKOS.prefLabel, DCTERMS.title])
-    return label or _qname_or_local(graph, node)
+    if label:
+        return label
+    fallback = _qname_or_local(graph, node)
+    if isinstance(node, URIRef):
+        prefix, separator, _ = fallback.partition(":")
+        if (separator and prefix.startswith("ns") and prefix[2:].isdigit()) or str(node).startswith("file:///"):
+            return humanize_identifier(local_name(str(node)))
+    return fallback
 
 
 def _graph_node_description(graph: Graph, node: Any) -> str:
@@ -843,6 +862,33 @@ def _is_local_uri(iri: str, namespace_policy: dict[str, Any]) -> bool:
         _clean_text(namespace_policy.get("public_html_base", "")),
     }
     return any(prefix and iri.startswith(prefix) for prefix in prefixes)
+
+
+def _explorer_edge_family(
+    predicate: URIRef,
+    object_properties: set[Any],
+    namespace_policy: dict[str, Any],
+) -> str:
+    predicate_iri = str(predicate)
+    if predicate == RDF.type:
+        return "type"
+    if predicate in _EXPLORER_SCHEMA_PREDICATES:
+        return "schema"
+    if predicate in _EXPLORER_EXCLUDED_PREDICATES:
+        return ""
+    if predicate == QUDT.unit:
+        return "unit"
+    if predicate == QUDT.quantityKind:
+        return "quantity_kind"
+    if predicate in _EXPLORER_PROVENANCE_PREDICATES:
+        return "provenance"
+    if predicate in object_properties:
+        return "object_property"
+    if _is_local_uri(predicate_iri, namespace_policy):
+        return "relation"
+    if predicate_iri.startswith("http://qudt.org/schema/qudt/"):
+        return "qudt"
+    return ""
 
 
 def _node_category(
@@ -971,13 +1017,8 @@ def _build_graph_explorer_payload(
             object_id = _node_identifier(obj)
             if not subject_id or not object_id:
                 continue
-            if predicate == RDF.type:
-                edge_family = "type"
-            elif predicate in _EXPLORER_SCHEMA_PREDICATES:
-                edge_family = "schema"
-            elif predicate in object_properties:
-                edge_family = "object_property"
-            else:
+            edge_family = _explorer_edge_family(predicate, object_properties, namespace_policy)
+            if not edge_family:
                 continue
             key = (subject_id, str(predicate), object_id, module_id, edge_family)
             if key in seen_links:
@@ -1084,30 +1125,43 @@ def _term_class_label(term: Any) -> str:
     return _clean_text(getattr(term, "term_type", "")).replace("_", " ") or "Unspecified"
 
 
+def _append_unit_rows(graph: Graph, subject: Any, rows: list[dict[str, str]], seen: set[str]) -> None:
+    for predicate, unit in graph.predicate_objects(subject):
+        if predicate != QUDT.unit and local_name(predicate) not in {"unit", "hasUnit"}:
+            continue
+        unit_iri = str(unit)
+        label = (
+            _graph_text(graph, unit, [RDFS.label, SKOS.prefLabel])
+            if isinstance(unit, URIRef)
+            else _clean_text(unit)
+        ) or humanize_identifier(local_name(unit))
+        key = f"{unit_iri}|{label}"
+        if key in seen:
+            continue
+        seen.add(key)
+        is_qudt_unit = unit_iri.startswith("http://qudt.org/") or unit_iri.startswith("https://qudt.org/")
+        rows.append(
+            {
+                "label": label,
+                "iri": unit_iri if isinstance(unit, URIRef) else "",
+                "html": _href_html(unit_iri, label) if is_qudt_unit else escape(label),
+            }
+        )
+
+
 def _term_units(graph: Graph, term_iri: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
     subject = URIRef(term_iri)
-    quantity_nodes = [obj for predicate, obj in graph.predicate_objects(subject) if local_name(predicate) == "hasQuantityValue"]
+    _append_unit_rows(graph, subject, rows, seen)
+    quantity_nodes = [
+        obj
+        for predicate, obj in graph.predicate_objects(subject)
+        if local_name(predicate) in {"hasQuantityValue", "quantityValue"}
+    ]
     for quantity_node in quantity_nodes:
-        for unit in graph.objects(quantity_node, QUDT.unit):
-            unit_iri = str(unit)
-            label = (
-                _graph_text(graph, unit, [RDFS.label, SKOS.prefLabel])
-                if isinstance(unit, URIRef)
-                else _clean_text(unit)
-            ) or humanize_identifier(local_name(unit))
-            key = f"{unit_iri}|{label}"
-            if key in seen:
-                continue
-            seen.add(key)
-            rows.append(
-                {
-                    "label": label,
-                    "iri": unit_iri if isinstance(unit, URIRef) else "",
-                    "html": _href_html(unit_iri, label) if isinstance(unit, URIRef) and _is_web_url(unit_iri) else escape(label),
-                }
-            )
+        _append_unit_rows(graph, quantity_node, rows, seen)
+    rows.sort(key=lambda row: (_clean_text(row["label"]).lower(), _clean_text(row["iri"])))
     return rows
 
 
@@ -1563,6 +1617,8 @@ def build_docs(
     schema_terms = extract_local_terms(schema_graph, namespace_policy, classifications)
     vocabulary_terms = extract_local_terms(controlled_vocabulary_graph, namespace_policy, classifications)
     vocabulary_context_graph = Graph()
+    for triple in schema_graph:
+        vocabulary_context_graph.add(triple)
     for triple in controlled_vocabulary_graph:
         vocabulary_context_graph.add(triple)
     for triple in examples_graph:

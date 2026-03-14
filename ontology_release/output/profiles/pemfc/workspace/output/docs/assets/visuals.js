@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const state = {
     selectedId: null,
+    seedId: null,
     showExternalNeighbors: false,
     expandedIds: new Set(),
     trail: [],
@@ -106,6 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTrail(nodeId);
   }
 
+  function chooseSuggestion(nodeId) {
+    if (!nodeId) return;
+    state.seedId = nodeId;
+    selectNode(nodeId, { reset: true });
+  }
+
   function syncState() {
     root.querySelectorAll("[data-visual-toggle]").forEach((input) => {
       state[input.dataset.visualToggle] = input.checked;
@@ -147,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function searchCandidates(view) {
-    return view.nodes.filter((node) => node.local && node.category !== "Ontology");
+    return view.nodes.filter((node) => node.local && node.category !== "Ontology" && node.modules.includes("vocabulary"));
   }
 
   function scoreNode(node, query) {
@@ -362,10 +369,16 @@ document.addEventListener("DOMContentLoaded", () => {
           sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
           targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
           lineStyle: {
-            width: link.edgeFamily === "schema" ? 2 : 1.6,
+            width: link.edgeFamily === "schema" ? 2 : link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? 1.8 : 1.5,
             opacity: 0.88,
             curveness: 0.12,
-            color: link.edgeFamily === "schema" ? "#ca6d2c" : link.edgeFamily === "object_property" ? "#1f7a7a" : "#64748b",
+            color:
+              link.edgeFamily === "schema" ? "#ca6d2c" :
+              link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? "#1f7a7a" :
+              link.edgeFamily === "unit" ? "#8b5cf6" :
+              link.edgeFamily === "quantity_kind" ? "#0284c7" :
+              link.edgeFamily === "provenance" ? "#7c3aed" :
+              "#64748b",
           },
         })),
         categories: (payload.categories || []).map((category) => ({ name: category.name, itemStyle: { color: category.color } })),
@@ -406,10 +419,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderSearchStatus(mode, rows, query) {
     if (mode === "starter") {
-      searchStatusEl.textContent = "Suggested starting points based on core classes and well-connected local terms.";
+      searchStatusEl.textContent = "Suggested starting points from the controlled vocabulary. Choose one to seed the graph.";
       return;
     }
-    searchStatusEl.textContent = `${rows.length} ranked suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}".`;
+    searchStatusEl.textContent = `${rows.length} controlled-vocabulary suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}". Choose one to recenter the graph.`;
   }
 
   function renderResults(rows, mode) {
@@ -417,13 +430,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!rows.length) {
       const emptyMessage = mode === "starter"
         ? "No starting points are available with the current module filters."
-        : "No local terms match the current search.";
+        : "No controlled vocabulary terms match the current search.";
       resultsEl.innerHTML = `<div class="visual-empty">${escapeHtml(emptyMessage)}</div>`;
       return;
     }
 
     resultsEl.innerHTML = rows.map((node) => `
-      <button class="visual-result ${node.id === state.selectedId ? "is-active" : ""} ${rows.indexOf(node) === state.highlightedIndex ? "is-highlighted" : ""}" type="button" data-result-id="${escapeHtml(node.id)}">
+      <button class="visual-result ${node.id === state.seedId ? "is-active" : ""} ${rows.indexOf(node) === state.highlightedIndex ? "is-highlighted" : ""}" type="button" data-result-id="${escapeHtml(node.id)}">
         <strong>${escapeHtml(node.name)}</strong>
         <small>${escapeHtml(node.display_class || node.category)}</small>
         <div class="visual-result__meta">
@@ -436,7 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultsEl.querySelectorAll("[data-result-id]").forEach((button) => {
       button.addEventListener("click", () => {
-        selectNode(button.dataset.resultId, { reset: true });
+        chooseSuggestion(button.dataset.resultId);
         renderAll();
       });
     });
@@ -499,7 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="visual-inspector__section">
         <strong>Explorer status</strong>
-        <p>${escapeHtml(node.id === graph.center?.id ? "Current focus node." : "Visible through the current expanded neighborhood.")} Degree: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml(node.modules.join(", "))}.</p>
+        <p>${escapeHtml(node.id === graph.center?.id ? "Current focus node." : "Visible through the current expanded neighborhood.")} ${escapeHtml(node.id === state.seedId ? "This is also the current search seed." : "")} Degree: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml(node.modules.join(", "))}.</p>
       </div>
       ${detailSections.join("")}
     `;
@@ -529,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderGraphNote(graph) {
     if (!graph.center) {
-      graphNoteEl.textContent = "Search for a local term or use a starting point to initialize the explorer.";
+      graphNoteEl.textContent = "Search for a controlled-vocabulary term or use a suggested starting point to initialize the explorer.";
       return;
     }
     if (!graph.links.length) {
@@ -551,7 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGraphNote(graph);
 
     if (!graph.center) {
-      chartEl.innerHTML = '<div class="visual-empty">Search for a local term or choose a starting point to render the ontology graph.</div>';
+      chartEl.innerHTML = '<div class="visual-empty">Search for a controlled-vocabulary term or choose a starting point to render the ontology graph.</div>';
       if (chart) {
         chart.dispose();
         chart = null;
@@ -580,24 +593,28 @@ document.addEventListener("DOMContentLoaded", () => {
       : starterSuggestions(view);
   }
 
-  function syncSelection(view, suggestions, mode) {
+  function syncSelection(view, suggestions) {
     if (!view.nodeMap.size) {
       state.selectedId = null;
+      state.seedId = null;
       state.expandedIds = new Set();
       return;
     }
+    if (state.seedId && !view.nodeMap.has(state.seedId)) {
+      state.seedId = null;
+    }
     if (!state.selectedId || !view.nodeMap.has(state.selectedId)) {
-      const fallbackId = suggestions[0]?.id || Array.from(view.nodeMap.keys())[0];
+      const fallbackId = state.seedId || suggestions[0]?.id || Array.from(view.nodeMap.keys())[0];
       if (fallbackId) {
+        if (!state.seedId && suggestions.some((node) => node.id === fallbackId)) {
+          state.seedId = fallbackId;
+        }
         selectNode(fallbackId, { reset: true });
       }
       return;
     }
-    if (mode === "search" && !suggestions.some((node) => node.id === state.selectedId)) {
-      const fallbackId = suggestions[0]?.id;
-      if (fallbackId) {
-        selectNode(fallbackId, { reset: true });
-      }
+    if (!state.seedId && suggestions.length) {
+      state.seedId = suggestions[0].id;
     }
   }
 
@@ -610,7 +627,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const query = searchInputEl.value;
     const mode = currentSuggestionMode(query);
     const results = currentSuggestionsForView(view, query);
-    syncSelection(view, results, mode);
+    syncSelection(view, results);
     if (state.highlightedIndex >= results.length) {
       state.highlightedIndex = Math.max(0, results.length - 1);
     }
@@ -630,13 +647,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   root.querySelectorAll("[data-visual-action]").forEach((button) => {
     button.addEventListener("click", () => {
-      if (button.dataset.visualAction === "reset" && state.selectedId) {
-        state.expandedIds = new Set([state.selectedId]);
+      if (button.dataset.visualAction === "reset" && (state.seedId || state.selectedId)) {
+        const seed = state.seedId || state.selectedId;
+        state.selectedId = seed;
+        state.expandedIds = new Set([seed]);
         renderAll();
       }
       if (button.dataset.visualAction === "clear") {
         searchInputEl.value = "";
         state.selectedId = null;
+        state.seedId = null;
         state.expandedIds = new Set();
         state.trail = [];
         state.highlightedIndex = 0;
@@ -666,7 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       const target = currentSuggestions[state.highlightedIndex] || currentSuggestions[0];
       if (target) {
-        selectNode(target.id, { reset: true });
+        chooseSuggestion(target.id);
         renderAll();
       }
       return;
