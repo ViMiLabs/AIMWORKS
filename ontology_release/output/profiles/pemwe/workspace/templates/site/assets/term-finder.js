@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const countExpandedEl = root.querySelector('[data-visual-count="expanded"]');
 
   let payload = null;
-  let chart = null;
+  let cy = null;
   let currentSuggestions = [];
 
   const state = {
@@ -119,10 +119,100 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function ensureChart() {
-    if (chart) return chart;
-    chart = echarts.init(chartEl, null, { renderer: "canvas" });
-    return chart;
+  function setChartEmpty(message) {
+    chartEl.classList.add("is-empty");
+    chartEl.dataset.emptyMessage = message;
+  }
+
+  function clearChartEmpty() {
+    chartEl.classList.remove("is-empty");
+    chartEl.dataset.emptyMessage = "";
+  }
+
+  function ensureCy() {
+    if (cy) return cy;
+    cy = cytoscape({
+      container: chartEl,
+      elements: [],
+      minZoom: 0.25,
+      maxZoom: 2.5,
+      wheelSensitivity: 0.2,
+      selectionType: "single",
+      style: [
+        {
+          selector: "node",
+          style: {
+            "background-color": "data(fill)",
+            "border-color": "data(borderColor)",
+            "border-width": "data(borderWidth)",
+            "width": "data(size)",
+            "height": "data(size)",
+            "label": "data(name)",
+            "color": "#10242d",
+            "font-size": "11px",
+            "font-family": "Aptos, Gill Sans, Trebuchet MS, sans-serif",
+            "text-wrap": "wrap",
+            "text-max-width": "150px",
+            "text-valign": "center",
+            "text-halign": "center",
+            "text-background-opacity": 0.88,
+            "text-background-color": "#ffffff",
+            "text-background-padding": "3px",
+            "text-background-shape": "roundrectangle",
+          },
+        },
+        {
+          selector: "node.center",
+          style: {
+            "font-size": "14px",
+            "font-weight": "700",
+            "z-index": 10,
+          },
+        },
+        {
+          selector: "edge",
+          style: {
+            "curve-style": "bezier",
+            "line-color": "data(color)",
+            "target-arrow-color": "data(color)",
+            "target-arrow-shape": "triangle",
+            "arrow-scale": 0.9,
+            "width": "data(width)",
+            "opacity": 0.9,
+            "label": "data(label)",
+            "font-size": "9px",
+            "color": "#334155",
+            "text-background-color": "#ffffff",
+            "text-background-opacity": 0.86,
+            "text-background-padding": "2px",
+            "text-background-shape": "roundrectangle",
+            "text-rotation": "autorotate",
+          },
+        },
+        {
+          selector: "edge.no-label",
+          style: {
+            "label": "",
+          },
+        },
+        {
+          selector: ":selected",
+          style: {
+            "overlay-color": "#ca6d2c",
+            "overlay-opacity": 0.08,
+          },
+        },
+      ],
+    });
+    cy.on("tap", "node", (event) => {
+      selectNode(event.target.id(), { reset: false });
+      renderAll();
+    });
+    cy.on("tap", "edge", (event) => {
+      const edge = event.target.data();
+      graphNoteEl.textContent = `Selected relation ${edge.label} between ${edge.sourceLabel} and ${edge.targetLabel}.`;
+    });
+    return cy;
   }
 
   function buildBaseView() {
@@ -313,93 +403,81 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  function chartOption(graph) {
-    const categoryIndex = new Map((payload.categories || []).map((category, index) => [category.name, index]));
-    const expandedIds = new Set(state.expandedIds);
+  function edgeColor(edgeFamily) {
+    if (edgeFamily === "schema") return "#ca6d2c";
+    if (edgeFamily === "relation" || edgeFamily === "object_property") return "#1f7a7a";
+    if (edgeFamily === "unit") return "#8b5cf6";
+    if (edgeFamily === "quantity_kind") return "#0284c7";
+    if (edgeFamily === "provenance") return "#7c3aed";
+    return "#64748b";
+  }
+
+  function buildCyElements(graph) {
     const showEdgeLabels = graph.links.length <= 20;
-    return {
-      tooltip: {
-        trigger: "item",
-        backgroundColor: "rgba(12, 26, 35, 0.96)",
-        borderColor: "rgba(255, 255, 255, 0.12)",
-        textStyle: { color: "#eef8f7" },
-        formatter: (params) => {
-          if (params.dataType === "edge") {
-            const data = params.data;
-            return `<strong>${escapeHtml(data.value || data.predicate)}</strong><br>${escapeHtml(data.sourceLabel)} -> ${escapeHtml(data.targetLabel)}<br>Module: ${escapeHtml(data.module)}`;
-          }
-          const data = params.data;
-          return `<strong>${escapeHtml(data.name)}</strong><br>${escapeHtml(data.display_class || data.category)}<br><code>${escapeHtml(data.iri)}</code><br>Degree: ${escapeHtml(data.degree || 0)}`;
+    const expandedIds = new Set(state.expandedIds);
+    const nodeElements = graph.nodes.map((node) => {
+      const isCenter = node.id === graph.center.id;
+      const isExpanded = expandedIds.has(node.id);
+      return {
+        data: {
+          id: node.id,
+          name: node.name,
+          iri: node.iri,
+          qname: node.qname,
+          localName: node.localName || "",
+          description: node.description || "",
+          display_class: node.display_class || node.category,
+          degree: Number(node.degree || 0),
+          modules: node.modules || [],
+          fill: isCenter ? "#ca6d2c" : isExpanded ? "#1f7a7a" : node.color,
+          borderColor: isExpanded && !isCenter ? "#10242d" : "rgba(16, 36, 45, 0.18)",
+          borderWidth: isExpanded ? 2 : 1,
+          size: isCenter ? 54 : isExpanded ? 42 : Math.max(24, Number(node.symbolSize || 18) + 8),
         },
+        classes: `${isCenter ? "center " : ""}${isExpanded ? "expanded" : ""}`.trim(),
+      };
+    });
+
+    const edgeElements = graph.links.map((link, index) => ({
+      data: {
+        id: `edge-${index}-${link.source}-${link.target}-${link.predicate}`,
+        source: link.source,
+        target: link.target,
+        label: showEdgeLabels ? link.value : "",
+        predicate: link.predicate,
+        module: link.module,
+        edgeFamily: link.edgeFamily,
+        color: edgeColor(link.edgeFamily),
+        width: link.edgeFamily === "schema" ? 2.6 : link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? 2.1 : 1.7,
+        sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
+        targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
       },
-      animationDurationUpdate: 650,
-      animationEasingUpdate: "quarticOut",
-      series: [{
-        type: "graph",
-        layout: "force",
-        roam: true,
-        draggable: true,
-        focusNodeAdjacency: true,
-        edgeSymbol: ["none", "arrow"],
-        edgeSymbolSize: [4, 10],
-        data: graph.nodes.map((node) => {
-          const isCenter = node.id === graph.center.id;
-          const isExpanded = expandedIds.has(node.id);
-          return {
-            ...node,
-            category: categoryIndex.get(node.category) ?? 0,
-            symbolSize: isCenter ? 40 : isExpanded ? 30 : Math.max(16, Number(node.symbolSize || 18)),
-            itemStyle: {
-              color: isCenter ? "#ca6d2c" : isExpanded ? "#1f7a7a" : node.color,
-              shadowBlur: isCenter ? 22 : 12,
-              shadowColor: "rgba(14, 26, 33, 0.18)",
-              borderWidth: isExpanded && !isCenter ? 2 : 0,
-              borderColor: isExpanded && !isCenter ? "rgba(14, 26, 33, 0.24)" : "transparent",
-            },
-            label: {
-              show: true,
-              formatter: node.name,
-              color: "#10242d",
-              fontSize: isCenter ? 14 : 11,
-            },
-          };
-        }),
-        links: graph.links.map((link) => ({
-          ...link,
-          sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
-          targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
-          lineStyle: {
-            width: link.edgeFamily === "schema" ? 2 : link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? 1.8 : 1.5,
-            opacity: 0.88,
-            curveness: 0.12,
-            color:
-              link.edgeFamily === "schema" ? "#ca6d2c" :
-              link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? "#1f7a7a" :
-              link.edgeFamily === "unit" ? "#8b5cf6" :
-              link.edgeFamily === "quantity_kind" ? "#0284c7" :
-              link.edgeFamily === "provenance" ? "#7c3aed" :
-              "#64748b",
-          },
-        })),
-        categories: (payload.categories || []).map((category) => ({ name: category.name, itemStyle: { color: category.color } })),
-        force: {
-          repulsion: 280,
-          edgeLength: [105, 185],
-          gravity: 0.08,
-          friction: 0.2,
-        },
-        edgeLabel: {
-          show: showEdgeLabels,
-          formatter: (params) => params.data.value,
-          backgroundColor: "rgba(255, 255, 255, 0.88)",
-          borderRadius: 4,
-          padding: [2, 4, 2, 4],
-          color: "#243a44",
-          fontSize: 10,
-        },
-        emphasis: { focus: "adjacency", lineStyle: { width: 3 } },
-      }],
-    };
+      classes: showEdgeLabels ? "" : "no-label",
+    }));
+
+    return [...nodeElements, ...edgeElements];
+  }
+
+  function runLayout(instance, centerId) {
+    if (!instance.nodes().length) return;
+    instance.layout({
+      name: "cose",
+      animate: false,
+      fit: true,
+      padding: 36,
+      nodeRepulsion: 420000,
+      idealEdgeLength: 130,
+      edgeElasticity: 120,
+      gravity: 0.22,
+      numIter: 900,
+      initialTemp: 180,
+      coolingFactor: 0.95,
+      componentSpacing: 80,
+    }).run();
+    const centerNode = instance.getElementById(centerId);
+    if (centerNode && centerNode.nonempty()) {
+      instance.center(centerNode);
+    }
   }
 
   function renderTable(headers, rows, emptyMessage) {
@@ -564,23 +642,18 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGraphNote(graph);
 
     if (!graph.center) {
-      chartEl.innerHTML = '<div class="visual-empty">Search for a controlled-vocabulary term or choose a starting point to render the ontology graph.</div>';
-      if (chart) {
-        chart.dispose();
-        chart = null;
+      setChartEmpty("Search for a controlled-vocabulary term or choose a starting point to render the ontology graph.");
+      if (cy) {
+        cy.elements().remove();
       }
       return;
     }
 
-    chartEl.innerHTML = "";
-    const instance = ensureChart();
-    instance.setOption(chartOption(graph), true);
-    instance.off("click");
-    instance.on("click", (params) => {
-      if (params.dataType !== "node") return;
-      selectNode(params.data.id, { reset: false });
-      renderAll();
-    });
+    clearChartEmpty();
+    const instance = ensureCy();
+    instance.elements().remove();
+    instance.add(buildCyElements(graph));
+    runLayout(instance, graph.center.id);
   }
 
   function currentSuggestionMode(query) {
@@ -698,7 +771,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   window.addEventListener("resize", () => {
-    if (chart) chart.resize();
+    if (!cy) return;
+    cy.resize();
+    cy.fit(cy.elements(), 36);
   });
 
   fetch(dataPath)
@@ -712,7 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       const message = escapeHtml(error.message);
-      chartEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      setChartEmpty(error.message);
       resultsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       trailEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       inspectorEl.innerHTML = `<div class="visual-empty">${message}</div>`;
