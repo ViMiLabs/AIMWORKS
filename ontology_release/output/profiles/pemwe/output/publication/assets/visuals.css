@@ -190,6 +190,9 @@
 .visual-results {
   display: grid;
   gap: 0.65rem;
+  max-height: 34rem;
+  overflow: auto;
+  padding-right: 0.2rem;
 }
 
 .visual-result {
@@ -207,6 +210,7 @@
 }
 
 .visual-result:hover,
+.visual-result.is-highlighted,
 .visual-result.is-active {
   transform: translateY(-1px);
   border-color: rgba(31, 122, 122, 0.32);
@@ -246,6 +250,20 @@
   gap: 1rem;
   align-items: end;
   margin-bottom: 0.85rem;
+}
+
+.visual-inline-note,
+.visual-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.visual-note {
+  border-radius: 1rem;
+  border: 1px solid rgba(18, 39, 48, 0.08);
+  background: linear-gradient(180deg, rgba(244, 251, 251, 0.84), rgba(255, 255, 255, 0.92));
+  padding: 0.85rem 0.95rem;
 }
 
 .visual-chart {
@@ -296,6 +314,30 @@
 
 .visual-inspector__section ul {
   padding-left: 1rem;
+}
+
+.visual-toolbar,
+.visual-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.visual-trail__item {
+  appearance: none;
+  border: 1px solid rgba(18, 39, 48, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--slate-950);
+  padding: 0.46rem 0.8rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.visual-trail__item:hover,
+.visual-trail__item.is-active {
+  border-color: rgba(31, 122, 122, 0.32);
+  background: rgba(77, 180, 170, 0.12);
 }
 
 @media (max-width: 1120px) {

@@ -39,9 +39,10 @@ def test_docs_generation(temp_project):
     assert "https://oops.linkeddata.es/" in quality_page
     assert "https://foops.linkeddata.es/FAIR_validator.html" in quality_page
     visuals_page = (temp_project / "output" / "docs" / "pages" / "visualizations.html").read_text(encoding="utf-8")
-    assert "Term Finder" in visuals_page
+    assert "Ontology Explorer" in visuals_page
     assert "data-visual-explorer" in visuals_page
     assert "Show directly linked external terms" in visuals_page
+    assert "Traversal history" in visuals_page
     reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Controlled Vocabulary" in reference_page
     assert "<th>Class</th><th>Unit</th>" in reference_page

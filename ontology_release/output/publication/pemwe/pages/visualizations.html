@@ -122,8 +122,8 @@
   <section class="card card--feature visual-hero">
     <div>
       <p class="eyebrow">Visual explorer</p>
-      <h2>Term Finder</h2>
-      <p class="visual-hero__lede">Find a local ontology term, then inspect only that node, its direct neighbors, and the visible relations that connect them. The page stays intentionally focused so the graph remains readable.</p>
+      <h2>Ontology Explorer</h2>
+      <p class="visual-hero__lede">Search the published ontology with ranked suggestions, start from a seed term, then expand the graph progressively by clicking visible nodes. The interface stays search-first so the graph grows in a controlled way instead of collapsing into a full release dump.</p>
       <div class="meta-row" style="margin-top: 1rem;">
         <span>Profile PEMWE</span>
         <span>Published modules 5</span>
@@ -132,9 +132,9 @@
     </div>
     <div class="visual-kpi-grid">
       <div class="visual-kpi"><span>Local terms</span><strong>715</strong></div>
-      <div class="visual-kpi"><span>Visible relations</span><strong data-visual-count="edges">0</strong></div>
       <div class="visual-kpi"><span>Active modules</span><strong data-visual-count="modules">5</strong></div>
-      <div class="visual-kpi"><span>Search results</span><strong data-visual-count="results">0</strong></div>
+      <div class="visual-kpi"><span>Expanded nodes</span><strong data-visual-count="expanded">0</strong></div>
+      <div class="visual-kpi"><span>Visible relations</span><strong data-visual-count="edges">0</strong></div>
     </div>
   </section>
 
@@ -143,11 +143,12 @@
       <section class="visual-panel">
         <p class="eyebrow">Find a term</p>
         <h2>Search</h2>
-        <p>Search local H2KG labels, local names, IRI fragments, and definitions. Results are ranked to prefer exact local matches.</p>
+        <p>Search local labels, local names, IRI fragments, definitions, and mapped hints. Suggestions update as you type and can be traversed with the keyboard.</p>
         <div class="visual-field">
           <label for="visual-search-input">Search for a term</label>
           <input id="visual-search-input" type="search" data-visual-search placeholder="e.g., ionomer, Measurement, ACAmplitude, usesInstrument">
         </div>
+        <p class="visual-inline-note">Use <code>Arrow Up</code>, <code>Arrow Down</code>, and <code>Enter</code> to select suggestions quickly.</p>
         <div class="visual-field">
           <label>Release modules</label>
           <div class="visual-module-grid">
@@ -208,13 +209,31 @@
       <section class="visual-panel">
         <div class="visual-section-heading">
           <div>
-            <p class="eyebrow">Matches</p>
-            <h3>Search results</h3>
-            <p>Choose one term to render its one-hop neighborhood.</p>
+            <p class="eyebrow">Suggestions</p>
+            <h3>Matches and starting points</h3>
+            <p>Pick a seed term. When the search box is empty, the explorer offers good entry points into the ontology.</p>
           </div>
         </div>
+        <div class="visual-note" data-search-status>Starter suggestions will appear here.</div>
         <div class="visual-results" data-search-results>
-          <div class="visual-empty">Start typing to search the local ontology terms.</div>
+          <div class="visual-empty">Start typing to search the ontology, or use one of the suggested starting points.</div>
+        </div>
+      </section>
+
+      <section class="visual-panel">
+        <div class="visual-section-heading">
+          <div>
+            <p class="eyebrow">Explorer trail</p>
+            <h3>Traversal history</h3>
+            <p>Use the trail to jump back to previously explored terms without losing context.</p>
+          </div>
+        </div>
+        <div class="visual-trail" data-visual-trail>
+          <div class="visual-empty">The exploration trail will appear after you select a term.</div>
+        </div>
+        <div class="visual-toolbar">
+          <button type="button" class="copy-button" data-visual-action="reset">Reset graph</button>
+          <button type="button" class="copy-button" data-visual-action="clear">Clear search</button>
         </div>
       </section>
     </aside>
@@ -223,16 +242,18 @@
       <section class="visual-stage">
         <div class="visual-stage__head">
           <div>
-            <p class="eyebrow">Neighborhood view</p>
-            <h2>Selected term graph</h2>
-            <p>The graph shows the selected term and its directly connected neighbors only. Blank nodes are excluded.</p>
+            <p class="eyebrow">Progressive graph</p>
+            <h2>Selected neighborhood</h2>
+            <p>The graph starts from a seed term and expands as you click visible nodes. Blank nodes stay hidden, while units and similar details are projected into the inspector instead.</p>
           </div>
           <div class="visual-status">
             <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">0</strong></span>
             <span class="metric-pill">Visible edges <strong data-visual-count="edges-inline">0</strong></span>
           </div>
         </div>
+        <p class="visual-inline-note">Click a node in the graph to recenter the explorer and reveal the next local neighborhood.</p>
         <div class="visual-chart" data-visual-chart="term"></div>
+        <div class="visual-note" data-visual-graph-note>The graph note updates with expansion and readability guidance.</div>
       </section>
 
       <section class="visual-detail-grid">
@@ -240,7 +261,7 @@
           <p class="eyebrow">Term details</p>
           <h3>Annotations and mapping</h3>
           <div class="visual-inspector__body" data-visual-inspector>
-            <div class="visual-empty">Select a search result to inspect its label, class, units, mappings, and release metadata.</div>
+            <div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>
           </div>
         </section>
         <section class="visual-panel">

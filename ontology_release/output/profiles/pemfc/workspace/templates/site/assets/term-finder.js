@@ -6,21 +6,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const chartEl = root.querySelector('[data-visual-chart="term"]');
   const searchInputEl = root.querySelector("[data-visual-search]");
   const resultsEl = root.querySelector("[data-search-results]");
+  const searchStatusEl = root.querySelector("[data-search-status]");
+  const graphNoteEl = root.querySelector("[data-visual-graph-note]");
+  const trailEl = root.querySelector("[data-visual-trail]");
   const inspectorEl = root.querySelector("[data-visual-inspector]");
   const relationsEl = root.querySelector("[data-visual-relations]");
   const countNodesEl = root.querySelector('[data-visual-count="nodes"]');
   const countEdgesEl = root.querySelector('[data-visual-count="edges"]');
   const countEdgesInlineEl = root.querySelector('[data-visual-count="edges-inline"]');
   const countModulesEl = root.querySelector('[data-visual-count="modules"]');
-  const countResultsEl = root.querySelector('[data-visual-count="results"]');
+  const countExpandedEl = root.querySelector('[data-visual-count="expanded"]');
 
   let payload = null;
   let chart = null;
+  let currentSuggestions = [];
 
   const state = {
     selectedId: null,
     showExternalNeighbors: false,
+    expandedIds: new Set(),
+    trail: [],
+    highlightedIndex: 0,
   };
+
+  const STARTER_LABELS = [
+    "measurement",
+    "property",
+    "parameter",
+    "matter",
+    "instrument",
+    "manufacturing",
+    "process",
+    "data",
+    "metadata",
+    "agent",
+  ];
+  const MAX_SUGGESTIONS = 16;
+  const MAX_VISIBLE_NODES = 72;
+  const MAX_NEW_NEIGHBORS_PER_SOURCE = 22;
 
   const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -30,7 +53,58 @@ document.addEventListener("DOMContentLoaded", () => {
     .replace(/'/g, "&#39;");
 
   const normalize = (value) => String(value || "").trim().toLowerCase();
+  const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-module-toggle]:checked")).map((input) => input.value);
+
+  function levenshtein(left, right) {
+    if (left === right) return 0;
+    if (!left.length) return right.length;
+    if (!right.length) return left.length;
+    const previous = Array.from({ length: right.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= left.length; i += 1) {
+      let diagonal = previous[0];
+      previous[0] = i;
+      for (let j = 1; j <= right.length; j += 1) {
+        const stored = previous[j];
+        const cost = left[i - 1] === right[j - 1] ? 0 : 1;
+        previous[j] = Math.min(previous[j] + 1, previous[j - 1] + 1, diagonal + cost);
+        diagonal = stored;
+      }
+    }
+    return previous[right.length];
+  }
+
+  function fuzzyBonus(query, candidate) {
+    const q = stripKey(query);
+    const c = stripKey(candidate);
+    if (!q || !c || Math.abs(q.length - c.length) > 3) return 0;
+    const distance = levenshtein(q, c);
+    if (distance === 0) return 30;
+    if (distance === 1) return 18;
+    if (distance === 2) return 9;
+    return 0;
+  }
+
+  function updateTrail(nodeId) {
+    if (!nodeId) return;
+    state.trail = state.trail.filter((value) => value !== nodeId);
+    state.trail.push(nodeId);
+    if (state.trail.length > 8) {
+      state.trail = state.trail.slice(state.trail.length - 8);
+    }
+  }
+
+  function selectNode(nodeId, options = {}) {
+    if (!nodeId) return;
+    state.selectedId = nodeId;
+    if (options.reset || !state.expandedIds.size) {
+      state.expandedIds = new Set([nodeId]);
+    } else {
+      state.expandedIds.add(nodeId);
+    }
+    state.highlightedIndex = 0;
+    updateTrail(nodeId);
+  }
 
   function syncState() {
     root.querySelectorAll("[data-visual-toggle]").forEach((input) => {
@@ -56,9 +130,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!selectedModules.has(link.module)) return false;
       return nodeMap.has(link.source) && nodeMap.has(link.target);
     });
+    const adjacency = new Map();
+    links.forEach((link) => {
+      if (!adjacency.has(link.source)) adjacency.set(link.source, []);
+      if (!adjacency.has(link.target)) adjacency.set(link.target, []);
+      adjacency.get(link.source).push(link);
+      adjacency.get(link.target).push(link);
+    });
     return {
       nodes,
       links,
+      adjacency,
       nodeMap,
       selectedModules: Array.from(selectedModules),
     };
@@ -73,18 +155,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!q) return 0;
 
     const label = normalize(node.name);
+    const localName = normalize(node.localName || "");
     const qname = normalize(node.qname);
     const iri = normalize(node.iri);
     const details = normalize(node.search_text || node.description || "");
+    const tokens = [label, localName, qname, node.display_class || "", node.units || ""];
     let score = 0;
 
-    if (label === q || qname === q) score += 120;
-    if (label.startsWith(q) || qname.startsWith(q)) score += 80;
-    if (label.includes(q) || qname.includes(q)) score += 55;
-    if (iri.includes(q)) score += 35;
-    if (details.includes(q)) score += 20;
-    if (normalize(node.display_class).includes(q)) score += 12;
-    if (node.local) score += 8;
+    if (label === q || localName === q || qname === q) score += 150;
+    if (label.startsWith(q) || localName.startsWith(q) || qname.startsWith(q)) score += 90;
+    if (label.includes(q) || localName.includes(q) || qname.includes(q)) score += 65;
+    if (iri.includes(q)) score += 38;
+    if (details.includes(q)) score += 24;
+    if (normalize(node.display_class).includes(q)) score += 18;
+    score += Math.max(...tokens.map((token) => fuzzyBonus(q, token)), 0);
+    score += Math.min(Number(node.degree || 0), 120) / 30;
 
     return score;
   }
@@ -99,52 +184,132 @@ document.addEventListener("DOMContentLoaded", () => {
         if (right.score !== left.score) return right.score - left.score;
         return left.node.name.localeCompare(right.node.name);
       })
-      .slice(0, 16)
+      .slice(0, MAX_SUGGESTIONS)
       .map((row) => row.node);
   }
 
-  function buildNeighborhood(view, seedId) {
-    const seed = view.nodeMap.get(seedId);
-    if (!seed) {
-      return { seed: null, nodes: [], links: [], nodeMap: new Map() };
-    }
+  function starterSuggestions(view) {
+    const candidates = searchCandidates(view);
+    const starters = [];
+    const seen = new Set();
 
-    let links = view.links.filter((link) => link.source === seedId || link.target === seedId);
-    if (!state.showExternalNeighbors) {
-      links = links.filter((link) => {
-        const neighborId = link.source === seedId ? link.target : link.source;
-        const neighbor = view.nodeMap.get(neighborId);
-        return !neighbor || neighbor.local || neighbor.id === seedId;
+    STARTER_LABELS.forEach((target) => {
+      const match = candidates.find((node) => {
+        const label = normalize(node.name);
+        const localName = normalize(node.localName || "");
+        return label === target || localName === target;
       });
-    }
-
-    const nodeIds = new Set([seedId]);
-    links.forEach((link) => {
-      nodeIds.add(link.source);
-      nodeIds.add(link.target);
+      if (match && !seen.has(match.id)) {
+        starters.push(match);
+        seen.add(match.id);
+      }
     });
 
-    const nodes = Array.from(nodeIds)
+    candidates
+      .slice()
+      .sort((left, right) => {
+        const leftScore = (left.category === "Class" ? 24 : 0) + Math.min(Number(left.degree || 0), 120);
+        const rightScore = (right.category === "Class" ? 24 : 0) + Math.min(Number(right.degree || 0), 120);
+        if (rightScore !== leftScore) return rightScore - leftScore;
+        return left.name.localeCompare(right.name);
+      })
+      .forEach((node) => {
+        if (!seen.has(node.id) && starters.length < 10) {
+          starters.push(node);
+          seen.add(node.id);
+        }
+      });
+
+    return starters;
+  }
+
+  function rankExpansionLink(view, sourceId, link) {
+    const neighborId = link.source === sourceId ? link.target : link.source;
+    const neighbor = view.nodeMap.get(neighborId);
+    if (!neighbor) return -999;
+    let score = 0;
+    if (neighbor.local) score += 70;
+    if (neighbor.category === "Class") score += 18;
+    if (neighbor.category === "ObjectProperty" || neighbor.category === "DatatypeProperty") score += 14;
+    if (link.edgeFamily === "schema") score += 22;
+    if (link.edgeFamily === "object_property") score += 16;
+    score -= Math.min(Number(neighbor.degree || 0), 160) / 12;
+    return score;
+  }
+
+  function buildExpandedGraph(view) {
+    const center = view.nodeMap.get(state.selectedId);
+    if (!center) {
+      return {
+        center: null,
+        nodes: [],
+        links: [],
+        nodeMap: new Map(),
+        meta: { expandedCount: 0, hiddenNeighborCount: 0, selectionLabel: "" },
+      };
+    }
+
+    const expandedIds = new Set(Array.from(state.expandedIds).filter((id) => view.nodeMap.has(id)));
+    expandedIds.add(center.id);
+
+    const visibleIds = new Set([center.id]);
+    let hiddenNeighborCount = 0;
+
+    Array.from(expandedIds).forEach((sourceId) => {
+      const related = (view.adjacency.get(sourceId) || [])
+        .filter((link) => {
+          const neighborId = link.source === sourceId ? link.target : link.source;
+          const neighbor = view.nodeMap.get(neighborId);
+          if (!neighbor) return false;
+          if (!state.showExternalNeighbors && !neighbor.local && neighbor.id !== center.id) return false;
+          return true;
+        })
+        .sort((left, right) => rankExpansionLink(view, sourceId, right) - rankExpansionLink(view, sourceId, left));
+
+      let newNeighbors = 0;
+      related.forEach((link) => {
+        const neighborId = link.source === sourceId ? link.target : link.source;
+        const isNew = !visibleIds.has(neighborId);
+        if (isNew && (visibleIds.size >= MAX_VISIBLE_NODES || newNeighbors >= MAX_NEW_NEIGHBORS_PER_SOURCE)) {
+          hiddenNeighborCount += 1;
+          return;
+        }
+        visibleIds.add(link.source);
+        visibleIds.add(link.target);
+        if (isNew) {
+          newNeighbors += 1;
+        }
+      });
+    });
+
+    const nodes = Array.from(visibleIds)
       .map((id) => view.nodeMap.get(id))
       .filter(Boolean)
       .sort((left, right) => {
-        if (left.id === seedId) return -1;
-        if (right.id === seedId) return 1;
+        if (left.id === center.id) return -1;
+        if (right.id === center.id) return 1;
         return left.name.localeCompare(right.name);
       });
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+    const links = view.links.filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target));
 
     return {
-      seed,
+      center,
       nodes,
-      links: links.filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target)),
+      links,
       nodeMap,
+      meta: {
+        expandedCount: expandedIds.size,
+        hiddenNeighborCount,
+        selectionLabel: center.name,
+      },
     };
   }
 
   function chartOption(graph) {
     const categoryIndex = new Map((payload.categories || []).map((category, index) => [category.name, index]));
-    const showEdgeLabels = graph.links.length <= 16;
+    const expandedIds = new Set(state.expandedIds);
+    const showEdgeLabels = graph.links.length <= 20;
     return {
       tooltip: {
         trigger: "item",
@@ -154,13 +319,13 @@ document.addEventListener("DOMContentLoaded", () => {
         formatter: (params) => {
           if (params.dataType === "edge") {
             const data = params.data;
-            return `<strong>${escapeHtml(data.value || data.predicate)}</strong><br>${escapeHtml(data.sourceLabel)} -> ${escapeHtml(data.targetLabel)}`;
+            return `<strong>${escapeHtml(data.value || data.predicate)}</strong><br>${escapeHtml(data.sourceLabel)} -> ${escapeHtml(data.targetLabel)}<br>Module: ${escapeHtml(data.module)}`;
           }
           const data = params.data;
-          return `<strong>${escapeHtml(data.name)}</strong><br>${escapeHtml(data.display_class || data.category)}<br><code>${escapeHtml(data.iri)}</code>`;
+          return `<strong>${escapeHtml(data.name)}</strong><br>${escapeHtml(data.display_class || data.category)}<br><code>${escapeHtml(data.iri)}</code><br>Degree: ${escapeHtml(data.degree || 0)}`;
         },
       },
-      animationDurationUpdate: 700,
+      animationDurationUpdate: 650,
       animationEasingUpdate: "quarticOut",
       series: [{
         type: "graph",
@@ -170,22 +335,28 @@ document.addEventListener("DOMContentLoaded", () => {
         focusNodeAdjacency: true,
         edgeSymbol: ["none", "arrow"],
         edgeSymbolSize: [4, 10],
-        data: graph.nodes.map((node) => ({
-          ...node,
-          category: categoryIndex.get(node.category) ?? 0,
-          symbolSize: node.id === graph.seed.id ? 34 : Math.max(16, Number(node.symbolSize || 18)),
-          itemStyle: {
-            color: node.id === graph.seed.id ? "#ca6d2c" : node.color,
-            shadowBlur: node.id === graph.seed.id ? 20 : 12,
-            shadowColor: "rgba(14, 26, 33, 0.16)",
-          },
-          label: {
-            show: true,
-            formatter: node.name,
-            color: "#10242d",
-            fontSize: node.id === graph.seed.id ? 13 : 11,
-          },
-        })),
+        data: graph.nodes.map((node) => {
+          const isCenter = node.id === graph.center.id;
+          const isExpanded = expandedIds.has(node.id);
+          return {
+            ...node,
+            category: categoryIndex.get(node.category) ?? 0,
+            symbolSize: isCenter ? 40 : isExpanded ? 30 : Math.max(16, Number(node.symbolSize || 18)),
+            itemStyle: {
+              color: isCenter ? "#ca6d2c" : isExpanded ? "#1f7a7a" : node.color,
+              shadowBlur: isCenter ? 22 : 12,
+              shadowColor: "rgba(14, 26, 33, 0.18)",
+              borderWidth: isExpanded && !isCenter ? 2 : 0,
+              borderColor: isExpanded && !isCenter ? "rgba(14, 26, 33, 0.24)" : "transparent",
+            },
+            label: {
+              show: true,
+              formatter: node.name,
+              color: "#10242d",
+              fontSize: isCenter ? 14 : 11,
+            },
+          };
+        }),
         links: graph.links.map((link) => ({
           ...link,
           sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
@@ -199,8 +370,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })),
         categories: (payload.categories || []).map((category) => ({ name: category.name, itemStyle: { color: category.color } })),
         force: {
-          repulsion: 260,
-          edgeLength: [110, 180],
+          repulsion: 280,
+          edgeLength: [105, 185],
           gravity: 0.08,
           friction: 0.2,
         },
@@ -227,35 +398,74 @@ document.addEventListener("DOMContentLoaded", () => {
     return `<table class="data-table"><thead><tr>${headerHtml}</tr></thead><tbody>${rowHtml}</tbody></table>`;
   }
 
-  function renderResults(rows) {
-    countResultsEl.textContent = String(rows.length);
+  function snippet(text, length = 120) {
+    const value = String(text || "").trim();
+    if (!value) return "";
+    return value.length <= length ? value : `${value.slice(0, length - 1)}...`;
+  }
+
+  function renderSearchStatus(mode, rows, query) {
+    if (mode === "starter") {
+      searchStatusEl.textContent = "Suggested starting points based on core classes and well-connected local terms.";
+      return;
+    }
+    searchStatusEl.textContent = `${rows.length} ranked suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}".`;
+  }
+
+  function renderResults(rows, mode) {
+    currentSuggestions = rows;
     if (!rows.length) {
-      resultsEl.innerHTML = '<div class="visual-empty">No local terms match the current search.</div>';
+      const emptyMessage = mode === "starter"
+        ? "No starting points are available with the current module filters."
+        : "No local terms match the current search.";
+      resultsEl.innerHTML = `<div class="visual-empty">${escapeHtml(emptyMessage)}</div>`;
       return;
     }
 
     resultsEl.innerHTML = rows.map((node) => `
-      <button class="visual-result ${node.id === state.selectedId ? "is-active" : ""}" type="button" data-result-id="${escapeHtml(node.id)}">
+      <button class="visual-result ${node.id === state.selectedId ? "is-active" : ""} ${rows.indexOf(node) === state.highlightedIndex ? "is-highlighted" : ""}" type="button" data-result-id="${escapeHtml(node.id)}">
         <strong>${escapeHtml(node.name)}</strong>
         <small>${escapeHtml(node.display_class || node.category)}</small>
         <div class="visual-result__meta">
-          <span class="visual-badge">${escapeHtml(node.modules.join(", "))}</span>
-          <span class="visual-badge">${escapeHtml(node.qname || node.iri)}</span>
+          <span class="visual-badge">${escapeHtml(node.localName || node.qname || node.iri)}</span>
+          <span class="visual-badge">${escapeHtml(String(node.degree || 0))} links</span>
         </div>
+        <small>${escapeHtml(snippet(node.description || ""))}</small>
       </button>
     `).join("");
 
     resultsEl.querySelectorAll("[data-result-id]").forEach((button) => {
       button.addEventListener("click", () => {
-        state.selectedId = button.dataset.resultId;
+        selectNode(button.dataset.resultId, { reset: true });
         renderAll();
       });
     });
   }
 
-  function renderInspector(node) {
+  function renderTrail(view) {
+    const rows = state.trail
+      .map((id) => view.nodeMap.get(id))
+      .filter(Boolean);
+    if (!rows.length) {
+      trailEl.innerHTML = '<div class="visual-empty">The exploration trail will appear after you select a term.</div>';
+      return;
+    }
+    trailEl.innerHTML = rows.map((node) => `
+      <button type="button" class="visual-trail__item ${node.id === state.selectedId ? "is-active" : ""}" data-trail-id="${escapeHtml(node.id)}">
+        ${escapeHtml(node.name)}
+      </button>
+    `).join("");
+    trailEl.querySelectorAll("[data-trail-id]").forEach((button) => {
+      button.addEventListener("click", () => {
+        selectNode(button.dataset.trailId, { reset: false });
+        renderAll();
+      });
+    });
+  }
+
+  function renderInspector(node, graph) {
     if (!node) {
-      inspectorEl.innerHTML = '<div class="visual-empty">Select a search result to inspect its label, class, units, mappings, and release metadata.</div>';
+      inspectorEl.innerHTML = '<div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>';
       return;
     }
 
@@ -280,16 +490,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><a href="${escapeHtml(node.iri)}"><code>${escapeHtml(node.iri)}</code></a></p>
       </div>
       <div class="visual-inspector__section">
-        <strong>QName / local form</strong>
-        <p><code>${escapeHtml(node.qname)}</code></p>
+        <strong>Local form</strong>
+        <p><code>${escapeHtml(node.localName || node.qname)}</code></p>
       </div>
       <div class="visual-inspector__section">
         <strong>Definition</strong>
         <p>${escapeHtml(node.description || "No definition or comment recorded.")}</p>
       </div>
       <div class="visual-inspector__section">
-        <strong>Source modules</strong>
-        <p>${escapeHtml(node.modules.join(", "))}</p>
+        <strong>Explorer status</strong>
+        <p>${escapeHtml(node.id === graph.center?.id ? "Current focus node." : "Visible through the current expanded neighborhood.")} Degree: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml(node.modules.join(", "))}.</p>
       </div>
       ${detailSections.join("")}
     `;
@@ -300,6 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
       source: graph.nodeMap.get(link.source)?.name || link.source,
       predicate: link.value,
       target: graph.nodeMap.get(link.target)?.name || link.target,
+      edgeFamily: link.edgeFamily,
       module: link.module,
     }));
 
@@ -308,6 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { label: "Source", render: (row) => escapeHtml(row.source) },
         { label: "Predicate", render: (row) => `<code>${escapeHtml(row.predicate)}</code>` },
         { label: "Target", render: (row) => escapeHtml(row.target) },
+        { label: "Kind", render: (row) => escapeHtml(row.edgeFamily) },
         { label: "Module", render: (row) => escapeHtml(row.module) },
       ],
       rows,
@@ -315,13 +527,31 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  function renderGraphNote(graph) {
+    if (!graph.center) {
+      graphNoteEl.textContent = "Search for a local term or use a starting point to initialize the explorer.";
+      return;
+    }
+    if (!graph.links.length) {
+      graphNoteEl.textContent = "This term is loaded, but no visible relationships remain with the current module and external-term filters.";
+      return;
+    }
+    if (graph.meta.hiddenNeighborCount > 0) {
+      graphNoteEl.textContent = `Showing a readable connected subset around ${graph.meta.selectionLabel}. ${graph.meta.hiddenNeighborCount} additional neighbor links are hidden for clarity. Click a visible node to keep exploring.`;
+      return;
+    }
+    graphNoteEl.textContent = `Showing the current connected neighborhood around ${graph.meta.selectionLabel}. Click any visible node to expand further.`;
+  }
+
   function renderGraph(graph) {
     countNodesEl.textContent = String(graph.nodes.length);
     countEdgesEl.textContent = String(graph.links.length);
     countEdgesInlineEl.textContent = String(graph.links.length);
+    countExpandedEl.textContent = String(graph.meta.expandedCount);
+    renderGraphNote(graph);
 
-    if (!graph.seed) {
-      chartEl.innerHTML = '<div class="visual-empty">Search for a local term to render its one-hop neighborhood.</div>';
+    if (!graph.center) {
+      chartEl.innerHTML = '<div class="visual-empty">Search for a local term or choose a starting point to render the ontology graph.</div>';
       if (chart) {
         chart.dispose();
         chart = null;
@@ -335,8 +565,40 @@ document.addEventListener("DOMContentLoaded", () => {
     instance.off("click");
     instance.on("click", (params) => {
       if (params.dataType !== "node") return;
-      renderInspector(params.data);
+      selectNode(params.data.id, { reset: false });
+      renderAll();
     });
+  }
+
+  function currentSuggestionMode(query) {
+    return normalize(query) ? "search" : "starter";
+  }
+
+  function currentSuggestionsForView(view, query) {
+    return currentSuggestionMode(query) === "search"
+      ? searchResults(view, query)
+      : starterSuggestions(view);
+  }
+
+  function syncSelection(view, suggestions, mode) {
+    if (!view.nodeMap.size) {
+      state.selectedId = null;
+      state.expandedIds = new Set();
+      return;
+    }
+    if (!state.selectedId || !view.nodeMap.has(state.selectedId)) {
+      const fallbackId = suggestions[0]?.id || Array.from(view.nodeMap.keys())[0];
+      if (fallbackId) {
+        selectNode(fallbackId, { reset: true });
+      }
+      return;
+    }
+    if (mode === "search" && !suggestions.some((node) => node.id === state.selectedId)) {
+      const fallbackId = suggestions[0]?.id;
+      if (fallbackId) {
+        selectNode(fallbackId, { reset: true });
+      }
+    }
   }
 
   function renderAll() {
@@ -345,23 +607,76 @@ document.addEventListener("DOMContentLoaded", () => {
     const view = buildBaseView();
     countModulesEl.textContent = String(view.selectedModules.length);
 
-    const results = searchResults(view, searchInputEl.value);
-    const resultIds = new Set(results.map((node) => node.id));
-    if (!resultIds.has(state.selectedId)) {
-      state.selectedId = results[0]?.id || null;
+    const query = searchInputEl.value;
+    const mode = currentSuggestionMode(query);
+    const results = currentSuggestionsForView(view, query);
+    syncSelection(view, results, mode);
+    if (state.highlightedIndex >= results.length) {
+      state.highlightedIndex = Math.max(0, results.length - 1);
     }
 
-    renderResults(results);
-    const graph = buildNeighborhood(view, state.selectedId);
+    renderSearchStatus(mode, results, query);
+    renderResults(results, mode);
+    renderTrail(view);
+
+    const graph = buildExpandedGraph(view);
     renderGraph(graph);
-    renderInspector(graph.seed);
+    renderInspector(graph.center, graph);
     renderRelations(graph);
   }
 
   root.querySelectorAll("[data-module-toggle], [data-visual-toggle]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
-  searchInputEl.addEventListener("input", renderAll);
+  root.querySelectorAll("[data-visual-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.visualAction === "reset" && state.selectedId) {
+        state.expandedIds = new Set([state.selectedId]);
+        renderAll();
+      }
+      if (button.dataset.visualAction === "clear") {
+        searchInputEl.value = "";
+        state.selectedId = null;
+        state.expandedIds = new Set();
+        state.trail = [];
+        state.highlightedIndex = 0;
+        renderAll();
+      }
+    });
+  });
+  searchInputEl.addEventListener("input", () => {
+    state.highlightedIndex = 0;
+    renderAll();
+  });
+  searchInputEl.addEventListener("keydown", (event) => {
+    if (!currentSuggestions.length) return;
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      state.highlightedIndex = Math.min(state.highlightedIndex + 1, currentSuggestions.length - 1);
+      renderAll();
+      return;
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      state.highlightedIndex = Math.max(state.highlightedIndex - 1, 0);
+      renderAll();
+      return;
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const target = currentSuggestions[state.highlightedIndex] || currentSuggestions[0];
+      if (target) {
+        selectNode(target.id, { reset: true });
+        renderAll();
+      }
+      return;
+    }
+    if (event.key === "Escape") {
+      searchInputEl.value = "";
+      state.highlightedIndex = 0;
+      renderAll();
+    }
+  });
   window.addEventListener("resize", () => {
     if (chart) chart.resize();
   });
@@ -379,7 +694,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const message = escapeHtml(error.message);
       chartEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       resultsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      trailEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       inspectorEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       relationsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      graphNoteEl.textContent = error.message;
+      searchStatusEl.textContent = error.message;
     });
 });

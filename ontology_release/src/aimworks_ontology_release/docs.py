@@ -946,6 +946,7 @@ def _build_graph_explorer_payload(
             {
                 "id": node_id,
                 "iri": iri,
+                "localName": local_name(iri) if isinstance(node, URIRef) else node_id,
                 "name": _graph_node_label(combined, node),
                 "qname": _qname_or_local(combined, node) if isinstance(node, URIRef) else node_id,
                 "value": iri,
@@ -993,6 +994,13 @@ def _build_graph_explorer_payload(
                 }
             )
     links.sort(key=lambda row: (row["module"], row["edgeFamily"], row["value"], row["source"], row["target"]))
+
+    degree_counts: dict[str, int] = {}
+    for link in links:
+        degree_counts[link["source"]] = degree_counts.get(link["source"], 0) + 1
+        degree_counts[link["target"]] = degree_counts.get(link["target"], 0) + 1
+    for node in nodes:
+        node["degree"] = degree_counts.get(node["id"], 0)
 
     module_summaries: list[dict[str, Any]] = []
     for row in module_rows:
@@ -1144,7 +1152,7 @@ def _enrich_explorer_nodes(payload: dict[str, Any], detail_rows: list[dict[str, 
             node["deprecated"] = "Active"
             node["search_text"] = " ".join(
                 part
-                for part in [node.get("name", ""), node.get("qname", ""), node.get("iri", ""), node.get("description", "")]
+                for part in [node.get("name", ""), node.get("localName", ""), node.get("qname", ""), node.get("iri", ""), node.get("description", "")]
                 if part
             )
             continue
@@ -1162,6 +1170,7 @@ def _enrich_explorer_nodes(payload: dict[str, Any], detail_rows: list[dict[str, 
             part
             for part in [
                 node.get("name", ""),
+                node.get("localName", ""),
                 node.get("qname", ""),
                 node.get("iri", ""),
                 node.get("description", ""),
