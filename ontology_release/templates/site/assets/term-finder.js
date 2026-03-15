@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-module-toggle]:checked")).map((input) => input.value);
+  const moduleInputs = () => Array.from(root.querySelectorAll("[data-module-toggle]"));
 
   function levenshtein(left, right) {
     if (left === right) return 0;
@@ -109,8 +110,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function chooseSuggestion(nodeId) {
     if (!nodeId) return;
+    ensureNodeModulesActive(nodeId);
     state.seedId = nodeId;
     selectNode(nodeId, { reset: true });
+  }
+
+  function ensureNodeModulesActive(nodeId) {
+    const node = (payload?.nodes || []).find((candidate) => candidate.id === nodeId);
+    if (!node) return;
+    const inputMap = new Map(moduleInputs().map((input) => [input.value, input]));
+    node.modules.forEach((moduleId) => {
+      const input = inputMap.get(moduleId);
+      if (input && !input.checked) {
+        input.checked = true;
+      }
+    });
   }
 
   function syncState() {
@@ -243,8 +257,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  function searchCandidates(view) {
-    return view.nodes.filter((node) => node.local && node.category !== "Ontology" && node.modules.includes("vocabulary"));
+  function isSearchableNode(node) {
+    const localName = String(node.localName || "");
+    const iri = String(node.iri || "");
+    if (!node.local || node.category === "Ontology" || node.category === "BlankNode") return false;
+    if (localName.startsWith("_") || /_QV$/i.test(localName)) return false;
+    if (iri.startsWith("file:///")) return false;
+    return true;
+  }
+
+  function searchCandidates() {
+    return (payload?.nodes || []).filter((node) => isSearchableNode(node));
+  }
+
+  function starterCandidates(view) {
+    return view.nodes.filter((node) => isSearchableNode(node) && node.modules.includes("vocabulary"));
   }
 
   function scoreNode(node, query) {
@@ -265,16 +292,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (iri.includes(q)) score += 38;
     if (details.includes(q)) score += 24;
     if (normalize(node.display_class).includes(q)) score += 18;
+    if (node.modules.includes("vocabulary")) score += 16;
+    if (node.modules.includes("schema")) score += 8;
     score += Math.max(...tokens.map((token) => fuzzyBonus(q, token)), 0);
     score += Math.min(Number(node.degree || 0), 120) / 30;
 
     return score;
   }
 
-  function searchResults(view, query) {
+  function searchResults(query) {
     const q = normalize(query);
     if (!q) return [];
-    return searchCandidates(view)
+    return searchCandidates()
       .map((node) => ({ node, score: scoreNode(node, q) }))
       .filter((row) => row.score > 0)
       .sort((left, right) => {
@@ -286,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function starterSuggestions(view) {
-    const candidates = searchCandidates(view);
+    const candidates = starterCandidates(view);
     const starters = [];
     const seen = new Set();
 
@@ -497,10 +526,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderSearchStatus(mode, rows, query) {
     if (mode === "starter") {
-      searchStatusEl.textContent = "Suggested starting points from the controlled vocabulary. Choose one to seed the graph.";
+      searchStatusEl.textContent = "Suggested starting points from the published local ontology. Choose one to seed the graph.";
       return;
     }
-    searchStatusEl.textContent = `${rows.length} controlled-vocabulary suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}". Choose one to recenter the graph.`;
+    searchStatusEl.textContent = `${rows.length} local ontology suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}". Choose one to recenter the graph.`;
   }
 
   function renderResults(rows, mode) {
@@ -508,7 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!rows.length) {
       const emptyMessage = mode === "starter"
         ? "No starting points are available with the current module filters."
-        : "No controlled vocabulary terms match the current search.";
+        : "No local ontology terms match the current search.";
       resultsEl.innerHTML = `<div class="visual-empty">${escapeHtml(emptyMessage)}</div>`;
       return;
     }
@@ -519,6 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <small>${escapeHtml(node.display_class || node.category)}</small>
         <div class="visual-result__meta">
           <span class="visual-badge">${escapeHtml(node.localName || node.qname || node.iri)}</span>
+          <span class="visual-badge">${escapeHtml(node.modules.join(", "))}</span>
           <span class="visual-badge">${escapeHtml(String(node.degree || 0))} links</span>
         </div>
         <small>${escapeHtml(snippet(node.description || ""))}</small>
@@ -620,7 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderGraphNote(graph) {
     if (!graph.center) {
-      graphNoteEl.textContent = "Search for a controlled-vocabulary term or use a suggested starting point to initialize the explorer.";
+      graphNoteEl.textContent = "Search for a local ontology term or use a suggested starting point to initialize the explorer.";
       return;
     }
     if (!graph.links.length) {
@@ -642,7 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGraphNote(graph);
 
     if (!graph.center) {
-      setChartEmpty("Search for a controlled-vocabulary term or choose a starting point to render the ontology graph.");
+      setChartEmpty("Search for a local ontology term or choose a starting point to render the ontology graph.");
       if (cy) {
         cy.elements().remove();
       }
@@ -662,11 +692,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function currentSuggestionsForView(view, query) {
     return currentSuggestionMode(query) === "search"
-      ? searchResults(view, query)
+      ? searchResults(query)
       : starterSuggestions(view);
   }
 
-  function syncSelection(view, suggestions) {
+  function syncSelection(view, suggestions, mode) {
     if (!view.nodeMap.size) {
       state.selectedId = null;
       state.seedId = null;
@@ -676,13 +706,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.seedId && !view.nodeMap.has(state.seedId)) {
       state.seedId = null;
     }
-    if (!state.selectedId || !view.nodeMap.has(state.selectedId)) {
-      const fallbackId = state.seedId || suggestions[0]?.id || Array.from(view.nodeMap.keys())[0];
-      if (fallbackId) {
-        if (!state.seedId && suggestions.some((node) => node.id === fallbackId)) {
-          state.seedId = fallbackId;
+    if (state.selectedId && !view.nodeMap.has(state.selectedId)) {
+      state.selectedId = null;
+      state.expandedIds = new Set();
+    }
+    if (!state.selectedId) {
+      if (mode === "starter") {
+        const fallbackId = (state.seedId && view.nodeMap.has(state.seedId))
+          ? state.seedId
+          : (suggestions.find((node) => view.nodeMap.has(node.id))?.id || Array.from(view.nodeMap.keys())[0]);
+        if (fallbackId) {
+          if (!state.seedId && suggestions.some((node) => node.id === fallbackId)) {
+            state.seedId = fallbackId;
+          }
+          selectNode(fallbackId, { reset: true });
         }
-        selectNode(fallbackId, { reset: true });
+      } else if (state.seedId && view.nodeMap.has(state.seedId)) {
+        selectNode(state.seedId, { reset: false });
       }
       return;
     }
@@ -700,7 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const query = searchInputEl.value;
     const mode = currentSuggestionMode(query);
     const results = currentSuggestionsForView(view, query);
-    syncSelection(view, results);
+    syncSelection(view, results, mode);
     if (state.highlightedIndex >= results.length) {
       state.highlightedIndex = Math.max(0, results.length - 1);
     }

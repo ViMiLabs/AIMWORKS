@@ -42,7 +42,7 @@ def test_docs_generation(temp_project):
     assert "Ontology Explorer" in visuals_page
     assert "data-visual-explorer" in visuals_page
     assert "Show directly linked external terms" in visuals_page
-    assert "Search only the controlled vocabulary terms" in visuals_page
+    assert "Search across the published local ontology terms" in visuals_page
     assert "Traversal history" in visuals_page
     assert "cytoscape.min.js" in visuals_page
     reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
