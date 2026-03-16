@@ -33,6 +33,10 @@ def _normalize_unit_label(value: str) -> str:
     return text.strip().casefold()
 
 
+def _normalize_alias(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", _clean_text(value).casefold())
+
+
 def _normalize_unit_rows(units_rows: list[dict[str, str]], fill_rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
     units_by_key: dict[str, dict[str, str]] = {}
     for row in units_rows:
@@ -131,6 +135,21 @@ def _term_label(graph: Graph, subject: URIRef) -> str:
     return _slugify(str(subject).rsplit("#", 1)[-1]).replace("_", " ")
 
 
+def _term_aliases(graph: Graph, subject: URIRef) -> list[str]:
+    aliases: list[str] = []
+    seen: set[str] = set()
+    for predicate in (RDFS.label, SKOS.prefLabel, SKOS.altLabel):
+        for obj in graph.objects(subject, predicate):
+            text = _clean_text(obj)
+            if text and text not in seen:
+                seen.add(text)
+                aliases.append(text)
+    fallback = _slugify(str(subject).rsplit("#", 1)[-1]).replace("_", " ")
+    if fallback and fallback not in seen:
+        aliases.append(fallback)
+    return aliases
+
+
 def _ensure_quantity_value_node(graph: Graph, term: URIRef, namespace_policy: dict[str, Any]) -> URIRef:
     has_quantity_value = URIRef(f"{namespace_policy['term_namespace']}hasQuantityValue")
     existing = [obj for obj in graph.objects(term, has_quantity_value) if isinstance(obj, URIRef)]
@@ -151,6 +170,19 @@ def _existing_unit_objects(graph: Graph, term: URIRef, namespace_policy: dict[st
     has_quantity_value = URIRef(f"{namespace_policy['term_namespace']}hasQuantityValue")
     for qv in graph.objects(term, has_quantity_value):
         for obj in graph.objects(qv, QUDT.unit):
+            if isinstance(obj, URIRef):
+                rows.append(obj)
+    return rows
+
+
+def _existing_quantity_kind_objects(graph: Graph, term: URIRef, namespace_policy: dict[str, Any]) -> list[URIRef]:
+    rows: list[URIRef] = []
+    for obj in graph.objects(term, QUDT.quantityKind):
+        if isinstance(obj, URIRef):
+            rows.append(obj)
+    has_quantity_value = URIRef(f"{namespace_policy['term_namespace']}hasQuantityValue")
+    for qv in graph.objects(term, has_quantity_value):
+        for obj in graph.objects(qv, QUDT.quantityKind):
             if isinstance(obj, URIRef):
                 rows.append(obj)
     return rows
@@ -212,6 +244,159 @@ def _build_local_unit(
         graph.add((unit_iri, SKOS.notation, Literal(raw_examples)))
     graph.add((unit_iri, DCTERMS.source, Literal(source_label)))
     return unit_iri
+
+
+def _append_review_row(review_rows: list[dict[str, Any]], row: dict[str, Any]) -> None:
+    term_iri = _clean_text(row.get("term_iri"))
+    review_rows[:] = [item for item in review_rows if _clean_text(item.get("term_iri")) != term_iri]
+    review_rows.append(row)
+
+
+def _propagate_units_by_alias(
+    schema_graph: Graph,
+    controlled_vocabulary_graph: Graph,
+    namespace_policy: dict[str, Any],
+    review_rows: list[dict[str, Any]],
+) -> dict[str, int]:
+    term_graph_index = _local_term_graphs(schema_graph, controlled_vocabulary_graph)
+    has_quantity_value = URIRef(f"{namespace_policy['term_namespace']}hasQuantityValue")
+    alias_index: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    propagated_qudt_units = 0
+    propagated_local_units = 0
+
+    def term_signature(term_iri: str, graph: Graph) -> dict[str, Any] | None:
+        subject = URIRef(term_iri)
+        units = list(dict.fromkeys(str(obj) for obj in _existing_unit_objects(graph, subject, namespace_policy)))
+        if len(units) != 1:
+            return None
+        quantity_kinds = list(dict.fromkeys(str(obj) for obj in _existing_quantity_kind_objects(graph, subject, namespace_policy)))
+        aliases = _term_aliases(graph, subject)
+        return {
+            "term_iri": term_iri,
+            "term_label": _term_label(graph, subject),
+            "primary_label_norm": _normalize_alias(_term_label(graph, subject)),
+            "unit_iri": units[0],
+            "quantity_kind_iri": quantity_kinds[0] if quantity_kinds else "",
+            "aliases": aliases,
+        }
+
+    for term_iri, graph in sorted(term_graph_index.items()):
+        signature = term_signature(term_iri, graph)
+        if signature is None:
+            continue
+        for alias in signature["aliases"]:
+            normalized = _normalize_alias(alias)
+            if normalized:
+                alias_index[normalized].append(signature)
+
+    for term_iri, graph in sorted(term_graph_index.items()):
+        subject = URIRef(term_iri)
+        if _existing_unit_objects(graph, subject, namespace_policy):
+            continue
+        quantity_nodes = [obj for obj in graph.objects(subject, has_quantity_value) if isinstance(obj, URIRef)]
+
+        aliases = _term_aliases(graph, subject)
+        matched_signatures: dict[tuple[str, str, str], dict[str, Any]] = {}
+        matched_aliases: set[str] = set()
+        for alias in aliases:
+            normalized = _normalize_alias(alias)
+            if not normalized:
+                continue
+            for signature in alias_index.get(normalized, []):
+                if signature["term_iri"] == term_iri:
+                    continue
+                matched_aliases.add(alias)
+                key = (signature["unit_iri"], signature["quantity_kind_iri"], signature["term_iri"])
+                matched_signatures[key] = signature
+
+        quantity_kinds = [str(obj) for obj in _existing_quantity_kind_objects(graph, subject, namespace_policy)]
+        target_primary_label_norm = _normalize_alias(_term_label(graph, subject))
+        prioritized_signatures = list(matched_signatures.values())
+        exact_primary_matches = [item for item in prioritized_signatures if item.get("primary_label_norm") == target_primary_label_norm]
+        used_exact_primary_match = False
+        if len(exact_primary_matches) == 1:
+            prioritized_signatures = exact_primary_matches
+            used_exact_primary_match = True
+        elif quantity_kinds:
+            same_quantity_kind = [item for item in prioritized_signatures if item.get("quantity_kind_iri") in quantity_kinds]
+            if len(same_quantity_kind) == 1:
+                prioritized_signatures = same_quantity_kind
+
+        unique_signatures = {
+            (item["unit_iri"], item["quantity_kind_iri"], item["term_iri"]): item for item in prioritized_signatures
+        }
+
+        if len(unique_signatures) == 1:
+            signature = next(iter(unique_signatures.values()))
+            qv_node = quantity_nodes[0] if quantity_nodes else _ensure_quantity_value_node(graph, subject, namespace_policy)
+            unit_iri = signature["unit_iri"]
+            graph.add((qv_node, QUDT.unit, URIRef(unit_iri)))
+            if not quantity_kinds and signature["quantity_kind_iri"]:
+                graph.add((qv_node, QUDT.quantityKind, URIRef(signature["quantity_kind_iri"])))
+
+            unit_label = ""
+            if unit_iri.startswith("http://qudt.org/") or unit_iri.startswith("https://qudt.org/"):
+                unit_label = unit_iri.rsplit("/", 1)[-1]
+            else:
+                for obj in graph.objects(URIRef(unit_iri), RDFS.label):
+                    unit_label = _clean_text(obj)
+                    break
+            if not unit_label:
+                unit_label = unit_iri.rsplit("#", 1)[-1]
+
+            matched_alias = _term_label(graph, subject) if used_exact_primary_match else (sorted(matched_aliases, key=len, reverse=True)[0] if matched_aliases else aliases[0])
+            if unit_iri.startswith("http://qudt.org/") or unit_iri.startswith("https://qudt.org/"):
+                decision = "assert_alias_qudt_unit"
+                propagated_qudt_units += 1
+            else:
+                decision = "assert_alias_local_reviewed_unit"
+                propagated_local_units += 1
+
+            _append_review_row(
+                review_rows,
+                {
+                    "term_iri": term_iri,
+                    "term_label": _term_label(graph, subject),
+                    "decision": decision,
+                    "support_count": 0,
+                    "consensus_ratio": "",
+                    "quantity_kind_iri": quantity_kinds[0] if quantity_kinds else signature["quantity_kind_iri"],
+                    "preferred_unit_label": unit_label,
+                    "preferred_qudt_unit_iri": unit_iri if unit_iri.startswith("http://qudt.org/") or unit_iri.startswith("https://qudt.org/") else "",
+                    "preferred_ucum_code": "",
+                    "local_unit_iri": unit_iri if not (unit_iri.startswith("http://qudt.org/") or unit_iri.startswith("https://qudt.org/")) else "",
+                    "note": f"Applied unit through exact alias match `{matched_alias}` from `{signature['term_label']}`.",
+                },
+            )
+            continue
+
+        note = "No curated unit was found through direct or alias-based matching."
+        decision = "review_missing_unit_after_alias_check"
+        if len(unique_signatures) > 1:
+            decision = "review_ambiguous_alias_unit_match"
+            note = "Multiple alias-based unit candidates were found; manual review is required."
+        _append_review_row(
+            review_rows,
+            {
+                "term_iri": term_iri,
+                "term_label": _term_label(graph, subject),
+                "decision": decision,
+                "support_count": 0,
+                "consensus_ratio": "",
+                "quantity_kind_iri": quantity_kinds[0] if quantity_kinds else "",
+                "preferred_unit_label": "",
+                "preferred_qudt_unit_iri": "",
+                "preferred_ucum_code": "",
+                "local_unit_iri": "",
+                "note": note,
+            },
+        )
+
+    review_rows.sort(key=lambda row: (_clean_text(row.get("decision", "")), _clean_text(row.get("term_label", "")), _clean_text(row.get("term_iri", ""))))
+    return {
+        "alias_qudt_units_linked": propagated_qudt_units,
+        "alias_local_units_linked": propagated_local_units,
+    }
 
 
 def _load_curated_unit_rows(path: Path) -> list[dict[str, str]]:
@@ -314,6 +499,12 @@ def enrich_units_from_cleaned_dataset(
             namespace_policy,
             curated_rows,
         )
+        alias_summary = _propagate_units_by_alias(
+            schema_graph,
+            controlled_vocabulary_graph,
+            namespace_policy,
+            applied_rows,
+        )
         report = {
             "enabled": enabled,
             "applied": True,
@@ -321,6 +512,11 @@ def enrich_units_from_cleaned_dataset(
             "evidence_dir": "",
             "curated_units_path": str(curated_units_path),
             **summary,
+            **alias_summary,
+            "terms_enriched": summary["terms_enriched"] + alias_summary["alias_qudt_units_linked"] + alias_summary["alias_local_units_linked"],
+            "qudt_units_linked": summary["qudt_units_linked"] + alias_summary["alias_qudt_units_linked"],
+            "local_units_created": summary["local_units_created"] + alias_summary["alias_local_units_linked"],
+            "review_rows": len(applied_rows),
         }
         write_unit_enrichment_outputs(report, applied_rows, root)
         return report
@@ -508,6 +704,18 @@ def enrich_units_from_cleaned_dataset(
         "min_consensus_ratio": min_ratio,
         "create_local_units": create_local_units,
     }
+    alias_summary = _propagate_units_by_alias(
+        schema_graph,
+        controlled_vocabulary_graph,
+        namespace_policy,
+        review_rows,
+    )
+    report["alias_qudt_units_linked"] = alias_summary["alias_qudt_units_linked"]
+    report["alias_local_units_linked"] = alias_summary["alias_local_units_linked"]
+    report["terms_enriched"] += alias_summary["alias_qudt_units_linked"] + alias_summary["alias_local_units_linked"]
+    report["qudt_units_linked"] += alias_summary["alias_qudt_units_linked"]
+    report["local_units_created"] += alias_summary["alias_local_units_linked"]
+    report["review_rows"] = len(review_rows)
     write_unit_enrichment_outputs(report, review_rows, root)
     return report
 
@@ -543,6 +751,8 @@ def write_unit_enrichment_outputs(report: dict[str, Any], review_rows: list[dict
         f"- Terms enriched: **{report.get('terms_enriched', 0)}**",
         f"- QUDT units linked: **{report.get('qudt_units_linked', 0)}**",
         f"- Local reviewed units created: **{report.get('local_units_created', 0)}**",
+        f"- Alias-propagated QUDT units: **{report.get('alias_qudt_units_linked', 0)}**",
+        f"- Alias-propagated local reviewed units: **{report.get('alias_local_units_linked', 0)}**",
         f"- Review rows: **{report.get('review_rows', 0)}**",
         "",
     ]
@@ -556,6 +766,7 @@ def write_unit_enrichment_outputs(report: dict[str, Any], review_rows: list[dict
                 "",
                 "- QUDT-backed units are asserted directly when cleaned PEMFC evidence is stable enough.",
                 "- Curated local PEMFC units are retained when no reviewed QUDT mapping is available yet.",
+                "- Exact ontology labels and alternative labels are checked conservatively to propagate units to duplicate or sibling terms.",
                 "- Ambiguous multi-unit terms remain in the review CSV instead of being forced into the ontology.",
                 "",
             ]

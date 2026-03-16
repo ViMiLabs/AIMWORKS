@@ -13,7 +13,7 @@ from .inspect import find_ontology_node
 from .io import load_graph
 from .normalize import humanize_identifier
 from .publication import reference_iri_rows
-from .utils import QUDT, ensure_dir, load_yaml, local_name, normalize_space, read_json, write_json, write_text
+from .utils import QUDT, ensure_dir, load_yaml, local_name, normalize_space, read_csv, read_json, write_json, write_text
 
 
 SITE_CSS = """
@@ -1149,6 +1149,30 @@ def _append_unit_rows(graph: Graph, subject: Any, rows: list[dict[str, str]], se
         )
 
 
+def _append_quantity_kind_rows(graph: Graph, subject: Any, rows: list[dict[str, str]], seen: set[str]) -> None:
+    for predicate, quantity_kind in graph.predicate_objects(subject):
+        if predicate != QUDT.quantityKind and local_name(predicate) not in {"quantityKind", "hasQuantityKind"}:
+            continue
+        quantity_kind_iri = str(quantity_kind)
+        label = (
+            _graph_text(graph, quantity_kind, [RDFS.label, SKOS.prefLabel])
+            if isinstance(quantity_kind, URIRef)
+            else _clean_text(quantity_kind)
+        ) or humanize_identifier(local_name(quantity_kind))
+        key = f"{quantity_kind_iri}|{label}"
+        if key in seen:
+            continue
+        seen.add(key)
+        is_qudt_quantity_kind = quantity_kind_iri.startswith("http://qudt.org/") or quantity_kind_iri.startswith("https://qudt.org/")
+        rows.append(
+            {
+                "label": label,
+                "iri": quantity_kind_iri if isinstance(quantity_kind, URIRef) else "",
+                "html": _href_html(quantity_kind_iri, label) if is_qudt_quantity_kind else escape(label),
+            }
+        )
+
+
 def _term_units(graph: Graph, term_iri: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
@@ -1165,6 +1189,36 @@ def _term_units(graph: Graph, term_iri: str) -> list[dict[str, str]]:
     return rows
 
 
+def _term_quantity_kinds(graph: Graph, term_iri: str) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    seen: set[str] = set()
+    subject = URIRef(term_iri)
+    _append_quantity_kind_rows(graph, subject, rows, seen)
+    quantity_nodes = [
+        obj
+        for predicate, obj in graph.predicate_objects(subject)
+        if local_name(predicate) in {"hasQuantityValue", "quantityValue"}
+    ]
+    for quantity_node in quantity_nodes:
+        _append_quantity_kind_rows(graph, quantity_node, rows, seen)
+    rows.sort(key=lambda row: (_clean_text(row["label"]).lower(), _clean_text(row["iri"])))
+    return rows
+
+
+def _term_alternative_labels(graph: Graph, term_iri: str, primary_label: str) -> list[str]:
+    subject = URIRef(term_iri)
+    seen: set[str] = set()
+    labels: list[str] = []
+    for predicate in (SKOS.altLabel, SKOS.prefLabel):
+        for obj in graph.objects(subject, predicate):
+            text = _clean_text(obj)
+            if not text or text == _clean_text(primary_label) or text in seen:
+                continue
+            seen.add(text)
+            labels.append(text)
+    return sorted(labels, key=str.lower)
+
+
 def _term_row(
     term: Any,
     mapping_lookup: dict[str, list[str]],
@@ -1172,6 +1226,8 @@ def _term_row(
     graph: Graph,
 ) -> dict[str, str]:
     unit_rows = _term_units(graph, term.iri)
+    quantity_kind_rows = _term_quantity_kinds(graph, term.iri)
+    alternative_labels = _term_alternative_labels(graph, term.iri, _clean_text(term.label))
     return {
         "label": _clean_text(term.label),
         "iri": term.iri,
@@ -1186,8 +1242,12 @@ def _term_row(
         "domain_html": _external_value_list_html(term.domains, namespace_policy),
         "range": ", ".join(_clean_values(term.ranges)) or "None",
         "range_html": _external_value_list_html(term.ranges, namespace_policy),
+        "quantity_kinds": ", ".join(row["label"] for row in quantity_kind_rows) or "—",
+        "quantity_kinds_html": ", ".join(row["html"] for row in quantity_kind_rows) or "—",
         "units": ", ".join(row["label"] for row in unit_rows) or "—",
         "units_html": ", ".join(row["html"] for row in unit_rows) or "—",
+        "alternative_labels": ", ".join(alternative_labels) or "—",
+        "alternative_labels_html": ", ".join(escape(label) for label in alternative_labels) or "—",
         "anchor": local_name(term.iri),
     }
 
@@ -1321,6 +1381,35 @@ def _mapping_stats(review_rows: list[dict[str, Any]]) -> dict[str, Any]:
         "sources": [{"label": key, "count": value} for key, value in sorted(source_counts.items(), key=lambda item: (-item[1], item[0]))],
         "relations": [{"label": key, "count": value} for key, value in sorted(relation_counts.items(), key=lambda item: (-item[1], item[0]))],
     }
+
+
+def _load_unit_review_rows(root: Path, vocabulary_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    review_path = root / "output" / "review" / "unit_evidence_review.csv"
+    if not review_path.exists():
+        return []
+    vocabulary_lookup = {row["iri"]: row for row in vocabulary_rows}
+    rows: list[dict[str, str]] = []
+    for item in read_csv(review_path):
+        decision = _clean_text(item.get("decision", ""))
+        if not decision.startswith("review_"):
+            continue
+        term_iri = _clean_text(item.get("term_iri", ""))
+        detail = vocabulary_lookup.get(term_iri)
+        if not detail:
+            continue
+        rows.append(
+            {
+                "label": detail["label"],
+                "iri": term_iri,
+                "class_label": detail["class_label"],
+                "quantity_kinds_html": detail["quantity_kinds_html"],
+                "alternative_labels_html": detail["alternative_labels_html"],
+                "decision": decision.replace("_", " "),
+                "note": _clean_text(item.get("note", "")) or "Manual review is still required.",
+            }
+        )
+    rows.sort(key=lambda row: (row["label"].lower(), row["decision"]))
+    return rows
 
 
 def _placeholder_definition_count(rows: list[dict[str, str]]) -> int:
@@ -1629,6 +1718,7 @@ def build_docs(
     classes.sort(key=lambda item: item["label"].lower())
     properties.sort(key=lambda item: item["label"].lower())
     vocabulary_rows.sort(key=lambda item: item["label"].lower())
+    unit_review_rows = _load_unit_review_rows(root, vocabulary_rows)
 
     ontology_node = find_ontology_node(schema_graph, namespace_policy) or URIRef(namespace_policy["ontology_iri"])
     creators = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.creator)])
@@ -1861,6 +1951,7 @@ def build_docs(
             class_rows=classes,
             property_rows=properties,
             vocabulary_rows=vocabulary_rows,
+            unit_review_rows=unit_review_rows,
             example_rows=example_rows,
             download_rows=download_rows,
             coverage_rows=coverage_rows,

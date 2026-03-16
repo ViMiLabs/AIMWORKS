@@ -203,3 +203,57 @@ def test_curated_units_apply_without_evidence(configs, temp_project):
     assert str(list(controlled_graph.objects(unit_nodes[0], RDFS.label))[0]) == "ohm cm2"
     assert report["applied"] is True
     assert report["source"] == "curated_unit_registry"
+
+
+def test_curated_units_propagate_by_alt_label(configs, temp_project):
+    ttl = """
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://w3id.org/h2kg/hydrogen-ontology> a owl:Ontology .
+h2kg:hasQuantityValue a owl:ObjectProperty .
+h2kg:Property a owl:Class ; rdfs:label "Property"@en .
+h2kg:CurrentDensity a h2kg:Property ; rdfs:label "Current Density"@en .
+h2kg:CurrentDensity_2 a h2kg:Property ; rdfs:label "Current Density"@en ; skos:altLabel "Electric Current Density"@en .
+"""
+    schema_graph = graph_from_text(ttl, "turtle")
+    controlled_graph = Graph()
+    for subject in [
+        URIRef("https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity"),
+        URIRef("https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity_2"),
+        URIRef("https://w3id.org/h2kg/hydrogen-ontology#Property"),
+    ]:
+        for triple in schema_graph.triples((subject, None, None)):
+            controlled_graph.add(triple)
+
+    curated_path = _write_curated_units(
+        temp_project,
+        [
+            "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity,Current Density,assert_qudt_unit,4,1.0,http://qudt.org/vocab/quantitykind/ElectricCurrentDensity,A/cm2,http://qudt.org/vocab/unit/A-PER-CentiM2,A-PER-CM2,,",
+        ],
+    )
+    release_profile = dict(configs["release_profile"])
+    release_profile["unit_enrichment"] = {
+        "enabled": True,
+        "curated_units_path": str(curated_path),
+        "create_local_units": True,
+    }
+
+    report = enrich_units_from_cleaned_dataset(
+        schema_graph,
+        controlled_graph,
+        release_profile,
+        configs["namespace_policy"],
+        temp_project,
+        evidence_dir=None,
+    )
+
+    duplicate = URIRef("https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity_2")
+    qv_nodes = list(controlled_graph.objects(duplicate, URIRef("https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue")))
+    assert qv_nodes
+    assert list(controlled_graph.objects(qv_nodes[0], QUDT.unit)) == [URIRef("http://qudt.org/vocab/unit/A-PER-CentiM2")]
+    review_rows = read_csv(temp_project / "output" / "review" / "unit_evidence_review.csv")
+    assert any(row["decision"] == "assert_alias_qudt_unit" for row in review_rows)
+    assert report["alias_qudt_units_linked"] == 1

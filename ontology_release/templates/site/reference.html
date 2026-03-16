@@ -200,7 +200,7 @@
   <div class="table-shell">
     <table id="reference-vocab-table" class="data-table searchable">
       <thead>
-        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Class</th><th>Unit</th><th>Definition</th><th>Mappings</th></tr>
+        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Class</th><th>Quantity kind</th><th>Unit</th><th>Alternative labels</th><th>Definition</th><th>Mappings</th></tr>
       </thead>
       <tbody>
         {% for row in vocabulary_rows %}
@@ -209,7 +209,9 @@
           <td><code>{{ row.iri }}</code></td>
           <td>{{ row.deprecated }}</td>
           <td>{{ row.class_label }}</td>
+          <td>{{ row.quantity_kinds_html | safe }}</td>
           <td>{{ row.units_html | safe }}</td>
+          <td>{{ row.alternative_labels_html | safe }}</td>
           <td>{{ row.definition }}</td>
           <td>{{ row.mappings }}</td>
         </tr>
@@ -217,6 +219,40 @@
       </tbody>
     </table>
   </div>
+</section>
+
+<section class="card">
+  <p class="section-kicker">Unit curation follow-up</p>
+  <h2>Unit Review Notes</h2>
+  <p>These vocabulary terms still need manual unit curation after direct and alternative-label matching against the ontology and GT-derived unit registry.</p>
+  {% if unit_review_rows %}
+  <div class="section-head">
+    <div></div>
+    <input class="filter-input" data-table-filter="reference-unit-review-table" placeholder="Filter unit notes">
+  </div>
+  <div class="table-shell">
+    <table id="reference-unit-review-table" class="data-table searchable">
+      <thead>
+        <tr><th>Label</th><th>IRI</th><th>Class</th><th>Quantity kind</th><th>Alternative labels</th><th>Decision</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        {% for row in unit_review_rows %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.iri }}</code></td>
+          <td>{{ row.class_label }}</td>
+          <td>{{ row.quantity_kinds_html | safe }}</td>
+          <td>{{ row.alternative_labels_html | safe }}</td>
+          <td>{{ row.decision }}</td>
+          <td>{{ row.note }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>No outstanding unit-capture issues were recorded in the current release build.</p>
+  {% endif %}
 </section>
 
 <section id="reference-examples" class="card">
