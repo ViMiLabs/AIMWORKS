@@ -17,6 +17,7 @@ from .llm_annotator import apply_approved_annotations, draft_annotations, import
 from .mapper import align_terms, write_alignment_outputs
 from .publication import build_jsonld_context, build_publication_layout
 from .split import split_graph, write_split_outputs
+from .unit_enrichment import enrich_units_from_cleaned_dataset
 from .utils import configured_paths, copy_file, copy_tree, load_configs, write_csv, write_json, write_text
 from .validate import validate_release, write_validation_outputs
 from .w3id import generate_w3id_artifacts
@@ -227,6 +228,7 @@ def run_pipeline(
     llm_config_path: Path | None = None,
     review_file: Path | None = None,
     apply_approved_file: Path | None = None,
+    unit_evidence_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     root = root or Path(__file__).resolve().parents[2]
     configs = load_configs(root)
@@ -265,9 +267,29 @@ def run_pipeline(
         configs["namespace_policy"],
         root,
     )
+    unit_report = enrich_units_from_cleaned_dataset(
+        split_graphs["schema"],
+        split_graphs["controlled_vocabulary"],
+        configs["release_profile"],
+        configs["namespace_policy"],
+        root,
+        evidence_dir=unit_evidence_dir,
+    )
     write_enrichment_outputs(split_graphs["schema"], split_graphs["controlled_vocabulary"], enrichment_report, root)
     if stage == "enrich":
-        return {"inspection_report": inspection_report, "alignment_report": alignment_report, "metadata_report": enrichment_report}
+        return {
+            "inspection_report": inspection_report,
+            "alignment_report": alignment_report,
+            "metadata_report": enrichment_report,
+            "unit_enrichment_report": unit_report,
+        }
+    if stage == "units":
+        return {
+            "inspection_report": inspection_report,
+            "alignment_report": alignment_report,
+            "metadata_report": enrichment_report,
+            "unit_enrichment_report": unit_report,
+        }
 
     if review_file and stage == "annotate":
         approved_rows = import_approved_rows(review_file, root)
@@ -287,7 +309,12 @@ def run_pipeline(
         apply_approved_annotations(split_graphs["schema"], split_graphs["controlled_vocabulary"], approved_rows)
         write_enrichment_outputs(split_graphs["schema"], split_graphs["controlled_vocabulary"], enrichment_report, root)
     if stage == "annotate":
-        return {"inspection_report": inspection_report, "alignment_report": alignment_report, "metadata_report": enrichment_report}
+        return {
+            "inspection_report": inspection_report,
+            "alignment_report": alignment_report,
+            "metadata_report": enrichment_report,
+            "unit_enrichment_report": unit_report,
+        }
 
     validation_report = validate_release(
         split_graphs["schema"],
@@ -300,7 +327,11 @@ def run_pipeline(
     )
     write_validation_outputs(validation_report, root)
     if stage == "validate":
-        return {"inspection_report": inspection_report, "validation_report": validation_report}
+        return {
+            "inspection_report": inspection_report,
+            "validation_report": validation_report,
+            "unit_enrichment_report": unit_report,
+        }
 
     imports_graph = _build_imports_graph(configs["namespace_policy"], configs["source_ontologies"])
     inferred_graph = _build_inferred_graph(split_graphs["schema"], alignments_graph)
@@ -359,11 +390,21 @@ def run_pipeline(
     )
     build_publication_layout(root, configs["release_profile"], configs["namespace_policy"], context_payload)
     if stage == "docs":
-        return {"inspection_report": inspection_report, "validation_report": validation_report, "fair_scores": fair_scores}
+        return {
+            "inspection_report": inspection_report,
+            "validation_report": validation_report,
+            "fair_scores": fair_scores,
+            "unit_enrichment_report": unit_report,
+        }
     if stage == "fair":
-        return {"fair_scores": fair_scores}
+        return {"fair_scores": fair_scores, "unit_enrichment_report": unit_report}
 
     _build_release_bundle(root, configs["release_profile"])
     if configs["release_profile"]["release"].get("copy_outputs_to_ontology_directory", True):
         _mirror_release_artifacts(root)
-    return {"inspection_report": inspection_report, "validation_report": validation_report, "fair_scores": fair_scores}
+    return {
+        "inspection_report": inspection_report,
+        "validation_report": validation_report,
+        "fair_scores": fair_scores,
+        "unit_enrichment_report": unit_report,
+    }

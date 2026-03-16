@@ -262,6 +262,7 @@ def run_profile_pipeline(
     review_file: Path | None = None,
     apply_approved_file: Path | None = None,
     input_override: str | None = None,
+    unit_evidence_dir: Path | None = None,
 ) -> dict[str, Any]:
     base_root = root or Path(__file__).resolve().parents[2]
     profiles_cfg = _profiles_config(base_root)
@@ -274,6 +275,9 @@ def run_profile_pipeline(
         profile_cfg["input_path"] = input_override
 
     runtime_root, runtime_release = _prepare_profile_runtime(base_root, profile_id, profile_cfg, profiles_cfg)
+    resolved_unit_evidence_dir = None
+    if unit_evidence_dir is not None:
+        resolved_unit_evidence_dir = unit_evidence_dir if unit_evidence_dir.is_absolute() else (base_root / unit_evidence_dir).resolve()
     result = run_pipeline(
         "input/current_ontology.jsonld",
         root=runtime_root,
@@ -282,6 +286,7 @@ def run_profile_pipeline(
         llm_config_path=llm_config_path,
         review_file=review_file,
         apply_approved_file=apply_approved_file,
+        unit_evidence_dir=resolved_unit_evidence_dir,
     )
     _copy_runtime_results_to_profile(base_root, profile_id, runtime_root)
 
@@ -324,12 +329,16 @@ def run_multi_profile_pipeline(
     profile_ids: list[str] | None = None,
     draft_llm: bool = False,
     llm_config_path: Path | None = None,
+    unit_evidence_dir: Path | None = None,
 ) -> dict[str, Any]:
     base_root = root or Path(__file__).resolve().parents[2]
     profiles_cfg = _profiles_config(base_root)
     requested = profile_ids or list(profiles_cfg.get("build_order") or profiles_cfg["profiles"].keys())
     built_rows: list[dict[str, Any]] = []
     outputs: dict[str, Any] = {"profiles": {}}
+    resolved_unit_evidence_dir = None
+    if unit_evidence_dir is not None:
+        resolved_unit_evidence_dir = unit_evidence_dir if unit_evidence_dir.is_absolute() else (base_root / unit_evidence_dir).resolve()
 
     for profile_id in requested:
         if profile_id not in profiles_cfg["profiles"]:
@@ -343,6 +352,7 @@ def run_multi_profile_pipeline(
             stage=stage,
             draft_llm=draft_llm,
             llm_config_path=llm_config_path,
+            unit_evidence_dir=resolved_unit_evidence_dir,
         )
         _copy_runtime_results_to_profile(base_root, profile_id, runtime_root)
         outputs["profiles"][profile_id] = result

@@ -6,6 +6,10 @@
   <title>Visualizations | H2KG — Ontology for Hydrogen Electrochemical Systems</title>
   <meta name="description" content="FAIR, EMMO-aligned documentation for the PEMWE profile">
   <link rel="stylesheet" href="../assets/site.css">
+  
+  <link rel="stylesheet" href="../assets/visuals.css">
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
+
   <script defer src="../assets/site.js"></script>
 </head>
 <body>
@@ -114,162 +118,152 @@
     </div>
     <main class="content">
       
-<section class="card card--feature">
-  <h2>Release-Oriented Visual Summaries</h2>
-  <p>These visuals are intentionally lightweight. They explain release structure and curation signals without pretending to replace a full ontology graph browser.</p>
-</section>
-
-<section class="grid two">
-  
-  <section class="diagram-card">
-    <h2>Ontology module overview</h2>
-    <p>Release overview of asserted schema, controlled vocabulary, and separated example content.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 320 180" width="100%" role="img" aria-label="Schema/vocabulary split">
-  <rect width="320" height="180" rx="28" fill="#ffffff"></rect>
-  <rect x="20" y="20" width="280" height="140" rx="24" fill="#ecfeff" stroke="#cbd5e1"></rect>
-  <text x="42" y="62" font-size="16" font-family="Trebuchet MS" fill="#0f172a">Schema/vocabulary split</text>
-  <text x="42" y="108" font-size="36" font-family="Trebuchet MS" font-weight="700" fill="#115e59">580</text>
-  <text x="42" y="138" font-size="13" font-family="Trebuchet MS" fill="#475569">Release modularization overview</text>
-</svg>
-</div>
+<section class="visual-shell" data-visual-explorer data-visual-data="../data/graph_explorer.json">
+  <section class="card card--feature visual-hero">
+    <div>
+      <p class="eyebrow">Visual explorer</p>
+      <h2>Ontology Explorer</h2>
+      <p class="visual-hero__lede">Search the published ontology with ranked suggestions, start from a seed term, then expand the graph progressively by clicking visible nodes. The interface stays search-first so the graph grows in a controlled way instead of collapsing into a full release dump.</p>
+      <div class="meta-row" style="margin-top: 1rem;">
+        <span>Profile PEMWE</span>
+        <span>Published modules 5</span>
+        <span>Release graph 11266 triples</span>
+      </div>
+    </div>
+    <div class="visual-kpi-grid">
+      <div class="visual-kpi"><span>Local terms</span><strong>715</strong></div>
+      <div class="visual-kpi"><span>Active modules</span><strong data-visual-count="modules">5</strong></div>
+      <div class="visual-kpi"><span>Expanded nodes</span><strong data-visual-count="expanded">0</strong></div>
+      <div class="visual-kpi"><span>Visible relations</span><strong data-visual-count="edges">0</strong></div>
+    </div>
   </section>
-  
-  <section class="diagram-card">
-    <h2>Import graph</h2>
-    <p>Configured primary, fallback, and optional external ontologies for the active release profile.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 650 360" width="100%" role="img" aria-label="Import graph">
-  <rect width="650" height="360" rx="24" fill="#ffffff"></rect>
-  <line x1="320" y1="108" x2="70" y2="172" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="240" y2="172" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="410" y2="172" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="580" y2="172" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="155" y2="272" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="325" y2="272" stroke="#0f766e" stroke-width="2.5"></line><line x1="320" y1="108" x2="495" y2="272" stroke="#0f766e" stroke-width="2.5"></line>
-  <rect x="220" y="52" width="200" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect><text x="320" y="84" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Asserted schema module</text><rect x="0" y="176" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="70" y="204" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">EMMO Core</text><rect x="170" y="176" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="240" y="204" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">EMMO Electrochemistry</text><rect x="340" y="176" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="410" y="204" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">QUDT Schema</text><rect x="510" y="176" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="580" y="204" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">QUDT Units</text><rect x="85" y="276" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="155" y="304" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">QUDT Quantity Kinds</text><rect x="255" y="276" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="325" y="304" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">ChEBI</text><rect x="425" y="276" width="140" height="48" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="495" y="304" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">PROV-O</text>
-  <text x="24" y="336" font-size="12" font-family="Trebuchet MS" fill="#475569">Configured import and alignment source overview for the active release profile.</text>
-</svg>
-</div>
+
+  <section class="visual-layout">
+    <aside class="visual-sidebar">
+      <section class="visual-panel">
+        <p class="eyebrow">Find a term</p>
+        <h2>Search</h2>
+        <p>Search across the published local ontology terms. Suggestions update as you type and appear directly below the search box, while the graph stays stable until you choose a result.</p>
+        <div class="visual-field">
+          <label for="visual-search-input">Search for a term</label>
+          <input id="visual-search-input" type="search" data-visual-search placeholder="e.g., ionomer, platinum loading, AC input amplitude, spacer thickness">
+        </div>
+        <p class="visual-inline-note">Use <code>Arrow Up</code>, <code>Arrow Down</code>, and <code>Enter</code> to select suggestions quickly.</p>
+        <div class="visual-note" data-search-status>Local ontology suggestions will appear here.</div>
+        <div class="visual-results" data-search-results>
+          <div class="visual-empty">Start typing to search the published ontology, or use one of the suggested starting points.</div>
+        </div>
+        <div class="visual-field">
+          <label>Release modules</label>
+          <div class="visual-module-grid">
+            
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="schema" checked>
+              <span>
+                <strong>Asserted schema</strong>
+                <small>Asserted local schema terms and ontology header metadata.</small>
+              </span>
+              <span class="visual-module__meta">245 triples</span>
+            </label>
+            
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="vocabulary" checked>
+              <span>
+                <strong>Controlled vocabulary</strong>
+                <small>Curated named terms published outside the asserted schema module.</small>
+              </span>
+              <span class="visual-module__meta">6526 triples</span>
+            </label>
+            
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="alignments" checked>
+              <span>
+                <strong>Alignments</strong>
+                <small>Reviewed alignment assertions to external ontologies and vocabularies.</small>
+              </span>
+              <span class="visual-module__meta">163 triples</span>
+            </label>
+            
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="examples" >
+              <span>
+                <strong>Examples</strong>
+                <small>Separated example and data-like content retained for demonstration and tutorials.</small>
+              </span>
+              <span class="visual-module__meta">3920 triples</span>
+            </label>
+            
+            <label class="visual-module">
+              <input type="checkbox" data-module-toggle value="inferred" >
+              <span>
+                <strong>Inferred ontology</strong>
+                <small>Optional inferred export generated by the release pipeline.</small>
+              </span>
+              <span class="visual-module__meta">412 triples</span>
+            </label>
+            
+          </div>
+        </div>
+        <label class="visual-option visual-option--compact">
+          <input type="checkbox" data-visual-toggle="showExternalNeighbors">
+          Show directly linked external terms
+        </label>
+      </section>
+
+      <section class="visual-panel">
+        <div class="visual-section-heading">
+          <div>
+            <p class="eyebrow">Explorer trail</p>
+            <h3>Traversal history</h3>
+            <p>Use the trail to jump back to previously explored terms without losing context.</p>
+          </div>
+        </div>
+        <div class="visual-trail" data-visual-trail>
+          <div class="visual-empty">The exploration trail will appear after you select a term.</div>
+        </div>
+        <div class="visual-toolbar">
+          <button type="button" class="copy-button" data-visual-action="reset">Reset graph</button>
+          <button type="button" class="copy-button" data-visual-action="clear">Clear search</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="visual-main">
+      <section class="visual-stage">
+        <div class="visual-stage__head">
+          <div>
+            <p class="eyebrow">Progressive graph</p>
+            <h2>Selected neighborhood</h2>
+            <p>The graph starts from a seed term and expands as you click visible nodes. Blank nodes stay hidden, while units and similar details are projected into the inspector instead.</p>
+          </div>
+          <div class="visual-status">
+            <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">0</strong></span>
+            <span class="metric-pill">Visible edges <strong data-visual-count="edges-inline">0</strong></span>
+          </div>
+        </div>
+        <p class="visual-inline-note">Click a node in the graph to recenter the explorer and reveal the next local neighborhood.</p>
+        <div class="visual-chart" data-visual-chart="term"></div>
+        <div class="visual-note" data-visual-graph-note>The graph note updates with expansion and readability guidance.</div>
+      </section>
+
+      <section class="visual-detail-grid">
+        <section class="visual-panel">
+          <p class="eyebrow">Term details</p>
+          <h3>Annotations and mapping</h3>
+          <div class="visual-inspector__body" data-visual-inspector>
+            <div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>
+          </div>
+        </section>
+        <section class="visual-panel">
+          <p class="eyebrow">Visible relations</p>
+          <h3>Connected edges</h3>
+          <div class="visual-table-shell" data-visual-relations>
+            <div class="visual-empty">Visible relations will appear here after you select a term.</div>
+          </div>
+        </section>
+      </section>
+    </section>
   </section>
-  
-  <section class="diagram-card">
-    <h2>Mapping coverage by source</h2>
-    <p>External source ontologies currently contributing reviewed mappings.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 600 360" width="100%" role="img" aria-label="Mapping coverage by source ontology">
-  <rect width="600" height="360" rx="24" fill="#ffffff"></rect>
-  <text x="24" y="24" font-size="15" font-family="Trebuchet MS" fill="#0f172a">Mapping coverage by source ontology</text>
-  
-  <text x="24" y="48" font-size="13" font-family="Trebuchet MS" fill="#0f172a">qudt_quantitykinds</text>
-  <rect x="180" y="34" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="34" width="360" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="48" font-size="12" font-family="Trebuchet MS" fill="#475569">98</text>
-
-  <text x="24" y="84" font-size="13" font-family="Trebuchet MS" fill="#0f172a">qudt_units</text>
-  <rect x="180" y="70" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="70" width="69" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="84" font-size="12" font-family="Trebuchet MS" fill="#475569">19</text>
-
-  <text x="24" y="120" font-size="13" font-family="Trebuchet MS" fill="#0f172a">chebi</text>
-  <rect x="180" y="106" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="106" width="47" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="120" font-size="12" font-family="Trebuchet MS" fill="#475569">13</text>
-
-  <text x="24" y="156" font-size="13" font-family="Trebuchet MS" fill="#0f172a">echo</text>
-  <rect x="180" y="142" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="142" width="36" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="156" font-size="12" font-family="Trebuchet MS" fill="#475569">10</text>
-
-  <text x="24" y="192" font-size="13" font-family="Trebuchet MS" fill="#0f172a">oeo</text>
-  <rect x="180" y="178" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="178" width="29" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="192" font-size="12" font-family="Trebuchet MS" fill="#475569">8</text>
-
-  <text x="24" y="228" font-size="13" font-family="Trebuchet MS" fill="#0f172a">emmo_core</text>
-  <rect x="180" y="214" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="214" width="25" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="228" font-size="12" font-family="Trebuchet MS" fill="#475569">7</text>
-
-  <text x="24" y="264" font-size="13" font-family="Trebuchet MS" fill="#0f172a">provo</text>
-  <rect x="180" y="250" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="250" width="18" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="264" font-size="12" font-family="Trebuchet MS" fill="#475569">5</text>
-
-  <text x="24" y="300" font-size="13" font-family="Trebuchet MS" fill="#0f172a">qudt_schema</text>
-  <rect x="180" y="286" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="286" width="3" height="16" rx="8" fill="#0f766e"></rect>
-  <text x="560" y="300" font-size="12" font-family="Trebuchet MS" fill="#475569">1</text>
-
-</svg>
-</div>
-  </section>
-  
-  <section class="diagram-card">
-    <h2>Process, data, and provenance pattern</h2>
-    <p>A publication-oriented modeling pattern for materials, measurements, outputs, and provenance.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 760 240" width="100%" role="img" aria-label="Process, data, and provenance pattern">
-  <rect width="760" height="240" rx="24" fill="#ffffff"></rect>
-  <rect x="40" y="70" width="150" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect>
-  <rect x="300" y="50" width="170" height="64" rx="18" fill="#f0fdf4" stroke="#94a3b8"></rect>
-  <rect x="300" y="150" width="170" height="64" rx="18" fill="#fff7ed" stroke="#94a3b8"></rect>
-  <rect x="570" y="70" width="150" height="56" rx="18" fill="#fef3c7" stroke="#94a3b8"></rect>
-  <text x="115" y="104" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Material / input</text>
-  <text x="385" y="88" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Measurement / process</text>
-  <text x="385" y="188" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Data / quantity values</text>
-  <text x="645" y="104" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Agent / provenance</text>
-  <line x1="190" y1="98" x2="300" y2="82" stroke="#0f766e" stroke-width="3"></line>
-  <line x1="385" y1="114" x2="385" y2="150" stroke="#0f766e" stroke-width="3"></line>
-  <line x1="470" y1="82" x2="570" y2="98" stroke="#0f766e" stroke-width="3"></line>
-  <text x="226" y="78" font-size="12" font-family="Trebuchet MS" fill="#475569">hasInputMaterial</text>
-  <text x="398" y="136" font-size="12" font-family="Trebuchet MS" fill="#475569">hasOutputData / hasQuantityValue</text>
-  <text x="498" y="76" font-size="12" font-family="Trebuchet MS" fill="#475569">prov:wasAssociatedWith</text>
-  <text x="24" y="218" font-size="12" font-family="Trebuchet MS" fill="#475569">Release pattern: keep processes and schema in the asserted module, and publish example data-like nodes separately.</text>
-</svg>
-</div>
-  </section>
-  
-  <section class="diagram-card">
-    <h2>Measurement neighborhood</h2>
-    <p>Representative term neighborhood around a measurement-focused schema class.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 760 260" width="100%" role="img" aria-label="Term neighborhood">
-  <rect width="760" height="260" rx="24" fill="#ffffff"></rect>
-  <line x1="380" y1="108" x2="120" y2="62" stroke="#0f766e" stroke-width="2.5"></line>
-  <rect x="280" y="80" width="200" height="56" rx="18" fill="#ecfeff" stroke="#94a3b8"></rect><text x="380" y="114" text-anchor="middle" font-size="14" font-family="Trebuchet MS" fill="#0f172a">Measurement</text><rect x="30" y="40" width="180" height="44" rx="16" fill="#f8fafc" stroke="#cbd5e1"></rect><text x="120" y="66" text-anchor="middle" font-size="12" font-family="Trebuchet MS" fill="#0f172a">fromMeasurement</text>
-  <text x="24" y="236" font-size="12" font-family="Trebuchet MS" fill="#475569">Property neighborhood preview around a representative measurement-focused class.</text>
-</svg>
-</div>
-  </section>
-  
-  <section class="diagram-card">
-    <h2>Alignment relation mix</h2>
-    <p>Reviewed relation types used across conservative mappings.</p>
-    <div class="svg-frame">
-<svg viewBox="0 0 600 216" width="100%" role="img" aria-label="Alignment relation types">
-  <rect width="600" height="216" rx="24" fill="#ffffff"></rect>
-  <text x="24" y="24" font-size="15" font-family="Trebuchet MS" fill="#0f172a">Alignment relation types</text>
-  
-  <text x="24" y="48" font-size="13" font-family="Trebuchet MS" fill="#0f172a">skos:closeMatch</text>
-  <rect x="180" y="34" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="34" width="360" height="16" rx="8" fill="#d97706"></rect>
-  <text x="560" y="48" font-size="12" font-family="Trebuchet MS" fill="#475569">146</text>
-
-  <text x="24" y="84" font-size="13" font-family="Trebuchet MS" fill="#0f172a">rdfs:subClassOf</text>
-  <rect x="180" y="70" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="70" width="17" height="16" rx="8" fill="#d97706"></rect>
-  <text x="560" y="84" font-size="12" font-family="Trebuchet MS" fill="#475569">7</text>
-
-  <text x="24" y="120" font-size="13" font-family="Trebuchet MS" fill="#0f172a">rdfs:subPropertyOf</text>
-  <rect x="180" y="106" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="106" width="14" height="16" rx="8" fill="#d97706"></rect>
-  <text x="560" y="120" font-size="12" font-family="Trebuchet MS" fill="#475569">6</text>
-
-  <text x="24" y="156" font-size="13" font-family="Trebuchet MS" fill="#0f172a">owl:equivalentClass</text>
-  <rect x="180" y="142" width="370" height="16" rx="8" fill="#e2e8f0"></rect>
-  <rect x="180" y="142" width="4" height="16" rx="8" fill="#d97706"></rect>
-  <text x="560" y="156" font-size="12" font-family="Trebuchet MS" fill="#475569">2</text>
-
-</svg>
-</div>
-  </section>
-  
 </section>
 
     </main>
@@ -277,5 +271,8 @@
       <p>H2KG — Ontology for Hydrogen Electrochemical Systems. Generated locally by the AIMWORKS ontology release pipeline.</p>
     </footer>
   </div>
+  
+  <script defer src="../assets/visuals.js"></script>
+
 </body>
 </html>

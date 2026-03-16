@@ -18,6 +18,7 @@ def _run_stage(
     llm_config: Path | None = None,
     review_file: Path | None = None,
     apply_approved: Path | None = None,
+    unit_evidence_dir: Path | None = None,
 ) -> None:
     if input:
         run_pipeline(
@@ -27,6 +28,7 @@ def _run_stage(
             llm_config_path=llm_config,
             review_file=review_file,
             apply_approved_file=apply_approved,
+            unit_evidence_dir=unit_evidence_dir,
         )
         return
     run_profile_pipeline(
@@ -36,6 +38,7 @@ def _run_stage(
         llm_config_path=llm_config,
         review_file=review_file,
         apply_approved_file=apply_approved,
+        unit_evidence_dir=unit_evidence_dir,
     )
 
 
@@ -72,8 +75,18 @@ def map(
 def enrich(
     input: str | None = typer.Option(None, "--input"),
     profile: str = typer.Option("pemfc", "--profile"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    _run_stage("enrich", input, profile)
+    _run_stage("enrich", input, profile, unit_evidence_dir=unit_evidence_dir)
+
+
+@app.command("units")
+def units(
+    input: str | None = typer.Option(None, "--input"),
+    profile: str = typer.Option("pemfc", "--profile"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
+) -> None:
+    _run_stage("units", input, profile, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command()
@@ -100,24 +113,27 @@ def annotate(
 def validate(
     input: str | None = typer.Option(None, "--input"),
     profile: str = typer.Option("pemfc", "--profile"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    _run_stage("validate", input, profile)
+    _run_stage("validate", input, profile, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command()
 def docs(
     input: str | None = typer.Option(None, "--input"),
     profile: str = typer.Option("pemfc", "--profile"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    _run_stage("docs", input, profile)
+    _run_stage("docs", input, profile, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command()
 def fair(
     input: str | None = typer.Option(None, "--input"),
     profile: str = typer.Option("pemfc", "--profile"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    _run_stage("fair", input, profile)
+    _run_stage("fair", input, profile, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command()
@@ -126,24 +142,27 @@ def release(
     profile: str = typer.Option("pemfc", "--profile"),
     draft_llm: bool = typer.Option(False, "--draft-llm"),
     llm_config: Path | None = typer.Option(None, "--llm-config"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    _run_stage("release", input, profile, draft_llm=draft_llm, llm_config=llm_config)
+    _run_stage("release", input, profile, draft_llm=draft_llm, llm_config=llm_config, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command("docs-all")
 def docs_all(
     draft_llm: bool = typer.Option(False, "--draft-llm"),
     llm_config: Path | None = typer.Option(None, "--llm-config"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    run_multi_profile_pipeline(stage="docs", draft_llm=draft_llm, llm_config_path=llm_config)
+    run_multi_profile_pipeline(stage="docs", draft_llm=draft_llm, llm_config_path=llm_config, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command("release-all")
 def release_all(
     draft_llm: bool = typer.Option(False, "--draft-llm"),
     llm_config: Path | None = typer.Option(None, "--llm-config"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
-    run_multi_profile_pipeline(stage="release", draft_llm=draft_llm, llm_config_path=llm_config)
+    run_multi_profile_pipeline(stage="release", draft_llm=draft_llm, llm_config_path=llm_config, unit_evidence_dir=unit_evidence_dir)
 
 
 @app.command()
@@ -156,12 +175,13 @@ def run(
     draft_llm: bool = typer.Option(False, "--draft-llm"),
     llm_config: Path | None = typer.Option(None, "--llm-config"),
     all_profiles: bool = typer.Option(False, "--all-profiles"),
+    unit_evidence_dir: Path | None = typer.Option(None, "--unit-evidence-dir"),
 ) -> None:
     stage = "release" if build_release else "docs" if build_docs else "fair" if fair_check else "validate"
     if all_profiles and not input:
-        run_multi_profile_pipeline(stage=stage, draft_llm=draft_llm, llm_config_path=llm_config)
+        run_multi_profile_pipeline(stage=stage, draft_llm=draft_llm, llm_config_path=llm_config, unit_evidence_dir=unit_evidence_dir)
         return
-    _run_stage(stage, input, profile, draft_llm=draft_llm, llm_config=llm_config)
+    _run_stage(stage, input, profile, draft_llm=draft_llm, llm_config=llm_config, unit_evidence_dir=unit_evidence_dir)
 
 
 if __name__ == "__main__":

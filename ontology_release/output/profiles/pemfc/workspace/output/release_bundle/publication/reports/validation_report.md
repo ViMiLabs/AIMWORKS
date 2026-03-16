@@ -10,8 +10,8 @@
 - SHACL conforms: **True**
 - OWL consistency hook: **skipped**
 - EMMO convention hook: **skipped**
-- OOPS! hook: **assessed**
-- FOOPS! hook: **assessed**
+- OOPS! hook: **warning**
+- FOOPS! hook: **warning**
 
 ## Details
 
@@ -23,18 +23,11 @@
 
 ## External Service Assessments
 
-- OOPS!: OOPS! assessed the ontology and reported 1 pitfalls.
+- OOPS!: OOPS! assessment could not be completed: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")))
 - OOPS! link: https://oops.linkeddata.es/
-- FOOPS!: FOOPS! assessment completed in file mode with an overall score of 86.1 / 100. The following dimensions were not assessed in this mode: Accessible.
+- FOOPS!: FOOPS! assessment could not be completed: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=9): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")))
 - FOOPS! link: https://foops.linkeddata.es/FAIR_validator.html
 
-- OOPS! pitfall count: **1**
-- OOPS! Important: 1
-- FOOPS! overall score: **86.1 / 100**
-- FOOPS! F (Findable): 100.0 / 100
-- FOOPS! A (Accessible): not assessed
-- FOOPS! I (Interoperable): 100.0 / 100
-- FOOPS! R (Reusable): 90.7 / 100
 - FOOPS! test catalogue: https://w3id.org/foops/catalogue
 
 ## Optional Hooks
@@ -44,24 +37,24 @@
 
 ## Resolver Checks
 
-- Ontology IRI [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Ontology IRI [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Ontology IRI [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Source [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Source [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Source [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Context [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Context [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Context [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [text/html]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [text/turtle]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [application/ld+json]: missing_local_artifact (Expected local publication artifact is missing. Network resolver check was not executed because enable_network_checks is false.)
+- Ontology IRI [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Ontology IRI [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Ontology IRI [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Source [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Source [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Source [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Inferred [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Inferred [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Inferred [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Latest [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Latest [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Latest [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Context [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Context [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Context [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned release [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned release [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned release [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned inferred [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned inferred [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+- Versioned inferred [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
