@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_SUGGESTIONS = 16;
   const MAX_VISIBLE_NODES = 72;
   const MAX_NEW_NEIGHBORS_PER_SOURCE = 22;
+  const MAX_EDGE_LABELS = 50;
   const MAX_HISTORY = 40;
 
   const escapeHtml = (value) => String(value ?? "")
@@ -498,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function buildCyElements(graph) {
-    const showEdgeLabels = graph.links.length <= 20;
+    const showEdgeLabels = graph.links.length <= MAX_EDGE_LABELS;
     const expandedIds = new Set(state.expandedIds);
     const nodeElements = graph.nodes.map((node) => {
       const isCenter = node.id === graph.center.id;
