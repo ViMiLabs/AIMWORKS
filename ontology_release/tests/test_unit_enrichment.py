@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from rdflib import Graph, URIRef
+from rdflib.namespace import RDFS
 
 from aimworks_ontology_release.io import graph_from_text
 from aimworks_ontology_release.release import run_pipeline
@@ -50,6 +51,19 @@ def _write_unit_evidence(root: Path, datapoint_rows: list[str], unit_rows: list[
         )
         (evidence_dir / "qudt_fill_report_iter4.csv").write_text(fill + "\n", encoding="utf-8")
     return evidence_dir
+
+
+def _write_curated_units(root: Path, rows: list[str]) -> Path:
+    curated_path = root / "config" / "curated_units.csv"
+    curated_path.parent.mkdir(parents=True, exist_ok=True)
+    curated = "\n".join(
+        [
+            "term_iri,term_label,decision,support_count,consensus_ratio,quantity_kind_iri,preferred_unit_label,preferred_qudt_unit_iri,preferred_ucum_code,local_unit_iri,note",
+            *rows,
+        ]
+    )
+    curated_path.write_text(curated + "\n", encoding="utf-8")
+    return curated_path
 
 
 def test_unit_enrichment_adds_qudt_unit(configs, temp_project):
@@ -149,3 +163,43 @@ def test_pipeline_units_stage_writes_reports(configs, temp_project):
     assert (temp_project / "output" / "review" / "unit_evidence_review.csv").exists()
     review_rows = read_csv(temp_project / "output" / "review" / "unit_evidence_review.csv")
     assert any(row["decision"] == "assert_qudt_unit" for row in review_rows)
+
+
+def test_curated_units_apply_without_evidence(configs, temp_project):
+    schema_graph = graph_from_text(UNIT_FIXTURE_TTL, "turtle")
+    controlled_graph = Graph()
+    term = URIRef("https://w3id.org/h2kg/hydrogen-ontology#AreaSpecificResistance")
+    for triple in schema_graph.triples((term, None, None)):
+        controlled_graph.add(triple)
+    for triple in schema_graph.triples((URIRef("https://w3id.org/h2kg/hydrogen-ontology#Property"), None, None)):
+        controlled_graph.add(triple)
+
+    curated_path = _write_curated_units(
+        temp_project,
+        [
+            "https://w3id.org/h2kg/hydrogen-ontology#AreaSpecificResistance,Area Specific Resistance,assert_local_reviewed_unit,2,1.0,http://qudt.org/vocab/quantitykind/AreaSpecificResistance,ohm cm2,,Ohm.cm2,https://w3id.org/h2kg/hydrogen-ontology#_Unit_AreaSpecificResistance_ohm_cm2,",
+        ],
+    )
+    release_profile = dict(configs["release_profile"])
+    release_profile["unit_enrichment"] = {
+        "enabled": True,
+        "curated_units_path": str(curated_path),
+        "create_local_units": True,
+    }
+
+    report = enrich_units_from_cleaned_dataset(
+        schema_graph,
+        controlled_graph,
+        release_profile,
+        configs["namespace_policy"],
+        temp_project,
+        evidence_dir=None,
+    )
+
+    qv_nodes = list(controlled_graph.objects(term, URIRef("https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue")))
+    assert qv_nodes
+    unit_nodes = list(controlled_graph.objects(qv_nodes[0], QUDT.unit))
+    assert unit_nodes == [URIRef("https://w3id.org/h2kg/hydrogen-ontology#_Unit_AreaSpecificResistance_ohm_cm2")]
+    assert str(list(controlled_graph.objects(unit_nodes[0], RDFS.label))[0]) == "ohm cm2"
+    assert report["applied"] is True
+    assert report["source"] == "curated_unit_registry"

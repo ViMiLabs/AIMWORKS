@@ -77,7 +77,7 @@ def _parse_iri_list(value: str) -> list[str]:
 
 
 def _resolve_unit_source_dir(root: Path, configured: str | Path | None) -> Path | None:
-    if configured is None:
+    if configured is None or not _clean_text(configured):
         return None
     candidate = Path(configured)
     if candidate.is_absolute():
@@ -86,6 +86,25 @@ def _resolve_unit_source_dir(root: Path, configured: str | Path | None) -> Path 
     if local.exists():
         return local
     # When running profile workspaces, allow paths relative to the package root.
+    try:
+        package_root = root.parents[3]
+        fallback = (package_root / candidate).resolve()
+        if fallback.exists():
+            return fallback
+    except IndexError:
+        pass
+    return None
+
+
+def _resolve_optional_file(root: Path, configured: str | Path | None) -> Path | None:
+    if configured is None or not _clean_text(configured):
+        return None
+    candidate = Path(configured)
+    if candidate.is_absolute():
+        return candidate if candidate.exists() else None
+    local = (root / candidate).resolve()
+    if local.exists():
+        return local
     try:
         package_root = root.parents[3]
         fallback = (package_root / candidate).resolve()
@@ -159,10 +178,20 @@ def _build_local_unit(
     term: URIRef,
     unit_row: dict[str, str],
     namespace_policy: dict[str, Any],
+    unit_iri_override: str = "",
+    source_label: str = "cleaned_v4 unit registry",
 ) -> URIRef:
-    label = _clean_text(unit_row.get("unit_label")) or _clean_text(unit_row.get("raw_unit_examples")) or "Local reviewed unit"
-    slug = _slugify(f"{term.rsplit('#', 1)[-1]}_{label}")
-    unit_iri = URIRef(f"{namespace_policy['term_namespace']}_Unit_{slug}")
+    label = (
+        _clean_text(unit_row.get("unit_label"))
+        or _clean_text(unit_row.get("preferred_unit_label"))
+        or _clean_text(unit_row.get("raw_unit_examples"))
+        or "Local reviewed unit"
+    )
+    if unit_iri_override:
+        unit_iri = URIRef(unit_iri_override)
+    else:
+        slug = _slugify(f"{term.rsplit('#', 1)[-1]}_{label}")
+        unit_iri = URIRef(f"{namespace_policy['term_namespace']}_Unit_{slug}")
     graph.add((unit_iri, RDF.type, QUDT_UNIT_CLASS))
     graph.add((unit_iri, RDFS.label, Literal(label, lang="en")))
     graph.add(
@@ -175,14 +204,94 @@ def _build_local_unit(
             ),
         )
     )
-    ucum_code = _clean_text(unit_row.get("ucum_code"))
+    ucum_code = _clean_text(unit_row.get("ucum_code")) or _clean_text(unit_row.get("preferred_ucum_code"))
     if ucum_code:
         graph.add((unit_iri, QUDT_UCUM_CODE, Literal(ucum_code)))
     raw_examples = _clean_text(unit_row.get("raw_unit_examples"))
     if raw_examples:
         graph.add((unit_iri, SKOS.notation, Literal(raw_examples)))
-    graph.add((unit_iri, DCTERMS.source, Literal("cleaned_v4 unit registry")))
+    graph.add((unit_iri, DCTERMS.source, Literal(source_label)))
     return unit_iri
+
+
+def _load_curated_unit_rows(path: Path) -> list[dict[str, str]]:
+    rows = read_csv(path)
+    return [
+        row
+        for row in rows
+        if _clean_text(row.get("term_iri"))
+        and _clean_text(row.get("decision")) in {"assert_qudt_unit", "assert_local_reviewed_unit"}
+    ]
+
+
+def _apply_curated_units(
+    schema_graph: Graph,
+    controlled_vocabulary_graph: Graph,
+    namespace_policy: dict[str, Any],
+    curated_rows: list[dict[str, str]],
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    term_graph_index = _local_term_graphs(schema_graph, controlled_vocabulary_graph)
+    applied_rows: list[dict[str, Any]] = []
+    terms_enriched = 0
+    qudt_units_linked = 0
+    local_units_created = 0
+
+    for row in curated_rows:
+        term_iri = _clean_text(row.get("term_iri"))
+        graph = term_graph_index.get(term_iri)
+        if graph is None:
+            continue
+        term_ref = URIRef(term_iri)
+        existing_units = _existing_unit_objects(graph, term_ref, namespace_policy)
+        if existing_units:
+            applied_rows.append(
+                {
+                    **row,
+                    "decision": "skip_existing_unit",
+                    "note": "Existing ontology unit assertion preserved.",
+                }
+            )
+            continue
+
+        quantity_kind_iri = _clean_text(row.get("quantity_kind_iri"))
+        qv_node = _ensure_quantity_value_node(graph, term_ref, namespace_policy)
+        decision = _clean_text(row.get("decision"))
+        note = _clean_text(row.get("note"))
+
+        if decision == "assert_qudt_unit" and _clean_text(row.get("preferred_qudt_unit_iri")):
+            unit_iri = URIRef(_clean_text(row.get("preferred_qudt_unit_iri")))
+            graph.add((qv_node, QUDT.unit, unit_iri))
+            if quantity_kind_iri:
+                graph.add((qv_node, QUDT.quantityKind, URIRef(quantity_kind_iri)))
+            terms_enriched += 1
+            qudt_units_linked += 1
+            applied_rows.append({**row, "note": note})
+            continue
+
+        if decision == "assert_local_reviewed_unit" and _clean_text(row.get("preferred_unit_label")):
+            local_unit = _build_local_unit(
+                graph,
+                term_ref,
+                row,
+                namespace_policy,
+                unit_iri_override=_clean_text(row.get("local_unit_iri")),
+                source_label="PEMFC curated unit registry",
+            )
+            graph.add((qv_node, QUDT.unit, local_unit))
+            if quantity_kind_iri:
+                graph.add((qv_node, QUDT.quantityKind, URIRef(quantity_kind_iri)))
+            terms_enriched += 1
+            local_units_created += 1
+            applied_rows.append({**row, "local_unit_iri": str(local_unit), "note": note})
+
+    report = {
+        "terms_examined": len(curated_rows),
+        "terms_enriched": terms_enriched,
+        "qudt_units_linked": qudt_units_linked,
+        "local_units_created": local_units_created,
+        "review_rows": len(applied_rows),
+    }
+    return report, applied_rows
 
 
 def enrich_units_from_cleaned_dataset(
@@ -194,13 +303,35 @@ def enrich_units_from_cleaned_dataset(
     evidence_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     cfg = release_profile.get("unit_enrichment", {})
-    enabled = bool(cfg.get("enabled", False) or evidence_dir)
+    curated_units_path = _resolve_optional_file(root, cfg.get("curated_units_path"))
+    enabled = bool(cfg.get("enabled", False) or evidence_dir or curated_units_path)
     resolved_dir = _resolve_unit_source_dir(root, evidence_dir or cfg.get("evidence_dir"))
+    if resolved_dir is None and curated_units_path is not None:
+        curated_rows = _load_curated_unit_rows(curated_units_path)
+        summary, applied_rows = _apply_curated_units(
+            schema_graph,
+            controlled_vocabulary_graph,
+            namespace_policy,
+            curated_rows,
+        )
+        report = {
+            "enabled": enabled,
+            "applied": True,
+            "source": "curated_unit_registry",
+            "evidence_dir": "",
+            "curated_units_path": str(curated_units_path),
+            **summary,
+        }
+        write_unit_enrichment_outputs(report, applied_rows, root)
+        return report
+
     if not enabled or not resolved_dir:
         report = {
             "enabled": enabled,
             "applied": False,
+            "source": "none",
             "evidence_dir": str(evidence_dir or cfg.get("evidence_dir") or ""),
+            "curated_units_path": str(curated_units_path or ""),
             "reason": "No cleaned evidence directory was configured or found.",
             "terms_examined": 0,
             "terms_enriched": 0,
@@ -217,7 +348,9 @@ def enrich_units_from_cleaned_dataset(
         report = {
             "enabled": True,
             "applied": False,
+            "source": "cleaned_evidence",
             "evidence_dir": str(resolved_dir),
+            "curated_units_path": str(curated_units_path or ""),
             "reason": "Cleaned datapoints.csv or units.csv is missing.",
             "terms_examined": 0,
             "terms_enriched": 0,
@@ -363,7 +496,9 @@ def enrich_units_from_cleaned_dataset(
     report = {
         "enabled": True,
         "applied": True,
+        "source": "cleaned_evidence",
         "evidence_dir": str(resolved_dir),
+        "curated_units_path": str(curated_units_path or ""),
         "terms_examined": len(evidence_by_term),
         "terms_enriched": terms_enriched,
         "qudt_units_linked": qudt_units_linked,
@@ -401,7 +536,9 @@ def write_unit_enrichment_outputs(report: dict[str, Any], review_rows: list[dict
         "",
         f"- Enabled: `{report.get('enabled', False)}`",
         f"- Applied: `{report.get('applied', False)}`",
+        f"- Source: `{report.get('source', 'none')}`",
         f"- Evidence directory: `{report.get('evidence_dir', '')}`",
+        f"- Curated units path: `{report.get('curated_units_path', '')}`",
         f"- Terms examined: **{report.get('terms_examined', 0)}**",
         f"- Terms enriched: **{report.get('terms_enriched', 0)}**",
         f"- QUDT units linked: **{report.get('qudt_units_linked', 0)}**",
@@ -418,7 +555,7 @@ def write_unit_enrichment_outputs(report: dict[str, Any], review_rows: list[dict
                 "## Policy",
                 "",
                 "- QUDT-backed units are asserted directly when cleaned PEMFC evidence is stable enough.",
-                "- UCUM-only or label-only units may become reviewed local unit placeholders when consensus is strong.",
+                "- Curated local PEMFC units are retained when no reviewed QUDT mapping is available yet.",
                 "- Ambiguous multi-unit terms remain in the review CSV instead of being forced into the ontology.",
                 "",
             ]

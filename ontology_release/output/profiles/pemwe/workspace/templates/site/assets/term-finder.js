@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const countEdgesInlineEl = root.querySelector('[data-visual-count="edges-inline"]');
   const countModulesEl = root.querySelector('[data-visual-count="modules"]');
   const countExpandedEl = root.querySelector('[data-visual-count="expanded"]');
+  const undoButtonEl = root.querySelector('[data-visual-action="undo"]');
 
   let payload = null;
   let cy = null;
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showExternalNeighbors: false,
     expandedIds: new Set(),
     trail: [],
+    history: [],
     highlightedIndex: 0,
   };
 
@@ -45,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_SUGGESTIONS = 16;
   const MAX_VISIBLE_NODES = 72;
   const MAX_NEW_NEIGHBORS_PER_SOURCE = 22;
+  const MAX_EDGE_LABELS = 50;
+  const MAX_HISTORY = 40;
 
   const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -94,6 +98,58 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.trail.length > 8) {
       state.trail = state.trail.slice(state.trail.length - 8);
     }
+  }
+
+  function captureSnapshot() {
+    return {
+      selectedId: state.selectedId,
+      seedId: state.seedId,
+      expandedIds: Array.from(state.expandedIds),
+      trail: state.trail.slice(),
+      highlightedIndex: state.highlightedIndex,
+      searchValue: searchInputEl.value,
+      activeModules: activeModules(),
+      toggles: Object.fromEntries(
+        Array.from(root.querySelectorAll("[data-visual-toggle]")).map((input) => [input.dataset.visualToggle, input.checked])
+      ),
+    };
+  }
+
+  function pushHistorySnapshot() {
+    state.history.push(captureSnapshot());
+    if (state.history.length > MAX_HISTORY) {
+      state.history = state.history.slice(state.history.length - MAX_HISTORY);
+    }
+  }
+
+  function applySnapshot(snapshot) {
+    if (!snapshot) return;
+    searchInputEl.value = snapshot.searchValue || "";
+    const selectedModules = new Set(snapshot.activeModules || []);
+    moduleInputs().forEach((input) => {
+      input.checked = selectedModules.has(input.value);
+    });
+    root.querySelectorAll("[data-visual-toggle]").forEach((input) => {
+      input.checked = Boolean(snapshot.toggles?.[input.dataset.visualToggle]);
+    });
+    state.selectedId = snapshot.selectedId || null;
+    state.seedId = snapshot.seedId || null;
+    state.expandedIds = new Set(snapshot.expandedIds || []);
+    state.trail = Array.isArray(snapshot.trail) ? snapshot.trail.slice(-8) : [];
+    state.highlightedIndex = Number.isInteger(snapshot.highlightedIndex) ? snapshot.highlightedIndex : 0;
+    syncState();
+  }
+
+  function undoLastStep() {
+    if (!state.history.length) return;
+    applySnapshot(state.history.pop());
+    renderAll();
+  }
+
+  function runUndoable(action) {
+    pushHistorySnapshot();
+    action();
+    renderAll();
   }
 
   function selectNode(nodeId, options = {}) {
@@ -219,8 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     });
     cy.on("tap", "node", (event) => {
-      selectNode(event.target.id(), { reset: false });
-      renderAll();
+      runUndoable(() => {
+        selectNode(event.target.id(), { reset: false });
+      });
     });
     cy.on("tap", "edge", (event) => {
       const edge = event.target.data();
@@ -442,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function buildCyElements(graph) {
-    const showEdgeLabels = graph.links.length <= 20;
+    const showEdgeLabels = graph.links.length <= MAX_EDGE_LABELS;
     const expandedIds = new Set(state.expandedIds);
     const nodeElements = graph.nodes.map((node) => {
       const isCenter = node.id === graph.center.id;
@@ -557,8 +614,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultsEl.querySelectorAll("[data-result-id]").forEach((button) => {
       button.addEventListener("click", () => {
-        chooseSuggestion(button.dataset.resultId);
-        renderAll();
+        runUndoable(() => {
+          chooseSuggestion(button.dataset.resultId);
+        });
       });
     });
   }
@@ -578,8 +636,9 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
     trailEl.querySelectorAll("[data-trail-id]").forEach((button) => {
       button.addEventListener("click", () => {
-        selectNode(button.dataset.trailId, { reset: false });
-        renderAll();
+        runUndoable(() => {
+          selectNode(button.dataset.trailId, { reset: false });
+        });
       });
     });
   }
@@ -736,6 +795,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const view = buildBaseView();
     countModulesEl.textContent = String(view.selectedModules.length);
+    if (undoButtonEl) {
+      undoButtonEl.disabled = state.history.length === 0;
+    }
 
     const query = searchInputEl.value;
     const mode = currentSuggestionMode(query);
@@ -760,20 +822,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   root.querySelectorAll("[data-visual-action]").forEach((button) => {
     button.addEventListener("click", () => {
+      if (button.dataset.visualAction === "undo") {
+        undoLastStep();
+      }
       if (button.dataset.visualAction === "reset" && (state.seedId || state.selectedId)) {
-        const seed = state.seedId || state.selectedId;
-        state.selectedId = seed;
-        state.expandedIds = new Set([seed]);
-        renderAll();
+        runUndoable(() => {
+          const seed = state.seedId || state.selectedId;
+          state.selectedId = seed;
+          state.expandedIds = new Set([seed]);
+        });
       }
       if (button.dataset.visualAction === "clear") {
-        searchInputEl.value = "";
-        state.selectedId = null;
-        state.seedId = null;
-        state.expandedIds = new Set();
-        state.trail = [];
-        state.highlightedIndex = 0;
-        renderAll();
+        runUndoable(() => {
+          searchInputEl.value = "";
+          state.selectedId = null;
+          state.seedId = null;
+          state.expandedIds = new Set();
+          state.trail = [];
+          state.highlightedIndex = 0;
+        });
       }
     });
   });
@@ -782,6 +849,11 @@ document.addEventListener("DOMContentLoaded", () => {
     renderAll();
   });
   searchInputEl.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && !event.shiftKey && event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      undoLastStep();
+      return;
+    }
     if (!currentSuggestions.length) return;
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -799,8 +871,9 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       const target = currentSuggestions[state.highlightedIndex] || currentSuggestions[0];
       if (target) {
-        chooseSuggestion(target.id);
-        renderAll();
+        runUndoable(() => {
+          chooseSuggestion(target.id);
+        });
       }
       return;
     }
@@ -814,6 +887,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!cy) return;
     cy.resize();
     cy.fit(cy.elements(), 36);
+  });
+  window.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const isEditableTarget = target instanceof HTMLElement
+      && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+    if (isEditableTarget) return;
+    if ((event.ctrlKey || event.metaKey) && !event.shiftKey && event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      undoLastStep();
+    }
   });
 
   fetch(dataPath)

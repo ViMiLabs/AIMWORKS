@@ -65,6 +65,7 @@ def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict
 
     base_configs = load_configs(base_root)
     runtime_release = deepcopy(base_configs["release_profile"])
+    runtime_release = _deep_merge(runtime_release, profile_cfg.get("release_profile_overrides", {}))
     site_cfg = profiles_cfg.get("site", {})
     runtime_release["project"]["title"] = site_cfg.get("title", runtime_release["project"]["title"])
     runtime_release["project"]["subtitle"] = profile_cfg.get("project_overrides", {}).get("subtitle", runtime_release["project"]["subtitle"])
