@@ -1891,22 +1891,16 @@ def build_docs(
         "profile_label": profile_label,
         "nav": [
             {"href": "index.html", "label": "Home"},
+            {"href": "pages/visualizations.html", "label": "Explore"},
             {"href": release_profile["publication"]["reference_page"], "label": "Reference"},
-            {"href": "pages/user-guide.html", "label": "User Guide"},
-            {"href": "pages/ontology-overview.html", "label": "About"},
-            {"href": "pages/scope-and-faq.html", "label": "Scope and FAQ"},
-            {"href": "pages/modeling-patterns.html", "label": "Patterns"},
-            {"href": "pages/queries.html", "label": "Queries"},
-            {"href": "pages/import-guide.html", "label": "Import"},
-            {"href": "pages/cite.html", "label": "Cite"},
-            {"href": "pages/visualizations.html", "label": "Visuals"},
+            {"href": "pages/user-guide.html", "label": "Guide"},
             {"href": "pages/quality-dashboard.html", "label": "Quality"},
             {"href": "pages/release.html", "label": "Release"},
         ],
         "actions": [
-            {"href": release_profile["publication"]["reference_page"], "label": "Browse reference", "primary": True},
+            {"href": "pages/visualizations.html", "label": "Explore ontology", "primary": True},
+            {"href": release_profile["publication"]["reference_page"], "label": "Browse reference", "primary": False},
             {"href": "pages/release.html", "label": "Release artifacts", "primary": False},
-            {"href": resources_cfg.get("repository_url", ""), "label": "GitHub repository", "primary": False},
         ],
     }
     write_text(assets_dir / "site.css", SITE_CSS)
@@ -1966,14 +1960,12 @@ def build_docs(
         {"label": "Validation", "value": validation_report["overall_status"].upper(), "detail": "Current release validation state."},
     ]
     featured_pages = [
-        {"href": "pages/scope-and-faq.html", "title": "Scope and FAQ", "body": f"Explains what the {profile_label} profile covers, what it does not cover, and why release modules are separated."},
-        {"href": "pages/modeling-patterns.html", "title": "Modeling Patterns", "body": "Documents the preferred patterns for measurement, materials, process, provenance, and publication."},
-        {"href": "pages/queries.html", "title": "Queries", "body": "Provides competency-question-driven SPARQL examples and release-query guidance."},
-        {"href": "pages/import-catalog.html", "title": "Import Catalog", "body": "Shows configured source ontologies, reuse targets, fetch modes, and version labels for the release stack."},
-        {"href": "pages/worked-examples.html", "title": "Worked Examples", "body": "Provides JSON-LD, CSV-to-RDF, and notebook-style examples for ontology users and data stewards."},
-        {"href": "pages/quality-dashboard.html", "title": "Quality Dashboard", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
-        {"href": "pages/visualizations.html", "title": "Visuals", "body": "Provides an interactive ontology graph explorer with search, module-aware filtering, triples preview, and source inspection."},
-        {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, and release provenance."},
+        {"href": "pages/visualizations.html", "title": "Explore", "body": "Search the ontology, pick a seed term, and expand the graph progressively without dropping users into a full release dump."},
+        {"href": release_profile["publication"]["reference_page"], "title": "Reference", "body": "Browse the full ontology reference with labels, definitions, mappings, units, and module-aware term details."},
+        {"href": "pages/user-guide.html", "title": "Guide", "body": "Start with the practical workflow, then branch into scope, modeling patterns, import guidance, and worked examples only when needed."},
+        {"href": "pages/quality-dashboard.html", "title": "Quality", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
+        {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, provenance, and release bundle outputs."},
+        {"href": "pages/queries.html", "title": "Advanced SPARQL", "body": "Power-user query console with competency-question presets for direct browser-side SPARQL execution."},
     ]
     fair_dimension_signals = [
         {
@@ -2252,15 +2244,23 @@ def build_docs(
   <li><code>annotate</code> creates reviewable annotation drafts, with optional LLM support.</li>
   <li><code>validate</code> runs metadata, namespace, mapping, and SHACL checks.</li>
 </ul>
+<p>For deeper documentation, use the focused pages instead of scanning the full portal at once:</p>
+<ul>
+  <li><a href="scope-and-faq.html">Scope and FAQ</a> explains coverage boundaries and why modules are published separately.</li>
+  <li><a href="modeling-patterns.html">Modeling Patterns</a> documents preferred patterns for measurements, materials, provenance, and publication.</li>
+  <li><a href="import-guide.html">Import Guide</a> and <a href="import-catalog.html">Import Catalog</a> cover source ontologies, reuse targets, and release-time import strategy.</li>
+  <li><a href="worked-examples.html">Worked Examples</a> provides JSON-LD, CSV-to-RDF, and notebook-style examples.</li>
+  <li><a href="queries.html">Advanced SPARQL</a> keeps the browser query console available for power users without making it a top-level page for everyone.</li>
+</ul>
 """
     write_text(
         pages_dir / "user-guide.html",
         page_template.render(
-            page_title="User Guide",
+            page_title="Guide",
             site=site,
             base_path="..",
-            heading="User Guide",
-            summary=f"Operational guidance for running and reviewing the {profile_label} release pipeline.",
+            heading="Guide",
+            summary=f"Start here for the operational workflow, then branch into the deeper {profile_label} documentation only when you need it.",
             content_html=user_guide_html,
         ),
     )
@@ -2727,7 +2727,7 @@ ex:run-001 a h2kg:Measurement ;
     write_text(
         pages_dir / "queries.html",
         queries_template.render(
-            page_title="Queries",
+            page_title="Advanced SPARQL",
             site=site,
             base_path="..",
             query_intro=_clean_text(documentation_cfg.get("query_guide", {}).get("introduction", "")),
@@ -2782,7 +2782,7 @@ ex:run-001 a h2kg:Measurement ;
     write_text(
         pages_dir / "visualizations.html",
         visualizations_template.render(
-            page_title="Visualizations",
+            page_title="Explore",
             site=site,
             base_path="..",
             explorer_data_path="../data/graph_explorer.json",
