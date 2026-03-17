@@ -13,7 +13,7 @@ from .inspect import find_ontology_node
 from .io import load_graph
 from .normalize import humanize_identifier
 from .publication import reference_iri_rows
-from .utils import QUDT, ensure_dir, load_yaml, local_name, normalize_space, read_csv, read_json, write_json, write_text
+from .utils import QUDT, copy_file, ensure_dir, load_yaml, local_name, normalize_space, read_csv, read_json, write_json, write_text
 
 
 SITE_CSS = """
@@ -313,6 +313,135 @@ h3 {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
   gap: 1rem;
+}
+.home-showcase {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.45fr);
+  gap: 1rem;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(202, 109, 44, 0.14), transparent 26%),
+    linear-gradient(145deg, rgba(14, 26, 33, 0.98), rgba(21, 56, 66, 0.94) 60%, rgba(31, 122, 122, 0.84));
+  color: #f7fcfb;
+  box-shadow: var(--shadow);
+}
+.home-showcase::after {
+  display: none;
+}
+.home-showcase__copy {
+  display: grid;
+  align-content: center;
+  gap: 0.95rem;
+}
+.home-showcase__copy p,
+.home-showcase__copy li,
+.home-showcase__copy a,
+.home-showcase__copy h2 {
+  color: inherit;
+}
+.home-showcase__copy .section-kicker {
+  color: #fdd9b4;
+}
+.home-showcase__copy .lede {
+  color: rgba(247, 252, 251, 0.8);
+  max-width: 52ch;
+}
+.home-showcase__frame {
+  position: relative;
+  margin: 0;
+  padding: 0.95rem;
+  border-radius: 1.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.home-showcase__frame::before {
+  content: "";
+  position: absolute;
+  inset: auto 12% -18% 12%;
+  height: 28%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(77, 180, 170, 0.2), transparent 72%);
+  filter: blur(24px);
+}
+.home-showcase__image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.15rem;
+  background: #ffffff;
+  box-shadow: 0 26px 54px rgba(7, 17, 22, 0.28);
+}
+.home-showcase__caption {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  color: rgba(247, 252, 251, 0.76);
+}
+.home-showcase__metrics {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.home-showcase__metrics .metric-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(247, 252, 251, 0.86);
+}
+.support-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 28%),
+    linear-gradient(145deg, rgba(18, 39, 48, 0.98), rgba(31, 122, 122, 0.92) 58%, rgba(202, 109, 44, 0.8));
+  color: #f7fcfb;
+}
+.support-card p,
+.support-card a,
+.support-card h2 {
+  color: inherit;
+}
+.support-card .section-kicker {
+  color: #fdd9b4;
+}
+.support-card__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.9rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.support-card__brand img {
+  width: min(100%, 220px);
+  height: auto;
+  display: block;
+}
+.support-card__links {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.support-card__links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.92rem;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+.support-card__links a:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 .card {
   position: relative;
@@ -856,7 +985,8 @@ h3 {
 }
 @media (max-width: 980px) {
   .hero__grid,
-  .landing-grid { grid-template-columns: 1fr; }
+  .landing-grid,
+  .home-showcase { grid-template-columns: 1fr; }
   .nav-shell { position: static; }
   .nav { border-radius: 1.75rem; }
   .footer-funding { grid-template-columns: 1fr; }
@@ -881,6 +1011,7 @@ h3 {
   .query-toolbar .copy-button,
   .query-toolbar .filter-input { width: 100%; }
   .query-source-grid { grid-template-columns: 1fr; }
+  .home-showcase__caption { flex-direction: column; }
 }
 """
 
@@ -1866,6 +1997,8 @@ def build_docs(
     profile_intro = _clean_text(documentation_cfg.get("landing_intro", ""))
     platform_title = _clean_text(release_profile["project"]["title"])
     profile_switch = documentation_cfg.get("profile_switch", [])
+    hmc_url = "https://helmholtz-metadaten.de/"
+    aimworks_project_url = "https://helmholtz-metadaten.de/inf-projects/aimworks"
     hero_note = _clean_text(
         documentation_cfg.get(
             "hero_note",
@@ -1907,6 +2040,18 @@ def build_docs(
     write_text(assets_dir / "site.js", SITE_JS)
     write_text(assets_dir / "visuals.css", (root / "templates" / "site" / "assets" / "visuals.css").read_text(encoding="utf-8"))
     write_text(assets_dir / "visuals.js", (root / "templates" / "site" / "assets" / "term-finder.js").read_text(encoding="utf-8"))
+    copy_file(root / "templates" / "site" / "assets" / "hmc-logo.svg", assets_dir / "hmc-logo.svg")
+    graph_poster = {"available": False, "href": "", "alt": "", "caption": ""}
+    poster_source = root / "input" / "final poster gephi.png"
+    if poster_source.exists():
+        poster_target = assets_dir / "knowledge-graph-poster.png"
+        copy_file(poster_source, poster_target)
+        graph_poster = {
+            "available": True,
+            "href": "assets/knowledge-graph-poster.png",
+            "alt": f"Gephi visualization of the {profile_label} H2KG knowledge graph",
+            "caption": "Poster-scale Gephi rendering of the connected H2KG knowledge graph.",
+        }
     write_text(output_dir / ".nojekyll", "")
 
     mapping_lookup = _mapping_lookup(review_rows)
@@ -2126,7 +2271,15 @@ def build_docs(
             use_cases=documentation_cfg.get("use_cases", []),
             audiences=documentation_cfg.get("audiences", []),
             resource_rows=resource_rows,
+            reference_href=release_profile["publication"]["reference_page"],
             competency_preview=documentation_cfg.get("competency_questions", [])[:2],
+            graph_poster=graph_poster,
+            graph_poster_metrics=[
+                {"label": "Schema", "value": str(len(classes) + len(properties))},
+                {"label": "Vocabulary", "value": str(len(vocabulary_rows))},
+                {"label": "Mapped", "value": str(mapping_stats["mapped"])},
+                {"label": "Examples", "value": str(split_report.get("example_subject_count", 0))},
+            ],
             module_cards=[
                 {"title": "Schema module", "svg": _simple_svg_card("Schema module", "Local asserted classes and properties", str(len(classes) + len(properties)), "#ecfeff")},
                 {"title": "Controlled vocabulary", "svg": _simple_svg_card("Controlled vocabulary", "Curated domain terms kept outside the schema", str(len(vocabulary_rows)), "#f0fdf4")},
@@ -2161,6 +2314,12 @@ def build_docs(
             download_rows=download_rows,
             coverage_rows=coverage_rows,
             curation_note=f"The {profile_label} release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
+            hmc_support={
+                "logo_src": "assets/hmc-logo.svg",
+                "hmc_url": hmc_url,
+                "aimworks_url": aimworks_project_url,
+                "text": "This ontology work is supported through the Helmholtz Metadata Collaboration (HMC) and the AIMWORKS project, connecting FAIR ontology publication to reusable metadata infrastructure.",
+            },
         ),
     )
 

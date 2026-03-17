@@ -62,6 +62,9 @@ def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict
 
     source_input = _resolve_profile_input(base_root, str(profile_cfg["input_path"]))
     copy_file(source_input, runtime_root / "input" / "current_ontology.jsonld")
+    poster_path = base_root / "input" / "final poster gephi.png"
+    if poster_path.exists():
+        copy_file(poster_path, runtime_root / "input" / "final poster gephi.png")
 
     base_configs = load_configs(base_root)
     runtime_release = deepcopy(base_configs["release_profile"])
