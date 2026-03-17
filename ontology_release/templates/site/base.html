@@ -32,6 +32,33 @@
             {% endfor %}
           </div>
           {% endif %}
+          {% if hero_support or (hero_visual and hero_visual.available) %}
+          <div class="hero__spotlight">
+            {% if hero_support %}
+            <section class="hero__support">
+              <div class="hero__support-brand">
+                <a href="{{ hero_support.hmc_url }}" target="_blank" rel="noopener noreferrer" aria-label="Helmholtz Metadata Collaboration">
+                  <img src="{{ base_path }}/{{ hero_support.logo_src }}" alt="Helmholtz Metadata Collaboration logo">
+                </a>
+              </div>
+              <p class="hero__support-copy">{{ hero_support.text }}</p>
+              <div class="hero__support-links">
+                <a href="{{ hero_support.hmc_url }}" target="_blank" rel="noopener noreferrer">HMC</a>
+                <a href="{{ hero_support.aimworks_url }}" target="_blank" rel="noopener noreferrer">AIMWORKS</a>
+              </div>
+            </section>
+            {% endif %}
+            {% if hero_visual and hero_visual.available %}
+            <figure class="hero__poster">
+              <img src="{{ base_path }}/{{ hero_visual.href }}" alt="{{ hero_visual.alt }}">
+              <figcaption class="hero__poster-caption">
+                <span>{{ hero_visual.caption }}</span>
+                <span>{{ hero_visual.context_label }}</span>
+              </figcaption>
+            </figure>
+            {% endif %}
+          </div>
+          {% endif %}
         </div>
         <aside class="hero__panel">
           <p class="hero__label">Publication profile</p>

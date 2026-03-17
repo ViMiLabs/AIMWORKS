@@ -1,33 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% if graph_poster.available %}
-<section class="card home-showcase">
-  <div class="home-showcase__copy">
-    <div>
-      <p class="section-kicker">Knowledge graph poster</p>
-      <h2>Publication-scale H2KG network view</h2>
-    </div>
-    <p class="lede">A Gephi-rendered view of the connected H2KG graph, bringing the ontology structure, curated vocabulary, and linked experiment knowledge into one visual field before you dive into the profile details.</p>
-    <div class="home-showcase__metrics">
-      {% for item in graph_poster_metrics %}
-      <span class="metric-pill">{{ item.label }} {{ item.value }}</span>
-      {% endfor %}
-    </div>
-    <div class="action-row">
-      <a href="{{ base_path }}/pages/visualizations.html" class="primary">Open Explore</a>
-      <a href="{{ base_path }}/{{ reference_href }}">Open Reference</a>
-    </div>
-  </div>
-  <figure class="home-showcase__frame">
-    <img class="home-showcase__image" src="{{ base_path }}/{{ graph_poster.href }}" alt="{{ graph_poster.alt }}">
-    <figcaption class="home-showcase__caption">
-      <span>{{ graph_poster.caption }}</span>
-      <span>{{ profile_heading }}</span>
-    </figcaption>
-  </figure>
-</section>
-{% endif %}
-
 <section class="landing-grid">
   <article class="card card--feature">
     <p class="section-kicker">Application ontology release</p>

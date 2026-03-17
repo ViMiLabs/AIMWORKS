@@ -134,6 +134,9 @@ pre code {
 .hero__content {
   position: relative;
   overflow: hidden;
+  display: grid;
+  gap: 0.95rem;
+  align-content: start;
   padding: 1.5rem 1.55rem 1.35rem;
   background:
     radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.38), transparent 22%),
@@ -167,6 +170,82 @@ pre code {
 .hero__note {
   margin: 0 0 1rem;
   color: rgba(236, 247, 245, 0.82);
+}
+.hero__spotlight {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1.22fr);
+  gap: 0.9rem;
+  margin-top: 0.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(18, 39, 48, 0.08);
+}
+.hero__support {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(18, 39, 48, 0.08);
+  background: linear-gradient(180deg, rgba(244, 251, 251, 0.94), rgba(255, 247, 236, 0.8));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+.hero__support-brand img {
+  width: min(100%, 180px);
+  height: auto;
+  display: block;
+}
+.hero__support-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.hero__support-links {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.hero__support-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.45rem 0.82rem;
+  text-decoration: none;
+  color: var(--slate-900);
+  border-radius: 999px;
+  border: 1px solid rgba(18, 39, 48, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+}
+.hero__support-links a:hover {
+  border-color: rgba(31, 122, 122, 0.28);
+  box-shadow: var(--shadow-soft);
+}
+.hero__poster {
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(18, 39, 48, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 242, 232, 0.76));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+.hero__poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.95rem;
+  background: #ffffff;
+  box-shadow: 0 24px 48px rgba(14, 26, 33, 0.12);
+}
+.hero__poster-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.86rem;
 }
 .hero-fact-grid {
   display: grid;
@@ -442,6 +521,33 @@ h3 {
 }
 .support-card__links a:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+.poster-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 251, 251, 0.9));
+}
+.poster-card__frame {
+  margin: 0;
+  padding: 0.9rem;
+  border-radius: 1.55rem;
+  border: 1px solid rgba(18, 39, 48, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 242, 232, 0.72));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+.poster-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 24px 48px rgba(14, 26, 33, 0.14);
+}
+.poster-card__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 .card {
   position: relative;
@@ -987,6 +1093,7 @@ h3 {
   .hero__grid,
   .landing-grid,
   .home-showcase { grid-template-columns: 1fr; }
+  .hero__spotlight { grid-template-columns: 1fr; }
   .nav-shell { position: static; }
   .nav { border-radius: 1.75rem; }
   .footer-funding { grid-template-columns: 1fr; }
@@ -1011,7 +1118,9 @@ h3 {
   .query-toolbar .copy-button,
   .query-toolbar .filter-input { width: 100%; }
   .query-source-grid { grid-template-columns: 1fr; }
-  .home-showcase__caption { flex-direction: column; }
+  .home-showcase__caption,
+  .poster-card__caption,
+  .hero__poster-caption { flex-direction: column; }
 }
 """
 
@@ -2271,15 +2380,7 @@ def build_docs(
             use_cases=documentation_cfg.get("use_cases", []),
             audiences=documentation_cfg.get("audiences", []),
             resource_rows=resource_rows,
-            reference_href=release_profile["publication"]["reference_page"],
             competency_preview=documentation_cfg.get("competency_questions", [])[:2],
-            graph_poster=graph_poster,
-            graph_poster_metrics=[
-                {"label": "Schema", "value": str(len(classes) + len(properties))},
-                {"label": "Vocabulary", "value": str(len(vocabulary_rows))},
-                {"label": "Mapped", "value": str(mapping_stats["mapped"])},
-                {"label": "Examples", "value": str(split_report.get("example_subject_count", 0))},
-            ],
             module_cards=[
                 {"title": "Schema module", "svg": _simple_svg_card("Schema module", "Local asserted classes and properties", str(len(classes) + len(properties)), "#ecfeff")},
                 {"title": "Controlled vocabulary", "svg": _simple_svg_card("Controlled vocabulary", "Curated domain terms kept outside the schema", str(len(vocabulary_rows)), "#f0fdf4")},
@@ -2314,11 +2415,16 @@ def build_docs(
             download_rows=download_rows,
             coverage_rows=coverage_rows,
             curation_note=f"The {profile_label} release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
-            hmc_support={
+            profile_heading=profile_heading,
+            hero_visual={
+                **graph_poster,
+                "context_label": profile_heading,
+            },
+            hero_support={
                 "logo_src": "assets/hmc-logo.svg",
                 "hmc_url": hmc_url,
                 "aimworks_url": aimworks_project_url,
-                "text": "This ontology work is supported through the Helmholtz Metadata Collaboration (HMC) and the AIMWORKS project, connecting FAIR ontology publication to reusable metadata infrastructure.",
+                "text": "Supported through the Helmholtz Metadata Collaboration (HMC) and AIMWORKS, connecting FAIR ontology publication to reusable metadata infrastructure.",
             },
         ),
     )
