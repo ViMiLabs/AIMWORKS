@@ -119,6 +119,14 @@ def validate(
 
 
 @app.command()
+def quality(
+    input: str | None = typer.Option(None, "--input"),
+    profile: str = typer.Option("pemfc", "--profile"),
+) -> None:
+    _run_stage("quality", input, profile)
+
+
+@app.command()
 def docs(
     input: str | None = typer.Option(None, "--input"),
     profile: str = typer.Option("pemfc", "--profile"),

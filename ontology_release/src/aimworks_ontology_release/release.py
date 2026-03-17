@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import shutil
 from pathlib import Path
@@ -16,9 +17,10 @@ from .io import load_graph, save_graph
 from .llm_annotator import apply_approved_annotations, draft_annotations, import_approved_rows
 from .mapper import align_terms, write_alignment_outputs
 from .publication import build_jsonld_context, build_publication_layout
+from .quality import clean_jsonld_payload, write_quality_outputs
 from .split import split_graph, write_split_outputs
 from .unit_enrichment import enrich_units_from_cleaned_dataset
-from .utils import configured_paths, copy_file, copy_tree, load_configs, write_csv, write_json, write_text
+from .utils import configured_paths, copy_file, copy_tree, load_configs, read_json, write_csv, write_json, write_text
 from .validate import validate_release, write_validation_outputs
 from .w3id import generate_w3id_artifacts
 
@@ -232,7 +234,36 @@ def run_pipeline(
 ) -> dict[str, Any]:
     root = root or Path(__file__).resolve().parents[2]
     configs = load_configs(root)
-    graph = load_graph(_resolve_input(root, input_path))
+    resolved_input = _resolve_input(root, input_path)
+    quality_report = {
+        "source": str(resolved_input),
+        "status": "skipped",
+        "duplicate_term_pairs_detected": 0,
+        "auto_merged_terms": 0,
+        "manual_review_pairs": 0,
+        "helper_nodes_merged": 0,
+        "reference_rewrites": 0,
+        "alt_labels_removed": 0,
+        "alt_label_removal_reasons": {},
+        "removed_alt_label_examples": [],
+        "review_pairs": [],
+        "auto_merge_examples": [],
+        "suspicious_remaining_alt_labels": [],
+        "changed": False,
+    }
+    if resolved_input.suffix.lower() in {".json", ".jsonld"}:
+        cleaned_payload, quality_report = clean_jsonld_payload(read_json(resolved_input), source_name=str(resolved_input))
+        write_quality_outputs(quality_report, root)
+        jsonld_text = json.dumps(cleaned_payload, ensure_ascii=False)
+        graph = Graph()
+        graph.parse(data=jsonld_text, format="json-ld")
+        if stage == "quality":
+            return {"quality_report": quality_report}
+    else:
+        graph = load_graph(resolved_input)
+        write_quality_outputs(quality_report, root)
+        if stage == "quality":
+            return {"quality_report": quality_report}
 
     inspection_report, classifications = inspect_graph(graph, configs["namespace_policy"], configs["mapping_rules"])
     write_inspection_reports(inspection_report, root)
