@@ -297,23 +297,6 @@ ns1:AemionIonomer a ns1:Matter ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Aemion Ionomer."@en ;
     skos:prefLabel "Aemion Ionomer"@en .
 
-ns1:AgAgCl a ns1:ReferenceElectrode ;
-    rdfs:label "Ag/AgCl"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ag/AgCl."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "Ag/AgCl"@en,
-        "Ag/AgCl (3 M KCl)"@en,
-        "Ag/AgCl (3M KCl)"@en,
-        "Ag/AgCl reference"@en,
-        "Ag/AgCl reference electrode"@en,
-        "Ag/AgCl reference electrode (3 M KCl)"@en,
-        "Ag/AgCl reference electrode (Metrohm)"@en,
-        "Ag/AgCl reference electrode (sat. KCl)"@en,
-        "CH Instruments RE-5B"@en,
-        "saturated Ag/AgCl"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ag/AgCl."@en ;
-    skos:prefLabel "Ag Ag Cl"@en .
-
 ns1:AgAgClPotentialVsRHE a ns1:Property ;
     rdfs:label "Ag Ag Cl Potential Vs RHE"@en ;
     dcterms:description "Potential of Ag/AgCl reference electrode expressed on the RHE scale (offset/conversion factor) measured for each electrolyte batch."@en ;
@@ -1540,7 +1523,7 @@ ns1:BiasPotential a ns1:Parameter ;
                 <http://qudt.org/vocab/quantitykind/Voltage> ;
             ns2:unit <http://qudt.org/vocab/unit/MilliV>,
                 <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:BinderMassFraction a ns1:Parameter ;
     rdfs:label "Binder Mass Fraction"@en ;
@@ -4471,6 +4454,7 @@ ns1:Cu2WS4CounterElectrode a ns1:Matter ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "CWS CE"@en,
         "Cu2WS4 CE"@en ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cu 2 WS 4 Counter Electrode."@en ;
     skos:prefLabel "Cu 2 WS 4 Counter Electrode"@en .
 
@@ -4877,7 +4861,7 @@ ns1:DepositionPotential a ns1:Parameter ;
     ns1:hasQuantityValue [ a ns2:QuantityValue ;
             ns2:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
             ns2:unit <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:DepositionRate a ns1:Parameter ;
     rdfs:label "Deposition Rate"@en ;
@@ -5654,24 +5638,6 @@ ns1:DyeSensitizedSolarCell a ns1:Matter ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dye Sensitized Solar Cell."@en ;
     skos:prefLabel "Dye Sensitized Solar Cell"@en .
 
-ns1:DynamicHydrogenElectrode a ns1:ReferenceElectrode ;
-    rdfs:label "Dynamic Hydrogen Electrode (H2 Anode in MEA)"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dynamic Hydrogen Electrode (H2 Anode in MEA)."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "DHE"@en,
-        "H2 anode"@en,
-        "H2 anode as reference"@en,
-        "H2 anode as reference electrode"@en,
-        "H2 anode in MEA"@en,
-        "H2 anode reference"@en,
-        "H2 anode reference/counter"@en,
-        "H2 anode reference/counter electrode"@en,
-        "dynamic hydrogen electrode"@en,
-        "dynamic reference electrode"@en,
-        "hydrogen electrode"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dynamic Hydrogen Electrode (H2 Anode in MEA)."@en ;
-    skos:prefLabel "Dynamic Hydrogen Electrode"@en .
-
 ns1:DynamicVaporSorptionMeasurement a ns1:Measurement ;
     rdfs:label "Dynamic Vapor Sorption Measurement"@en ;
     dcterms:description "Gravimetric water sorption/desorption measurement used for water uptake in CL/membranes (mentioned in Section 6.2.3), but not present as a specific term in ontology."@en ;
@@ -6020,6 +5986,7 @@ ns1:ElectrochemicalWorkstation_2 a ns1:Instrument ;
     skos:altLabel "CH Instruments"@en,
         "CHI611C"@en,
         "Electrochemical Analyzer"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Electrochemical Workstation."@en ;
     skos:prefLabel "Electrochemical Workstation"@en .
 
@@ -7408,17 +7375,6 @@ ns1:FuelCellOperationTime a ns1:Parameter ;
     skos:prefLabel "Fuel Cell Operation Time"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_FuelCellOperationTime_QV> .
 
-ns1:FuelCellStack a ns1:Matter ;
-    rdfs:label "Fuel Cell Stack"@en ;
-    dcterms:description "Multi-cell fuel cell stack used in aging experiments (commercial Ballard NEXA, Proton Motor PM200)."@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Fuel Cell Stack."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "47 cells"@en,
-        "96 cells"@en,
-        "stack"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Fuel Cell Stack."@en ;
-    skos:prefLabel "Fuel Cell Stack"@en .
-
 ns1:FuelCellTestStation_2 a ns1:Instrument ;
     rdfs:label "Fuel Cell Test Station"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Fuel Cell Test Station."@en ;
@@ -7639,17 +7595,6 @@ ns1:GasDiffusionLayerThickness a ns1:Parameter ;
     skos:prefLabel "Gas Diffusion Layer Thickness"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_GasDiffusionLayerThickness_QV> .
 
-ns1:GasDiffusionLayer_2 a ns1:Matter ;
-    rdfs:label "Gas Diffusion Layer"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gas Diffusion Layer."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "10BC carbon papers"@en,
-        "GDL"@en,
-        "carbon paper"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gas Diffusion Layer."@en ;
-    skos:prefLabel "Gas Diffusion Layer"@en ;
-    ns1:hasQuantityValue ns1:_GasDiffusionLayer_2_QV .
-
 ns1:GasFlowRate a ns1:Parameter ;
     rdfs:label "Gas Flow Rate"@en ;
     dcterms:description "ontology_iri: https://w3id.org/h2kg/hydrogen-ontology#CarrierGasFlow; label_human: Carrier Gas Flow"@en ;
@@ -7744,15 +7689,6 @@ ns1:GasVolumetricFlowRate_2 a ns1:Parameter ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gas Volumetric Flow Rate."@en ;
     skos:prefLabel "Gas Volumetric Flow Rate"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_GasVolumetricFlowRate_QV_2> .
-
-ns1:Gasket a ns1:Matter ;
-    rdfs:label "Gasket"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gasket."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "PTFE gasket"@en,
-        "gaskets"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gasket."@en ;
-    skos:prefLabel "Gasket"@en .
 
 ns1:GasketThickness a ns1:Parameter ;
     rdfs:label "Gasket Thickness"@en ;
@@ -8013,6 +7949,8 @@ ns1:GraphiteBipolarPlate a ns1:Matter ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "flow field plates"@en,
         "graphite plates"@en ;
+    skos:broadMatch <http://purl.org/holy/ns#BipolarPlate>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Graphite Bipolar Plate."@en ;
     skos:prefLabel "Graphite Bipolar Plate"@en .
 
@@ -8041,6 +7979,7 @@ ns1:GraphiteRodCounterElectrode a ns1:Instrument ;
     dcterms:description "desc: Graphite rod used as counter electrode during CV in this paper."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Graphite Rod Counter Electrode."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Graphite Rod Counter Electrode."@en ;
     skos:prefLabel "Graphite Rod Counter Electrode"@en .
 
@@ -8050,6 +7989,7 @@ ns1:GraphiteRodCounterElectrode_2 a ns1:Instrument ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Graphite Rod Counter Electrode."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "graphite rod counter"@en ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Graphite Rod Counter Electrode."@en ;
     skos:prefLabel "Graphite Rod Counter Electrode"@en .
 
@@ -8162,8 +8102,8 @@ ns1:GravureCoating a ns1:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gravure Coating."@en ;
     skos:prefLabel "Gravure Coating"@en ;
     ns1:hasInputMaterial ns1:CatalystInk ;
-    ns1:hasOutputMaterial ns1:CathodeCatalystLayer,
-        ns1:CoatedElectrode .
+    ns1:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns1:CathodeCatalystLayer .
 
 ns1:GridLSTMModel a ns1:Data ;
     rdfs:label "Grid LSTM Model"@en ;
@@ -11850,15 +11790,6 @@ ns1:MembraneBulkResistance a ns1:Property ;
     skos:prefLabel "Membrane Bulk Resistance"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_MembraneBulkResistance_QV> .
 
-ns1:MembraneElectrodeAssembly_2 a ns1:Matter ;
-    rdfs:label "Membrane Electrode Assembly"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Membrane Electrode Assembly."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "MEA"@en,
-        "MEAs"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Membrane Electrode Assembly."@en ;
-    skos:prefLabel "Membrane Electrode Assembly"@en .
-
 ns1:MembraneImmobilizationOnPyrexGlass a ns1:Manufacturing ;
     rdfs:label "Membrane Immobilization On Pyrex Glass"@en ;
     dcterms:description "desc=Process of attaching Nafion membrane to pyrex glass (using ethanol paste and high-temperature tape) to suppress swelling during spraying."@en ;
@@ -11868,7 +11799,7 @@ ns1:MembraneImmobilizationOnPyrexGlass a ns1:Manufacturing ;
         "immobilized on pyrex glass"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Membrane Immobilization On Pyrex Glass."@en ;
     skos:prefLabel "Membrane Immobilization On Pyrex Glass"@en ;
-    ns1:hasInputMaterial ns1:ProtonExchangeMembrane,
+    ns1:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
         ns1:PyrexGlass .
 
 ns1:MembranePorousLayerThickness a ns1:Parameter ;
@@ -13527,7 +13458,7 @@ ns1:OnsetPotential a ns1:Property ;
                 <http://qudt.org/vocab/quantitykind/ElectricPotentialDifference> ;
             ns2:unit <http://qudt.org/vocab/unit/MilliV>,
                 <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:OpenCircuitVoltage a ns1:Property ;
     rdfs:label "Open Circuit Voltage"@en ;
@@ -13737,7 +13668,7 @@ ns1:Overpotential a ns1:Property ;
             ns2:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
             ns2:unit <http://qudt.org/vocab/unit/MilliV>,
                 <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:OxidePowderInk a ns1:Matter ;
     rdfs:label "Oxide Powder Ink"@en ;
@@ -14473,7 +14404,7 @@ ns1:PeakPotential a ns1:Property ;
             ns2:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
             ns2:unit <http://qudt.org/vocab/unit/MilliV>,
                 <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:PeakPowerDensity_2 a ns1:Property ;
     rdfs:label "Peak Power Density"@en ;
@@ -15046,6 +14977,7 @@ ns1:PlatinumWireCounterElectrode a ns1:Instrument ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "Pt wire"@en,
         "Pt wire counter electrode"@en ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Platinum Wire Counter Electrode."@en ;
     skos:prefLabel "Platinum Wire Counter Electrode"@en .
 
@@ -16418,16 +16350,6 @@ ns1:ProtonConductLayerThicknessFractionInMCL a ns1:Parameter ;
     skos:prefLabel "Proton Conduct Layer Thickness Fraction In MCL"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_ProtonConductLayerThicknessFractionInMCL_QV> .
 
-ns1:ProtonExchangeMembraneFuelCell a ns1:UNKNOWN ;
-    rdfs:label "Proton Exchange Membrane Fuel Cell"@en ;
-    dcterms:description "desc: PEM fuel cell context for MEA testing in this paper."@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Proton Exchange Membrane Fuel Cell."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "PEM fuel cell"@en,
-        "PEMFC"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Proton Exchange Membrane Fuel Cell."@en ;
-    skos:prefLabel "Proton Exchange Membrane Fuel Cell"@en .
-
 ns1:ProtonatedMembrane a ns1:Matter ;
     rdfs:label "Protonated Membrane"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Protonated Membrane."@en ;
@@ -16610,6 +16532,7 @@ ns1:PtCounterElectrode a ns1:Matter ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "Pt CE"@en,
         "platinized counter electrode"@en ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pt Counter Electrode."@en ;
     skos:prefLabel "Pt Counter Electrode"@en .
 
@@ -17697,7 +17620,7 @@ ns1:ReferenceScale a ns1:Parameter ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Reference Scale."@en ;
     skos:prefLabel "Reference Scale"@en ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:ReinfiltrationMassIncrease a ns1:Property ;
     rdfs:label "Reinfiltration Mass Increase"@en ;
@@ -18076,7 +17999,7 @@ ns1:RingPotential a ns1:Parameter ;
     ns1:hasQuantityValue [ a ns2:QuantityValue ;
             ns2:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
             ns2:unit <http://qudt.org/vocab/unit/V> ] ;
-    ns1:referenceElectrode ns1:RHE .
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
 ns1:RollPressMachine a ns1:Instrument ;
     rdfs:label "Roll Press Machine"@en ;
@@ -18199,7 +18122,7 @@ ns1:RuAtomicPercent a ns1:Property ;
     skos:prefLabel "Ru Atomic Percent"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_RuAtomicPercent_QV> .
 
-ns1:SCE a ns1:ReferenceElectrode ;
+ns1:SCE a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
     rdfs:label "SCE"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SCE."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
@@ -18239,7 +18162,7 @@ ns1:SEMMicrographDataset a ns1:Data ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SEM Micrograph Dataset."@en ;
     skos:prefLabel "SEM Micrograph Dataset"@en .
 
-ns1:SHE a ns1:ReferenceElectrode ;
+ns1:SHE a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
     rdfs:label "SHE"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SHE."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
@@ -25082,6 +25005,8 @@ ns1:CathodeGDE_2 a ns1:Matter ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "Pt–C/Nafion GDE"@en,
         "gas diffusion electrode (GDE)"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cathode GDE."@en ;
     skos:prefLabel "Cathode GDE"@en .
 
@@ -26487,11 +26412,6 @@ ns1:_GUNdopedCarbonCatalyst_QV a ns2:QuantityValue ;
     rdfs:label "GU Ndoped Carbon Catalyst unit descriptor"@en ;
     ns2:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     ns2:unit ns1:_Unit_Gloss_GU .
-
-ns1:_GasDiffusionLayer_2_QV a ns2:QuantityValue ;
-    rdfs:label "Gas Diffusion Layer unit descriptor"@en ;
-    ns2:quantityKind <http://qudt.org/vocab/quantitykind/Porosity> ;
-    ns2:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 ns1:_HydrochloricAcid_3_QV a ns2:QuantityValue ;
     rdfs:label "Hydrochloric Acid unit descriptor"@en ;
@@ -29013,20 +28933,6 @@ ns1:MolarConcentration a ns1:Parameter ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Molar Concentration."@en ;
     skos:prefLabel "Molar Concentration"@en ;
     ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_MolarConcentration_QV> .
-
-ns1:RHE a ns1:ReferenceElectrode ;
-    rdfs:label "RHE"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing RHE."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "RHE scale"@en,
-        "V vs. RHE"@en,
-        "V_RHE"@en,
-        "V_RHE scale"@en,
-        "reversible hydrogen electrode"@en,
-        "reversible hydrogen electrode scale"@en,
-        "vs. RHE"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing RHE."@en ;
-    skos:prefLabel "RHE"@en .
 
 ns1:_Unit_ComponentVolume_mL a ns2:Unit ;
     rdfs:label "mL"@en ;

@@ -1,13 +1,13 @@
 # Validation Report
 
 - RDF syntax sanity: **pass**
-- Overall status: **pass**
+- Overall status: **warning**
 - Missing metadata predicates: **0**
 - Missing labels: **0**
 - Missing definitions/comments: **0**
 - Mapping issues: **0**
 - Namespace violations: **0**
-- SHACL conforms: **True**
+- SHACL conforms: **False**
 - OWL consistency hook: **skipped**
 - EMMO convention hook: **skipped**
 - OOPS! hook: **warning**
@@ -19,7 +19,14 @@
 ## SHACL Summary
 
 - Validation Report
-- Conforms: True
+- Conforms: False
+- Results (1):
+- Constraint Violation in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):
+- 	Severity: sh:Violation
+- 	Source Shape: [ rdf:type sh:NodeShape ; sh:or ( [ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path rdfs:comment ] ] [ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path skos:definition ] ] ) ; sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path rdfs:label ] ; sh:targetClass owl:Class ]
+- 	Focus Node: <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29>
+- 	Value Node: <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29>
+- 	Message: Node <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> must conform to one or more shapes in [ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path rdfs:comment ] ] , [ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path skos:definition ] ]
 
 ## External Service Assessments
 

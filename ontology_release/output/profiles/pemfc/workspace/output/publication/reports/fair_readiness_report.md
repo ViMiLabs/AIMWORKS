@@ -1,7 +1,7 @@
 # FAIR Readiness Report
 
 - Overall FAIR readiness score: **95.0 / 100**
-- Release ready: **True**
+- Release ready: **False**
 
 ## Dimension Scores
 
@@ -23,4 +23,4 @@
 
 ## Blocking Issues
 
-- No blocking issues detected.
+- SHACL validation still reports unresolved constraints.

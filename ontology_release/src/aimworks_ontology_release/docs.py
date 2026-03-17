@@ -655,6 +655,9 @@ h3 {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.8);
 }
+.table-shell--wide {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
 .data-table {
   width: 100%;
   min-width: 640px;
@@ -684,6 +687,106 @@ h3 {
 .data-table tbody tr:nth-child(even) { background: rgba(31, 122, 122, 0.025); }
 .data-table tbody tr:hover { background: rgba(202, 109, 44, 0.06); }
 .data-table code { overflow-wrap: anywhere; }
+.reference-table--vocab {
+  min-width: 1460px;
+  table-layout: fixed;
+}
+.reference-table--unit-review {
+  min-width: 1260px;
+  table-layout: fixed;
+}
+.reference-table--vocab col.term-col-label { width: 18rem; }
+.reference-table--vocab col.term-col-iri { width: 15rem; }
+.reference-table--vocab col.term-col-status { width: 7rem; }
+.reference-table--vocab col.term-col-class { width: 8rem; }
+.reference-table--vocab col.term-col-quantity-kind { width: 13rem; }
+.reference-table--vocab col.term-col-unit { width: 9rem; }
+.reference-table--vocab col.term-col-alt-labels { width: 17rem; }
+.reference-table--vocab col.term-col-definition { width: 22rem; }
+.reference-table--vocab col.term-col-mappings { width: 14rem; }
+.reference-table--unit-review col.term-col-label { width: 18rem; }
+.reference-table--unit-review col.term-col-iri { width: 15rem; }
+.reference-table--unit-review col.term-col-class { width: 8rem; }
+.reference-table--unit-review col.term-col-quantity-kind { width: 13rem; }
+.reference-table--unit-review col.term-col-alt-labels { width: 17rem; }
+.reference-table--unit-review col.term-col-decision { width: 12rem; }
+.reference-table--unit-review col.term-col-note { width: 24rem; }
+.term-cell {
+  display: grid;
+  gap: 0.45rem;
+}
+.term-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--slate-950);
+}
+.term-subtle {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.iri-cell code,
+.reference-table--unit-review .iri-cell code {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
+}
+.term-chip,
+.term-pill-list a,
+.term-pill-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(18, 39, 48, 0.1);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.2rem 0.62rem;
+  font-size: 0.81rem;
+  line-height: 1.3;
+  color: var(--slate-900);
+  text-decoration: none;
+}
+.term-chip--class {
+  background: linear-gradient(180deg, rgba(244, 251, 251, 0.94), rgba(255, 247, 236, 0.94));
+}
+.term-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+.term-pill-list--muted span {
+  color: var(--muted);
+  background: rgba(18, 39, 48, 0.04);
+}
+.term-stack {
+  display: grid;
+  gap: 0.38rem;
+}
+.term-stack span,
+.term-stack a {
+  display: block;
+  line-height: 1.45;
+}
+.term-copy {
+  max-width: 36ch;
+  line-height: 1.58;
+  color: #223740;
+}
+.term-copy--wide {
+  max-width: 48ch;
+}
+.term-note {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.cell-status,
+.cell-class {
+  white-space: nowrap;
+}
 .prose { font-size: 1rem; }
 .prose p,
 .prose li { max-width: 72ch; }
@@ -1252,6 +1355,29 @@ def _term_row(
     }
 
 
+def _term_row_view(
+    term: Any,
+    mapping_lookup: dict[str, list[str]],
+    namespace_policy: dict[str, Any],
+    graph: Graph,
+) -> dict[str, str]:
+    row = _term_row(term, mapping_lookup, namespace_policy, graph)
+    mapping_values = _clean_values(mapping_lookup.get(term.iri, []))
+    class_label = row["class_label"]
+    row.update(
+        {
+            "iri_html": _href_html(term.iri, term.iri, code=True) if _is_web_url(term.iri) else f"<code>{escape(term.iri)}</code>",
+            "deprecated_html": _status_html(row["deprecated"]),
+            "mappings_html": _stack_html(mapping_values),
+            "class_label_html": f"<span class='term-chip term-chip--class'>{escape(class_label)}</span>",
+            "quantity_kinds_html": _link_pills_html(_term_quantity_kinds(graph, term.iri)),
+            "units_html": _link_pills_html(_term_units(graph, term.iri)),
+            "alternative_labels_html": _text_pills_html(_term_alternative_labels(graph, term.iri, _clean_text(term.label)), muted=True),
+        }
+    )
+    return row
+
+
 def _enrich_explorer_nodes(payload: dict[str, Any], detail_rows: list[dict[str, str]]) -> dict[str, Any]:
     detail_lookup = {row["iri"]: row for row in detail_rows}
     for node in payload.get("nodes", []):
@@ -1607,6 +1733,45 @@ def _href_html(href: str, label: str | None = None, code: bool = False) -> str:
     return f"<a href='{escape(target, quote=True)}'>{inner}</a>"
 
 
+def _pill_list_html(items: list[str], modifier: str = "") -> str:
+    if not items:
+        return "<span class='term-note'>—</span>"
+    class_name = "term-pill-list"
+    if modifier:
+        class_name = f"{class_name} {modifier}"
+    return f"<div class='{class_name}'>{''.join(items)}</div>"
+
+
+def _text_pills_html(values: list[str], muted: bool = False) -> str:
+    clean = [value for value in _clean_values(values) if value and value not in {"—", "â€”"}]
+    items = [f"<span>{escape(value)}</span>" for value in clean]
+    modifier = "term-pill-list--muted" if muted else ""
+    return _pill_list_html(items, modifier)
+
+
+def _link_pills_html(rows: list[dict[str, str]]) -> str:
+    items: list[str] = []
+    for row in rows:
+        html = row.get("html", "")
+        if not html:
+            continue
+        items.append(html if html.startswith("<span") else f"<span>{html}</span>")
+    return _pill_list_html(items)
+
+
+def _stack_html(values: list[str], empty: str = "None") -> str:
+    clean = [value for value in _clean_values(values) if value and value != empty]
+    if not clean:
+        return f"<span class='term-note'>{escape(empty)}</span>"
+    return "<div class='term-stack'>" + "".join(f"<span>{escape(value)}</span>" for value in clean) + "</div>"
+
+
+def _status_html(label: str) -> str:
+    text = _clean_text(label)
+    css = "status-good" if text == "Active" else "status-watch"
+    return f"<span class='status-pill {css}'>{escape(text)}</span>"
+
+
 def _external_value_list_html(values: list[str], namespace_policy: dict[str, Any]) -> str:
     rendered: list[str] = []
     for value in _clean_values(values):
@@ -1712,9 +1877,9 @@ def build_docs(
         vocabulary_context_graph.add(triple)
     for triple in examples_graph:
         vocabulary_context_graph.add(triple)
-    classes = [_term_row(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type == "class"]
-    properties = [_term_row(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type != "class"]
-    vocabulary_rows = [_term_row(term, mapping_lookup, namespace_policy, vocabulary_context_graph) for term in vocabulary_terms]
+    classes = [_term_row_view(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type == "class"]
+    properties = [_term_row_view(term, mapping_lookup, namespace_policy, schema_graph) for term in schema_terms if term.term_type != "class"]
+    vocabulary_rows = [_term_row_view(term, mapping_lookup, namespace_policy, vocabulary_context_graph) for term in vocabulary_terms]
     classes.sort(key=lambda item: item["label"].lower())
     properties.sort(key=lambda item: item["label"].lower())
     vocabulary_rows.sort(key=lambda item: item["label"].lower())
