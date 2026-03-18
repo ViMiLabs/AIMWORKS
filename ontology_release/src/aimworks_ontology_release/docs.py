@@ -2150,6 +2150,10 @@ def build_docs(
     copy_file(root / "templates" / "site" / "assets" / "hmc-logo.svg", assets_dir / "hmc-logo.svg")
     graph_poster = {"available": False, "href": "", "alt": "", "caption": ""}
     poster_source = root / "input" / "final poster gephi.png"
+    if not poster_source.exists():
+        fallback_poster = (root / ".." / "input" / "final poster gephi.png").resolve()
+        if fallback_poster.exists():
+            poster_source = fallback_poster
     if poster_source.exists():
         poster_target = assets_dir / "knowledge-graph-poster.png"
         copy_file(poster_source, poster_target)
