@@ -1,18 +1,18 @@
 [
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputData."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -23,35 +23,30 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "hasOutputData"
+        "@value": "usesInstrument"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#inverseOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputData."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -62,25 +57,64 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Metadata"
+        "@value": "Manufacturing"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasProperty",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Data Point"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#Entity"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through measures."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
@@ -96,7 +130,7 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "hasProperty"
+        "@value": "measures"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
@@ -107,19 +141,24 @@
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through measures."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#isPartOf",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isPartOf."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -130,81 +169,341 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "isPartOf"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#inverseOf": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasPart"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isPartOf."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#influences",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through influences."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "influences"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through influences."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#DatatypeProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology for recording hasIdentifier."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "hasIdentifier"
+        "@value": "hasParameter"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {
-        "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology for recording hasIdentifier."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through fromMeasurement."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fromMeasurement"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through fromMeasurement."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through ofProperty."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ofProperty"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through ofProperty."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://purl.org/dc/terms/abstract": [
+      {
+        "@language": "en",
+        "@value": "A release-ready, FAIR-oriented, EMMO-aligned application ontology for PEMFC catalyst-layer experiments and associated provenance-aware resources."
+      }
+    ],
+    "http://purl.org/dc/terms/contributor": [
+      {
+        "@value": "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany"
+      },
+      {
+        "@language": "en",
+        "@value": "AIMWORKS Ontology Engineering Team"
+      }
+    ],
+    "http://purl.org/dc/terms/created": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-03-12"
+      }
+    ],
+    "http://purl.org/dc/terms/creator": [
+      {
+        "@value": "Marjan Kohandani"
+      },
+      {
+        "@language": "en",
+        "@value": "Electrochemistry Research Group"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Ontology for representing proton exchange membrane fuel cell materials, components, devices, processes, measurements, and experiments."
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://purl.org/dc/terms/modified": [
+      {
+        "@value": "2026-03-18"
+      }
+    ],
+    "http://purl.org/dc/terms/publisher": [
+      {
+        "@value": "Forschungszentrum Juelich GmbH"
+      }
+    ],
+    "http://purl.org/dc/terms/references": [
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#"
+      },
+      {
+        "@id": "https://w3id.org/emmo"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/manufacturing#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/coating#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/equivalent-circuit-model#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/microscopy#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry"
+      }
+    ],
+    "http://purl.org/dc/terms/source": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments"
+      }
+    ],
+    "http://purl.org/vocab/vann/preferredNamespacePrefix": [
+      {
+        "@value": "h2kg"
+      }
+    ],
+    "http://purl.org/vocab/vann/preferredNamespaceUri": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_e072436a_2656_4e03_b600_a7f41c486339"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_abe17c61_6a3d_4ec6_b4db_450b5654dbc6"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc#EMMO_b24401b7_35e4_40be_8c8b_36ee8869cc1a"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#FuelCellStack"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#Gasket"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#CatalystLayer"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#Membrane"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#BipolarPlate"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#MembraneElectrodeAssembly"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#GasDiffusionLayer"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#PolymerElectrolyteMembraneFuelCell"
+      },
+      {
+        "@id": "https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence"
+      },
+      {
+        "@id": "https://www.fz-juelich.de/profile/kohandani_m"
+      },
+      {
+        "@id": "https://orcid.org/0009-0005-5173-202X"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#imports": [
+      {
+        "@id": "https://w3id.org/emmo/domain/pemfc"
+      },
+      {
+        "@id": "http://purl.org/holy/ns#"
+      },
+      {
+        "@id": "https://w3id.org/emmo"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/manufacturing#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/coating#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/equivalent-circuit-model#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/microscopy#"
+      },
+      {
+        "@id": "https://w3id.org/emmo/domain/electrochemistry"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionIRI": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology/releases/2026.3.0"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionInfo": [
+      {
+        "@value": "Generated on 2025-12-07 10:58:11"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasAttributedTo": [
+      {
+        "@id": "https://orcid.org/0009-0005-5173-202X"
+      }
+    ],
+    "http://xmlns.com/foaf/0.1/homepage": [
+      {
+        "@id": "https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence"
+      }
+    ],
+    "http://xmlns.com/foaf/0.1/page": [
+      {
+        "@id": "https://www.fz-juelich.de/profile/kohandani_m"
       }
     ]
   },
@@ -243,80 +542,65 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#influences",
     "@type": [
-      "http://www.w3.org/2002/07/owl#Ontology"
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
-    "http://purl.org/dc/terms/abstract": [
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A release-ready, FAIR-oriented, EMMO-aligned application ontology for PEMFC catalyst-layer experiments and associated provenance-aware resources."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through influences."
       }
     ],
-    "http://purl.org/dc/terms/contributor": [
-      {
-        "@language": "en",
-        "@value": "AIMWORKS Ontology Engineering Team"
-      }
-    ],
-    "http://purl.org/dc/terms/created": [
-      {
-        "@type": "http://www.w3.org/2001/XMLSchema#date",
-        "@value": "2026-03-12"
-      }
-    ],
-    "http://purl.org/dc/terms/creator": [
-      {
-        "@value": "Electrochemistry Research Group"
-      },
-      {
-        "@language": "en",
-        "@value": "Electrochemistry Research Group"
-      }
-    ],
-    "http://purl.org/dc/terms/description": [
-      {
-        "@value": "Ontology for representing low-Pt PEM fuel-cell cathode catalyst layer experiments, focusing on ionomer/solvent effects on ECSA, high-frequency resistance, and oxygen-transport metrics over realistic operating conditions."
-      }
-    ],
-    "http://purl.org/dc/terms/license": [
-      {
-        "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
-    ],
-    "http://purl.org/dc/terms/modified": [
-      {
-        "@value": "2026-03-16"
-      }
-    ],
-    "http://purl.org/dc/terms/source": [
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
       {
         "@id": "https://w3id.org/h2kg/hydrogen-ontology"
       }
     ],
-    "http://purl.org/dc/terms/title": [
+    "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@value": "Hydrogen Experiments Ontology – Low-Pt PEMFC Cathode Catalyst Layers"
+        "@language": "en",
+        "@value": "influences"
       }
     ],
-    "http://purl.org/vocab/vann/preferredNamespacePrefix": [
+    "http://www.w3.org/2004/02/skos/core#definition": [
       {
-        "@value": "h2kg"
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through influences."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."
       }
     ],
-    "http://purl.org/vocab/vann/preferredNamespaceUri": [
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
       }
     ],
-    "http://www.w3.org/2002/07/owl#versionIRI": [
+    "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology/releases/2026.3.0"
+        "@language": "en",
+        "@value": "Measurement"
       }
     ],
-    "http://www.w3.org/2002/07/owl#versionInfo": [
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@value": "Generated on 2025-12-07 10:58:11"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."
       }
     ]
   },
@@ -358,14 +642,14 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -376,106 +660,13 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Manufacturing"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
+        "@value": "Property"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputMaterial."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "hasOutputMaterial"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Matter"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#inverseOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputMaterial."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputData."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "hasInputData"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#used"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputData."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."
       }
     ]
   },
@@ -524,14 +715,19 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputMaterial."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -542,13 +738,23 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "hasPart"
+        "@value": "hasOutputMaterial"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#inverseOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputMaterial."
       }
     ]
   },
@@ -587,210 +793,21 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Instrument"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#Entity"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Property"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Unit",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Unit"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through measures."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputData."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "measures"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through measures."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "hasSubProcess"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Measurement"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
         "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
       }
     ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Matter."
-      }
-    ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
       {
         "@id": "https://w3id.org/h2kg/hydrogen-ontology"
@@ -799,207 +816,23 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Matter"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Matter."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "referenceElectrode"
+        "@value": "hasInputData"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#ReferenceElectrode"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#used"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#ReferenceElectrode",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Reference Electrode."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Reference Electrode"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Reference Electrode."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasQuantityValue."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "hasQuantityValue"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasQuantityValue."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through normalizedTo."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "normalizedTo"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through normalizedTo."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Process"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#Activity"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Data"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.w3.org/ns/prov#Entity"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputData."
       }
     ]
   },
@@ -1038,58 +871,58 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through fromMeasurement."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputData."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "fromMeasurement"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
       {
         "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       }
     ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "hasOutputData"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#inverseOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
+      }
+    ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through fromMeasurement."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasOutputData."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through normalizedTo."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -1100,30 +933,69 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "hasParameter"
+        "@value": "normalizedTo"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through normalizedTo."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasProperty",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "hasProperty"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -1134,7 +1006,141 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Data Point"
+        "@value": "Metadata"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology for recording hasIdentifier."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "hasIdentifier"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A datatype property in the H2KG PEMFC Catalyst Layer Application Ontology for recording hasIdentifier."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Reference Electrode"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasQuantityValue."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "hasQuantityValue"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasQuantityValue."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class",
+      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Normalization Basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Data"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
@@ -1145,53 +1151,19 @@
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Parameter"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."
-      }
-    ]
-  },
-  {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -1202,18 +1174,84 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "usesInstrument"
+        "@value": "referenceElectrode"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
+        "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Process"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#Activity"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."
+      }
+    ]
+  },
+  {
+    "@id": "_:Nf89d8290ff924c77b65ab524ad392cdf",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_:Nf6aa0dcd6bc140539b1222226bca7129"
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#OhmicResistance"
+      }
+    ]
+  },
+  {
+    "@id": "_:Nf6aa0dcd6bc140539b1222226bca7129",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Resistance"
+      }
+    ],
+    "http://qudt.org/schema/qudt/unit": [
+      {
+        "@id": "http://qudt.org/vocab/unit/OHM"
       }
     ]
   },
@@ -1257,15 +1295,14 @@
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Unit",
     "@type": [
-      "http://www.w3.org/2002/07/owl#Class",
-      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      "http://www.w3.org/2002/07/owl#Class"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -1276,30 +1313,117 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Normalization Basis"
+        "@value": "Unit"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."
       }
     ]
   },
   {
-    "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Instrument"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#Entity"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Matter."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Matter"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Matter."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Parameter"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through ofProperty."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -1310,50 +1434,76 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "ofProperty"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property"
+        "@value": "hasSubProcess"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through ofProperty."
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."
       }
     ]
   },
   {
-    "@id": "_:Nf89d8290ff924c77b65ab524ad392cdf",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
     "@type": [
-      "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
-    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
-        "@id": "_:Nf6aa0dcd6bc140539b1222226bca7129"
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."
       }
     ],
-    "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
       {
-        "@id": "https://w3id.org/h2kg/hydrogen-ontology#OhmicResistance"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "hasPart"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."
       }
     ]
   },
   {
-    "@id": "_:Nf6aa0dcd6bc140539b1222226bca7129",
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#isPartOf",
     "@type": [
-      "http://qudt.org/schema/qudt/QuantityValue"
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
     ],
-    "http://qudt.org/schema/qudt/quantityKind": [
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
-        "@id": "http://qudt.org/vocab/quantitykind/Resistance"
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isPartOf."
       }
     ],
-    "http://qudt.org/schema/qudt/unit": [
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
       {
-        "@id": "http://qudt.org/vocab/unit/OHM"
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "isPartOf"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#inverseOf": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasPart"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isPartOf."
       }
     ]
   }

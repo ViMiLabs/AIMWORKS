@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architecture and Workflow | H2KG — Ontology for Hydrogen Electrochemical Systems</title>
+  <meta name="description" content="FAIR, EMMO-aligned documentation for the PEMFC profile">
+  <link rel="stylesheet" href="../assets/site.css">
+  
+  <script defer src="../assets/site.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="hero">
+      <div class="hero__band"></div>
+      <div class="hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">PEMFC catalyst-layer application profile</p>
+          <h1>H2KG — Ontology for Hydrogen Electrochemical Systems</h1>
+          <p class="lede">FAIR, EMMO-aligned documentation for the PEMFC profile</p>
+          <div class="meta-row">
+            <span>Version 2026.3.0</span>
+            <span><a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></span>
+            <span>h2kg</span>
+          </div>
+        
+          <div class="action-row">
+            
+            
+            <a href="../hydrogen-ontology.html" class="primary">Browse reference</a>
+            
+            
+            
+            <a href="../pages/release.html" class="">Release artifacts</a>
+            
+            
+            
+            <a href="https://github.com/ViMiLabs/AIMWORKS" class="">GitHub repository</a>
+            
+            
+          </div>
+          
+        </div>
+        <aside class="hero__panel">
+          <p class="hero__label">Publication profile</p>
+          <p class="hero__note">An EMMO-aligned application ontology release profile for PEMFC concepts, measurements, curated vocabulary, and publication-ready provenance.</p>
+          <div class="hero-fact-grid">
+            
+            <div class="hero-fact">
+              <span>Profile</span>
+              <strong>PEMFC</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Release</span>
+              <strong>2026.3.0</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Namespace</span>
+              <strong>h2kg</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Validation</span>
+              <strong>WARNING</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>FAIR score</span>
+              <strong>95.0</strong>
+            </div>
+            
+          </div>
+        </aside>
+      </div>
+    </header>
+    
+    <div class="chip-row" style="margin: 0.35rem 0 0.2rem;">
+      
+      <a href="/AIMWORKS/pemfc/index.html" style="border: 1px solid rgba(16,36,45,0.24); font-weight: 700;">PEMFC</a>
+      
+      <a href="/AIMWORKS/pemwe/index.html" >PEMWE</a>
+      
+    </div>
+    
+    <div class="nav-shell">
+      <nav class="nav">
+        
+        <a href="../index.html">Home</a>
+        
+        <a href="../hydrogen-ontology.html">Reference</a>
+        
+        <a href="../pages/get-started.html">Get Started</a>
+        
+        <a href="../pages/architecture-workflow.html">Architecture</a>
+        
+        <a href="../pages/emmo-alignment.html">EMMO</a>
+        
+        <a href="../pages/module-index.html">Modules</a>
+        
+        <a href="../pages/metrics.html">Metrics</a>
+        
+        <a href="../pages/user-guide.html">User Guide</a>
+        
+        <a href="../pages/ontology-overview.html">About</a>
+        
+        <a href="../pages/scope-and-faq.html">Scope and FAQ</a>
+        
+        <a href="../pages/modeling-patterns.html">Patterns</a>
+        
+        <a href="../pages/queries.html">Queries</a>
+        
+        <a href="../pages/import-guide.html">Import</a>
+        
+        <a href="../pages/cite.html">Cite</a>
+        
+        <a href="../pages/visualizations.html">Visuals</a>
+        
+        <a href="../pages/quality-dashboard.html">Quality</a>
+        
+        <a href="../pages/developer-guide.html">Developer</a>
+        
+        <a href="../pages/release.html">Release</a>
+        
+      </nav>
+    </div>
+    <main class="content">
+      
+<section class="card card--feature">
+  <p class="section-kicker">Documentation page</p>
+  <h2>Architecture and Workflow</h2>
+  
+  <p class="lede">How the PEMFC release is engineered: canonical source, asserted modules, inferred outputs, publication layout, and automation.</p>
+  
+</section>
+<article class="card prose">
+  <p>PEMFC keeps the current JSON-LD-driven source-of-truth and generates modular asserted views, merged asserted releases, inferred outputs, and publication pages automatically. This gives H2KG a BattINFO-like engineering posture without replacing the existing AIMWORKS release behavior.</p><h3>Asserted vs Inferred</h3><ul class='simple-list'><li>Asserted release artifacts capture the curated local ontology, controlled vocabulary, metadata, and reviewed mappings that belong in the publication baseline.</li><li>Inferred release artifacts preserve the same publication baseline while adding lightweight closure for exploration, indexing, and graph analytics.</li><li>Both views are generated automatically so users can choose compact editorial truth or broader reasoning-oriented exploration without changing the source-of-truth workflow.</li></ul><h3>TBox vs ABox</h3><ul class='simple-list'><li>TBox: local classes, properties, annotations, axioms, imports, and curated ontology-level vocabulary used as release-facing terminology.</li><li>ABox: examples, individuals, quantity-value helper content, and data-like resources kept separate from the asserted core release.</li><li>The split is enforced automatically so the public source release stays compact while example content remains available.</li></ul><h3>Pipeline overview</h3><table class='data-table'><thead><tr><th>Step</th><th>Purpose</th><th>Key artifacts</th></tr></thead><tbody><tr><td>1</td><td>Inspect and classify</td><td><code>reports/inspection_report.json</code><br><code>review/classification_review.csv</code></td></tr><tr><td>2</td><td>Separate asserted modules</td><td><code>ontology/schema.ttl</code><br><code>ontology/controlled_vocabulary.ttl</code><br><code>examples/examples.ttl</code></td></tr><tr><td>3</td><td>Align and enrich</td><td><code>mappings/alignments.ttl</code><br><code>reports/metadata_report.json</code><br><code>reports/unit_enrichment_report.json</code></td></tr><tr><td>4</td><td>Validate and reason</td><td><code>ontology/inferred.ttl</code><br><code>ontology/asserted.ttl</code><br><code>ontology/asserted.rdf</code></td></tr><tr><td>5</td><td>Publish and deploy</td><td><code>publication/source/asserted.ttl</code><br><code>publication/source/modules/</code><br><code>w3id/.htaccess</code></td></tr></tbody></table><h3>Import strategy</h3><ul class='simple-list'><li>The generated asserted release stays compact and reuses imported EMMO and EMMO-based ontologies externally rather than vendoring them into the local namespace.</li><li>A generated &lt;code&gt;catalog-v001.xml&lt;/code&gt; file supports repeatable local import resolution for development and CI workflows.</li><li>Generated module views are engineering artifacts over the canonical source, not a manual side workflow that needs separate maintenance.</li></ul><h3>Module dependency view</h3><div class='svg-frame'><svg viewBox='0 0 760 372' width='100%' role='img' aria-label='Module dependency graph'><rect width='760' height='372' rx='24' fill='#f8fafc'></rect><line x1='380' y1='258' x2='180' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='280.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>909</text><line x1='380' y1='162' x2='180' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='280.0' y='118.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>183</text><line x1='580' y1='162' x2='180' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='380.0' y='118.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>99</text><line x1='580' y1='162' x2='380' y2='214' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='480.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>49</text><line x1='180' y1='258' x2='180' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='180.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>42</text><line x1='580' y1='162' x2='380' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='480.0' y='118.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>27</text><line x1='180' y1='258' x2='380' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='280.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>16</text><line x1='380' y1='162' x2='180' y2='214' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='280.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>9</text><line x1='180' y1='258' x2='380' y2='214' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='280.0' y='214.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>8</text><line x1='380' y1='162' x2='380' y2='214' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='380.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>7</text><line x1='580' y1='162' x2='180' y2='214' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='380.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>6</text><line x1='380' y1='258' x2='380' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='380.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>6</text><line x1='380' y1='258' x2='580' y2='118' stroke='#0f766e' stroke-width='2' opacity='0.65'></line><text x='480.0' y='166.0' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>5</text><rect x='288' y='36' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='56' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Top / metadata</text><text x='380' y='70' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>0 local terms</text><rect x='88' y='118' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='180' y='138' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Core local terms</text><text x='180' y='152' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>16 local terms</text><rect x='288' y='118' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='138' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Materials</text><text x='380' y='152' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>596 local terms</text><rect x='488' y='118' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='580' y='138' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Components and devices</text><text x='580' y='152' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>137 local terms</text><rect x='88' y='214' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='180' y='234' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Processes and manufacturing</text><text x='180' y='248' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>93 local terms</text><rect x='288' y='214' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='234' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Measurements, properties, and data</text><text x='380' y='248' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>1032 local terms</text><rect x='488' y='214' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='580' y='234' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Mappings and alignments</text><text x='580' y='248' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>0 local terms</text><rect x='288' y='304' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='324' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>Examples and individuals</text><text x='380' y='338' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>0 local terms</text><text x='24' y='352' font-size='12' font-family='Trebuchet MS' fill='#475569'>Cross-module local references in the generated asserted engineering modules.</text></svg></div><h3>Import overview</h3><div class='svg-frame'><svg viewBox='0 0 760 300' width='100%' role='img' aria-label='Import graph overview'><rect width='760' height='300' rx='24' fill='#f8fafc'></rect><line x1='228' y1='92' x2='292' y2='62' stroke='#0f766e' stroke-width='2.5'></line><line x1='228' y1='92' x2='532' y2='92' stroke='#0f766e' stroke-width='2.5'></line><line x1='228' y1='244' x2='292' y2='230' stroke='#0f766e' stroke-width='2.5'></line><line x1='380' y1='70' x2='620' y2='170' stroke='#0f766e' stroke-width='2.5'></line><line x1='380' y1='226' x2='620' y2='114' stroke='#0f766e' stroke-width='2.5'></line><rect x='52' y='74' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='140' y='98' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>H2KG asserted</text><rect x='292' y='30' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='54' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>EMMO / PEMFC</text><rect x='532' y='74' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='620' y='98' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>Electrochemistry</text><rect x='532' y='174' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='620' y='198' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>Manufacturing / Coating</text><rect x='292' y='226' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='380' y='250' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>CHAMEO / Microscopy / ECM</text><rect x='52' y='226' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect><text x='140' y='250' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>HOLY / bridges</text><text x='24' y='278' font-size='12' font-family='Trebuchet MS' fill='#475569'>1 configured imported ontologies contribute to the release stack.</text></svg></div>
+</article>
+
+    </main>
+    <footer class="footer">
+      <p>H2KG — Ontology for Hydrogen Electrochemical Systems. Generated locally by the AIMWORKS ontology release pipeline.</p>
+    </footer>
+  </div>
+  
+</body>
+</html>

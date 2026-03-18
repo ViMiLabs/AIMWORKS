@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Developer Guide | H2KG — Ontology for Hydrogen Electrochemical Systems</title>
+  <meta name="description" content="FAIR, EMMO-aligned documentation for the PEMWE profile">
+  <link rel="stylesheet" href="../assets/site.css">
+  
+  <script defer src="../assets/site.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="hero">
+      <div class="hero__band"></div>
+      <div class="hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">PEMWE electrolyzer application profile</p>
+          <h1>H2KG — Ontology for Hydrogen Electrochemical Systems</h1>
+          <p class="lede">FAIR, EMMO-aligned documentation for the PEMWE profile</p>
+          <div class="meta-row">
+            <span>Version 2026.3.0</span>
+            <span><a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></span>
+            <span>h2kg</span>
+          </div>
+        
+          <div class="action-row">
+            
+            
+            <a href="../hydrogen-ontology.html" class="primary">Browse reference</a>
+            
+            
+            
+            <a href="../pages/release.html" class="">Release artifacts</a>
+            
+            
+            
+            <a href="https://github.com/ViMiLabs/AIMWORKS" class="">GitHub repository</a>
+            
+            
+          </div>
+          
+        </div>
+        <aside class="hero__panel">
+          <p class="hero__label">Publication profile</p>
+          <p class="hero__note">An EMMO-aligned application ontology release profile for PEMWE concepts, measurements, curated vocabulary, and publication-ready provenance.</p>
+          <div class="hero-fact-grid">
+            
+            <div class="hero-fact">
+              <span>Profile</span>
+              <strong>PEMWE</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Release</span>
+              <strong>2026.3.0</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Namespace</span>
+              <strong>h2kg</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>Validation</span>
+              <strong>PASS</strong>
+            </div>
+            
+            <div class="hero-fact">
+              <span>FAIR score</span>
+              <strong>95.0</strong>
+            </div>
+            
+          </div>
+        </aside>
+      </div>
+    </header>
+    
+    <div class="chip-row" style="margin: 0.35rem 0 0.2rem;">
+      
+      <a href="/AIMWORKS/pemfc/index.html" >PEMFC</a>
+      
+      <a href="/AIMWORKS/pemwe/index.html" style="border: 1px solid rgba(16,36,45,0.24); font-weight: 700;">PEMWE</a>
+      
+    </div>
+    
+    <div class="nav-shell">
+      <nav class="nav">
+        
+        <a href="../index.html">Home</a>
+        
+        <a href="../hydrogen-ontology.html">Reference</a>
+        
+        <a href="../pages/get-started.html">Get Started</a>
+        
+        <a href="../pages/architecture-workflow.html">Architecture</a>
+        
+        <a href="../pages/emmo-alignment.html">EMMO</a>
+        
+        <a href="../pages/module-index.html">Modules</a>
+        
+        <a href="../pages/metrics.html">Metrics</a>
+        
+        <a href="../pages/user-guide.html">User Guide</a>
+        
+        <a href="../pages/ontology-overview.html">About</a>
+        
+        <a href="../pages/scope-and-faq.html">Scope and FAQ</a>
+        
+        <a href="../pages/modeling-patterns.html">Patterns</a>
+        
+        <a href="../pages/queries.html">Queries</a>
+        
+        <a href="../pages/import-guide.html">Import</a>
+        
+        <a href="../pages/cite.html">Cite</a>
+        
+        <a href="../pages/visualizations.html">Visuals</a>
+        
+        <a href="../pages/quality-dashboard.html">Quality</a>
+        
+        <a href="../pages/developer-guide.html">Developer</a>
+        
+        <a href="../pages/release.html">Release</a>
+        
+      </nav>
+    </div>
+    <main class="content">
+      
+<section class="card card--feature">
+  <p class="section-kicker">Documentation page</p>
+  <h2>Developer Guide</h2>
+  
+  <p class="lede">Contribution guidance for extending the PEMWE ontology and release portal without breaking existing automation.</p>
+  
+</section>
+<article class="card prose">
+  <h3>Local development commands</h3><table class='data-table'><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody><tr><td><code>python -m aimworks_ontology_release.cli release-all</code></td><td>Run the full multi-profile release pipeline and regenerate publication outputs.</td></tr><tr><td><code>python -m aimworks_ontology_release.cli docs-all</code></td><td>Regenerate the static site and JSON data indexes without rebuilding the full release bundle.</td></tr><tr><td><code>python -m aimworks_ontology_release.cli validate --profile pemfc</code></td><td>Run validation for a specific profile.</td></tr><tr><td><code>python -m pytest</code></td><td>Run the package test suite.</td></tr></tbody></table><h3>How to add a new local term</h3><ul class='simple-list'><li>Start from the current ontology source used by the profile; do not hand-edit generated publication files.</li><li>Check imported EMMO and EMMO-based ontologies first; only mint a new H2KG term when the existing semantics are not specific enough.</li><li>Add label, textual definition or comment, and mapping notes early so the generated docs remain publication-ready.</li><li>Let the release pipeline regenerate the asserted module views, merged asserted release, inferred release, and public documentation automatically.</li></ul><h3>How to add a mapping</h3><ul class='simple-list'><li>Prefer conservative mappings such as subclass, subproperty, or SKOS exact/close matches unless equivalence is clearly justified.</li><li>Keep H2KG-specific PEMFC and hydrogen concepts local when external reuse would lose important domain semantics.</li><li>Review mapping outputs in the generated review CSVs before treating them as final release assertions.</li></ul><h3>Conventions</h3><ul class='simple-list'><li>Keep H2KG EMMO-native in modeling philosophy and avoid introducing non-EMMO foundational dependencies.</li><li>Use asserted source for editorial truth, inferred output for exploration, and examples for demonstration or testing rather than core ontology commitments.</li><li>Do not edit the static website by hand; update templates, configuration, or generation code and rerun the build.</li></ul>
+</article>
+
+    </main>
+    <footer class="footer">
+      <p>H2KG — Ontology for Hydrogen Electrochemical Systems. Generated locally by the AIMWORKS ontology release pipeline.</p>
+    </footer>
+  </div>
+  
+</body>
+</html>

@@ -1,4 +1,5 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix ns11: <https://w3id.org/h2kg/hydrogen-ontology#> .
 @prefix ns2: <http://qudt.org/schema/qudt/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -423,8 +424,6 @@ ns11:MeasurementGap skos:closeMatch <https://w3id.org/emmo/domain/electrochemist
 
 ns11:MembraneBulkResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
 
-ns11:MembraneElectrodeAssembly_2 skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
-
 ns11:MembraneThickness skos:closeMatch <http://qudt.org/vocab/quantitykind/Length> .
 
 ns11:MercuryIntrusionPressure skos:closeMatch <http://qudt.org/vocab/quantitykind/Pressure> .
@@ -569,8 +568,6 @@ ns11:PulseDuration skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> .
 ns11:QDInkSolventWeightRatio skos:closeMatch <http://qudt.org/vocab/quantitykind/MassFraction> .
 
 ns11:QuokkaSANSInstrument skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
-
-ns11:RHE skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
 
 ns11:ReactionTime skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> .
 
@@ -876,7 +873,7 @@ ns11:referenceElectrode a owl:ObjectProperty ;
     rdfs:label "referenceElectrode"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    rdfs:range ns11:ReferenceElectrode ;
+    rdfs:range <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through referenceElectrode."@en .
 
 ns11:usesInstrument a owl:ObjectProperty ;
@@ -909,12 +906,6 @@ ns11:NormalizationBasis a owl:Class,
 
 ns11:OhmicResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
 
-ns11:ReferenceElectrode a owl:Class ;
-    rdfs:label "Reference Electrode"@en ;
-    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Reference Electrode."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Reference Electrode."@en .
-
 ns11:hasPart a owl:ObjectProperty ;
     rdfs:label "hasPart"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."@en ;
@@ -927,6 +918,9 @@ ns11:hasSubProcess a owl:ObjectProperty ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."@en .
+
+<https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> a owl:Class ;
+    rdfs:label "Reference Electrode"@en .
 
 ns11:Data a owl:Class ;
     rdfs:label "Data"@en ;
@@ -984,19 +978,70 @@ ns11:Process a owl:Class ;
 
 <https://w3id.org/h2kg/hydrogen-ontology> a owl:Ontology ;
     dcterms:abstract "A release-ready, FAIR-oriented, EMMO-aligned application ontology for PEMFC catalyst-layer experiments and associated provenance-aware resources."@en ;
-    dcterms:contributor "AIMWORKS Ontology Engineering Team"@en ;
+    dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany",
+        "AIMWORKS Ontology Engineering Team"@en ;
     dcterms:created "2026-03-12"^^xsd:date ;
-    dcterms:creator "Electrochemistry Research Group",
+    dcterms:creator "Marjan Kohandani",
         "Electrochemistry Research Group"@en ;
-    dcterms:description "Ontology for representing low-Pt PEM fuel-cell cathode catalyst layer experiments, focusing on ionomer/solvent effects on ECSA, high-frequency resistance, and oxygen-transport metrics over realistic operating conditions." ;
+    dcterms:description "Ontology for representing proton exchange membrane fuel cell materials, components, devices, processes, measurements, and experiments." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    dcterms:modified "2026-03-16" ;
+    dcterms:modified "2026-03-18" ;
+    dcterms:publisher "Forschungszentrum Juelich GmbH" ;
+    dcterms:references <http://purl.org/holy/ns#>,
+        <https://w3id.org/emmo>,
+        <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>,
+        <https://w3id.org/emmo/domain/coating#>,
+        <https://w3id.org/emmo/domain/electrochemistry>,
+        <https://w3id.org/emmo/domain/equivalent-circuit-model#>,
+        <https://w3id.org/emmo/domain/manufacturing#>,
+        <https://w3id.org/emmo/domain/microscopy#>,
+        <https://w3id.org/emmo/domain/pemfc> ;
     dcterms:source <https://w3id.org/h2kg/hydrogen-ontology> ;
-    dcterms:title "Hydrogen Experiments Ontology – Low-Pt PEMFC Cathode Catalyst Layers" ;
+    dcterms:title "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments" ;
     vann:preferredNamespacePrefix "h2kg" ;
     vann:preferredNamespaceUri ns11: ;
+    rdfs:seeAlso <http://purl.org/holy/ns#BipolarPlate>,
+        <http://purl.org/holy/ns#CatalystLayer>,
+        <http://purl.org/holy/ns#FuelCellStack>,
+        <http://purl.org/holy/ns#GasDiffusionLayer>,
+        <http://purl.org/holy/ns#Gasket>,
+        <http://purl.org/holy/ns#Membrane>,
+        <http://purl.org/holy/ns#MembraneElectrodeAssembly>,
+        <http://purl.org/holy/ns#PolymerElectrolyteMembraneFuelCell>,
+        <https://orcid.org/0009-0005-5173-202X>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_abe17c61_6a3d_4ec6_b4db_450b5654dbc6>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_b24401b7_35e4_40be_8c8b_36ee8869cc1a>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_e072436a_2656_4e03_b600_a7f41c486339>,
+        <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence>,
+        <https://www.fz-juelich.de/profile/kohandani_m> ;
+    owl:imports <http://purl.org/holy/ns#>,
+        <https://w3id.org/emmo>,
+        <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>,
+        <https://w3id.org/emmo/domain/coating#>,
+        <https://w3id.org/emmo/domain/electrochemistry>,
+        <https://w3id.org/emmo/domain/equivalent-circuit-model#>,
+        <https://w3id.org/emmo/domain/manufacturing#>,
+        <https://w3id.org/emmo/domain/microscopy#>,
+        <https://w3id.org/emmo/domain/pemfc> ;
     owl:versionIRI <https://w3id.org/h2kg/hydrogen-ontology/releases/2026.3.0> ;
-    owl:versionInfo "Generated on 2025-12-07 10:58:11" .
+    owl:versionInfo "Generated on 2025-12-07 10:58:11" ;
+    prov:wasAttributedTo <https://orcid.org/0009-0005-5173-202X> ;
+    foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
+    foaf:page <https://www.fz-juelich.de/profile/kohandani_m> .
 
 [] a ns11:DataPoint ;
     ns11:hasQuantityValue [ a ns2:QuantityValue ;

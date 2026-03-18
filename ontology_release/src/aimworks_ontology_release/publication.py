@@ -93,24 +93,54 @@ def build_publication_layout(
 
     copy_file(ontology_dir / "schema.ttl", source_dir / source_filename)
     copy_file(ontology_dir / "schema.jsonld", source_dir / source_jsonld_filename)
+    if (ontology_dir / "asserted.ttl").exists():
+        copy_file(ontology_dir / "asserted.ttl", source_dir / "asserted.ttl")
+    if (ontology_dir / "asserted.jsonld").exists():
+        copy_file(ontology_dir / "asserted.jsonld", source_dir / "asserted.jsonld")
+    if (ontology_dir / "asserted.rdf").exists():
+        copy_file(ontology_dir / "asserted.rdf", source_dir / "asserted.rdf")
     copy_file(ontology_dir / "controlled_vocabulary.ttl", source_dir / "controlled_vocabulary.ttl")
     copy_file(ontology_dir / "imports.ttl", source_dir / "imports.ttl")
+    if (ontology_dir / "catalog-v001.xml").exists():
+        copy_file(ontology_dir / "catalog-v001.xml", source_dir / "catalog-v001.xml")
+    if (ontology_dir / "modules").exists():
+        copy_tree(ontology_dir / "modules", source_dir / "modules")
     copy_file(examples_dir / "examples.ttl", source_dir / "examples.ttl")
     copy_file(mappings_dir / "alignments.ttl", source_dir / "alignments.ttl")
 
     copy_file(ontology_dir / "inferred.ttl", inferred_dir / inferred_filename)
+    if (ontology_dir / "full_inferred.ttl").exists():
+        copy_file(ontology_dir / "full_inferred.ttl", inferred_dir / "full_inferred.ttl")
+    if (ontology_dir / "full_inferred.rdf").exists():
+        copy_file(ontology_dir / "full_inferred.rdf", inferred_dir / "full_inferred.rdf")
     write_json(context_dir / context_filename, context_payload)
 
     copy_file(ontology_dir / "schema.ttl", latest_dir / source_filename)
     copy_file(ontology_dir / "schema.jsonld", latest_dir / source_jsonld_filename)
+    if (ontology_dir / "asserted.ttl").exists():
+        copy_file(ontology_dir / "asserted.ttl", latest_dir / "asserted.ttl")
+    if (ontology_dir / "asserted.jsonld").exists():
+        copy_file(ontology_dir / "asserted.jsonld", latest_dir / "asserted.jsonld")
     copy_file(ontology_dir / "inferred.ttl", latest_dir / "inferred.ttl")
+    if (ontology_dir / "full_inferred.ttl").exists():
+        copy_file(ontology_dir / "full_inferred.ttl", latest_dir / "full_inferred.ttl")
     write_json(latest_dir / context_filename, context_payload)
     copy_file(ontology_dir / "controlled_vocabulary.ttl", latest_dir / "controlled_vocabulary.ttl")
     copy_file(mappings_dir / "alignments.ttl", latest_dir / "alignments.ttl")
 
     copy_file(ontology_dir / "schema.ttl", version_dir / source_filename)
     copy_file(ontology_dir / "schema.jsonld", version_dir / source_jsonld_filename)
+    if (ontology_dir / "asserted.ttl").exists():
+        copy_file(ontology_dir / "asserted.ttl", version_dir / "asserted.ttl")
+    if (ontology_dir / "asserted.jsonld").exists():
+        copy_file(ontology_dir / "asserted.jsonld", version_dir / "asserted.jsonld")
+    if (ontology_dir / "asserted.rdf").exists():
+        copy_file(ontology_dir / "asserted.rdf", version_dir / "asserted.rdf")
     copy_file(ontology_dir / "inferred.ttl", version_dir / "inferred.ttl")
+    if (ontology_dir / "full_inferred.ttl").exists():
+        copy_file(ontology_dir / "full_inferred.ttl", version_dir / "full_inferred.ttl")
+    if (ontology_dir / "full_inferred.rdf").exists():
+        copy_file(ontology_dir / "full_inferred.rdf", version_dir / "full_inferred.rdf")
     write_json(version_dir / context_filename, context_payload)
     copy_file(ontology_dir / "controlled_vocabulary.ttl", version_dir / "controlled_vocabulary.ttl")
     copy_file(examples_dir / "examples.ttl", version_dir / "examples.ttl")

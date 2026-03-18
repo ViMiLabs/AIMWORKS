@@ -2,7 +2,7 @@
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - Namespace mode: `hash`
-- Triples inspected: **8601**
+- Triples inspected: **8626**
 - Local terms detected: **712**
 - Schema terms detected: **601**
 - Label coverage: **98.0%**
@@ -20,13 +20,18 @@
 
 ## Imports
 
-- None found
+- https://w3id.org/emmo
+- https://w3id.org/emmo/domain/manufacturing#
+- https://w3id.org/emmo/domain/coating#
+- https://w3id.org/emmo/domain/equivalent-circuit-model#
+- https://w3id.org/emmo/domain/characterisation-methodology/chameo#
+- https://w3id.org/emmo/domain/microscopy#
+- https://w3id.org/emmo/domain/electrochemistry
 
 ## Likely Release Blockers
 
-- Missing ontology metadata predicates: title, description, license, owl#versionIRI.
+- Missing ontology metadata predicates: license, owl#versionIRI.
 
 ## Likely FAIR Blockers
 
 - Schema definition or comment coverage is below 60%.
-- No owl:imports declarations were found for reused external vocabularies.

@@ -3,7 +3,7 @@
 - Schema subjects: **36**
 - Controlled vocabulary subjects: **566**
 - Example or data-like subjects: **451**
-- Schema triples: **116**
+- Schema triples: **141**
 - Controlled vocabulary triples: **4790**
 - Example triples: **3920**
 

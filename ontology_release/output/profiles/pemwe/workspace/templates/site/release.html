@@ -81,6 +81,32 @@
 </section>
 
 <section class="card">
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">Downloads</p>
+      <h2>Human-Readable vs Machine-Readable Artifacts</h2>
+      <p>Keep the HTML portal for browsing and use the machine-readable release files for ontology loading, scripting, and downstream graph workflows.</p>
+    </div>
+  </div>
+  <div class="table-shell">
+    <table class="data-table">
+      <thead>
+        <tr><th>Artifact</th><th>Path</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        {% for row in download_rows %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td><code>{{ row.href }}</code></td>
+          <td>{{ row.detail }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
   <h2>Validation Summary</h2>
   <ul class="simple-list">
     {% for line in validation_lines %}

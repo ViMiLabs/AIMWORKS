@@ -1,11 +1,11 @@
 # Split Report
 
 - Schema subjects: **36**
-- Controlled vocabulary subjects: **1848**
-- Example or data-like subjects: **1519**
-- Schema triples: **117**
-- Controlled vocabulary triples: **16643**
-- Example triples: **13636**
+- Controlled vocabulary subjects: **1840**
+- Example or data-like subjects: **1515**
+- Schema triples: **168**
+- Controlled vocabulary triples: **16588**
+- Example triples: **13418**
 
 ## Notes
 

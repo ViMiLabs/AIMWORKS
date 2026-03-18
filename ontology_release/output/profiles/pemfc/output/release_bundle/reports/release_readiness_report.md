@@ -1,6 +1,6 @@
 # Release Readiness Report
 
-- Release ready: **True**
+- Release ready: **False**
 - Overall readiness score: **95.0 / 100**
 
 ## Criteria
@@ -23,4 +23,4 @@
 
 ## Required Follow-up
 
-- None.
+- SHACL validation still reports unresolved constraints.

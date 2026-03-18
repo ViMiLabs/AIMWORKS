@@ -2086,6 +2086,12 @@ def build_docs(
     metadata_report = read_json(root / "output" / "reports" / "metadata_report.json")
     import_catalog = read_json(root / "output" / "reports" / "import_catalog.json") if (root / "output" / "reports" / "import_catalog.json").exists() else []
     changelog_payload = read_json(root / "output" / "reports" / "changelog_report.json") if (root / "output" / "reports" / "changelog_report.json").exists() else {"entries": []}
+    module_index_rows = read_json(root / "output" / "reports" / "module_index.json") if (root / "output" / "reports" / "module_index.json").exists() else []
+    ontology_stats = read_json(root / "output" / "reports" / "ontology_stats.json") if (root / "output" / "reports" / "ontology_stats.json").exists() else {}
+    engineering_workflow = read_json(root / "output" / "reports" / "engineering_workflow.json") if (root / "output" / "reports" / "engineering_workflow.json").exists() else []
+    emmo_alignment = read_json(root / "output" / "reports" / "emmo_alignment.json") if (root / "output" / "reports" / "emmo_alignment.json").exists() else {}
+    module_dependency_svg = (root / "output" / "reports" / "module_dependency_graph.svg").read_text(encoding="utf-8") if (root / "output" / "reports" / "module_dependency_graph.svg").exists() else ""
+    import_graph_svg = (root / "output" / "reports" / "import_graph.svg").read_text(encoding="utf-8") if (root / "output" / "reports" / "import_graph.svg").exists() else ""
     citation_meta = load_yaml(root / "CITATION.cff") if (root / "CITATION.cff").exists() else {}
     zenodo_meta = read_json(root / ".zenodo.json") if (root / ".zenodo.json").exists() else {}
     profile_label = _clean_text(documentation_cfg.get("profile_label", "Ontology Profile"))
@@ -2123,8 +2129,20 @@ def build_docs(
             {"href": "index.html", "label": "Home"},
             {"href": "pages/visualizations.html", "label": "Explore"},
             {"href": release_profile["publication"]["reference_page"], "label": "Reference"},
-            {"href": "pages/user-guide.html", "label": "Guide"},
+            {"href": "pages/get-started.html", "label": "Get Started"},
+            {"href": "pages/architecture-workflow.html", "label": "Architecture"},
+            {"href": "pages/emmo-alignment.html", "label": "EMMO"},
+            {"href": "pages/module-index.html", "label": "Modules"},
+            {"href": "pages/metrics.html", "label": "Metrics"},
+            {"href": "pages/user-guide.html", "label": "User Guide"},
+            {"href": "pages/ontology-overview.html", "label": "About"},
+            {"href": "pages/scope-and-faq.html", "label": "Scope and FAQ"},
+            {"href": "pages/modeling-patterns.html", "label": "Patterns"},
+            {"href": "pages/queries.html", "label": "Queries"},
+            {"href": "pages/import-guide.html", "label": "Import"},
+            {"href": "pages/cite.html", "label": "Cite"},
             {"href": "pages/quality-dashboard.html", "label": "Quality"},
+            {"href": "pages/developer-guide.html", "label": "Developer"},
             {"href": "pages/release.html", "label": "Release"},
         ],
         "actions": [
@@ -2176,16 +2194,20 @@ def build_docs(
         "vocabulary_count": len(vocabulary_rows),
         "example_count": split_report.get("example_subject_count", 0),
         "release_date": release_profile["release"]["release_date"],
+        "asserted_triple_count": ontology_stats.get("asserted_triple_count", len(schema_graph) + len(controlled_vocabulary_graph)),
+        "module_count": ontology_stats.get("module_count", len(module_index_rows)),
     }
     cards = [
         {"title": "Alignment Stack", "body": "Primary semantic anchors are EMMO, ECHO, QUDT, ChEBI, PROV-O, Dublin Core Terms, and VANN."},
         {"title": "IRI Policy", "body": f"The {profile_label} profile preserves existing local IRIs by default unless namespace migration is explicitly enabled."},
         {"title": "Release Assets", "body": f"The {platform_title} publication includes RDF modules, static docs, versioned endpoints, FAIR reports, validation outputs, and w3id templates."},
+        {"title": "BattINFO-like engineering", "body": "H2KG stays compact and PEMFC-focused while adopting a BattINFO-like asserted vs inferred workflow, generated modules, and machine-readable engineering artifacts."},
     ]
     highlights = [
         {"label": "Schema terms", "value": str(len(classes) + len(properties)), "detail": "Asserted local classes and properties published as the schema module."},
         {"label": "Controlled vocabulary", "value": str(len(vocabulary_rows)), "detail": "Curated named terms kept outside the asserted schema."},
         {"label": "Examples separated", "value": str(split_report.get("example_subject_count", 0)), "detail": "Example or data-like resources removed from the schema module."},
+        {"label": "Engineering modules", "value": str(ontology_stats.get("module_count", len(module_index_rows))), "detail": "Generated BattINFO-inspired source views for asserted H2KG content."},
         {"label": "Mapped rows", "value": str(mapping_stats["mapped"]), "detail": "Review rows that have a target IRI in the mapping review output."},
         {"label": "FAIR score", "value": str(fair_scores["overall"]), "detail": "Aggregate pre-publication FAIR readiness signal."},
         {"label": "Validation", "value": validation_report["overall_status"].upper(), "detail": "Current release validation state."},
@@ -2193,10 +2215,21 @@ def build_docs(
     featured_pages = [
         {"href": "pages/visualizations.html", "title": "Explore", "body": "Search the ontology, pick a seed term, and expand the graph progressively without dropping users into a full release dump."},
         {"href": release_profile["publication"]["reference_page"], "title": "Reference", "body": "Browse the full ontology reference with labels, definitions, mappings, units, and module-aware term details."},
+        {"href": "pages/get-started.html", "title": "Get Started", "body": "Introduces asserted vs inferred downloads, JSON-LD context use, and the fastest path into the H2KG portal."},
+        {"href": "pages/architecture-workflow.html", "title": "Architecture and Workflow", "body": "Explains the canonical source, generated modules, TBox/ABox split, release automation, and publication flow."},
+        {"href": "pages/emmo-alignment.html", "title": "EMMO Alignment", "body": "Shows which EMMO and EMMO-based domains are reused, why they are imported, and how H2KG stays inside the EMMO universe."},
+        {"href": "pages/module-index.html", "title": "Module Index", "body": "Lists generated engineering modules, their purpose, dependencies, and local term counts."},
+        {"href": "pages/metrics.html", "title": "Metrics and Stats", "body": "Summarizes ontology counts, asserted/inferred release sizes, module counts, and imported ontology signals."},
+        {"href": "pages/h2kg-vs-battinfo.html", "title": "H2KG vs BattINFO", "body": "Explains the design choice to adopt BattINFO-like engineering discipline without expanding H2KG into a battery ontology."},
         {"href": "pages/user-guide.html", "title": "Guide", "body": "Start with the practical workflow, then branch into scope, modeling patterns, import guidance, and worked examples only when needed."},
-        {"href": "pages/quality-dashboard.html", "title": "Quality", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
-        {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, provenance, and release bundle outputs."},
-        {"href": "pages/queries.html", "title": "Advanced SPARQL", "body": "Power-user query console with competency-question presets for direct browser-side SPARQL execution."},
+        {"href": "pages/scope-and-faq.html", "title": "Scope and FAQ", "body": f"Explains what the {profile_label} profile covers, what it does not cover, and why release modules are separated."},
+        {"href": "pages/modeling-patterns.html", "title": "Modeling Patterns", "body": "Documents the preferred patterns for measurement, materials, process, provenance, and publication."},
+        {"href": "pages/queries.html", "title": "Advanced SPARQL", "body": "Power-user query console with competency-question presets and release-query guidance."},
+        {"href": "pages/import-catalog.html", "title": "Import Catalog", "body": "Shows configured source ontologies, reuse targets, fetch modes, and version labels for the release stack."},
+        {"href": "pages/worked-examples.html", "title": "Worked Examples", "body": "Provides JSON-LD, CSV-to-RDF, and notebook-style examples for ontology users and data stewards."},
+        {"href": "pages/quality-dashboard.html", "title": "Quality Dashboard", "body": "Combines FAIR, validation, metadata hygiene, and publication checks in one place."},
+        {"href": "pages/developer-guide.html", "title": "Developer Guide", "body": "Documents how to add local terms, mappings, and releases without breaking H2KG interoperability."},
+        {"href": "pages/release.html", "title": "Release", "body": "Summarizes publication endpoints, files, and release provenance."},
     ]
     fair_dimension_signals = [
         {
@@ -2315,9 +2348,15 @@ def build_docs(
     download_rows = [
         {"label": "Asserted source (Turtle)", "href": "source/ontology.ttl", "detail": "Immediate download of the asserted ontology module from the current publication tree."},
         {"label": "Asserted source (JSON-LD)", "href": "source/ontology.jsonld", "detail": "Machine-readable asserted release in JSON-LD."},
+        {"label": "Merged asserted release", "href": "source/asserted.ttl", "detail": "BattINFO-inspired merged asserted release across local schema, controlled vocabulary, and reviewed mappings."},
+        {"label": "Merged asserted release (JSON-LD)", "href": "source/asserted.jsonld", "detail": "JSON-LD export of the merged asserted release."},
+        {"label": "Merged asserted release (RDF/XML)", "href": "source/asserted.rdf", "detail": "RDF/XML export of the merged asserted release."},
         {"label": "Inferred release", "href": "inferred/ontology.ttl", "detail": "Inferred schema and mapping export from the current publication tree."},
+        {"label": "Full inferred release", "href": "inferred/full_inferred.ttl", "detail": "Merged asserted plus inferred closure for engineering review and graph analytics."},
         {"label": "Latest asserted bundle", "href": "latest/ontology.ttl", "detail": "Stable latest-release alias inside the generated publication layout."},
         {"label": "JSON-LD context", "href": "context/context.jsonld", "detail": "JSON-LD context currently emitted by the release pipeline."},
+        {"label": "Catalog file", "href": "source/catalog-v001.xml", "detail": "XML catalog for local development and ontology import resolution."},
+        {"label": "Generated modules", "href": "source/modules/", "detail": "Generated module directory for asserted engineering views."},
         {"label": "Versioned release", "href": f"{release_profile['release']['version']}/ontology.ttl", "detail": "Version-pinned asserted ontology file in the publication tree."},
         {"label": "Versioned inferred", "href": f"{release_profile['release']['version']}/inferred.ttl", "detail": "Version-pinned inferred ontology file in the publication tree."},
     ]
@@ -2331,6 +2370,11 @@ def build_docs(
     resource_rows = [
         {"label": "Reference page", "href": release_profile["publication"]["reference_page"], "value": "Single-page ontology reference"},
         {"label": "Release page", "href": "pages/release.html", "value": "Publication layout and release bundle overview"},
+        {"label": "Get Started", "href": "pages/get-started.html", "value": "Asserted vs inferred releases, download guidance, and JSON-LD context usage."},
+        {"label": "Architecture", "href": "pages/architecture-workflow.html", "value": "Asserted modules, TBox/ABox split, and automated release workflow."},
+        {"label": "EMMO alignment", "href": "pages/emmo-alignment.html", "value": "Imported EMMO-based domains and local alignment coverage."},
+        {"label": "Module index", "href": "pages/module-index.html", "value": "Generated BattINFO-inspired asserted module views and dependencies."},
+        {"label": "Metrics", "href": "pages/metrics.html", "value": "Generated ontology counts, module totals, and asserted/inferred metrics."},
         {"label": "GitHub repository", "href": resources_cfg.get("repository_url", ""), "value": resources_cfg.get("repository_url", "")},
         {"label": "Pages URL", "href": resources_cfg.get("pages_url", ""), "value": resources_cfg.get("pages_url", "")},
         {"label": "OOPS!", "href": oops_external.get("service_url", ""), "value": oops_external.get("service_url", "")},
@@ -2347,7 +2391,7 @@ def build_docs(
             profile_heading=profile_heading,
             overview=overview,
             release_score=fair_scores["overall"],
-            readiness_summary=f"{profile_label} is published as a conservative ontology release package with explicit separation of schema, curated vocabulary, and example or data-like content.",
+            readiness_summary=f"{profile_label} is published as a conservative EMMO-aligned application ontology with BattINFO-inspired engineering outputs: asserted vs inferred releases, generated modules, stats, and release automation.",
             blockers=fair_scores["blockers"][:8] or ["No blocking issues detected."],
             cards=cards,
             highlights=highlights,
@@ -2359,9 +2403,15 @@ def build_docs(
             resource_rows=resource_rows,
             competency_preview=documentation_cfg.get("competency_questions", [])[:2],
             module_cards=[
-                {"title": "Schema module", "svg": _simple_svg_card("Schema module", "Local asserted classes and properties", str(len(classes) + len(properties)), "#ecfeff")},
-                {"title": "Controlled vocabulary", "svg": _simple_svg_card("Controlled vocabulary", "Curated domain terms kept outside the schema", str(len(vocabulary_rows)), "#f0fdf4")},
-                {"title": "Examples separated", "svg": _simple_svg_card("Examples separated", "Example and data-like resources in a separate module", str(split_report.get("example_subject_count", 0)), "#fff7ed")},
+                {
+                    "title": row["label"],
+                    "svg": _simple_svg_card(row["label"], row["purpose"], str(row["term_count"]), "#ecfeff" if row["id"] in {"top", "core"} else "#f0fdf4" if row["id"] in {"materials", "components_devices"} else "#fff7ed"),
+                }
+                for row in (module_index_rows[:3] or [
+                    {"id": "core", "label": "Core local terms", "purpose": "Backbone local terms", "term_count": len(classes) + len(properties)},
+                    {"id": "measurements_data", "label": "Measurements and data", "purpose": "Measurement, property, parameter, and data terms", "term_count": len(vocabulary_rows)},
+                    {"id": "examples", "label": "Examples and individuals", "purpose": "Separated ABox-like content", "term_count": split_report.get("example_subject_count", 0)},
+                ])
             ],
         ),
     )
@@ -2441,9 +2491,13 @@ def build_docs(
     release_files = [str(path.relative_to(root / "output")) for path in sorted((root / "output").rglob("*")) if path.is_file()]
     publication_rows = [
         {"label": "HTML reference page", "value": "ready" if (output_dir / release_profile["publication"]["reference_page"]).exists() else "missing", "status": _status_for_flag((output_dir / release_profile["publication"]["reference_page"]).exists())},
-        {"label": "Machine-readable source", "value": "ready" if (root / "output" / "publication" / "source" / "ontology.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "source" / "ontology.ttl").exists())},
-        {"label": "Inferred serialization", "value": "ready" if (root / "output" / "publication" / "inferred" / "ontology.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "inferred" / "ontology.ttl").exists())},
-        {"label": "JSON-LD context", "value": "ready" if (root / "output" / "publication" / "context" / "context.jsonld").exists() else "missing", "status": _status_for_flag((root / "output" / "publication" / "context" / "context.jsonld").exists())},
+        {"label": "Machine-readable source", "value": "ready" if (root / "output" / "ontology" / "schema.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "schema.ttl").exists())},
+        {"label": "Merged asserted release", "value": "ready" if (root / "output" / "ontology" / "asserted.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "asserted.ttl").exists())},
+        {"label": "Inferred serialization", "value": "ready" if (root / "output" / "ontology" / "inferred.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "inferred.ttl").exists())},
+        {"label": "Full inferred release", "value": "ready" if (root / "output" / "ontology" / "full_inferred.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "full_inferred.ttl").exists())},
+        {"label": "JSON-LD context", "value": "ready" if (root / "output" / "ontology" / "context.jsonld").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "context.jsonld").exists())},
+        {"label": "Catalog-v001", "value": "ready" if (root / "output" / "ontology" / "catalog-v001.xml").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "catalog-v001.xml").exists())},
+        {"label": "Generated modules", "value": "ready" if (root / "output" / "ontology" / "modules").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "modules").exists())},
         {"label": "Release bundle", "value": "ready" if (root / "output" / "release_bundle" / "manifest.json").exists() else "missing", "status": _status_for_flag((root / "output" / "release_bundle" / "manifest.json").exists())},
         {"label": "w3id artifacts", "value": "ready" if (root / "output" / "w3id" / ".htaccess").exists() else "missing", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists())},
     ]
@@ -2454,6 +2508,7 @@ def build_docs(
             site=site,
             base_path="..",
             release_files=release_files[:140],
+            download_rows=download_rows,
             fair_rows=fair_scores["dimensions"],
             transparency_rows=transparency_signals,
             external_fair_rows=external_fair_rows,
@@ -2503,6 +2558,239 @@ def build_docs(
         ),
     )
 
+    get_started_html = (
+        f"<p>The {profile_label} profile is published in two complementary ways: a compact asserted source view for stable reuse and richer inferred or merged views for review, exploration, and graph analytics.</p>"
+        + "<h3>What to open first</h3>"
+        + _list_html(
+            [
+                f"Browse the single-page reference in <code>{release_profile['publication']['reference_page']}</code> when you want labels, definitions, units, mappings, and downloadable artifacts.",
+                "Use the Release page to distinguish asserted source files, merged asserted releases, inferred exports, JSON-LD context files, and generated module views.",
+                "Use the Module Index and Architecture pages if you want the BattINFO-like engineering structure rather than the public-facing overview only.",
+            ]
+        )
+        + "<h3>Asserted vs inferred</h3>"
+        + _list_html(
+            [
+                "Asserted source: the editor-reviewed release built from H2KG local schema, curated vocabulary, and explicit metadata.",
+                "Merged asserted release: a BattINFO-inspired engineering artifact that combines local schema, controlled vocabulary, and reviewed mappings.",
+                "Inferred release: an additional export for exploration, review, and reasoning-oriented downstream workflows.",
+            ]
+        )
+        + "<h3>Key downloads</h3>"
+        + _html_table(
+            ["Artifact", "Path", "Why you would use it"],
+            [[row["label"], f"<code>{escape(row['href'])}</code>", row["detail"]] for row in download_rows[:8]],
+        )
+    )
+    write_text(
+        pages_dir / "get-started.html",
+        page_template.render(
+            page_title="Get Started",
+            site=site,
+            base_path="..",
+            heading="Get Started",
+            summary=f"Quick entry points into the {profile_label} ontology portal, downloads, and release workflow.",
+            content_html=get_started_html,
+        ),
+    )
+
+    module_index_html = (
+        "<p>This generated index exposes the BattINFO-inspired engineering modules built from the current H2KG asserted release. The canonical source remains the existing ontology input and release pipeline; these modules are generated for navigation, review, and stable download.</p>"
+        + "<div class='section-head'><div></div><input class='filter-input' data-table-filter='module-index-table' placeholder='Filter modules'></div>"
+        + _html_table(
+            ["Module", "Purpose", "Terms", "Triples", "Dependencies", "Imported domains", "Path"],
+            [
+                [
+                    escape(row["label"]),
+                    escape(row["purpose"]),
+                    str(row["term_count"]),
+                    str(row["triple_count"]),
+                    escape(", ".join(row.get("dependencies", [])) or "None"),
+                    escape(", ".join(row.get("imported_domains", [])) or "None"),
+                    f"<code>{escape(row['path'])}</code>",
+                ]
+                for row in module_index_rows
+            ] or [["No generated modules", "Run a release build to generate engineering modules.", "0", "0", "None", "None", "<code>modules/</code>"]],
+        ).replace("<table class='data-table'>", "<table id='module-index-table' class='data-table searchable'>")
+    )
+    write_text(
+        pages_dir / "module-index.html",
+        page_template.render(
+            page_title="Module Index",
+            site=site,
+            base_path="..",
+            heading="Module Index",
+            summary=f"Generated asserted source modules for the {profile_label} engineering workflow.",
+            content_html=module_index_html,
+        ),
+    )
+
+    architecture_html = (
+        f"<p>{profile_label} keeps the current JSON-LD-driven source-of-truth and generates modular asserted views, merged asserted releases, inferred outputs, and publication pages automatically. This gives H2KG a BattINFO-like engineering posture without replacing the existing AIMWORKS release behavior.</p>"
+        + "<h3>Asserted vs Inferred</h3>"
+        + _list_html(
+            [
+                "Asserted release artifacts capture the curated local ontology, controlled vocabulary, metadata, and reviewed mappings that belong in the publication baseline.",
+                "Inferred release artifacts preserve the same publication baseline while adding lightweight closure for exploration, indexing, and graph analytics.",
+                "Both views are generated automatically so users can choose compact editorial truth or broader reasoning-oriented exploration without changing the source-of-truth workflow.",
+            ]
+        )
+        + "<h3>TBox vs ABox</h3>"
+        + _list_html(
+            [
+                "TBox: local classes, properties, annotations, axioms, imports, and curated ontology-level vocabulary used as release-facing terminology.",
+                "ABox: examples, individuals, quantity-value helper content, and data-like resources kept separate from the asserted core release.",
+                "The split is enforced automatically so the public source release stays compact while example content remains available.",
+            ]
+        )
+        + "<h3>Pipeline overview</h3>"
+        + _html_table(
+            ["Step", "Purpose", "Key artifacts"],
+            [[str(row["step"]), row["label"], "<br>".join(f"<code>{escape(item)}</code>" for item in row.get("artifacts", []))] for row in engineering_workflow],
+        )
+        + "<h3>Import strategy</h3>"
+        + _list_html(
+            [
+                "The generated asserted release stays compact and reuses imported EMMO and EMMO-based ontologies externally rather than vendoring them into the local namespace.",
+                "A generated <code>catalog-v001.xml</code> file supports repeatable local import resolution for development and CI workflows.",
+                "Generated module views are engineering artifacts over the canonical source, not a manual side workflow that needs separate maintenance.",
+            ]
+        )
+        + "<h3>Module dependency view</h3>"
+        + (f"<div class='svg-frame'>{module_dependency_svg}</div>" if module_dependency_svg else "<p>No module dependency graph was generated.</p>")
+        + "<h3>Import overview</h3>"
+        + (f"<div class='svg-frame'>{import_graph_svg}</div>" if import_graph_svg else "<p>No import graph was generated.</p>")
+    )
+    write_text(
+        pages_dir / "architecture-workflow.html",
+        page_template.render(
+            page_title="Architecture and Workflow",
+            site=site,
+            base_path="..",
+            heading="Architecture and Workflow",
+            summary=f"How the {profile_label} release is engineered: canonical source, asserted modules, inferred outputs, publication layout, and automation.",
+            content_html=architecture_html,
+        ),
+    )
+
+    emmo_alignment_html = (
+        f"<p>{profile_label} remains an EMMO-based application ontology. Local H2KG terms are kept only where the imported EMMO and EMMO-based domains do not safely cover the intended hydrogen/PEMFC semantics.</p>"
+        + "<h3>EMMO Universe</h3>"
+        + "<p>The release stays in the EMMO universe by reusing EMMO core and selected EMMO-based domain ontologies as imports, while keeping H2KG-local terms narrow and application-specific.</p>"
+        + "<h3>Imported EMMO-aligned sources</h3>"
+        + _html_table(
+            ["Source", "Enabled", "Category", "Base IRI"],
+            [
+                [
+                    escape(row["title"]),
+                    escape(str(row["enabled"])),
+                    escape(row["category"]),
+                    _href_html(row["base_iri"], row["base_iri"], code=True) if _is_web_url(row["base_iri"]) else f"<code>{escape(row['base_iri'])}</code>",
+                ]
+                for row in emmo_alignment.get("import_rows", [])
+            ] or [["No imports recorded", "False", "n/a", "n/a"]],
+        )
+        + "<h3>Alignment coverage</h3>"
+        + _html_table(
+            ["Target family", "Mapped rows"],
+            [[escape(key), str(value)] for key, value in sorted(emmo_alignment.get("source_counts", {}).items())] or [["No mapping counts recorded", "0"]],
+        )
+        + "<h3>Why H2KG stays focused</h3>"
+        + _list_html(
+            [
+                "Reuse EMMO and relevant EMMO-based domains first; only keep H2KG-local terms where the external semantics are not specific enough.",
+                "Keep HOLY and similar non-EMMO resources as mappings or bridging references rather than foundational ontology replacements.",
+                "Adopt BattINFO-like engineering structure without inheriting BattINFO battery-domain scope.",
+            ]
+        )
+    )
+    write_text(
+        pages_dir / "emmo-alignment.html",
+        page_template.render(
+            page_title="EMMO Alignment",
+            site=site,
+            base_path="..",
+            heading="EMMO Alignment",
+            summary=f"How the {profile_label} profile stays inside the EMMO universe while preserving local H2KG application terms.",
+            content_html=emmo_alignment_html,
+        ),
+    )
+
+    metrics_cards = "".join(
+        f"<article class='kpi'><span class='kpi__value'>{escape(str(item['value']))}</span><span class='kpi__label'>{escape(item['label'])}</span><p class='kpi__detail'>{escape(item['detail'])}</p></article>"
+        for item in [
+            {"label": "Local terms", "value": ontology_stats.get("local_term_count", len(classes) + len(properties) + len(vocabulary_rows)), "detail": "Local H2KG terms across schema and controlled vocabulary."},
+            {"label": "Imported terms", "value": ontology_stats.get("imported_term_count", 0), "detail": "Referenced external terms visible in the asserted engineering graph."},
+            {"label": "Modules", "value": ontology_stats.get("module_count", len(module_index_rows)), "detail": "Generated engineering modules for the asserted release."},
+            {"label": "Asserted triples", "value": ontology_stats.get("asserted_triple_count", len(schema_graph) + len(controlled_vocabulary_graph)), "detail": "Merged asserted graph size."},
+            {"label": "Full inferred triples", "value": ontology_stats.get("inferred_triple_count", len(schema_graph) + len(controlled_vocabulary_graph)), "detail": "Merged asserted plus inferred closure size."},
+            {"label": "Imported ontologies", "value": ontology_stats.get("imported_ontology_count", len(imports)), "detail": "owl:imports declarations in the current profile release."},
+        ]
+    )
+    metrics_html = (
+        "<div class='kpi-grid'>" + metrics_cards + "</div>"
+        + "<h3>Structural counts</h3>"
+        + _html_table(
+            ["Metric", "Value"],
+            [
+                ["Classes", str(ontology_stats.get("class_count", len(classes)))],
+                ["Object properties", str(ontology_stats.get("object_property_count", sum(1 for row in properties if row['kind'] == 'object property')))],
+                ["Datatype properties", str(ontology_stats.get("datatype_property_count", sum(1 for row in properties if row['kind'] == 'datatype property')))],
+                ["Annotation properties", str(ontology_stats.get("annotation_property_count", sum(1 for row in properties if row['kind'] == 'annotation property')))],
+                ["Individuals", str(ontology_stats.get("individual_count", split_report.get("example_subject_count", 0)))],
+                ["Controlled vocabulary terms", str(len(vocabulary_rows))],
+            ],
+        )
+        + "<h3>Module summary</h3>"
+        + _html_table(
+            ["Module", "Terms", "Triples"],
+            [[escape(row["label"]), str(row["term_count"]), str(row["triple_count"])] for row in module_index_rows] or [["No generated modules", "0", "0"]],
+        )
+    )
+    write_text(
+        pages_dir / "metrics.html",
+        page_template.render(
+            page_title="Metrics and Stats",
+            site=site,
+            base_path="..",
+            heading="Metrics and Stats",
+            summary=f"Generated ontology counts, module totals, and publication metrics for the {profile_label} profile.",
+            content_html=metrics_html,
+        ),
+    )
+
+    battinfo_html = (
+        "<p>BattINFO is a broad EMMO-based ontology engineering project with a strong asserted vs inferred publication workflow, generated contexts, docs, and release artifacts. H2KG is intentionally borrowing that engineering discipline, not its battery-domain scope.</p>"
+        + "<h3>What H2KG adopts</h3>"
+        + _list_html(
+            [
+                "Generated asserted and inferred releases.",
+                "Modular source views and machine-readable indexes.",
+                "Catalog files, JSON-LD context, release metrics, and automated docs.",
+                "A clearer public portal for ontology downloads, architecture, and alignment.",
+            ]
+        )
+        + "<h3>What H2KG does not adopt</h3>"
+        + _list_html(
+            [
+                "Battery-domain scope or terminology outside hydrogen electrochemical systems.",
+                "Unnecessary local duplication of semantics already provided by EMMO and reused EMMO-based domains.",
+                "A completely new website or disconnected toolchain.",
+            ]
+        )
+    )
+    write_text(
+        pages_dir / "h2kg-vs-battinfo.html",
+        page_template.render(
+            page_title="H2KG vs BattINFO",
+            site=site,
+            base_path="..",
+            heading="H2KG vs BattINFO",
+            summary="Why H2KG is adopting BattINFO-like ontology engineering and publication practices without becoming a BattINFO clone.",
+            content_html=battinfo_html,
+        ),
+    )
+
     resource_html = (
         "<ul class='simple-list'>"
         + "".join(
@@ -2525,6 +2813,7 @@ def build_docs(
     )
     overview_html = (
         f"<p>{escape(overview['landing_intro'])}</p>"
+        + f"<p>{escape(profile_label)} remains a focused EMMO-based hydrogen and PEMFC application ontology. The publication workflow adopts BattINFO-like engineering practices, but the ontology scope stays intentionally narrower than BattINFO.</p>"
         + "<h3>Core release facts</h3>"
         + "<ul class='simple-list'>"
         + f"<li>Ontology IRI: <code>{escape(namespace_policy['ontology_iri'])}</code></li>"
@@ -2533,6 +2822,12 @@ def build_docs(
         + f"<li>Imports: {escape(', '.join(imports) or 'None declared in schema module')}</li>"
         + f"<li>License: <code>{escape(release_profile['release']['ontology_license'])}</code></li>"
         + f"<li>Namespace URI: <code>{escape(namespace_policy['preferred_namespace_uri'])}</code></li>"
+        + "</ul>"
+        + "<h3>Why this is not BattINFO</h3>"
+        + "<ul class='simple-list'>"
+        + "<li>BattINFO is used here as an engineering and publication reference pattern, not as a hydrogen-domain ontology source.</li>"
+        + "<li>H2KG stays in the EMMO universe and remains focused on hydrogen electrochemical systems, especially PEMFC and PEMWE application profiles.</li>"
+        + "<li>The goal is compact, reusable release engineering: asserted vs inferred outputs, generated modules, indexes, metrics, and stable publication assets.</li>"
         + "</ul>"
         + "<h3>Resource links</h3>"
         + resource_html
@@ -2765,6 +3060,55 @@ graph.parse("{namespace_policy['ontology_iri']}/source", format="turtle")
             heading="How to Import",
             summary=f"Practical import and programmatic access guidance for the {profile_label} ontology release modules.",
             content_html=import_html,
+        ),
+    )
+
+    developer_html = (
+        "<h3>Local development commands</h3>"
+        + _html_table(
+            ["Command", "Purpose"],
+            [
+                ["<code>python -m aimworks_ontology_release.cli release-all</code>", "Run the full multi-profile release pipeline and regenerate publication outputs."],
+                ["<code>python -m aimworks_ontology_release.cli docs-all</code>", "Regenerate the static site and JSON data indexes without rebuilding the full release bundle."],
+                ["<code>python -m aimworks_ontology_release.cli validate --profile pemfc</code>", "Run validation for a specific profile."],
+                ["<code>python -m pytest</code>", "Run the package test suite."],
+            ],
+        )
+        + "<h3>How to add a new local term</h3>"
+        + _list_html(
+            [
+                "Start from the current ontology source used by the profile; do not hand-edit generated publication files.",
+                "Check imported EMMO and EMMO-based ontologies first; only mint a new H2KG term when the existing semantics are not specific enough.",
+                "Add label, textual definition or comment, and mapping notes early so the generated docs remain publication-ready.",
+                "Let the release pipeline regenerate the asserted module views, merged asserted release, inferred release, and public documentation automatically.",
+            ]
+        )
+        + "<h3>How to add a mapping</h3>"
+        + _list_html(
+            [
+                "Prefer conservative mappings such as subclass, subproperty, or SKOS exact/close matches unless equivalence is clearly justified.",
+                "Keep H2KG-specific PEMFC and hydrogen concepts local when external reuse would lose important domain semantics.",
+                "Review mapping outputs in the generated review CSVs before treating them as final release assertions.",
+            ]
+        )
+        + "<h3>Conventions</h3>"
+        + _list_html(
+            [
+                "Keep H2KG EMMO-native in modeling philosophy and avoid introducing non-EMMO foundational dependencies.",
+                "Use asserted source for editorial truth, inferred output for exploration, and examples for demonstration or testing rather than core ontology commitments.",
+                "Do not edit the static website by hand; update templates, configuration, or generation code and rerun the build.",
+            ]
+        )
+    )
+    write_text(
+        pages_dir / "developer-guide.html",
+        page_template.render(
+            page_title="Developer Guide",
+            site=site,
+            base_path="..",
+            heading="Developer Guide",
+            summary=f"Contribution guidance for extending the {profile_label} ontology and release portal without breaking existing automation.",
+            content_html=developer_html,
         ),
     )
 
@@ -3040,3 +3384,7 @@ ex:run-001 a h2kg:Measurement ;
     write_json(data_dir / "visualizations.json", [{"title": item["title"], "body": item["body"]} for item in visualization_rows])
     write_json(data_dir / "import_catalog.json", import_catalog_rows)
     write_json(data_dir / "local_keep_rows.json", local_keep_rows)
+    write_json(data_dir / "module_index.json", module_index_rows)
+    write_json(data_dir / "ontology_stats.json", ontology_stats)
+    write_json(data_dir / "engineering_workflow.json", engineering_workflow)
+    write_json(data_dir / "emmo_alignment.json", emmo_alignment)

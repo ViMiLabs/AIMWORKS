@@ -18,6 +18,13 @@ def test_docs_generation(temp_project):
     assert (temp_project / "output" / "docs" / "pages" / "cite.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "worked-examples.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "changelog.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "get-started.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "architecture-workflow.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "emmo-alignment.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "module-index.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "metrics.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "developer-guide.html").exists()
+    assert (temp_project / "output" / "docs" / "pages" / "h2kg-vs-battinfo.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "queries.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "quality-dashboard.html").exists()
     assert (temp_project / "output" / "docs" / "pages" / "visualizations.html").exists()
@@ -25,10 +32,18 @@ def test_docs_generation(temp_project):
     assert (temp_project / "output" / "docs" / "assets" / "visuals.js").exists()
     assert (temp_project / "output" / "docs" / "data" / "import_catalog.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "graph_explorer.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "module_index.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "ontology_stats.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "engineering_workflow.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "emmo_alignment.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.jsonld").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.csv").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_release_notebook.ipynb").exists()
     assert (temp_project / "output" / "publication" / "source" / "ontology.ttl").exists()
+    assert (temp_project / "output" / "publication" / "source" / "asserted.ttl").exists()
+    assert (temp_project / "output" / "publication" / "source" / "catalog-v001.xml").exists()
+    assert (temp_project / "output" / "publication" / "source" / "modules" / "core.ttl").exists()
+    assert (temp_project / "output" / "publication" / "inferred" / "full_inferred.ttl").exists()
     assert (temp_project / "output" / "publication" / "latest" / "ontology.ttl").exists()
     queries_page = (temp_project / "output" / "docs" / "pages" / "queries.html").read_text(encoding="utf-8")
     assert "Query Console" in queries_page
@@ -50,3 +65,11 @@ def test_docs_generation(temp_project):
     assert "Controlled Vocabulary" in reference_page
     assert "<th>Class</th><th>Quantity kind</th><th>Unit</th><th>Alternative labels</th>" in reference_page
     assert "Unit Review Notes" in reference_page
+    architecture_page = (temp_project / "output" / "docs" / "pages" / "architecture-workflow.html").read_text(encoding="utf-8")
+    assert "Asserted vs Inferred" in architecture_page
+    assert "catalog-v001.xml" in architecture_page
+    emmo_page = (temp_project / "output" / "docs" / "pages" / "emmo-alignment.html").read_text(encoding="utf-8")
+    assert "EMMO Universe" in emmo_page
+    release_page = (temp_project / "output" / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
+    assert "Human-Readable vs Machine-Readable Artifacts" in release_page
+    assert "source/asserted.ttl" in release_page

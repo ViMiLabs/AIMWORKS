@@ -2,7 +2,7 @@
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - Namespace mode: `hash`
-- Triples inspected: **30080**
+- Triples inspected: **30100**
 - Local terms detected: **2269**
 - Schema terms detected: **1874**
 - Label coverage: **99.4%**
@@ -24,6 +24,12 @@
 
 - https://w3id.org/emmo/domain/pemfc
 - http://purl.org/holy/ns#
+- https://w3id.org/emmo
+- https://w3id.org/emmo/domain/manufacturing#
+- https://w3id.org/emmo/domain/coating#
+- https://w3id.org/emmo/domain/equivalent-circuit-model#
+- https://w3id.org/emmo/domain/characterisation-methodology/chameo#
+- https://w3id.org/emmo/domain/microscopy#
 - https://w3id.org/emmo/domain/electrochemistry
 
 ## Likely Release Blockers

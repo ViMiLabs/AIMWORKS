@@ -11,6 +11,7 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS
 
 from .battinfo_overlap import analyze_battinfo_overlap, write_battinfo_overlap_outputs
 from .docs import build_docs
+from .engineering import build_engineering_artifacts
 from .enrich import enrich_graphs, write_enrichment_outputs
 from .fair import compute_fair_scores, write_fair_reports
 from .inspect import inspect_graph, write_inspection_reports
@@ -186,12 +187,26 @@ def _mirror_release_artifacts(root: Path) -> None:
     ontology_dir = root / "ontology"
     copy_file(root / "output" / "ontology" / "schema.ttl", ontology_dir / "schema.ttl")
     copy_file(root / "output" / "ontology" / "schema.jsonld", ontology_dir / "schema.jsonld")
+    if (root / "output" / "ontology" / "asserted.ttl").exists():
+        copy_file(root / "output" / "ontology" / "asserted.ttl", ontology_dir / "asserted.ttl")
+    if (root / "output" / "ontology" / "asserted.jsonld").exists():
+        copy_file(root / "output" / "ontology" / "asserted.jsonld", ontology_dir / "asserted.jsonld")
+    if (root / "output" / "ontology" / "asserted.rdf").exists():
+        copy_file(root / "output" / "ontology" / "asserted.rdf", ontology_dir / "asserted.rdf")
     copy_file(root / "output" / "ontology" / "controlled_vocabulary.ttl", ontology_dir / "controlled_vocabulary.ttl")
     if (root / "output" / "ontology" / "context.jsonld").exists():
         copy_file(root / "output" / "ontology" / "context.jsonld", ontology_dir / "context.jsonld")
+    if (root / "output" / "ontology" / "catalog-v001.xml").exists():
+        copy_file(root / "output" / "ontology" / "catalog-v001.xml", ontology_dir / "catalog-v001.xml")
+    if (root / "output" / "ontology" / "modules").exists():
+        copy_tree(root / "output" / "ontology" / "modules", ontology_dir / "modules")
     copy_file(root / "output" / "examples" / "examples.ttl", ontology_dir / "examples.ttl")
     copy_file(root / "output" / "ontology" / "imports.ttl", ontology_dir / "imports.ttl")
     copy_file(root / "output" / "ontology" / "inferred.ttl", ontology_dir / "inferred.ttl")
+    if (root / "output" / "ontology" / "full_inferred.ttl").exists():
+        copy_file(root / "output" / "ontology" / "full_inferred.ttl", ontology_dir / "full_inferred.ttl")
+    if (root / "output" / "ontology" / "full_inferred.rdf").exists():
+        copy_file(root / "output" / "ontology" / "full_inferred.rdf", ontology_dir / "full_inferred.rdf")
 
 
 def _build_release_bundle(root: Path, release_profile: dict[str, Any]) -> None:
@@ -379,6 +394,18 @@ def run_pipeline(
     save_graph(imports_graph, root / "output" / "ontology" / "imports.ttl", "turtle")
     save_graph(inferred_graph, root / "output" / "ontology" / "inferred.ttl", "turtle")
     write_json(root / "output" / "ontology" / "context.jsonld", context_payload)
+    build_engineering_artifacts(
+        split_graphs["schema"],
+        split_graphs["controlled_vocabulary"],
+        split_graphs["examples"],
+        alignments_graph,
+        inferred_graph,
+        classifications,
+        configs["release_profile"],
+        configs["namespace_policy"],
+        configs["source_ontologies"],
+        root,
+    )
 
     generate_w3id_artifacts(configs["namespace_policy"], configs["release_profile"], root)
     _write_import_catalog(configs["source_ontologies"], root)

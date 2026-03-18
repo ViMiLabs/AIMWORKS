@@ -3714,7 +3714,7 @@ ns2:AcceleratedStressTestVoltageCycling a ns2:Manufacturing ;
         "start-stop cycling simulation"@en,
         "voltage cycling"@en ;
     skos:prefLabel "Accelerated Stress Test Voltage Cycling"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasParameter ns2:DwellTime,
         ns2:LowerPotentialLimit,
         ns2:NumberOfCycles,
@@ -3809,7 +3809,7 @@ ns2:AmbientPressureChemicalVaporDepositionSynthesis a ns2:Manufacturing ;
         "ambient pressure-chemical vapor deposition"@en,
         "catalytic chemical vapor deposition"@en ;
     skos:prefLabel "Ambient Pressure Chemical Vapor Deposition Synthesis"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
         ns2:EthyleneGas_2,
         ns2:Hydrogen,
         ns2:Nitrogen,
@@ -3897,8 +3897,8 @@ ns2:AtomicForceMicroscopyMeasurement a ns2:Measurement ;
         "tapping mode AFM"@en,
         "typical spring constant 2.8 N/m"@en ;
     skos:prefLabel "Atomic Force Microscopy Measurement"@en ;
-    ns2:hasInputMaterial ns2:CatalystCoatedMembrane,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        ns2:CatalystCoatedMembrane,
         ns2:PFSAIonomer,
         ns2:Pt111Surface,
         ns2:SolventMixture ;
@@ -3987,8 +3987,8 @@ ns2:BreakInProcedure a ns2:Manufacturing ;
         "incubation"@en,
         "pre-conditioned"@en ;
     skos:prefLabel "Break In Procedure"@en ;
-    ns2:hasInputMaterial ns2:CatalystCoatedMembrane,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CatalystCoatedMembrane ;
     ns2:hasParameter ns2:AnodeStoichiometricRatio,
         ns2:CathodeStoichiometricRatio,
         ns2:CellVoltage,
@@ -4018,14 +4018,14 @@ ns2:BrushCoating a ns2:Manufacturing ;
         "painting technique"@en,
         "repeatedly painted"@en ;
     skos:prefLabel "Brush Coating"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CatalystInk,
+        ns2:CathodeCatalystLayer ;
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:CatalystCoatedMembrane,
         ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
-        ns2:ProtonExchangeMembrane ;
-    ns2:hasOutputMaterial ns2:CatalystCoatedMembrane,
-        ns2:CathodeCatalystLayer,
-        ns2:CathodeGDE,
-        ns2:CoatedElectrode ;
+        ns2:CathodeGDE ;
     ns2:hasParameter ns2:CoatingAirVelocity,
         ns2:CoatingTemperature .
 
@@ -4091,7 +4091,7 @@ ns2:CarbonMonoxideStrippingVoltammetry a ns2:Measurement ;
         "Pt surface area"@en,
         "carbon monoxide stripping"@en ;
     skos:prefLabel "Carbon Monoxide Stripping Voltammetry"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
         ns2:PtRuBlackCatalyst ;
     ns2:hasOutputData ns2:ECSADataset ;
     ns2:hasParameter ns2:COStrippingSpecificChargeDensity,
@@ -4110,10 +4110,10 @@ ns2:CarbonMonoxideStrippingVoltammetry a ns2:Measurement ;
         ns2:IonomerConnectedElectrochemicallyActiveSurfaceArea,
         ns2:PeakPotential,
         ns2:WaterActivatedElectrochemicallyActiveSurfaceArea ;
-    ns2:referenceElectrode ns2:RHE ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
-        ns2:FuelCellTestCell,
-        ns2:Potentiostat .
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ;
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
+        ns2:FuelCellTestCell .
 
 ns2:CarbothermalGraphitizationAnnealing a ns2:Manufacturing ;
     rdfs:label "Carbothermal Graphitization Annealing"@en ;
@@ -4554,7 +4554,7 @@ ns2:CatalystLayerMicrostructureSimulation a ns2:Measurement ;
         "random packing"@en,
         "random-walk tortuosity"@en ;
     skos:prefLabel "Catalyst Layer Microstructure Simulation"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasOutputData ns2:ConductivityDataset ;
     ns2:hasParameter ns2:CarbonBlackVolumeFraction,
         ns2:IonomerToCarbonRatio ;
@@ -4626,10 +4626,10 @@ ns2:CatalystLoadingDetermination a ns2:Measurement ;
         "weighing for loading"@en,
         "weight-based catalyst loading check"@en ;
     skos:prefLabel "Catalyst Loading Determination"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:CathodeGDE,
-        ns2:CoatedElectrode,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CathodeCatalystLayer,
+        ns2:CathodeGDE ;
     ns2:measures ns2:AnodeCatalystLoading,
         ns2:CatalystLoading,
         ns2:CatalystPlatinumMassFraction,
@@ -4685,9 +4685,9 @@ ns2:ChronoamperometryMeasurement a ns2:Measurement ;
     ns2:measures ns2:OxygenDiffusionCoefficientInIonomer,
         ns2:OxygenPermeability,
         ns2:OxygenSolubilityInIonomer ;
-    ns2:referenceElectrode ns2:RHE ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
-        ns2:Potentiostat,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ;
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
         ns2:RotatingDiskElectrodeSystem .
 
 ns2:ChronoamperometryMeasurement_2 a ns2:Measurement ;
@@ -4847,9 +4847,9 @@ ns2:ContactAngleMeasurement a ns2:Measurement ;
         "water contact angle measurement"@en,
         "water drop contact angle measurement"@en ;
     skos:prefLabel "Contact Angle Measurement"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
         ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
         ns2:Nafion212Membrane,
         ns2:PolyethyleneTerephthalateFabric,
         ns2:SolventMixture ;
@@ -5018,8 +5018,8 @@ ns2:CurrentInterruptHFRMeasurement a ns2:Measurement ;
         "shortened impedance spectrum"@en,
         "static method"@en ;
     skos:prefLabel "Current-Interrupt HFR Measurement"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CathodeCatalystLayer ;
     ns2:hasOutputData ns2:ExperimentDataset ;
     ns2:hasParameter ns2:CatalystLoading,
         ns2:CellPressure,
@@ -5102,17 +5102,17 @@ ns2:DecalTransfer a ns2:Manufacturing ;
         "transferred onto membrane"@en,
         "transferred onto the membrane"@en ;
     skos:prefLabel "Decal Transfer"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <http://purl.org/holy/ns#Membrane>,
+        ns2:CatalystInk,
         ns2:CathodeCatalystLayer,
         ns2:NPropanol,
         ns2:Nafion211Membrane,
-        ns2:PTFEPolymer,
-        ns2:ProtonExchangeMembrane ;
-    ns2:hasOutputMaterial ns2:CatalystCoatedMembrane,
-        ns2:CatalystLayer,
-        ns2:CathodeCatalystLayer,
-        ns2:MembraneElectrodeAssembly ;
+        ns2:PTFEPolymer ;
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CatalystCoatedMembrane,
+        ns2:CathodeCatalystLayer ;
     ns2:hasParameter ns2:AnnealingTemperature,
         ns2:HotPressPressure,
         ns2:HotPressTemperature,
@@ -5207,7 +5207,7 @@ ns2:DipCoatingProcess a ns2:Manufacturing ;
         "dip-coated"@en,
         "dipcoating"@en ;
     skos:prefLabel "Dip Coating Process"@en ;
-    ns2:hasOutputMaterial ns2:CatalystLayer ;
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasParameter ns2:DipCoatingWithdrawalRate,
         ns2:DwellTime,
         ns2:FeToCoMolarRatio,
@@ -5399,14 +5399,14 @@ ns2:DoctorBladeCoating a ns2:Manufacturing ;
         "gap-height 170 µm"@en,
         "knife coating"@en ;
     skos:prefLabel "Doctor Blade Coating"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CatalystInk,
         ns2:CatalystInk_2,
-        ns2:GasDiffusionLayer,
         ns2:KaptonFilm ;
-    ns2:hasOutputMaterial ns2:CatalystLayer,
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
         ns2:CathodeCatalystLayer,
-        ns2:CathodeGDE,
-        ns2:CoatedElectrode ;
+        ns2:CathodeGDE ;
     ns2:hasParameter ns2:CoatingGap,
         ns2:CoatingSpeed,
         ns2:MeasurementGap .
@@ -5433,8 +5433,8 @@ ns2:DropCastingProcess a ns2:Manufacturing ;
     ns2:hasInputMaterial ns2:CatalystInk,
         ns2:Isopropanol,
         ns2:PFSAIonomer ;
-    ns2:hasOutputMaterial ns2:AnodeCatalystLayer,
-        ns2:CoatedElectrode,
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:AnodeCatalystLayer,
         ns2:GlassyCarbonDiskElectrode,
         ns2:PrintedGoldElectrode ;
     ns2:hasParameter ns2:DropletVolume,
@@ -5583,7 +5583,7 @@ ns2:ElectrochemicalImpedanceSpectroscopyGalvanostatic_2 a ns2:Measurement ;
         "i = 1000 mA cm^-2"@en,
         "impedance"@en ;
     skos:prefLabel "Electrochemical Impedance Spectroscopy Galvanostatic"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly_2 ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasOutputData ns2:ImpedanceDataset_2 ;
     ns2:hasParameter ns2:ACAmplitude,
         ns2:CurrentDensity,
@@ -5608,10 +5608,10 @@ ns2:ElectrochemicalReactionSimulation a ns2:Measurement ;
         "mass transfer simulation"@en,
         "numerical model"@en ;
     skos:prefLabel "Electrochemical Reaction Simulation"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CathodeCatalystLayer,
         ns2:Oxygen,
-        ns2:ProtonExchangeMembrane,
         ns2:Water ;
     ns2:hasParameter ns2:CatalystLayerConductivityExponentB,
         ns2:CatalystLayerConductivityPrefactorA,
@@ -5741,12 +5741,12 @@ ns2:ElectronMicroscopyImaging a ns2:Measurement ;
         "δ_C"@en,
         "δ_CL"@en ;
     skos:prefLabel "Electron Microscopy Imaging"@en ;
-    ns2:hasInputMaterial ns2:CatalystCoatedMembrane,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:CatalystCoatedMembrane,
         ns2:CatalystInk,
         ns2:CathodeCatalystLayer,
         ns2:CathodeGDE,
         ns2:CoTMPPCatalyst,
-        ns2:CoatedElectrode,
         ns2:IonomerSolution,
         ns2:PFSAIonomer,
         ns2:PtRuOnCarbonCatalyst ;
@@ -5802,8 +5802,8 @@ ns2:ElectrospinningDeposition a ns2:Manufacturing ;
         "electrospinning"@en,
         "electrospun"@en ;
     skos:prefLabel "Electrospinning Deposition"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:CatalystInk ;
     ns2:hasOutputMaterial ns2:CathodeCatalystLayer,
         ns2:ElectrospunCatalystLayer,
         ns2:IonomerNanofiberScaffoldingCatalystLayer,
@@ -5834,8 +5834,8 @@ ns2:ElectrosprayDeposition a ns2:Manufacturing ;
         "pitch"@en,
         "raster speed"@en ;
     skos:prefLabel "Electrospray Deposition"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:CatalystInk ;
     ns2:hasOutputMaterial ns2:CathodeCatalystLayer,
         ns2:ElectrosprayedCatalystLayer,
         ns2:IonomerNanofiberScaffoldingCatalystLayer ;
@@ -5876,8 +5876,8 @@ ns2:EnergyDispersiveXRaySpectroscopy a ns2:Measurement ;
         "energy dispersive spectroscopy"@en,
         "wt.%"@en ;
     skos:prefLabel "Energy Dispersive X Ray Spectroscopy"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        ns2:CatalystInk,
         ns2:CathodeCatalystLayer ;
     ns2:hasOutputData ns2:SEMImageDataset ;
     ns2:measures ns2:CobaltWeightPercentInCatalystLayer,
@@ -6137,7 +6137,7 @@ ns2:FreezeThawCyclingDurabilityTest a ns2:Manufacturing ;
         "water amount in catalyst layer"@en,
         "water amount in membrane"@en ;
     skos:prefLabel "Freeze Thaw Cycling Durability Test"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasParameter ns2:FreezeThawCycleCount,
         ns2:RelativeHumidity,
         ns2:SaturatedResidualWaterAmount,
@@ -6264,10 +6264,10 @@ ns2:FuelCellPolarizationMeasurement a ns2:Measurement ;
         "voltage at 1.8 A cm-2"@en,
         "voltage at 1800 mA cm^-2"@en ;
     skos:prefLabel "Fuel Cell Polarization Measurement"@en ;
-    ns2:hasInputMaterial ns2:Air,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:Air,
         ns2:Hydrogen,
         ns2:MEAAssembly,
-        ns2:MembraneElectrodeAssembly,
         ns2:Oxygen ;
     ns2:hasOutputData ns2:FuelCellPolarizationDataset,
         ns2:PolarizationCurveDataset ;
@@ -6319,7 +6319,8 @@ ns2:FuelCellPolarizationMeasurement a ns2:Measurement ;
         ns2:PtMassSpecificPeakPowerDensity,
         ns2:PtMassSpecificPowerDensity,
         ns2:RelativePerformanceVariationPercent ;
-    ns2:usesInstrument ns2:DigitalMultimeter,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:DigitalMultimeter,
         ns2:DirectMethanolFuelCell,
         ns2:ElectricLoad,
         ns2:ElectrochemicalWorkstation,
@@ -6327,7 +6328,6 @@ ns2:FuelCellPolarizationMeasurement a ns2:Measurement ;
         ns2:FuelCellTestStation,
         ns2:GasHumidificationUnit,
         ns2:MassFlowController,
-        ns2:Potentiostat,
         ns2:SegmentedCellSystem .
 
 ns2:FuelCellPolarizationMeasurement_2 a ns2:Measurement ;
@@ -6340,7 +6340,7 @@ ns2:FuelCellPolarizationMeasurement_2 a ns2:Measurement ;
         "i–V curves"@en,
         "polarization curves"@en ;
     skos:prefLabel "Fuel Cell Polarization Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly_2 ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasOutputData ns2:PolarizationCurveDataset_2 ;
     ns2:hasParameter ns2:GasVolumetricFlowRate_2,
         ns2:OperatingTemperature_2,
@@ -6547,20 +6547,20 @@ ns2:HotPressing a ns2:Manufacturing ;
         "transfer to membrane by hot pressing"@en,
         "transferred on membrane by pressing"@en ;
     skos:prefLabel "Hot Pressing"@en ;
-    ns2:hasInputMaterial ns2:AluminumFoilSubstrate,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:AluminumFoilSubstrate,
         ns2:AnodeCatalystLayer,
         ns2:AnodeGDE,
         ns2:CatalystCoatedMembrane,
-        ns2:CatalystLayer,
         ns2:CathodeCatalystLayer,
-        ns2:CoatedElectrode,
-        ns2:GasDiffusionLayer,
-        ns2:MembraneElectrodeAssembly,
         ns2:Nafion211Membrane,
-        ns2:Nafion212Membrane,
-        ns2:ProtonExchangeMembrane ;
-    ns2:hasOutputMaterial ns2:MEAAssembly,
-        ns2:MembraneElectrodeAssembly ;
+        ns2:Nafion212Membrane ;
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:MEAAssembly ;
     ns2:hasParameter ns2:HoldTime,
         ns2:HotPressForce,
         ns2:HotPressPressure,
@@ -6822,7 +6822,7 @@ ns2:InkExtrusionProcess a ns2:Manufacturing ;
     skos:prefLabel "Ink Extrusion Process"@en ;
     ns2:hasInputMaterial ns2:CatalystInk,
         ns2:PowderInk ;
-    ns2:hasOutputMaterial ns2:CoatedElectrode,
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
         ns2:Microfilament ;
     ns2:hasParameter ns2:DepositionTime,
         ns2:NeedleDiameter,
@@ -7038,12 +7038,12 @@ ns2:InkjetPrinting a ns2:Manufacturing ;
         "drop form prior to impact"@en,
         "ink-jet"@en ;
     skos:prefLabel "Inkjet Printing"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:Docosyltriethoxysilane,
-        ns2:ProtonExchangeMembrane ;
-    ns2:hasOutputMaterial ns2:CatalystLayer,
-        ns2:CathodeCatalystLayer,
-        ns2:CoatedElectrode ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:CatalystInk,
+        ns2:Docosyltriethoxysilane ;
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:CathodeCatalystLayer ;
     ns2:hasParameter ns2:DyeConcentration,
         ns2:InkDilutionRatio,
         ns2:InkDropVolume ;
@@ -7228,8 +7228,8 @@ ns2:KOHImmersionActivation a ns2:Manufacturing ;
         "immersion in 1 M KOH"@en,
         "pre-conditioning"@en ;
     skos:prefLabel "KOH Immersion Activation"@en ;
-    ns2:hasInputMaterial ns2:CathodeGDE,
-        ns2:MembraneElectrodeAssembly,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CathodeGDE,
         ns2:PotassiumHydroxide ;
     ns2:hasParameter ns2:DwellTime,
         ns2:KOHConcentration .
@@ -7291,8 +7291,8 @@ ns2:LayerByLayerDeposition a ns2:Manufacturing ;
         "forming a second catalyst ink layer"@en,
         "layer-by-layer"@en ;
     skos:prefLabel "Layer By Layer Deposition"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:CatalystInk ;
     ns2:hasOutputMaterial ns2:CatalystCoatedMembrane ;
     ns2:hasParameter ns2:CatalystLayerPorosity .
 
@@ -7383,10 +7383,10 @@ ns2:LimitingCurrentMeasurement a ns2:Measurement ;
         "oxygen limiting current measurements"@en,
         "ε_I"@en ;
     skos:prefLabel "Limiting Current Measurement"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer,
-        ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CathodeCatalystLayer ;
     ns2:hasOutputData ns2:LimitingCurrentDataset,
         ns2:LocalOxygenTransportResistanceDataset ;
     ns2:hasParameter ns2:AlcoholMassFractionInSolventMixture,
@@ -7427,14 +7427,14 @@ ns2:LimitingCurrentMeasurement a ns2:Measurement ;
         ns2:PressureIndependentGasDiffusionResistance,
         ns2:TotalGasDiffusionResistance ;
     ns2:referenceElectrode ns2:DynamicHydrogenElectrode ;
-    ns2:usesInstrument ns2:ElectricLoad,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectricLoad,
         ns2:ElectrochemicalWorkstation,
         ns2:FuelCellTestCell,
         ns2:FuelCellTestStation,
         ns2:GasHumidificationUnit,
         ns2:InterdigitatedElectrodeArray,
-        ns2:MassFlowController,
-        ns2:Potentiostat .
+        ns2:MassFlowController .
 
 ns2:LiquidEthanePlungeFreezing a ns2:Manufacturing ;
     rdfs:label "Liquid Ethane Plunge Freezing"@en ;
@@ -7612,26 +7612,26 @@ ns2:MEAAssemblyProcess a ns2:Manufacturing ;
         "width 3.4 cm"@en,
         "working area"@en ;
     skos:prefLabel "MEAAssembly Process"@en ;
-    prov:used ns2:AnodeGDE,
+    prov:used <http://purl.org/holy/ns#Gasket>,
+        ns2:AnodeGDE,
         ns2:CathodeGDE,
-        ns2:Gasket,
         ns2:ProtonatedMembrane ;
-    ns2:hasInputMaterial ns2:AnodeCatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Gasket>,
+        <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:AnodeCatalystLayer,
         ns2:AnodeGDE,
         ns2:CatalystCoatedMembrane,
         ns2:CatalystInk,
         ns2:CathodeCatalystLayer,
         ns2:CathodeGDE,
-        ns2:CoatedElectrode,
-        ns2:GasDiffusionLayer,
-        ns2:Gasket,
         ns2:Nafion211Membrane,
         ns2:Nafion212Membrane,
         ns2:PTFEPolymer,
-        ns2:ProtonExchangeMembrane,
         ns2:ProtonatedMembrane ;
-    ns2:hasOutputMaterial ns2:MEAAssembly,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:MEAAssembly ;
     ns2:hasParameter ns2:AnodeCatalystLoading,
         ns2:AssemblyTorque,
         ns2:CatalystLoading,
@@ -7661,12 +7661,12 @@ ns2:MEAAssemblyProcess_2 a ns2:Manufacturing ;
         "Pt loading"@en,
         "assembled in a single cell"@en ;
     skos:prefLabel "MEA Assembly Process"@en ;
-    ns2:hasInputMaterial ns2:CatalystCoatedMembrane,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CatalystCoatedMembrane,
         ns2:CathodeGDE_2,
-        ns2:GasDiffusionLayer,
         ns2:Nafion212Membrane_3 ;
-    ns2:hasOutputMaterial ns2:CatalystCoatedMembrane,
-        ns2:MembraneElectrodeAssembly .
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CatalystCoatedMembrane .
 
 ns2:MEADurabilityMeasurement a ns2:Measurement ;
     rdfs:label "MEA Durability Measurement"@en ;
@@ -7706,7 +7706,7 @@ ns2:MEADurabilityMeasurement a ns2:Measurement ;
         "~20 mV"@en,
         "~50 mV at 2.0 A/cm2"@en ;
     skos:prefLabel "MEA Durability Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasParameter ns2:BiasPotential,
         ns2:CathodeStoichiometricRatio,
         ns2:CellPressure,
@@ -7762,8 +7762,8 @@ ns2:MembraneAreaExpansionMeasurement a ns2:Measurement ;
     skos:altLabel "area expansion measurement"@en,
         "membrane swelling test"@en ;
     skos:prefLabel "Membrane Area Expansion Measurement"@en ;
-    ns2:hasInputMaterial ns2:Ethanol,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:Ethanol ;
     ns2:measures ns2:MembraneAreaExpansionPercent .
 
 ns2:MembraneCastingProcess a ns2:Manufacturing ;
@@ -7774,7 +7774,7 @@ ns2:MembraneCastingProcess a ns2:Manufacturing ;
     skos:prefLabel "Membrane Casting Process"@en ;
     ns2:hasInputMaterial ns2:SPFSO2NHGCIOHIonomer,
         ns2:SulfonatedPolyEtherEtherKetone ;
-    ns2:hasOutputMaterial ns2:ProtonExchangeMembrane,
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#Membrane>,
         ns2:SPFSO2NHGCIOHMembrane ;
     ns2:hasParameter ns2:SolventType .
 
@@ -7789,8 +7789,8 @@ ns2:MembraneSwellingMeasurement a ns2:Measurement ;
         "swelling ratio measurement"@en,
         "swelling ratio of membrane"@en ;
     skos:prefLabel "Membrane Swelling Measurement"@en ;
-    ns2:hasInputMaterial ns2:PESPVPCompositeMembrane,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:PESPVPCompositeMembrane ;
     ns2:hasParameter ns2:Acetone,
         ns2:Ethanol,
         ns2:EthyleneGlycol,
@@ -7831,11 +7831,11 @@ ns2:MercuryIntrusionPorosimetryMeasurement a ns2:Measurement ;
         "true density"@en,
         "ρ_p"@en ;
     skos:prefLabel "Mercury Intrusion Porosimetry Measurement"@en ;
-    ns2:hasInputMaterial ns2:AnodeCatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:AnodeCatalystLayer,
         ns2:CarbonSupport,
-        ns2:CatalystLayer,
         ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
         ns2:PorousAluminaCeramicCarrier,
         ns2:VulcanXC72RCarbonBlack ;
     ns2:hasOutputData ns2:PoreSizeDistributionDataset ;
@@ -7868,7 +7868,7 @@ ns2:MethanolPermeabilityMeasurement a ns2:Measurement ;
     skos:prefLabel "Methanol Permeability Measurement"@en ;
     ns2:hasInputMaterial ns2:AnionExchangeMembrane ;
     ns2:measures ns2:MethanolPermeability ;
-    ns2:usesInstrument ns2:Potentiostat .
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> .
 
 ns2:MeyerRodCoating a ns2:Manufacturing ;
     rdfs:label "Meyer Rod Coating"@en ;
@@ -7885,10 +7885,10 @@ ns2:MeyerRodCoating a ns2:Manufacturing ;
         "contact coating"@en,
         "rod coating"@en ;
     skos:prefLabel "Meyer Rod Coating"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:GasDiffusionLayer,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CatalystInk,
         ns2:MicroporousLayerInk ;
-    ns2:hasOutputMaterial ns2:CatalystLayer,
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
         ns2:CathodeCatalystLayer,
         ns2:MicroporousLayer ;
     ns2:usesInstrument ns2:Elcometer4340BarCoatingDevice .
@@ -7936,9 +7936,9 @@ ns2:MicrobialFuelCellPolarizationMeasurement a ns2:Measurement ;
         ns2:OperatingVoltage,
         ns2:PeakPowerDensity,
         ns2:TotalInternalResistance ;
-    ns2:usesInstrument ns2:AgAgCl,
-        ns2:ElectrochemicalWorkstation,
-        ns2:Potentiostat .
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:AgAgCl,
+        ns2:ElectrochemicalWorkstation .
 
 ns2:MicroelectrodeWaterElectrolyzerPolarizationMeasurement a ns2:Measurement ;
     rdfs:label "Microelectrode Water Electrolyzer Polarization Measurement"@en ;
@@ -7947,7 +7947,7 @@ ns2:MicroelectrodeWaterElectrolyzerPolarizationMeasurement a ns2:Measurement ;
         "polarization curve"@en,
         "water-splitting performance on IDE microelectrodes"@en ;
     skos:prefLabel "Microelectrode Water Electrolyzer Polarization Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasOutputData ns2:PolarizationCurveDataset ;
     ns2:hasParameter ns2:CellPressure,
         ns2:ConditioningTime,
@@ -8162,7 +8162,7 @@ ns2:OrganicFlowBatteryPolarizationMeasurement a ns2:Measurement ;
         "polarization curve"@en,
         "polarization measurement"@en ;
     skos:prefLabel "Organic Flow Battery Polarization Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasOutputData ns2:PolarizationCurveDataset ;
     ns2:hasParameter ns2:CatalystLoading,
         ns2:CurrentDensity,
@@ -8207,11 +8207,11 @@ ns2:PEMFCCFDSimulation a ns2:Measurement ;
         "j*"@en,
         "β"@en ;
     skos:prefLabel "PEMFCCFD Simulation"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:FlowChannel,
-        ns2:GasDiffusionLayer,
-        ns2:MembraneElectrodeAssembly,
-        ns2:ProtonExchangeMembrane ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CathodeCatalystLayer,
+        ns2:FlowChannel ;
     ns2:hasOutputData ns2:PolarizationCurveDataset ;
     ns2:hasParameter ns2:BiasPotential,
         ns2:CatalystLayerPorosity,
@@ -8362,8 +8362,8 @@ ns2:PorosityMeasurement a ns2:Measurement ;
         "skeletal density"@en,
         "skeletal density measurement"@en ;
     skos:prefLabel "Porosity Measurement"@en ;
-    ns2:hasInputMaterial ns2:Carbonized3DPrintedCarbonMaterial,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        ns2:Carbonized3DPrintedCarbonMaterial,
         ns2:CesiumFormateSolution ;
     ns2:hasParameter ns2:TrueDensity ;
     ns2:measures ns2:ApparentDensity,
@@ -8388,7 +8388,7 @@ ns2:PotentialCyclingActivation a ns2:Manufacturing ;
         "potential cycling"@en,
         "voltage cycling"@en ;
     skos:prefLabel "Potential Cycling Activation"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ;
     ns2:hasParameter ns2:LowerPotentialLimit,
         ns2:NumberOfCycles,
         ns2:ScanRate,
@@ -8493,10 +8493,10 @@ ns2:ProtonConductivityMeasurement a ns2:Measurement ;
         "through-plane AC impedance conductivity measurement"@en,
         "κ_f"@en ;
     skos:prefLabel "Proton Conductivity Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
         ns2:PFSAIonomer,
-        ns2:PhosphoricAcidDopedPESPVPCompositeMembrane,
-        ns2:ProtonExchangeMembrane ;
+        ns2:PhosphoricAcidDopedPESPVPCompositeMembrane ;
     ns2:hasOutputData ns2:ConductivityDataset,
         ns2:ImpedanceDataset ;
     ns2:hasParameter ns2:EISMaxFrequency,
@@ -8509,9 +8509,9 @@ ns2:ProtonConductivityMeasurement a ns2:Measurement ;
         ns2:Temperature ;
     ns2:measures ns2:EffectiveIonicConductivity,
         ns2:ProtonicCatalystLayerResistivity ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
-        ns2:InterdigitatedElectrodeArray,
-        ns2:Potentiostat .
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
+        ns2:InterdigitatedElectrodeArray .
 
 ns2:PtUtilizationCalculation a ns2:Measurement ;
     rdfs:label "Pt Utilization Calculation"@en ;
@@ -8541,7 +8541,7 @@ ns2:PulsedLaserDepositionProcess a ns2:Manufacturing ;
     ns2:hasInputMaterial ns2:Alumina,
         ns2:CobaltIIOxideCoO,
         ns2:Fe2O3Powder ;
-    ns2:hasOutputMaterial ns2:CatalystLayer ;
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasParameter ns2:LaserFluence,
         ns2:LaserPulseLength,
         ns2:LaserRepetitionRate,
@@ -8705,7 +8705,7 @@ ns2:ReferenceElectrodeCalibrationMeasurement a ns2:Measurement ;
     skos:prefLabel "Reference Electrode Calibration Measurement"@en ;
     ns2:hasInputMaterial ns2:AgAgCl ;
     ns2:measures ns2:AgAgClPotentialVsRHE ;
-    ns2:referenceElectrode ns2:RHE ;
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ;
     ns2:usesInstrument ns2:ElectrochemicalWorkstation .
 
 ns2:ReportedMaterialProperty a ns2:Measurement ;
@@ -9077,16 +9077,16 @@ ns2:SEMImagingMeasurement a ns2:Measurement ;
         "scanning electron microscopy"@en,
         "~8 µm"@en ;
     skos:prefLabel "SEM Imaging Measurement"@en ;
-    ns2:hasInputMaterial ns2:AnodeCatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:AnodeCatalystLayer,
         ns2:Carbonized3DPrintedCarbonMaterial,
         ns2:CatalystCoatedMembrane,
         ns2:CatalystInk,
-        ns2:CatalystLayer,
         ns2:CathodeCatalystLayer,
         ns2:CathodeGDE,
-        ns2:CoatedElectrode,
-        ns2:GasDiffusionLayer,
-        ns2:MembraneElectrodeAssembly,
         ns2:MicroporousLayer,
         ns2:PorousAluminaCeramicCarrier,
         ns2:PseudoBoehmite,
@@ -9156,12 +9156,12 @@ ns2:ScreenPrinting a ns2:Manufacturing ;
         "sieve printing"@en,
         "target Pt loading"@en ;
     skos:prefLabel "Screen Printing"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk,
-        ns2:GasDiffusionLayer ;
-    ns2:hasOutputMaterial ns2:CatalystCoatedMembrane,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:CatalystInk ;
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:CatalystCoatedMembrane,
         ns2:CathodeCatalystLayer,
-        ns2:CoatedElectrode,
         ns2:TitaniumOxideLayer ;
     ns2:hasParameter ns2:CatalystLoading,
         ns2:PrintPressure,
@@ -9286,9 +9286,9 @@ ns2:SlotDieCoating a ns2:Manufacturing ;
     dcterms:description "Roll-to-roll compatible coating method for depositing catalyst inks; discussed as scalable CL fabrication."@en ;
     skos:prefLabel "Slot Die Coating"@en ;
     ns2:hasInputMaterial ns2:CatalystInk ;
-    ns2:hasOutputMaterial ns2:CatalystCoatedMembrane,
-        ns2:CathodeCatalystLayer,
-        ns2:CoatedElectrode ;
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns2:CatalystCoatedMembrane,
+        ns2:CathodeCatalystLayer ;
     ns2:hasParameter ns2:CoatingGap,
         ns2:CoatingSpeed,
         ns2:CoatingWidth,
@@ -9579,7 +9579,7 @@ ns2:SpectroscopicEllipsometryMeasurement a ns2:Measurement ;
         "swelling measurement"@en,
         "thickness measurement"@en ;
     skos:prefLabel "Spectroscopic Ellipsometry Measurement"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasOutputData ns2:SwellingDataset ;
     ns2:hasParameter ns2:RelativeHumidity ;
     ns2:measures ns2:CatalystLayerThickness,
@@ -9673,29 +9673,29 @@ ns2:SprayCoating a ns2:Manufacturing ;
     skos:prefLabel "Spray Coating"@en ;
     prov:used ns2:CatalystInk,
         ns2:ElectrodeSubstrate ;
-    ns2:hasInputMaterial ns2:AnionExchangeIonomerPowder,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:AnionExchangeIonomerPowder,
         ns2:CatalystInk,
         ns2:CobaltAcetate,
         ns2:ElectrodeSubstrate,
-        ns2:GasDiffusionLayer,
         ns2:IronAcetate,
         ns2:Isopropanol,
         ns2:KetjenBlackEC300JCarbonSupport,
         ns2:Nafion212Membrane,
         ns2:PTFEPolymer,
-        ns2:ProtonExchangeMembrane,
         ns2:PtOnCarbonCatalyst,
         ns2:TitaniumSubstrate ;
-    ns2:hasOutputMaterial ns2:AnodeCatalystLayer,
+    ns2:hasOutputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:AnodeCatalystLayer,
         ns2:AnodeGDE,
         ns2:CatalystCoatedMembrane,
-        ns2:CatalystLayer,
         ns2:CathodeCatalystLayer,
         ns2:CathodeGDE,
-        ns2:CoatedElectrode,
         ns2:FeCoBimetallicCatalyst,
-        ns2:IonomerNanofiberScaffoldingCatalystLayer,
-        ns2:MembraneElectrodeAssembly ;
+        ns2:IonomerNanofiberScaffoldingCatalystLayer ;
     ns2:hasParameter ns2:AnodeCatalystLoading,
         ns2:BreakTimeBetweenSprayCycles,
         ns2:CarrierGasFlow,
@@ -10126,10 +10126,10 @@ ns2:ThroughPlaneElectronicConductivityMeasurement a ns2:Measurement ;
     ns2:measures ns2:ElectricalPercolationThresholdVolumeFraction,
         ns2:ScalingExponentT,
         ns2:ThroughPlaneElectronicConductivity ;
-    ns2:usesInstrument ns2:GoldPlatedProbes,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:GoldPlatedProbes,
         ns2:MicroOhmMeter,
         ns2:PneumaticJack,
-        ns2:Potentiostat,
         ns2:Rheometer .
 
 ns2:ThroughPlaneGasTransportMeasurement a ns2:Measurement ;
@@ -10153,7 +10153,7 @@ ns2:ThroughPlaneThermalConductivityMeasurement a ns2:Measurement ;
         "k"@en,
         "thermal conductivity apparatus"@en ;
     skos:prefLabel "Through Plane Thermal Conductivity Measurement"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasParameter ns2:CatalystLayerThickness,
         ns2:CompressionPressure,
         ns2:IonomerToCarbonRatio,
@@ -10453,7 +10453,7 @@ ns2:VacuumDrying a ns2:Manufacturing ;
         "vacuum oven drying"@en,
         "vacuum-dried"@en ;
     skos:prefLabel "Vacuum Drying"@en ;
-    ns2:hasInputMaterial ns2:CatalystLayer ;
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer> ;
     ns2:hasParameter ns2:DryingTemperature,
         ns2:DryingTime,
         ns2:Temperature,
@@ -10554,7 +10554,7 @@ ns2:XRayComputedTomographyMeasurement a ns2:Measurement ;
         "tomography"@en,
         "x-ray computed tomography"@en ;
     skos:prefLabel "X Ray Computed Tomography Measurement"@en ;
-    ns2:hasInputMaterial ns2:MembraneElectrodeAssembly,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
         ns2:SmartElastomericCellularFoam ;
     ns2:hasOutputData ns2:ExperimentDataset ;
     ns2:hasParameter ns2:AcceleratingVoltage,
@@ -10625,8 +10625,8 @@ ns2:XRayDiffractionMeasurement a ns2:Measurement ;
         "λ"@en,
         "λ = 1.54056 Å"@en ;
     skos:prefLabel "X Ray Diffraction Measurement"@en ;
-    ns2:hasInputMaterial ns2:Carbonized3DPrintedCarbonMaterial,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        ns2:Carbonized3DPrintedCarbonMaterial,
         ns2:FeNCCatalyst,
         ns2:PorousAluminaCeramicCarrier,
         ns2:PtOnCarbonCatalyst,
@@ -11016,15 +11016,15 @@ ns2:CyclicVoltammetry a ns2:Measurement ;
         "voltammograms"@en,
         "−0.1 V vs SCE"@en ;
     skos:prefLabel "Cyclic Voltammetry"@en ;
-    ns2:hasInputMaterial ns2:Anthraquinone2SulfonicAcid,
-        ns2:CatalystLayer,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#CatalystLayer>,
+        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:Anthraquinone2SulfonicAcid,
         ns2:CathodeCatalystLayer,
         ns2:CathodeGDE,
-        ns2:CoatedElectrode,
         ns2:DihydroxybenzeneDisulfonicAcid,
         ns2:Hydrogen,
         ns2:LaNiO3PerovskiteOxide,
-        ns2:MembraneElectrodeAssembly,
         ns2:Nitrogen,
         ns2:PDLAgNWCompositeInk,
         ns2:PlatinumCoatedGlassSlide,
@@ -11090,14 +11090,15 @@ ns2:CyclicVoltammetry a ns2:Measurement ;
         ns2:ReductionPotential,
         ns2:RoughnessFactor,
         ns2:SurfaceConcentration ;
-    ns2:referenceElectrode ns2:AgAgCl,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24>,
+        ns2:AgAgCl,
         ns2:DynamicHydrogenElectrode,
         ns2:MercuryMercuryOxideReferenceElectrode,
-        ns2:RHE,
         ns2:ReferenceElectrodeMercurousSulfate,
         ns2:ReferenceElectrodeMercuryMercuryOxide,
         ns2:SCE ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
         ns2:FuelCellTestCell,
         ns2:FuelCellTestStation,
         ns2:GDEHalfCellSetup,
@@ -11105,7 +11106,6 @@ ns2:CyclicVoltammetry a ns2:Measurement ;
         ns2:GraphiteRodCounterElectrode,
         ns2:MercurySulfateReferenceElectrode,
         ns2:PlatinumWireCounterElectrode,
-        ns2:Potentiostat,
         ns2:RotatingDiskElectrodeSystem,
         ns2:SCE .
 
@@ -11207,9 +11207,9 @@ ns2:ElectrochemicalImpedanceSpectroscopyGalvanostatic a ns2:Measurement ;
         "mgpt cm−2"@en,
         "r_cl"@en ;
     skos:prefLabel "Electrochemical Impedance Spectroscopy Galvanostatic"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:MEAAssembly,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CathodeCatalystLayer,
+        ns2:MEAAssembly ;
     ns2:hasOutputData ns2:EISNyquistDataset,
         ns2:ExperimentDataset,
         ns2:ImpedanceDataset ;
@@ -11257,9 +11257,9 @@ ns2:ElectrochemicalImpedanceSpectroscopyGalvanostatic a ns2:Measurement ;
         ns2:ProtonicCatalystLayerResistance,
         ns2:WarburgCoefficient ;
     ns2:referenceElectrode ns2:DynamicHydrogenElectrode ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
         ns2:FuelCellTestStation,
-        ns2:Potentiostat,
         ns2:SegmentedCellSystem .
 
 ns2:ElectrochemicalImpedanceSpectroscopyPotentiostatic a ns2:Measurement ;
@@ -11387,8 +11387,8 @@ ns2:ElectrochemicalImpedanceSpectroscopyPotentiostatic a ns2:Measurement ;
         "τ^-1"@en,
         "τ−1"@en ;
     skos:prefLabel "Electrochemical Impedance Spectroscopy Potentiostatic"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer,
-        ns2:MembraneElectrodeAssembly,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        ns2:CathodeCatalystLayer,
         ns2:PDLAgNWCompositeInk,
         ns2:PlatinumCoatedGlassSlide,
         ns2:PotassiumChlorideElectrolyte ;
@@ -11453,13 +11453,13 @@ ns2:ElectrochemicalImpedanceSpectroscopyPotentiostatic a ns2:Measurement ;
         ns2:TotalInternalResistance,
         ns2:WarburgCoefficient,
         ns2:WarburgImpedance ;
-    ns2:referenceElectrode ns2:AgAgCl,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24>,
+        ns2:AgAgCl,
         ns2:DynamicHydrogenElectrode,
-        ns2:RHE,
         ns2:ReferenceElectrodeMercuryMercuryOxide ;
-    ns2:usesInstrument ns2:ElectrochemicalWorkstation,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:ElectrochemicalWorkstation,
         ns2:FuelCellTestStation,
-        ns2:Potentiostat,
         ns2:RotatingDiskElectrodeSystem,
         ns2:SegmentedCellSystem,
         ns2:Solartron1260ImpedanceAnalyzer .
@@ -11680,18 +11680,18 @@ ns2:LinearSweepVoltammetry a ns2:Measurement ;
         ns2:Overpotential,
         ns2:TafelSlope ;
     ns2:normalizedTo ns2:GeometricArea ;
-    ns2:referenceElectrode ns2:AgAgCl,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24>,
+        ns2:AgAgCl,
         ns2:DynamicHydrogenElectrode,
         ns2:MercuryMercuryOxideReferenceElectrode,
-        ns2:RHE,
         ns2:ReferenceElectrodeMercurousSulfate,
         ns2:ReferenceElectrodeMercuryMercuryOxide,
         ns2:SCE ;
-    ns2:usesInstrument ns2:AgAgCl,
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:AgAgCl,
         ns2:ElectrochemicalWorkstation,
         ns2:GDEHalfCellSetup,
         ns2:GlassyCarbonDiskElectrode,
-        ns2:Potentiostat,
         ns2:RDERotator,
         ns2:RRDEAssembly,
         ns2:RotatingDiskElectrodeSystem,
@@ -11837,12 +11837,12 @@ ns2:MEAPolarization a ns2:Measurement ;
         "~195 mA cm^-2 at 0.4 V"@en,
         "ΔV_total"@en ;
     skos:prefLabel "MEAPolarization"@en ;
-    ns2:hasInputMaterial ns2:Air,
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1>,
+        ns2:Air,
         ns2:AnionExchangeMembrane,
         ns2:CathodeCatalystLayer,
-        ns2:GasDiffusionLayer,
         ns2:Hydrogen,
-        ns2:MembraneElectrodeAssembly,
         ns2:Nitrogen,
         ns2:Oxygen ;
     ns2:hasOutputData ns2:ExperimentDataset,
@@ -11903,15 +11903,15 @@ ns2:MEAPolarization a ns2:Measurement ;
         ns2:SpecificAreaActivityAt0p9V,
         ns2:TafelSlope,
         ns2:TotalInternalResistance ;
-    ns2:referenceElectrode ns2:RHE ;
-    ns2:usesInstrument ns2:DigitalMultimeter,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ;
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:DigitalMultimeter,
         ns2:ElectricLoad,
         ns2:ElectrochemicalWorkstation,
         ns2:FuelCellTestCell,
         ns2:FuelCellTestStation,
         ns2:GasHumidificationUnit,
-        ns2:MassFlowController,
-        ns2:Potentiostat .
+        ns2:MassFlowController .
 
 ns2:MercuryPorosimeter a ns2:Instrument ;
     rdfs:label "Mercury Porosimeter"@en ;
@@ -12033,10 +12033,10 @@ ns2:PhosphoricAcidDoping a ns2:Manufacturing ;
         "phosphoric acid–doped PBI"@en,
         "treated with 85% H3PO4"@en ;
     skos:prefLabel "Phosphoric Acid Doping"@en ;
-    ns2:hasInputMaterial ns2:PESPVPCompositeMembrane,
+    ns2:hasInputMaterial <http://purl.org/holy/ns#Membrane>,
+        ns2:PESPVPCompositeMembrane,
         ns2:PhosphoricAcid,
-        ns2:Polybenzimidazole,
-        ns2:ProtonExchangeMembrane ;
+        ns2:Polybenzimidazole ;
     ns2:hasOutputMaterial ns2:PhosphoricAcidDopedPESPVPCompositeMembrane ;
     ns2:hasParameter ns2:DryingTime,
         ns2:PhosphoricAcidWeightPercent .
@@ -12144,13 +12144,13 @@ ns2:RotatingRingDiskVoltammetry a ns2:Measurement ;
         ns2:OxygenPermeability,
         ns2:PeroxideYield,
         ns2:PtPoisoningByIonomer ;
-    ns2:referenceElectrode ns2:AgAgCl,
-        ns2:MercuryMercuryOxideReferenceElectrode,
-        ns2:RHE ;
-    ns2:usesInstrument ns2:AgAgCl,
+    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24>,
+        ns2:AgAgCl,
+        ns2:MercuryMercuryOxideReferenceElectrode ;
+    ns2:usesInstrument <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6>,
+        ns2:AgAgCl,
         ns2:ElectrochemicalWorkstation,
         ns2:GlassyCarbonDiskElectrode,
-        ns2:Potentiostat,
         ns2:RRDEAssembly,
         ns2:RotatingDiskElectrodeSystem .
 
@@ -12162,7 +12162,7 @@ ns2:SEMImaging a ns2:Measurement ;
         "scanning electron microscopy"@en,
         "thickness 500 µm"@en ;
     skos:prefLabel "SEM Imaging"@en ;
-    ns2:hasInputMaterial ns2:CoatedElectrode ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56> ;
     ns2:measures ns2:CatalystLayerThickness,
         ns2:FilmThickness,
         ns2:GrapheneFlakeLateralSize,
@@ -13045,6 +13045,8 @@ ns2:AnodeGDE a ns2:Matter ;
         "anode gas diffusion electrode"@en,
         "commercial gas diffusion electrode (Fuel Cell Store)"@en,
         "commercial gas diffusion electrode (GDE) used as anode"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d> ;
     skos:prefLabel "Anode GDE"@en .
 
 ns2:CatalystInkStructureDataset a ns2:Data ;
@@ -13074,8 +13076,8 @@ ns2:MEAAssembly a ns2:Matter ;
         "reactive area"@en,
         "single cell assembled with an MEA sandwiched with a GDL"@en ;
     skos:prefLabel "MEAAssembly"@en ;
-    ns2:hasInputMaterial ns2:GasDiffusionLayer,
-        ns2:MembraneElectrodeAssembly ;
+    ns2:hasInputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1> ;
     ns2:hasOutputMaterial ns2:AqueousOrganicFlowBattery .
 
 ns2:MicroporousLayer a ns2:Matter ;
@@ -13323,6 +13325,22 @@ ns2:DigitalMultimeter a ns2:Instrument ;
         "digital multi-meter"@en ;
     skos:prefLabel "Digital Multimeter"@en .
 
+ns2:DynamicHydrogenElectrode a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
+    rdfs:label "Dynamic Hydrogen Electrode (H2 Anode in MEA)"@en ;
+    skos:altLabel "DHE"@en,
+        "H2 anode"@en,
+        "H2 anode as reference"@en,
+        "H2 anode as reference electrode"@en,
+        "H2 anode in MEA"@en,
+        "H2 anode reference"@en,
+        "H2 anode reference/counter"@en,
+        "H2 anode reference/counter electrode"@en,
+        "dynamic hydrogen electrode"@en,
+        "dynamic reference electrode"@en,
+        "hydrogen electrode"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ;
+    skos:prefLabel "Dynamic Hydrogen Electrode"@en .
+
 ns2:GlassyCarbonDiskElectrode a ns2:Instrument ;
     rdfs:label "Glassy Carbon Disk Electrode"@en ;
     dcterms:description "Working electrode substrate (glassy carbon disk) used in RDE measurements."@en ;
@@ -13339,6 +13357,7 @@ ns2:GlassyCarbonDiskElectrode a ns2:Instrument ;
         "glassy carbon (GC) rod"@en,
         "glassy carbon disk"@en,
         "glassy carbon electrode"@en ;
+    skos:broadMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc> ;
     skos:prefLabel "Glassy Carbon Disk Electrode"@en .
 
 ns2:MassFlowController a ns2:Instrument ;
@@ -13428,6 +13447,7 @@ ns2:RotatingDiskElectrodeSystem a ns2:Instrument ;
         "rotating disk electrode"@en,
         "rotating disk electrode setup"@en,
         "rotating disk electrode system (Pine Research)"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7> ;
     skos:prefLabel "Rotating Disk Electrode System"@en .
 
 ns2:SampleMass a ns2:Metadata ;
@@ -13493,6 +13513,7 @@ ns2:AnodeCatalystLayer a ns2:Matter ;
         "anode electrode"@en,
         "anode layer"@en,
         "catalyst layer"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76> ;
     skos:prefLabel "Anode Catalyst Layer"@en .
 
 ns2:Ethanol a ns2:Matter ;
@@ -13827,6 +13848,20 @@ ns2:VulcanXC72RCarbonBlack a ns2:Matter ;
         "carbon support"@en ;
     skos:prefLabel "Vulcan XC 72 R Carbon Black"@en .
 
+ns2:AgAgCl a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
+    rdfs:label "Ag/AgCl"@en ;
+    skos:altLabel "Ag/AgCl"@en,
+        "Ag/AgCl (3 M KCl)"@en,
+        "Ag/AgCl (3M KCl)"@en,
+        "Ag/AgCl reference"@en,
+        "Ag/AgCl reference electrode"@en,
+        "Ag/AgCl reference electrode (3 M KCl)"@en,
+        "Ag/AgCl reference electrode (Metrohm)"@en,
+        "Ag/AgCl reference electrode (sat. KCl)"@en,
+        "CH Instruments RE-5B"@en,
+        "saturated Ag/AgCl"@en ;
+    skos:prefLabel "Ag Ag Cl"@en .
+
 ns2:PolarizationCurveDataset a ns2:Data ;
     rdfs:label "Polarization Curve Dataset"@en ;
     dcterms:description "Polarization curves (U-I / I-V) measured at different RH and degradation states."@en ;
@@ -13883,6 +13918,8 @@ ns2:CathodeGDE a ns2:Matter ;
         "cathode gas diffusion electrode"@en,
         "coated electrode"@en,
         "gas diffusion electrode"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2>,
+        <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67> ;
     skos:prefLabel "Cathode GDE"@en .
 
 ns2:FuelCellTestStation a ns2:Instrument ;
@@ -14248,81 +14285,6 @@ ns2:PtOnCarbonCatalyst a ns2:Matter ;
         "platinum-based catalysts"@en ;
     skos:prefLabel "Pt On Carbon Catalyst"@en .
 
-ns2:Potentiostat a ns2:Instrument ;
-    rdfs:label "Potentiostat"@en ;
-    dcterms:description "Potentiostat/galvanostat used for CV, EIS, and other electrochemical measurements."@en ;
-    skos:altLabel "760E bi-potentiostat"@en,
-        "AUTOLAB AUT58696"@en,
-        "ArrayStat"@en,
-        "Autolab"@en,
-        "Autolab PGSTAT 30"@en,
-        "Autolab PGSTAT30"@en,
-        "Autolab PGSTAT302 N"@en,
-        "Autolab PGSTAT302N"@en,
-        "BI-STAT 2 channel potentiostat (Princeton)"@en,
-        "Bio-Logic"@en,
-        "Bio-Logic VSP-300"@en,
-        "BioLogic"@en,
-        "BioLogic SP-150 potentiostat"@en,
-        "BioLogic potentiostat"@en,
-        "Biologic SP-50"@en,
-        "Biologic VSP-300"@en,
-        "CH Instruments"@en,
-        "CHI611C Electrochemical Analyzer"@en,
-        "Eco Chemie PGSTAT-30"@en,
-        "Gamry Interface 5000E"@en,
-        "Gamry Ref3000"@en,
-        "Gamry Ref3000 potentiostat"@en,
-        "Gamry Reference 3000"@en,
-        "Gamry Reference 3000 + 30k booster"@en,
-        "Gill ac potentiostat (ACM Instruments)"@en,
-        "HA-151B potentiostat"@en,
-        "IM6 (Zahner)"@en,
-        "Metrohm"@en,
-        "Metrohm Autolab PGSTAT302N"@en,
-        "Metrohm Autolab potentiostat"@en,
-        "Model 2100"@en,
-        "Multi Autolab"@en,
-        "PGSTAT 30"@en,
-        "Pine instrument model AFCBP1"@en,
-        "SP-150"@en,
-        "SP-150 potentiostat"@en,
-        "SP-50 Biologic Potentiostat"@en,
-        "Solartron 1287A"@en,
-        "Solartron SI1287"@en,
-        "Solartron SI2610"@en,
-        "VMP3B booster"@en,
-        "VersaStat 3"@en,
-        "Zahner IM6"@en,
-        "Zahner Zennium potentiostat"@en,
-        "Zahner potentiostat"@en,
-        "bi-potentiostat"@en,
-        "electrochemical measurement apparatus"@en,
-        "electrochemical system"@en,
-        "electrochemical workstation"@en,
-        "galvanostat"@en,
-        "multi-channel potentiostat"@en,
-        "potentiostat (Bio-Logic SP-150)"@en,
-        "potentiostat/galvanostat"@en,
-        "potentiostat/galvanostat with EIS"@en,
-        "potentiostat/galvanostat with EIS module"@en,
-        "test-stand integrated potentiostat"@en ;
-    skos:prefLabel "Potentiostat"@en .
-
-ns2:CoatedElectrode a ns2:Matter ;
-    skos:altLabel "Au electrode"@en,
-        "GDE"@en,
-        "GDE (catalyst-coated GDL)"@en,
-        "Pt-C/Nafion GDE"@en,
-        "catalyst film on GC"@en,
-        "catalyst thin film"@en,
-        "catalyst-coated GDL"@en,
-        "catalyst-coated gas diffusion media"@en,
-        "electrode"@en,
-        "gas diffusion electrode"@en,
-        "ink coated gold electrode"@en ;
-    skos:prefLabel "Coated Electrode"@en .
-
 ns2:ExperimentDataset a ns2:Data ;
     dcterms:creator "Electrochemistry Research Group" ;
     dcterms:format "CSV" ;
@@ -14368,149 +14330,7 @@ ns2:CatalystCoatedMembrane a ns2:Matter ;
         "half CCM"@en,
         "membrane catalyst layer assembly"@en ;
     skos:prefLabel "Catalyst Coated Membrane"@en ;
-    ns2:hasOutputMaterial ns2:MembraneElectrodeAssembly .
-
-ns2:GasDiffusionLayer a ns2:Matter ;
-    rdfs:label "Gas Diffusion Layer"@en ;
-    dcterms:description "Gas diffusion layer used on anode and cathode sides."@en ;
-    skos:altLabel "10BC carbon paper"@en,
-        "10BC carbon paper (SGL)"@en,
-        "10BCE"@en,
-        "28BCE (SGL)"@en,
-        "29BC"@en,
-        "AvCarb GDS 3250"@en,
-        "CeTech)"@en,
-        "ELAT"@en,
-        "ELAT (E-TEK)"@en,
-        "ELAT V2.1"@en,
-        "ELAT® GDL"@en,
-        "ELAT® GDL LT 1400-W"@en,
-        "Freudenberg H14C7"@en,
-        "Freudenberg H14CX653"@en,
-        "Freudenberg H23C8"@en,
-        "Freudenberg H23C9"@en,
-        "GD07508G"@en,
-        "GDL"@en,
-        "GDL/MPL"@en,
-        "GDM"@en,
-        "H14C7"@en,
-        "H2315 C2 (Freudenberg)"@en,
-        "H23C9 GDL"@en,
-        "HCP120"@en,
-        "JNT20-A3"@en,
-        "JNT30-A3"@en,
-        "LT 1400-W"@en,
-        "LT2500"@en,
-        "MGL190"@en,
-        "MPL"@en,
-        "PTFE-treated TGP-H-60"@en,
-        "SGL 10BC"@en,
-        "SGL 10BC carbon paper"@en,
-        "SGL 10BCE"@en,
-        "SGL 24BC"@en,
-        "SGL 25 BC"@en,
-        "SGL 25BC"@en,
-        "SGL 29BC"@en,
-        "SGL 29BC(E)"@en,
-        "SGL 35BC"@en,
-        "SGL24BCE"@en,
-        "Sigracet"@en,
-        "Sigracet 10BC"@en,
-        "Sigracet 25 BC"@en,
-        "Sigracet 29 BC"@en,
-        "Sigracet 29BC"@en,
-        "Sigracet GDL"@en,
-        "Sigracet GDL-34BC"@en,
-        "TGP-H-60"@en,
-        "TGPH-060 (Toray)"@en,
-        "TGPH-090"@en,
-        "Teflonized non-woven carbon paper"@en,
-        "Toray TGPH090"@en,
-        "Toray carbon paper"@en,
-        "Toray graphite paper"@en,
-        "Toray paper"@en,
-        "W1S1005"@en,
-        "backing layer (BL)"@en,
-        "carbon cloth"@en,
-        "carbon cloth (Electrode Backing EC-CC1-060T)"@en,
-        "carbon cloth GDL"@en,
-        "carbon fibrous web"@en,
-        "carbon paper"@en,
-        "carbon paper AvCarb MGL370"@en,
-        "carbon paper GDL"@en,
-        "carbon paper TGP-H-030"@en,
-        "carbon paper with microporous layer"@en,
-        "carbon supporting layer"@en,
-        "diffusion media"@en,
-        "diffusion medium"@en,
-        "gas diffusion layer (W1S1009"@en,
-        "gas diffusion media"@en,
-        "gas diffusion medium"@en,
-        "microporous layer"@en,
-        "porous transport layer (PTL)"@en ;
-    skos:prefLabel "Gas Diffusion Layer"@en .
-
-ns2:ProtonExchangeMembrane a ns2:Matter ;
-    rdfs:label "Proton Exchange Membrane"@en ;
-    dcterms:description "Proton exchange membrane separating anode/cathode; thickness reported."@en ;
-    skos:altLabel "1135 Nafion membrane"@en,
-        "825.15 (WL Gore)"@en,
-        "Asahi Kasei membrane"@en,
-        "Asahi Kasei membrane (15 µm)"@en,
-        "CHO-SPEEK membrane"@en,
-        "DuPont Nafion 115"@en,
-        "DuPont Nafion-212"@en,
-        "FS715RFS"@en,
-        "GORE SELECT membrane"@en,
-        "Gore membrane M735.18"@en,
-        "N115"@en,
-        "N211 membrane"@en,
-        "NR-211"@en,
-        "NR212"@en,
-        "NRE-211"@en,
-        "NRE211"@en,
-        "NRE212"@en,
-        "Nafion 112"@en,
-        "Nafion 1135 membrane"@en,
-        "Nafion 115"@en,
-        "Nafion 115 membrane"@en,
-        "Nafion 115 membrane (H+ form)"@en,
-        "Nafion 117"@en,
-        "Nafion 211 membrane"@en,
-        "Nafion 212"@en,
-        "Nafion N-117 membrane"@en,
-        "Nafion N211"@en,
-        "Nafion NR-212 membrane"@en,
-        "Nafion NR211 membrane"@en,
-        "Nafion NR212 membrane"@en,
-        "Nafion NRE-211 membrane"@en,
-        "Nafion XL"@en,
-        "Nafion XL membrane"@en,
-        "Nafion membrane"@en,
-        "Nafion-212 membrane"@en,
-        "Nafion115"@en,
-        "Nafion115®"@en,
-        "NafionTM 117 (183 µm)"@en,
-        "NafionTM XL membrane"@en,
-        "Nafion® 115"@en,
-        "Nafion® 117"@en,
-        "Nafion® N-117"@en,
-        "PBI membrane"@en,
-        "PBI/epoxy cross-linked membrane"@en,
-        "PEM"@en,
-        "PF1-HLF8–15-X"@en,
-        "PFSA membrane"@en,
-        "PFSA-based membrane"@en,
-        "SPAEK-TM membrane"@en,
-        "TPS® membrane"@en,
-        "electrolyte membrane"@en,
-        "hydrocarbon membrane"@en,
-        "ionomer membrane"@en,
-        "membrane"@en,
-        "polymer electrolyte membrane"@en,
-        "polymer membrane"@en,
-        "sPEEK membrane (this paper)"@en ;
-    skos:prefLabel "Proton Exchange Membrane"@en .
+    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> .
 
 ns2:Water a ns2:Matter ;
     rdfs:label "Water"@en ;
@@ -14588,51 +14408,8 @@ ns2:ElectrochemicalWorkstation a ns2:Instrument ;
         "potentiostat"@en,
         "potentiostat (PS-04)"@en,
         "potentiostat/galvanostat"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> ;
     skos:prefLabel "Electrochemical Workstation"@en .
-
-ns2:CatalystLayer a ns2:Matter ;
-    rdfs:label "Catalyst Layer"@en ;
-    dcterms:description "Description: Generic catalyst layer (CL) as studied ex-situ (not explicitly labeled as anode/cathode in paper)."@en ;
-    skos:altLabel "CL"@en,
-        "Fe-Co layer"@en,
-        "Fe–Co layer"@en,
-        "anode catalyst layer"@en,
-        "c-CL"@en,
-        "catalyst ink layer"@en,
-        "catalyst layers"@en,
-        "cathode CL"@en,
-        "cathode catalyst layer"@en,
-        "electrode"@en,
-        "first catalyst ink layer"@en,
-        "mixed oxide layer"@en,
-        "second catalyst ink layer"@en,
-        "thin catalyst layer"@en ;
-    skos:prefLabel "Catalyst Layer"@en .
-
-ns2:MembraneElectrodeAssembly a ns2:Matter ;
-    rdfs:label "Membrane Electrode Assembly"@en ;
-    dcterms:description "Membrane electrode assembly used for in-situ fuel cell characterization."@en ;
-    skos:altLabel "AEM-DGFC single cell"@en,
-        "CCM"@en,
-        "CCM MEA"@en,
-        "CCM-based MEA"@en,
-        "Gore PRIMEA (A510.1/M715.18/C510.1)"@en,
-        "IPA-MEA"@en,
-        "MEA"@en,
-        "MEAs"@en,
-        "MeOH-MEA"@en,
-        "PA-MEA"@en,
-        "THF-MEA"@en,
-        "array MEA"@en,
-        "assembled cell"@en,
-        "assemblies"@en,
-        "catalyst coated membrane"@en,
-        "five-layer membrane electrode assembly"@en,
-        "laminated CCM"@en,
-        "membrane electrode assemblies"@en,
-        "membrane/anode assembly"@en,
-        "perfluorinated MEA"@en ;
-    skos:prefLabel "Membrane Electrode Assembly"@en .
 
 ns2:CathodeCatalystLayer a ns2:Matter ;
     rdfs:label "Cathode Catalyst Layer"@en ;
@@ -14659,6 +14436,7 @@ ns2:CathodeCatalystLayer a ns2:Matter ;
         "coating"@en,
         "commercial cathode"@en,
         "deposit"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76> ;
     skos:prefLabel "Cathode Catalyst Layer"@en ;
     ns2:hasParameter ns2:IonomerMassFraction,
         ns2:IonomerToCarbonRatio,

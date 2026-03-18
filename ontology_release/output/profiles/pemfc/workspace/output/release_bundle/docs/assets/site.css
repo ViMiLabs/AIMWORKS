@@ -637,6 +637,9 @@ h3 {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.8);
 }
+.table-shell--wide {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
 .data-table {
   width: 100%;
   min-width: 640px;
@@ -666,6 +669,106 @@ h3 {
 .data-table tbody tr:nth-child(even) { background: rgba(31, 122, 122, 0.025); }
 .data-table tbody tr:hover { background: rgba(202, 109, 44, 0.06); }
 .data-table code { overflow-wrap: anywhere; }
+.reference-table--vocab {
+  min-width: 1460px;
+  table-layout: fixed;
+}
+.reference-table--unit-review {
+  min-width: 1260px;
+  table-layout: fixed;
+}
+.reference-table--vocab col.term-col-label { width: 18rem; }
+.reference-table--vocab col.term-col-iri { width: 15rem; }
+.reference-table--vocab col.term-col-status { width: 7rem; }
+.reference-table--vocab col.term-col-class { width: 8rem; }
+.reference-table--vocab col.term-col-quantity-kind { width: 13rem; }
+.reference-table--vocab col.term-col-unit { width: 9rem; }
+.reference-table--vocab col.term-col-alt-labels { width: 17rem; }
+.reference-table--vocab col.term-col-definition { width: 22rem; }
+.reference-table--vocab col.term-col-mappings { width: 14rem; }
+.reference-table--unit-review col.term-col-label { width: 18rem; }
+.reference-table--unit-review col.term-col-iri { width: 15rem; }
+.reference-table--unit-review col.term-col-class { width: 8rem; }
+.reference-table--unit-review col.term-col-quantity-kind { width: 13rem; }
+.reference-table--unit-review col.term-col-alt-labels { width: 17rem; }
+.reference-table--unit-review col.term-col-decision { width: 12rem; }
+.reference-table--unit-review col.term-col-note { width: 24rem; }
+.term-cell {
+  display: grid;
+  gap: 0.45rem;
+}
+.term-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--slate-950);
+}
+.term-subtle {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.iri-cell code,
+.reference-table--unit-review .iri-cell code {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
+}
+.term-chip,
+.term-pill-list a,
+.term-pill-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(18, 39, 48, 0.1);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.2rem 0.62rem;
+  font-size: 0.81rem;
+  line-height: 1.3;
+  color: var(--slate-900);
+  text-decoration: none;
+}
+.term-chip--class {
+  background: linear-gradient(180deg, rgba(244, 251, 251, 0.94), rgba(255, 247, 236, 0.94));
+}
+.term-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+.term-pill-list--muted span {
+  color: var(--muted);
+  background: rgba(18, 39, 48, 0.04);
+}
+.term-stack {
+  display: grid;
+  gap: 0.38rem;
+}
+.term-stack span,
+.term-stack a {
+  display: block;
+  line-height: 1.45;
+}
+.term-copy {
+  max-width: 36ch;
+  line-height: 1.58;
+  color: #223740;
+}
+.term-copy--wide {
+  max-width: 48ch;
+}
+.term-note {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.cell-status,
+.cell-class {
+  white-space: nowrap;
+}
 .prose { font-size: 1rem; }
 .prose p,
 .prose li { max-width: 72ch; }

@@ -1,0 +1,187 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns2: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ns2:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Agent."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf prov:Agent ;
+    owl:equivalentClass prov:Agent ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Agent."@en .
+
+ns2:Data a owl:Class ;
+    rdfs:label "Data"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf prov:Entity ;
+    owl:equivalentClass <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."@en .
+
+ns2:DataPoint a owl:Class ;
+    rdfs:label "Data Point"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf prov:Entity,
+        <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data Point."@en .
+
+ns2:ECSABasis a ns2:NormalizationBasis ;
+    rdfs:label "ECSA Basis"@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing ECSA Basis."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "Pt surface area basis"@en,
+        "cm2_Pt"@en ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing ECSA Basis."@en ;
+    skos:prefLabel "ECSA Basis"@en .
+
+ns2:GeometricArea a ns2:NormalizationBasis ;
+    rdfs:label "Geometric Area"@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Geometric Area."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "0.1256 cm^2"@en,
+        "0.196 cm2"@en,
+        "1 cm2"@en,
+        "1 cm2 active area"@en,
+        "1 cm^2"@en,
+        "1.32 cm^2"@en,
+        "25 cm2"@en,
+        "2×5 mm²"@en,
+        "4×4 cm^2 membrane area"@en,
+        "5 cm2"@en,
+        "9 cm2 active area"@en,
+        "A (cm^2)"@en,
+        "A=491 mm2"@en,
+        "A=491 mm²"@en,
+        "Au plate 2×5 mm2"@en,
+        "CL active area"@en,
+        "Freudenberg H23C8 (4×4 cm)"@en,
+        "GC-RDE area"@en,
+        "GeometricArea"@en,
+        "active area"@en,
+        "active area (geometric)"@en,
+        "active area 5×5 cm2"@en,
+        "active area basis"@en,
+        "active area of 25 cm2"@en,
+        "anode area 2.2 cm2"@en,
+        "area"@en,
+        "cm2"@en,
+        "cm2_geo"@en,
+        "cm2geo"@en,
+        "cm^2"@en,
+        "electrode area"@en,
+        "electrode area (geometric)"@en,
+        "electrode geometric area"@en,
+        "geometric area 10.89 cm^2"@en,
+        "geometric area basis"@en,
+        "geometric area normalization"@en,
+        "geometric electrode area"@en,
+        "geometric surface area"@en,
+        "geometric-reactive area"@en,
+        "geometric/active area"@en,
+        "membrane area"@en,
+        "printed area"@en,
+        "reactive area"@en,
+        "substrate area"@en,
+        "surface area"@en ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Geometric Area."@en ;
+    skos:prefLabel "Geometric Area"@en ;
+    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_GeometricArea_QV> .
+
+ns2:Measurement a owl:Class ;
+    rdfs:label "Measurement"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f4ce4df2_d7e6_470f_8eab_3a911adaaf0f>,
+        ns2:Process ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Measurement."@en .
+
+ns2:Metadata a owl:Class ;
+    rdfs:label "Metadata"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf prov:Entity ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Metadata."@en .
+
+ns2:PoreSizeDistribution a ns2:nan ;
+    rdfs:label "Pore Size Distribution"@en ;
+    dcterms:description "Label: PoreSizeDistribution. In this paper: Pore size distribution from mercury intrusion porosimetry (figures)."@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pore Size Distribution."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "PSD"@en ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pore Size Distribution."@en ;
+    skos:prefLabel "Pore Size Distribution"@en ;
+    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_PoreSizeDistribution_QV> .
+
+ns2:Property a owl:Class ;
+    rdfs:label "Property"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf <https://w3id.org/emmo#EMMO_2480b72b_db8d_460f_9a5f_c2912f979046> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Property."@en .
+
+ns2:PtMass a ns2:NormalizationBasis ;
+    rdfs:label "Pt Mass"@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pt Mass."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "Pt mass (normalization basis)"@en,
+        "Pt mass normalization"@en,
+        "PtMass"@en,
+        "gPt"@en,
+        "g_Pt"@en,
+        "mg_PGM"@en,
+        "mg_Pt"@en,
+        "platinum mass"@en ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pt Mass."@en ;
+    skos:prefLabel "Pt Mass"@en ;
+    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_PtMass_QV> .
+
+ns2:SCE a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
+    rdfs:label "SCE"@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SCE."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "SCE (3 M KCl)"@en,
+        "saturated calomel electrode"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SCE."@en ;
+    skos:prefLabel "SCE"@en .
+
+ns2:SHE a <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
+    rdfs:label "SHE"@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SHE."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "standard hydrogen electrode"@en ;
+    skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing SHE."@en ;
+    skos:prefLabel "SHE"@en .
+
+ns2:Unit a owl:Class ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Unit."@en .
+
+ns2:Parameter a owl:Class ;
+    rdfs:label "Parameter"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Parameter."@en .
+
+ns2:Process a owl:Class ;
+    rdfs:label "Process"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subClassOf prov:Activity,
+        <https://w3id.org/emmo#EMMO_472a0ca2_58bf_4618_b561_6fe68bd9fd49> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Process."@en .
+
+ns2:NormalizationBasis a owl:Class,
+        ns2:Parameter ;
+    rdfs:label "Normalization Basis"@en ;
+    rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Normalization Basis."@en .
+
