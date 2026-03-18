@@ -72,6 +72,8 @@ def test_docs_generation(temp_project):
     assert "catalog-v001.xml" in architecture_page
     emmo_page = (temp_project / "output" / "docs" / "pages" / "emmo-alignment.html").read_text(encoding="utf-8")
     assert "EMMO Universe" in emmo_page
+    assert "Schema-level alignment coverage" in emmo_page
+    assert "Vocabulary mapping coverage" in emmo_page
     release_page = (temp_project / "output" / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
     assert "Human-Readable vs Machine-Readable Artifacts" in release_page
     assert "source/asserted.ttl" in release_page

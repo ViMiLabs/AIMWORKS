@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from rdflib import Graph, URIRef
-from rdflib.namespace import OWL, RDF, RDFS
+from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from .extract import extract_local_terms
 from .inspect import find_ontology_node
@@ -377,6 +377,25 @@ def _workflow_rows(release_profile: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _alignment_family(target_iri: str) -> str:
+    namespace = namespace_of(target_iri)
+    if "w3id.org/battinfo" in target_iri:
+        return "battinfo"
+    if "w3id.org/emmo" in namespace:
+        return "emmo"
+    if "qudt.org" in namespace:
+        return "qudt"
+    if "purl.obolibrary.org/obo/CHEBI" in target_iri:
+        return "chebi"
+    if "w3.org/ns/prov" in namespace:
+        return "prov"
+    if "purl.org/dc/terms" in namespace:
+        return "dcterms"
+    if "purl.org/holy" in namespace:
+        return "holy"
+    return "other"
+
+
 def build_engineering_artifacts(
     schema_graph: Graph,
     controlled_vocabulary_graph: Graph,
@@ -510,34 +529,29 @@ def build_engineering_artifacts(
                     "rationale": cfg.get("description", cfg.get("title", source_id)),
                 }
             )
-    source_counts: Counter[str] = Counter()
-    relation_counts: Counter[str] = Counter()
+    schema_source_counts: Counter[str] = Counter()
+    schema_relation_counts: Counter[str] = Counter()
+    vocabulary_source_counts: Counter[str] = Counter()
+    vocabulary_relation_counts: Counter[str] = Counter()
     for subject, predicate, obj in alignments_graph:
-        if predicate not in {OWL.equivalentClass, OWL.equivalentProperty, RDFS.subClassOf, RDFS.subPropertyOf}:
-            continue
         if not isinstance(obj, URIRef):
             continue
-        namespace = namespace_of(str(obj))
-        if "w3id.org/emmo" in namespace:
-            source_counts["emmo"] += 1
-        elif "qudt.org" in namespace:
-            source_counts["qudt"] += 1
-        elif "purl.obolibrary.org/obo/CHEBI" in str(obj):
-            source_counts["chebi"] += 1
-        elif "w3.org/ns/prov" in namespace:
-            source_counts["prov"] += 1
-        elif "purl.org/dc/terms" in namespace:
-            source_counts["dcterms"] += 1
-        elif "purl.org/holy" in namespace:
-            source_counts["holy"] += 1
-        else:
-            source_counts["other"] += 1
-        relation_counts[local_name(predicate)] += 1
+        family = _alignment_family(str(obj))
+        if predicate in {OWL.equivalentClass, OWL.equivalentProperty, RDFS.subClassOf, RDFS.subPropertyOf}:
+            schema_source_counts[family] += 1
+            schema_relation_counts[local_name(predicate)] += 1
+        elif predicate in {SKOS.exactMatch, SKOS.closeMatch}:
+            vocabulary_source_counts[family] += 1
+            vocabulary_relation_counts[local_name(predicate)] += 1
     emmo_alignment_payload = {
         "imports": imports,
         "import_rows": emmo_import_rows,
-        "source_counts": dict(source_counts),
-        "relation_counts": dict(relation_counts),
+        "schema_source_counts": dict(schema_source_counts),
+        "schema_relation_counts": dict(schema_relation_counts),
+        "vocabulary_source_counts": dict(vocabulary_source_counts),
+        "vocabulary_relation_counts": dict(vocabulary_relation_counts),
+        "source_counts": dict(schema_source_counts),
+        "relation_counts": dict(schema_relation_counts),
         "kept_local_terms": sum(1 for row in assignment_rows if row["module_id"] != "examples"),
         "alignment_triple_count": len(alignments_graph),
     }

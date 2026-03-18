@@ -2679,6 +2679,11 @@ def build_docs(
         ),
     )
 
+    schema_source_counts = emmo_alignment.get("schema_source_counts", emmo_alignment.get("source_counts", {}))
+    schema_relation_counts = emmo_alignment.get("schema_relation_counts", emmo_alignment.get("relation_counts", {}))
+    vocabulary_source_counts = emmo_alignment.get("vocabulary_source_counts", {})
+    vocabulary_relation_counts = emmo_alignment.get("vocabulary_relation_counts", {})
+
     emmo_alignment_html = (
         f"<p>{profile_label} remains an EMMO-based application ontology. Local H2KG terms are kept only where the imported EMMO and EMMO-based domains do not safely cover the intended hydrogen/PEMFC semantics.</p>"
         + "<h3>EMMO Universe</h3>"
@@ -2696,10 +2701,27 @@ def build_docs(
                 for row in emmo_alignment.get("import_rows", [])
             ] or [["No imports recorded", "False", "n/a", "n/a"]],
         )
-        + "<h3>Alignment coverage</h3>"
+        + "<h3>Schema-level alignment coverage</h3>"
+        + "<p>Counts asserted schema-style alignment triples only: <code>owl:equivalentClass</code>, <code>owl:equivalentProperty</code>, <code>rdfs:subClassOf</code>, and <code>rdfs:subPropertyOf</code>.</p>"
         + _html_table(
             ["Target family", "Mapped rows"],
-            [[escape(key), str(value)] for key, value in sorted(emmo_alignment.get("source_counts", {}).items())] or [["No mapping counts recorded", "0"]],
+            [[escape(key), str(value)] for key, value in sorted(schema_source_counts.items())] or [["No schema alignment counts recorded", "0"]],
+        )
+        + "<h3>Schema-level relation mix</h3>"
+        + _html_table(
+            ["Relation", "Mapped rows"],
+            [[escape(key), str(value)] for key, value in sorted(schema_relation_counts.items())] or [["No schema relation counts recorded", "0"]],
+        )
+        + "<h3>Vocabulary mapping coverage</h3>"
+        + "<p>Counts curated vocabulary mapping triples only: <code>skos:exactMatch</code> and <code>skos:closeMatch</code>. This is where QUDT, ChEBI, HOLY, and similar term-level links are expected to appear.</p>"
+        + _html_table(
+            ["Target family", "Mapped rows"],
+            [[escape(key), str(value)] for key, value in sorted(vocabulary_source_counts.items())] or [["No vocabulary mapping counts recorded", "0"]],
+        )
+        + "<h3>Vocabulary relation mix</h3>"
+        + _html_table(
+            ["Relation", "Mapped rows"],
+            [[escape(key), str(value)] for key, value in sorted(vocabulary_relation_counts.items())] or [["No vocabulary relation counts recorded", "0"]],
         )
         + "<h3>Why H2KG stays focused</h3>"
         + _list_html(
