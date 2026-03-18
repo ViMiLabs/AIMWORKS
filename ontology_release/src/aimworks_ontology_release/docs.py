@@ -2180,6 +2180,11 @@ def build_docs(
     creators = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.creator)])
     contributors = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.contributor)])
     imports = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, OWL.imports)])
+    references = _clean_values(
+        [str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.references)]
+        + [str(obj) for obj in schema_graph.objects(ontology_node, RDFS.seeAlso)]
+    )
+    referenced_ontologies = [item for item in references if item not in imports]
     namespace_rows, hidden_local_namespace_count = _public_namespace_rows(inspection_report, namespace_policy)
     mapping_stats = _mapping_stats(review_rows)
     placeholder_definition_count = _placeholder_definition_count(classes + properties + vocabulary_rows)
@@ -2433,6 +2438,7 @@ def build_docs(
             endpoint_rows=endpoint_rows,
             metadata_rows=metadata_rows,
             imports=imports,
+            referenced_ontologies=referenced_ontologies,
             namespace_rows=namespace_rows,
             class_rows=classes,
             property_rows=properties,

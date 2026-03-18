@@ -97,8 +97,8 @@
     </div>
   </article>
   <article class="card">
-    <p class="section-kicker">Imports and namespaces</p>
-    <h2>Imports and Namespaces</h2>
+    <p class="section-kicker">Imports, links, and namespaces</p>
+    <h2>Imports, Referenced Ontologies, and Namespaces</h2>
     <h3>Imports</h3>
     <ul class="simple-list">
       {% for item in imports %}
@@ -106,6 +106,15 @@
       {% endfor %}
       {% if not imports %}
       <li>No explicit imports were declared in the schema graph.</li>
+      {% endif %}
+    </ul>
+    <h3>Referenced ontologies</h3>
+    <ul class="simple-list">
+      {% for item in referenced_ontologies %}
+      <li><a href="{{ item }}"><code>{{ item }}</code></a></li>
+      {% endfor %}
+      {% if not referenced_ontologies %}
+      <li>No additional referenced ontologies were declared beyond the imports.</li>
       {% endif %}
     </ul>
     <h3>Namespaces</h3>

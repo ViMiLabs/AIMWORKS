@@ -25,6 +25,7 @@ SAMPLE_TTL = """
 <https://w3id.org/h2kg/hydrogen-ontology> a owl:Ontology ;
   dcterms:title "Sample H2KG Ontology"@en ;
   dcterms:description "Sample release fixture."@en ;
+  dcterms:references <https://w3id.org/battinfo> ;
   dcterms:license <https://creativecommons.org/licenses/by/4.0/> .
 
 h2kg:Measurement a owl:Class .
