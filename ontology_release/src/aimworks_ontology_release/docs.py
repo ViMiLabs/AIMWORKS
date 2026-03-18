@@ -153,11 +153,33 @@ pre code {
   background: radial-gradient(circle, rgba(31, 122, 122, 0.14), rgba(31, 122, 122, 0) 68%);
 }
 .hero__panel {
+  position: relative;
+  overflow: hidden;
   padding: 1.3rem 1.2rem;
   background:
     radial-gradient(circle at top right, rgba(229, 176, 122, 0.16), transparent 30%),
     linear-gradient(180deg, rgba(18, 39, 48, 0.96), rgba(18, 39, 48, 0.86));
   color: #ecf7f5;
+}
+.hero__panel > * {
+  position: relative;
+  z-index: 1;
+}
+.hero__panel--poster {
+  background:
+    linear-gradient(180deg, rgba(12, 24, 31, 0.44), rgba(12, 24, 31, 0.9)),
+    linear-gradient(145deg, rgba(7, 31, 41, 0.62), rgba(31, 122, 122, 0.22) 62%, rgba(202, 109, 44, 0.18)),
+    var(--hero-panel-image) center/cover no-repeat;
+  box-shadow: 0 30px 75px rgba(14, 26, 33, 0.18);
+}
+.hero__panel--poster::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(14, 26, 33, 0.16), rgba(14, 26, 33, 0));
+  z-index: 0;
 }
 .hero__label {
   margin: 0 0 0.55rem;
@@ -175,7 +197,7 @@ pre code {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1.22fr);
+  grid-template-columns: minmax(240px, 420px);
   gap: 0.9rem;
   margin-top: 0.15rem;
   padding-top: 1rem;
@@ -222,30 +244,6 @@ pre code {
 .hero__support-links a:hover {
   border-color: rgba(31, 122, 122, 0.28);
   box-shadow: var(--shadow-soft);
-}
-.hero__poster {
-  margin: 0;
-  padding: 0.75rem;
-  border-radius: 1.35rem;
-  border: 1px solid rgba(18, 39, 48, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 242, 232, 0.76));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
-}
-.hero__poster img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0.95rem;
-  background: #ffffff;
-  box-shadow: 0 24px 48px rgba(14, 26, 33, 0.12);
-}
-.hero__poster-caption {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 0.7rem;
-  color: var(--muted);
-  font-size: 0.86rem;
 }
 .hero-fact-grid {
   display: grid;
@@ -1119,8 +1117,7 @@ h3 {
   .query-toolbar .filter-input { width: 100%; }
   .query-source-grid { grid-template-columns: 1fr; }
   .home-showcase__caption,
-  .poster-card__caption,
-  .hero__poster-caption { flex-direction: column; }
+  .poster-card__caption { flex-direction: column; }
 }
 """
 
@@ -2108,6 +2105,7 @@ def build_docs(
     profile_switch = documentation_cfg.get("profile_switch", [])
     hmc_url = "https://helmholtz-metadaten.de/"
     aimworks_project_url = "https://helmholtz-metadaten.de/inf-projects/aimworks"
+    profile_id = str(documentation_cfg.get("profile_id", "")).strip().lower()
     hero_note = _clean_text(
         documentation_cfg.get(
             "hero_note",
@@ -2397,6 +2395,7 @@ def build_docs(
 
     reference_template = env.get_template("reference.html")
     example_rows = collect_examples(examples_graph, classifications, limit=int(release_profile["release"]["docs_example_preview_limit"]))
+    hero_panel_image = graph_poster if profile_id == "pemfc" else {"available": False, "href": "", "alt": "", "caption": ""}
     write_text(
         output_dir / release_profile["publication"]["reference_page"],
         reference_template.render(
@@ -2416,10 +2415,7 @@ def build_docs(
             coverage_rows=coverage_rows,
             curation_note=f"The {profile_label} release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
             profile_heading=profile_heading,
-            hero_visual={
-                **graph_poster,
-                "context_label": profile_heading,
-            },
+            hero_panel_image=hero_panel_image,
             hero_support={
                 "logo_src": "assets/hmc-logo.svg",
                 "hmc_url": hmc_url,
