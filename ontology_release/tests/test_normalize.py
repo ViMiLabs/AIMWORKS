@@ -6,4 +6,5 @@ from aimworks_ontology_release.normalize import coerce_version, humanize_identif
 def test_normalization_helpers():
     assert humanize_identifier("hasQuantityValue") == "Has Quantity Value"
     assert normalize_label(" Pt Mass  ") == "pt mass"
+    assert normalize_label("ElectrochemicalCell") == "electrochemical cell"
     assert coerce_version("2026.3.0") == "2026.3.0"

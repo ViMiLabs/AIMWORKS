@@ -8,10 +8,15 @@ def normalize_text(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def humanize_identifier(identifier: str) -> str:
-    value = identifier.replace("_", " ").replace("-", " ")
+def _identifier_words(text: str) -> str:
+    value = text.replace("_", " ").replace("-", " ")
     value = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", value)
-    value = normalize_text(value)
+    value = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", value)
+    return normalize_text(value)
+
+
+def humanize_identifier(identifier: str) -> str:
+    value = _identifier_words(identifier)
     if not value:
         return value
     parts = value.split(" ")
@@ -20,7 +25,7 @@ def humanize_identifier(identifier: str) -> str:
 
 
 def normalize_label(label: str) -> str:
-    return normalize_text(label).lower()
+    return _identifier_words(label).lower()
 
 
 def token_set(label: str) -> set[str]:

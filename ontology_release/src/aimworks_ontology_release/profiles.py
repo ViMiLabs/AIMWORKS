@@ -59,6 +59,8 @@ def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict
     ensure_dir(runtime_root / "output")
     ensure_dir(runtime_root / "ontology")
     ensure_dir(runtime_root / "cache" / "sources")
+    if (base_root / "cache" / "sources").exists():
+        copy_tree(base_root / "cache" / "sources", runtime_root / "cache" / "sources")
 
     source_input = _resolve_profile_input(base_root, str(profile_cfg["input_path"]))
     copy_file(source_input, runtime_root / "input" / "current_ontology.jsonld")

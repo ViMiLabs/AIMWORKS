@@ -156,7 +156,12 @@ def _parse_rdf_source(path: Path, source_id: str, source_title: str, priority: f
         record_type = _record_type(graph, subject)
         if record_type == "controlled_vocabulary_term" and not list(graph.objects(subject, RDF.type)):
             continue
-        label = next((str(obj) for obj in graph.objects(subject, RDFS.label)), humanize_identifier(local_name(subject)))
+        pref_labels = [str(obj) for obj in graph.objects(subject, SKOS.prefLabel)]
+        rdfs_labels = [str(obj) for obj in graph.objects(subject, RDFS.label)]
+        label = next(iter(pref_labels or rdfs_labels), humanize_identifier(local_name(subject)))
+        synonyms = [item for item in pref_labels[1:] + rdfs_labels if item != label]
+        synonyms.extend(str(obj) for obj in graph.objects(subject, SKOS.altLabel))
+        unique_synonyms = list(dict.fromkeys(item for item in synonyms if item and item != label))
         definition = next((str(obj) for obj in graph.objects(subject, SKOS.definition)), "")
         records.append(
             SourceRecord(
@@ -166,7 +171,7 @@ def _parse_rdf_source(path: Path, source_id: str, source_title: str, priority: f
                 source_title=source_title,
                 record_type=record_type,
                 priority=priority,
-                synonyms=[],
+                synonyms=unique_synonyms,
                 definition=definition,
             )
         )

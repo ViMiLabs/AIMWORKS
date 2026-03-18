@@ -9,6 +9,7 @@ from typing import Any
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS
 
+from .battinfo_overlap import analyze_battinfo_overlap, write_battinfo_overlap_outputs
 from .docs import build_docs
 from .enrich import enrich_graphs, write_enrichment_outputs
 from .fair import compute_fair_scores, write_fair_reports
@@ -251,30 +252,34 @@ def run_pipeline(
         "suspicious_remaining_alt_labels": [],
         "changed": False,
     }
+    battinfo_overlap_report = {"status": "skipped"}
     if resolved_input.suffix.lower() in {".json", ".jsonld"}:
         cleaned_payload, quality_report = clean_jsonld_payload(read_json(resolved_input), source_name=str(resolved_input))
         write_quality_outputs(quality_report, root)
+        battinfo_overlap_report = analyze_battinfo_overlap(cleaned_payload, root, source_config=configs["source_ontologies"])
+        write_battinfo_overlap_outputs(battinfo_overlap_report, root)
         jsonld_text = json.dumps(cleaned_payload, ensure_ascii=False)
         graph = Graph()
         graph.parse(data=jsonld_text, format="json-ld")
         if stage == "quality":
-            return {"quality_report": quality_report}
+            return {"quality_report": quality_report, "battinfo_overlap_report": battinfo_overlap_report}
     else:
         graph = load_graph(resolved_input)
         write_quality_outputs(quality_report, root)
+        write_battinfo_overlap_outputs(battinfo_overlap_report, root)
         if stage == "quality":
-            return {"quality_report": quality_report}
+            return {"quality_report": quality_report, "battinfo_overlap_report": battinfo_overlap_report}
 
     inspection_report, classifications = inspect_graph(graph, configs["namespace_policy"], configs["mapping_rules"])
     write_inspection_reports(inspection_report, root)
     _write_classification_review(classifications, root)
     if stage == "inspect":
-        return {"inspection_report": inspection_report}
+        return {"inspection_report": inspection_report, "battinfo_overlap_report": battinfo_overlap_report}
 
     split_graphs, split_report = split_graph(graph, classifications)
     write_split_outputs(split_graphs, split_report, root)
     if stage == "split":
-        return {"inspection_report": inspection_report, "split_report": split_report}
+        return {"inspection_report": inspection_report, "split_report": split_report, "battinfo_overlap_report": battinfo_overlap_report}
 
     alignments_graph, mapping_review, alignment_report = align_terms(
         split_graphs["schema"],
@@ -287,7 +292,7 @@ def run_pipeline(
     )
     write_alignment_outputs(alignments_graph, mapping_review, alignment_report, root)
     if stage == "map":
-        return {"inspection_report": inspection_report, "alignment_report": alignment_report}
+        return {"inspection_report": inspection_report, "alignment_report": alignment_report, "battinfo_overlap_report": battinfo_overlap_report}
 
     enrichment_report = enrich_graphs(
         split_graphs["schema"],
@@ -313,6 +318,7 @@ def run_pipeline(
             "alignment_report": alignment_report,
             "metadata_report": enrichment_report,
             "unit_enrichment_report": unit_report,
+            "battinfo_overlap_report": battinfo_overlap_report,
         }
     if stage == "units":
         return {
@@ -320,6 +326,7 @@ def run_pipeline(
             "alignment_report": alignment_report,
             "metadata_report": enrichment_report,
             "unit_enrichment_report": unit_report,
+            "battinfo_overlap_report": battinfo_overlap_report,
         }
 
     if review_file and stage == "annotate":
@@ -345,6 +352,7 @@ def run_pipeline(
             "alignment_report": alignment_report,
             "metadata_report": enrichment_report,
             "unit_enrichment_report": unit_report,
+            "battinfo_overlap_report": battinfo_overlap_report,
         }
 
     validation_report = validate_release(
@@ -362,6 +370,7 @@ def run_pipeline(
             "inspection_report": inspection_report,
             "validation_report": validation_report,
             "unit_enrichment_report": unit_report,
+            "battinfo_overlap_report": battinfo_overlap_report,
         }
 
     imports_graph = _build_imports_graph(configs["namespace_policy"], configs["source_ontologies"])
@@ -426,9 +435,10 @@ def run_pipeline(
             "validation_report": validation_report,
             "fair_scores": fair_scores,
             "unit_enrichment_report": unit_report,
+            "battinfo_overlap_report": battinfo_overlap_report,
         }
     if stage == "fair":
-        return {"fair_scores": fair_scores, "unit_enrichment_report": unit_report}
+        return {"fair_scores": fair_scores, "unit_enrichment_report": unit_report, "battinfo_overlap_report": battinfo_overlap_report}
 
     _build_release_bundle(root, configs["release_profile"])
     if configs["release_profile"]["release"].get("copy_outputs_to_ontology_directory", True):
@@ -438,4 +448,5 @@ def run_pipeline(
         "validation_report": validation_report,
         "fair_scores": fair_scores,
         "unit_enrichment_report": unit_report,
+        "battinfo_overlap_report": battinfo_overlap_report,
     }
