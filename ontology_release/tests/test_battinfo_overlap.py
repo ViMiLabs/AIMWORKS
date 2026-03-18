@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path
+import tempfile
+
 from aimworks_ontology_release.battinfo_overlap import analyze_battinfo_overlap
 from aimworks_ontology_release.release import run_pipeline
 
@@ -23,24 +26,25 @@ def _text(value: str) -> dict[str, str]:
     return {"@value": value}
 
 
-def test_battinfo_overlap_classifies_exact_and_partial_matches(tmp_path) -> None:
+def test_battinfo_overlap_classifies_exact_and_partial_matches() -> None:
     payload = [
         {"@id": f"{LOCAL}Frequency", RDFS_LABEL: [_text("Frequency")]},
         {"@id": f"{LOCAL}LimitingCurrentDensity", RDFS_LABEL: [_text("Limiting Current Density")]},
         {"@id": f"{LOCAL}PEMFCCathodeCatalystLayer", RDFS_LABEL: [_text("PEMFC Cathode Catalyst Layer")]},
     ]
 
-    report = analyze_battinfo_overlap(payload, tmp_path, battinfo_text=BATTINFO_SAMPLE)
+    with tempfile.TemporaryDirectory() as temp_dir:
+        report = analyze_battinfo_overlap(payload, Path(temp_dir), battinfo_text=BATTINFO_SAMPLE)
 
-    assert report["status"] == "ok"
-    assert report["exact_pref_overlap_count"] == 1
-    assert report["exact_alt_overlap_count"] == 1
-    assert report["reuse_directly_count"] == 1
-    assert report["map_only_count"] == 1
-    assert report["keep_local_count"] == 1
-    assert report["reuse_directly"][0]["h2kg_label"] == "Frequency"
-    assert report["map_only"][0]["h2kg_label"] == "Limiting Current Density"
-    assert report["keep_local"][0]["h2kg_label"] == "PEMFC Cathode Catalyst Layer"
+        assert report["status"] == "ok"
+        assert report["exact_pref_overlap_count"] == 1
+        assert report["exact_alt_overlap_count"] == 1
+        assert report["reuse_directly_count"] == 1
+        assert report["map_only_count"] == 1
+        assert report["keep_local_count"] == 1
+        assert report["reuse_directly"][0]["h2kg_label"] == "Frequency"
+        assert report["map_only"][0]["h2kg_label"] == "Limiting Current Density"
+        assert report["keep_local"][0]["h2kg_label"] == "PEMFC Cathode Catalyst Layer"
 
 
 def test_quality_stage_writes_battinfo_overlap_report(temp_project) -> None:

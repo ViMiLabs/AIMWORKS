@@ -271,19 +271,28 @@ def analyze_battinfo_overlap(
 
 def write_battinfo_overlap_outputs(report: dict[str, Any], root: Path) -> None:
     write_json(root / "output" / "reports" / "battinfo_overlap_report.json", report)
+    source_origin = report.get("source_origin", "")
+    source_location = report.get("source_location", "")
+    battinfo_entity_count = report.get("battinfo_entity_count", 0)
+    h2kg_local_term_count = report.get("h2kg_local_term_count", 0)
+    exact_pref_overlap_count = report.get("exact_pref_overlap_count", 0)
+    exact_alt_overlap_count = report.get("exact_alt_overlap_count", 0)
+    reuse_directly_count = report.get("reuse_directly_count", 0)
+    map_only_count = report.get("map_only_count", 0)
+    keep_local_count = report.get("keep_local_count", 0)
     lines = [
         "# BattINFO Overlap Report",
         "",
         f"- Status: **{report['status']}**",
-        f"- Source origin: `{report['source_origin']}`",
-        f"- Source location: `{report['source_location']}`",
-        f"- BattINFO entities parsed: **{report['battinfo_entity_count']}**",
-        f"- H2KG local terms reviewed: **{report['h2kg_local_term_count']}**",
-        f"- Exact prefLabel overlaps: **{report['exact_pref_overlap_count']}**",
-        f"- Exact altLabel overlaps: **{report['exact_alt_overlap_count']}**",
-        f"- Reuse directly: **{report['reuse_directly_count']}**",
-        f"- Map only: **{report['map_only_count']}**",
-        f"- Keep local: **{report['keep_local_count']}**",
+        f"- Source origin: `{source_origin}`",
+        f"- Source location: `{source_location}`",
+        f"- BattINFO entities parsed: **{battinfo_entity_count}**",
+        f"- H2KG local terms reviewed: **{h2kg_local_term_count}**",
+        f"- Exact prefLabel overlaps: **{exact_pref_overlap_count}**",
+        f"- Exact altLabel overlaps: **{exact_alt_overlap_count}**",
+        f"- Reuse directly: **{reuse_directly_count}**",
+        f"- Map only: **{map_only_count}**",
+        f"- Keep local: **{keep_local_count}**",
         "",
     ]
     if report.get("notes"):
