@@ -10,7 +10,7 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from .extract import extract_local_terms
 from .inspect import find_ontology_node
-from .utils import write_json, write_text
+from .utils import is_local_iri, write_json, write_text
 
 
 def _run_pyshacl(data_graph: Graph, shapes_dir: Path) -> tuple[bool, list[str]]:
@@ -25,6 +25,16 @@ def _run_pyshacl(data_graph: Graph, shapes_dir: Path) -> tuple[bool, list[str]]:
     report_value = report_text.decode("utf-8") if isinstance(report_text, bytes) else str(report_text)
     report_lines = report_value.splitlines()[:20]
     return bool(conforms), report_lines
+
+
+def _local_validation_graph(data_graph: Graph, namespace_policy: dict[str, Any]) -> Graph:
+    local_graph = Graph()
+    for prefix, namespace in data_graph.namespaces():
+        local_graph.bind(prefix, namespace)
+    for subject, predicate, obj in data_graph:
+        if is_local_iri(subject, namespace_policy):
+            local_graph.add((subject, predicate, obj))
+    return local_graph
 
 
 def _optional_check(status: str, details: str, extra: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -407,7 +417,7 @@ def validate_release(
         for term in terms
         if not term.iri.startswith(namespace_policy["term_namespace"]) and term.iri != namespace_policy["ontology_iri"]
     ]
-    shacl_conforms, shacl_lines = _run_pyshacl(data_graph, root / "shapes")
+    shacl_conforms, shacl_lines = _run_pyshacl(_local_validation_graph(data_graph, namespace_policy), root / "shapes")
     owl_consistency = _run_owl_consistency_check(schema_graph, controlled_vocabulary_graph, root)
     emmo_checks = _run_emmo_check()
     validation_cfg = release_profile.get("validation", {})

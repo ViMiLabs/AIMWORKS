@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import OWL, RDF, RDFS, SKOS
+
 from aimworks_ontology_release.enrich import enrich_graphs
 from aimworks_ontology_release.mapper import align_terms
 from aimworks_ontology_release.split import split_graph
-from aimworks_ontology_release.validate import _foops_dimension_rows, validate_release
+from aimworks_ontology_release.validate import _foops_dimension_rows, _local_validation_graph, validate_release
 
 
 def test_validation_runs(sample_graph, classifications, configs, package_root):
@@ -53,3 +56,23 @@ def test_foops_dimension_rows_aggregate() -> None:
     assert indexed["Findable"]["score"] == 60.0
     assert indexed["Accessible"]["score"] is None
     assert indexed["Interoperable"]["score"] == 100.0
+
+
+def test_local_validation_graph_excludes_external_subjects(configs) -> None:
+    namespace_policy = configs["namespace_policy"]
+    graph = Graph()
+    local_term = URIRef(f"{namespace_policy['term_namespace']}LocalClass")
+    external_term = URIRef("https://w3id.org/emmo/domain/electrochemistry#ExternalClass")
+
+    graph.add((local_term, RDF.type, OWL.Class))
+    graph.add((local_term, RDFS.label, Literal("Local class")))
+    graph.add((local_term, SKOS.closeMatch, external_term))
+    graph.add((external_term, RDF.type, OWL.Class))
+    graph.add((external_term, RDFS.label, Literal("External class")))
+
+    filtered = _local_validation_graph(graph, namespace_policy)
+
+    assert (local_term, RDF.type, OWL.Class) in filtered
+    assert (local_term, SKOS.closeMatch, external_term) in filtered
+    assert (external_term, RDF.type, OWL.Class) not in filtered
+    assert (external_term, RDFS.label, Literal("External class")) not in filtered
