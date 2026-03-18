@@ -2,19 +2,19 @@
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - Namespace mode: `hash`
-- Triples inspected: **30100**
-- Local terms detected: **2269**
-- Schema terms detected: **1874**
-- Label coverage: **99.4%**
+- Triples inspected: **26940**
+- Local terms detected: **2157**
+- Schema terms detected: **1784**
+- Label coverage: **99.3%**
 - Definition/comment coverage: **0.0%**
 
 ## Classification Counts
 
 - class: 14
-- controlled_vocabulary_term: 1840
+- controlled_vocabulary_term: 1750
 - datatype_property: 2
 - ephemeral_generated_instance: 1121
-- example_individual: 390
+- example_individual: 368
 - external_reference: 10
 - object_property: 19
 - ontology_header: 1

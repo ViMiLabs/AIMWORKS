@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="card card--feature">
-  <p class="section-kicker">Interactive ontology querying</p>
-  <h2>Run Queries Directly in the Browser</h2>
+  <p class="section-kicker">Advanced querying</p>
+  <h2>Run SPARQL Directly in the Browser</h2>
   <p>{{ query_intro }}</p>
+  <p class="query-hint">Most users should start with <a href="{{ base_path }}/pages/visualizations.html">Explore</a>. This page is kept for direct SPARQL control and competency-question-driven querying.</p>
   <ul class="simple-list">
     {% for item in query_notes %}
     <li>{{ item }}</li>
@@ -41,7 +42,7 @@
   </article>
 
   <article class="card card--quiet">
-    <p class="section-kicker">Quick search</p>
+    <p class="section-kicker">Query helper</p>
     <h2>Term Finder</h2>
     <p>Search labels without writing SPARQL manually. This loads a generated query into the console and runs it.</p>
     <div class="query-toolbar">
@@ -90,7 +91,7 @@
   <div class="section-head">
     <div>
       <p class="section-kicker">Competency question presets</p>
-      <h2>Ready-Made Queries</h2>
+      <h2>Ready-Made SPARQL</h2>
     </div>
   </div>
   <div class="feature-list">

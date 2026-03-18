@@ -3,7 +3,7 @@
 - Version: `2026.3.0`
 - Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2026.3.0`
 - Added or normalized metadata items: **10**
-- Generated annotations: **1853**
+- Generated annotations: **1859**
 
 ## Added Metadata
 

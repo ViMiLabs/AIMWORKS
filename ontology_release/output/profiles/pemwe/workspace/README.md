@@ -137,5 +137,6 @@ Existing GitHub workflows continue to drive the release:
 
 - `.github/workflows/ontology-release.yml` runs tests and `release-all`
 - `.github/workflows/ontology-pages.yml` runs `docs-all` and deploys `output/publication/`
+- `.github/workflows/ontology-github-release.yml` runs `release-all`, packages release assets, and publishes them to GitHub Releases for tags such as `v2026.3.0`
 
 No manual post-processing step is required after the ontology build.

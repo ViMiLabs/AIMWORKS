@@ -1,21 +1,20 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ns2: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix ns1: <https://w3id.org/h2kg/hydrogen-ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-ns2:AcidDoping a ns2:Manufacturing ;
+ns1:AcidDoping a ns1:Manufacturing ;
     rdfs:label "Acid Doping"@en ;
     dcterms:description "Process of doping cross-linked PAA/PVA films by immersion in sulfuric acid solution to tune ionic strength."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Acid Doping."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "H3PO4 immersion"@en,
-        "phosphoric acid doping"@en,
-        "submerging in H2SO4 solution (1 h)"@en ;
+        "phosphoric acid doping"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Acid Doping."@en ;
     skos:prefLabel "Acid Doping"@en .
 
-ns2:AcidTreatmentOfCCM a ns2:Manufacturing ;
+ns1:AcidTreatmentOfCCM a ns1:Manufacturing ;
     rdfs:label "Acid Treatment Of CCM"@en ;
     dcterms:description "proposed_definition=Post-fabrication acid treatment / washing of the catalyst-coated membrane (CCM) to remove leached metal ions (e.g., Ni2+) and improve mass transport.; Mentioned as improving H2/air performance and low-RH performance (Fig. 4)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Acid Treatment Of CCM."@en ;
@@ -24,9 +23,9 @@ ns2:AcidTreatmentOfCCM a ns2:Manufacturing ;
         "acid-washing"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Acid Treatment Of CCM."@en ;
     skos:prefLabel "Acid Treatment Of CCM"@en ;
-    ns2:hasInputMaterial ns2:CatalystCoatedMembrane .
+    ns1:hasInputMaterial ns1:CatalystCoatedMembrane .
 
-ns2:AmineHydrolysisProcess a ns2:Manufacturing ;
+ns1:AmineHydrolysisProcess a ns1:Manufacturing ;
     rdfs:label "Amine Hydrolysis Process"@en ;
     dcterms:description "Amine hydrolysis step (with triethylamine) used to form MS@NiFeO nanohybrids."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Amine Hydrolysis Process."@en ;
@@ -35,71 +34,46 @@ ns2:AmineHydrolysisProcess a ns2:Manufacturing ;
         "amine hydrolysis"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Amine Hydrolysis Process."@en ;
     skos:prefLabel "Amine Hydrolysis Process"@en ;
-    ns2:hasInputMaterial ns2:MoS2Nanosheets ;
-    ns2:hasOutputMaterial ns2:MoS2NiFe2O4Nanohybrid .
+    ns1:hasInputMaterial ns1:MoS2Nanosheets ;
+    ns1:hasOutputMaterial ns1:MoS2NiFe2O4Nanohybrid .
 
-ns2:AnnealingDuration a ns2:Parameter ;
+ns1:AnnealingDuration a ns1:Parameter ;
     rdfs:label "Annealing Duration"@en ;
     dcterms:description "Duration of Pt(111) annealing step during surface preparation (1 h)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Duration."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1 h"@en,
-        "1 h calcination"@en,
-        "1h reaction"@en,
-        "annealing time"@en,
-        "for 1 h"@en,
-        "h"@en,
+    skos:altLabel "annealing time"@en,
         "hold time"@en,
-        "min"@en,
         "one hour"@en,
         "reaction time"@en ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Duration."@en ;
     skos:prefLabel "Annealing Duration"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_AnnealingDuration_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_AnnealingDuration_QV> .
 
-ns2:AnnealingTemperature a ns2:Parameter ;
+ns1:AnnealingTemperature a ns1:Parameter ;
     rdfs:label "Annealing Temperature"@en ;
     dcterms:description "Temperature used to anneal Pt(111) single-crystal surface during preparation (1600 °C)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Temperature."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1000°C"@en,
-        "1600 °C"@en,
-        "350 °C"@en,
-        "350 °C heating step"@en,
-        "500°C"@en,
-        "700°C"@en,
-        "800°C calcination"@en,
-        "F1"@en,
+    skos:altLabel "F1"@en,
         "F2"@en,
-        "annealed 400°C"@en,
-        "annealed at 1000°C"@en,
-        "annealed at 1600 °C"@en,
         "growth temperature"@en,
-        "heat treatment 400°C"@en,
         "heat treatment temperature"@en,
         "heat treatment temperature (pre-step)"@en,
         "oxidation temperature"@en,
-        "thermolysed at 350 °C"@en,
         "thermolysis temperature"@en,
         "°C"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Temperature."@en ;
     skos:prefLabel "Annealing Temperature"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_AnnealingTemperature_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_AnnealingTemperature_QV> .
 
-ns2:AnnealingTime a ns2:Parameter ;
+ns1:AnnealingTime a ns1:Parameter ;
     rdfs:label "Annealing Time"@en ;
     dcterms:description "Duration of high-temperature annealing (graphitization)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1 h"@en,
-        "1 hour"@en,
-        "1.5 h"@en,
-        "1.5 h heating step"@en,
-        "3 h"@en,
-        "3 h annealing"@en,
-        "3 hrs"@en,
-        "annealed for 2 h"@en,
+    skos:altLabel "1 hour"@en,
         "annealing duration"@en,
         "heat treatment time"@en,
         "heat treatment time (pre-step)"@en,
@@ -107,9 +81,9 @@ ns2:AnnealingTime a ns2:Parameter ;
         "thermolysis time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Annealing Time."@en ;
     skos:prefLabel "Annealing Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_AnnealingTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_AnnealingTime_QV> .
 
-ns2:AtomicLayerDeposition a ns2:Manufacturing ;
+ns1:AtomicLayerDeposition a ns1:Manufacturing ;
     rdfs:label "Atomic Layer Deposition"@en ;
     dcterms:description "Pt deposition process used to synthesize Pt/NbB2 catalyst (MeCpMe3Pt precursor)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Atomic Layer Deposition."@en ;
@@ -117,10 +91,10 @@ ns2:AtomicLayerDeposition a ns2:Manufacturing ;
     skos:altLabel "ALD"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Atomic Layer Deposition."@en ;
     skos:prefLabel "Atomic Layer Deposition"@en ;
-    ns2:hasInputMaterial ns2:NbB2Support ;
-    ns2:hasOutputMaterial ns2:PtOnNbB2Catalyst .
+    ns1:hasInputMaterial ns1:NbB2Support ;
+    ns1:hasOutputMaterial ns1:PtOnNbB2Catalyst .
 
-ns2:BreakTimeBetweenSprayCycles a ns2:Parameter ;
+ns1:BreakTimeBetweenSprayCycles a ns1:Parameter ;
     rdfs:label "Break Time Between Spray Cycles"@en ;
     dcterms:description "label_human: BreakTimeBetweenSprayCycles | description: Rest time between spray-pass series to allow solvent evaporation (reported 10 s)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Break Time Between Spray Cycles."@en ;
@@ -129,9 +103,9 @@ ns2:BreakTimeBetweenSprayCycles a ns2:Parameter ;
         "break time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Break Time Between Spray Cycles."@en ;
     skos:prefLabel "Break Time Between Spray Cycles"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_BreakTimeBetweenSprayCycles_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_BreakTimeBetweenSprayCycles_QV> .
 
-ns2:COStrippingActivation a ns2:Manufacturing ;
+ns1:COStrippingActivation a ns1:Manufacturing ;
     rdfs:label "CO Stripping Activation"@en ;
     dcterms:description "Activation method using CO adsorption/oxidation stripping to clean Pt surface."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing CO Stripping Activation."@en ;
@@ -142,7 +116,7 @@ ns2:COStrippingActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing CO Stripping Activation."@en ;
     skos:prefLabel "CO Stripping Activation"@en .
 
-ns2:CatalyzedDiffusionMediumMethod a ns2:Manufacturing ;
+ns1:CatalyzedDiffusionMediumMethod a ns1:Manufacturing ;
     rdfs:label "Catalyzed Diffusion Medium Method"@en ;
     dcterms:description "IRI: (proposed_new) | description: MEA fabrication approach where catalyst layer is deposited into/onto diffusion medium/MPL instead of directly onto membrane."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Catalyzed Diffusion Medium Method."@en ;
@@ -151,7 +125,7 @@ ns2:CatalyzedDiffusionMediumMethod a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Catalyzed Diffusion Medium Method."@en ;
     skos:prefLabel "Catalyzed Diffusion Medium Method"@en .
 
-ns2:CathodeStarvationActivation a ns2:Manufacturing ;
+ns1:CathodeStarvationActivation a ns1:Manufacturing ;
     rdfs:label "Cathode Starvation Activation"@en ;
     dcterms:description "Break-in method using cathode oxygen starvation leading to H2 evolution/reducing conditions."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cathode Starvation Activation."@en ;
@@ -163,7 +137,7 @@ ns2:CathodeStarvationActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cathode Starvation Activation."@en ;
     skos:prefLabel "Cathode Starvation Activation"@en .
 
-ns2:CoReductionProcess a ns2:Manufacturing ;
+ns1:CoReductionProcess a ns1:Manufacturing ;
     rdfs:label "Co Reduction Process"@en ;
     dcterms:description "Hydrogen reduction of blended oxides (Fe2O3+NiO+MoO3) to metals, enabling subsequent alloy formation."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Co Reduction Process."@en ;
@@ -173,30 +147,28 @@ ns2:CoReductionProcess a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Co Reduction Process."@en ;
     skos:prefLabel "Co Reduction Process"@en .
 
-ns2:CoatingAirVelocity a ns2:Parameter ;
+ns1:CoatingAirVelocity a ns1:Parameter ;
     rdfs:label "Coating Air Velocity"@en ;
     dcterms:description "Air velocity during painting/ink application step."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Air Velocity."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "air velocity"@en,
-        "controlled air velocity of 4.2 m/s"@en ;
+    skos:altLabel "air velocity"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Air Velocity."@en ;
     skos:prefLabel "Coating Air Velocity"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingAirVelocity_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingAirVelocity_QV> .
 
-ns2:CoatingGap a ns2:Parameter ;
+ns1:CoatingGap a ns1:Parameter ;
     rdfs:label "Coating Gap"@en ;
     dcterms:description "Applicator gap setting used during coating (25–175 µm)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Gap."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "gap-height"@en,
-        "gap-height 170 µm"@en,
         "wet film thickness"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Gap."@en ;
     skos:prefLabel "Coating Gap"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingGap_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingGap_QV> .
 
-ns2:CoatingRepetitions a ns2:Parameter ;
+ns1:CoatingRepetitions a ns1:Parameter ;
     rdfs:label "Coating Repetitions"@en ;
     dcterms:description "Number of repeated spin-coating cycles used to build film thickness."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Repetitions."@en ;
@@ -205,9 +177,9 @@ ns2:CoatingRepetitions a ns2:Parameter ;
         "repeated 5 times"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Repetitions."@en ;
     skos:prefLabel "Coating Repetitions"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingRepetitions_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingRepetitions_QV> .
 
-ns2:CoatingSpeed a ns2:Parameter ;
+ns1:CoatingSpeed a ns1:Parameter ;
     rdfs:label "Coating Speed"@en ;
     dcterms:description "Coating speed used with film applicator (10 mm/s)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Speed."@en ;
@@ -221,30 +193,29 @@ ns2:CoatingSpeed a ns2:Parameter ;
         "web speed"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Speed."@en ;
     skos:prefLabel "Coating Speed"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingSpeed_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingSpeed_QV> .
 
-ns2:CoatingTemperature a ns2:Parameter ;
+ns1:CoatingTemperature a ns1:Parameter ;
     rdfs:label "Coating Temperature"@en ;
     dcterms:description "Ambient/plate temperature during ink painting/application step."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Temperature."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:altLabel "deposition temperature"@en,
-        "painting temperature"@en,
-        "temperature of 44°C"@en ;
+        "painting temperature"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Temperature."@en ;
     skos:prefLabel "Coating Temperature"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingTemperature_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingTemperature_QV> .
 
-ns2:CoatingWidth a ns2:Parameter ;
+ns1:CoatingWidth a ns1:Parameter ;
     rdfs:label "Coating Width"@en ;
     dcterms:description "desc=Coating width used in slot-die coating."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Width."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coating Width."@en ;
     skos:prefLabel "Coating Width"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_CoatingWidth_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_CoatingWidth_QV> .
 
-ns2:ColdIsostaticPressingProcess a ns2:Manufacturing ;
+ns1:ColdIsostaticPressingProcess a ns1:Manufacturing ;
     rdfs:label "Cold Isostatic Pressing Process"@en ;
     dcterms:description "desc: Isostatic pressing step (e.g., 300 MPa for 10 min) to bond powder catalyst layer to substrate."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cold Isostatic Pressing Process."@en ;
@@ -254,7 +225,7 @@ ns2:ColdIsostaticPressingProcess a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Cold Isostatic Pressing Process."@en ;
     skos:prefLabel "Cold Isostatic Pressing Process"@en .
 
-ns2:ColloidalSynthesisProcess a ns2:Manufacturing ;
+ns1:ColloidalSynthesisProcess a ns1:Manufacturing ;
     rdfs:label "Colloidal Synthesis Process"@en ;
     dcterms:description "Colloidal synthesis of Cu2WS4 nanocubes using metal chlorides + sulfur in oleylamine; heated 180°C then 300°C."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Colloidal Synthesis Process."@en ;
@@ -263,9 +234,9 @@ ns2:ColloidalSynthesisProcess a ns2:Manufacturing ;
         "hot injection method"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Colloidal Synthesis Process."@en ;
     skos:prefLabel "Colloidal Synthesis Process"@en ;
-    ns2:hasOutputMaterial ns2:Cu2WS4Nanocubes .
+    ns1:hasOutputMaterial ns1:Cu2WS4Nanocubes .
 
-ns2:ContinuousModePrinting a ns2:Manufacturing ;
+ns1:ContinuousModePrinting a ns1:Manufacturing ;
     rdfs:label "Continuous Mode Printing"@en ;
     dcterms:description "Conventional DIW printing mode where geometry is sliced into layers and filled with continuous filaments."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Continuous Mode Printing."@en ;
@@ -275,19 +246,7 @@ ns2:ContinuousModePrinting a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Continuous Mode Printing."@en ;
     skos:prefLabel "Continuous Mode Printing"@en .
 
-ns2:ConvectionDrying_2 a ns2:Manufacturing ;
-    rdfs:label "Convection Drying"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Convection Drying."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "2 h"@en,
-        "air-dried"@en,
-        "~80°C"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Convection Drying."@en ;
-    skos:prefLabel "Convection Drying"@en ;
-    ns2:hasParameter ns2:DryingTemperature_2,
-        ns2:DryingTime_2 .
-
-ns2:CoprecipitationSynthesis a ns2:Manufacturing ;
+ns1:CoprecipitationSynthesis a ns1:Manufacturing ;
     rdfs:label "Coprecipitation Synthesis"@en ;
     dcterms:description "Synthesis of LDH precursors by coprecipitation from metal nitrate solutions into Na2CO3 at controlled pH."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coprecipitation Synthesis."@en ;
@@ -295,10 +254,10 @@ ns2:CoprecipitationSynthesis a ns2:Manufacturing ;
     skos:altLabel "coprecipitation"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Coprecipitation Synthesis."@en ;
     skos:prefLabel "Coprecipitation Synthesis"@en ;
-    ns2:hasOutputMaterial ns2:NiMgAlLayeredDoubleHydroxide ;
-    ns2:hasParameter ns2:pH .
+    ns1:hasOutputMaterial ns1:NiMgAlLayeredDoubleHydroxide ;
+    ns1:hasParameter ns1:pH .
 
-ns2:DLPPrinting a ns2:Manufacturing ;
+ns1:DLPPrinting a ns1:Manufacturing ;
     rdfs:label "DLP Printing"@en ;
     dcterms:description "Top-down digital light processing (DLP) vat photopolymerization used to print photopolymer matrix layers (not found in ontology)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing DLP Printing."@en ;
@@ -308,7 +267,7 @@ ns2:DLPPrinting a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing DLP Printing."@en ;
     skos:prefLabel "DLP Printing"@en .
 
-ns2:DebindingProcess a ns2:Manufacturing ;
+ns1:DebindingProcess a ns1:Manufacturing ;
     rdfs:label "Debinding Process"@en ;
     dcterms:description "Thermal removal/decomposition of polymer binder and organics prior to sintering."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Debinding Process."@en ;
@@ -318,37 +277,35 @@ ns2:DebindingProcess a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Debinding Process."@en ;
     skos:prefLabel "Debinding Process"@en .
 
-ns2:DepositionPotential a ns2:Parameter ;
+ns1:DepositionPotential a ns1:Parameter ;
     rdfs:label "Deposition Potential"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Potential."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Potential."@en ;
     skos:prefLabel "Deposition Potential"@en ;
-    ns2:hasQuantityValue [ ] ;
-    ns2:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
+    ns1:hasQuantityValue [ ] ;
+    ns1:referenceElectrode <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> .
 
-ns2:DepositionRate a ns2:Parameter ;
+ns1:DepositionRate a ns1:Parameter ;
     rdfs:label "Deposition Rate"@en ;
     dcterms:description "Volumetric deposition rate / volumetric flow rate during printing (mm^3/s)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Rate."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Rate."@en ;
     skos:prefLabel "Deposition Rate"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_DepositionRate_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_DepositionRate_QV> .
 
-ns2:DepositionTime a ns2:Parameter ;
+ns1:DepositionTime a ns1:Parameter ;
     rdfs:label "Deposition Time"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "<3 min"@en,
-        "plating time"@en,
-        "plating time 15 min"@en ;
+    skos:altLabel "plating time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Deposition Time."@en ;
     skos:prefLabel "Deposition Time"@en ;
-    ns2:hasQuantityValue [ ] .
+    ns1:hasQuantityValue [ ] .
 
-ns2:DipCoatingWithdrawalRate a ns2:Parameter ;
+ns1:DipCoatingWithdrawalRate a ns1:Parameter ;
     rdfs:label "Dip Coating Withdrawal Rate"@en ;
     dcterms:description "Dip-coating immersion and extraction rates (reported in mm/min)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dip Coating Withdrawal Rate."@en ;
@@ -357,109 +314,58 @@ ns2:DipCoatingWithdrawalRate a ns2:Parameter ;
         "withdrawal rate"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dip Coating Withdrawal Rate."@en ;
     skos:prefLabel "Dip Coating Withdrawal Rate"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_DipCoatingWithdrawalRate_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_DipCoatingWithdrawalRate_QV> .
 
-ns2:DryingDuration a ns2:Parameter ;
+ns1:DryingDuration a ns1:Parameter ;
     rdfs:label "Drying Duration"@en ;
     dcterms:description "Oven drying duration for modified catalyst solids."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Duration."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "48 h"@en ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Duration."@en ;
     skos:prefLabel "Drying Duration"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_DryingDuration_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_DryingDuration_QV> .
 
-ns2:DryingTemperature a ns2:Parameter ;
+ns1:DryingTemperature a ns1:Parameter ;
     rdfs:label "Drying Temperature"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Temperature."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "100 °C"@en,
-        "100°C"@en,
-        "110°C"@en,
-        "125°C"@en,
-        "130°C"@en,
-        "150 °C"@en,
-        "250°C"@en,
-        "25°C (IPA)"@en,
-        "50°C (DMSO)"@en,
-        "50°C drying"@en,
-        "60°C oven"@en,
-        "70 °C"@en,
-        "70°C"@en,
-        "80 °C"@en,
-        "80 °C drying"@en,
-        "90°C (NMP)"@en,
+    skos:altLabel "Drying Temperature"@en,
         "annealing temperature"@en,
-        "cured at 75 °C"@en,
         "curing temperature"@en,
-        "dried at 100 °C"@en,
-        "dried at 110°C"@en,
-        "dried at 125°C"@en,
-        "dried at 130°C"@en,
-        "dried at 37 °C"@en,
-        "dried at 50°C/60°C"@en,
-        "dried at 60°C"@en,
-        "dried at 70°C"@en,
-        "dried in an oven at 100°C"@en,
-        "dried in an oven at 37 °C"@en,
-        "drying at 110°C"@en,
-        "drying at 55°C"@en,
-        "drying temperature 120°C"@en,
         "drying/annealing temperature"@en,
         "electrode drying temperature"@en,
-        "oven at 60°C"@en,
         "oven temperature"@en,
         "room temperature drying"@en,
         "vacuum dried"@en,
-        "vacuum oven temperature"@en,
-        "vacuum-dried at 70°C"@en ;
+        "vacuum oven temperature"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Temperature."@en ;
     skos:prefLabel "Drying Temperature"@en ;
-    ns2:hasQuantityValue [ ] .
+    ns1:hasQuantityValue [ ],
+        <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_DryingTemperature_QV> .
 
-ns2:DryingTime a ns2:Parameter ;
+ns1:DryingTime a ns1:Parameter ;
     rdfs:label "Drying Time"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1 h"@en,
-        "1 h vacuum dry"@en,
-        "10 min"@en,
-        "10 min hot press"@en,
-        "12 h drying"@en,
-        "12 hours"@en,
-        "15 min"@en,
+    skos:altLabel "12 hours"@en,
         "2 days"@en,
-        "20 min (90 wt% in 20 min)"@en,
-        "3 h drying"@en,
-        "30 min"@en,
-        "30 min drying"@en,
-        "48 h"@en,
-        "6 min drying"@en,
-        "60-120 min drying"@en,
+        "Drying Time"@en,
         "annealing time"@en,
-        "cured for 1 h"@en,
         "curing time"@en,
-        "dried for 1 h"@en,
-        "dried for 15 min"@en,
-        "dried for 24 h"@en,
-        "dried for 30 min"@en,
-        "dried for about 1 h"@en,
-        "dried for ~1 h"@en,
         "drying duration"@en,
         "electrode drying time"@en,
-        "for 1 h"@en,
         "hours"@en,
         "soaking time"@en,
         "under reduced pressure for an additional hour"@en,
-        "vacuum drying time"@en,
-        "~1 h"@en ;
+        "vacuum drying time"@en ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Time."@en ;
     skos:prefLabel "Drying Time"@en ;
-    ns2:hasQuantityValue [ ] .
+    ns1:hasQuantityValue [ ],
+        <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_DryingTime_QV> .
 
-ns2:DyeSensitizationProcess a ns2:Manufacturing ;
+ns1:DyeSensitizationProcess a ns1:Manufacturing ;
     rdfs:label "Dye Sensitization Process"@en ;
     dcterms:description "Soaking TiO2 photoanode in N719 dye solution (5.10e-3 M) for 18 h."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dye Sensitization Process."@en ;
@@ -468,10 +374,10 @@ ns2:DyeSensitizationProcess a ns2:Manufacturing ;
         "sensitization"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Dye Sensitization Process."@en ;
     skos:prefLabel "Dye Sensitization Process"@en ;
-    ns2:hasInputMaterial ns2:N719Dye,
-        ns2:TitaniumOxideLayer .
+    ns1:hasInputMaterial ns1:N719Dye,
+        ns1:TitaniumOxideLayer .
 
-ns2:ElectronBeamEvaporationDeposition a ns2:Manufacturing ;
+ns1:ElectronBeamEvaporationDeposition a ns1:Manufacturing ;
     rdfs:label "Electron Beam Evaporation Deposition"@en ;
     dcterms:description "Deposition process used to coat Si wafer with aluminum thin film."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Electron Beam Evaporation Deposition."@en ;
@@ -480,9 +386,9 @@ ns2:ElectronBeamEvaporationDeposition a ns2:Manufacturing ;
         "electron beam evaporation"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Electron Beam Evaporation Deposition."@en ;
     skos:prefLabel "Electron Beam Evaporation Deposition"@en ;
-    ns2:hasOutputMaterial ns2:AluminumThinFilmLayer .
+    ns1:hasOutputMaterial ns1:AluminumThinFilmLayer .
 
-ns2:EquivalentSprayCoatingPassCount a ns2:Parameter ;
+ns1:EquivalentSprayCoatingPassCount a ns1:Parameter ;
     rdfs:label "Equivalent Spray Coating Pass Count"@en ;
     dcterms:description "Pass count normalized to a reference ink carbon concentration to keep total cathode thickness constant (as defined by authors)"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Equivalent Spray Coating Pass Count."@en ;
@@ -491,21 +397,19 @@ ns2:EquivalentSprayCoatingPassCount a ns2:Parameter ;
         "equivalent run times"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Equivalent Spray Coating Pass Count."@en ;
     skos:prefLabel "Equivalent Spray Coating Pass Count"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_EquivalentSprayCoatingPassCount_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_EquivalentSprayCoatingPassCount_QV> .
 
-ns2:ExtrusionPressure a ns2:Parameter ;
+ns1:ExtrusionPressure a ns1:Parameter ;
     rdfs:label "Extrusion Pressure"@en ;
     dcterms:description "Pneumatic pressure used to extrude ink during direct ink writing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Extrusion Pressure."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "75 kPa"@en,
-        "75 kPa pneumatic pressure"@en ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Pressure> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Extrusion Pressure."@en ;
     skos:prefLabel "Extrusion Pressure"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_ExtrusionPressure_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_ExtrusionPressure_QV> .
 
-ns2:FilamentOnDemandMode a ns2:Manufacturing ;
+ns1:FilamentOnDemandMode a ns1:Manufacturing ;
     rdfs:label "Filament On Demand Mode"@en ;
     dcterms:description "DIW deposition mode where extrusion is started/stopped per-pillar (analogous to inkjet drop-on-demand), enabling vertical free-standing pillars."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Filament On Demand Mode."@en ;
@@ -515,7 +419,7 @@ ns2:FilamentOnDemandMode a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Filament On Demand Mode."@en ;
     skos:prefLabel "Filament On Demand Mode"@en .
 
-ns2:GalvanostaticActivation a ns2:Manufacturing ;
+ns1:GalvanostaticActivation a ns1:Manufacturing ;
     rdfs:label "Galvanostatic Activation"@en ;
     dcterms:description "Break-in method at constant current density (galvanostatic hold)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Galvanostatic Activation."@en ;
@@ -525,18 +429,18 @@ ns2:GalvanostaticActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Galvanostatic Activation."@en ;
     skos:prefLabel "Galvanostatic Activation"@en .
 
-ns2:GravureCoating a ns2:Manufacturing ;
+ns1:GravureCoating a ns1:Manufacturing ;
     rdfs:label "Gravure Coating"@en ;
     dcterms:description "Roll-to-roll printing/coating method for catalyst inks; discussed in context of scalable manufacturing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gravure Coating."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Gravure Coating."@en ;
     skos:prefLabel "Gravure Coating"@en ;
-    ns2:hasInputMaterial ns2:CatalystInk ;
-    ns2:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
-        ns2:CathodeCatalystLayer .
+    ns1:hasInputMaterial ns1:CatalystInk ;
+    ns1:hasOutputMaterial <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56>,
+        ns1:CathodeCatalystLayer .
 
-ns2:HighPressureHomogenization a ns2:Manufacturing ;
+ns1:HighPressureHomogenization a ns1:Manufacturing ;
     rdfs:label "High Pressure Homogenization"@en ;
     dcterms:description "High-pressure homogenizer dispersion method; not present as a named process in ontology."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing High Pressure Homogenization."@en ;
@@ -545,9 +449,9 @@ ns2:HighPressureHomogenization a ns2:Manufacturing ;
         "homogenizer"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing High Pressure Homogenization."@en ;
     skos:prefLabel "High Pressure Homogenization"@en ;
-    ns2:usesInstrument ns2:HighPressureHomogenizer .
+    ns1:usesInstrument ns1:HighPressureHomogenizer .
 
-ns2:HybridDLPDIWPrinting a ns2:Manufacturing ;
+ns1:HybridDLPDIWPrinting a ns1:Manufacturing ;
     rdfs:label "Hybrid DLPDIW Printing"@en ;
     dcterms:description "Integrated process combining DLP printing with DIW printing in a single platform/job."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hybrid DLPDIW Printing."@en ;
@@ -558,7 +462,7 @@ ns2:HybridDLPDIWPrinting a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hybrid DLPDIW Printing."@en ;
     skos:prefLabel "Hybrid DLPDIW Printing"@en .
 
-ns2:HydrogenPumpingActivation a ns2:Manufacturing ;
+ns1:HydrogenPumpingActivation a ns1:Manufacturing ;
     rdfs:label "Hydrogen Pumping Activation"@en ;
     dcterms:description "Activation method with H2 pumping (H2 at anode, inert at cathode, external power) to induce H2 evolution at cathode."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hydrogen Pumping Activation."@en ;
@@ -569,16 +473,27 @@ ns2:HydrogenPumpingActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hydrogen Pumping Activation."@en ;
     skos:prefLabel "Hydrogen Pumping Activation"@en .
 
-ns2:KOHSoakingPretreatment a ns2:Manufacturing ;
+ns1:HydrothermalSynthesisProcess a ns1:Manufacturing ;
+    rdfs:label "Hydrothermal Synthesis Process"@en ;
+    dcterms:description "Hydrothermal synthesis used to prepare MoS2 nanosheets and as part of hybrid synthesis."@en ;
+    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hydrothermal Synthesis Process."@en ;
+    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    skos:altLabel "hydrothermal route"@en,
+        "hydrothermal treatment"@en,
+        "solvothermal method"@en ;
+    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Hydrothermal Synthesis Process."@en ;
+    skos:prefLabel "Hydrothermal Synthesis Process"@en ;
+    ns1:hasOutputMaterial ns1:MoS2Nanosheets .
+
+ns1:KOHSoakingPretreatment a ns1:Manufacturing ;
     rdfs:label "KOH Soaking Pretreatment"@en ;
     dcterms:description "Pretreatment step for electrodes and AEM to exchange halide to OH− via soaking in 1 M KOH for 1 h, followed by washing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing KOH Soaking Pretreatment."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "soaked in aqueous 1M KOH solution for 1h"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing KOH Soaking Pretreatment."@en ;
     skos:prefLabel "KOH Soaking Pretreatment"@en .
 
-ns2:LiquidNitrogenFreezingTreatment a ns2:Manufacturing ;
+ns1:LiquidNitrogenFreezingTreatment a ns1:Manufacturing ;
     rdfs:label "Liquid Nitrogen Freezing Treatment"@en ;
     dcterms:description "Cryogenic release step: liquid nitrogen scattered over MEA just before peeling decal substrate to improve transfer yield."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid Nitrogen Freezing Treatment."@en ;
@@ -589,7 +504,7 @@ ns2:LiquidNitrogenFreezingTreatment a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid Nitrogen Freezing Treatment."@en ;
     skos:prefLabel "Liquid Nitrogen Freezing Treatment"@en .
 
-ns2:LiquidPhaseExfoliationProcess a ns2:Manufacturing ;
+ns1:LiquidPhaseExfoliationProcess a ns1:Manufacturing ;
     rdfs:label "Liquid Phase Exfoliation Process"@en ;
     dcterms:description "Exfoliation of SN into few-layer nanosheets using ultrasonication in ethanol."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid Phase Exfoliation Process."@en ;
@@ -598,10 +513,10 @@ ns2:LiquidPhaseExfoliationProcess a ns2:Manufacturing ;
         "ultrasonication exfoliation"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid Phase Exfoliation Process."@en ;
     skos:prefLabel "Liquid Phase Exfoliation Process"@en ;
-    ns2:hasInputMaterial ns2:SilicaNanosheet ;
-    ns2:hasOutputMaterial ns2:ExfoliatedSilicaNanosheet .
+    ns1:hasInputMaterial ns1:SilicaNanosheet ;
+    ns1:hasOutputMaterial ns1:ExfoliatedSilicaNanosheet .
 
-ns2:LiquidStateLigandExchange a ns2:Manufacturing ;
+ns1:LiquidStateLigandExchange a ns1:Manufacturing ;
     rdfs:label "Liquid State Ligand Exchange"@en ;
     dcterms:description "Ligand exchange performed in solution phase to create CQD inks (phase transfer approach)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid State Ligand Exchange."@en ;
@@ -611,7 +526,7 @@ ns2:LiquidStateLigandExchange a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Liquid State Ligand Exchange."@en ;
     skos:prefLabel "Liquid State Ligand Exchange"@en .
 
-ns2:ManufacturingThroughputIncreaseFactor a ns2:Property ;
+ns1:ManufacturingThroughputIncreaseFactor a ns1:Property ;
     rdfs:label "Manufacturing Throughput Increase Factor"@en ;
     dcterms:description "Relative throughput factor (e.g., roll-to-roll vs lab spray); not present as named Property in ontology."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing Throughput Increase Factor."@en ;
@@ -621,9 +536,9 @@ ns2:ManufacturingThroughputIncreaseFactor a ns2:Property ;
         "throughput increase factor"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing Throughput Increase Factor."@en ;
     skos:prefLabel "Manufacturing Throughput Increase Factor"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_ManufacturingThroughputIncreaseFactor_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_ManufacturingThroughputIncreaseFactor_QV> .
 
-ns2:NumberOfSprayPasses a ns2:Parameter ;
+ns1:NumberOfSprayPasses a ns1:Parameter ;
     rdfs:label "Number Of Spray Passes"@en ;
     dcterms:description "Number of spray passes used to build up coating thickness."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Number Of Spray Passes."@en ;
@@ -638,9 +553,9 @@ ns2:NumberOfSprayPasses a ns2:Parameter ;
         "spraying cycles"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Number Of Spray Passes."@en ;
     skos:prefLabel "Number Of Spray Passes"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_NumberOfSprayPasses_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_NumberOfSprayPasses_QV> .
 
-ns2:OxygenPlasmaTreatment a ns2:Manufacturing ;
+ns1:OxygenPlasmaTreatment a ns1:Manufacturing ;
     rdfs:label "Oxygen Plasma Treatment"@en ;
     dcterms:description "Surface treatment of substrates (e.g., thermanox) with oxygen plasma to improve ink adhesion/wetting prior to coating/printing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Oxygen Plasma Treatment."@en ;
@@ -649,29 +564,27 @@ ns2:OxygenPlasmaTreatment a ns2:Manufacturing ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/OxygenTransportResistance> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Oxygen Plasma Treatment."@en ;
     skos:prefLabel "Oxygen Plasma Treatment"@en ;
-    ns2:hasInputMaterial ns2:ThermanoxSubstrate .
+    ns1:hasInputMaterial ns1:ThermanoxSubstrate .
 
-ns2:PelletAnnealingTemperature a ns2:Parameter ;
+ns1:PelletAnnealingTemperature a ns1:Parameter ;
     rdfs:label "Pellet Annealing Temperature"@en ;
     dcterms:description "Annealing temperature for compressed pellet prior to Hall testing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Annealing Temperature."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "900°C"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Annealing Temperature."@en ;
     skos:prefLabel "Pellet Annealing Temperature"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_PelletAnnealingTemperature_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_PelletAnnealingTemperature_QV> .
 
-ns2:PelletAnnealingTime a ns2:Parameter ;
+ns1:PelletAnnealingTime a ns1:Parameter ;
     rdfs:label "Pellet Annealing Time"@en ;
     dcterms:description "Annealing duration for compressed pellet prior to Hall testing."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Annealing Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "2 h"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Annealing Time."@en ;
     skos:prefLabel "Pellet Annealing Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_PelletAnnealingTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_PelletAnnealingTime_QV> .
 
-ns2:PelletCompressionProcess a ns2:Manufacturing ;
+ns1:PelletCompressionProcess a ns1:Manufacturing ;
     rdfs:label "Pellet Compression Process"@en ;
     dcterms:description "Compression of graphene film into pellet to improve conductivity."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Compression Process."@en ;
@@ -679,9 +592,9 @@ ns2:PelletCompressionProcess a ns2:Manufacturing ;
     skos:altLabel "compressed pellet"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Pellet Compression Process."@en ;
     skos:prefLabel "Pellet Compression Process"@en ;
-    ns2:hasOutputMaterial ns2:BiomassDerivedFewLayerGrapheneFlakes .
+    ns1:hasOutputMaterial ns1:BiomassDerivedFewLayerGrapheneFlakes .
 
-ns2:PlasmaEtching a ns2:Manufacturing ;
+ns1:PlasmaEtching a ns1:Manufacturing ;
     rdfs:label "Plasma Etching"@en ;
     dcterms:description "Process for surface modification/patterning of PEM using plasma etching (used to increase roughness / interfacial area)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Plasma Etching."@en ;
@@ -690,7 +603,7 @@ ns2:PlasmaEtching a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Plasma Etching."@en ;
     skos:prefLabel "Plasma Etching"@en .
 
-ns2:PotentiostaticActivation a ns2:Manufacturing ;
+ns1:PotentiostaticActivation a ns1:Manufacturing ;
     rdfs:label "Potentiostatic Activation"@en ;
     dcterms:description "Break-in method at constant cell voltage (potentiostatic hold)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Potentiostatic Activation."@en ;
@@ -701,7 +614,7 @@ ns2:PotentiostaticActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Potentiostatic Activation."@en ;
     skos:prefLabel "Potentiostatic Activation"@en .
 
-ns2:PrintingLayerThickness a ns2:Parameter ;
+ns1:PrintingLayerThickness a ns1:Parameter ;
     rdfs:label "Printing Layer Thickness"@en ;
     dcterms:description "Layer thickness for DLP layers (TL) and DIW layers (TW), reported in µm."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Printing Layer Thickness."@en ;
@@ -714,9 +627,9 @@ ns2:PrintingLayerThickness a ns2:Parameter ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Length> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Printing Layer Thickness."@en ;
     skos:prefLabel "Printing Layer Thickness"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_PrintingLayerThickness_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_PrintingLayerThickness_QV> .
 
-ns2:PrintingPlatformStage a ns2:Instrument ;
+ns1:PrintingPlatformStage a ns1:Instrument ;
     rdfs:label "Printing Platform Stage"@en ;
     dcterms:description "Movable build platform (glass with opaque film) mounted on a linear stage."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Printing Platform Stage."@en ;
@@ -728,7 +641,7 @@ ns2:PrintingPlatformStage a ns2:Instrument ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Printing Platform Stage."@en ;
     skos:prefLabel "Printing Platform Stage"@en .
 
-ns2:ProfilometrySamplePreparation a ns2:Manufacturing ;
+ns1:ProfilometrySamplePreparation a ns1:Manufacturing ;
     rdfs:label "Profilometry Sample Preparation"@en ;
     dcterms:description "Preparation for profilometry: remove parallel strips of coating to expose substrate baseline for thickness calculation."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Profilometry Sample Preparation."@en ;
@@ -736,11 +649,11 @@ ns2:ProfilometrySamplePreparation a ns2:Manufacturing ;
     skos:altLabel "removing strips with toothpick"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Profilometry Sample Preparation."@en ;
     skos:prefLabel "Profilometry Sample Preparation"@en ;
-    ns2:hasInputMaterial ns2:CathodeCatalystLayer ;
-    ns2:hasParameter ns2:RemovedStripWidth,
-        ns2:StripSpacing .
+    ns1:hasInputMaterial ns1:CathodeCatalystLayer ;
+    ns1:hasParameter ns1:RemovedStripWidth,
+        ns1:StripSpacing .
 
-ns2:RapidCoolDownActivation a ns2:Manufacturing ;
+ns1:RapidCoolDownActivation a ns1:Manufacturing ;
     rdfs:label "Rapid Cool Down Activation"@en ;
     dcterms:description "Break-in method combining operation with rapid cool-down below dew point to condense liquid water."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Rapid Cool Down Activation."@en ;
@@ -752,7 +665,7 @@ ns2:RapidCoolDownActivation a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Rapid Cool Down Activation."@en ;
     skos:prefLabel "Rapid Cool Down Activation"@en .
 
-ns2:RollToRollProduction a ns2:Manufacturing ;
+ns1:RollToRollProduction a ns1:Manufacturing ;
     rdfs:label "Roll To Roll Production"@en ;
     dcterms:description "Roll-to-roll catalyst coated membrane production referenced; not present as named process in ontology."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Roll To Roll Production."@en ;
@@ -764,7 +677,7 @@ ns2:RollToRollProduction a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Roll To Roll Production."@en ;
     skos:prefLabel "Roll To Roll Production"@en .
 
-ns2:ScreenPrintingMachine a ns2:Instrument ;
+ns1:ScreenPrintingMachine a ns1:Instrument ;
     rdfs:label "Screen Printing Machine"@en ;
     dcterms:description "Screen printing equipment used to print PICL inks onto GDL."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Screen Printing Machine."@en ;
@@ -775,7 +688,7 @@ ns2:ScreenPrintingMachine a ns2:Instrument ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Screen Printing Machine."@en ;
     skos:prefLabel "Screen Printing Machine"@en .
 
-ns2:ShearMixingRepetitions a ns2:Parameter ;
+ns1:ShearMixingRepetitions a ns1:Parameter ;
     rdfs:label "Shear Mixing Repetitions"@en ;
     dcterms:description "Number of shear-mixing cycles (each 2 min) in blender."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Shear Mixing Repetitions."@en ;
@@ -784,44 +697,34 @@ ns2:ShearMixingRepetitions a ns2:Parameter ;
         "repeated twenty times"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Shear Mixing Repetitions."@en ;
     skos:prefLabel "Shear Mixing Repetitions"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_ShearMixingRepetitions_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_ShearMixingRepetitions_QV> .
 
-ns2:ShearMixingRestTime a ns2:Parameter ;
+ns1:ShearMixingRestTime a ns1:Parameter ;
     rdfs:label "Shear Mixing Rest Time"@en ;
     dcterms:description "Rest time between blender shear-mixing cycles (blender left open)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Shear Mixing Rest Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "left open for 15 min"@en,
-        "rest time"@en,
+    skos:altLabel "rest time"@en,
         "rest/open time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Shear Mixing Rest Time."@en ;
     skos:prefLabel "Shear Mixing Rest Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_ShearMixingRestTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_ShearMixingRestTime_QV> .
 
-ns2:SinteringTemperature a ns2:Parameter ;
+ns1:SinteringTemperature a ns1:Parameter ;
     rdfs:label "Sintering Temperature"@en ;
     dcterms:description "Peak sintering temperature for different materials."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sintering Temperature."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1373 K"@en,
-        "1500 °C"@en,
-        "1520 °C"@en,
-        "220 °C"@en,
-        "300°C"@en,
-        "350 °C"@en,
-        "350 °C sintering"@en,
-        "380°C"@en,
-        "800 °C"@en,
-        "final temperature"@en,
+    skos:altLabel "final temperature"@en,
         "heat treated"@en,
         "post-sintering temperature"@en,
         "thermally sintered"@en,
         "°C"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sintering Temperature."@en ;
     skos:prefLabel "Sintering Temperature"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SinteringTemperature_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SinteringTemperature_QV> .
 
-ns2:SolidStateLigandExchange a ns2:Manufacturing ;
+ns1:SolidStateLigandExchange a ns1:Manufacturing ;
     rdfs:label "Solid State Ligand Exchange"@en ;
     dcterms:description "Ligand exchange performed on solid CQD films (often layer-by-layer processing)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Solid State Ligand Exchange."@en ;
@@ -830,7 +733,7 @@ ns2:SolidStateLigandExchange a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Solid State Ligand Exchange."@en ;
     skos:prefLabel "Solid State Ligand Exchange"@en .
 
-ns2:Sonication a ns2:Manufacturing ;
+ns1:Sonication a ns1:Manufacturing ;
     rdfs:label "Sonication"@en ;
     dcterms:description "Sonication dispersion step"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sonication."@en ;
@@ -839,32 +742,27 @@ ns2:Sonication a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sonication."@en ;
     skos:prefLabel "Sonication"@en .
 
-ns2:SpinCoatingSpeed a ns2:Parameter ;
+ns1:SpinCoatingSpeed a ns1:Parameter ;
     rdfs:label "Spin Coating Speed"@en ;
     dcterms:description "Spin-coating speed used to deposit QD photoresist films."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spin Coating Speed."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "1000 rpm"@en,
-        "rpm"@en,
-        "spin coated 1000 rpm"@en,
-        "spin speed"@en ;
+    skos:altLabel "spin speed"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spin Coating Speed."@en ;
     skos:prefLabel "Spin Coating Speed"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SpinCoatingSpeed_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SpinCoatingSpeed_QV> .
 
-ns2:SpinCoatingTime a ns2:Parameter ;
+ns1:SpinCoatingTime a ns1:Parameter ;
     rdfs:label "Spin Coating Time"@en ;
     dcterms:description "Spin-coating duration."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spin Coating Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "20 s"@en,
-        "spin coated ... 20 s"@en,
-        "spin time"@en ;
+    skos:altLabel "spin time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spin Coating Time."@en ;
     skos:prefLabel "Spin Coating Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SpinCoatingTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SpinCoatingTime_QV> .
 
-ns2:SprayAirPressure a ns2:Parameter ;
+ns1:SprayAirPressure a ns1:Parameter ;
     rdfs:label "Spray Air Pressure"@en ;
     dcterms:description "Atomizing air pressure during spray coating (set by regulator)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Air Pressure."@en ;
@@ -876,18 +774,18 @@ ns2:SprayAirPressure a ns2:Parameter ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Pressure> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Air Pressure."@en ;
     skos:prefLabel "Spray Air Pressure"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SprayAirPressure_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SprayAirPressure_QV> .
 
-ns2:SprayAngle a ns2:Parameter ;
+ns1:SprayAngle a ns1:Parameter ;
     rdfs:label "Spray Angle"@en ;
     dcterms:description "desc=Spray angle during deposition (45°)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Angle."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Angle."@en ;
     skos:prefLabel "Spray Angle"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SprayAngle_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SprayAngle_QV> .
 
-ns2:SprayCoatingPassCount a ns2:Parameter ;
+ns1:SprayCoatingPassCount a ns1:Parameter ;
     rdfs:label "Spray Coating Pass Count"@en ;
     dcterms:description "Number of ultrasonic spray coating passes/run times used to deposit a given layer"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coating Pass Count."@en ;
@@ -897,44 +795,28 @@ ns2:SprayCoatingPassCount a ns2:Parameter ;
         "spraying parameter"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coating Pass Count."@en ;
     skos:prefLabel "Spray Coating Pass Count"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SprayCoatingPassCount_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SprayCoatingPassCount_QV> .
 
-ns2:SprayCoating_3 a ns2:Manufacturing ;
-    rdfs:label "Spray Coating"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coating."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "Pt loading"@en,
-        "ultrasonic spray coating"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coating."@en ;
-    skos:prefLabel "Spray Coating"@en ;
-    ns2:hasInputMaterial ns2:HydrophilicCatalystInk_2 ;
-    ns2:hasOutputMaterial ns2:CathodeGDE_2 ;
-    ns2:usesInstrument ns2:SprayCoater_2 .
-
-ns2:SprayDistance a ns2:Parameter ;
+ns1:SprayDistance a ns1:Parameter ;
     rdfs:label "Spray Distance"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Distance."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "15 cm"@en,
-        "8 cm"@en,
-        "distance 8 cm"@en,
-        "nozzle-to-electrode distance"@en ;
+    skos:altLabel "nozzle-to-electrode distance"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Distance."@en ;
     skos:prefLabel "Spray Distance"@en ;
-    ns2:hasQuantityValue [ ] .
+    ns1:hasQuantityValue [ ] .
 
-ns2:SprayDuration a ns2:Parameter ;
+ns1:SprayDuration a ns1:Parameter ;
     rdfs:label "Spray Duration"@en ;
     dcterms:description "Duration of spraying/atomization during spray coating to tune catalyst/Pt loading."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Duration."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "2.5–10 min"@en ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Duration."@en ;
     skos:prefLabel "Spray Duration"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SprayDuration_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SprayDuration_QV> .
 
-ns2:SpraySpeed a ns2:Parameter ;
+ns1:SpraySpeed a ns1:Parameter ;
     rdfs:label "Spray Speed"@en ;
     dcterms:description "Nozzle travel speed during each spray pass."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Speed."@en ;
@@ -943,9 +825,9 @@ ns2:SpraySpeed a ns2:Parameter ;
         "speed"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Speed."@en ;
     skos:prefLabel "Spray Speed"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SpraySpeed_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SpraySpeed_QV> .
 
-ns2:SputterCoatingCurrent a ns2:Parameter ;
+ns1:SputterCoatingCurrent a ns1:Parameter ;
     rdfs:label "Sputter Coating Current"@en ;
     dcterms:description "Current used during sputter coating (mA)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sputter Coating Current."@en ;
@@ -954,9 +836,9 @@ ns2:SputterCoatingCurrent a ns2:Parameter ;
     skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricCurrentDensity> ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sputter Coating Current."@en ;
     skos:prefLabel "Sputter Coating Current"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SputterCoatingCurrent_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SputterCoatingCurrent_QV> .
 
-ns2:SputterCoatingTime a ns2:Parameter ;
+ns1:SputterCoatingTime a ns1:Parameter ;
     rdfs:label "Sputter Coating Time"@en ;
     dcterms:description "Duration of gold sputter coating prior to SEM (s)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sputter Coating Time."@en ;
@@ -964,9 +846,9 @@ ns2:SputterCoatingTime a ns2:Parameter ;
     skos:altLabel "coated with gold for"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Sputter Coating Time."@en ;
     skos:prefLabel "Sputter Coating Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_SputterCoatingTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_SputterCoatingTime_QV> .
 
-ns2:SteamActivationProcess a ns2:Manufacturing ;
+ns1:SteamActivationProcess a ns1:Manufacturing ;
     rdfs:label "Steam Activation Process"@en ;
     dcterms:description "High-temperature activation under steam/water vapor to create hierarchical pore structure and Fe3O4 nanoparticles."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Steam Activation Process."@en ;
@@ -974,10 +856,10 @@ ns2:SteamActivationProcess a ns2:Manufacturing ;
     skos:altLabel "steam activation"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Steam Activation Process."@en ;
     skos:prefLabel "Steam Activation Process"@en ;
-    ns2:hasInputMaterial ns2:FeNCCatalyst ;
-    ns2:hasOutputMaterial ns2:SteamActivatedFeNCCatalyst .
+    ns1:hasInputMaterial ns1:FeNCCatalyst ;
+    ns1:hasOutputMaterial ns1:SteamActivatedFeNCCatalyst .
 
-ns2:SteamPretreatment a ns2:Manufacturing ;
+ns1:SteamPretreatment a ns1:Manufacturing ;
     rdfs:label "Steam Pretreatment"@en ;
     dcterms:description "Steaming MEA/CCM prior to operation to hydrate membrane/ionomer."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Steam Pretreatment."@en ;
@@ -989,7 +871,7 @@ ns2:SteamPretreatment a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Steam Pretreatment."@en ;
     skos:prefLabel "Steam Pretreatment"@en .
 
-ns2:TiCl4SurfaceTreatment a ns2:Manufacturing ;
+ns1:TiCl4SurfaceTreatment a ns1:Manufacturing ;
     rdfs:label "Ti Cl 4 Surface Treatment"@en ;
     dcterms:description "Surface treatment of TiO2 films in TiCl4 solution (40 mM) at 70°C for 30 min (twice)."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ti Cl 4 Surface Treatment."@en ;
@@ -997,9 +879,9 @@ ns2:TiCl4SurfaceTreatment a ns2:Manufacturing ;
     skos:altLabel "TiCl4 treatment"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ti Cl 4 Surface Treatment."@en ;
     skos:prefLabel "Ti Cl 4 Surface Treatment"@en ;
-    ns2:hasInputMaterial ns2:TitaniumOxideLayer .
+    ns1:hasInputMaterial ns1:TitaniumOxideLayer .
 
-ns2:UltrasonicSprayCoating a ns2:Manufacturing ;
+ns1:UltrasonicSprayCoating a ns1:Manufacturing ;
     rdfs:label "Ultrasonic Spray Coating"@en ;
     dcterms:description "Ultrasonic spray coating deposition"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ultrasonic Spray Coating."@en ;
@@ -1007,9 +889,9 @@ ns2:UltrasonicSprayCoating a ns2:Manufacturing ;
     skos:altLabel "ultrasonically spray coated"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ultrasonic Spray Coating."@en ;
     skos:prefLabel "Ultrasonic Spray Coating"@en ;
-    ns2:usesInstrument ns2:SprayCoater .
+    ns1:usesInstrument ns1:SprayCoater .
 
-ns2:UltrasonicSprayCoatingSystem a ns2:Instrument ;
+ns1:UltrasonicSprayCoatingSystem a ns1:Instrument ;
     rdfs:label "Ultrasonic Spray Coating System"@en ;
     dcterms:description "Ultrasonic spray coater used for layer deposition (Prism 400)"@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ultrasonic Spray Coating System."@en ;
@@ -1019,7 +901,7 @@ ns2:UltrasonicSprayCoatingSystem a ns2:Instrument ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Ultrasonic Spray Coating System."@en ;
     skos:prefLabel "Ultrasonic Spray Coating System"@en .
 
-ns2:UniaxialPressingProcess a ns2:Manufacturing ;
+ns1:UniaxialPressingProcess a ns1:Manufacturing ;
     rdfs:label "Uniaxial Pressing Process"@en ;
     dcterms:description "desc: Mechanical pressing step (e.g., 262 MPa for 5 min) to immobilize powder on substrate prior to CIP."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Uniaxial Pressing Process."@en ;
@@ -1029,36 +911,20 @@ ns2:UniaxialPressingProcess a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Uniaxial Pressing Process."@en ;
     skos:prefLabel "Uniaxial Pressing Process"@en .
 
-ns2:VacuumDryingTime a ns2:Parameter ;
+ns1:VacuumDryingTime a ns1:Parameter ;
     rdfs:label "Vacuum Drying Time"@en ;
     dcterms:description "Vacuum drying time used before/after ligand exchange."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying Time."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "2 h"@en,
-        "24 h"@en,
-        "dried in vacuum for 2 h"@en,
-        "drying time"@en,
-        "min"@en,
+    skos:altLabel "drying time"@en,
         "one day"@en,
-        "solvent evaporation time"@en,
-        "vacuum-dried ... for 24 h"@en ;
+        "solvent evaporation time"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying Time."@en ;
     skos:prefLabel "Vacuum Drying Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_VacuumDryingTime_QV> .
+    ns1:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_VacuumDryingTime_QV>,
+        <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_VacuumDryingTime_QV_2> .
 
-ns2:VacuumDrying_2 a ns2:Manufacturing ;
-    rdfs:label "Vacuum Drying"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "30 min"@en,
-        "air-dried"@en,
-        "under vacuum drying"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying."@en ;
-    skos:prefLabel "Vacuum Drying"@en ;
-    ns2:hasParameter ns2:DryingTemperature_2,
-        ns2:VacuumDryingTime_2 .
-
-ns2:VacuumEncapsulationProcess a ns2:Manufacturing ;
+ns1:VacuumEncapsulationProcess a ns1:Manufacturing ;
     rdfs:label "Vacuum Encapsulation Process"@en ;
     dcterms:description "Sealing specimens under vacuum in quartz capillaries for high-temperature XRD/tomography."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Encapsulation Process."@en ;
@@ -1068,7 +934,7 @@ ns2:VacuumEncapsulationProcess a ns2:Manufacturing ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Encapsulation Process."@en ;
     skos:prefLabel "Vacuum Encapsulation Process"@en .
 
-ns2:VacuumFiltrationProcess a ns2:Manufacturing ;
+ns1:VacuumFiltrationProcess a ns1:Manufacturing ;
     rdfs:label "Vacuum Filtration Process"@en ;
     dcterms:description "Vacuum filtration used to make free-standing graphene films."@en ;
     rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Filtration Process."@en ;
@@ -1076,62 +942,25 @@ ns2:VacuumFiltrationProcess a ns2:Manufacturing ;
     skos:altLabel "vacuum filtration"@en ;
     skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Filtration Process."@en ;
     skos:prefLabel "Vacuum Filtration Process"@en ;
-    ns2:hasOutputMaterial ns2:BiomassDerivedFewLayerGrapheneFlakes .
+    ns1:hasOutputMaterial ns1:BiomassDerivedFewLayerGrapheneFlakes .
 
-ns2:isSubProcessOf a owl:ObjectProperty ;
+ns1:isSubProcessOf a owl:ObjectProperty ;
     rdfs:label "isSubProcessOf"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isSubProcessOf."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    owl:inverseOf ns2:hasSubProcess ;
+    owl:inverseOf ns1:hasSubProcess ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through isSubProcessOf."@en .
 
-ns2:DryingTime_2 a ns2:Parameter ;
-    rdfs:label "Drying Time"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Time."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "2 h"@en ;
-    skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Time."@en ;
-    skos:prefLabel "Drying Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_DryingTime_QV> .
-
-ns2:SprayCoater_2 a ns2:Instrument ;
-    rdfs:label "Spray Coater"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coater."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "Sono Tek"@en,
-        "ultrasonic spray coating system"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Spray Coater."@en ;
-    skos:prefLabel "Spray Coater"@en .
-
-ns2:VacuumDryingTime_2 a ns2:Parameter ;
-    rdfs:label "Vacuum Drying Time"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying Time."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "30 min"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Vacuum Drying Time."@en ;
-    skos:prefLabel "Vacuum Drying Time"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_VacuumDryingTime_QV_2> .
-
-ns2:hasSubProcess a owl:ObjectProperty ;
+ns1:hasSubProcess a owl:ObjectProperty ;
     rdfs:label "hasSubProcess"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasSubProcess."@en .
 
-ns2:DryingTemperature_2 a ns2:Parameter ;
-    rdfs:label "Drying Temperature"@en ;
-    rdfs:comment "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Temperature."@en ;
-    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    skos:altLabel "~80°C"@en ;
-    skos:definition "A curated controlled term in the H2KG PEMFC Catalyst Layer Application Ontology representing Drying Temperature."@en ;
-    skos:prefLabel "Drying Temperature"@en ;
-    ns2:hasQuantityValue <file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/output/profiles/pemfc/workspace/input/_DryingTemperature_QV> .
-
-ns2:Manufacturing a owl:Class ;
+ns1:Manufacturing a owl:Class ;
     rdfs:label "Manufacturing"@en ;
     rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    rdfs:subClassOf ns2:Process ;
+    rdfs:subClassOf ns1:Process ;
     skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Manufacturing."@en .
 

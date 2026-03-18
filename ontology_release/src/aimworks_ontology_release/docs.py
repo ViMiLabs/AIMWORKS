@@ -2008,6 +2008,16 @@ def _href_html(href: str, label: str | None = None, code: bool = False) -> str:
     return f"<a href='{escape(target, quote=True)}'>{inner}</a>"
 
 
+def _join_url(base: str, suffix: str) -> str:
+    root = _clean_text(base).rstrip("/")
+    tail = _clean_text(suffix).lstrip("/")
+    if not root:
+        return tail
+    if not tail:
+        return root + "/"
+    return f"{root}/{tail}"
+
+
 def _pill_list_html(items: list[str], modifier: str = "") -> str:
     if not items:
         return "<span class='term-note'>—</span>"
@@ -2350,6 +2360,11 @@ def build_docs(
         {"label": "Creators", "value": ", ".join(creators) or "Not recorded"},
         {"label": "Contributors", "value": ", ".join(contributors) or "Not recorded"},
     ]
+    repository_url = _clean_text(resources_cfg.get("repository_url", ""))
+    releases_url = _join_url(repository_url, "releases") if repository_url else ""
+    pages_url = _clean_text(resources_cfg.get("pages_url", ""))
+    issue_tracker_url = _clean_text(resources_cfg.get("issue_tracker", ""))
+    release_tag = f"v{release_profile['release']['version']}"
     download_rows = [
         {"label": "Asserted source (Turtle)", "href": "source/ontology.ttl", "detail": "Immediate download of the asserted ontology module from the current publication tree."},
         {"label": "Asserted source (JSON-LD)", "href": "source/ontology.jsonld", "detail": "Machine-readable asserted release in JSON-LD."},
@@ -2365,6 +2380,124 @@ def build_docs(
         {"label": "Versioned release", "href": f"{release_profile['release']['version']}/ontology.ttl", "detail": "Version-pinned asserted ontology file in the publication tree."},
         {"label": "Versioned inferred", "href": f"{release_profile['release']['version']}/inferred.ttl", "detail": "Version-pinned inferred ontology file in the publication tree."},
     ]
+    homepage_access_rows = [
+        {
+            "label": "Live profile home",
+            "kind": "Human-readable",
+            "href": pages_url,
+            "detail": "Current GitHub Pages profile landing page for browsing the ontology portal.",
+        },
+        {
+            "label": "Live reference page",
+            "kind": "Human-readable",
+            "href": _join_url(pages_url, release_profile["publication"]["reference_page"]),
+            "detail": "Single-page ontology reference with labels, definitions, mappings, and units.",
+        },
+        {
+            "label": "Live release page",
+            "kind": "Human-readable",
+            "href": _join_url(pages_url, "pages/release.html"),
+            "detail": "Release/download page for machine-readable artifacts and publication checks.",
+        },
+        {
+            "label": "Canonical ontology IRI",
+            "kind": "Stable IRI",
+            "href": namespace_policy["ontology_iri"],
+            "detail": "Preferred stable public ontology IRI pattern; public resolution depends on w3id redirect registration.",
+        },
+        {
+            "label": "Latest asserted alias",
+            "kind": "Stable IRI",
+            "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/latest",
+            "detail": "Stable latest alias for clients that do not want to pin a versioned release path.",
+        },
+        {
+            "label": "JSON-LD context IRI",
+            "kind": "Stable IRI",
+            "href": f"{namespace_policy['ontology_iri'].rstrip('/')}/context",
+            "detail": "Stable context endpoint pattern for JSON-LD clients once public redirect registration is enabled.",
+        },
+    ]
+    machine_artifact_rows = [
+        {
+            "label": row["label"],
+            "href": _join_url(pages_url, row["href"]),
+            "detail": row["detail"],
+        }
+        for row in download_rows[:8]
+    ]
+    github_release_rows = [
+        {
+            "label": "GitHub Releases page",
+            "asset_name": "Browse all tagged ontology releases",
+            "href": releases_url,
+            "detail": "Release notes and downloadable packaged assets published from CI.",
+        },
+        {
+            "label": "Publication site archive",
+            "asset_name": f"h2kg-publication-site-{release_profile['release']['version']}.zip",
+            "href": releases_url,
+            "detail": "Static HTML publication tree, machine-readable files, and release reports.",
+        },
+        {
+            "label": "Multi-profile release bundle",
+            "asset_name": f"h2kg-release-bundle-{release_profile['release']['version']}.zip",
+            "href": releases_url,
+            "detail": "Packaged release bundle with both profile outputs and the deployed publication tree.",
+        },
+        {
+            "label": f"{profile_id.upper()} merged asserted release",
+            "asset_name": f"h2kg-{profile_id}-asserted-{release_profile['release']['version']}.ttl",
+            "href": releases_url,
+            "detail": "Per-profile merged asserted ontology artifact mirrored to GitHub Releases.",
+        },
+        {
+            "label": f"{profile_id.upper()} full inferred release",
+            "asset_name": f"h2kg-{profile_id}-full-inferred-{release_profile['release']['version']}.ttl",
+            "href": releases_url,
+            "detail": "Per-profile inferred closure artifact mirrored to GitHub Releases.",
+        },
+        {
+            "label": f"{profile_id.upper()} context",
+            "asset_name": f"h2kg-{profile_id}-context-{release_profile['release']['version']}.jsonld",
+            "href": releases_url,
+            "detail": "Per-profile JSON-LD context artifact for linked-data clients.",
+        },
+        {
+            "label": f"{profile_id.upper()} catalog file",
+            "asset_name": f"h2kg-{profile_id}-catalog-v001-{release_profile['release']['version']}.xml",
+            "href": releases_url,
+            "detail": "Per-profile XML catalog for local import resolution and repeatable development builds.",
+        },
+    ]
+    stable_access_html = _html_table(
+        ["Access point", "Kind", "Current URL", "Notes"],
+        [
+            [
+                escape(row["label"]),
+                escape(row["kind"]),
+                _href_html(row["href"], row["href"], code=True) if _is_web_url(row["href"]) else f"<code>{escape(row['href'])}</code>",
+                escape(row["detail"]),
+            ]
+            for row in homepage_access_rows
+        ],
+    )
+    machine_access_html = "<div class='feature-list'>" + "".join(
+        f"<a class='feature-item' href='{escape(row['href'], quote=True)}'><h3>{escape(row['label'])}</h3><p>{escape(row['detail'])}</p><p><code>{escape(row['href'])}</code></p></a>"
+        for row in machine_artifact_rows
+    ) + "</div>"
+    github_release_html = _html_table(
+        ["Surface", "Asset or destination", "Link", "Purpose"],
+        [
+            [
+                escape(row["label"]),
+                f"<code>{escape(row['asset_name'])}</code>",
+                _href_html(row["href"], row["href"], code=True) if row.get("href") else "Not configured",
+                escape(row["detail"]),
+            ]
+            for row in github_release_rows
+        ],
+    )
     coverage_rows = [
         {"label": "Source label coverage", "value": f"{float(inspection_report['label_coverage']) * 100:.1f}%"},
         {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%"},
@@ -2380,6 +2513,7 @@ def build_docs(
         {"label": "EMMO alignment", "href": "pages/emmo-alignment.html", "value": "Imported EMMO-based domains and local alignment coverage."},
         {"label": "Module index", "href": "pages/module-index.html", "value": "Generated BattINFO-inspired asserted module views and dependencies."},
         {"label": "Metrics", "href": "pages/metrics.html", "value": "Generated ontology counts, module totals, and asserted/inferred metrics."},
+        {"label": "GitHub Releases", "href": releases_url, "value": releases_url or "Configure repository_url to surface GitHub Releases."},
         {"label": "GitHub repository", "href": resources_cfg.get("repository_url", ""), "value": resources_cfg.get("repository_url", "")},
         {"label": "Pages URL", "href": resources_cfg.get("pages_url", ""), "value": resources_cfg.get("pages_url", "")},
         {"label": "OOPS!", "href": oops_external.get("service_url", ""), "value": oops_external.get("service_url", "")},
@@ -2406,6 +2540,9 @@ def build_docs(
             use_cases=documentation_cfg.get("use_cases", []),
             audiences=documentation_cfg.get("audiences", []),
             resource_rows=resource_rows,
+            stable_access_html=stable_access_html,
+            machine_access_html=machine_access_html,
+            github_release_html=github_release_html,
             competency_preview=documentation_cfg.get("competency_questions", [])[:2],
             module_cards=[
                 {
@@ -2515,6 +2652,19 @@ def build_docs(
             base_path="..",
             release_files=release_files[:140],
             download_rows=download_rows,
+            endpoint_table_html=_html_table(
+                ["Label", "IRI", "Purpose"],
+                [
+                    [
+                        escape(row["label"]),
+                        _href_html(row["iri"], row["iri"], code=True) if _is_web_url(row["iri"]) else f"<code>{escape(row['iri'])}</code>",
+                        escape(row["purpose"]),
+                    ]
+                    for row in endpoint_rows
+                ],
+            ),
+            github_release_html=github_release_html,
+            release_tag=release_tag,
             fair_rows=fair_scores["dimensions"],
             transparency_rows=transparency_signals,
             external_fair_rows=external_fair_rows,
@@ -3416,3 +3566,5 @@ ex:run-001 a h2kg:Measurement ;
     write_json(data_dir / "ontology_stats.json", ontology_stats)
     write_json(data_dir / "engineering_workflow.json", engineering_workflow)
     write_json(data_dir / "emmo_alignment.json", emmo_alignment)
+    write_json(data_dir / "stable_access.json", homepage_access_rows)
+    write_json(data_dir / "release_assets.json", github_release_rows)

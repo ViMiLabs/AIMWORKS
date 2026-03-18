@@ -1,0 +1,141 @@
+name: Ontology GitHub Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: Optional release tag name. Defaults to v<ontology version>.
+        required: false
+        type: string
+      target_ref:
+        description: Branch or commit to release when manually triggered.
+        required: false
+        default: main
+        type: string
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ontology_release
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.target_ref || github.ref }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+      - name: Run tests
+        run: python -m pytest
+      - name: Build ontology release
+        run: python -m aimworks_ontology_release.cli release-all
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        run: |
+          VERSION=$(python - <<'PY'
+          import yaml
+          from pathlib import Path
+          cfg = yaml.safe_load(Path("config/release_profile.yaml").read_text(encoding="utf-8"))
+          print(cfg["release"]["version"])
+          PY
+          )
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag_name }}"
+            TARGET="${{ inputs.target_ref }}"
+            if [ -z "$TAG" ]; then
+              TAG="v${VERSION}"
+            fi
+          else
+            TAG="${{ github.ref_name }}"
+            TARGET="${{ github.sha }}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "target=${TARGET}" >> "$GITHUB_OUTPUT"
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import shutil
+          from pathlib import Path
+
+          root = Path(".")
+          version = "${{ steps.meta.outputs.version }}"
+          assets = root / "release-assets"
+          if assets.exists():
+              shutil.rmtree(assets)
+          assets.mkdir(parents=True, exist_ok=True)
+
+          shutil.make_archive(str(assets / f"h2kg-publication-site-{version}"), "zip", root_dir=root / "output" / "publication")
+          shutil.make_archive(str(assets / f"h2kg-release-bundle-{version}"), "zip", root_dir=root / "output" / "release_bundle")
+
+          copied = []
+          for slug in ("pemfc", "pemwe"):
+              publication_root = root / "output" / "publication" / slug
+              release_files = [
+                  ("source/asserted.ttl", f"h2kg-{slug}-asserted-{version}.ttl"),
+                  ("source/asserted.jsonld", f"h2kg-{slug}-asserted-{version}.jsonld"),
+                  ("inferred/full_inferred.ttl", f"h2kg-{slug}-full-inferred-{version}.ttl"),
+                  ("context/context.jsonld", f"h2kg-{slug}-context-{version}.jsonld"),
+                  ("source/catalog-v001.xml", f"h2kg-{slug}-catalog-v001-{version}.xml"),
+              ]
+              for relative_path, asset_name in release_files:
+                  source = publication_root / relative_path
+                  if source.exists():
+                      shutil.copy2(source, assets / asset_name)
+                      copied.append(asset_name)
+
+          manifest = {
+              "version": version,
+              "assets": sorted(item.name for item in assets.iterdir() if item.is_file()),
+          }
+          (assets / "release-assets.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+          notes = "\n".join(
+              [
+                  f"# H2KG Ontology Release {version}",
+                  "",
+                  "This GitHub Release publishes the generated AIMWORKS ontology assets for the current H2KG multi-profile release.",
+                  "",
+                  "Included asset groups:",
+                  "- publication-site ZIP for the deployable static ontology portal",
+                  "- multi-profile release-bundle ZIP for archival and downstream automation",
+                  "- per-profile asserted TTL/JSON-LD, full inferred TTL, context JSON-LD, and catalog-v001.xml files",
+                  "",
+                  "Profiles included: PEMFC and PEMWE.",
+                  "",
+                  "Generated automatically from the AIMWORKS ontology release pipeline.",
+              ]
+          )
+          (assets / "RELEASE_NOTES.md").write_text(notes + "\n", encoding="utf-8")
+          PY
+      - name: Upload release assets artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ontology-github-release-assets
+          path: ontology_release/release-assets
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          TITLE="H2KG ontology release ${{ steps.meta.outputs.version }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" release-assets/* --clobber
+            gh release edit "$TAG" --title "$TITLE" --notes-file release-assets/RELEASE_NOTES.md
+          else
+            gh release create "$TAG" release-assets/* --title "$TITLE" --notes-file release-assets/RELEASE_NOTES.md --target "${{ steps.meta.outputs.target }}"
+          fi

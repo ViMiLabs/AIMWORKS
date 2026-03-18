@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-import tempfile
+import shutil
+import uuid
 
 from aimworks_ontology_release.battinfo_overlap import analyze_battinfo_overlap
 from aimworks_ontology_release.release import run_pipeline
@@ -26,15 +27,19 @@ def _text(value: str) -> dict[str, str]:
     return {"@value": value}
 
 
-def test_battinfo_overlap_classifies_exact_and_partial_matches() -> None:
+def test_battinfo_overlap_classifies_exact_and_partial_matches(package_root: Path) -> None:
     payload = [
         {"@id": f"{LOCAL}Frequency", RDFS_LABEL: [_text("Frequency")]},
         {"@id": f"{LOCAL}LimitingCurrentDensity", RDFS_LABEL: [_text("Limiting Current Density")]},
         {"@id": f"{LOCAL}PEMFCCathodeCatalystLayer", RDFS_LABEL: [_text("PEMFC Cathode Catalyst Layer")]},
     ]
 
-    with tempfile.TemporaryDirectory() as temp_dir:
-        report = analyze_battinfo_overlap(payload, Path(temp_dir), battinfo_text=BATTINFO_SAMPLE)
+    temp_root = package_root / "pytest-cache-files-fixtures"
+    temp_root.mkdir(parents=True, exist_ok=True)
+    temp_dir = temp_root / f"battinfo-overlap-{uuid.uuid4().hex[:12]}"
+    temp_dir.mkdir(parents=True, exist_ok=False)
+    try:
+        report = analyze_battinfo_overlap(payload, temp_dir, battinfo_text=BATTINFO_SAMPLE)
 
         assert report["status"] == "ok"
         assert report["exact_pref_overlap_count"] == 1
@@ -45,6 +50,8 @@ def test_battinfo_overlap_classifies_exact_and_partial_matches() -> None:
         assert report["reuse_directly"][0]["h2kg_label"] == "Frequency"
         assert report["map_only"][0]["h2kg_label"] == "Limiting Current Density"
         assert report["keep_local"][0]["h2kg_label"] == "PEMFC Cathode Catalyst Layer"
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
 
 def test_quality_stage_writes_battinfo_overlap_report(temp_project) -> None:

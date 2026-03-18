@@ -21,6 +21,7 @@ def test_release_bundle_generation(temp_project):
     assert (temp_project / "output" / "publication" / "source" / "modules" / "core.ttl").exists()
     assert (temp_project / "output" / "publication" / "inferred" / "full_inferred.ttl").exists()
     assert (temp_project / "output" / "release_bundle" / "manifest.json").exists()
+    assert (temp_project / "output" / "release_bundle" / "README.md").exists()
     assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "ontology.ttl").exists()
     assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "asserted.ttl").exists()
     assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "modules" / "core.ttl").exists()

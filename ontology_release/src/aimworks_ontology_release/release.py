@@ -236,6 +236,25 @@ def _build_release_bundle(root: Path, release_profile: dict[str, Any]) -> None:
         "files": [str(path.relative_to(bundle_root)) for path in sorted(bundle_root.rglob("*")) if path.is_file()],
     }
     write_json(bundle_root / "manifest.json", manifest)
+    bundle_readme = "\n".join(
+        [
+            "# Release Bundle",
+            "",
+            "This bundle contains the generated ontology outputs for the active release build.",
+            "",
+            "## Included directories",
+            "",
+            "- `ontology/`: asserted, inferred, module, context, and catalog artifacts",
+            "- `examples/`: separated example content",
+            "- `mappings/`: reviewed mapping outputs",
+            "- `reports/`: validation, FAIR, engineering, and release reports",
+            "- `docs/`: generated HTML documentation",
+            "- `publication/`: Pages-ready publication tree",
+            "- `w3id/`: redirect templates and publication notes",
+            "",
+        ]
+    )
+    write_text(bundle_root / "README.md", bundle_readme + "\n")
 
 
 def run_pipeline(

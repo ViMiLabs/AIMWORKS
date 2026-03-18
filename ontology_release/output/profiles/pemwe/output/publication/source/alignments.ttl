@@ -80,7 +80,7 @@ ns1:CurrentDensityAt2V skos:closeMatch <http://qudt.org/vocab/quantitykind/Elect
 
 ns1:CurrentDensityLossPercent skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricCurrentDensity> .
 
-ns1:Data owl:equivalentClass <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> .
+ns1:Data rdfs:subClassOf <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> .
 
 ns1:DataPoint rdfs:subClassOf <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> .
 
@@ -89,6 +89,8 @@ ns1:DeltaCellVoltage skos:closeMatch <http://qudt.org/vocab/quantitykind/Electri
 ns1:DepositionPotential skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
 
 ns1:Duration skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> .
+
+ns1:DynamicHydrogenElectrode skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
 
 ns1:ECSAChangePercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
 
@@ -100,7 +102,7 @@ ns1:ElectricalConductivity skos:closeMatch <http://qudt.org/vocab/quantitykind/C
 
 ns1:ElectricalResistivity skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
 
-ns1:ElectrochemicalEtching skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f4ce4df2_d7e6_470f_8eab_3a911adaaf0f> .
+ns1:ElectrochemicalEtching skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_ebdb68e9_c4b5_4d57_a042_c0f51d446755> .
 
 ns1:ElectrodePotentialVsRHE skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
 
@@ -112,7 +114,7 @@ ns1:EquilibriumPotentialZincElectrode skos:closeMatch <http://qudt.org/vocab/qua
 
 ns1:ExchangeCurrentDensity skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricCurrentDensity> .
 
-ns1:FIBSEMInstrument skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
+ns1:FIBSEMInstrument skos:closeMatch <https://w3id.org/emmo#EMMO_5c68497d_2544_4cd4_897b_1ea783c9f6fe> .
 
 ns1:FeedWaterConductivity skos:closeMatch <http://qudt.org/vocab/quantitykind/Conductivity> .
 
@@ -148,7 +150,7 @@ ns1:IRFreeCellVoltage skos:closeMatch <http://qudt.org/vocab/quantitykind/Electr
 
 ns1:ImmersionDuration skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> .
 
-ns1:Instrument rdfs:subClassOf <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
+ns1:Instrument rdfs:subClassOf <https://w3id.org/emmo#EMMO_5c68497d_2544_4cd4_897b_1ea783c9f6fe> .
 
 ns1:InterfacialContactResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
 
@@ -161,6 +163,8 @@ ns1:IrBlackCatalyst skos:closeMatch <http://openenergy-platform.org/ontology/oeo
 ns1:IrCoatingThickness skos:closeMatch <http://qudt.org/vocab/quantitykind/Length> .
 
 ns1:IrCoveragePercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
+
+ns1:IrElectrodepositionProcess skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f4ce4df2_d7e6_470f_8eab_3a911adaaf0f> .
 
 ns1:IrInIrBandPercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
 
@@ -242,6 +246,8 @@ ns1:PolarizationResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/R
 
 ns1:Porosity skos:closeMatch <http://qudt.org/vocab/quantitykind/Porosity> .
 
+ns1:PorousTransportElectrode skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
+
 ns1:PorousTransportLayerPorosity skos:closeMatch <http://qudt.org/vocab/quantitykind/OxygenTransportResistance> .
 
 ns1:PorousTransportLayerThickness skos:closeMatch <http://qudt.org/vocab/quantitykind/OxygenTransportResistance> .
@@ -294,8 +300,6 @@ ns1:ThermalConductivityMeasurement skos:closeMatch <http://qudt.org/vocab/quanti
 
 ns1:Tortuosity skos:closeMatch <http://qudt.org/vocab/quantitykind/Porosity> .
 
-ns1:TubeFurnaceInstrument skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
-
 ns1:TurnoverFrequency skos:closeMatch <http://qudt.org/vocab/quantitykind/Frequency> .
 
 ns1:UltrapureWater skos:closeMatch <http://purl.obolibrary.org/obo/CHEBI_15377> .
@@ -320,13 +324,21 @@ ns1:hasIdentifier rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_a592c856_4103_4
 
 ns1:hasInputData rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> .
 
+ns1:hasInputMaterial rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> .
+
 ns1:hasOutputData rdfs:subPropertyOf prov:wasGeneratedBy .
 
 ns1:hasOutputMaterial rdfs:subPropertyOf prov:wasGeneratedBy .
 
-ns1:hasPart rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_cd24eb82_a11c_4a31_96ea_32f870c5580a> .
+ns1:hasParameter rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> .
+
+ns1:hasPart rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> .
+
+ns1:hasProperty rdfs:subPropertyOf prov:wasGeneratedBy .
 
 ns1:hasQuantityValue rdfs:subPropertyOf ns2:quantityKind .
+
+ns1:usesInstrument rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_cd24eb82_a11c_4a31_96ea_32f870c5580a> .
 
 <https://w3id.org/h2kg/hydrogen-ontology/alignments> a owl:Ontology ;
     dcterms:title "H2KG alignment module"@en .

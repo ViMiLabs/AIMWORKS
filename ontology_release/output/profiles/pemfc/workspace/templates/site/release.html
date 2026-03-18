@@ -15,11 +15,9 @@
 <section class="grid two">
   <article class="card">
     <h2>Publication Endpoints</h2>
-    <ul class="simple-list">
-      {% for row in endpoint_rows %}
-      <li><code>{{ row.iri }}</code>: {{ row.purpose }}</li>
-      {% endfor %}
-    </ul>
+    <div class="table-shell">
+      {{ endpoint_table_html | safe }}
+    </div>
   </article>
   <article class="card">
     <h2>Publication Checks</h2>
@@ -103,6 +101,19 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-head">
+    <div>
+      <p class="section-kicker">GitHub releases</p>
+      <h2>Tagged Release Assets</h2>
+      <p>Tagged releases use the conventional tag <code>{{ release_tag }}</code> and publish packaged archives plus per-profile ontology files to GitHub Releases.</p>
+    </div>
+  </div>
+  <div class="table-shell">
+    {{ github_release_html | safe }}
   </div>
 </section>
 

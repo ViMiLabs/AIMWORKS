@@ -36,6 +36,8 @@ def test_docs_generation(temp_project):
     assert (temp_project / "output" / "docs" / "data" / "ontology_stats.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "engineering_workflow.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "emmo_alignment.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "stable_access.json").exists()
+    assert (temp_project / "output" / "docs" / "data" / "release_assets.json").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.jsonld").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_measurement.csv").exists()
     assert (temp_project / "output" / "docs" / "data" / "example_release_notebook.ipynb").exists()
@@ -77,3 +79,7 @@ def test_docs_generation(temp_project):
     release_page = (temp_project / "output" / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
     assert "Human-Readable vs Machine-Readable Artifacts" in release_page
     assert "source/asserted.ttl" in release_page
+    assert "Tagged Release Assets" in release_page
+    home_page = (temp_project / "output" / "docs" / "index.html").read_text(encoding="utf-8")
+    assert "Current Access Patterns" in home_page
+    assert "GitHub Releases and Packaging" in home_page

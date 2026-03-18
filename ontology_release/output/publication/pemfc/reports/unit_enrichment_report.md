@@ -6,12 +6,12 @@
 - Evidence directory: ``
 - Curated units path: `C:\MARJAN\H2KG\AIMWORKS\ontology_release\output\profiles\pemfc\workspace\config\curated_units\pemfc_curated_units.csv`
 - Terms examined: **901**
-- Terms enriched: **1051**
-- QUDT units linked: **652**
-- Local reviewed units created: **399**
-- Alias-propagated QUDT units: **88**
-- Alias-propagated local reviewed units: **62**
-- Review rows: **2139**
+- Terms enriched: **1016**
+- QUDT units linked: **634**
+- Local reviewed units created: **382**
+- Alias-propagated QUDT units: **70**
+- Alias-propagated local reviewed units: **45**
+- Review rows: **2049**
 
 ## Policy
 

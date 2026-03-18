@@ -190,6 +190,33 @@ def _assemble_multi_release_bundle(base_root: Path, built_profiles: list[dict[st
         release_root / "profiles.json",
         [{"profile_id": item["profile_id"], "slug": item["slug"], "label": item["label"]} for item in built_profiles],
     )
+    manifest = {
+        "profiles": [{"profile_id": item["profile_id"], "slug": item["slug"], "label": item["label"]} for item in built_profiles],
+        "top_level_files": [str(path.relative_to(release_root)) for path in sorted(release_root.rglob("*")) if path.is_file()],
+    }
+    write_json(release_root / "manifest.json", manifest)
+    readme_lines = [
+        "# Multi-profile Release Bundle",
+        "",
+        "This bundle packages the generated H2KG publication and release outputs for all built profiles.",
+        "",
+        "## Included profile bundles",
+        "",
+    ]
+    readme_lines.extend(f"- `{item['slug']}`: {item['label']}" for item in built_profiles)
+    readme_lines.extend(
+        [
+            "",
+            "## Top-level contents",
+            "",
+            "- `publication/`: combined Pages-ready publication tree",
+            "- `<profile>/`: per-profile release bundles and reports",
+            "- `profiles.json`: machine-readable profile index",
+            "- `manifest.json`: bundle-level file manifest",
+            "",
+        ]
+    )
+    write_text(release_root / "README.md", "\n".join(readme_lines) + "\n")
 
 
 def _landing_html(title: str, subtitle: str, cards: list[dict[str, str]]) -> str:

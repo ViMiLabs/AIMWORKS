@@ -1,22 +1,22 @@
 # Alignment Report
 
-- Local schema or vocabulary terms reviewed: **601**
-- Proposed mappings: **161**
+- Local schema or vocabulary terms reviewed: **603**
+- Proposed mappings: **167**
 
 ## Mapping Relations
 
-- owl:equivalentClass: 2
-- rdfs:subClassOf: 7
-- rdfs:subPropertyOf: 6
-- skos:closeMatch: 146
+- owl:equivalentClass: 1
+- rdfs:subClassOf: 8
+- rdfs:subPropertyOf: 10
+- skos:closeMatch: 148
 
 ## Sources Used
 
 - chebi: 13
 - echo: 10
-- emmo_core: 7
+- emmo_core: 12
 - oeo: 8
-- provo: 5
+- provo: 6
 - qudt_quantitykinds: 98
 - qudt_schema: 1
 - qudt_units: 19

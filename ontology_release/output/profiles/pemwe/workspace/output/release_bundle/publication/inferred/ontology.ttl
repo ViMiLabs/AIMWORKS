@@ -89,8 +89,8 @@ ns1:Data a owl:Class ;
     rdfs:label "Data"@en ;
     rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    rdfs:subClassOf prov:Entity ;
-    owl:equivalentClass <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> ;
+    rdfs:subClassOf prov:Entity,
+        <https://w3id.org/emmo#EMMO_194e367c_9783_4bf5_96d0_9ad597d48d9a> ;
     skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Data."@en .
 
 ns1:DeltaCellVoltage skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
@@ -98,6 +98,8 @@ ns1:DeltaCellVoltage skos:closeMatch <http://qudt.org/vocab/quantitykind/Electri
 ns1:DepositionPotential skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
 
 ns1:Duration skos:closeMatch <http://qudt.org/vocab/quantitykind/Time> .
+
+ns1:DynamicHydrogenElectrode skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
 
 ns1:ECSAChangePercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
 
@@ -109,7 +111,7 @@ ns1:ElectricalConductivity skos:closeMatch <http://qudt.org/vocab/quantitykind/C
 
 ns1:ElectricalResistivity skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
 
-ns1:ElectrochemicalEtching skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f4ce4df2_d7e6_470f_8eab_3a911adaaf0f> .
+ns1:ElectrochemicalEtching skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_ebdb68e9_c4b5_4d57_a042_c0f51d446755> .
 
 ns1:ElectrodePotentialVsRHE skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
 
@@ -119,7 +121,7 @@ ns1:ElectronicThroughPlaneResistance skos:closeMatch <http://qudt.org/vocab/quan
 
 ns1:EquilibriumPotentialZincElectrode skos:closeMatch <http://qudt.org/vocab/quantitykind/ElectricPotential> .
 
-ns1:FIBSEMInstrument skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
+ns1:FIBSEMInstrument skos:closeMatch <https://w3id.org/emmo#EMMO_5c68497d_2544_4cd4_897b_1ea783c9f6fe> .
 
 ns1:FeedWaterConductivity skos:closeMatch <http://qudt.org/vocab/quantitykind/Conductivity> .
 
@@ -160,7 +162,7 @@ ns1:Instrument a owl:Class ;
     rdfs:comment "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
     rdfs:subClassOf prov:Entity,
-        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> ;
+        <https://w3id.org/emmo#EMMO_5c68497d_2544_4cd4_897b_1ea783c9f6fe> ;
     skos:definition "A class in the H2KG PEMFC Catalyst Layer Application Ontology representing Instrument."@en .
 
 ns1:InterfacialContactResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/Resistance> .
@@ -174,6 +176,8 @@ ns1:IrBlackCatalyst skos:closeMatch <http://openenergy-platform.org/ontology/oeo
 ns1:IrCoatingThickness skos:closeMatch <http://qudt.org/vocab/quantitykind/Length> .
 
 ns1:IrCoveragePercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
+
+ns1:IrElectrodepositionProcess skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f4ce4df2_d7e6_470f_8eab_3a911adaaf0f> .
 
 ns1:IrInIrBandPercent skos:closeMatch <http://qudt.org/vocab/unit/PERCENT> .
 
@@ -274,6 +278,8 @@ ns1:PolarizationResistance skos:closeMatch <http://qudt.org/vocab/quantitykind/R
 
 ns1:Porosity skos:closeMatch <http://qudt.org/vocab/quantitykind/Porosity> .
 
+ns1:PorousTransportElectrode skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2a40b878_7d09_49db_91b2_d0ee30192284> .
+
 ns1:PorousTransportLayerPorosity skos:closeMatch <http://qudt.org/vocab/quantitykind/OxygenTransportResistance> .
 
 ns1:PorousTransportLayerThickness skos:closeMatch <http://qudt.org/vocab/quantitykind/OxygenTransportResistance> .
@@ -321,8 +327,6 @@ ns1:ThermalConductivity skos:closeMatch <http://qudt.org/vocab/quantitykind/Cond
 ns1:ThermalConductivityMeasurement skos:closeMatch <http://qudt.org/vocab/quantitykind/Conductivity> .
 
 ns1:Tortuosity skos:closeMatch <http://qudt.org/vocab/quantitykind/Porosity> .
-
-ns1:TubeFurnaceInstrument skos:closeMatch <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_3f9b2956_1465_4fe0_b0df_5e4784dac3b6> .
 
 ns1:TurnoverFrequency skos:closeMatch <http://qudt.org/vocab/quantitykind/Frequency> .
 
@@ -386,7 +390,8 @@ ns1:hasInputMaterial a owl:ObjectProperty ;
     rdfs:label "hasInputMaterial"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputMaterial."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    rdfs:subPropertyOf prov:used ;
+    rdfs:subPropertyOf prov:used,
+        <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasInputMaterial."@en .
 
 ns1:hasName a owl:DatatypeProperty ;
@@ -416,12 +421,14 @@ ns1:hasParameter a owl:ObjectProperty ;
     rdfs:label "hasParameter"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasParameter."@en .
 
 ns1:hasProperty a owl:ObjectProperty ;
     rdfs:label "hasProperty"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subPropertyOf prov:wasGeneratedBy ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasProperty."@en .
 
 ns1:hasQuantityValue a owl:ObjectProperty ;
@@ -483,6 +490,7 @@ ns1:usesInstrument a owl:ObjectProperty ;
     rdfs:label "usesInstrument"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+    rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_cd24eb82_a11c_4a31_96ea_32f870c5580a> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through usesInstrument."@en .
 
 <https://w3id.org/h2kg/hydrogen-ontology/alignments> a owl:Ontology ;
@@ -532,7 +540,7 @@ ns1:hasPart a owl:ObjectProperty ;
     rdfs:label "hasPart"@en ;
     rdfs:comment "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."@en ;
     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
-    rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_cd24eb82_a11c_4a31_96ea_32f870c5580a> ;
+    rdfs:subPropertyOf <https://w3id.org/emmo#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> ;
     skos:definition "An object property in the H2KG PEMFC Catalyst Layer Application Ontology for relating resources through hasPart."@en .
 
 ns1:hasSubProcess a owl:ObjectProperty ;
@@ -562,13 +570,14 @@ ns1:DataPoint a owl:Class ;
     dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany",
         "AIMWORKS Ontology Engineering Team"@en ;
     dcterms:created "2026-03-12"^^xsd:date ;
-    dcterms:creator "Marjan Kohandani",
+    dcterms:creator "Electrochemistry Research Group",
         "Electrochemistry Research Group"@en ;
     dcterms:description "Ontology for representing proton exchange membrane water electrolysis materials, components, devices, processes, measurements, and experiments." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:modified "2026-03-18" ;
     dcterms:publisher "Forschungszentrum Juelich GmbH" ;
-    dcterms:references <https://w3id.org/emmo>,
+    dcterms:references <https://w3id.org/battinfo>,
+        <https://w3id.org/emmo>,
         <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>,
         <https://w3id.org/emmo/domain/coating#>,
         <https://w3id.org/emmo/domain/electrochemistry>,
@@ -579,9 +588,7 @@ ns1:DataPoint a owl:Class ;
     dcterms:title "H2KG: Ontology for Proton Exchange Membrane Water Electrolysis Materials, Components, and Experiments" ;
     vann:preferredNamespacePrefix "h2kg" ;
     vann:preferredNamespaceUri ns1: ;
-    rdfs:seeAlso <https://orcid.org/0009-0005-5173-202X>,
-        <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence>,
-        <https://www.fz-juelich.de/profile/kohandani_m> ;
+    rdfs:seeAlso <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
     owl:imports <https://w3id.org/emmo>,
         <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>,
         <https://w3id.org/emmo/domain/coating#>,
@@ -591,9 +598,7 @@ ns1:DataPoint a owl:Class ;
         <https://w3id.org/emmo/domain/microscopy#> ;
     owl:versionIRI <https://w3id.org/h2kg/hydrogen-ontology/releases/2026.3.0> ;
     owl:versionInfo "Generated on 2025-11-28 16:12:13" ;
-    prov:wasAttributedTo <https://orcid.org/0009-0005-5173-202X> ;
-    foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
-    foaf:page <https://www.fz-juelich.de/profile/kohandani_m> .
+    foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
 
 [] a ns1:DataPoint ;
     ns1:hasQuantityValue [ a ns2:QuantityValue ;
