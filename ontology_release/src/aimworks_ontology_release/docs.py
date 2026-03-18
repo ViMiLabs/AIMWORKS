@@ -165,22 +165,6 @@ pre code {
   position: relative;
   z-index: 1;
 }
-.hero__panel--poster {
-  background:
-    linear-gradient(180deg, rgba(12, 24, 31, 0.44), rgba(12, 24, 31, 0.9)),
-    linear-gradient(145deg, rgba(7, 31, 41, 0.62), rgba(31, 122, 122, 0.22) 62%, rgba(202, 109, 44, 0.18)),
-    var(--hero-panel-image) center/cover no-repeat;
-  box-shadow: 0 30px 75px rgba(14, 26, 33, 0.18);
-}
-.hero__panel--poster::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.12), transparent 24%),
-    linear-gradient(180deg, rgba(14, 26, 33, 0.16), rgba(14, 26, 33, 0));
-  z-index: 0;
-}
 .hero__label {
   margin: 0 0 0.55rem;
   text-transform: uppercase;
@@ -197,7 +181,7 @@ pre code {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(240px, 420px);
+  grid-template-columns: minmax(0, 34rem);
   gap: 0.9rem;
   margin-top: 0.15rem;
   padding-top: 1rem;
@@ -205,36 +189,41 @@ pre code {
 }
 .hero__support {
   display: grid;
-  align-content: start;
-  gap: 0.75rem;
-  padding: 1rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
   border-radius: 1.35rem;
   border: 1px solid rgba(18, 39, 48, 0.08);
   background: linear-gradient(180deg, rgba(244, 251, 251, 0.94), rgba(255, 247, 236, 0.8));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
 }
+.hero__support-body {
+  display: grid;
+  gap: 0.55rem;
+}
 .hero__support-brand img {
-  width: min(100%, 180px);
+  width: min(100%, 168px);
   height: auto;
   display: block;
 }
 .hero__support-copy {
   margin: 0;
   color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 .hero__support-links {
   display: flex;
-  gap: 0.55rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 .hero__support-links a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.2rem;
-  padding: 0.45rem 0.82rem;
+  min-height: 2rem;
+  padding: 0.38rem 0.74rem;
   text-decoration: none;
   color: var(--slate-900);
   border-radius: 999px;
@@ -286,7 +275,7 @@ h3 {
   letter-spacing: -0.02em;
 }
 h1 {
-  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
+  font-size: clamp(2rem, 4.2vw, 3.35rem);
   margin: 0.15rem 0 0.8rem;
   max-width: 16ch;
   text-wrap: balance;
@@ -1092,6 +1081,7 @@ h3 {
   .landing-grid,
   .home-showcase { grid-template-columns: 1fr; }
   .hero__spotlight { grid-template-columns: 1fr; }
+  .hero__support { grid-template-columns: 1fr; align-items: start; }
   .nav-shell { position: static; }
   .nav { border-radius: 1.75rem; }
   .footer-funding { grid-template-columns: 1fr; }
@@ -1099,7 +1089,7 @@ h3 {
 @media (max-width: 720px) {
   body::before,
   body::after { display: none; }
-  h1 { font-size: clamp(2.45rem, 12vw, 3.8rem); }
+  h1 { font-size: clamp(2.1rem, 10.5vw, 3.15rem); }
   .hero__content,
   .hero__panel,
   .card,
@@ -2148,21 +2138,6 @@ def build_docs(
     write_text(assets_dir / "visuals.css", (root / "templates" / "site" / "assets" / "visuals.css").read_text(encoding="utf-8"))
     write_text(assets_dir / "visuals.js", (root / "templates" / "site" / "assets" / "term-finder.js").read_text(encoding="utf-8"))
     copy_file(root / "templates" / "site" / "assets" / "hmc-logo.svg", assets_dir / "hmc-logo.svg")
-    graph_poster = {"available": False, "href": "", "alt": "", "caption": ""}
-    poster_source = root / "input" / "final poster gephi.png"
-    if not poster_source.exists():
-        fallback_poster = (root / ".." / "input" / "final poster gephi.png").resolve()
-        if fallback_poster.exists():
-            poster_source = fallback_poster
-    if poster_source.exists():
-        poster_target = assets_dir / "knowledge-graph-poster.png"
-        copy_file(poster_source, poster_target)
-        graph_poster = {
-            "available": True,
-            "href": "assets/knowledge-graph-poster.png",
-            "alt": f"Gephi visualization of the {profile_label} H2KG knowledge graph",
-            "caption": "Poster-scale Gephi rendering of the connected H2KG knowledge graph.",
-        }
     write_text(output_dir / ".nojekyll", "")
 
     mapping_lookup = _mapping_lookup(review_rows)
@@ -2399,7 +2374,6 @@ def build_docs(
 
     reference_template = env.get_template("reference.html")
     example_rows = collect_examples(examples_graph, classifications, limit=int(release_profile["release"]["docs_example_preview_limit"]))
-    hero_panel_image = graph_poster if profile_id == "pemfc" else {"available": False, "href": "", "alt": "", "caption": ""}
     write_text(
         output_dir / release_profile["publication"]["reference_page"],
         reference_template.render(
@@ -2419,12 +2393,11 @@ def build_docs(
             coverage_rows=coverage_rows,
             curation_note=f"The {profile_label} release guarantees structural completeness, but generated definitions and retained local vocabulary terms should still be curated by domain experts before claiming full conceptual maturity.",
             profile_heading=profile_heading,
-            hero_panel_image=hero_panel_image,
             hero_support={
                 "logo_src": "assets/hmc-logo.svg",
                 "hmc_url": hmc_url,
                 "aimworks_url": aimworks_project_url,
-                "text": "Supported through the Helmholtz Metadata Collaboration (HMC) and AIMWORKS, connecting FAIR ontology publication to reusable metadata infrastructure.",
+                "text": "Supported through the Helmholtz Metadata Collaboration (HMC) and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.",
             },
         ),
     )

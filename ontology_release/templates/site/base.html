@@ -40,16 +40,18 @@
                   <img src="{{ base_path }}/{{ hero_support.logo_src }}" alt="Helmholtz Metadata Collaboration logo">
                 </a>
               </div>
-              <p class="hero__support-copy">{{ hero_support.text }}</p>
-              <div class="hero__support-links">
-                <a href="{{ hero_support.hmc_url }}" target="_blank" rel="noopener noreferrer">HMC</a>
-                <a href="{{ hero_support.aimworks_url }}" target="_blank" rel="noopener noreferrer">AIMWORKS</a>
+              <div class="hero__support-body">
+                <p class="hero__support-copy">{{ hero_support.text }}</p>
+                <div class="hero__support-links">
+                  <a href="{{ hero_support.hmc_url }}" target="_blank" rel="noopener noreferrer">HMC</a>
+                  <a href="{{ hero_support.aimworks_url }}" target="_blank" rel="noopener noreferrer">AIMWORKS</a>
+                </div>
               </div>
             </section>
           </div>
           {% endif %}
         </div>
-        <aside class="hero__panel{% if hero_panel_image and hero_panel_image.available %} hero__panel--poster{% endif %}"{% if hero_panel_image and hero_panel_image.available %} style="--hero-panel-image: url('{{ base_path }}/{{ hero_panel_image.href }}')"{% endif %}>
+        <aside class="hero__panel">
           <p class="hero__label">Publication profile</p>
           <p class="hero__note">{{ site.hero_note }}</p>
           <div class="hero-fact-grid">
