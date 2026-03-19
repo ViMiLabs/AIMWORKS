@@ -12,9 +12,16 @@ profiles:
     slug: pemfc
     input_path: ../input/ONTOLOGY_PEMFC.jsonld
     release_profile_overrides:
+      documentation:
+        resources:
+          ontology_homepage_iri: https://w3id.org/h2kg/pemfc
       unit_enrichment:
         enabled: true
         curated_units_path: config/curated_units/pemfc_curated_units.csv
+    namespace_overrides:
+      ontology_iri: https://w3id.org/h2kg/pemfc
+      public_html_base: https://w3id.org/h2kg/pemfc
+      version_iri_template: https://w3id.org/h2kg/pemfc/releases/{version}
     profile_heading: PEMFC application profile
     project_overrides:
       subtitle: PEMFC application profile
@@ -26,6 +33,14 @@ profiles:
     label: PEMWE
     slug: pemwe
     input_path: ../input/ONTOLOGY_PEMWE.jsonld
+    release_profile_overrides:
+      documentation:
+        resources:
+          ontology_homepage_iri: https://w3id.org/h2kg/pemwe
+    namespace_overrides:
+      ontology_iri: https://w3id.org/h2kg/pemwe
+      public_html_base: https://w3id.org/h2kg/pemwe
+      version_iri_template: https://w3id.org/h2kg/pemwe/releases/{version}
     profile_heading: PEMWE application profile
     project_overrides:
       subtitle: PEMWE application profile

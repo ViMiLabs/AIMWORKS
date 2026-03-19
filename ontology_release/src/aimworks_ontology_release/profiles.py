@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import shutil
 from copy import deepcopy
 from pathlib import Path
@@ -45,6 +46,54 @@ def _safe_remove_tree(path: Path) -> None:
             shutil.rmtree(path, ignore_errors=True)
 
 
+def _replace_exact_jsonld_value(payload: Any, old_value: str, new_value: str) -> Any:
+    if isinstance(payload, dict):
+        return {key: _replace_exact_jsonld_value(value, old_value, new_value) for key, value in payload.items()}
+    if isinstance(payload, list):
+        return [_replace_exact_jsonld_value(item, old_value, new_value) for item in payload]
+    if payload == old_value:
+        return new_value
+    return payload
+
+
+def _rewrite_profile_ontology_identity(
+    input_path: Path,
+    *,
+    ontology_iri: str,
+    version_iri: str,
+    source_iri: str,
+) -> None:
+    if input_path.suffix.lower() not in {".json", ".jsonld"}:
+        return
+    payload = json.loads(input_path.read_text(encoding="utf-8"))
+    graph_nodes = payload if isinstance(payload, list) else payload.get("@graph", [payload])
+    ontology_node = None
+    for node in graph_nodes:
+        if not isinstance(node, dict):
+            continue
+        node_types = node.get("@type", [])
+        if isinstance(node_types, str):
+            node_types = [node_types]
+        if "http://www.w3.org/2002/07/owl#Ontology" in node_types:
+            ontology_node = node
+            break
+    if ontology_node is None:
+        return
+    old_ontology_iri = str(ontology_node.get("@id") or "")
+    rewritten = payload
+    if old_ontology_iri and old_ontology_iri != ontology_iri:
+        rewritten = _replace_exact_jsonld_value(rewritten, old_ontology_iri, ontology_iri)
+        graph_nodes = rewritten if isinstance(rewritten, list) else rewritten.get("@graph", [rewritten])
+        for node in graph_nodes:
+            if isinstance(node, dict) and node.get("@id") == ontology_iri:
+                ontology_node = node
+                break
+    ontology_node["@id"] = ontology_iri
+    ontology_node["http://purl.org/dc/terms/source"] = [{"@id": source_iri}]
+    ontology_node["http://www.w3.org/2002/07/owl#versionIRI"] = [{"@id": version_iri}]
+    input_path.write_text(json.dumps(rewritten, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict[str, Any], profiles_cfg: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
     runtime_root = base_root / "output" / "profiles" / profile_id / "workspace"
     _safe_remove_tree(runtime_root)
@@ -61,15 +110,6 @@ def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict
     ensure_dir(runtime_root / "cache" / "sources")
     if (base_root / "cache" / "sources").exists():
         copy_tree(base_root / "cache" / "sources", runtime_root / "cache" / "sources")
-
-    source_input = _resolve_profile_input(base_root, str(profile_cfg["input_path"]))
-    copy_file(source_input, runtime_root / "input" / "current_ontology.jsonld")
-    try:
-        poster_path = _resolve_profile_input(base_root, "../input/final poster gephi.png")
-    except FileNotFoundError:
-        poster_path = None
-    if poster_path and poster_path.exists():
-        copy_file(poster_path, runtime_root / "input" / "final poster gephi.png")
 
     base_configs = load_configs(base_root)
     runtime_release = deepcopy(base_configs["release_profile"])
@@ -114,6 +154,25 @@ def _prepare_profile_runtime(base_root: Path, profile_id: str, profile_cfg: dict
     if namespace_overrides:
         active_name = runtime_namespace["active_profile"]
         runtime_namespace["profiles"][active_name] = _deep_merge(runtime_namespace["profiles"][active_name], namespace_overrides)
+    active_namespace = runtime_namespace["profiles"][runtime_namespace["active_profile"]]
+    doc_cfg["resources"]["ontology_homepage_iri"] = str(doc_cfg["resources"].get("ontology_homepage_iri") or active_namespace["ontology_iri"])
+    runtime_release["documentation"] = doc_cfg
+
+    source_input = _resolve_profile_input(base_root, str(profile_cfg["input_path"]))
+    runtime_input = runtime_root / "input" / "current_ontology.jsonld"
+    copy_file(source_input, runtime_input)
+    _rewrite_profile_ontology_identity(
+        runtime_input,
+        ontology_iri=active_namespace["ontology_iri"],
+        version_iri=active_namespace["version_iri_template"].format(version=runtime_release["release"]["version"]),
+        source_iri=active_namespace["ontology_iri"],
+    )
+    try:
+        poster_path = _resolve_profile_input(base_root, "../input/final poster gephi.png")
+    except FileNotFoundError:
+        poster_path = None
+    if poster_path and poster_path.exists():
+        copy_file(poster_path, runtime_root / "input" / "final poster gephi.png")
 
     write_text(runtime_root / "config" / "release_profile.yaml", _yaml_dump(runtime_release))
     write_text(runtime_root / "config" / "namespace_policy.yaml", _yaml_dump(runtime_namespace))

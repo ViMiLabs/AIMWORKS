@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 from aimworks_ontology_release.profiles import available_profiles, run_multi_profile_pipeline, run_profile_pipeline
 
 
@@ -24,3 +26,8 @@ def test_single_profile_release_build(temp_project):
     assert (temp_project / "output" / "profiles" / "pemwe" / "output" / "release_bundle" / "manifest.json").exists()
     assert (temp_project / "output" / "publication" / "pemwe" / "index.html").exists()
     assert (temp_project / "output" / "release_bundle" / "pemwe" / "manifest.json").exists()
+    inspection_report = json.loads((temp_project / "output" / "profiles" / "pemwe" / "output" / "reports" / "inspection_report.json").read_text(encoding="utf-8"))
+    reference_rows = json.loads((temp_project / "output" / "publication" / "pemwe" / "reference_iris.json").read_text(encoding="utf-8"))
+    assert inspection_report["ontology_iri"] == "https://w3id.org/h2kg/pemwe"
+    assert reference_rows[0]["iri"] == "https://w3id.org/h2kg/pemwe"
+    assert any(row["iri"] == "https://w3id.org/h2kg/pemwe/latest" for row in reference_rows)
