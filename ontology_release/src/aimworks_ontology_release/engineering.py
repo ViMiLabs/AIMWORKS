@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -141,6 +142,16 @@ _MEASUREMENT_KEYWORDS = {
     "spectroscopy",
     "imaging",
 }
+_MODULE_SHORT_LABELS = {
+    "top": "Top",
+    "core": "Core",
+    "materials": "Materials",
+    "components_devices": "Components",
+    "processes_manufacturing": "Processes",
+    "measurements_data": "Measurements",
+    "mappings": "Mappings",
+    "examples": "Examples",
+}
 
 
 def _bind_all_namespaces(target: Graph, *graphs: Graph) -> None:
@@ -246,71 +257,235 @@ def _module_dependency_graph(
     return edges, imported_rows
 
 
+def _wrap_svg_lines(text: str, max_chars: int = 24, max_lines: int = 2) -> list[str]:
+    words = str(text or "").split()
+    if not words:
+        return [""]
+    lines: list[str] = []
+    remaining = words[:]
+    while remaining and len(lines) < max_lines:
+        current = remaining.pop(0)
+        while remaining and len(f"{current} {remaining[0]}") <= max_chars:
+            current = f"{current} {remaining.pop(0)}"
+        lines.append(current)
+    if remaining:
+        overflow = " ".join([lines[-1], *remaining]).strip()
+        if len(overflow) > max_chars:
+            overflow = overflow[: max_chars - 3].rstrip() + "..."
+        lines[-1] = overflow
+    return lines
+
+
+def _svg_text_block(
+    x: float,
+    y: float,
+    lines: list[str],
+    *,
+    font_size: int,
+    fill: str,
+    anchor: str = "middle",
+    weight: str = "400",
+    line_height: int = 15,
+) -> str:
+    tspans = []
+    for index, line in enumerate(lines):
+        dy = "0" if index == 0 else str(line_height)
+        tspans.append(f"<tspan x='{x}' dy='{dy}'>{escape(line)}</tspan>")
+    return (
+        f"<text x='{x}' y='{y}' text-anchor='{anchor}' font-size='{font_size}' "
+        f"font-family='Trebuchet MS' font-weight='{weight}' fill='{fill}'>"
+        + "".join(tspans)
+        + "</text>"
+    )
+
+
+def _compact_iri_label(value: str, max_chars: int = 34) -> str:
+    compact = str(value).replace("https://", "").replace("http://", "").rstrip("/#")
+    if len(compact) <= max_chars:
+        return compact
+    parts = compact.split("/")
+    if len(parts) >= 2:
+        reduced = f"{parts[0]}/.../{parts[-1]}"
+        if len(reduced) <= max_chars:
+            return reduced
+    return compact[: max_chars - 3].rstrip() + "..."
+
+
+def _resolve_import_title(import_iri: str, source_registry: dict[str, Any]) -> str:
+    normalized = str(import_iri).rstrip("/#")
+    for cfg in source_registry.get("sources", {}).values():
+        base_iri = str(cfg.get("base_iri") or "").rstrip("/#")
+        if not base_iri:
+            continue
+        if normalized == base_iri or normalized.startswith(base_iri) or base_iri.startswith(normalized):
+            return str(cfg.get("title") or base_iri)
+    explicit_titles = {
+        "https://w3id.org/emmo": "EMMO",
+        "https://w3id.org/emmo/domain/pemfc": "EMMO PEMFC",
+        "https://w3id.org/emmo/domain/manufacturing": "EMMO Manufacturing",
+        "https://w3id.org/emmo/domain/coating": "EMMO Coating",
+        "https://w3id.org/emmo/domain/equivalent-circuit-model": "Equivalent Circuit Model",
+        "https://w3id.org/emmo/domain/characterisation-methodology/chameo": "CHAMEO",
+        "https://w3id.org/emmo/domain/microscopy": "EMMO Microscopy",
+        "https://w3id.org/emmo/domain/electrochemistry": "EMMO Electrochemistry",
+        "http://purl.org/holy/ns": "HOLY",
+        "http://www.w3.org/ns/prov": "PROV-O",
+    }
+    if normalized in explicit_titles:
+        return explicit_titles[normalized]
+    tail = normalized.split("/")[-1].split("#")[-1]
+    return tail.replace("-", " ").replace("_", " ").title() if tail else normalized
+
+
 def _module_dependency_svg(modules: list[dict[str, Any]], edges: list[dict[str, Any]]) -> str:
     positions = {
-        "top": (380, 36),
-        "core": (180, 118),
-        "materials": (380, 118),
-        "components_devices": (580, 118),
-        "processes_manufacturing": (180, 214),
-        "measurements_data": (380, 214),
-        "mappings": (580, 214),
-        "examples": (380, 304),
+        "top": (350, 60),
+        "core": (120, 176),
+        "materials": (350, 176),
+        "components_devices": (580, 176),
+        "processes_manufacturing": (120, 344),
+        "measurements_data": (350, 344),
+        "mappings": (580, 344),
+        "examples": (350, 476),
     }
+    card_width = 220
+    card_height = 86
+    half_width = card_width / 2
+    half_height = card_height / 2
+    top_edges = edges[:10]
+    max_edge_count = max((edge["count"] for edge in top_edges), default=1)
+    module_lookup = {row["id"]: row for row in modules}
+
     node_svg: list[str] = []
     for row in modules:
-        x, y = positions.get(row["id"], (380, 304))
+        x, y = positions.get(row["id"], (350, 476))
+        label_lines = _wrap_svg_lines(row["label"], max_chars=24, max_lines=2)
+        label_y = y - 12 if len(label_lines) == 1 else y - 18
+        subtitle_y = y + 24 if len(label_lines) == 1 else y + 30
         node_svg.append(
-            f"<rect x='{x - 92}' y='{y}' width='184' height='44' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect>"
-            f"<text x='{x}' y='{y + 20}' text-anchor='middle' font-size='13' font-family='Trebuchet MS' fill='#0f172a'>{row['label']}</text>"
-            f"<text x='{x}' y='{y + 34}' text-anchor='middle' font-size='11' font-family='Trebuchet MS' fill='#64748b'>{row['term_count']} local terms</text>"
+            f"<rect x='{x - half_width}' y='{y - half_height}' width='{card_width}' height='{card_height}' rx='22' fill='#ffffff' stroke='#cbd5e1'></rect>"
+            + _svg_text_block(x, label_y, label_lines, font_size=13, fill="#0f172a", weight="600")
+            + _svg_text_block(x, subtitle_y, [f"{row['term_count']} local terms"], font_size=11, fill="#64748b")
         )
+
     edge_svg: list[str] = []
-    for edge in edges[:18]:
+    legend_svg: list[str] = [
+        "<rect x='706' y='42' width='250' height='470' rx='24' fill='#ffffff' stroke='#dbe4ec'></rect>",
+        "<text x='730' y='76' font-size='15' font-family='Trebuchet MS' font-weight='600' fill='#0f172a'>Strongest cross-module flows</text>",
+        "<text x='730' y='98' font-size='12' font-family='Trebuchet MS' fill='#64748b'>Top 10 local reference paths in the asserted engineering modules.</text>",
+    ]
+    for index, edge in enumerate(top_edges):
         sx, sy = positions.get(edge["source"], (0, 0))
         tx, ty = positions.get(edge["target"], (0, 0))
+        if ty > sy:
+            start_x, start_y = sx, sy + half_height
+            end_x, end_y = tx, ty - half_height
+            control_y = (sy + ty) / 2
+            path = (
+                f"M {start_x:.1f} {start_y:.1f} "
+                f"C {start_x:.1f} {control_y:.1f}, {end_x:.1f} {control_y:.1f}, {end_x:.1f} {end_y:.1f}"
+            )
+        elif ty < sy:
+            start_x, start_y = sx, sy - half_height
+            end_x, end_y = tx, ty + half_height
+            control_y = (sy + ty) / 2
+            path = (
+                f"M {start_x:.1f} {start_y:.1f} "
+                f"C {start_x:.1f} {control_y:.1f}, {end_x:.1f} {control_y:.1f}, {end_x:.1f} {end_y:.1f}"
+            )
+        else:
+            direction = 1 if tx > sx else -1
+            start_x, start_y = sx + direction * half_width, sy
+            end_x, end_y = tx - direction * half_width, ty
+            lift = sy - 68 if sy < 260 else sy + 68
+            path = (
+                f"M {start_x:.1f} {start_y:.1f} "
+                f"C {start_x + direction * 70:.1f} {lift:.1f}, {end_x - direction * 70:.1f} {lift:.1f}, {end_x:.1f} {end_y:.1f}"
+            )
+        stroke_width = 2.0 + (4.5 * edge["count"] / max_edge_count)
         edge_svg.append(
-            f"<line x1='{sx}' y1='{sy + 44}' x2='{tx}' y2='{ty}' stroke='#0f766e' stroke-width='2' opacity='0.65'></line>"
-            f"<text x='{(sx + tx) / 2:.1f}' y='{(sy + ty) / 2:.1f}' text-anchor='middle' font-size='10' font-family='Trebuchet MS' fill='#0f766e'>{edge['count']}</text>"
+            f"<path d='{path}' fill='none' stroke='#0f766e' stroke-width='{stroke_width:.2f}' opacity='0.34' stroke-linecap='round'></path>"
+        )
+        legend_y = 136 + index * 34
+        source_label = _MODULE_SHORT_LABELS.get(edge["source"], module_lookup.get(edge["source"], {}).get("label", edge["source"]))
+        target_label = _MODULE_SHORT_LABELS.get(edge["target"], module_lookup.get(edge["target"], {}).get("label", edge["target"]))
+        pill_width = 34 if edge["count"] < 100 else 42 if edge["count"] < 1000 else 52
+        legend_svg.append(
+            f"<rect x='730' y='{legend_y - 14}' width='{pill_width}' height='22' rx='11' fill='#e6fffb' stroke='#99f6e4'></rect>"
+            f"<text x='{730 + pill_width / 2:.1f}' y='{legend_y + 1}' text-anchor='middle' font-size='11' font-family='Trebuchet MS' font-weight='600' fill='#0f766e'>{edge['count']}</text>"
+            + _svg_text_block(782, legend_y - 2, [f"{source_label} -> {target_label}"], font_size=12, fill="#0f172a", anchor="start")
         )
     return (
-        "<svg viewBox='0 0 760 372' width='100%' role='img' aria-label='Module dependency graph'>"
-        "<rect width='760' height='372' rx='24' fill='#f8fafc'></rect>"
+        "<svg viewBox='0 0 980 560' width='100%' role='img' aria-label='Module dependency graph'>"
+        "<rect width='980' height='560' rx='24' fill='#f8fafc'></rect>"
+        "<text x='36' y='44' font-size='15' font-family='Trebuchet MS' font-weight='600' fill='#0f172a'>Module layout</text>"
+        "<text x='36' y='66' font-size='12' font-family='Trebuchet MS' fill='#64748b'>Generated asserted engineering modules arranged by release layer and domain role.</text>"
+        "<line x1='36' y1='108' x2='644' y2='108' stroke='#dbe4ec' stroke-width='1'></line>"
+        "<line x1='36' y1='266' x2='644' y2='266' stroke='#dbe4ec' stroke-width='1'></line>"
+        "<text x='36' y='101' font-size='11' font-family='Trebuchet MS' fill='#94a3b8'>Release frame</text>"
+        "<text x='36' y='259' font-size='11' font-family='Trebuchet MS' fill='#94a3b8'>Domain modules</text>"
+        "<text x='36' y='442' font-size='11' font-family='Trebuchet MS' fill='#94a3b8'>Example layer</text>"
         + "".join(edge_svg)
         + "".join(node_svg)
-        + "<text x='24' y='352' font-size='12' font-family='Trebuchet MS' fill='#475569'>Cross-module local references in the generated asserted engineering modules.</text>"
+        + "".join(legend_svg)
+        + "<text x='36' y='536' font-size='12' font-family='Trebuchet MS' fill='#475569'>Cross-module local references are shown as the ten strongest flows to keep the diagram readable.</text>"
         + "</svg>"
     )
 
 
 def _import_graph_svg(import_rows: list[dict[str, str]]) -> str:
-    anchors = [
-        (140, 92, "H2KG asserted"),
-        (380, 48, "EMMO / PEMFC"),
-        (620, 92, "Electrochemistry"),
-        (620, 192, "Manufacturing / Coating"),
-        (380, 244, "CHAMEO / Microscopy / ECM"),
-        (140, 244, "HOLY / bridges"),
+    width = 980
+    height = 458
+    center_x = width / 2
+    center_y = 220
+    hub_width = 250
+    hub_height = 94
+    card_width = 240
+    card_height = 64
+    cards: list[str] = [
+        f"<rect x='{center_x - hub_width / 2:.1f}' y='{center_y - hub_height / 2:.1f}' width='{hub_width}' height='{hub_height}' rx='24' fill='#ecfeff' stroke='#94a3b8'></rect>"
+        + _svg_text_block(center_x, center_y - 8, ["H2KG asserted release"], font_size=15, fill="#0f172a", weight="600")
+        + _svg_text_block(center_x, center_y + 20, ["Profile header imports and release dependencies"], font_size=11, fill="#475569")
     ]
-    cards = []
-    for x, y, label in anchors:
+    left_rows = import_rows[: (len(import_rows) + 1) // 2]
+    right_rows = import_rows[(len(import_rows) + 1) // 2 :]
+    left_positions = [(170, 72 + index * 82) for index in range(len(left_rows))]
+    right_positions = [(810, 72 + index * 82) for index in range(len(right_rows))]
+    edges: list[str] = []
+    for row, (x, y) in zip(left_rows, left_positions):
+        title_lines = _wrap_svg_lines(row["title"], max_chars=24, max_lines=2)
+        subtitle = _compact_iri_label(row["iri"])
         cards.append(
-            f"<rect x='{x - 88}' y='{y - 18}' width='176' height='40' rx='16' fill='#ffffff' stroke='#cbd5e1'></rect>"
-            f"<text x='{x}' y='{y + 6}' text-anchor='middle' font-size='12' font-family='Trebuchet MS' fill='#0f172a'>{label}</text>"
+            f"<rect x='{x - card_width / 2:.1f}' y='{y - card_height / 2:.1f}' width='{card_width}' height='{card_height}' rx='18' fill='#ffffff' stroke='#cbd5e1'></rect>"
+            + _svg_text_block(x, y - 8 if len(title_lines) == 1 else y - 14, title_lines, font_size=12, fill="#0f172a", weight="600")
+            + _svg_text_block(x, y + 18, [subtitle], font_size=10, fill="#64748b")
         )
-    lines = [
-        "<line x1='228' y1='92' x2='292' y2='62' stroke='#0f766e' stroke-width='2.5'></line>",
-        "<line x1='228' y1='92' x2='532' y2='92' stroke='#0f766e' stroke-width='2.5'></line>",
-        "<line x1='228' y1='244' x2='292' y2='230' stroke='#0f766e' stroke-width='2.5'></line>",
-        "<line x1='380' y1='70' x2='620' y2='170' stroke='#0f766e' stroke-width='2.5'></line>",
-        "<line x1='380' y1='226' x2='620' y2='114' stroke='#0f766e' stroke-width='2.5'></line>",
-    ]
+        start_x = x + card_width / 2
+        end_x = center_x - hub_width / 2
+        edges.append(
+            f"<path d='M {start_x:.1f} {y:.1f} C {start_x + 70:.1f} {y:.1f}, {end_x - 70:.1f} {center_y:.1f}, {end_x:.1f} {center_y:.1f}' fill='none' stroke='#0f766e' stroke-width='2.5' opacity='0.45' stroke-linecap='round'></path>"
+        )
+    for row, (x, y) in zip(right_rows, right_positions):
+        title_lines = _wrap_svg_lines(row["title"], max_chars=24, max_lines=2)
+        subtitle = _compact_iri_label(row["iri"])
+        cards.append(
+            f"<rect x='{x - card_width / 2:.1f}' y='{y - card_height / 2:.1f}' width='{card_width}' height='{card_height}' rx='18' fill='#ffffff' stroke='#cbd5e1'></rect>"
+            + _svg_text_block(x, y - 8 if len(title_lines) == 1 else y - 14, title_lines, font_size=12, fill="#0f172a", weight="600")
+            + _svg_text_block(x, y + 18, [subtitle], font_size=10, fill="#64748b")
+        )
+        start_x = x - card_width / 2
+        end_x = center_x + hub_width / 2
+        edges.append(
+            f"<path d='M {start_x:.1f} {y:.1f} C {start_x - 70:.1f} {y:.1f}, {end_x + 70:.1f} {center_y:.1f}, {end_x:.1f} {center_y:.1f}' fill='none' stroke='#0f766e' stroke-width='2.5' opacity='0.45' stroke-linecap='round'></path>"
+        )
     return (
-        "<svg viewBox='0 0 760 300' width='100%' role='img' aria-label='Import graph overview'>"
-        "<rect width='760' height='300' rx='24' fill='#f8fafc'></rect>"
-        + "".join(lines)
+        "<svg viewBox='0 0 980 458' width='100%' role='img' aria-label='Import graph overview'>"
+        "<rect width='980' height='458' rx='24' fill='#f8fafc'></rect>"
+        "<text x='36' y='44' font-size='15' font-family='Trebuchet MS' font-weight='600' fill='#0f172a'>Declared ontology imports</text>"
+        "<text x='36' y='66' font-size='12' font-family='Trebuchet MS' fill='#64748b'>Actual owl:imports declared in the active profile header, shown as release-time dependencies around the local H2KG core.</text>"
+        + "".join(edges)
         + "".join(cards)
-        + f"<text x='24' y='278' font-size='12' font-family='Trebuchet MS' fill='#475569'>{len(import_rows)} configured imported ontologies contribute to the release stack.</text>"
+        + f"<text x='36' y='430' font-size='12' font-family='Trebuchet MS' fill='#475569'>{len(import_rows)} ontology imports are declared in the current profile header.</text>"
         + "</svg>"
     )
 
@@ -489,6 +664,10 @@ def build_engineering_artifacts(
     save_graph(full_inferred, ontology_output / "full_inferred.rdf", "xml")
 
     imports = [as_uri_text(obj) for obj in combined_asserted.objects(ontology_node, OWL.imports)] if ontology_node else []
+    import_visual_rows = sorted(
+        [{"title": _resolve_import_title(item, source_registry), "iri": item} for item in imports],
+        key=lambda row: (row["title"].lower(), row["iri"]),
+    )
     local_counts = _local_term_counts(combined_asserted, namespace_policy)
     imported_term_count = sum(
         1
@@ -564,7 +743,7 @@ def build_engineering_artifacts(
     write_json(reports_output / "module_term_assignments.json", assignment_rows)
     write_text(ontology_output / "catalog-v001.xml", _catalog_xml(namespace_policy, release_profile, module_rows))
     write_text(reports_output / "module_dependency_graph.svg", _module_dependency_svg(module_rows, dependency_edges))
-    write_text(reports_output / "import_graph.svg", _import_graph_svg(emmo_import_rows))
+    write_text(reports_output / "import_graph.svg", _import_graph_svg(import_visual_rows))
 
     module_md_lines = [
         "# Module Index",
