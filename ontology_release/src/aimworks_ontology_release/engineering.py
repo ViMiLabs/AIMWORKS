@@ -313,12 +313,6 @@ def _compact_iri_label(value: str, max_chars: int = 34) -> str:
 
 def _resolve_import_title(import_iri: str, source_registry: dict[str, Any]) -> str:
     normalized = str(import_iri).rstrip("/#")
-    for cfg in source_registry.get("sources", {}).values():
-        base_iri = str(cfg.get("base_iri") or "").rstrip("/#")
-        if not base_iri:
-            continue
-        if normalized == base_iri or normalized.startswith(base_iri) or base_iri.startswith(normalized):
-            return str(cfg.get("title") or base_iri)
     explicit_titles = {
         "https://w3id.org/emmo": "EMMO",
         "https://w3id.org/emmo/domain/pemfc": "EMMO PEMFC",
@@ -333,6 +327,18 @@ def _resolve_import_title(import_iri: str, source_registry: dict[str, Any]) -> s
     }
     if normalized in explicit_titles:
         return explicit_titles[normalized]
+    candidates: list[tuple[int, str]] = []
+    for cfg in source_registry.get("sources", {}).values():
+        base_iri = str(cfg.get("base_iri") or "").rstrip("/#")
+        if not base_iri:
+            continue
+        if normalized == base_iri:
+            candidates.append((len(base_iri), str(cfg.get("title") or base_iri)))
+            continue
+        if normalized.startswith(base_iri) and normalized[len(base_iri) : len(base_iri) + 1] in {"", "/", "#"}:
+            candidates.append((len(base_iri), str(cfg.get("title") or base_iri)))
+    if candidates:
+        return max(candidates, key=lambda item: item[0])[1]
     tail = normalized.split("/")[-1].split("#")[-1]
     return tail.replace("-", " ").replace("_", " ").title() if tail else normalized
 
@@ -435,9 +441,9 @@ def _module_dependency_svg(modules: list[dict[str, Any]], edges: list[dict[str, 
 
 def _import_graph_svg(import_rows: list[dict[str, str]]) -> str:
     width = 980
-    height = 458
+    height = 560
     center_x = width / 2
-    center_y = 220
+    center_y = 306
     hub_width = 250
     hub_height = 94
     card_width = 240
@@ -449,8 +455,8 @@ def _import_graph_svg(import_rows: list[dict[str, str]]) -> str:
     ]
     left_rows = import_rows[: (len(import_rows) + 1) // 2]
     right_rows = import_rows[(len(import_rows) + 1) // 2 :]
-    left_positions = [(170, 72 + index * 82) for index in range(len(left_rows))]
-    right_positions = [(810, 72 + index * 82) for index in range(len(right_rows))]
+    left_positions = [(170, 154 + index * 88) for index in range(len(left_rows))]
+    right_positions = [(810, 154 + index * 88) for index in range(len(right_rows))]
     edges: list[str] = []
     for row, (x, y) in zip(left_rows, left_positions):
         title_lines = _wrap_svg_lines(row["title"], max_chars=24, max_lines=2)
@@ -479,13 +485,13 @@ def _import_graph_svg(import_rows: list[dict[str, str]]) -> str:
             f"<path d='M {start_x:.1f} {y:.1f} C {start_x - 70:.1f} {y:.1f}, {end_x + 70:.1f} {center_y:.1f}, {end_x:.1f} {center_y:.1f}' fill='none' stroke='#0f766e' stroke-width='2.5' opacity='0.45' stroke-linecap='round'></path>"
         )
     return (
-        "<svg viewBox='0 0 980 458' width='100%' role='img' aria-label='Import graph overview'>"
-        "<rect width='980' height='458' rx='24' fill='#f8fafc'></rect>"
+        "<svg viewBox='0 0 980 560' width='100%' role='img' aria-label='Import graph overview'>"
+        "<rect width='980' height='560' rx='24' fill='#f8fafc'></rect>"
         "<text x='36' y='44' font-size='15' font-family='Trebuchet MS' font-weight='600' fill='#0f172a'>Declared ontology imports</text>"
         "<text x='36' y='66' font-size='12' font-family='Trebuchet MS' fill='#64748b'>Actual owl:imports declared in the active profile header, shown as release-time dependencies around the local H2KG core.</text>"
         + "".join(edges)
         + "".join(cards)
-        + f"<text x='36' y='430' font-size='12' font-family='Trebuchet MS' fill='#475569'>{len(import_rows)} ontology imports are declared in the current profile header.</text>"
+        + f"<text x='36' y='532' font-size='12' font-family='Trebuchet MS' fill='#475569'>{len(import_rows)} ontology imports are declared in the current profile header.</text>"
         + "</svg>"
     )
 
