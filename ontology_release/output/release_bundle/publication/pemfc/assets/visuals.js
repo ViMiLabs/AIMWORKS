@@ -50,6 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_EDGE_LABELS = 50;
   const MAX_HISTORY = 40;
 
+  const CANONICAL_PREFIXES = [
+    ["https://w3id.org/h2kg/hydrogen-ontology#", "h2kg"],
+    ["http://purl.org/holy/ns#", "holy"],
+    ["https://w3id.org/emmo/domain/electrochemistry#", "electrochemistry"],
+    ["https://w3id.org/emmo/domain/pemfc#", "pemfc"],
+    ["https://w3id.org/emmo#", "emmo"],
+    ["http://qudt.org/schema/qudt/", "qudt"],
+    ["http://qudt.org/vocab/unit/", "unit"],
+    ["http://qudt.org/vocab/quantitykind/", "quantitykind"],
+    ["http://purl.obolibrary.org/obo/CHEBI_", "chebi"],
+    ["http://openenergy-platform.org/ontology/oeo/", "oeo"],
+  ];
+
   const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -61,6 +74,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-module-toggle]:checked")).map((input) => input.value);
   const moduleInputs = () => Array.from(root.querySelectorAll("[data-module-toggle]"));
+
+  function canonicalQnameFromIri(iri, fallback = "") {
+    const value = String(iri || "");
+    for (const [base, prefix] of CANONICAL_PREFIXES.slice().sort((left, right) => right[0].length - left[0].length)) {
+      if (value.startsWith(base)) {
+        const local = value.slice(base.length);
+        return local ? `${prefix}:${local}` : `${prefix}:`;
+      }
+    }
+    return /^ns\d+:/.test(String(fallback || "")) ? (fallback || value) : (fallback || value);
+  }
+
+  function nodeQname(node) {
+    return canonicalQnameFromIri(node.iri, node.qname || "");
+  }
+
+  function linkLabel(link) {
+    return canonicalQnameFromIri(link.predicate, link.value || "");
+  }
 
   function levenshtein(left, right) {
     if (left === right) return 0;
@@ -220,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "label": "data(name)",
             "color": "#10242d",
             "font-size": "11px",
-            "font-family": "Aptos, Gill Sans, Trebuchet MS, sans-serif",
+            "font-family": "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
             "text-wrap": "wrap",
             "text-max-width": "150px",
             "text-valign": "center",
@@ -337,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const label = normalize(node.name);
     const localName = normalize(node.localName || "");
-    const qname = normalize(node.qname);
+    const qname = normalize(nodeQname(node));
     const iri = normalize(node.iri);
     const details = normalize(node.search_text || node.description || "");
     const tokens = [label, localName, qname, node.display_class || "", node.units || ""];
@@ -509,7 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
           id: node.id,
           name: node.name,
           iri: node.iri,
-          qname: node.qname,
+          qname: nodeQname(node),
           localName: node.localName || "",
           description: node.description || "",
           display_class: node.display_class || node.category,
@@ -529,7 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
         id: `edge-${index}-${link.source}-${link.target}-${link.predicate}`,
         source: link.source,
         target: link.target,
-        label: showEdgeLabels ? link.value : "",
+        label: showEdgeLabels ? linkLabel(link) : "",
         predicate: link.predicate,
         module: link.module,
         edgeFamily: link.edgeFamily,
@@ -604,7 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <strong>${escapeHtml(node.name)}</strong>
         <small>${escapeHtml(node.display_class || node.category)}</small>
         <div class="visual-result__meta">
-          <span class="visual-badge">${escapeHtml(node.localName || node.qname || node.iri)}</span>
+          <span class="visual-badge">${escapeHtml(node.localName || nodeQname(node) || node.iri)}</span>
           <span class="visual-badge">${escapeHtml(node.modules.join(", "))}</span>
           <span class="visual-badge">${escapeHtml(String(node.degree || 0))} links</span>
         </div>
@@ -671,7 +703,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="visual-inspector__section">
         <strong>Local form</strong>
-        <p><code>${escapeHtml(node.localName || node.qname)}</code></p>
+        <p><code>${escapeHtml(node.localName || nodeQname(node))}</code></p>
       </div>
       <div class="visual-inspector__section">
         <strong>Definition</strong>
@@ -688,7 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderRelations(graph) {
     const rows = graph.links.map((link) => ({
       source: graph.nodeMap.get(link.source)?.name || link.source,
-      predicate: link.value,
+      predicate: linkLabel(link),
       target: graph.nodeMap.get(link.target)?.name || link.target,
       edgeFamily: link.edgeFamily,
       module: link.module,

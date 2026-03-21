@@ -1,25 +1,64 @@
 from __future__ import annotations
 
-import csv
 import json
 import re
-import shutil
-from datetime import datetime, timezone
+from copy import deepcopy
+from datetime import date, datetime, timezone
+from html import escape
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
-import yaml
-from rdflib import BNode, Graph, Literal, Namespace, URIRef
+PACKAGE_ROOT = Path(__file__).resolve().parents[2]
+SRC_ROOT = Path(__file__).resolve().parents[1]
 
-PROV = Namespace("http://www.w3.org/ns/prov#")
-VANN = Namespace("http://purl.org/vocab/vann/")
-QUDT = Namespace("http://qudt.org/schema/qudt/")
-QK = Namespace("http://qudt.org/vocab/quantitykind/")
-UNIT = Namespace("http://qudt.org/vocab/unit/")
+COMMON_CONTEXT: dict[str, str] = {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+}
+
+OWL_CLASS = "http://www.w3.org/2002/07/owl#Class"
+OWL_OBJECT_PROPERTY = "http://www.w3.org/2002/07/owl#ObjectProperty"
+OWL_DATATYPE_PROPERTY = "http://www.w3.org/2002/07/owl#DatatypeProperty"
+OWL_ANNOTATION_PROPERTY = "http://www.w3.org/2002/07/owl#AnnotationProperty"
+OWL_ONTOLOGY = "http://www.w3.org/2002/07/owl#Ontology"
+OWL_EQUIVALENT_CLASS = "http://www.w3.org/2002/07/owl#equivalentClass"
+OWL_EQUIVALENT_PROPERTY = "http://www.w3.org/2002/07/owl#equivalentProperty"
+RDFS_CLASS = "http://www.w3.org/2000/01/rdf-schema#Class"
+RDFS_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"
+RDFS_COMMENT = "http://www.w3.org/2000/01/rdf-schema#comment"
+RDFS_SUBCLASS = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+RDFS_SUBPROPERTY = "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
+RDFS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain"
+RDFS_RANGE = "http://www.w3.org/2000/01/rdf-schema#range"
+RDFS_IS_DEFINED_BY = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy"
+SKOS_DEFINITION = "http://www.w3.org/2004/02/skos/core#definition"
+SKOS_PREF_LABEL = "http://www.w3.org/2004/02/skos/core#prefLabel"
+SKOS_ALT_LABEL = "http://www.w3.org/2004/02/skos/core#altLabel"
+QUDT_QUANTITY_VALUE = "http://qudt.org/schema/qudt/QuantityValue"
+QUDT_NUMERIC_VALUE = "http://qudt.org/schema/qudt/numericValue"
+QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
+QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
 
 
 def package_root() -> Path:
-    return Path(__file__).resolve().parents[2]
+    return PACKAGE_ROOT
 
 
 def ensure_dir(path: Path) -> Path:
@@ -27,174 +66,270 @@ def ensure_dir(path: Path) -> Path:
     return path
 
 
-def load_yaml(path: Path) -> dict[str, Any]:
-    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-
-
-def load_text(path: Path) -> str:
+def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def write_text(path: Path, text: str) -> Path:
+def write_text(path: Path, content: str) -> Path:
     ensure_dir(path.parent)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(content, encoding="utf-8")
     return path
 
 
-def write_json(path: Path, payload: Any) -> Path:
+def load_json(path: Path) -> Any:
+    return json.loads(read_text(path))
+
+
+def dump_json(path: Path, data: Any) -> Path:
     ensure_dir(path.parent)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     return path
 
 
-def read_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+def try_load_yaml(path: Path, default: dict[str, Any]) -> dict[str, Any]:
+    try:
+        import yaml  # type: ignore
 
-
-def write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> Path:
-    ensure_dir(path.parent)
-    with path.open("w", encoding="utf-8", newline="\n") as handle:
-        for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
-    return path
-
-
-def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> Path:
-    ensure_dir(path.parent)
-    with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
-        writer.writeheader()
-        for row in rows:
-            writer.writerow({key: row.get(key, "") for key in fieldnames})
-    return path
-
-
-def read_csv(path: Path) -> list[dict[str, str]]:
-    with path.open("r", encoding="utf-8", newline="") as handle:
-        return list(csv.DictReader(handle))
-
-
-def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+        with path.open("r", encoding="utf-8") as handle:
+            loaded = yaml.safe_load(handle)
+        return loaded if isinstance(loaded, dict) else deepcopy(default)
+    except Exception:
+        return deepcopy(default)
 
 
 def today_iso() -> str:
-    return datetime.now(timezone.utc).date().isoformat()
+    return date.today().isoformat()
 
 
-def as_uri_text(node: URIRef | BNode | Literal | None) -> str:
-    if node is None:
-        return ""
-    return str(node)
+def now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def local_name(node: URIRef | BNode | str | None) -> str:
-    if node is None:
-        return ""
-    value = str(node)
-    if value.startswith("_:"):
-        return value
-    if "#" in value:
-        return value.rsplit("#", 1)[-1]
-    value = value.rstrip("/")
-    return value.rsplit("/", 1)[-1]
-
-
-def namespace_of(uri: str) -> str:
+def uri_namespace(uri: str) -> str:
     if "#" in uri:
         return uri.rsplit("#", 1)[0] + "#"
     if "/" in uri:
-        return uri.rsplit("/", 1)[0] + "/"
+        return uri.rstrip("/").rsplit("/", 1)[0] + "/"
     return uri
 
 
-def normalize_space(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()
+def local_name(uri: str) -> str:
+    if "#" in uri:
+        return uri.rsplit("#", 1)[1]
+    return uri.rstrip("/").rsplit("/", 1)[-1]
 
 
-def make_literal(text: str, lang: str = "en") -> Literal:
-    return Literal(normalize_space(text), lang=lang)
+def canonical_qname(uri: str, fallback: str = "") -> str:
+    if not uri:
+        return fallback
+    for prefix, base in sorted(COMMON_CONTEXT.items(), key=lambda item: len(item[1]), reverse=True):
+        if uri.startswith(base):
+            local = uri[len(base) :]
+            return f"{prefix}:{local}" if local else f"{prefix}:"
+    if fallback and not re.match(r"^ns\d+:", fallback):
+        return fallback
+    return fallback or uri
 
 
-def is_uri(node: Any) -> bool:
-    return isinstance(node, URIRef)
+def humanize(text: str) -> str:
+    if not text:
+        return text
+    value = text.replace("_", " ").replace("-", " ")
+    value = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", value)
+    value = re.sub(r"\s+", " ", value).strip()
+    if not value:
+        return text
+    return value[0].upper() + value[1:]
 
 
-def is_bnode(node: Any) -> bool:
-    return isinstance(node, BNode)
+def normalize_token(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
-def is_local_iri(node: URIRef | BNode | Literal, namespace_policy: dict[str, Any]) -> bool:
-    if not isinstance(node, URIRef):
-        return False
-    ontology_iri = namespace_policy.get("ontology_iri", "")
-    term_namespace = namespace_policy.get("term_namespace", "")
-    return str(node).startswith(term_namespace) or str(node) == ontology_iri
+def short_text(text: str, limit: int = 220) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    if len(compact) <= limit:
+        return compact
+    return compact[: limit - 3].rstrip() + "..."
 
 
-def configured_paths(root: Path | None = None) -> dict[str, Path]:
-    base = root or package_root()
+def html_paragraphs(lines: list[str]) -> str:
+    return "\n".join(f"<p>{escape(line)}</p>" for line in lines if line)
+
+
+def deep_get(data: dict[str, Any], *keys: str, default: Any = None) -> Any:
+    current: Any = data
+    for key in keys:
+        if not isinstance(current, dict) or key not in current:
+            return default
+        current = current[key]
+    return current
+
+
+def default_release_profile() -> dict[str, Any]:
     return {
-        "root": base,
-        "config": base / "config",
-        "input": base / "input",
-        "output": base / "output",
-        "reports": base / "output" / "reports",
-        "review": base / "output" / "review",
-        "mappings": base / "output" / "mappings",
-        "ontology_output": base / "output" / "ontology",
-        "examples_output": base / "output" / "examples",
-        "docs_output": base / "output" / "docs",
-        "release_bundle": base / "output" / "release_bundle",
-        "profiles_output": base / "output" / "profiles",
-        "w3id_output": base / "output" / "w3id",
-        "ontology_dir": base / "ontology",
-        "templates": base / "templates",
-        "shapes": base / "shapes",
-        "cache": base / "cache",
+        "project": {
+            "title": "H2KG PEMFC Catalyst Layer Application Ontology",
+            "short_title": "H2KG PEMFC Catalyst Layer Ontology",
+            "subtitle": "EMMO-aligned ontology for PEMFC catalyst-layer experiments",
+            "description": "Application ontology for low-Pt PEMFC cathode catalyst-layer experiments, materials, measurements, quantity values, and FAIR provenance.",
+            "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
+            "namespace_prefix": "h2kg",
+            "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
+            "repository_url": "https://github.com/aimworks/AIMWORKS",
+            "docs_url": "https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/",
+            "version": "1.0.0",
+            "version_tag": "v1.0.0",
+            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0",
+            "prior_version": "https://w3id.org/h2kg/hydrogen-ontology",
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+        },
+        "maintainers": {
+            "creator": ["AIMWORKS Maintainers"],
+            "contributor": ["Electrochemistry Research Group"],
+            "publisher": ["AIMWORKS"],
+        },
+        "release": {
+            "preserve_term_iris": True,
+            "preserve_hash_namespace": True,
+            "build_docs": True,
+            "build_release_bundle": True,
+            "validate_with_shacl": True,
+            "fair_check": True,
+            "generate_w3id": True,
+            "emit_jsonld": True,
+            "emit_ttl": True,
+        },
+        "separation": {
+            "publish_examples": True,
+            "publish_controlled_vocabulary": True,
+            "treat_quantity_values_as_examples": True,
+            "treat_generated_nodes_as_examples": True,
+            "local_schema_priority": [
+                "Agent",
+                "Process",
+                "Manufacturing",
+                "Measurement",
+                "Instrument",
+                "Matter",
+                "Parameter",
+                "Property",
+                "Data",
+                "DataPoint",
+                "Metadata",
+                "NormalizationBasis",
+                "ReferenceElectrode",
+                "Unit",
+            ],
+        },
     }
 
 
-def load_configs(root: Path | None = None) -> dict[str, Any]:
-    paths = configured_paths(root)
-    config_dir = paths["config"]
-    namespace_data = load_yaml(config_dir / "namespace_policy.yaml")
-    active_profile = namespace_data["profiles"][namespace_data["active_profile"]]
-    ontology_profiles = load_yaml(config_dir / "ontology_profiles.yaml")
+def default_metadata_defaults() -> dict[str, Any]:
     return {
-        "source_ontologies": load_yaml(config_dir / "source_ontologies.yaml"),
-        "release_profile": load_yaml(config_dir / "release_profile.yaml"),
-        "metadata_defaults": load_yaml(config_dir / "metadata_defaults.yaml"),
-        "mapping_rules": load_yaml(config_dir / "mapping_rules.yaml"),
-        "namespace_policy": active_profile,
-        "namespace_policy_raw": namespace_data,
-        "ontology_profiles": ontology_profiles,
+        "ontology": {
+            "title": "H2KG PEMFC Catalyst Layer Application Ontology",
+            "subtitle": "EMMO-aligned ontology for low-Pt PEMFC catalyst-layer experiments and related provenance",
+            "abstract": "Application ontology for low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata.",
+            "description": "The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and FAIR provenance.",
+            "created": "2026-03-19",
+            "modified": "2026-03-19",
+            "language": "en",
+            "creators": ["AIMWORKS Maintainers"],
+            "contributors": ["Electrochemistry Research Group"],
+            "source": ["ONTOLOGY_extended.jsonld"],
+        },
+        "term_annotations": {
+            "label_language": "en",
+            "comment_language": "en",
+            "definition_language": "en",
+            "add_is_defined_by": True,
+            "infer_labels_from_local_names": True,
+            "infer_comments_for_unannotated_schema_terms": True,
+            "infer_definitions_for_unannotated_schema_terms": True,
+        },
     }
 
 
-def copy_file(src: Path, dst: Path) -> Path:
-    ensure_dir(dst.parent)
-    shutil.copy2(src, dst)
-    return dst
+def default_mapping_rules() -> dict[str, Any]:
+    return {
+        "policies": {
+            "conservative_mode": True,
+            "equivalence_threshold": 0.96,
+            "subclass_threshold": 0.82,
+            "close_match_threshold": 0.72,
+            "exact_match_threshold": 0.88,
+            "reuse_existing_external_terms": True,
+            "forbid_cross_kind_mappings": True,
+            "prefer_subclass_over_equivalence": True,
+        },
+        "manual_overrides": {
+            "Agent": {
+                "relation": "rdfs:subClassOf",
+                "target": "http://www.w3.org/ns/prov#Agent",
+                "rationale": "Agent should remain local while anchored in PROV-O.",
+            },
+            "Measurement": {
+                "relation": "rdfs:subClassOf",
+                "target": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+                "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice.",
+            },
+            "hasQuantityValue": {
+                "relation": "rdfs:subPropertyOf",
+                "target": "http://qudt.org/schema/qudt/quantityValue",
+                "rationale": "Quantity-value relations should reuse QUDT semantics where possible.",
+            },
+        },
+        "term_hints": {
+            "quantity_value_indicators": ["QuantityValue", "numericValue", "unit", "quantityKind"],
+            "chemical_indicators": ["platinum", "ionomer", "solvent", "oxygen", "hydrogen", "nafion"],
+            "pemfc_indicators": [
+                "membrane electrode assembly",
+                "catalyst layer",
+                "gas diffusion layer",
+                "reference electrode",
+                "oxygen transport",
+            ],
+        },
+    }
 
 
-def copy_tree(src: Path, dst: Path) -> Path:
-    ensure_dir(dst.parent)
-    shutil.copytree(src, dst, dirs_exist_ok=True)
-    return dst
+def default_namespace_policy() -> dict[str, Any]:
+    return {
+        "policy": {
+            "active_strategy": "preserve_hash_namespace",
+            "preserve_existing_term_iris": True,
+            "allow_future_namespace_migration": True,
+            "current_ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
+            "current_namespace_prefix": "h2kg",
+            "current_namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
+            "publication_base_html": "https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/",
+            "publication_base_rdf": "https://raw.githubusercontent.com/aimworks/AIMWORKS/main/ontology_release/output/ontology/",
+            "slash_namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology/",
+            "version_path_template": "releases/{version}",
+            "migration": {
+                "enabled": False,
+                "target_namespace_uri": None,
+                "generate_alias_map": True,
+                "generate_redirect_templates": True,
+            },
+        }
+    }
 
 
-def gather_bnode_closure(graph: Graph, seeds: Iterable[URIRef | BNode]) -> set[URIRef | BNode]:
-    pending = list(seeds)
-    seen: set[URIRef | BNode] = set(pending)
-    while pending:
-        node = pending.pop()
-        for _, _, obj in graph.triples((node, None, None)):
-            if isinstance(obj, BNode) and obj not in seen:
-                seen.add(obj)
-                pending.append(obj)
-        for subj, _, _ in graph.triples((None, None, node)):
-            if isinstance(subj, BNode) and subj not in seen:
-                seen.add(subj)
-                pending.append(subj)
-    return seen
+def default_source_registry() -> dict[str, Any]:
+    return {
+        "sources": [
+            {"id": "emmo-core", "title": "EMMO Core", "enabled": True, "priority": 100, "required": True},
+            {"id": "emmo-electrochemistry", "title": "EMMO Electrochemistry / ECHO", "enabled": True, "priority": 95, "required": True},
+            {"id": "qudt-schema", "title": "QUDT Schema", "enabled": True, "priority": 90, "required": True},
+            {"id": "qudt-units", "title": "QUDT Units", "enabled": True, "priority": 90, "required": True},
+            {"id": "qudt-quantitykinds", "title": "QUDT Quantity Kinds", "enabled": True, "priority": 90, "required": True},
+            {"id": "chebi", "title": "ChEBI", "enabled": True, "priority": 85, "required": False},
+            {"id": "prov-o", "title": "PROV-O", "enabled": True, "priority": 80, "required": True},
+            {"id": "dcterms", "title": "Dublin Core Terms", "enabled": True, "priority": 80, "required": True},
+            {"id": "vann", "title": "VANN", "enabled": True, "priority": 70, "required": True},
+            {"id": "oeo", "title": "Open Energy Ontology", "enabled": False, "priority": 20, "required": False},
+            {"id": "pemfc-external", "title": "Optional PEMFC-specific Source Ontology", "enabled": False, "priority": 99, "required": False},
+        ]
+    }
