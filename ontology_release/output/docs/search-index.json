@@ -1,0 +1,903 @@
+{
+  "classes": [
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
+      "label": "Agent",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "rdfs:subClassOf http://www.w3.org/ns/prov#Agent"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "label": "Data",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "label": "Data Point",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+      "label": "Instrument",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
+      "label": "Manufacturing",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "label": "Matter",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "skos:closeMatch https://w3id.org/emmo#EMMO_material"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "label": "Measurement",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "rdfs:subClassOf https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "label": "Metadata",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
+      "label": "Normalization Basis",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "label": "Parameter",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "label": "Process",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "owl:equivalentClass https://w3id.org/emmo#EMMO_process"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "label": "Property",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "owl:equivalentClass https://w3id.org/emmo#EMMO_property"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+      "label": "Reference Electrode",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Unit",
+      "label": "Unit",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    }
+  ],
+  "properties": [
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#atCurrentDensity",
+      "label": "atCurrentDensity",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "range": "http://qudt.org/schema/qudt/QuantityValue",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement",
+      "label": "fromMeasurement",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
+      "label": "hasIdentifier",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "http://www.w3.org/2000/01/rdf-schema#Literal",
+      "mappings": [
+        "rdfs:subPropertyOf http://purl.org/dc/terms/identifier"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasName",
+      "label": "hasName",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "http://www.w3.org/2000/01/rdf-schema#Literal",
+      "mappings": [
+        "skos:closeMatch http://xmlns.com/foaf/0.1/name"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasProperty",
+      "label": "hasProperty",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "label": "hasQuantityValue",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": [
+        "rdfs:subPropertyOf http://qudt.org/schema/qudt/quantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess",
+      "label": "hasSubProcess",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#influences",
+      "label": "influences",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#isPartOf",
+      "label": "isPartOf",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf",
+      "label": "isSubProcessOf",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
+      "label": "normalizedTo",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+      "label": "referenceElectrode",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "label": "usesInstrument",
+      "description": "No description available in the source ontology.",
+      "domain": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "range": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+      "mappings": []
+    }
+  ],
+  "examples": [
+    {
+      "iri": "_:CLPorosityQV",
+      "label": ":CLPorosity QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:CLThicknessQV",
+      "label": ":CLThickness QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:CLTortuosityQV",
+      "label": ":CLTortuosity QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:CathodeStoichQV",
+      "label": ":Cathode Stoich QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:CompressionPressureQV",
+      "label": ":Compression Pressure QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:EffIonicCondQV",
+      "label": ":Eff Ionic Cond QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:EffO2DiffQV",
+      "label": ":Eff O2 Diff QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:FlowFieldDesignQV",
+      "label": ":Flow Field Design QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:GDLTypeQV",
+      "label": ":GDLType QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:GasCompositionQV",
+      "label": ":Gas Composition QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:InkAgingTimeQV",
+      "label": ":Ink Aging Time QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:IonomerEWQV",
+      "label": ":Ionomer EWQV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:LimitingCurrentDensityQV",
+      "label": ":Limiting Current Density QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:LocalO2ResQV",
+      "label": ":Local O2 Res QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:MPLPresenceQV",
+      "label": ":MPLPresence QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:MassTransResQV",
+      "label": ":Mass Trans Res QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:N66cb6c9778f74c9b9c256f499e3a9bc0",
+      "label": ":N66cb6c9778f74c9b9c256f499e3a9bc0",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:N8162ab2e0a114b078213d75dfd939880",
+      "label": ":N8162ab2e0a114b078213d75dfd939880",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:Nb228004723df43c4a495e1fe11dc02f4",
+      "label": ":Nb228004723df43c4a495e1fe11dc02f4",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:Nc0b7c3d32f93489994afa613a2e5c1dc",
+      "label": ":Nc0b7c3d32f93489994afa613a2e5c1dc",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:Nd95ba8bad43e4777aca9cebde6cc4d53",
+      "label": ":Nd95ba8bad43e4777aca9cebde6cc4d53",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "_:WaterUptakeQV",
+      "label": ":Water Uptake QV",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#BiasPotential",
+      "label": "Bias Potential",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerPorosity",
+      "label": "Catalyst Layer Porosity",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
+      "label": "Catalyst Layer Thickness",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerTortuosity",
+      "label": "Catalyst Layer Tortuosity",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerVolume",
+      "label": "Catalyst Layer Volume",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CathodeStoichiometricRatio",
+      "label": "Cathode Stoichiometric Ratio",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CompressionPressure",
+      "label": "Compression Pressure",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity",
+      "label": "Current Density",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentInterruptHFRMeasurement",
+      "label": "Current-Interrupt HFR Measurement",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DynamicHydrogenElectrode",
+      "label": "Dynamic Hydrogen Electrode (H2 Anode in MEA)",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSABasis",
+      "label": "ECSA Basis",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#EffectiveIonicConductivity",
+      "label": "Effective Ionic Conductivity",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#EffectiveOxygenDiffusionCoefficient",
+      "label": "Effective Oxygen Diffusion Coefficient",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#EnvironmentalChamber",
+      "label": "Environmental Chamber",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FlowFieldDesign",
+      "label": "Flow Field Design",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Frequency",
+      "label": "Frequency",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GDEFixture",
+      "label": "GDE Fixture",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GDLType",
+      "label": "GDL Type",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GasComposition",
+      "label": "Gas Composition",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GasHumidificationUnit",
+      "label": "Gas Humidification Unit",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#InkAgingTime",
+      "label": "Ink Aging Time",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerEquivalentWeight",
+      "label": "Ionomer Equivalent Weight",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerMass",
+      "label": "Ionomer Mass",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LimitingCurrentDensity",
+      "label": "Limiting Current Density",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LocalOxygenTransportResistance",
+      "label": "Local Oxygen Transport Resistance",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MassTransportResistance",
+      "label": "Mass Transport Resistance",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MembraneType",
+      "label": "Membrane Type",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPresence",
+      "label": "Microporous Layer Presence",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#O2N2SwitchingMeasurement",
+      "label": "O2–N2 Switching Measurement",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OnsetPotential",
+      "label": "Onset Potential",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenGainLossMeasurement",
+      "label": "Oxygen Gain/Loss Measurement",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ProtonatedMembrane",
+      "label": "Protonated Membrane",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PtMass",
+      "label": "Pt Mass",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RotationRate",
+      "label": "Rotation Rate",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SCE",
+      "label": "SCE",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneGasTransportMeasurement",
+      "label": "Through-Plane Gas Transport Measurement",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneTransportCell",
+      "label": "Through-Plane Transport Cell",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#WaterUptakeIndicator",
+      "label": "Water Uptake Indicator",
+      "description": "No description available in the source ontology.",
+      "domain": "",
+      "range": "",
+      "mappings": []
+    }
+  ],
+  "mappings": [
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
+      "local_label": "Agent",
+      "local_kind": "class",
+      "target_iri": "http://www.w3.org/ns/prov#Agent",
+      "target_label": "Agent",
+      "target_kind": "class",
+      "source": "prov-o",
+      "score": 0.99,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Agent should remain local while anchored in PROV-O.",
+      "status": "manual_override"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrodeSubstrate",
+      "local_label": "Electrode Substrate",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+      "target_label": "Electrochemical measurement",
+      "target_kind": "class",
+      "source": "emmo-electrochemistry",
+      "score": 0.565,
+      "relation": "skos:closeMatch",
+      "rationale": "Lexical similarity with a compatible external term.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "local_label": "Matter",
+      "local_kind": "class",
+      "target_iri": "https://w3id.org/emmo#EMMO_material",
+      "target_label": "Material",
+      "target_kind": "class",
+      "source": "emmo-core",
+      "score": 0.714,
+      "relation": "skos:closeMatch",
+      "rationale": "Lexical similarity with a compatible external term.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "local_label": "Measurement",
+      "local_kind": "class",
+      "target_iri": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
+      "target_label": "Electrochemical measurement",
+      "target_kind": "class",
+      "source": "emmo-electrochemistry",
+      "score": 0.99,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice.",
+      "status": "manual_override"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "local_label": "Process",
+      "local_kind": "class",
+      "target_iri": "https://w3id.org/emmo#EMMO_process",
+      "target_label": "Process",
+      "target_kind": "class",
+      "source": "emmo-core",
+      "score": 1.0,
+      "relation": "owl:equivalentClass",
+      "rationale": "High lexical similarity and compatible kind support a strong equivalence proposal.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "local_label": "Property",
+      "local_kind": "class",
+      "target_iri": "https://w3id.org/emmo#EMMO_property",
+      "target_label": "Property",
+      "target_kind": "class",
+      "source": "emmo-core",
+      "score": 1.0,
+      "relation": "owl:equivalentClass",
+      "rationale": "High lexical similarity and compatible kind support a strong equivalence proposal.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
+      "local_label": "hasIdentifier",
+      "local_kind": "datatype_property",
+      "target_iri": "http://purl.org/dc/terms/identifier",
+      "target_label": "identifier",
+      "target_kind": "datatype_property",
+      "source": "dcterms",
+      "score": 0.87,
+      "relation": "rdfs:subPropertyOf",
+      "rationale": "Conservative anchoring favors specialization over strict equivalence.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasName",
+      "local_label": "hasName",
+      "local_kind": "datatype_property",
+      "target_iri": "http://xmlns.com/foaf/0.1/name",
+      "target_label": "name",
+      "target_kind": "datatype_property",
+      "source": "foaf",
+      "score": 0.727,
+      "relation": "skos:closeMatch",
+      "rationale": "Lexical similarity with a compatible external term.",
+      "status": "proposed"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "local_label": "hasQuantityValue",
+      "local_kind": "object_property",
+      "target_iri": "http://qudt.org/schema/qudt/quantityValue",
+      "target_label": "quantity value",
+      "target_kind": "object_property",
+      "source": "qudt-schema",
+      "score": 0.99,
+      "relation": "rdfs:subPropertyOf",
+      "rationale": "Quantity-value relations should reuse QUDT semantics where possible.",
+      "status": "manual_override"
+    }
+  ]
+}

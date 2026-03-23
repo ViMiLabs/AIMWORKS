@@ -5,7 +5,6 @@ on:
   push:
     paths:
       - "ontology_release/**"
-      - "input/**"
       - ".github/workflows/ontology-release.yml"
 
 jobs:
@@ -15,25 +14,18 @@ jobs:
       run:
         working-directory: ontology_release
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt
-          python -m pip install -e .
+        run: python -m pip install -r requirements.txt
       - name: Run tests
         run: python -m pytest
-      - name: Build ontology release
-        run: python -m aimworks_ontology_release.cli release-all
+      - name: Build ontology release bundle
+        run: python -m aimworks_ontology_release.cli --project-root . run --input input/current_ontology.jsonld --rewrite --split --build-docs --build-release --fair-check
       - name: Upload release bundle
         uses: actions/upload-artifact@v4
         with:
           name: ontology-release-bundle
           path: ontology_release/output/release_bundle
-      - name: Upload publication site
-        uses: actions/upload-artifact@v4
-        with:
-          name: ontology-publication-site
-          path: ontology_release/output/publication

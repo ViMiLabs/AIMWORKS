@@ -1,26 +1,16 @@
 # {{ title }}
 
-Generated: {{ generated_at }}
+Generated on {{ generated_on }}.
 
 {% if summary %}
 ## Summary
 
-{% for item in summary %}
-- {{ item }}
-{% endfor %}
+{{ summary }}
 {% endif %}
 
 {% for section in sections %}
 ## {{ section.title }}
 
-{% if section.lines %}
-{% for line in section.lines %}
-- {{ line }}
-{% endfor %}
-{% endif %}
-
-{% if section.body %}
 {{ section.body }}
-{% endif %}
 
 {% endfor %}

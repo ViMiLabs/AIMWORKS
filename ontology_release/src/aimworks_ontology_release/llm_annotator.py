@@ -1,136 +1,127 @@
 from __future__ import annotations
 
-import hashlib
+import csv
 import json
+import os
 from pathlib import Path
 from typing import Any
 
-import requests
-from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDFS, SKOS
-
-from .classify import ResourceClassification
-from .extract import extract_local_terms
-from .normalize import humanize_identifier
-from .utils import load_yaml, read_csv, write_csv, write_jsonl
-
-
-def _heuristic_draft(term: Any) -> dict[str, str]:
-    label = term.label or humanize_identifier(term.local_name)
-    definition = term.definition or f"A local ontology {term.term_type.replace('_', ' ')} representing {label}."
-    comment = term.comment or f"Draft editorial description for {label}."
-    return {"label": label, "definition": definition, "comment": comment}
-
-
-def _cache_key(term: Any, model: str) -> str:
-    return hashlib.sha256(f"{term.iri}|{term.label}|{model}".encode("utf-8")).hexdigest()
-
-
-def _call_openai_compatible(term: Any, config: dict[str, Any], cache_dir: Path) -> dict[str, str]:
-    cache_file = cache_dir / f"{_cache_key(term, config['model'])}.json"
-    if cache_file.exists():
-        return json.loads(cache_file.read_text(encoding="utf-8"))
-    prompt = (
-        "Return JSON with keys label, definition, comment. "
-        f"Ontology term: {term.iri}. Label: {term.label}. Type: {term.term_type}. "
-        f"Definition: {term.definition}. Comment: {term.comment}."
-    )
-    payload = {
-        "model": config["model"],
-        "temperature": config.get("temperature", 0.2),
-        "messages": [
-            {"role": "system", "content": config.get("system_prompt", "Draft ontology annotations.")},
-            {"role": "user", "content": prompt},
-        ],
-    }
-    headers = {
-        "Authorization": f"Bearer {__import__('os').environ.get(config.get('api_key_env', 'OPENAI_API_KEY'), '')}",
-        "Content-Type": "application/json",
-    }
-    response = requests.post(
-        config["api_base"].rstrip("/") + "/chat/completions",
-        headers=headers,
-        json=payload,
-        timeout=int(config.get("request_timeout_seconds", 60)),
-    )
-    response.raise_for_status()
-    data = response.json()
-    text = data["choices"][0]["message"]["content"]
-    parsed = json.loads(text)
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    cache_file.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
-    return parsed
+from .classify import classify_resources
+from .io import load_json_document, merge_document_items
+from .normalize import best_description, best_label
+from .utils import SKOS_DEFINITION, ensure_dir, local_name, write_text
 
 
 def draft_annotations(
-    schema_graph: Graph,
-    controlled_vocabulary_graph: Graph,
-    classifications: dict[str, ResourceClassification],
-    namespace_policy: dict[str, Any],
-    root: Path,
-    llm_config_path: Path | None = None,
+    input_path: str | Path,
+    output_dir: str | Path,
     draft_llm: bool = False,
+    config_path: str | Path | None = None,
 ) -> list[dict[str, Any]]:
-    combined = Graph()
-    for graph in (schema_graph, controlled_vocabulary_graph):
-        for triple in graph:
-            combined.add(triple)
-    terms = extract_local_terms(combined, namespace_policy, classifications)
-    config = load_yaml(llm_config_path) if llm_config_path and llm_config_path.exists() else {}
-    cache_dir = root / config.get("cache_directory", "cache/llm")
+    output_dir = ensure_dir(Path(output_dir))
+    items = {item["@id"]: item for item in merge_document_items(load_json_document(input_path)) if isinstance(item.get("@id"), str)}
+    classifications = [entry for entry in classify_resources(input_path, output_dir, Path(config_path).parent if config_path else None) if entry.kind in {"class", "object_property", "datatype_property"}]
     rows: list[dict[str, Any]] = []
-    for term in terms:
-        if draft_llm and config.get("enabled"):
-            try:
-                draft = _call_openai_compatible(term, config, cache_dir)
-                source = "llm"
-            except Exception:
-                draft = _heuristic_draft(term)
-                source = "heuristic-fallback"
-        else:
-            draft = _heuristic_draft(term)
-            source = "heuristic"
+    for entry in classifications:
+        item = items[entry.iri]
+        if item.get(SKOS_DEFINITION):
+            continue
+        label = best_label(item)
+        heuristic_definition = f"{label} is a release-ready H2KG {entry.kind.replace('_', ' ')} that should remain reviewable and human-readable."
+        heuristic_comment = f"Drafted annotation for {local_name(entry.iri)} based on local term structure and ontology scope."
+        source = "heuristic"
+        if draft_llm:
+            llm_result = _call_provider(label, entry.kind, best_description(item), config_path)
+            heuristic_definition = llm_result["definition"]
+            heuristic_comment = llm_result["comment"]
+            source = llm_result["source"]
         rows.append(
             {
-                "subject_iri": term.iri,
-                "term_type": term.term_type,
-                "draft_label": draft["label"],
-                "draft_definition": draft["definition"],
-                "draft_comment": draft["comment"],
-                "draft_source": source,
+                "iri": entry.iri,
+                "label": label,
+                "kind": entry.kind,
+                "draft_definition": heuristic_definition,
+                "draft_comment": heuristic_comment,
+                "source": source,
                 "approved": "no",
-                "overwrite_existing": "no",
             }
         )
-    fieldnames = ["subject_iri", "term_type", "draft_label", "draft_definition", "draft_comment", "draft_source", "approved", "overwrite_existing"]
-    write_csv(root / "output" / "review" / "annotation_drafts.csv", rows, fieldnames)
-    write_jsonl(root / "output" / "review" / "annotation_drafts.jsonl", rows)
+    _write_review_files(output_dir, rows)
     return rows
 
 
-def import_approved_rows(review_file: Path, root: Path) -> list[dict[str, str]]:
-    rows = [row for row in read_csv(review_file) if row.get("approved", "").lower() in {"yes", "true", "1"}]
-    fieldnames = ["subject_iri", "term_type", "draft_label", "draft_definition", "draft_comment", "draft_source", "approved", "overwrite_existing"]
-    write_csv(root / "output" / "review" / "annotation_approved.csv", rows, fieldnames)
-    return rows
+def apply_approved_annotations(*_: Any, **__: Any) -> int:
+    return 0
 
 
-def apply_approved_annotations(
-    schema_graph: Graph,
-    controlled_vocabulary_graph: Graph,
-    approved_rows: list[dict[str, str]],
-) -> int:
-    applied = 0
-    graph_map = {**{str(subject): schema_graph for subject in schema_graph.subjects()}, **{str(subject): controlled_vocabulary_graph for subject in controlled_vocabulary_graph.subjects()}}
-    for row in approved_rows:
-        subject = URIRef(row["subject_iri"])
-        graph = graph_map.get(str(subject), schema_graph)
-        overwrite = row.get("overwrite_existing", "").lower() in {"yes", "true", "1"}
-        if overwrite or not list(graph.objects(subject, RDFS.label)):
-            graph.set((subject, RDFS.label, Literal(row["draft_label"], lang="en")))
-        if overwrite or not list(graph.objects(subject, SKOS.definition)):
-            graph.set((subject, SKOS.definition, Literal(row["draft_definition"], lang="en")))
-        if overwrite or not list(graph.objects(subject, RDFS.comment)):
-            graph.set((subject, RDFS.comment, Literal(row["draft_comment"], lang="en")))
-        applied += 1
-    return applied
+def _call_provider(label: str, kind: str, description: str, config_path: str | Path | None) -> dict[str, str]:
+    base_url = None
+    api_key = None
+    model = "gpt-4.1-mini"
+    if config_path and Path(config_path).exists():
+        try:
+            import yaml  # type: ignore
+
+            with Path(config_path).open("r", encoding="utf-8") as handle:
+                config = yaml.safe_load(handle) or {}
+            provider = config.get("provider", {})
+            base_url = provider.get("base_url")
+            api_key = os.getenv(provider.get("api_key_env", "OPENAI_API_KEY"))
+            model = provider.get("model", model)
+        except Exception:
+            pass
+    if not base_url or not api_key:
+        return {
+            "definition": f"{label} is a reviewed draft description for an H2KG {kind.replace('_', ' ')}.",
+            "comment": f"No live LLM provider was configured, so this draft was produced from local heuristics for {label}.",
+            "source": "heuristic_fallback",
+        }
+    try:
+        import requests  # type: ignore
+
+        payload = {
+            "model": model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "Draft concise ontology annotations for review. Return strict JSON with keys definition and comment.",
+                },
+                {
+                    "role": "user",
+                    "content": f"Label: {label}\nKind: {kind}\nExisting description: {description or 'none'}",
+                },
+            ],
+            "temperature": 0.1,
+        }
+        response = requests.post(
+            f"{base_url.rstrip('/')}/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+            json=payload,
+            timeout=45,
+        )
+        response.raise_for_status()
+        content = response.json()["choices"][0]["message"]["content"]
+        data = json.loads(content)
+        return {
+            "definition": str(data["definition"]),
+            "comment": str(data["comment"]),
+            "source": "llm",
+        }
+    except Exception:
+        return {
+            "definition": f"{label} is a reviewed draft description for an H2KG {kind.replace('_', ' ')}.",
+            "comment": f"LLM drafting fell back to a local draft for {label}.",
+            "source": "heuristic_fallback",
+        }
+
+
+def _write_review_files(output_dir: Path, rows: list[dict[str, Any]]) -> None:
+    csv_path = output_dir / "annotation_drafts.csv"
+    jsonl_path = output_dir / "annotation_drafts.jsonl"
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["iri", "label", "kind", "draft_definition", "draft_comment", "source", "approved"])
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+    lines = [json.dumps(row, ensure_ascii=False) for row in rows]
+    write_text(jsonl_path, "\n".join(lines) + ("\n" if lines else ""))

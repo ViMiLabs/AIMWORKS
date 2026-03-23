@@ -1,15 +1,13 @@
 # Release Readiness Report
 
-- Release ready: **True**
-- Overall readiness score: **95.0 / 100**
+Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.
 
-## Criteria
+## Publication Assets
 
-- Findable: 100 / 100
-- Accessible: 100 / 100
-- Interoperable: 100 / 100
-- Reusable: 80 / 100
-
-## Required Follow-up
-
-- None.
+- HTML reference page: ready
+- Machine-readable source: ready
+- JSON-LD source: ready
+- Alignment mappings: ready
+- Examples module: ready
+- Release bundle: ready
+- w3id artifacts: ready

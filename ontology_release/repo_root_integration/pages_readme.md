@@ -1,11 +1,15 @@
-# Repository Integration Notes
+# GitHub Pages Integration
 
-The workflow files in `repo_root_integration/github_workflows/` are mirrored into the repository root under `.github/workflows/`.
+The authoritative workflow sources live in `ontology_release/repo_root_integration/github_workflows/`.
 
-- `ontology-release.yml` runs tests and builds the release bundle.
-- `ontology-pages.yml` generates the static publication tree and deploys `ontology_release/output/publication/` with GitHub Pages.
+Mirror these files to repository root as:
 
-The workflows build both configured ontology profiles (`pemfc` and `pemwe`) and assume source files are present at:
+- `.github/workflows/ontology-release.yml`
+- `.github/workflows/ontology-pages.yml`
 
-- `input/ONTOLOGY_PEMFC.jsonld`
-- `input/ONTOLOGY_PEMWE.jsonld`
+They are intentionally minimal. All ontology-specific logic remains inside `ontology_release/`, and the workflows only:
+
+1. install Python dependencies
+2. run tests
+3. build the ontology release outputs
+4. upload artifacts or deploy `output/docs/` to GitHub Pages

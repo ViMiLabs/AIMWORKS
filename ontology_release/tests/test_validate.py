@@ -1,84 +1,56 @@
 from __future__ import annotations
 
-from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import OWL, RDF, RDFS, SKOS
+import json
 
-from aimworks_ontology_release.enrich import enrich_graphs
-from aimworks_ontology_release.mapper import align_terms
-from aimworks_ontology_release.split import split_graph
-from aimworks_ontology_release.validate import _foops_dimension_rows, _local_validation_graph, validate_release
+from aimworks_ontology_release.validate import validate_release
+from aimworks_ontology_release.validate import _parse_foops_response, _parse_oops_xml
 
 
-def test_validation_runs(sample_graph, classifications, configs, package_root):
-    graphs, _ = split_graph(sample_graph, classifications)
-    alignments, _, _ = align_terms(
-        graphs["schema"],
-        graphs["controlled_vocabulary"],
-        classifications,
-        configs["source_ontologies"],
-        configs["namespace_policy"],
-        configs["mapping_rules"],
-        package_root,
-    )
-    enrich_graphs(
-        graphs["schema"],
-        graphs["controlled_vocabulary"],
-        classifications,
-        configs["metadata_defaults"],
-        configs["release_profile"],
-        configs["namespace_policy"],
-        package_root,
-    )
-    report = validate_release(
-        graphs["schema"],
-        graphs["controlled_vocabulary"],
-        alignments,
-        classifications,
-        configs["namespace_policy"],
-        configs["release_profile"],
-        package_root,
-    )
-    assert report["syntax_ok"] is True
-    assert report["overall_status"] in {"pass", "warning"}
-    assert "owl_consistency" in report
-    assert "resolver_checks" in report
-    assert report["release_term_count"] >= 0
-    assert report["release_definition_coverage"] == (
-        round((report["release_term_count"] - report["missing_definition_count"]) / report["release_term_count"], 4)
-        if report["release_term_count"]
-        else 1.0
-    )
+def test_validate_outputs_reports(mini_ontology_file, output_dir):
+    report = validate_release(mini_ontology_file, output_dir)
+    assert "valid" in report
+    assert (output_dir / "validation_report.md").exists()
+    assert report["external_assessments"]["oops"]["status"] == "disabled"
+    payload = json.loads((output_dir / "validation_report.json").read_text(encoding="utf-8"))
+    assert payload["external_assessments"]["foops"]["status"] == "disabled"
 
 
-def test_foops_dimension_rows_aggregate() -> None:
-    rows = _foops_dimension_rows(
-        [
-            {"category_id": "Findable", "principle_id": "F1", "total_passed_tests": 1, "total_tests_run": 1, "status": "ok"},
-            {"category_id": "Findable", "principle_id": "F2", "total_passed_tests": 2, "total_tests_run": 4, "status": "error"},
-            {"category_id": "Interoperable", "principle_id": "I1", "total_passed_tests": 3, "total_tests_run": 3, "status": "ok"},
-        ]
-    )
-    indexed = {row["dimension"]: row for row in rows}
-    assert indexed["Findable"]["score"] == 60.0
-    assert indexed["Accessible"]["score"] is None
-    assert indexed["Interoperable"]["score"] == 100.0
+def test_parse_oops_xml_extracts_pitfalls():
+    xml_text = """<?xml version="1.0" encoding="UTF-8"?>
+<oops:OOPSResponse xmlns:oops="http://www.oeg-upm.net/oops">
+  <oops:Pitfall>
+    <oops:Code>P10</oops:Code>
+    <oops:Name>Missing disjointness</oops:Name>
+    <oops:Description>The ontology lacks disjoint axioms.</oops:Description>
+    <oops:Affects>
+      <oops:AffectedElement>https://example.org/ClassA</oops:AffectedElement>
+    </oops:Affects>
+  </oops:Pitfall>
+</oops:OOPSResponse>
+"""
+    parsed = _parse_oops_xml(xml_text)
+    assert parsed["pitfall_count"] == 1
+    assert parsed["pitfalls"][0]["code"] == "P10"
 
 
-def test_local_validation_graph_excludes_external_subjects(configs) -> None:
-    namespace_policy = configs["namespace_policy"]
-    graph = Graph()
-    local_term = URIRef(f"{namespace_policy['term_namespace']}LocalClass")
-    external_term = URIRef("https://w3id.org/emmo/domain/electrochemistry#ExternalClass")
-
-    graph.add((local_term, RDF.type, OWL.Class))
-    graph.add((local_term, RDFS.label, Literal("Local class")))
-    graph.add((local_term, SKOS.closeMatch, external_term))
-    graph.add((external_term, RDF.type, OWL.Class))
-    graph.add((external_term, RDFS.label, Literal("External class")))
-
-    filtered = _local_validation_graph(graph, namespace_policy)
-
-    assert (local_term, RDF.type, OWL.Class) in filtered
-    assert (local_term, SKOS.closeMatch, external_term) in filtered
-    assert (external_term, RDF.type, OWL.Class) not in filtered
-    assert (external_term, RDFS.label, Literal("External class")) not in filtered
+def test_parse_foops_response_extracts_scores_and_failed_checks():
+    html = """
+<html>
+  <body>
+    <h2>Overall score</h2>
+    <div>47.8 / 100</div>
+    <div>Findable 60.0 / 100</div>
+    <div>Accessible not assessed</div>
+    <div>Interoperable 33.3 / 100</div>
+    <div>Reusable 50.0 / 100</div>
+    <table>
+      <tr><td>F1</td><td>failed</td><td>Missing persistent identifier metadata</td></tr>
+    </table>
+  </body>
+</html>
+"""
+    parsed = _parse_foops_response(html)
+    assert parsed["overall_score"] == 47.8
+    assert parsed["dimensions"]["findable"] == 60.0
+    assert parsed["dimensions"]["accessible"] is None
+    assert parsed["failed_checks"][0]["label"] == "F1"

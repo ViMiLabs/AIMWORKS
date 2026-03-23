@@ -1,182 +1,238 @@
 from __future__ import annotations
 
+import importlib.util
 from pathlib import Path
 from typing import Any
 
-from rdflib import Graph
-from rdflib.namespace import DCTERMS, OWL, RDF
+from .inspect import inspect_ontology
+from .utils import default_release_profile, dump_json, ensure_dir, try_load_yaml, write_text
+from .validate import validate_release
 
-from .utils import read_json, write_text
 
+def compute_fair_readiness(
+    input_path: str | Path,
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
+) -> dict[str, Any]:
+    input_path = Path(input_path)
+    output_dir = ensure_dir(Path(output_dir))
+    release_root = output_dir.parent if output_dir.name == "reports" else output_dir
+    config_root = Path(config_dir or input_path.parent.parent / "config")
+    profile = try_load_yaml(config_root / "release_profile.yaml", default_release_profile())
+    inspection = inspect_ontology(input_path, output_dir, config_root)
+    validation = validate_release(input_path, output_dir, config_root)
+    release = validation["release_candidate"]
+    project = profile["project"]
 
-def compute_fair_scores(root: Path) -> dict[str, Any]:
-    inspection = read_json(root / "output" / "reports" / "inspection_report.json")
-    validation = read_json(root / "output" / "reports" / "validation_report.json")
-    schema_graph = Graph()
-    schema_graph.parse(root / "output" / "ontology" / "schema.ttl", format="turtle")
-    ontology_nodes = list(schema_graph.subjects(RDF.type, OWL.Ontology)) or list(schema_graph.subjects())
-    ontology_node = ontology_nodes[0] if ontology_nodes else None
-    schema_ttl = (root / "output" / "ontology" / "schema.ttl").exists()
-    schema_jsonld = (root / "output" / "ontology" / "schema.jsonld").exists()
-    docs_index = (root / "output" / "docs" / "index.html").exists()
-    w3id_ready = (root / "output" / "w3id" / ".htaccess").exists()
-    citation_ready = (root / "CITATION.cff").exists() and (root / ".zenodo.json").exists()
-    mappings_ready = (root / "output" / "mappings" / "alignments.ttl").exists()
-    examples_ready = (root / "output" / "examples" / "examples.ttl").exists()
-    has_title = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.title)))
-    has_description = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.description)))
-    has_version_iri = bool(ontology_node and list(schema_graph.objects(ontology_node, OWL.versionIRI)))
-    has_version_info = bool(ontology_node and list(schema_graph.objects(ontology_node, OWL.versionInfo)))
-    has_license = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.license)))
-    has_provenance = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.source)))
-    release_definition_coverage = float(validation.get("release_definition_coverage", inspection["definition_coverage"]))
+    docs_ready = (release_root / "docs" / "index.html").exists()
+    machine_ttl_ready = (release_root / "ontology" / "schema.ttl").exists()
+    machine_jsonld_ready = (release_root / "ontology" / "schema.jsonld").exists()
+    mappings_ready = (release_root / "mappings" / "alignments.ttl").exists()
+    examples_ready = (release_root / "examples" / "examples.ttl").exists()
+    w3id_ready = (release_root / "w3id" / ".htaccess").exists()
+    release_bundle_ready = (release_root / "release_bundle" / "RELEASE_NOTES.md").exists()
+    citation_ready = (release_root.parent / "CITATION.cff").exists()
+    zenodo_ready = (release_root.parent / ".zenodo.json").exists()
+    docs_url_ready = bool(project.get("docs_url"))
+    repository_ready = bool(project.get("repository_url"))
 
-    findable = sum(
-        [
-            25 if inspection["ontology_iri"] else 0,
-            20 if has_version_iri else 0,
-            20 if has_title and has_description else 0,
-            20 if citation_ready else 0,
-            15 if docs_index else 0,
-        ]
+    findable = _bounded_score(
+        16 if inspection["ontology_iri"] else 0,
+        10 if project.get("version_iri") else 0,
+        10 if release["metadata_gap_count"] == 0 else 0,
+        10 if docs_url_ready else 0,
+        10 if machine_ttl_ready and machine_jsonld_ready else 5 if machine_ttl_ready or machine_jsonld_ready else 0,
+        8 if validation["release_candidate"]["imports_count"] > 0 else 0,
+        8 if citation_ready else 0,
+        6 if zenodo_ready else 0,
+        8 if w3id_ready else 0,
     )
-    accessible = sum([35 if schema_ttl and schema_jsonld else 0, 35 if docs_index else 0, 30 if w3id_ready else 0])
-    interoperable = sum([40 if inspection["external_namespaces"] else 0, 35 if mappings_ready else 0, 25 if not validation["namespace_violations"] else 0])
-    reusable = sum(
-        [
-            25 if has_license else 0,
-            20 if has_provenance or citation_ready else 0,
-            20 if release_definition_coverage >= 0.6 else 0,
-            20 if has_version_info else 0,
-            15 if examples_ready else 0,
-        ]
+    accessible = _bounded_score(
+        20 if machine_ttl_ready else 0,
+        15 if machine_jsonld_ready else 0,
+        12 if docs_ready else 0,
+        12 if w3id_ready else 0,
+        10 if repository_ready else 0,
+        8 if docs_url_ready else 0,
+        8 if release_bundle_ready else 0,
+        15 if validation["external_assessments"]["foops"].get("dimensions", {}).get("accessible") is not None else 0,
     )
+    interoperable = _bounded_score(
+        20 if validation["release_candidate"]["imports_count"] > 0 else 0,
+        18 if mappings_ready else 0,
+        18 if validation["namespace_violations"] == 0 else 0,
+        10 if validation["shacl"]["conforms"] is True else 0,
+        12 if machine_jsonld_ready else 0,
+        12 if validation["mapping_issues"] == 0 else 0,
+        10 if inspection["counts"]["quantity_value_count"] > 0 else 0,
+    )
+    definition_coverage = float(release["definition_coverage"])
+    reusable_base = _bounded_score(
+        18 if release["metadata_gap_count"] == 0 else max(0, 18 - 4 * release["metadata_gap_count"]),
+        12 if project.get("license") else 0,
+        10 if project.get("version_iri") and project.get("prior_version") else 0,
+        10 if examples_ready else 0,
+        10 if release_bundle_ready else 0,
+        10 if citation_ready else 0,
+        8 if zenodo_ready else 0,
+        22 if definition_coverage >= 0.95 else 14 if definition_coverage >= 0.8 else 6 if definition_coverage >= 0.6 else 0,
+    )
+    reusable_penalty = min(25, int(release["placeholder_definition_count"]) * 2) + (10 if validation["shacl"]["conforms"] is False else 0)
+    reusable = max(0, reusable_base - reusable_penalty)
 
-    dimensions = [
-        {"acronym": "F", "dimension": "Findable", "score": findable},
-        {"acronym": "A", "dimension": "Accessible", "score": accessible},
-        {"acronym": "I", "dimension": "Interoperable", "score": interoperable},
-        {"acronym": "R", "dimension": "Reusable", "score": reusable},
+    fair_signals = [
+        _score_row("F / Findable", findable, "Internal score for identifiers, versioning, citation, namespace, and findable publication metadata."),
+        _score_row("A / Accessible", accessible, "Internal score for machine-readable outputs, docs presence, resolver artifacts, and public access hooks."),
+        _score_row("I / Interoperable", interoperable, "Internal score for reuse of imports, mappings, namespace hygiene, and standards-based serializations."),
+        _score_row("R / Reusable", reusable, "Internal score for license, provenance, versioning, definitions, examples, and release packaging."),
     ]
-    overall = round(sum(item["score"] for item in dimensions) / len(dimensions), 1)
-    blockers = validation["mapping_issues"] + validation["namespace_violations"]
-    if validation["metadata_missing"]:
-        blockers.extend(validation["metadata_missing"])
-    if not validation["shacl_conforms"]:
-        blockers.append("SHACL validation still reports unresolved constraints.")
-    release_ready = overall >= 75 and not blockers
-    oops_result = validation.get("oops_checks", {})
-    foops_result = validation.get("foops_checks", {})
-    transparency_checks = [
-        {
-            "label": "OOPS! ontology pitfall scan",
-            "status": oops_result.get("status", "not_reported"),
-            "details": oops_result.get("details", "No OOPS! result was recorded."),
-            "counted_in_score": False,
-            "service_url": oops_result.get("service_url", ""),
-        },
-        {
-            "label": "FOOPS! FAIR assessment",
-            "status": foops_result.get("status", "not_reported"),
-            "details": foops_result.get("details", "No FOOPS! result was recorded."),
-            "counted_in_score": False,
-            "service_url": foops_result.get("service_url", ""),
-            "catalogue_url": foops_result.get("catalogue_url", ""),
-        },
+    transparency_hooks = [
+        _external_row("OOPS! ontology pitfall scan", validation["external_assessments"]["oops"], "External ontology pitfall scan against the release candidate. Service availability is outside the repository."),
+        _external_row("FOOPS! FAIR assessment", validation["external_assessments"]["foops"], "External FAIR-oriented ontology assessment against the release candidate. File mode does not assess accessibility."),
     ]
-    external_scores = {
-        "foops": {
-            "status": foops_result.get("status", "not_reported"),
-            "overall_score": foops_result.get("overall_score"),
-            "dimension_scores": foops_result.get("dimension_scores", []),
-            "details": foops_result.get("details", "No FOOPS! result was recorded."),
-            "service_url": foops_result.get("service_url", ""),
-            "catalogue_url": foops_result.get("catalogue_url", ""),
-            "mode": foops_result.get("mode", ""),
-        },
-        "oops": {
-            "status": oops_result.get("status", "not_reported"),
-            "pitfall_count": oops_result.get("pitfall_count"),
-            "severity_counts": oops_result.get("severity_counts", {}),
-            "details": oops_result.get("details", "No OOPS! result was recorded."),
-            "service_url": oops_result.get("service_url", ""),
+    validation_signals = [
+        _status_row("Overall validation status", "good" if validation["valid"] else "action", "pass" if validation["valid"] else "fail", "Combined metadata, namespace, mapping, and SHACL validation checks."),
+        _status_row("SHACL conforms", "good" if validation["shacl"]["conforms"] is not False else "action", str(validation["shacl"]["conforms"]), "Local SHACL shape execution when pyshacl is available."),
+        _count_row("Missing labels", release["missing_labels"], "Release-time missing labels on local schema terms."),
+        _count_row("Missing definitions", release["missing_definitions"], "Release-time missing definitions or comments on local schema terms."),
+        _count_row("Namespace violations", validation["namespace_violations"], "Violations against the active namespace policy."),
+        _count_row("Mapping issues", validation["mapping_issues"], "Mappings that remain risky or inconsistent after local checks."),
+        _status_row("OWL consistency hook", _optional_hook_status("owlready2"), _optional_hook_value("owlready2"), "Optional OWL reasoner hook. It is skipped when owlready2 is not installed."),
+        _status_row("EMMO checks", _optional_hook_status("EMMOntoPy"), _optional_hook_value("EMMOntoPy"), "Optional EMMO convention hook. It is skipped when EMMOntoPy is not installed."),
+        _external_hook_row("OOPS! hook", validation["external_assessments"]["oops"]),
+        _external_hook_row("FOOPS! hook", validation["external_assessments"]["foops"]),
+    ]
+    publication_assets = [
+        _asset_row("HTML reference page", "ready" if docs_ready else "pending", "Generated public documentation page."),
+        _asset_row("Machine-readable source", "ready" if machine_ttl_ready else "missing", "Primary Turtle serialization for the release candidate."),
+        _asset_row("JSON-LD source", "ready" if machine_jsonld_ready else "missing", "JSON-LD serialization for the release candidate."),
+        _asset_row("Alignment mappings", "ready" if mappings_ready else "missing", "Conservative alignment output for review and publication."),
+        _asset_row("Examples module", "ready" if examples_ready else "missing", "Separated example and data-like instances."),
+        _asset_row("Release bundle", "ready" if release_bundle_ready else "not built in docs-only run", "Bundle status depends on whether the current command executed the release-bundle stage."),
+        _asset_row("w3id artifacts", "ready" if w3id_ready else "missing", "Redirect templates and publication notes for stable public identifiers."),
+    ]
+
+    result = {
+        "findable": findable,
+        "accessible": accessible,
+        "interoperable": interoperable,
+        "reusable": reusable,
+        "summary": (
+            "Internal FAIR signals are local release-readiness indicators. "
+            "External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality."
+        ),
+        "artifacts": [row["label"] for row in publication_assets if row["value"] == "ready"],
+        "fair_signals": fair_signals,
+        "transparency_hooks": transparency_hooks,
+        "validation_signals": validation_signals,
+        "publication_assets": publication_assets,
+        "foops": validation["external_assessments"]["foops"],
+        "oops": validation["external_assessments"]["oops"],
+        "release_metrics": release,
+        "section_explanations": {
+            "fair_signals": "Internal FAIR signals estimate release readiness from the built ontology package itself. They are conservative but not equivalent to live post-publication FAIR audits.",
+            "transparency_hooks": "External transparency hooks call public assessment services. Their availability depends on external infrastructure and network access.",
+            "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, and optional SHACL checks on the release candidate.",
+            "publication_assets": "Publication asset rows show whether the files required for public release were actually built in the current run.",
         },
     }
-    return {
-        "dimensions": dimensions,
-        "overall": overall,
-        "release_ready": release_ready,
-        "blockers": blockers,
-        "transparency_checks": transparency_checks,
-        "external_scores": external_scores,
-    }
+    dump_json(output_dir / "fair_readiness_report.json", result)
+    write_text(output_dir / "fair_readiness_report.md", _fair_markdown(result))
+    write_text(output_dir / "release_readiness_report.md", _release_markdown(result))
+    return result
 
 
-def write_fair_reports(scores: dict[str, Any], root: Path) -> None:
-    fair_lines = [
-        "# FAIR Readiness Report",
-        "",
-        f"- Overall FAIR readiness score: **{scores['overall']} / 100**",
-        f"- Release ready: **{scores['release_ready']}**",
-        "",
-        "## Dimension Scores",
-        "",
-    ]
-    fair_lines.extend(f"- {item['acronym']} ({item['dimension']}): {item['score']} / 100" for item in scores["dimensions"])
-    fair_lines.extend(["", "## External Transparency Hooks", ""])
-    fair_lines.append("- OOPS! and FOOPS! are reported separately for transparency and are not added to the numeric F/A/I/R score.")
-    fair_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
-    foops = scores.get("external_scores", {}).get("foops", {})
-    oops = scores.get("external_scores", {}).get("oops", {})
-    fair_lines.extend(["", "## External Service Results", ""])
-    if foops.get("overall_score") is not None:
-        fair_lines.append(f"- FOOPS! overall score: **{foops['overall_score']} / 100**")
-        for row in foops.get("dimension_scores", []):
-            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
-            fair_lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
-    else:
-        fair_lines.append("- FOOPS! did not return a score in this run.")
-    if oops.get("pitfall_count") is not None:
-        fair_lines.append(f"- OOPS! pitfall count: **{oops['pitfall_count']}**")
-        fair_lines.extend(f"- OOPS! {level}: {count}" for level, count in sorted(oops.get("severity_counts", {}).items()))
-    else:
-        fair_lines.append("- OOPS! did not return a pitfall count in this run.")
-    fair_lines.extend(["", "## Blocking Issues", ""])
-    if scores["blockers"]:
-        fair_lines.extend(f"- {item}" for item in scores["blockers"])
-    else:
-        fair_lines.append("- No blocking issues detected.")
-    write_text(root / "output" / "reports" / "fair_readiness_report.md", "\n".join(fair_lines) + "\n")
+def _bounded_score(*parts: int) -> int:
+    return max(0, min(100, sum(parts)))
 
-    release_lines = [
-        "# Release Readiness Report",
-        "",
-        f"- Release ready: **{scores['release_ready']}**",
-        f"- Overall readiness score: **{scores['overall']} / 100**",
-        "",
-        "## Criteria",
-        "",
-    ]
-    release_lines.extend(f"- {item['acronym']} ({item['dimension']}): {item['score']} / 100" for item in scores["dimensions"])
-    release_lines.extend(["", "## External Transparency Hooks", ""])
-    release_lines.append("- OOPS! and FOOPS! are tracked separately from the numeric FAIR score so the base F/A/I/R calculation stays reproducible offline.")
-    release_lines.extend(f"- {item['label']}: **{item['status']}**. {item['details']}" for item in scores.get("transparency_checks", []))
-    release_lines.extend(["", "## External Service Results", ""])
-    if foops.get("overall_score") is not None:
-        release_lines.append(f"- FOOPS! overall score: **{foops['overall_score']} / 100**")
-        for row in foops.get("dimension_scores", []):
-            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
-            release_lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
+
+def _score_row(label: str, score: int, detail: str) -> dict[str, str]:
+    if score >= 85:
+        status = "good"
+    elif score >= 65:
+        status = "watch"
     else:
-        release_lines.append("- FOOPS! did not return a score in this run.")
-    if oops.get("pitfall_count") is not None:
-        release_lines.append(f"- OOPS! pitfall count: **{oops['pitfall_count']}**")
-        release_lines.extend(f"- OOPS! {level}: {count}" for level, count in sorted(oops.get("severity_counts", {}).items()))
-    else:
-        release_lines.append("- OOPS! did not return a pitfall count in this run.")
-    release_lines.extend(["", "## Required Follow-up", ""])
-    if scores["blockers"]:
-        release_lines.extend(f"- {item}" for item in scores["blockers"])
-    else:
-        release_lines.append("- None.")
-    write_text(root / "output" / "reports" / "release_readiness_report.md", "\n".join(release_lines) + "\n")
+        status = "action"
+    return {"label": label, "status": status, "value": f"{score} / 100", "detail": detail}
+
+
+def _status_row(label: str, status: str, value: str, detail: str) -> dict[str, str]:
+    return {"label": label, "status": status, "value": value, "detail": detail}
+
+
+def _count_row(label: str, count: int, detail: str) -> dict[str, str]:
+    status = "good" if count == 0 else "watch" if count <= 5 else "action"
+    return {"label": label, "status": status, "value": str(count), "detail": detail}
+
+
+def _external_row(label: str, assessment: dict[str, Any], detail: str) -> dict[str, str]:
+    status = assessment.get("status", "unknown")
+    if status == "assessed":
+        if "overall_score" in assessment and assessment.get("overall_score") is not None:
+            value = f"{assessment['overall_score']} / 100"
+        else:
+            value = f"{assessment.get('pitfall_count', 0)} findings"
+        row_status = "good" if label.startswith("OOPS!") and assessment.get("pitfall_count", 1) == 0 else "watch"
+        if label.startswith("FOOPS!") and assessment.get("overall_score", 0) >= 70:
+            row_status = "good"
+        elif label.startswith("FOOPS!") and assessment.get("overall_score", 0) < 50:
+            row_status = "action"
+        return {"label": label, "status": row_status, "value": value, "detail": detail}
+    if status == "disabled":
+        return {"label": label, "status": "watch", "value": "disabled", "detail": assessment.get("message", detail)}
+    return {"label": label, "status": "watch", "value": "service unavailable", "detail": assessment.get("message", detail)}
+
+
+def _external_hook_row(label: str, assessment: dict[str, Any]) -> dict[str, str]:
+    status = assessment.get("status", "unknown")
+    if status == "assessed":
+        value = "assessed"
+        detail = assessment.get("message", "")
+        return {"label": label, "status": "good", "value": value, "detail": detail}
+    if status == "disabled":
+        return {"label": label, "status": "watch", "value": "disabled", "detail": assessment.get("message", "")}
+    return {"label": label, "status": "watch", "value": "service unavailable", "detail": assessment.get("message", "")}
+
+
+def _asset_row(label: str, value: str, detail: str) -> dict[str, str]:
+    status = "good" if value == "ready" else "watch" if "docs-only" in value or value == "pending" else "action"
+    return {"label": label, "status": status, "value": value, "detail": detail}
+
+
+def _optional_hook_status(module_name: str) -> str:
+    return "good" if importlib.util.find_spec(module_name) else "watch"
+
+
+def _optional_hook_value(module_name: str) -> str:
+    return "available" if importlib.util.find_spec(module_name) else f"skipped ({module_name} not installed)"
+
+
+def _fair_markdown(result: dict[str, Any]) -> str:
+    rows = "\n".join(f"- {row['label']}: {row['value']} ({row['status']})" for row in result["fair_signals"])
+    hooks = "\n".join(f"- {row['label']}: {row['value']} ({row['status']})" for row in result["transparency_hooks"])
+    return f"""# FAIR Readiness Report
+
+## Internal FAIR Signals
+
+{rows}
+
+## Transparency Hooks
+
+{hooks}
+
+## Summary
+
+{result['summary']}
+"""
+
+
+def _release_markdown(result: dict[str, Any]) -> str:
+    assets = "\n".join(f"- {row['label']}: {row['value']}" for row in result["publication_assets"])
+    return f"""# Release Readiness Report
+
+{result['summary']}
+
+## Publication Assets
+
+{assets}
+"""

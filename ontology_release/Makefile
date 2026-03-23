@@ -1,54 +1,41 @@
 PYTHON ?= python
-CLI = $(PYTHON) -m aimworks_ontology_release.cli
-PROFILE ?= pemfc
+PACKAGE = aimworks_ontology_release
+INPUT ?= input/current_ontology.jsonld
 
-.PHONY: install profiles inspect split map enrich annotate docs docs-all validate fair release release-all run test clean
+.PHONY: install inspect split map enrich annotate docs validate fair release run test
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
-	$(PYTHON) -m pip install -e .
-
-profiles:
-	$(CLI) profiles
 
 inspect:
-	$(CLI) inspect --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli inspect --input $(INPUT)
 
 split:
-	$(CLI) split --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli split --input $(INPUT)
 
 map:
-	$(CLI) map --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli map --input $(INPUT)
 
 enrich:
-	$(CLI) enrich --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli enrich --input $(INPUT)
 
 annotate:
-	$(CLI) annotate --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli annotate --input $(INPUT) --draft-llm
 
 docs:
-	$(CLI) docs --profile $(PROFILE)
-
-docs-all:
-	$(CLI) docs-all
+	$(PYTHON) -m $(PACKAGE).cli docs --input $(INPUT)
 
 validate:
-	$(CLI) validate --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli validate --input $(INPUT)
 
 fair:
-	$(CLI) fair --profile $(PROFILE)
+	$(PYTHON) -m $(PACKAGE).cli fair --input $(INPUT)
 
 release:
-	$(CLI) release --profile $(PROFILE)
-
-release-all:
-	$(CLI) release-all
+	$(PYTHON) -m $(PACKAGE).cli release --input $(INPUT)
 
 run:
-	$(CLI) run --all-profiles --build-docs --build-release --fair-check
+	$(PYTHON) -m $(PACKAGE).cli run --input $(INPUT) --rewrite --split --build-docs --build-release --fair-check
 
 test:
 	$(PYTHON) -m pytest
-
-clean:
-	$(PYTHON) -c "from pathlib import Path; import shutil; [shutil.rmtree(p, ignore_errors=True) for p in [Path('output/release_bundle'), Path('.pytest_cache')]]"

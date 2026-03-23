@@ -1,93 +1,74 @@
 from __future__ import annotations
 
+from collections import Counter
+from pathlib import Path
 from typing import Any
 
-from rdflib import Graph, URIRef
-from rdflib.namespace import RDF
-
-from .classify import ResourceClassification
-from .io import save_graph
-from .utils import gather_bnode_closure, write_json, write_text
+from .classify import classify_resources
+from .io import dump_jsonld_items, dump_turtle_items, load_json_document, merge_document_items
+from .normalize import best_label
+from .utils import ensure_dir, write_text
 
 
-SCHEMA_CATEGORIES = {"ontology_header", "class", "object_property", "datatype_property", "annotation_property"}
-
-
-def _copy_subjects(source: Graph, target: Graph, subjects: set[Any]) -> None:
-    closure = gather_bnode_closure(source, subjects)
-    for subject in subjects | closure:
-        for triple in source.triples((subject, None, None)):
-            target.add(triple)
-
-
-def split_graph(
-    graph: Graph,
-    classifications: dict[str, ResourceClassification],
-) -> tuple[dict[str, Graph], dict[str, Any]]:
-    schema_subjects: set[Any] = set()
-    vocab_subjects: set[Any] = set()
-    example_subjects: set[Any] = set()
-
-    for subject in set(graph.subjects()):
-        record = classifications.get(str(subject))
-        if not record:
+def split_ontology(
+    input_path: str | Path,
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
+) -> dict[str, Any]:
+    output_dir = ensure_dir(Path(output_dir))
+    classifications = classify_resources(input_path, output_dir.parent / "review", config_dir)
+    kind_by_iri = {entry.iri: entry for entry in classifications}
+    merged = merge_document_items(load_json_document(input_path))
+    schema_items: list[dict[str, Any]] = []
+    vocab_items: list[dict[str, Any]] = []
+    example_items: list[dict[str, Any]] = []
+    counts: Counter[str] = Counter()
+    for item in merged:
+        identifier = item.get("@id")
+        if not isinstance(identifier, str) or identifier not in kind_by_iri:
             continue
-        if record.category in SCHEMA_CATEGORIES:
-            schema_subjects.add(subject)
-        elif record.category == "controlled_vocabulary_term":
-            vocab_subjects.add(subject)
-        elif record.category in {"example_individual", "ephemeral_generated_instance", "quantity_value_data_node"}:
-            example_subjects.add(subject)
-
-    schema_graph = Graph()
-    vocab_graph = Graph()
-    examples_graph = Graph()
-    for prefix, namespace in graph.namespaces():
-        schema_graph.bind(prefix, namespace)
-        vocab_graph.bind(prefix, namespace)
-        examples_graph.bind(prefix, namespace)
-
-    _copy_subjects(graph, schema_graph, schema_subjects)
-    _copy_subjects(graph, vocab_graph, vocab_subjects)
-    _copy_subjects(graph, examples_graph, example_subjects)
-
+        kind = kind_by_iri[identifier].kind
+        if kind in {"ontology_header", "class", "object_property", "datatype_property", "annotation_property"}:
+            schema_items.append(item)
+            counts["schema"] += 1
+        elif kind == "controlled_vocabulary_term":
+            vocab_items.append(item)
+            counts["vocabulary"] += 1
+        elif kind in {"example_individual", "ephemeral_generated_instance", "quantity_value_data_node"}:
+            example_items.append(item)
+            counts["examples"] += 1
+    dump_turtle_items(output_dir / "schema.ttl", schema_items)
+    dump_jsonld_items(output_dir / "schema.jsonld", schema_items)
+    dump_turtle_items(output_dir / "controlled_vocabulary.ttl", vocab_items)
+    dump_turtle_items(output_dir.parent / "examples" / "examples.ttl", example_items)
     report = {
-        "schema_subject_count": len(schema_subjects),
-        "controlled_vocabulary_subject_count": len(vocab_subjects),
-        "example_subject_count": len(example_subjects),
-        "schema_triples": len(schema_graph),
-        "controlled_vocabulary_triples": len(vocab_graph),
-        "examples_triples": len(examples_graph),
-        "notes": [
-            "Schema output preserves ontology headers, classes, and properties.",
-            "Controlled vocabulary output keeps named, curated terms typed by local vocabulary-like classes.",
-            "Examples output captures example individuals, quantity values, blank-node closures, and ephemeral data-like resources.",
-        ],
+        "schema_count": counts["schema"],
+        "vocabulary_count": counts["vocabulary"],
+        "example_count": counts["examples"],
+        "schema_preview": [best_label(item) for item in schema_items[:15]],
+        "vocabulary_preview": [best_label(item) for item in vocab_items[:15]],
+        "example_preview": [best_label(item) for item in example_items[:15]],
     }
-    return {"schema": schema_graph, "controlled_vocabulary": vocab_graph, "examples": examples_graph}, report
+    write_text(output_dir.parent / "reports" / "split_report.md", _split_report(report))
+    return report
 
 
-def write_split_outputs(graphs: dict[str, Graph], report: dict[str, Any], root: str | Any) -> None:
-    root_path = root if hasattr(root, "joinpath") else None
-    if root_path is None:
-        raise TypeError("root must be a pathlib.Path-like object")
-    save_graph(graphs["schema"], root_path / "output" / "ontology" / "schema.ttl", "turtle")
-    save_graph(graphs["schema"], root_path / "output" / "ontology" / "schema.jsonld", "json-ld")
-    save_graph(graphs["controlled_vocabulary"], root_path / "output" / "ontology" / "controlled_vocabulary.ttl", "turtle")
-    save_graph(graphs["examples"], root_path / "output" / "examples" / "examples.ttl", "turtle")
-    write_json(root_path / "output" / "reports" / "split_report.json", report)
-    report_lines = [
-        "# Split Report",
-        "",
-        f"- Schema subjects: **{report['schema_subject_count']}**",
-        f"- Controlled vocabulary subjects: **{report['controlled_vocabulary_subject_count']}**",
-        f"- Example or data-like subjects: **{report['example_subject_count']}**",
-        f"- Schema triples: **{report['schema_triples']}**",
-        f"- Controlled vocabulary triples: **{report['controlled_vocabulary_triples']}**",
-        f"- Example triples: **{report['examples_triples']}**",
-        "",
-        "## Notes",
-        "",
-    ]
-    report_lines.extend(f"- {item}" for item in report["notes"])
-    write_text(root_path / "output" / "reports" / "split_report.md", "\n".join(report_lines) + "\n")
+def _split_report(report: dict[str, Any]) -> str:
+    return f"""# Split Report
+
+- Schema resources: {report['schema_count']}
+- Controlled vocabulary resources: {report['vocabulary_count']}
+- Example or data-like resources: {report['example_count']}
+
+## Schema Preview
+
+{chr(10).join(f"- {item}" for item in report['schema_preview']) or '- None'}
+
+## Controlled Vocabulary Preview
+
+{chr(10).join(f"- {item}" for item in report['vocabulary_preview']) or '- None'}
+
+## Example Preview
+
+{chr(10).join(f"- {item}" for item in report['example_preview']) or '- None'}
+"""

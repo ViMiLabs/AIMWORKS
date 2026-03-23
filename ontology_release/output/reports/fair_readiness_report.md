@@ -1,15 +1,17 @@
 # FAIR Readiness Report
 
-- Overall FAIR readiness score: **95.0 / 100**
-- Release ready: **True**
+## Internal FAIR Signals
 
-## Dimension Scores
+- F / Findable: 86 / 100 (good)
+- A / Accessible: 85 / 100 (good)
+- I / Interoperable: 90 / 100 (good)
+- R / Reusable: 65 / 100 (watch)
 
-- Findable: 100 / 100
-- Accessible: 100 / 100
-- Interoperable: 100 / 100
-- Reusable: 80 / 100
+## Transparency Hooks
 
-## Blocking Issues
+- OOPS! ontology pitfall scan: service unavailable (watch)
+- FOOPS! FAIR assessment: 46.7 / 100 (action)
 
-- No blocking issues detected.
+## Summary
+
+Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.

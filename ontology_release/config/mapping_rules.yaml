@@ -1,101 +1,26 @@
-thresholds:
-  equivalent: 96
-  subclass: 88
-  close_match: 74
-  weak_match: 62
-weights:
-  lexical_similarity: 0.65
-  source_priority: 0.2
-  token_overlap: 0.15
-source_boosts:
-  emmo_core: 1.0
-  echo: 1.0
-  qudt_schema: 0.98
-  qudt_units: 1.0
-  qudt_quantitykinds: 1.0
-  chebi: 0.97
-  provo: 0.96
-  dcterms: 0.96
-  vann: 0.92
-  oeo: 0.82
-classification:
-  controlled_vocabulary_anchor_classes:
-    - NormalizationBasis
-    - ReferenceElectrode
-    - Unit
-    - Parameter
-    - Property
-  quantity_value_patterns:
-    - QuantityValue
-    - QV
-    - Value
-  ephemeral_identifier_patterns:
-    - '^_'
-    - 'nodeID://'
-    - '/generated/'
-    - '/observation/'
-  example_identifier_patterns:
-    - Experiment
-    - Measurement
-    - Dataset
-    - Sample
-    - Process
-type_compatibility:
-  class:
-    - class
-  object_property:
-    - object_property
-  datatype_property:
-    - datatype_property
-  annotation_property:
-    - annotation_property
-  controlled_vocabulary_term:
-    - class
-    - controlled_vocabulary_term
-lexical_policies:
-  chemical_tokens:
-    - platinum
-    - pt
-    - oxygen
-    - hydrogen
-    - water
-    - ionomer
-    - carbon
-    - nafion
-  quantity_kind_tokens:
-    - conductivity
-    - voltage
-    - resistance
-    - frequency
-    - current
-    - current density
-    - porosity
-    - thickness
-    - time
-    - pressure
-  unit_tokens:
-    - volt
-    - ohm
-    - percent
-    - hertz
-    - second
-    - minute
-    - hour
-    - bar
-    - watt
-    - ampere
-    - meter
-  provenance_tokens:
-    - creator
-    - contributor
-    - identifier
-    - source
-    - provenance
-    - metadata
-    - used
-relations:
-  strong_class: owl:equivalentClass
-  strong_property: owl:equivalentProperty
-  default_class: rdfs:subClassOf
-  default_property: rdfs:subPropertyOf
-  vocabulary: skos:closeMatch
+policies:
+  conservative_mode: true
+  equivalence_threshold: 0.96
+  subclass_threshold: 0.82
+  close_match_threshold: 0.72
+  exact_match_threshold: 0.88
+  reuse_existing_external_terms: true
+  forbid_cross_kind_mappings: true
+  prefer_subclass_over_equivalence: true
+manual_overrides:
+  Agent:
+    relation: rdfs:subClassOf
+    target: http://www.w3.org/ns/prov#Agent
+    rationale: Agent should remain local while anchored in PROV-O.
+  Measurement:
+    relation: rdfs:subClassOf
+    target: https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29
+    rationale: Measurement is better treated as a local specialization of electrochemical measurement practice.
+  hasQuantityValue:
+    relation: rdfs:subPropertyOf
+    target: http://qudt.org/schema/qudt/quantityValue
+    rationale: Quantity-value relations should reuse QUDT semantics where possible.
+term_hints:
+  quantity_value_indicators: [QuantityValue, numericValue, unit, quantityKind]
+  chemical_indicators: [platinum, ionomer, solvent, oxygen, hydrogen, nafion]
+  pemfc_indicators: [membrane electrode assembly, catalyst layer, gas diffusion layer, reference electrode, oxygen transport]

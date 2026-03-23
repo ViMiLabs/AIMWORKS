@@ -3,117 +3,74 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import write_text
+from .utils import default_namespace_policy, default_release_profile, ensure_dir, try_load_yaml, write_text
 
 
-def generate_w3id_artifacts(namespace_policy: dict[str, Any], release_profile: dict[str, Any], root: Path) -> None:
-    output_dir = root / "output" / "w3id"
-    public_base = namespace_policy["public_html_base"].rstrip("/")
-    namespace_mode = namespace_policy["namespace_mode"]
-    version = str(release_profile["release"]["version"])
-    reference_page = release_profile["publication"]["reference_page"]
-    docs_reference = f"{public_base}/{reference_page}"
-    source_ttl = f"{public_base}/source/ontology.ttl"
-    source_jsonld = f"{public_base}/source/ontology.jsonld"
-    inferred_ttl = f"{public_base}/inferred/ontology.ttl"
-    latest_ttl = f"{public_base}/latest/ontology.ttl"
-    latest_jsonld = f"{public_base}/latest/ontology.jsonld"
-    latest_context = f"{public_base}/latest/context.jsonld"
-    version_ttl = f"{public_base}/{version}/ontology.ttl"
-    version_jsonld = f"{public_base}/{version}/ontology.jsonld"
-    version_inferred = f"{public_base}/{version}/inferred.ttl"
-    version_context = f"{public_base}/{version}/context.jsonld"
-    htaccess = f"""RewriteEngine On
-AddType text/turtle .ttl
-AddType application/ld+json .jsonld
+def generate_w3id_artifacts(
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
+) -> dict[str, Any]:
+    output_dir = ensure_dir(Path(output_dir))
+    config_root = Path(config_dir or Path(output_dir).parent.parent / "config")
+    policy = try_load_yaml(config_root / "namespace_policy.yaml", default_namespace_policy())["policy"]
+    profile = try_load_yaml(config_root / "release_profile.yaml", default_release_profile())["project"]
+    strategy = policy["active_strategy"]
+    html_base = policy["publication_base_html"].rstrip("/") + "/"
+    rdf_base = policy["publication_base_rdf"].rstrip("/") + "/"
+    htaccess = f"""Options +FollowSymLinks
+RewriteEngine On
 
 RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
-RewriteRule ^$ {docs_reference} [R=303,L]
+RewriteRule ^$ {html_base}index.html [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
-RewriteCond %{{QUERY_STRING}} (^|&)format=jsonld(&|$)
-RewriteRule ^$ {latest_jsonld} [R=303,L]
+RewriteCond %{{HTTP_ACCEPT}} text/turtle
+RewriteRule ^$ {rdf_base}schema.ttl [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
-RewriteCond %{{QUERY_STRING}} (^|&)format=ttl(&|$)
-RewriteRule ^$ {latest_ttl} [R=303,L]
+RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json
+RewriteRule ^$ {rdf_base}schema.jsonld [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
-RewriteCond %{{QUERY_STRING}} (^|&)format=jsonld(&|$)
-RewriteRule ^source/?$ {source_jsonld} [R=303,L]
-
-RewriteRule ^source/?$ {source_ttl} [R=303,L]
-RewriteRule ^inferred/?$ {inferred_ttl} [R=303,L]
-
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
-RewriteCond %{{QUERY_STRING}} (^|&)format=jsonld(&|$)
-RewriteRule ^latest/?$ {latest_jsonld} [R=303,L]
-
-RewriteRule ^latest/?$ {latest_ttl} [R=303,L]
-RewriteRule ^latest/inferred/?$ {public_base}/latest/inferred.ttl [R=303,L]
-RewriteRule ^context/?$ {latest_context} [R=303,L]
-
-RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
-RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
-RewriteRule ^([0-9]{{4}}\\.[0-9]+\\.[0-9]+)/?$ {docs_reference} [R=303,L]
-
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
-RewriteCond %{{QUERY_STRING}} (^|&)format=jsonld(&|$)
-RewriteRule ^([0-9]{{4}}\\.[0-9]+\\.[0-9]+)/?$ {public_base}/$1/ontology.jsonld [R=303,L]
-
-RewriteRule ^([0-9]{{4}}\\.[0-9]+\\.[0-9]+)/?$ {public_base}/$1/ontology.ttl [R=303,L]
-RewriteRule ^([0-9]{{4}}\\.[0-9]+\\.[0-9]+)/inferred/?$ {public_base}/$1/inferred.ttl [R=303,L]
-RewriteRule ^([0-9]{{4}}\\.[0-9]+\\.[0-9]+)/context/?$ {public_base}/$1/context.jsonld [R=303,L]
-
-RewriteRule ^$ {latest_ttl} [R=303,L]
-"""
-    readme = f"""# w3id Publication Support
-
-Active recipe: **{namespace_mode} namespace**
-
-- Public ontology IRI: `{namespace_policy['ontology_iri']}`
-- Preferred namespace URI: `{namespace_policy['preferred_namespace_uri']}`
-- HTML reference page target: `{docs_reference}`
-- Asserted source target: `{source_ttl}`
-- Inferred target: `{inferred_ttl}`
-- Latest target: `{latest_ttl}`
-- Latest JSON-LD target: `{latest_jsonld}`
-- Context target: `{latest_context}`
-- Versioned asserted target: `{version_ttl}`
-- Versioned inferred target: `{version_inferred}`
-
-This template preserves the current hash-style publication policy by default while exposing ECHO-style source endpoints such as `/source`, `/inferred`, `/latest`, `/context`, and versioned release paths.
-"""
-    curl_tests = f"""#!/usr/bin/env bash
-set -eu
-
-curl -I -H 'Accept: text/html' '{namespace_policy['ontology_iri']}'
-curl -I -H 'Accept: text/turtle' '{namespace_policy['ontology_iri']}'
-curl -I -H 'Accept: application/ld+json' '{namespace_policy['ontology_iri']}'
-curl -I '{namespace_policy['ontology_iri']}/source'
-curl -I '{namespace_policy['ontology_iri']}/inferred'
-curl -I '{namespace_policy['ontology_iri']}/latest'
-curl -I '{namespace_policy['ontology_iri']}/context'
-curl -I '{namespace_policy['ontology_iri']}/{version}'
-curl -I '{namespace_policy['ontology_iri']}/{version}/inferred'
-"""
-    notes = f"""# Publishing Notes
-
-1. Keep the ontology IRI stable at `{namespace_policy['ontology_iri']}`.
-2. Deploy `output/publication/` as the public static root. The publication layout now includes `source/`, `inferred/`, `latest/`, `context/`, and `{version}/`.
-3. Register the generated `.htaccess` rules with the w3id maintainers or mirror them into the existing namespace configuration.
-4. Ensure that:
-   - `{docs_reference}` resolves to the single-page ontology reference.
-   - `{source_ttl}` resolves to the asserted source ontology.
-   - `{inferred_ttl}` resolves to the inferred ontology.
-   - `{latest_ttl}` resolves to the latest asserted release.
-   - `{version_ttl}` resolves to the version-pinned asserted release.
-5. If namespace migration is enabled later, also publish the generated migration map and add redirects for legacy hash IRIs.
-
-The current default remains hash-based because the existing ontology already uses stable hash IRIs and preserving them is the safest backward-compatible first release.
+RewriteRule ^$ {html_base}index.html [R=302,L]
 """
     write_text(output_dir / ".htaccess", htaccess)
-    write_text(output_dir / "README.md", readme)
-    write_text(output_dir / "curl_tests.sh", curl_tests)
-    write_text(output_dir / "publishing_notes.md", notes)
+    write_text(output_dir / "README.md", _w3id_readme(strategy, profile))
+    write_text(output_dir / "publishing_notes.md", _publishing_notes(strategy, profile))
+    write_text(output_dir / "curl_tests.sh", _curl_tests(profile))
+    return {"strategy": strategy, "html_base": html_base, "rdf_base": rdf_base}
+
+
+def _w3id_readme(strategy: str, profile: dict[str, Any]) -> str:
+    return f"""# w3id Redirect Template
+
+Active recipe: `{strategy}`.
+
+This release preserves the current ontology IRI and hash-style term IRIs by default:
+
+- Ontology IRI: `{profile['ontology_iri']}`
+- Namespace URI: `{profile['namespace_uri']}`
+- Version IRI: `{profile['version_iri']}`
+
+Use `.htaccess` as the starting point for w3id registration. It prefers HTML for browsers and serves Turtle or JSON-LD for RDF-aware clients.
+"""
+
+
+def _publishing_notes(strategy: str, profile: dict[str, Any]) -> str:
+    return f"""# Publishing Notes
+
+1. Register or update the w3id entry for `{profile['ontology_iri']}`.
+2. Point HTML requests to the GitHub Pages documentation site.
+3. Point RDF requests to the raw ontology artifacts in the repository.
+4. Keep the active namespace strategy as `{strategy}` until a reviewed migration plan exists.
+5. If a future slash namespace is adopted, generate alias maps and redirects before switching publication policy.
+"""
+
+
+def _curl_tests(profile: dict[str, Any]) -> str:
+    iri = profile["ontology_iri"]
+    return f"""#!/usr/bin/env sh
+set -eu
+
+curl -I -H "Accept: text/html" {iri}
+curl -I -H "Accept: text/turtle" {iri}
+curl -I -H "Accept: application/ld+json" {iri}
+"""

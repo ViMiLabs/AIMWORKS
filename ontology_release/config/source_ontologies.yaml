@@ -1,134 +1,100 @@
-default_timeout_seconds: 15
-cache_directory: cache/sources
 sources:
-  emmo_core:
+  - id: emmo-core
     title: EMMO Core
     enabled: true
-    optional: false
-    priority: 1.0
-    category: primary
-    base_iri: https://w3id.org/emmo#
-    fetch:
-      kind: remote_rdf
-      url: https://raw.githubusercontent.com/emmo-repo/EMMO/master/emmo.ttl
-      cache_file: emmo_core.ttl
-      allow_remote: false
-  echo:
-    title: EMMO Electrochemistry
+    priority: 100
+    required: true
+    kind: ontology
+    local_cache: cache/sources/emmo-core.ttl
+    remote_url: https://w3id.org/emmo#inferred
+    focus: [process, material, property, measurement]
+  - id: emmo-electrochemistry
+    title: EMMO Electrochemistry / ECHO
     enabled: true
-    optional: false
-    priority: 1.0
-    category: primary
-    base_iri: https://purls.helmholtz-metadaten.de/echo/
-    fetch:
-      kind: remote_rdf
-      url: https://raw.githubusercontent.com/emmo-repo/domain-electrochemistry/master/electrochemistry.ttl
-      cache_file: echo.ttl
-      allow_remote: false
-  qudt_schema:
+    priority: 95
+    required: true
+    kind: ontology
+    local_cache: cache/sources/emmo-electrochemistry.ttl
+    remote_url: https://w3id.org/emmo/domain/electrochemistry
+    focus: [electrochemistry, measurement, electrode, cell]
+  - id: qudt-schema
     title: QUDT Schema
     enabled: true
-    optional: false
-    priority: 0.98
-    category: primary
-    base_iri: http://qudt.org/schema/qudt/
-    fetch:
-      kind: remote_rdf
-      url: https://qudt.org/3.1.1/schema/qudt
-      cache_file: qudt_schema.ttl
-      allow_remote: false
-  qudt_units:
+    priority: 90
+    required: true
+    kind: ontology
+    local_cache: cache/sources/qudt-schema.ttl
+    remote_url: http://qudt.org/2.1/schema/qudt
+    focus: [quantity-value, quantity-kind, unit]
+  - id: qudt-units
     title: QUDT Units
     enabled: true
-    optional: false
-    priority: 0.99
-    category: primary
-    base_iri: http://qudt.org/vocab/unit/
-    fetch:
-      kind: remote_rdf
-      url: https://qudt.org/3.1.1/vocab/unit
-      cache_file: qudt_units.ttl
-      allow_remote: false
-  qudt_quantitykinds:
+    priority: 90
+    required: true
+    kind: vocabulary
+    local_cache: cache/sources/qudt-units.ttl
+    remote_url: http://qudt.org/2.1/vocab/unit
+    focus: [units]
+  - id: qudt-quantitykinds
     title: QUDT Quantity Kinds
     enabled: true
-    optional: false
-    priority: 0.99
-    category: primary
-    base_iri: http://qudt.org/vocab/quantitykind/
-    fetch:
-      kind: remote_rdf
-      url: https://qudt.org/3.1.1/vocab/quantitykind
-      cache_file: qudt_quantitykinds.ttl
-      allow_remote: false
-  chebi:
+    priority: 90
+    required: true
+    kind: vocabulary
+    local_cache: cache/sources/qudt-quantitykinds.ttl
+    remote_url: http://qudt.org/2.1/vocab/quantitykind
+    focus: [quantity-kinds]
+  - id: chebi
     title: ChEBI
     enabled: true
-    optional: false
-    priority: 0.97
-    category: primary
-    base_iri: http://purl.obolibrary.org/obo/CHEBI_
-    fetch:
-      kind: ols4
-      url: https://www.ebi.ac.uk/ols4/api/search
-      allow_remote: false
-  provo:
+    priority: 85
+    required: false
+    kind: api_or_export
+    local_cache: cache/sources/chebi.tsv
+    api_url: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+    focus: [chemical-entities]
+  - id: prov-o
     title: PROV-O
     enabled: true
-    optional: false
-    priority: 0.96
-    category: primary
-    base_iri: http://www.w3.org/ns/prov#
-    fetch:
-      kind: remote_rdf
-      url: https://www.w3.org/ns/prov-o.ttl
-      cache_file: prov-o.ttl
-      allow_remote: false
-  dcterms:
+    priority: 80
+    required: true
+    kind: ontology
+    local_cache: cache/sources/prov-o.ttl
+    remote_url: https://www.w3.org/ns/prov-o
+    focus: [provenance, generation, usage]
+  - id: dcterms
     title: Dublin Core Terms
     enabled: true
-    optional: false
-    priority: 0.96
-    category: primary
-    base_iri: http://purl.org/dc/terms/
-    fetch:
-      kind: remote_rdf
-      url: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/dublin_core_terms.ttl
-      cache_file: dcterms.ttl
-      allow_remote: false
-  vann:
+    priority: 80
+    required: true
+    kind: ontology
+    local_cache: cache/sources/dcterms.ttl
+    remote_url: http://purl.org/dc/terms/
+    focus: [metadata, title, description, license]
+  - id: vann
     title: VANN
     enabled: true
-    optional: false
-    priority: 0.94
-    category: primary
-    base_iri: http://purl.org/vocab/vann/
-    fetch:
-      kind: remote_rdf
-      url: http://purl.org/vocab/vann/vann-vocab-20100607.rdf
-      cache_file: vann.rdf
-      allow_remote: false
-  oeo:
+    priority: 70
+    required: true
+    kind: ontology
+    local_cache: cache/sources/vann.ttl
+    remote_url: http://purl.org/vocab/vann/
+    focus: [namespace-metadata]
+  - id: oeo
     title: Open Energy Ontology
-    enabled: true
-    optional: true
-    priority: 0.82
-    category: fallback
-    base_iri: http://openenergy-platform.org/ontology/oeo/
-    fetch:
-      kind: remote_rdf
-      url: https://raw.githubusercontent.com/OpenEnergyPlatform/ontology/master/oeo.ttl
-      cache_file: oeo.ttl
-      allow_remote: false
-  pemfc_specific:
-    title: Optional PEMFC-specific source ontology
     enabled: false
-    optional: true
-    priority: 0.99
-    category: configurable
-    base_iri: null
-    fetch:
-      kind: configurable
-      path: null
-      url: null
-      allow_remote: false
+    priority: 20
+    required: false
+    kind: ontology
+    local_cache: cache/sources/oeo.ttl
+    remote_url: https://openenergyplatform.org/ontology/oeo/
+    focus: [broad-energy-fallback]
+  - id: pemfc-external
+    title: Optional PEMFC-specific Source Ontology
+    enabled: false
+    priority: 99
+    required: false
+    kind: ontology
+    local_cache: cache/sources/pemfc-external.ttl
+    remote_url: null
+    focus: [pemfc, catalyst-layer, membrane-electrode-assembly]

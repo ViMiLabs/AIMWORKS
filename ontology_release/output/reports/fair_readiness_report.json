@@ -1,0 +1,242 @@
+{
+  "findable": 86,
+  "accessible": 85,
+  "interoperable": 90,
+  "reusable": 65,
+  "summary": "Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.",
+  "artifacts": [
+    "HTML reference page",
+    "Machine-readable source",
+    "JSON-LD source",
+    "Alignment mappings",
+    "Examples module",
+    "Release bundle",
+    "w3id artifacts"
+  ],
+  "fair_signals": [
+    {
+      "label": "F / Findable",
+      "status": "good",
+      "value": "86 / 100",
+      "detail": "Internal score for identifiers, versioning, citation, namespace, and findable publication metadata."
+    },
+    {
+      "label": "A / Accessible",
+      "status": "good",
+      "value": "85 / 100",
+      "detail": "Internal score for machine-readable outputs, docs presence, resolver artifacts, and public access hooks."
+    },
+    {
+      "label": "I / Interoperable",
+      "status": "good",
+      "value": "90 / 100",
+      "detail": "Internal score for reuse of imports, mappings, namespace hygiene, and standards-based serializations."
+    },
+    {
+      "label": "R / Reusable",
+      "status": "watch",
+      "value": "65 / 100",
+      "detail": "Internal score for license, provenance, versioning, definitions, examples, and release packaging."
+    }
+  ],
+  "transparency_hooks": [
+    {
+      "label": "OOPS! ontology pitfall scan",
+      "status": "watch",
+      "value": "service unavailable",
+      "detail": "OOPS! something went wrong. There was an unexpected error."
+    },
+    {
+      "label": "FOOPS! FAIR assessment",
+      "status": "action",
+      "value": "46.7 / 100",
+      "detail": "External FAIR-oriented ontology assessment against the release candidate. File mode does not assess accessibility."
+    }
+  ],
+  "validation_signals": [
+    {
+      "label": "Overall validation status",
+      "status": "good",
+      "value": "pass",
+      "detail": "Combined metadata, namespace, mapping, and SHACL validation checks."
+    },
+    {
+      "label": "SHACL conforms",
+      "status": "action",
+      "value": "False",
+      "detail": "Local SHACL shape execution when pyshacl is available."
+    },
+    {
+      "label": "Missing labels",
+      "status": "good",
+      "value": "0",
+      "detail": "Release-time missing labels on local schema terms."
+    },
+    {
+      "label": "Missing definitions",
+      "status": "good",
+      "value": "0",
+      "detail": "Release-time missing definitions or comments on local schema terms."
+    },
+    {
+      "label": "Namespace violations",
+      "status": "good",
+      "value": "0",
+      "detail": "Violations against the active namespace policy."
+    },
+    {
+      "label": "Mapping issues",
+      "status": "good",
+      "value": "0",
+      "detail": "Mappings that remain risky or inconsistent after local checks."
+    },
+    {
+      "label": "OWL consistency hook",
+      "status": "watch",
+      "value": "skipped (owlready2 not installed)",
+      "detail": "Optional OWL reasoner hook. It is skipped when owlready2 is not installed."
+    },
+    {
+      "label": "EMMO checks",
+      "status": "watch",
+      "value": "skipped (EMMOntoPy not installed)",
+      "detail": "Optional EMMO convention hook. It is skipped when EMMOntoPy is not installed."
+    },
+    {
+      "label": "OOPS! hook",
+      "status": "watch",
+      "value": "service unavailable",
+      "detail": "OOPS! something went wrong. There was an unexpected error."
+    },
+    {
+      "label": "FOOPS! hook",
+      "status": "good",
+      "value": "assessed",
+      "detail": "FOOPS! assessment completed in file mode. Accessible checks may remain unassessed."
+    }
+  ],
+  "publication_assets": [
+    {
+      "label": "HTML reference page",
+      "status": "good",
+      "value": "ready",
+      "detail": "Generated public documentation page."
+    },
+    {
+      "label": "Machine-readable source",
+      "status": "good",
+      "value": "ready",
+      "detail": "Primary Turtle serialization for the release candidate."
+    },
+    {
+      "label": "JSON-LD source",
+      "status": "good",
+      "value": "ready",
+      "detail": "JSON-LD serialization for the release candidate."
+    },
+    {
+      "label": "Alignment mappings",
+      "status": "good",
+      "value": "ready",
+      "detail": "Conservative alignment output for review and publication."
+    },
+    {
+      "label": "Examples module",
+      "status": "good",
+      "value": "ready",
+      "detail": "Separated example and data-like instances."
+    },
+    {
+      "label": "Release bundle",
+      "status": "good",
+      "value": "ready",
+      "detail": "Bundle status depends on whether the current command executed the release-bundle stage."
+    },
+    {
+      "label": "w3id artifacts",
+      "status": "good",
+      "value": "ready",
+      "detail": "Redirect templates and publication notes for stable public identifiers."
+    }
+  ],
+  "foops": {
+    "overall_score": 46.7,
+    "dimensions": {
+      "findable": 60.0,
+      "accessible": null,
+      "interoperable": 33.3,
+      "reusable": 44.4
+    },
+    "failed_checks": [
+      {
+        "label": "F1",
+        "detail": "Unexpected error while running the test: null"
+      },
+      {
+        "label": "F2",
+        "detail": "The following metadata was not found: version iri"
+      },
+      {
+        "label": "R1",
+        "detail": "The following metadata was not found: version info, citation"
+      },
+      {
+        "label": "R1",
+        "detail": "The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: previous version, backwards compatibility. Please consider adding them if appropriate."
+      },
+      {
+        "label": "R1.2",
+        "detail": "The following provenance information was not found: issued"
+      },
+      {
+        "label": "I2",
+        "detail": "The ontology does not reuse vocabularies for common metadata"
+      },
+      {
+        "label": "I2",
+        "detail": "The ontology does not import/extend other vocabularies."
+      },
+      {
+        "label": "R1",
+        "detail": "No ontology terms found"
+      },
+      {
+        "label": "R1",
+        "detail": "No ontology terms found"
+      },
+      {
+        "label": "F1",
+        "detail": "Version IRI  not defined. Version information not found.  Please consider adding it to describe the version number of the ontology."
+      }
+    ],
+    "message": "FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.",
+    "ontology_title": "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments",
+    "ontology_uri": "null",
+    "status": "assessed",
+    "service": "https://foops.linkeddata.es/FAIR_validator.html",
+    "mode": "file"
+  },
+  "oops": {
+    "status": "unavailable",
+    "service": "https://oops.linkeddata.es/rest",
+    "message": "OOPS! something went wrong. There was an unexpected error."
+  },
+  "release_metrics": {
+    "path": "output\\ontology\\schema.ttl",
+    "schema_term_count": 35,
+    "local_schema_term_count": 34,
+    "missing_labels": 0,
+    "missing_definitions": 0,
+    "placeholder_definition_count": 34,
+    "label_coverage": 1.0,
+    "definition_coverage": 1.0,
+    "metadata_gap_count": 0,
+    "imports_count": 9
+  },
+  "section_explanations": {
+    "fair_signals": "Internal FAIR signals estimate release readiness from the built ontology package itself. They are conservative but not equivalent to live post-publication FAIR audits.",
+    "transparency_hooks": "External transparency hooks call public assessment services. Their availability depends on external infrastructure and network access.",
+    "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, and optional SHACL checks on the release candidate.",
+    "publication_assets": "Publication asset rows show whether the files required for public release were actually built in the current run."
+  }
+}

@@ -1,26 +1,27 @@
 # Alignment Report
 
-- Local schema or vocabulary terms reviewed: **1883**
-- Proposed mappings: **366**
+## Summary
 
-## Mapping Relations
+- Proposed mappings: 9
+- Strong equivalence candidates: 2
+- Subclass or subproperty anchors: 4
+- SKOS soft matches: 3
 
-- owl:equivalentClass: 2
-- rdfs:subClassOf: 7
-- rdfs:subPropertyOf: 6
-- skos:closeMatch: 351
+## Representative Mappings
 
-## Sources Used
+- `Agent` -> `rdfs:subClassOf` -> `http://www.w3.org/ns/prov#Agent` (0.99)
+- `Electrode Substrate` -> `skos:closeMatch` -> `https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29` (0.565)
+- `Matter` -> `skos:closeMatch` -> `https://w3id.org/emmo#EMMO_material` (0.714)
+- `Measurement` -> `rdfs:subClassOf` -> `https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29` (0.99)
+- `Process` -> `owl:equivalentClass` -> `https://w3id.org/emmo#EMMO_process` (1.0)
+- `Property` -> `owl:equivalentClass` -> `https://w3id.org/emmo#EMMO_property` (1.0)
+- `hasIdentifier` -> `rdfs:subPropertyOf` -> `http://purl.org/dc/terms/identifier` (0.87)
+- `hasName` -> `skos:closeMatch` -> `http://xmlns.com/foaf/0.1/name` (0.727)
+- `hasQuantityValue` -> `rdfs:subPropertyOf` -> `http://qudt.org/schema/qudt/quantityValue` (0.99)
 
-- chebi: 16
-- echo: 46
-- emmo_core: 12
-- oeo: 7
-- provo: 6
-- qudt_quantitykinds: 250
-- qudt_schema: 1
-- qudt_units: 28
+## Policy Notes
 
-## Source Notes
-
-- Built-in seed registries were sufficient for this run.
+- Generic process, material, measurement, and property concepts are anchored conservatively to EMMO and ECHO.
+- Units and quantity-value semantics reuse QUDT when possible.
+- Metadata and provenance terms prefer DCTERMS, FOAF, and PROV-O.
+- Local PEMFC catalyst-layer terms remain in the `h2kg` namespace for v1 unless a later migration policy is explicitly enabled.

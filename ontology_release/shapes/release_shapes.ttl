@@ -2,26 +2,19 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix vann: <http://purl.org/vocab/vann/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 [] a sh:NodeShape ;
-  sh:targetClass owl:Ontology ;
-  sh:property [
-    sh:path dcterms:title ;
-    sh:minCount 1 ;
-  ] ;
-  sh:property [
-    sh:path dcterms:description ;
-    sh:minCount 1 ;
-  ] ;
-  sh:property [
-    sh:path dcterms:license ;
-    sh:minCount 1 ;
-  ] ;
-  sh:property [
-    sh:path owl:versionIRI ;
-    sh:minCount 1 ;
-  ] ;
-  sh:property [
-    sh:path vann:preferredNamespacePrefix ;
-    sh:minCount 1 ;
-  ] .
+   sh:targetClass owl:Ontology ;
+   sh:property [ sh:path dcterms:title ; sh:minCount 1 ] ;
+   sh:property [ sh:path dcterms:description ; sh:minCount 1 ] ;
+   sh:property [ sh:path dcterms:license ; sh:minCount 1 ] ;
+   sh:property [ sh:path owl:versionIRI ; sh:minCount 1 ] ;
+   sh:property [ sh:path vann:preferredNamespacePrefix ; sh:minCount 1 ] ;
+   sh:property [ sh:path vann:preferredNamespaceUri ; sh:minCount 1 ] .
+
+[] a sh:NodeShape ;
+   sh:targetSubjectsOf rdfs:isDefinedBy ;
+   sh:property [ sh:path rdfs:label ; sh:minCount 1 ] ;
+   sh:property [ sh:path skos:definition ; sh:minCount 1 ] .

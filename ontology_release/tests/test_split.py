@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from rdflib import URIRef
-
-from aimworks_ontology_release.split import split_graph
+from aimworks_ontology_release.split import split_ontology
 
 
-def test_split_separates_schema_vocab_examples(sample_graph, classifications):
-    graphs, report = split_graph(sample_graph, classifications)
-    assert report["schema_subject_count"] >= 5
-    assert (URIRef("https://w3id.org/h2kg/hydrogen-ontology#Measurement"), None, None) in graphs["schema"]
-    assert (URIRef("https://w3id.org/h2kg/hydrogen-ontology#PtMass"), None, None) in graphs["controlled_vocabulary"]
-    assert (URIRef("https://w3id.org/h2kg/hydrogen-ontology#Measurement1"), None, None) in graphs["examples"]
+def test_split_writes_modules(mini_ontology_file, output_dir):
+    (output_dir / "ontology").mkdir()
+    (output_dir / "review").mkdir()
+    (output_dir / "examples").mkdir()
+    (output_dir / "reports").mkdir()
+    summary = split_ontology(mini_ontology_file, output_dir / "ontology")
+    assert summary["schema_count"] >= 3
+    assert (output_dir / "ontology" / "schema.ttl").exists()
+    assert (output_dir / "examples" / "examples.ttl").exists()

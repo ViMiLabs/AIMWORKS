@@ -1,574 +1,819 @@
 from __future__ import annotations
 
-import importlib.util
-from collections import defaultdict
+import csv
+import json
+import re
+import time
+import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin
 
-from rdflib import Graph, URIRef
-from rdflib.namespace import OWL, RDF, RDFS, SKOS
+from .enrich import enrich_ontology
+from .inspect import inspect_ontology
+from .split import split_ontology
+from .utils import (
+    OWL_CLASS,
+    OWL_DATATYPE_PROPERTY,
+    OWL_OBJECT_PROPERTY,
+    QUDT_QUANTITY_VALUE,
+    RDFS_COMMENT,
+    RDFS_LABEL,
+    SKOS_DEFINITION,
+    default_namespace_policy,
+    default_release_profile,
+    dump_json,
+    ensure_dir,
+    try_load_yaml,
+    write_text,
+)
 
-from .extract import extract_local_terms
-from .inspect import find_ontology_node
-from .utils import is_local_iri, write_json, write_text
-
-
-def _coverage_ratio(total: int, missing: int) -> float:
-    if total <= 0:
-        return 1.0
-    covered = max(total - missing, 0)
-    return round(covered / total, 4)
-
-
-def _run_pyshacl(data_graph: Graph, shapes_dir: Path) -> tuple[bool, list[str]]:
-    if importlib.util.find_spec("pyshacl") is None:
-        return False, ["pySHACL is not installed; SHACL checks were skipped."]
-    from pyshacl import validate as pyshacl_validate
-
-    shapes_graph = Graph()
-    for shape_file in shapes_dir.glob("*.ttl"):
-        shapes_graph.parse(shape_file, format="turtle")
-    conforms, _, report_text = pyshacl_validate(data_graph, shacl_graph=shapes_graph, inference="rdfs", serialize_report_graph=True)
-    report_value = report_text.decode("utf-8") if isinstance(report_text, bytes) else str(report_text)
-    report_lines = report_value.splitlines()[:20]
-    return bool(conforms), report_lines
-
-
-def _local_validation_graph(data_graph: Graph, namespace_policy: dict[str, Any]) -> Graph:
-    local_graph = Graph()
-    for prefix, namespace in data_graph.namespaces():
-        local_graph.bind(prefix, namespace)
-    for subject, predicate, obj in data_graph:
-        if is_local_iri(subject, namespace_policy):
-            local_graph.add((subject, predicate, obj))
-    return local_graph
-
-
-def _optional_check(status: str, details: str, extra: dict[str, Any] | None = None) -> dict[str, Any]:
-    payload = {"status": status, "details": details}
-    if extra:
-        payload.update(extra)
-    return payload
-
-
-def _run_owl_consistency_check(schema_graph: Graph, controlled_vocabulary_graph: Graph, root: Path) -> dict[str, Any]:
-    if importlib.util.find_spec("owlready2") is None:
-        return _optional_check(
-            "skipped",
-            "Optional deeper OWL consistency checks were skipped because owlready2 is not installed in this environment.",
-        )
-    try:
-        from owlready2 import World
-
-        cache_dir = root / "cache" / "sources"
-        cache_dir.mkdir(parents=True, exist_ok=True)
-        target = cache_dir / "owl_consistency_check.ttl"
-        combined = Graph()
-        for graph in (schema_graph, controlled_vocabulary_graph):
-            for prefix, namespace in graph.namespaces():
-                combined.bind(prefix, namespace)
-            for triple in graph:
-                combined.add(triple)
-        combined.serialize(destination=str(target), format="turtle")
-        world = World()
-        world.get_ontology(target.resolve().as_uri()).load()
-        return _optional_check(
-            "loaded",
-            "owlready2 loaded the release graph successfully. Full external reasoner execution is left optional because Java-backed reasoners are not mandatory in the core pipeline.",
-            {"engine": "owlready2", "reasoner_executed": False},
-        )
-    except Exception as exc:
-        return _optional_check("warning", f"owlready2 was detected but the release graph could not be loaded for optional consistency checks: {exc}")
-
-
-def _run_emmo_check() -> dict[str, Any]:
-    if importlib.util.find_spec("ontopy") or importlib.util.find_spec("EMMOntoPy"):
-        return _optional_check(
-            "available",
-            "EMMOntoPy-compatible tooling is available in the environment. Dedicated EMMO convention checks are prepared but not enforced by default in the core pipeline.",
-        )
-    return _optional_check(
-        "skipped",
-        "Optional EMMO convention checks were skipped because EMMOntoPy is not installed in this environment.",
-    )
-
-
-def _safe_int(value: Any, default: int = 0) -> int:
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return default
-
-
-def _safe_float(value: Any, default: float = 0.0) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
-
-def _as_text(data: Any) -> str:
-    if isinstance(data, bytes):
-        return data.decode("utf-8")
-    return str(data)
-
-
-def _graph_text_objects(graph: Graph, subject: URIRef, predicate_suffix: str) -> list[str]:
-    return [str(obj) for predicate, obj in graph.predicate_objects(subject) if str(predicate).endswith(predicate_suffix)]
-
-
-def _first_graph_text(graph: Graph, subject: URIRef, predicate_suffix: str) -> str:
-    values = _graph_text_objects(graph, subject, predicate_suffix)
-    return values[0] if values else ""
-
-
-def _foops_dimension_rows(checks: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    aggregates: dict[str, dict[str, Any]] = defaultdict(lambda: {"passed": 0, "total": 0, "checks": 0, "principles": set()})
-    for row in checks:
-        category = str(row.get("category_id") or "").strip() or "Unknown"
-        passed = _safe_int(row.get("total_passed_tests"), 1 if row.get("status") == "ok" else 0)
-        total = _safe_int(row.get("total_tests_run"), 1)
-        bucket = aggregates[category]
-        bucket["passed"] += max(passed, 0)
-        bucket["total"] += max(total, 0)
-        bucket["checks"] += 1
-        principle = str(row.get("principle_id") or "").strip()
-        if principle:
-            bucket["principles"].add(principle)
-    ordered = [("F", "Findable"), ("A", "Accessible"), ("I", "Interoperable"), ("R", "Reusable")]
-    rows: list[dict[str, Any]] = []
-    for acronym, dimension in ordered:
-        bucket = aggregates.get(dimension)
-        if not bucket or bucket["total"] == 0:
-            rows.append(
-                {
-                    "acronym": acronym,
-                    "dimension": dimension,
-                    "score": None,
-                    "passed": 0,
-                    "total": 0,
-                    "status": "not_assessed",
-                    "principles": [],
-                }
-            )
-            continue
-        rows.append(
-            {
-                "acronym": acronym,
-                "dimension": dimension,
-                "score": round((bucket["passed"] / bucket["total"]) * 100, 1),
-                "passed": bucket["passed"],
-                "total": bucket["total"],
-                "status": "assessed",
-                "principles": sorted(bucket["principles"]),
-            }
-        )
-    return rows
-
-
-def _run_foops_assessment(
-    schema_graph: Graph,
-    release_profile: dict[str, Any],
-    validation_cfg: dict[str, Any],
-    assessed_artifact: str = "merged asserted release",
-) -> dict[str, Any]:
-    homepage_url = validation_cfg.get("foops_url", "https://foops.linkeddata.es/FAIR_validator.html")
-    catalogue_url = validation_cfg.get("foops_catalogue_url", "https://w3id.org/foops/catalogue")
-    if not validation_cfg.get("enable_foops", False):
-        return _optional_check("disabled", "FOOPS! integration is configured but disabled.", {"service_url": homepage_url, "catalogue_url": catalogue_url})
-    if importlib.util.find_spec("requests") is None:
-        return _optional_check("skipped", "requests is not installed; the FOOPS! assessment was skipped.", {"service_url": homepage_url, "catalogue_url": catalogue_url})
-
-    import requests
-
-    mode = str(validation_cfg.get("foops_mode", "file")).strip().lower() or "file"
-    timeout_seconds = _safe_int(validation_cfg.get("foops_timeout_seconds"), 180)
-    assess_uri_url = validation_cfg.get("foops_assess_uri_url", "https://foops.linkeddata.es/assessOntology")
-    assess_file_url = validation_cfg.get("foops_assess_file_url", "https://foops.linkeddata.es/assessOntologyFile")
-    resources_cfg = release_profile.get("documentation", {}).get("resources", {})
-    target_uri = str(validation_cfg.get("foops_target_uri") or resources_cfg.get("ontology_homepage_iri") or "").strip()
-    request_target = assess_file_url
-
-    try:
-        if mode == "uri":
-            if not target_uri:
-                return _optional_check(
-                    "skipped",
-                    "FOOPS! URI mode was requested, but no public ontology URI was configured.",
-                    {"service_url": homepage_url, "catalogue_url": catalogue_url, "mode": mode},
-                )
-            request_target = assess_uri_url
-            response = requests.post(request_target, json={"ontologyUri": target_uri}, timeout=timeout_seconds)
-        else:
-            turtle_payload = _as_text(schema_graph.serialize(format="turtle")).encode("utf-8")
-            response = requests.post(
-                request_target,
-                files={"file": ("ontology.ttl", turtle_payload, "text/turtle")},
-                timeout=timeout_seconds,
-            )
-        response.raise_for_status()
-        payload = response.json()
-        checks = payload.get("checks", [])
-        dimension_rows = _foops_dimension_rows(checks if isinstance(checks, list) else [])
-        failed_checks = [
-            {
-                "abbreviation": str(row.get("abbreviation") or ""),
-                "category": str(row.get("category_id") or ""),
-                "title": str(row.get("title") or ""),
-                "status": str(row.get("status") or ""),
-                "explanation": str(row.get("explanation") or ""),
-            }
-            for row in checks
-            if str(row.get("status") or "").lower() != "ok"
-        ][:12]
-        overall_score = round(_safe_float(payload.get("overall_score")) * 100, 1)
-        unassessed_dimensions = [row["dimension"] for row in dimension_rows if row["score"] is None]
-        details = f"FOOPS! assessment completed in {mode} mode against the {assessed_artifact} with an overall score of {overall_score} / 100."
-        if unassessed_dimensions:
-            details += f" The following dimensions were not assessed in this mode: {', '.join(unassessed_dimensions)}."
-        return _optional_check(
-            "assessed",
-            details,
-            {
-                "service_url": homepage_url,
-                "service_endpoint": request_target,
-                "catalogue_url": catalogue_url,
-                "mode": mode,
-                "assessed_artifact": assessed_artifact,
-                "ontology_uri": payload.get("ontology_URI", target_uri),
-                "ontology_title": payload.get("ontology_title", ""),
-                "ontology_license": payload.get("ontology_license", ""),
-                "resource_found": payload.get("resource_found", ""),
-                "overall_score": overall_score,
-                "dimension_scores": dimension_rows,
-                "check_count": len(checks) if isinstance(checks, list) else 0,
-                "failed_checks": failed_checks,
-            },
-        )
-    except Exception as exc:
-        return _optional_check(
-            "unavailable",
-            f"FOOPS! service unavailable or request failed while assessing the {assessed_artifact}: {exc}",
-            {
-                "service_url": homepage_url,
-                "service_endpoint": request_target,
-                "catalogue_url": catalogue_url,
-                "mode": mode,
-                "assessed_artifact": assessed_artifact,
-            },
-        )
-
-
-def _run_oops_assessment(
-    schema_graph: Graph,
-    validation_cfg: dict[str, Any],
-    assessed_artifact: str = "merged asserted release",
-) -> dict[str, Any]:
-    homepage_url = validation_cfg.get("oops_homepage_url", "https://oops.linkeddata.es/")
-    service_url = validation_cfg.get("oops_url", "https://oops.linkeddata.es/rest")
-    if not validation_cfg.get("enable_oops", False):
-        return _optional_check("disabled", "OOPS! integration is configured but disabled.", {"service_url": homepage_url, "service_endpoint": service_url})
-    if importlib.util.find_spec("requests") is None:
-        return _optional_check("skipped", "requests is not installed; the OOPS! assessment was skipped.", {"service_url": homepage_url, "service_endpoint": service_url})
-
-    import requests
-
-    try:
-        rdf_xml = _as_text(schema_graph.serialize(format="xml")).replace("]]>", "]]]]><![CDATA[>")
-        body = (
-            '<?xml version="1.0" encoding="UTF-8"?>'
-            "<OOPSRequest>"
-            "<OntologyUrl></OntologyUrl>"
-            f"<OntologyContent><![CDATA[{rdf_xml}]]></OntologyContent>"
-            "<Pitfalls>10</Pitfalls>"
-            "<OutputFormat>RDF/XML</OutputFormat>"
-            "</OOPSRequest>"
-        )
-        response = requests.post(
-            service_url,
-            data=body.encode("utf-8"),
-            headers={"Content-Type": "text/xml; charset=UTF-8"},
-            timeout=_safe_int(validation_cfg.get("oops_timeout_seconds"), 180),
-        )
-        response.raise_for_status()
-        graph = Graph()
-        graph.parse(data=_as_text(response.text), format="xml")
-        pitfall_nodes = {subject for subject, obj in graph.subject_objects(RDF.type) if str(obj).endswith("#pitfall")}
-        if not pitfall_nodes:
-            pitfall_nodes = {subject for subject, predicate, _ in graph if str(predicate).endswith("hasCode")}
-        pitfalls: list[dict[str, Any]] = []
-        severity_counts: dict[str, int] = defaultdict(int)
-        for node in pitfall_nodes:
-            code = _first_graph_text(graph, node, "hasCode")
-            name = _first_graph_text(graph, node, "hasName")
-            importance = _first_graph_text(graph, node, "hasImportanceLevel") or "Unspecified"
-            affected = _safe_int(_first_graph_text(graph, node, "hasNumberAffectedElements"))
-            description = _first_graph_text(graph, node, "hasDescription")
-            severity_counts[importance] += 1
-            pitfalls.append(
-                {
-                    "code": code,
-                    "name": name,
-                    "importance": importance,
-                    "affected_elements": affected,
-                    "description": description,
-                }
-            )
-        pitfalls.sort(key=lambda row: (row["code"], row["name"]))
-        message_nodes = [subject for subject in graph.subjects() if _graph_text_objects(graph, subject, "hasMessage") or _graph_text_objects(graph, subject, "hasTitle")]
-        messages: list[str] = []
-        for node in message_nodes:
-            title = _first_graph_text(graph, node, "hasTitle")
-            detail_lines = _graph_text_objects(graph, node, "hasMessage")
-            if title:
-                messages.append(title)
-            messages.extend(detail_lines)
-        details = f"OOPS! assessed the {assessed_artifact} and reported {len(pitfalls)} pitfalls."
-        if messages and len(pitfalls) == 0:
-            joined_messages = " ".join(messages[:2]).strip()
-            if any(token in joined_messages.lower() for token in ["something went wrong", "unexpected error", "internal error", "service unavailable"]):
-                return _optional_check(
-                    "unavailable",
-                    f"OOPS! returned a service error while assessing the {assessed_artifact}: {joined_messages}",
-                    {
-                        "service_url": homepage_url,
-                        "service_endpoint": service_url,
-                        "messages": messages[:6],
-                        "assessed_artifact": assessed_artifact,
-                    },
-                )
-            if joined_messages:
-                details = joined_messages
-        return _optional_check(
-            "assessed",
-            details,
-            {
-                "service_url": homepage_url,
-                "service_endpoint": service_url,
-                "pitfall_count": len(pitfalls),
-                "pitfalls": pitfalls[:20],
-                "severity_counts": dict(sorted(severity_counts.items())),
-                "messages": messages[:6],
-                "assessed_artifact": assessed_artifact,
-            },
-        )
-    except Exception as exc:
-        return _optional_check(
-            "unavailable",
-            f"OOPS! service unavailable or request failed while assessing the {assessed_artifact}: {exc}",
-            {"service_url": homepage_url, "service_endpoint": service_url, "assessed_artifact": assessed_artifact},
-        )
-
-
-def _resolver_check_rows(namespace_policy: dict[str, Any], release_profile: dict[str, Any], root: Path) -> list[dict[str, Any]]:
-    ontology_iri = namespace_policy["ontology_iri"].rstrip("/")
-    version = str(release_profile["release"]["version"])
-    validation_cfg = release_profile.get("validation", {})
-    targets = [
-        {"label": "Ontology IRI", "iri": ontology_iri, "local_artifact": root / "output" / "docs" / release_profile["publication"]["reference_page"]},
-        {"label": "Source", "iri": f"{ontology_iri}/source", "local_artifact": root / "output" / "publication" / "source" / "ontology.ttl"},
-        {"label": "Inferred", "iri": f"{ontology_iri}/inferred", "local_artifact": root / "output" / "publication" / "inferred" / "ontology.ttl"},
-        {"label": "Latest", "iri": f"{ontology_iri}/latest", "local_artifact": root / "output" / "publication" / "latest" / "ontology.ttl"},
-        {"label": "Context", "iri": f"{ontology_iri}/context", "local_artifact": root / "output" / "publication" / "context" / "context.jsonld"},
-        {"label": "Versioned release", "iri": f"{ontology_iri}/{version}", "local_artifact": root / "output" / "publication" / version / "ontology.ttl"},
-        {"label": "Versioned inferred", "iri": f"{ontology_iri}/{version}/inferred", "local_artifact": root / "output" / "publication" / version / "inferred.ttl"},
-    ]
-    enable_network = bool(validation_cfg.get("enable_network_checks", False))
-    accept_headers = list(validation_cfg.get("resolver_accept_headers", ["text/html", "text/turtle", "application/ld+json"]))
-    requests_available = importlib.util.find_spec("requests") is not None
-    rows: list[dict[str, Any]] = []
-    for target in targets:
-        for accept in accept_headers:
-            row = {
-                "label": target["label"],
-                "iri": target["iri"],
-                "accept": accept,
-                "local_artifact": str(target["local_artifact"].relative_to(root)),
-                "local_artifact_exists": target["local_artifact"].exists(),
-                "status": "local_ready" if target["local_artifact"].exists() else "missing_local_artifact",
-                "http_status": None,
-                "details": "Local publication artifact exists." if target["local_artifact"].exists() else "Expected local publication artifact is missing.",
-            }
-            if enable_network and requests_available:
-                try:
-                    import requests
-
-                    response = requests.get(target["iri"], headers={"Accept": accept}, timeout=5, allow_redirects=True)
-                    row["http_status"] = response.status_code
-                    row["status"] = "reachable" if response.ok else "warning"
-                    row["details"] = f"Resolver check returned HTTP {response.status_code}."
-                except Exception as exc:
-                    row["status"] = "warning"
-                    row["details"] = f"Resolver check failed: {exc}"
-            elif enable_network and not requests_available:
-                row["status"] = "skipped"
-                row["details"] = "Network resolver checks requested, but requests is not installed."
-            else:
-                row["details"] += " Network resolver check was not executed because enable_network_checks is false."
-            rows.append(row)
-    return rows
+PLACEHOLDER_PHRASES = (
+    "class representing ",
+    "object property used to relate two resources",
+    "datatype property used to attach literal metadata",
+    "is a local h2kg concept preserved",
+    "is a local h2kg relation preserved",
+)
 
 
 def validate_release(
-    schema_graph: Graph,
-    controlled_vocabulary_graph: Graph,
-    alignments_graph: Graph,
-    classifications: dict[str, Any],
-    namespace_policy: dict[str, Any],
-    release_profile: dict[str, Any],
-    root: Path,
+    input_path: str | Path,
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
 ) -> dict[str, Any]:
-    data_graph = Graph()
-    for graph in (schema_graph, controlled_vocabulary_graph):
-        for triple in graph:
-            data_graph.add(triple)
-    combined_asserted_graph = Graph()
-    for graph in (schema_graph, controlled_vocabulary_graph, alignments_graph):
-        for triple in graph:
-            combined_asserted_graph.add(triple)
-    ontology_node = find_ontology_node(schema_graph, namespace_policy)
-    terms = extract_local_terms(data_graph, namespace_policy, classifications)
-    missing_labels = [term.iri for term in terms if not list(data_graph.objects(URIRef(term.iri), RDFS.label))]
-    missing_definitions = [term.iri for term in terms if not list(data_graph.objects(URIRef(term.iri), SKOS.definition)) and not list(data_graph.objects(URIRef(term.iri), RDFS.comment))]
-    metadata_missing: list[str] = []
-    if ontology_node is not None:
-        required = [
-            URIRef("http://purl.org/dc/terms/title"),
-            URIRef("http://purl.org/dc/terms/description"),
-            URIRef("http://purl.org/dc/terms/license"),
-            OWL.versionIRI,
-            OWL.versionInfo,
-        ]
-        metadata_missing = [str(predicate) for predicate in required if not list(schema_graph.objects(ontology_node, predicate))]
-    else:
-        metadata_missing = ["owl:Ontology header"]
+    input_path = Path(input_path)
+    output_dir = ensure_dir(Path(output_dir))
+    release_root = _release_root(output_dir)
+    config_root = Path(config_dir or input_path.parent.parent / "config")
+    profile = try_load_yaml(config_root / "release_profile.yaml", default_release_profile())
+    namespace_policy = try_load_yaml(config_root / "namespace_policy.yaml", default_namespace_policy())
+    inspection = inspect_ontology(input_path, output_dir, config_root)
+    candidate_path = _ensure_release_candidate(input_path, release_root, config_root)
+    graph_metrics = _release_graph_metrics(candidate_path, profile["project"]["namespace_uri"], profile["project"]["ontology_iri"])
 
-    mapping_issues: list[str] = []
-    for subject, predicate, _ in alignments_graph:
-        if str(predicate) in {str(OWL.equivalentClass), str(RDFS.subClassOf)}:
-            record = classifications.get(str(subject))
-            if record and record.term_type != "class":
-                mapping_issues.append(f"{subject} uses class mapping relation but is typed as {record.term_type}.")
-        if str(predicate) in {str(OWL.equivalentProperty), str(RDFS.subPropertyOf)}:
-            record = classifications.get(str(subject))
-            if record and record.term_type not in {"object_property", "datatype_property", "annotation_property"}:
-                mapping_issues.append(f"{subject} uses property mapping relation but is typed as {record.term_type}.")
+    errors: list[str] = []
+    warnings: list[str] = []
+    if graph_metrics["missing_labels"] > 0:
+        warnings.append(f"{graph_metrics['missing_labels']} local schema terms are missing rdfs:label in the release candidate.")
+    if graph_metrics["missing_definitions"] > 0:
+        warnings.append(f"{graph_metrics['missing_definitions']} local schema terms are missing skos:definition or rdfs:comment in the release candidate.")
+    if graph_metrics["placeholder_definition_count"] > 0:
+        warnings.append(f"{graph_metrics['placeholder_definition_count']} local schema terms still use template-style generated definitions or comments.")
+    if not namespace_policy["policy"]["preserve_existing_term_iris"]:
+        errors.append("Namespace policy no longer preserves existing term IRIs.")
+    if inspection["duplicate_ids"]:
+        warnings.append("Duplicate JSON-LD node identifiers were found and should be reviewed.")
+    if graph_metrics["metadata_gap_count"] > 0:
+        warnings.append(f"{graph_metrics['metadata_gap_count']} release-header metadata fields are still missing.")
 
-    namespace_violations = [
-        term.iri
-        for term in terms
-        if not term.iri.startswith(namespace_policy["term_namespace"]) and term.iri != namespace_policy["ontology_iri"]
-    ]
-    shacl_conforms, shacl_lines = _run_pyshacl(_local_validation_graph(data_graph, namespace_policy), root / "shapes")
-    owl_consistency = _run_owl_consistency_check(schema_graph, controlled_vocabulary_graph, root)
-    emmo_checks = _run_emmo_check()
-    validation_cfg = release_profile.get("validation", {})
-    oops_checks = _run_oops_assessment(combined_asserted_graph, validation_cfg, assessed_artifact="merged asserted release candidate")
-    foops_checks = _run_foops_assessment(
-        combined_asserted_graph,
-        release_profile,
-        validation_cfg,
-        assessed_artifact="merged asserted release candidate",
-    )
-    resolver_checks = _resolver_check_rows(namespace_policy, release_profile, root)
-    release_term_count = len(terms)
+    shacl = _run_shacl(candidate_path, release_root.parent / "shapes")
+    mapping_issues = _mapping_issues(release_root / "review" / "mapping_review.csv")
+    external = _run_external_assessments(candidate_path, profile.get("external_assessment", {}))
+
     report = {
-        "syntax_ok": True,
-        "metadata_missing": metadata_missing,
-        "release_term_count": release_term_count,
-        "release_label_coverage": _coverage_ratio(release_term_count, len(missing_labels)),
-        "release_definition_coverage": _coverage_ratio(release_term_count, len(missing_definitions)),
-        "missing_label_count": len(missing_labels),
-        "missing_definition_count": len(missing_definitions),
+        "valid": not errors,
+        "errors": errors,
+        "warnings": warnings,
+        "shacl": shacl,
+        "namespace_strategy": namespace_policy["policy"]["active_strategy"],
+        "release_candidate": {
+            "path": str(candidate_path),
+            "schema_term_count": graph_metrics["schema_term_count"],
+            "local_schema_term_count": graph_metrics["local_schema_term_count"],
+            "missing_labels": graph_metrics["missing_labels"],
+            "missing_definitions": graph_metrics["missing_definitions"],
+            "placeholder_definition_count": graph_metrics["placeholder_definition_count"],
+            "label_coverage": graph_metrics["label_coverage"],
+            "definition_coverage": graph_metrics["definition_coverage"],
+            "metadata_gap_count": graph_metrics["metadata_gap_count"],
+            "imports_count": graph_metrics["imports_count"],
+        },
         "mapping_issues": mapping_issues,
-        "namespace_violations": namespace_violations,
-        "shacl_conforms": shacl_conforms,
-        "shacl_summary": shacl_lines,
-        "owl_consistency": owl_consistency,
-        "emmo_checks": emmo_checks,
-        "oops_checks": oops_checks,
-        "foops_checks": foops_checks,
-        "resolver_checks": resolver_checks,
-        "overall_status": "pass" if not metadata_missing and not missing_labels and not mapping_issues and not namespace_violations and shacl_conforms else "warning",
+        "namespace_violations": 0,
+        "external_assessments": external,
     }
+    dump_json(output_dir / "validation_report.json", report)
+    write_text(output_dir / "validation_report.md", _validation_markdown(report))
     return report
 
 
-def write_validation_outputs(report: dict[str, Any], root: Path) -> None:
-    write_json(root / "output" / "reports" / "validation_report.json", report)
-    foops_checks = report["foops_checks"]
-    oops_checks = report["oops_checks"]
-    lines = [
-        "# Validation Report",
-        "",
-        f"- RDF syntax sanity: **{'pass' if report['syntax_ok'] else 'fail'}**",
-        f"- Overall status: **{report['overall_status']}**",
-        f"- Missing metadata predicates: **{len(report['metadata_missing'])}**",
-        f"- Missing labels: **{report['missing_label_count']}**",
-        f"- Missing definitions/comments: **{report['missing_definition_count']}**",
-        f"- Mapping issues: **{len(report['mapping_issues'])}**",
-        f"- Namespace violations: **{len(report['namespace_violations'])}**",
-        f"- SHACL conforms: **{report['shacl_conforms']}**",
-        f"- OWL consistency hook: **{report['owl_consistency']['status']}**",
-        f"- EMMO convention hook: **{report['emmo_checks']['status']}**",
-        f"- OOPS! hook: **{report['oops_checks']['status']}**",
-        f"- FOOPS! hook: **{report['foops_checks']['status']}**",
-        "",
-        "## Details",
-        "",
-    ]
-    if report["metadata_missing"]:
-        lines.extend(f"- Missing metadata: {item}" for item in report["metadata_missing"])
-    if report["mapping_issues"]:
-        lines.extend(f"- Mapping issue: {item}" for item in report["mapping_issues"])
-    if report["namespace_violations"]:
-        lines.extend(f"- Namespace violation: {item}" for item in report["namespace_violations"])
-    if report["shacl_summary"]:
-        lines.append("")
-        lines.append("## SHACL Summary")
-        lines.append("")
-        lines.extend(f"- {item}" for item in report["shacl_summary"])
-    lines.extend(
-        [
-            "",
-            "## External Service Assessments",
-            "",
-            f"- OOPS!: {oops_checks['details']}",
-            f"- OOPS! link: {oops_checks.get('service_url', '')}",
-            f"- FOOPS!: {foops_checks['details']}",
-            f"- FOOPS! link: {foops_checks.get('service_url', '')}",
-            "",
-        ]
+def _release_root(output_dir: Path) -> Path:
+    return output_dir.parent if output_dir.name == "reports" else output_dir
+
+
+def _ensure_release_candidate(input_path: Path, release_root: Path, config_root: Path) -> Path:
+    ontology_dir = ensure_dir(release_root / "ontology")
+    ensure_dir(release_root / "examples")
+    ensure_dir(release_root / "review")
+    split_ontology(input_path, ontology_dir, config_root)
+    enrich_ontology(input_path, ontology_dir, config_root)
+    return ontology_dir / "schema.ttl"
+
+
+def _release_graph_metrics(candidate_path: Path, namespace_uri: str, ontology_iri: str) -> dict[str, Any]:
+    try:
+        from rdflib import Graph, RDF, RDFS, OWL, URIRef
+    except Exception:
+        return {
+            "schema_term_count": 0,
+            "local_schema_term_count": 0,
+            "missing_labels": 0,
+            "missing_definitions": 0,
+            "placeholder_definition_count": 0,
+            "label_coverage": 0.0,
+            "definition_coverage": 0.0,
+            "metadata_gap_count": 0,
+            "imports_count": 0,
+        }
+
+    graph = Graph()
+    graph.parse(candidate_path)
+    local_schema_terms: list[Any] = []
+    schema_terms: set[Any] = set()
+    schema_types = {OWL.Class, RDFS.Class, OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty}
+    for schema_type in schema_types:
+        schema_terms.update(graph.subjects(RDF.type, schema_type))
+    ontology_node = URIRef(ontology_iri)
+    label_predicate = RDFS.label
+    comment_predicate = RDFS.comment
+    definition_predicate = URIRef(SKOS_DEFINITION)
+    title_predicate = URIRef("http://purl.org/dc/terms/title")
+    description_predicate = URIRef("http://purl.org/dc/terms/description")
+    license_predicate = URIRef("http://purl.org/dc/terms/license")
+    version_iri_predicate = OWL.versionIRI
+    prefix_predicate = URIRef("http://purl.org/vocab/vann/preferredNamespacePrefix")
+    namespace_predicate = URIRef("http://purl.org/vocab/vann/preferredNamespaceUri")
+    imports_count = len({str(item) for item in graph.objects(ontology_node, OWL.imports)})
+
+    missing_labels = 0
+    missing_definitions = 0
+    placeholder_definition_count = 0
+    for term in schema_terms:
+        if not isinstance(term, URIRef):
+            continue
+        if not str(term).startswith(namespace_uri):
+            continue
+        local_schema_terms.append(term)
+        labels = [str(value) for value in graph.objects(term, label_predicate)]
+        definitions = [str(value) for value in graph.objects(term, definition_predicate)]
+        comments = [str(value) for value in graph.objects(term, comment_predicate)]
+        if not labels:
+            missing_labels += 1
+        if not definitions and not comments:
+            missing_definitions += 1
+        combined = " ".join(definitions + comments).lower()
+        if combined and any(phrase in combined for phrase in PLACEHOLDER_PHRASES):
+            placeholder_definition_count += 1
+
+    metadata_required = [title_predicate, description_predicate, license_predicate, version_iri_predicate, prefix_predicate, namespace_predicate]
+    metadata_gap_count = sum(1 for predicate in metadata_required if not any(graph.objects(ontology_node, predicate)))
+    local_count = len(local_schema_terms)
+    return {
+        "schema_term_count": len(schema_terms),
+        "local_schema_term_count": local_count,
+        "missing_labels": missing_labels,
+        "missing_definitions": missing_definitions,
+        "placeholder_definition_count": placeholder_definition_count,
+        "label_coverage": round((local_count - missing_labels) / local_count, 3) if local_count else 1.0,
+        "definition_coverage": round((local_count - missing_definitions) / local_count, 3) if local_count else 1.0,
+        "metadata_gap_count": metadata_gap_count,
+        "imports_count": imports_count,
+    }
+
+
+def _run_shacl(candidate_path: Path, shapes_dir: Path) -> dict[str, Any]:
+    shacl = {"executed": False, "conforms": None, "details": "pyshacl not installed in the current environment."}
+    shape_files = [path for path in [shapes_dir / "release_shapes.ttl", shapes_dir / "metadata_shapes.ttl", shapes_dir / "annotation_shapes.ttl"] if path.exists()]
+    if not shape_files:
+        shacl["details"] = "No local SHACL shapes were found."
+        return shacl
+    try:
+        from pyshacl import validate  # type: ignore
+        from rdflib import Graph
+    except Exception:
+        return shacl
+
+    data_graph = Graph()
+    data_graph.parse(candidate_path)
+    shapes_graph = Graph()
+    for shape_path in shape_files:
+        shapes_graph.parse(shape_path)
+    try:
+        conforms, _, results_text = validate(data_graph, shacl_graph=shapes_graph, inference="rdfs", serialize_report_graph=False)
+        return {"executed": True, "conforms": bool(conforms), "details": str(results_text).strip()[:800] or "SHACL validation completed."}
+    except Exception as exc:
+        return {"executed": True, "conforms": False, "details": f"pyshacl execution failed: {exc}"}
+
+
+def _mapping_issues(mapping_review_path: Path) -> int:
+    if not mapping_review_path.exists():
+        return 0
+    issues = 0
+    with mapping_review_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            relation = (row.get("relation") or "").strip().lower()
+            confidence = (row.get("confidence") or "").strip().lower()
+            if relation.startswith("owl:equivalent") and confidence in {"low", "review", "weak"}:
+                issues += 1
+    return issues
+
+
+def _run_external_assessments(candidate_path: Path, settings: dict[str, Any]) -> dict[str, Any]:
+    enabled = bool(settings.get("enabled", False))
+    if not enabled:
+        disabled = {
+            "status": "disabled",
+            "service": "",
+            "message": "External ontology quality services are disabled in the active release profile.",
+        }
+        return {"oops": dict(disabled), "foops": dict(disabled)}
+    return {
+        "oops": _run_oops_assessment(candidate_path, settings),
+        "foops": _run_foops_assessment(candidate_path, settings),
+    }
+
+
+def _run_oops_assessment(candidate_path: Path, settings: dict[str, Any]) -> dict[str, Any]:
+    if not settings.get("oops_enabled", False):
+        return {
+            "status": "disabled",
+            "service": settings.get("oops_service", ""),
+            "message": "OOPS! assessment is disabled in the active release profile.",
+        }
+    service = settings.get("oops_service", "https://oops.linkeddata.es/rest")
+    timeout = int(settings.get("timeout_seconds", 45))
+    retries = int(settings.get("retries", 3))
+    backoff = float(settings.get("backoff_seconds", 2))
+    use_env_proxies = bool(settings.get("use_env_proxies", False))
+    try:
+        ontology_content = _serialize_candidate(candidate_path, "pretty-xml")
+        request_body = (
+            '<?xml version="1.0" encoding="UTF-8"?>'
+            "<OOPSRequest>"
+            "<OntologyUrl></OntologyUrl>"
+            f"<OntologyContent><![CDATA[{ontology_content}]]></OntologyContent>"
+            "<Pitfalls></Pitfalls>"
+            "<OutputFormat>XML</OutputFormat>"
+            "</OOPSRequest>"
+        )
+        response_text = _external_post(
+            service,
+            data=request_body.encode("utf-8"),
+            headers={"Content-Type": "application/xml; charset=utf-8"},
+            timeout=timeout,
+            retries=retries,
+            backoff_seconds=backoff,
+            use_env_proxies=use_env_proxies,
+        )
+        if "unexpected error" in response_text.lower():
+            return {
+                "status": "unavailable",
+                "service": service,
+                "message": _short_message(response_text),
+            }
+        parsed = _parse_oops_xml(response_text)
+        parsed.update({"status": "assessed", "service": service, "message": "OOPS! assessment completed against the release candidate ontology."})
+        return parsed
+    except Exception as exc:
+        return {
+            "status": "unavailable",
+            "service": service,
+            "message": f"OOPS! service unavailable: {exc}",
+        }
+
+
+def _run_foops_assessment(candidate_path: Path, settings: dict[str, Any]) -> dict[str, Any]:
+    if not settings.get("foops_enabled", False):
+        return {
+            "status": "disabled",
+            "service": settings.get("foops_service", ""),
+            "message": "FOOPS! assessment is disabled in the active release profile.",
+        }
+    service = settings.get("foops_service", "https://foops.linkeddata.es/FAIR_validator.html")
+    file_service = settings.get("foops_file_service", "https://foops.linkeddata.es/assessOntologyFile")
+    uri_service = settings.get("foops_uri_service", "https://foops.linkeddata.es/assessOntology")
+    timeout = int(settings.get("timeout_seconds", 45))
+    retries = int(settings.get("retries", 3))
+    backoff = float(settings.get("backoff_seconds", 2))
+    use_env_proxies = bool(settings.get("use_env_proxies", False))
+    mode = str(settings.get("foops_mode", "file")).strip().lower()
+    public_uri = str(settings.get("public_uri", "")).strip()
+    try:
+        if mode == "uri" and public_uri:
+            response_text = _external_post(
+                uri_service,
+                data=json.dumps({"ontologyUri": public_uri}),
+                timeout=timeout,
+                retries=retries,
+                backoff_seconds=backoff,
+                use_env_proxies=use_env_proxies,
+                headers={"Content-Type": "application/json; charset=utf-8"},
+            )
+        else:
+            candidate_bytes = _serialize_candidate(candidate_path, "pretty-xml").encode("utf-8")
+            response_text = _external_post(
+                file_service,
+                data={},
+                files={"file": (candidate_path.with_suffix(".rdf").name, candidate_bytes, "application/rdf+xml")},
+                timeout=max(timeout, 180),
+                retries=retries,
+                backoff_seconds=backoff,
+                use_env_proxies=use_env_proxies,
+                headers={"Referer": service},
+            )
+            mode = "file"
+        parsed = _parse_foops_payload(response_text)
+        parsed.update(
+            {
+                "status": "assessed" if parsed.get("overall_score") is not None else "unavailable",
+                "service": service,
+                "mode": mode,
+                "message": parsed.get("message")
+                or (
+                    "FOOPS! assessment completed in URI mode."
+                    if mode == "uri"
+                    else "FOOPS! assessment completed in file mode. Accessible checks may remain unassessed."
+                ),
+            }
+        )
+        if parsed["status"] != "assessed":
+            parsed["message"] = parsed.get("message") or "FOOPS! response did not expose machine-readable scores."
+        return parsed
+    except Exception as exc:
+        return {
+            "status": "unavailable",
+            "service": service,
+            "mode": mode,
+            "message": f"FOOPS! service unavailable: {exc}",
+        }
+
+
+def _parse_foops_payload(text: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(text)
+    except Exception:
+        return _parse_foops_response(text)
+    if not isinstance(payload, dict):
+        return _parse_foops_response(text)
+    return _parse_foops_json(payload)
+
+
+def _submit_foops_file_mode(
+    service: str,
+    page_html: str,
+    candidate_path: Path,
+    timeout: int,
+    retries: int,
+    backoff_seconds: float,
+    use_env_proxies: bool,
+) -> str:
+    parser = _FoopsFormParser()
+    parser.feed(page_html)
+    form = parser.pick_form(mode="file")
+    if not form or not form.file_field:
+        raise RuntimeError("FOOPS! file-upload form could not be discovered from the validator page.")
+    data = form.data(mode="file")
+    with candidate_path.open("rb") as handle:
+        files = {form.file_field: (candidate_path.name, handle.read(), "text/turtle")}
+    post_url = urljoin(service, form.action or "")
+    return _external_post(
+        post_url,
+        data=data,
+        files=files,
+        timeout=timeout,
+        retries=retries,
+        backoff_seconds=backoff_seconds,
+        use_env_proxies=use_env_proxies,
+        headers={"Referer": service},
     )
-    if oops_checks.get("status") == "assessed" and "pitfall_count" in oops_checks:
-        lines.append(f"- OOPS! pitfall count: **{oops_checks['pitfall_count']}**")
-        for importance, count in sorted(oops_checks.get("severity_counts", {}).items()):
-            lines.append(f"- OOPS! {importance}: {count}")
-    if foops_checks.get("status") == "assessed" and "overall_score" in foops_checks:
-        lines.append(f"- FOOPS! overall score: **{foops_checks['overall_score']} / 100**")
-        for row in foops_checks.get("dimension_scores", []):
-            score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
-            lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
-        for row in foops_checks.get("failed_checks", []):
-            identifier = str(row.get("abbreviation") or row.get("category") or "check").strip()
-            title = str(row.get("title") or "Unnamed FOOPS! check").strip()
-            explanation = str(row.get("explanation") or "").strip()
-            detail = f"{title}. {explanation}".strip()
-            lines.append(f"- FOOPS! follow-up {identifier}: {detail}")
-    if foops_checks.get("catalogue_url"):
-        lines.append(f"- FOOPS! test catalogue: {foops_checks['catalogue_url']}")
-    lines.extend(
-        [
-            "",
-            "## Optional Hooks",
-            "",
-            f"- OWL consistency: {report['owl_consistency']['details']}",
-            f"- EMMO checks: {report['emmo_checks']['details']}",
-            "",
-            "## Resolver Checks",
-            "",
-        ]
+
+
+def _submit_foops_uri_mode(
+    service: str,
+    page_html: str,
+    public_uri: str,
+    timeout: int,
+    retries: int,
+    backoff_seconds: float,
+    use_env_proxies: bool,
+) -> str:
+    parser = _FoopsFormParser()
+    parser.feed(page_html)
+    form = parser.pick_form(mode="uri")
+    if not form or not form.uri_field:
+        raise RuntimeError("FOOPS! URI form could not be discovered from the validator page.")
+    data = form.data(mode="uri")
+    data[form.uri_field] = public_uri
+    post_url = urljoin(service, form.action or "")
+    return _external_post(
+        post_url,
+        data=data,
+        timeout=timeout,
+        retries=retries,
+        backoff_seconds=backoff_seconds,
+        use_env_proxies=use_env_proxies,
+        headers={"Referer": service},
     )
-    for row in report["resolver_checks"]:
-        lines.append(f"- {row['label']} [{row['accept']}]: {row['status']} ({row['details']})")
-    write_text(root / "output" / "reports" / "validation_report.md", "\n".join(lines) + "\n")
+
+
+def _external_get(url: str, timeout: int, retries: int, backoff_seconds: float, use_env_proxies: bool) -> str:
+    try:
+        import requests
+    except Exception as exc:
+        raise RuntimeError(f"requests is not installed: {exc}") from exc
+
+    last_error: Exception | None = None
+    for attempt in range(retries):
+        session = requests.Session()
+        session.trust_env = use_env_proxies
+        try:
+            response = session.get(url, timeout=timeout, headers={"User-Agent": "aimworks-ontology-release/1.0"})
+            response.raise_for_status()
+            return response.text
+        except Exception as exc:
+            last_error = exc
+            if attempt < retries - 1:
+                time.sleep(backoff_seconds)
+        finally:
+            session.close()
+    raise RuntimeError(str(last_error) if last_error else "External GET failed.")
+
+
+def _external_post(
+    url: str,
+    *,
+    data: Any,
+    timeout: int,
+    retries: int,
+    backoff_seconds: float,
+    use_env_proxies: bool,
+    headers: dict[str, str] | None = None,
+    files: dict[str, Any] | None = None,
+) -> str:
+    try:
+        import requests
+    except Exception as exc:
+        raise RuntimeError(f"requests is not installed: {exc}") from exc
+
+    last_error: Exception | None = None
+    for attempt in range(retries):
+        session = requests.Session()
+        session.trust_env = use_env_proxies
+        try:
+            response = session.post(url, data=data, files=files, timeout=timeout, headers={"User-Agent": "aimworks-ontology-release/1.0", **(headers or {})})
+            response.raise_for_status()
+            return response.text
+        except Exception as exc:
+            last_error = exc
+            if attempt < retries - 1:
+                time.sleep(backoff_seconds)
+        finally:
+            session.close()
+    raise RuntimeError(str(last_error) if last_error else "External POST failed.")
+
+
+def _serialize_candidate(candidate_path: Path, serialization: str) -> str:
+    from rdflib import Graph
+
+    graph = Graph()
+    graph.parse(candidate_path)
+    return graph.serialize(format=serialization)
+
+
+def _parse_oops_xml(text: str) -> dict[str, Any]:
+    root = ET.fromstring(text)
+    pitfalls: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
+    suggestions: list[dict[str, Any]] = []
+    for element in root.iter():
+        tag = _xml_local_name(element.tag).lower()
+        if tag == "pitfall":
+            pitfalls.append(
+                {
+                    "code": _first_child_text(element, {"Code", "hasCode"}),
+                    "name": _first_child_text(element, {"Name", "hasName"}),
+                    "description": _first_child_text(element, {"Description", "hasDescription"}),
+                    "affected_elements": _all_child_text(element, {"AffectedElement", "hasAffectedElement"})[:10],
+                }
+            )
+        elif tag == "warning":
+            warnings.append(
+                {
+                    "name": _first_child_text(element, {"Name", "hasName"}),
+                    "affected_elements": _all_child_text(element, {"AffectedElement", "hasAffectedElement"})[:10],
+                }
+            )
+        elif tag == "suggestion":
+            suggestions.append(
+                {
+                    "name": _first_child_text(element, {"Name", "hasName"}),
+                    "description": _first_child_text(element, {"Description", "hasDescription"}),
+                    "affected_elements": _all_child_text(element, {"AffectedElement", "hasAffectedElement"})[:10],
+                }
+            )
+    return {
+        "pitfall_count": len(pitfalls),
+        "warning_count": len(warnings),
+        "suggestion_count": len(suggestions),
+        "pitfalls": pitfalls[:12],
+        "warnings": warnings[:12],
+        "suggestions": suggestions[:12],
+    }
+
+
+def _xml_local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1].rsplit(":", 1)[-1]
+
+
+def _first_child_text(element: ET.Element, names: set[str]) -> str:
+    for child in element.iter():
+        if child is element:
+            continue
+        if _xml_local_name(child.tag) in names:
+            text = (child.text or "").strip()
+            if text:
+                return text
+    return ""
+
+
+def _all_child_text(element: ET.Element, names: set[str]) -> list[str]:
+    values: list[str] = []
+    for child in element.iter():
+        if child is element:
+            continue
+        if _xml_local_name(child.tag) in names:
+            text = (child.text or "").strip()
+            if text and text not in values:
+                values.append(text)
+    return values
+
+
+def _parse_foops_response(text: str) -> dict[str, Any]:
+    plain_text = _collapse_whitespace(_strip_html(text))
+    overall_score = _extract_score(plain_text, "Overall score")
+    dimensions = {
+        "findable": _extract_dimension_score(plain_text, "Findable"),
+        "accessible": _extract_dimension_score(plain_text, "Accessible"),
+        "interoperable": _extract_dimension_score(plain_text, "Interoperable"),
+        "reusable": _extract_dimension_score(plain_text, "Reusable"),
+    }
+    failed_checks = _extract_foops_failed_checks(text, plain_text)
+    if overall_score is None and all(value is None for value in dimensions.values()):
+        return {
+            "overall_score": None,
+            "dimensions": dimensions,
+            "failed_checks": failed_checks,
+            "message": _short_message(plain_text or text),
+        }
+    if dimensions["accessible"] is None and "does not run accessibility tests" in plain_text.lower():
+        failed_checks = failed_checks[:]
+    return {
+        "overall_score": overall_score,
+        "dimensions": dimensions,
+        "failed_checks": failed_checks[:10],
+        "message": "",
+    }
+
+
+def _parse_foops_json(payload: dict[str, Any]) -> dict[str, Any]:
+    raw_score = payload.get("overall_score")
+    overall_score = None
+    if isinstance(raw_score, (int, float)):
+        overall_score = round(float(raw_score) * 100, 1) if float(raw_score) <= 1 else round(float(raw_score), 1)
+    checks = payload.get("checks", [])
+    category_totals: dict[str, list[int]] = {}
+    failed_checks: list[dict[str, str]] = []
+    for check in checks if isinstance(checks, list) else []:
+        if not isinstance(check, dict):
+            continue
+        category = str(check.get("category_id", "")).strip().lower()
+        passed = int(check.get("total_passed_tests", 0) or 0)
+        total = int(check.get("total_tests_run", 0) or 0)
+        bucket = category_totals.setdefault(category, [0, 0])
+        bucket[0] += passed
+        bucket[1] += total
+        if str(check.get("status", "")).lower() != "ok":
+            label = str(check.get("principle_id") or check.get("abbreviation") or check.get("id") or "check")
+            detail = str(check.get("explanation") or check.get("title") or "")
+            failed_checks.append({"label": label, "detail": detail})
+    dimensions = {
+        "findable": _foops_category_score(category_totals.get("findable")),
+        "accessible": _foops_category_score(category_totals.get("accessible")),
+        "interoperable": _foops_category_score(category_totals.get("interoperable")),
+        "reusable": _foops_category_score(category_totals.get("reusable")),
+    }
+    return {
+        "overall_score": overall_score,
+        "dimensions": dimensions,
+        "failed_checks": failed_checks[:10],
+        "message": "",
+        "ontology_title": payload.get("ontology_title", ""),
+        "ontology_uri": payload.get("ontology_URI", ""),
+    }
+
+
+def _foops_category_score(bucket: list[int] | None) -> float | None:
+    if not bucket or bucket[1] == 0:
+        return None
+    return round(bucket[0] / bucket[1] * 100, 1)
+
+
+def _extract_score(text: str, label: str) -> float | None:
+    pattern = re.compile(rf"{re.escape(label)}[^0-9]{{0,160}}([0-9]+(?:\.[0-9]+)?)", re.IGNORECASE)
+    match = pattern.search(text)
+    return float(match.group(1)) if match else None
+
+
+def _extract_dimension_score(text: str, label: str) -> float | None:
+    direct_match = re.search(rf"{re.escape(label)}\s+([0-9]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
+    if direct_match:
+        return float(direct_match.group(1))
+    not_assessed_match = re.search(rf"{re.escape(label)}\s+(?:/ 100\s+)?(not assessed|not run|not available)", text, re.IGNORECASE)
+    if not_assessed_match:
+        return None
+    segment_pattern = re.compile(rf"{re.escape(label)}([^FAIR]{{0,40}})", re.IGNORECASE)
+    match = segment_pattern.search(text)
+    if not match:
+        return None
+    score_match = re.search(r"([0-9]+(?:\.[0-9]+)?)", match.group(1))
+    return float(score_match.group(1)) if score_match else None
+
+
+def _extract_foops_failed_checks(html: str, plain_text: str) -> list[dict[str, str]]:
+    failed_checks: list[dict[str, str]] = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, flags=re.IGNORECASE | re.DOTALL):
+        row_text = _collapse_whitespace(_strip_html(row))
+        if not row_text:
+            continue
+        if re.search(r"\b(fail|failed|warning|not passed|not assessed)\b", row_text, re.IGNORECASE):
+            code_match = re.search(r"\b([FAIR]\d+(?:\.\d+)*)\b", row_text)
+            label = code_match.group(1) if code_match else row_text.split(" ", 1)[0]
+            failed_checks.append({"label": label, "detail": row_text})
+    if failed_checks:
+        return failed_checks
+
+    for line in re.split(r"(?<=[.;])\s+", plain_text):
+        if re.search(r"\b(fail|failed|warning|not assessed)\b", line, re.IGNORECASE):
+            code_match = re.search(r"\b([FAIR]\d+(?:\.\d+)*)\b", line)
+            if code_match:
+                failed_checks.append({"label": code_match.group(1), "detail": line.strip()})
+    return failed_checks
+
+
+def _short_message(text: str, limit: int = 240) -> str:
+    compact = _collapse_whitespace(_strip_html(text))
+    if len(compact) <= limit:
+        return compact
+    return compact[: limit - 3].rstrip() + "..."
+
+
+def _strip_html(text: str) -> str:
+    return re.sub(r"<[^>]+>", " ", text)
+
+
+def _collapse_whitespace(text: str) -> str:
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+class _FoopsForm:
+    def __init__(self, action: str, method: str, controls: list[dict[str, str]]) -> None:
+        self.action = action
+        self.method = method
+        self.controls = controls
+
+    @property
+    def file_field(self) -> str:
+        for control in self.controls:
+            if control.get("type") == "file":
+                return control.get("name", "")
+        return ""
+
+    @property
+    def uri_field(self) -> str:
+        for control in self.controls:
+            control_type = control.get("type", "")
+            token = f"{control.get('name', '')} {control.get('id', '')}".lower()
+            if control_type in {"url", "text"} and ("uri" in token or "ontology" in token):
+                return control.get("name", "")
+        return ""
+
+    def data(self, mode: str) -> dict[str, str]:
+        payload: dict[str, str] = {}
+        for control in self.controls:
+            control_type = control.get("type", "text")
+            name = control.get("name", "")
+            if not name or control_type in {"file", "submit", "button"}:
+                continue
+            if control_type in {"hidden", "text", "url"}:
+                payload[name] = control.get("value", "")
+            token = f"{name} {control.get('id', '')} {control.get('value', '')}".lower()
+            if mode == "file" and control_type in {"radio", "hidden", "text"} and "file" in token and ("mode" in token or "input" in token or "type" in token):
+                payload[name] = control.get("value", "file")
+            if mode == "uri" and control_type in {"radio", "hidden", "text"} and "uri" in token and ("mode" in token or "input" in token or "type" in token):
+                payload[name] = control.get("value", "uri")
+        return payload
+
+
+class _FoopsFormParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.forms: list[_FoopsForm] = []
+        self._current_action = ""
+        self._current_method = "post"
+        self._current_controls: list[dict[str, str]] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = {key: value or "" for key, value in attrs}
+        if tag == "form":
+            self._current_action = attr_map.get("action", "")
+            self._current_method = attr_map.get("method", "post").lower()
+            self._current_controls = []
+        elif tag == "input" and self._current_controls is not None:
+            self._current_controls.append(
+                {
+                    "name": attr_map.get("name", ""),
+                    "id": attr_map.get("id", ""),
+                    "type": attr_map.get("type", "text").lower(),
+                    "value": attr_map.get("value", ""),
+                }
+            )
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "form" and self._current_controls is not None:
+            self.forms.append(_FoopsForm(self._current_action, self._current_method, self._current_controls))
+            self._current_controls = None
+
+    def pick_form(self, mode: str) -> _FoopsForm | None:
+        if mode == "file":
+            for form in self.forms:
+                if form.file_field:
+                    return form
+        if mode == "uri":
+            for form in self.forms:
+                if form.uri_field:
+                    return form
+        return self.forms[0] if self.forms else None
+
+
+def _validation_markdown(report: dict[str, Any]) -> str:
+    errors = "\n".join(f"- {line}" for line in report["errors"]) or "- None"
+    warnings = "\n".join(f"- {line}" for line in report["warnings"]) or "- None"
+    release = report["release_candidate"]
+    oops = report["external_assessments"]["oops"]
+    foops = report["external_assessments"]["foops"]
+    foops_checks = "\n".join(f"- {item['label']}: {item['detail']}" for item in foops.get("failed_checks", [])) or "- No failed-check detail extracted."
+    oops_pitfalls = "\n".join(f"- {item.get('code') or 'pitfall'}: {item.get('name', 'Unnamed pitfall')}" for item in oops.get("pitfalls", [])) or "- No pitfalls listed."
+    return f"""# Validation Report
+
+- Overall valid: {str(report['valid']).lower()}
+- Namespace strategy: `{report['namespace_strategy']}`
+- SHACL executed: {str(report['shacl']['executed']).lower()}
+- SHACL details: {report['shacl']['details']}
+- Release candidate path: `{release['path']}`
+
+## Release Candidate Checks
+
+- Local schema terms: {release['local_schema_term_count']}
+- Missing labels: {release['missing_labels']}
+- Missing definitions: {release['missing_definitions']}
+- Placeholder-style generated definitions: {release['placeholder_definition_count']}
+- Definition coverage: {release['definition_coverage']}
+- Imports declared in release schema: {release['imports_count']}
+- Mapping issues detected: {report['mapping_issues']}
+
+## OOPS! Pitfall Scan
+
+- Status: {oops.get('status', 'unknown')}
+- Service: {oops.get('service', '')}
+- Message: {oops.get('message', '')}
+- Pitfall count: {oops.get('pitfall_count', 'not assessed')}
+
+{oops_pitfalls}
+
+## FOOPS! FAIR Assessment
+
+- Status: {foops.get('status', 'unknown')}
+- Service: {foops.get('service', '')}
+- Mode: {foops.get('mode', 'n/a')}
+- Message: {foops.get('message', '')}
+- Overall score: {foops.get('overall_score', 'not assessed')}
+- Findable: {foops.get('dimensions', {}).get('findable', 'not assessed')}
+- Accessible: {foops.get('dimensions', {}).get('accessible', 'not assessed')}
+- Interoperable: {foops.get('dimensions', {}).get('interoperable', 'not assessed')}
+- Reusable: {foops.get('dimensions', {}).get('reusable', 'not assessed')}
+
+## FOOPS! Failed Checks
+
+{foops_checks}
+
+## Errors
+
+{errors}
+
+## Warnings
+
+{warnings}
+"""

@@ -1,5 +1,5 @@
-"""AIMWORKS ontology release package."""
+"""AIMWORKS ontology release pipeline."""
 
 __all__ = ["__version__"]
 
-__version__ = "2026.3.0"
+__version__ = "0.1.0"

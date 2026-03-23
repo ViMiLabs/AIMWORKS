@@ -1,300 +1,64 @@
 project:
-  title: H2KG — Ontology for Hydrogen Electrochemical Systems
-  subtitle: EMMO-aligned release package for hydrogen technology application ontology profiles
-  short_title: H2KG — Ontology for Hydrogen Electrochemical Systems
-  package_name: aimworks-ontology-release
-  preferred_prefix: h2kg
-  documentation_subtitle: FAIR release preparation package
-release:
-  version: 2026.3.0
-  version_strategy: calendar
-  release_date: 2026-03-12
-  language: en
-  ontology_license: https://creativecommons.org/licenses/by/4.0/
-  software_license: MIT
-  build_examples_limit: 80
-  docs_example_preview_limit: 40
-  mapping_candidate_limit: 5
-  release_bundle_name: h2kg-pemfc-catalyst-layer-ontology-release
-  copy_outputs_to_ontology_directory: true
+  title: H2KG PEMFC Catalyst Layer Application Ontology
+  short_title: H2KG PEMFC Catalyst Layer Ontology
+  ontology_iri: https://w3id.org/h2kg/hydrogen-ontology
+  namespace_prefix: h2kg
+  namespace_uri: https://w3id.org/h2kg/hydrogen-ontology#
+  repository_url: https://github.com/aimworks/AIMWORKS
+  docs_url: https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/
+  release_series: 1
+  version: 1.0.0
+  version_tag: v1.0.0
+  version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0
+  prior_version: https://w3id.org/h2kg/hydrogen-ontology
+  license: https://creativecommons.org/licenses/by/4.0/
+  citation:
+    preferred_citation: AIMWORKS Maintainers (2026). H2KG PEMFC Catalyst Layer Application Ontology.
 maintainers:
-  creators:
-    - name: Electrochemistry Research Group
-    - name: AIMWORKS Ontology Engineering Team
-  contributors:
-    - name: AIMWORKS Release Automation
-  publisher: AIMWORKS
-documentation:
-  site_title: H2KG — Ontology for Hydrogen Electrochemical Systems
-  site_tagline: FAIR, EMMO-aligned documentation generated from the release pipeline
-  github_pages_path: /AIMWORKS/
-  landing_intro: H2KG is an EMMO-aligned application ontology for low-Pt PEMFC cathode catalyst-layer experiments, measurements, materials, provenance, and curated domain vocabulary. It is published as a conservative release package that separates schema, curated reference terms, and example or data-like content.
-  audiences:
-    - Ontology engineers preparing FAIR, reviewable ontology releases.
-    - PEMFC catalyst-layer researchers who need consistent experiment, material, and measurement terminology.
-    - Data stewards publishing provenance-rich experimental assets and mappings to community ontologies.
-  resources:
-    repository_url: https://github.com/ViMiLabs/AIMWORKS
-    issue_tracker: https://github.com/ViMiLabs/AIMWORKS/issues
-    pages_url: https://vimilabs.github.io/AIMWORKS/
-    ontology_homepage_iri: https://w3id.org/h2kg/hydrogen-ontology
-  scope:
-    in_scope:
-      - PEMFC cathode catalyst-layer experiments, materials, processing, measurements, and provenance-rich data structures.
-      - Conservative alignment of generic scientific and electrochemistry concepts to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.
-      - FAIR publication support with stable IRIs, release artifacts, validation reports, and machine-readable serializations.
-    out_of_scope:
-      - A general hydrogen economy ontology or broad energy-system ontology.
-      - Full PEMWE, SOFC, or generic fuel-cell lifecycle modeling outside the catalyst-layer experiment scope.
-      - Publishing transient measurement records or generated data nodes as part of the core asserted schema.
-  use_cases:
-    - Harmonize PEMFC catalyst-layer experiment descriptions across materials, manufacturing, measurements, and derived data.
-    - Publish experiment packages with explicit provenance, normalization context, units, and mappings to reused community ontologies.
-    - Support ontology review and release engineering through conservative alignment, validation, FAIR checks, and stable publication endpoints.
-  faq:
-    - question: Is H2KG a general hydrogen-economy ontology?
-      answer: No. H2KG is a focused application ontology for PEMFC catalyst-layer experiments, materials, measurements, and provenance-aware resources.
-    - question: Why are schema, controlled vocabulary, and examples published separately?
-      answer: The source ontology mixes core terms with many named resources and data-like content. The release split keeps the core ontology stable and reviewable while still preserving curated reference terms and example material.
-    - question: Does H2KG replace EMMO, ECHO, QUDT, or ChEBI?
-      answer: No. H2KG reuses and aligns to those ontologies. Local terms are preserved for PEMFC catalyst-layer concepts that are not safely covered elsewhere.
-    - question: Are mappings automatically asserted as equivalence?
-      answer: No. The release pipeline is conservative and prefers subclassing or SKOS mappings unless the evidence for equivalence is strong.
-  modeling_patterns:
-    - title: Measurement Event Pattern
-      description: Use an H2KG measurement class to relate an experimental activity to instruments, parameters, outputs, and normalization context.
-      bullets:
-        - Model the measurement process as a class or activity-like concept aligned to EMMO or ECHO where appropriate.
-        - Link the measurement to instruments with properties such as `usesInstrument`.
-        - Keep raw quantity values and example measurement nodes outside the core schema module.
-    - title: Material and Process Pattern
-      description: Represent catalyst-layer materials, manufacturing steps, and outputs with explicit process input and output relations.
-      bullets:
-        - Preserve local catalyst-layer specific material concepts in the `h2kg` namespace.
-        - Reuse broader process or material semantics from EMMO and ECHO where the match is justified.
-        - Keep curated named materials in the controlled vocabulary module rather than the asserted schema.
-    - title: Provenance and Release Pattern
-      description: Publish ontology releases with explicit versioning, citation metadata, and stable machine-readable endpoints.
-      bullets:
-        - Keep the canonical ontology IRI stable and publish version-specific endpoints separately.
-        - Record release metadata, creator and contributor information, and validation status.
-        - Publish both asserted and inferred serializations together with FAIR and validation reports.
-  competency_questions:
-    - id: CQ1
-      question: Which measurement classes in H2KG record instrument usage and produce data outputs?
-      answer: Use the schema module to traverse local measurement classes and the object properties that relate measurements to instruments and outputs.
-      sparql: |
-        PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-        SELECT ?measurement ?measurementLabel ?property ?propertyLabel
-        WHERE {
-          ?measurement a owl:Class ;
-            rdfs:label ?measurementLabel .
-          FILTER(CONTAINS(LCASE(STR(?measurementLabel)), "measurement"))
-          ?property rdfs:domain ?measurement ;
-            rdfs:label ?propertyLabel .
-        }
-        ORDER BY ?measurementLabel ?propertyLabel
-    - id: CQ2
-      question: Which local terms are aligned to EMMO, ECHO, QUDT, ChEBI, or PROV-O?
-      answer: Query the alignments graph to review proposed reuse and local terms that remain intentionally specific to H2KG.
-      sparql: |
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-        SELECT ?local ?relation ?external
-        WHERE {
-          VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }
-          ?local ?relation ?external .
-          FILTER(STRSTARTS(STR(?local), "https://w3id.org/h2kg/hydrogen-ontology#"))
-        }
-        ORDER BY ?local ?relation
-    - id: CQ3
-      question: Which controlled vocabulary terms were kept local because no safe external mapping was found?
-      answer: Review the mapping review output for local vocabulary terms without a target IRI and use that list to prioritize curation.
-      sparql: |
-        PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-        SELECT ?term ?label
-        WHERE {
-          ?term rdfs:label ?label .
-          FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
-        }
-        ORDER BY ?label
-    - id: CQ4
-      question: Which local schema terms are currently marked as deprecated?
-      answer: Use this query to identify terms that remain resolvable but should no longer be used for new annotations.
-      sparql: |
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-        SELECT ?term ?label ?type
-        WHERE {
-          VALUES ?type { owl:Class owl:ObjectProperty owl:DatatypeProperty owl:AnnotationProperty }
-          ?term a ?type ;
-            owl:deprecated true .
-          OPTIONAL { ?term rdfs:label ?label }
-          FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
-        }
-        ORDER BY ?type ?label
-    - id: CQ5
-      question: Which local properties declare domain and range constraints?
-      answer: This query helps reviewers inspect modeling constraints and detect properties that may need stronger domain or range curation.
-      sparql: |
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-        SELECT ?property ?propertyLabel ?kind ?domain ?range
-        WHERE {
-          VALUES ?kind { owl:ObjectProperty owl:DatatypeProperty }
-          ?property a ?kind .
-          OPTIONAL { ?property rdfs:label ?propertyLabel }
-          OPTIONAL { ?property rdfs:domain ?domain }
-          OPTIONAL { ?property rdfs:range ?range }
-          FILTER(STRSTARTS(STR(?property), "https://w3id.org/h2kg/hydrogen-ontology#"))
-        }
-        ORDER BY ?kind ?propertyLabel
-    - id: CQ6
-      question: Which mapped local terms point to QUDT resources?
-      answer: Use this to review unit and quantity-kind reuse in the alignment output.
-      sparql: |
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-        SELECT ?local ?localLabel ?relation ?qudt
-        WHERE {
-          VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }
-          ?local ?relation ?qudt .
-          OPTIONAL { ?local rdfs:label ?localLabel }
-          FILTER(STRSTARTS(STR(?local), "https://w3id.org/h2kg/hydrogen-ontology#"))
-          FILTER(CONTAINS(LCASE(STR(?qudt)), "qudt"))
-        }
-        ORDER BY ?localLabel ?relation
-    - id: CQ7
-      question: Which mapped local terms point to ChEBI resources?
-      answer: This query highlights chemical-entity reuse and helps check whether chemistry terms are externally aligned where appropriate.
-      sparql: |
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-        SELECT ?local ?localLabel ?relation ?chebi
-        WHERE {
-          VALUES ?relation { owl:equivalentClass owl:equivalentProperty rdfs:subClassOf rdfs:subPropertyOf skos:exactMatch skos:closeMatch }
-          ?local ?relation ?chebi .
-          OPTIONAL { ?local rdfs:label ?localLabel }
-          FILTER(STRSTARTS(STR(?local), "https://w3id.org/h2kg/hydrogen-ontology#"))
-          FILTER(CONTAINS(LCASE(STR(?chebi)), "chebi"))
-        }
-        ORDER BY ?localLabel ?relation
-    - id: CQ8
-      question: Which local classes and properties still miss labels or textual definitions?
-      answer: This is a quality-control query for publication editing, focused on local schema terms.
-      sparql: |
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-        SELECT ?term ?type
-        WHERE {
-          VALUES ?type { owl:Class owl:ObjectProperty owl:DatatypeProperty owl:AnnotationProperty }
-          ?term a ?type .
-          FILTER(STRSTARTS(STR(?term), "https://w3id.org/h2kg/hydrogen-ontology#"))
-          FILTER NOT EXISTS { ?term rdfs:label ?label }
-          FILTER NOT EXISTS { ?term rdfs:comment ?comment }
-          FILTER NOT EXISTS { ?term skos:definition ?definition }
-        }
-        ORDER BY ?type ?term
-  query_guide:
-    introduction: Use the interactive query console to execute SPARQL directly in the browser against the selected ontology modules. H2KG benefits most from queries that make schema, vocabulary, mappings, examples, and release metadata explicit.
-    notes:
-      - Start with the term finder or a preset, then refine the query in the console and rerun.
-      - Keep sources explicit; asserted schema, controlled vocabulary, alignments, inferred export, and examples answer different questions.
-      - Use `LIMIT` in exploratory queries to keep browser execution responsive for end users.
-      - Pair each query preset with a domain interpretation so non-ontology users understand the result context.
-  governance:
-    editorial_policy:
-      - Preserve stable public IRIs by default and avoid breaking local PEMFC terms without a migration note.
-      - Prefer explicit annotation improvement, alignment, and modular separation over destructive refactoring.
-      - Require review before turning weak lexical mapping suggestions into asserted equivalence.
-    contribution_path:
-      - Report ontology issues and mapping questions in the GitHub issue tracker.
-      - Review mapping proposals and annotation drafts before importing them into the published schema.
-      - Treat vocabulary growth, deprecation, and namespace changes as release-governed changes.
-    versioning_policy:
-      - Keep the ontology IRI stable while publishing version-specific releases and a latest alias.
-      - Record prior versions and release metadata for every published release bundle.
-      - Document deprecations and namespace migrations explicitly rather than silently rewriting identifiers.
-  namespace_policy_notes:
-    - The stable release profile preserves the current ontology IRI and hash-style term namespace for backward compatibility.
-    - Future slash-namespace publication is supported through configuration, but it is not the active default.
-    - Namespace migration must produce redirect templates and a migration map rather than silently rewriting local identifiers.
-    - Version-specific release IRIs are published alongside the canonical ontology IRI and latest alias.
-  deprecation_policy:
-    - Deprecation should be explicit, reviewable, and release-governed rather than hidden in silent rewrites.
-    - Deprecated terms should remain resolvable, be marked with deprecation annotations, and point to replacements where possible.
-    - Breaking namespace changes must be documented with redirect rules, migration notes, and prior-version links.
-    - Terms that remain local by design should be documented as intentional, not treated as temporary errors.
-  citation_guidance:
-    - Cite both the ontology release and the release-preparation software package when the pipeline itself is methodologically relevant.
-    - Prefer the versioned ontology release reference for published data packages and papers.
-    - When a DOI is minted later, update the citation page and badges without changing the stable ontology IRI pattern.
-  import_guidance:
-    - Import the asserted schema module when you need the curated ontology structure without example individuals.
-    - Use the inferred serialization for exploration, quality review, or graph analytics, not as a substitute for editorial curation.
-    - Keep the controlled vocabulary and example modules separate unless your downstream use case explicitly requires them.
-  researcher_extras:
-    - JSON-LD example for a measurement-oriented H2KG resource bundle.
-    - CSV-to-RDF example showing how a small experiment table can be translated into ontology-aligned triples.
-    - Notebook starter example for inspecting release outputs and alignments programmatically.
-  release_story:
-    - title: Source inspection and separation
-      detail: Inspect the mixed ontology source, classify resources conservatively, and separate schema, controlled vocabulary, and example or data-like resources.
-    - title: Alignment and metadata enrichment
-      detail: Propose conservative mappings, preserve local PEMFC terms, and enrich ontology metadata for a FAIR release.
-    - title: Validation, FAIR checks, and publication
-      detail: Validate the release with SHACL and metadata rules, compute FAIR readiness signals, and publish HTML, RDF, and w3id artifacts together.
-validation:
-  enable_network_checks: false
-  enable_oops: true
-  enable_foops: true
+  creator: [AIMWORKS Maintainers]
+  contributor: [Electrochemistry Research Group]
+  publisher: [AIMWORKS]
+release:
+  preserve_term_iris: true
+  preserve_hash_namespace: true
+  build_docs: true
+  build_release_bundle: true
+  validate_with_shacl: true
+  fair_check: true
+  generate_w3id: true
+  emit_jsonld: true
+  emit_ttl: true
+external_assessment:
+  enabled: true
+  oops_enabled: true
+  foops_enabled: true
   foops_mode: file
-  resolver_accept_headers:
-    - text/html
-    - text/turtle
-    - application/ld+json
-  oops_homepage_url: https://oops.linkeddata.es/
-  oops_url: https://oops.linkeddata.es/rest
-  oops_timeout_seconds: 180
-  foops_url: https://foops.linkeddata.es/FAIR_validator.html
-  foops_assess_uri_url: https://foops.linkeddata.es/assessOntology
-  foops_assess_file_url: https://foops.linkeddata.es/assessOntologyFile
-  foops_catalogue_url: https://w3id.org/foops/catalogue
-  foops_timeout_seconds: 180
-  theme:
-    accent: "#0f766e"
-    accent_soft: "#ccfbf1"
-    ink: "#0f172a"
-    muted: "#475569"
-    paper: "#f8fafc"
-publication:
-  reference_page: hydrogen-ontology.html
-  source_filename: ontology.ttl
-  source_jsonld_filename: ontology.jsonld
-  inferred_filename: ontology.ttl
-  context_filename: context.jsonld
-unit_enrichment:
-  enabled: false
-  evidence_dir: ""
-  curated_units_path: ""
-  min_observations: 1
-  min_consensus_ratio: 0.8
-  create_local_units: true
-citation:
-  doi: null
-  preferred_reference: H2KG — Ontology for Hydrogen Electrochemical Systems, release 2026.3.0
+  oops_service: https://oops.linkeddata.es/rest
+  foops_service: https://foops.linkeddata.es/FAIR_validator.html
+  foops_file_service: https://foops.linkeddata.es/assessOntologyFile
+  foops_uri_service: https://foops.linkeddata.es/assessOntology
+  timeout_seconds: 45
+  retries: 3
+  backoff_seconds: 2
+  use_env_proxies: false
+  public_uri: ""
+separation:
+  publish_examples: true
+  publish_controlled_vocabulary: true
+  treat_quantity_values_as_examples: true
+  treat_generated_nodes_as_examples: true
+  local_schema_priority:
+    - Agent
+    - Process
+    - Manufacturing
+    - Measurement
+    - Instrument
+    - Matter
+    - Parameter
+    - Property
+    - Data
+    - DataPoint
+    - Metadata
+    - NormalizationBasis
+    - ReferenceElectrode
+    - Unit

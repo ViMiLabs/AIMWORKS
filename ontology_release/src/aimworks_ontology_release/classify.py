@@ -1,115 +1,90 @@
 from __future__ import annotations
 
-import re
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Any
 
-from rdflib import BNode, Graph, Literal, URIRef
-from rdflib.namespace import OWL, RDF, RDFS, SKOS
-
-from .utils import QUDT, as_uri_text, is_local_iri, local_name
+from .io import dump_jsonld_items, load_json_document, merge_document_items
+from .normalize import best_label, lexical_signature, looks_like_ephemeral, looks_like_quantity_value
+from .utils import (
+    OWL_ANNOTATION_PROPERTY,
+    OWL_CLASS,
+    OWL_DATATYPE_PROPERTY,
+    OWL_OBJECT_PROPERTY,
+    OWL_ONTOLOGY,
+    RDFS_CLASS,
+    deep_get,
+    default_release_profile,
+    dump_json,
+    ensure_dir,
+    humanize,
+    local_name,
+    try_load_yaml,
+)
 
 
 @dataclass
 class ResourceClassification:
     iri: str
-    category: str
-    term_type: str
-    local: bool
-    score: float
+    label: str
+    kind: str
+    confidence: float
     reasons: list[str]
+    is_local: bool
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
-def explicit_term_type(graph: Graph, subject: URIRef | BNode) -> str:
-    rdf_types = set(graph.objects(subject, RDF.type))
-    if OWL.Ontology in rdf_types:
-        return "ontology_header"
-    if OWL.Class in rdf_types or RDFS.Class in rdf_types:
-        return "class"
-    if OWL.ObjectProperty in rdf_types:
-        return "object_property"
-    if OWL.DatatypeProperty in rdf_types:
-        return "datatype_property"
-    if OWL.AnnotationProperty in rdf_types:
-        return "annotation_property"
-    return "other"
-
-
-def _matches_any(value: str, patterns: list[str]) -> bool:
-    return any(re.search(pattern, value, flags=re.IGNORECASE) for pattern in patterns)
-
-
-def _typed_by_anchor(graph: Graph, subject: URIRef | BNode, anchors: list[str]) -> bool:
-    for rdf_type in graph.objects(subject, RDF.type):
-        if local_name(rdf_type) in anchors:
-            return True
-    return False
-
-
-def classify_resource(
-    graph: Graph,
-    subject: URIRef | BNode,
-    namespace_policy: dict[str, Any],
-    rules: dict[str, Any],
-) -> ResourceClassification:
-    iri = as_uri_text(subject)
-    local = is_local_iri(subject, namespace_policy)
-    reasons: list[str] = []
-    explicit = explicit_term_type(graph, subject)
-    if explicit != "other":
-        reasons.append(f"explicit rdf:type {explicit}")
-        return ResourceClassification(iri, explicit, explicit, local, 1.0, reasons)
-
-    if isinstance(subject, BNode):
-        reasons.append("blank node")
-        return ResourceClassification(iri, "ephemeral_generated_instance", "other", False, 0.95, reasons)
-
-    identifier = local_name(subject)
-    classification_rules = rules.get("classification", {})
-    if _matches_any(identifier, classification_rules.get("ephemeral_identifier_patterns", [])):
-        reasons.append("identifier matches ephemeral pattern")
-        return ResourceClassification(iri, "ephemeral_generated_instance", "other", local, 0.9, reasons)
-
-    if any(str(obj).startswith(str(QUDT)) for obj in graph.objects(subject, None)):
-        reasons.append("uses QUDT predicate/object")
-        return ResourceClassification(iri, "quantity_value_data_node", "other", local, 0.92, reasons)
-
-    if any(local_name(obj) == "QuantityValue" for obj in graph.objects(subject, RDF.type)):
-        reasons.append("typed as QuantityValue")
-        return ResourceClassification(iri, "quantity_value_data_node", "other", local, 0.96, reasons)
-
-    if _matches_any(identifier, classification_rules.get("quantity_value_patterns", [])):
-        if any(isinstance(obj, Literal) for _, _, obj in graph.triples((subject, None, None))):
-            reasons.append("identifier resembles quantity value and has literal assertions")
-            return ResourceClassification(iri, "quantity_value_data_node", "other", local, 0.85, reasons)
-
-    outgoing = list(graph.predicate_objects(subject))
-    if local and (
-        _typed_by_anchor(graph, subject, classification_rules.get("controlled_vocabulary_anchor_classes", []))
-        or (list(graph.objects(subject, RDFS.label)) or list(graph.objects(subject, SKOS.prefLabel)))
-        and len(outgoing) <= 8
-    ):
-        reasons.append("typed by anchor class or concise labeled individual")
-        return ResourceClassification(iri, "controlled_vocabulary_term", "controlled_vocabulary_term", local, 0.82, reasons)
-
-    if local:
-        reasons.append("local named individual-like resource")
-        return ResourceClassification(iri, "example_individual", "example_individual", local, 0.72, reasons)
-
-    reasons.append("external reference")
-    return ResourceClassification(iri, "external_reference", "other", False, 0.5, reasons)
-
-
 def classify_resources(
-    graph: Graph,
-    namespace_policy: dict[str, Any],
-    rules: dict[str, Any],
-) -> dict[str, ResourceClassification]:
-    classifications: dict[str, ResourceClassification] = {}
-    for subject in set(graph.subjects()):
-        record = classify_resource(graph, subject, namespace_policy, rules)
-        classifications[record.iri] = record
-    return classifications
+    input_path: str | Path,
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
+) -> list[ResourceClassification]:
+    input_path = Path(input_path)
+    output_dir = ensure_dir(Path(output_dir))
+    profile = try_load_yaml(Path(config_dir or input_path.parent.parent / "config") / "release_profile.yaml", default_release_profile())
+    namespace_uri = deep_get(profile, "project", "namespace_uri", default="https://w3id.org/h2kg/hydrogen-ontology#")
+    ontology_iri = deep_get(profile, "project", "ontology_iri", default="https://w3id.org/h2kg/hydrogen-ontology")
+    merged = merge_document_items(load_json_document(input_path))
+    results = [_classify_item(item, ontology_iri, namespace_uri) for item in merged if isinstance(item.get("@id"), str)]
+    dump_json(output_dir / "classification_report.json", [item.to_dict() for item in results])
+    dump_jsonld_items(output_dir / "classification_snapshot.jsonld", [item for item in merged if isinstance(item.get("@id"), str)])
+    return results
+
+
+def _classify_item(item: dict[str, Any], ontology_iri: str, namespace_uri: str) -> ResourceClassification:
+    identifier = str(item.get("@id", ""))
+    label = best_label(item)
+    is_local = identifier == ontology_iri or identifier.startswith(namespace_uri)
+    types = item.get("@type", [])
+    type_values = types if isinstance(types, list) else [types]
+    reasons: list[str] = []
+    if OWL_ONTOLOGY in type_values or identifier == ontology_iri:
+        return ResourceClassification(identifier, label, "ontology_header", 1.0, ["Explicit ontology header."], is_local)
+    if OWL_CLASS in type_values or RDFS_CLASS in type_values:
+        return ResourceClassification(identifier, label, "class", 1.0, ["Explicit owl:Class or rdfs:Class."], is_local)
+    if OWL_OBJECT_PROPERTY in type_values:
+        return ResourceClassification(identifier, label, "object_property", 1.0, ["Explicit owl:ObjectProperty."], is_local)
+    if OWL_DATATYPE_PROPERTY in type_values:
+        return ResourceClassification(identifier, label, "datatype_property", 1.0, ["Explicit owl:DatatypeProperty."], is_local)
+    if OWL_ANNOTATION_PROPERTY in type_values:
+        return ResourceClassification(identifier, label, "annotation_property", 1.0, ["Explicit owl:AnnotationProperty."], is_local)
+    if looks_like_quantity_value(item):
+        reasons.append("QUDT quantity value indicators detected.")
+        return ResourceClassification(identifier, label, "quantity_value_data_node", 0.95, reasons, is_local)
+    if not is_local:
+        return ResourceClassification(identifier, label, "external_resource", 0.8, ["External namespace resource."], is_local)
+    local = local_name(identifier)
+    signature = lexical_signature(item)
+    if any(token in signature for token in ["basis", "type", "design", "presence", "ratio", "electrode"]) and "measurement" not in signature:
+        reasons.append("Looks like a controlled vocabulary or reference term.")
+        return ResourceClassification(identifier, label, "controlled_vocabulary_term", 0.72, reasons, is_local)
+    if looks_like_ephemeral(identifier):
+        reasons.append("Identifier looks generated or instance-like.")
+        return ResourceClassification(identifier, label, "ephemeral_generated_instance", 0.85, reasons, is_local)
+    if any(key in item for key in ["https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue", "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"]):
+        reasons.append("Operational measurement or process structure detected.")
+        return ResourceClassification(identifier, label, "example_individual", 0.78, reasons, is_local)
+    reasons.append(f"Defaulted to example individual for local non-schema term `{humanize(local)}`.")
+    return ResourceClassification(identifier, label, "example_individual", 0.6, reasons, is_local)

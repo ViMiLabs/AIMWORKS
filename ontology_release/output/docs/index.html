@@ -1,71 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>H2KG - Ontology for Hydrogen Electrochemical Systems</title>
-  <style>
-    :root {
-      --ink: #10242d;
-      --muted: #4d6370;
-      --line: rgba(16,36,45,0.14);
-      --accent: #0d7f83;
-      --paper: #ffffff;
-      --shadow: 0 16px 44px rgba(16,36,45,0.12);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Aptos", "Trebuchet MS", sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top right, rgba(13,127,131,0.2), transparent 32%),
-        linear-gradient(180deg, #edf8f7 0%, #fbf6ef 100%);
-    }
-    main { max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 3rem; }
-    h1, h2 { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }
-    h1 { margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }
-    p { color: var(--muted); line-height: 1.55; }
-    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
-    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }
-    .links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
-    a {
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(135deg, #10242d, var(--accent));
-      border-radius: 999px;
-      padding: 0.45rem 0.82rem;
-      font-size: 0.9rem;
-    }
-  </style>
+  <title>Home | H2KG PEMFC Catalyst Layer Application Ontology</title>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <main>
-    <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
-    <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
-    <div class="grid">
-
-      <article class="card">
-        <h2>PEMFC Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
-        <div class="links">
-          <a href="./pemfc/index.html">Open profile home</a>
-          <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
-          <a href="./pemfc/pages/queries.html">Open queries</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <h2>PEMWE Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
-        <div class="links">
-          <a href="./pemwe/index.html">Open profile home</a>
-          <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
-          <a href="./pemwe/pages/queries.html">Open queries</a>
-        </div>
-      </article>
-
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">H2KG PEMFC Catalyst Layer Ontology</p>
+      <h1>Home</h1>
+      <p class="subtitle">EMMO-aligned ontology for PEMFC catalyst-layer experiments</p>
+      
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="pages/user-guide.html">User Guide</a>
+      <a href="pages/ontology-overview.html">Overview</a>
+      <a href="pages/class-index.html">Classes</a>
+      <a href="pages/property-index.html">Properties</a>
+      <a href="pages/alignment.html">Alignments</a>
+      <a href="pages/examples.html">Examples</a>
+      <a href="pages/quality-dashboard.html">Quality</a>
+      <a href="pages/release.html">Release</a>
+    </nav>
+    
     </div>
+  </header>
+  <main class="wrap content">
+    
+    <section class="grid">
+      <article class="card">
+        <h2>Scope</h2>
+        <p>Application ontology for low-Pt PEMFC cathode catalyst-layer experiments, materials, measurements, quantity values, and FAIR provenance.</p>
+      </article>
+      <article class="card">
+        <h2>Release Snapshot</h2>
+        <ul class="stats">
+          <li><strong>35</strong> schema terms</li>
+          <li><strong>4</strong> curated vocabulary terms</li>
+          <li><strong>60</strong> example or data-like resources</li>
+          <li><strong>9</strong> mapping proposals</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Imports and Alignments</h2>
+        <ul><li>EMMO core</li><li>EMMO electrochemistry</li><li>QUDT</li><li>PROV-O</li><li>DCTERMS</li></ul>
+      </article>
+      <article class="card">
+        <h2>Publication</h2>
+        <p>Stable ontology IRI: <code>https://w3id.org/h2kg/hydrogen-ontology</code></p>
+        <p>Version IRI: <code>https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0</code></p>
+        <p>License: <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></p>
+      </article>
+    </section>
+    
   </main>
+  <footer class="footer">
+    <div class="wrap">
+      <p>H2KG PEMFC Catalyst Layer Application Ontology | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
 </body>
 </html>

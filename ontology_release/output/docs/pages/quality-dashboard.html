@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quality Dashboard | H2KG PEMFC Catalyst Layer Application Ontology</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">H2KG PEMFC Catalyst Layer Ontology</p>
+      <h1>Quality Dashboard</h1>
+      <p class="subtitle">EMMO-aligned ontology for PEMFC catalyst-layer experiments</p>
+      
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="release.html">Release</a>
+    </nav>
+    
+    </div>
+  </header>
+  <main class="wrap content">
+    
+    <section class="prose">
+      <p>Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.</p>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <h2>FAIR Signals</h2>
+        <p class="muted">Internal FAIR signals estimate release readiness from the built ontology package itself. They are conservative but not equivalent to live post-publication FAIR audits.</p>
+        <ul class='metric-list'><li><strong>F / Findable</strong> <span class='badge good'>GOOD</span> <span class='value'>86 / 100</span><br><span class='muted'>Internal score for identifiers, versioning, citation, namespace, and findable publication metadata.</span></li><li><strong>A / Accessible</strong> <span class='badge good'>GOOD</span> <span class='value'>85 / 100</span><br><span class='muted'>Internal score for machine-readable outputs, docs presence, resolver artifacts, and public access hooks.</span></li><li><strong>I / Interoperable</strong> <span class='badge good'>GOOD</span> <span class='value'>90 / 100</span><br><span class='muted'>Internal score for reuse of imports, mappings, namespace hygiene, and standards-based serializations.</span></li><li><strong>R / Reusable</strong> <span class='badge watch'>WATCH</span> <span class='value'>65 / 100</span><br><span class='muted'>Internal score for license, provenance, versioning, definitions, examples, and release packaging.</span></li></ul>
+      </article>
+      <article class="card">
+        <h2>Transparency Hooks</h2>
+        <p class="muted">External transparency hooks call public assessment services. Their availability depends on external infrastructure and network access.</p>
+        <ul class='metric-list'><li><strong>OOPS! ontology pitfall scan</strong> <span class='badge watch'>WATCH</span> <span class='value'>service unavailable</span><br><span class='muted'>OOPS! something went wrong. There was an unexpected error.</span></li><li><strong>FOOPS! FAIR assessment</strong> <span class='badge action'>ACTION</span> <span class='value'>46.7 / 100</span><br><span class='muted'>External FAIR-oriented ontology assessment against the release candidate. File mode does not assess accessibility.</span></li></ul>
+      </article>
+      <article class="card">
+        <h2>FOOPS! Assessment</h2>
+        <p class="muted">FOOPS! is an external FAIR-oriented ontology validator. In file mode it does not run accessibility checks, so the Accessible dimension may appear as not assessed.</p>
+        <ul class='metric-list'><li><strong>Status</strong> <span class='badge good'>GOOD</span> <span class='value'>assessed</span><br><span class='muted'>FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.</span></li><li><strong>Overall score</strong> <span class='badge watch'>WATCH</span> <span class='value'>46.7 / 100</span><br><span class='muted'>Returned directly by the FOOPS! service.</span></li><li><strong>F / Findable</strong> <span class='badge action'>ACTION</span> <span class='value'>60.0 / 100</span><br><span class='muted'>Returned directly by the FOOPS! service.</span></li><li><strong>A / Accessible</strong> <span class='badge watch'>WATCH</span> <span class='value'>not assessed</span><br><span class='muted'>In file mode this dimension is commonly not assessed by FOOPS!.</span></li><li><strong>I / Interoperable</strong> <span class='badge action'>ACTION</span> <span class='value'>33.3 / 100</span><br><span class='muted'>Returned directly by the FOOPS! service.</span></li><li><strong>R / Reusable</strong> <span class='badge action'>ACTION</span> <span class='value'>44.4 / 100</span><br><span class='muted'>Returned directly by the FOOPS! service.</span></li><li><strong>FOOPS! follow-up 1</strong> <span class='badge watch'>WATCH</span> <span class='value'>F1</span><br><span class='muted'>Unexpected error while running the test: null</span></li><li><strong>FOOPS! follow-up 2</strong> <span class='badge watch'>WATCH</span> <span class='value'>F2</span><br><span class='muted'>The following metadata was not found: version iri</span></li><li><strong>FOOPS! follow-up 3</strong> <span class='badge watch'>WATCH</span> <span class='value'>R1</span><br><span class='muted'>The following metadata was not found: version info, citation</span></li><li><strong>FOOPS! follow-up 4</strong> <span class='badge watch'>WATCH</span> <span class='value'>R1</span><br><span class='muted'>The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: previous version, backwards compatibility. Please consider adding them if appropriate.</span></li><li><strong>FOOPS! follow-up 5</strong> <span class='badge watch'>WATCH</span> <span class='value'>R1.2</span><br><span class='muted'>The following provenance information was not found: issued</span></li><li><strong>FOOPS! follow-up 6</strong> <span class='badge watch'>WATCH</span> <span class='value'>I2</span><br><span class='muted'>The ontology does not reuse vocabularies for common metadata</span></li><li><strong>FOOPS! follow-up 7</strong> <span class='badge watch'>WATCH</span> <span class='value'>I2</span><br><span class='muted'>The ontology does not import/extend other vocabularies.</span></li><li><strong>FOOPS! follow-up 8</strong> <span class='badge watch'>WATCH</span> <span class='value'>R1</span><br><span class='muted'>No ontology terms found</span></li></ul>
+      </article>
+      <article class="card">
+        <h2>OOPS! Pitfalls</h2>
+        <p class="muted">OOPS! is an external ontology pitfall scanner. Service errors are shown as availability problems rather than as zero pitfalls.</p>
+        <ul class='metric-list'><li><strong>Status</strong> <span class='badge watch'>WATCH</span> <span class='value'>unavailable</span><br><span class='muted'>OOPS! something went wrong. There was an unexpected error.</span></li><li><strong>Pitfall count</strong> <span class='badge watch'>WATCH</span> <span class='value'>not assessed</span><br><span class='muted'>Returned directly by the OOPS! service when the scan succeeds.</span></li></ul>
+      </article>
+      <article class="card">
+        <h2>Validation Signals</h2>
+        <p class="muted">Validation signals summarize local structural, metadata, namespace, mapping, and optional SHACL checks on the release candidate.</p>
+        <ul class='metric-list'><li><strong>Overall validation status</strong> <span class='badge good'>GOOD</span> <span class='value'>pass</span><br><span class='muted'>Combined metadata, namespace, mapping, and SHACL validation checks.</span></li><li><strong>SHACL conforms</strong> <span class='badge action'>ACTION</span> <span class='value'>False</span><br><span class='muted'>Local SHACL shape execution when pyshacl is available.</span></li><li><strong>Missing labels</strong> <span class='badge good'>GOOD</span> <span class='value'>0</span><br><span class='muted'>Release-time missing labels on local schema terms.</span></li><li><strong>Missing definitions</strong> <span class='badge good'>GOOD</span> <span class='value'>0</span><br><span class='muted'>Release-time missing definitions or comments on local schema terms.</span></li><li><strong>Namespace violations</strong> <span class='badge good'>GOOD</span> <span class='value'>0</span><br><span class='muted'>Violations against the active namespace policy.</span></li><li><strong>Mapping issues</strong> <span class='badge good'>GOOD</span> <span class='value'>0</span><br><span class='muted'>Mappings that remain risky or inconsistent after local checks.</span></li><li><strong>OWL consistency hook</strong> <span class='badge watch'>WATCH</span> <span class='value'>skipped (owlready2 not installed)</span><br><span class='muted'>Optional OWL reasoner hook. It is skipped when owlready2 is not installed.</span></li><li><strong>EMMO checks</strong> <span class='badge watch'>WATCH</span> <span class='value'>skipped (EMMOntoPy not installed)</span><br><span class='muted'>Optional EMMO convention hook. It is skipped when EMMOntoPy is not installed.</span></li><li><strong>OOPS! hook</strong> <span class='badge watch'>WATCH</span> <span class='value'>service unavailable</span><br><span class='muted'>OOPS! something went wrong. There was an unexpected error.</span></li><li><strong>FOOPS! hook</strong> <span class='badge good'>GOOD</span> <span class='value'>assessed</span><br><span class='muted'>FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.</span></li></ul>
+      </article>
+      <article class="card">
+        <h2>Publication Assets</h2>
+        <p class="muted">Publication asset rows show whether the files required for public release were actually built in the current run.</p>
+        <ul class='metric-list'><li><strong>HTML reference page</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Generated public documentation page.</span></li><li><strong>Machine-readable source</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Primary Turtle serialization for the release candidate.</span></li><li><strong>JSON-LD source</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>JSON-LD serialization for the release candidate.</span></li><li><strong>Alignment mappings</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Conservative alignment output for review and publication.</span></li><li><strong>Examples module</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Separated example and data-like instances.</span></li><li><strong>Release bundle</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Bundle status depends on whether the current command executed the release-bundle stage.</span></li><li><strong>w3id artifacts</strong> <span class='badge good'>GOOD</span> <span class='value'>ready</span><br><span class='muted'>Redirect templates and publication notes for stable public identifiers.</span></li></ul>
+      </article>
+    </section>
+    
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <p>H2KG PEMFC Catalyst Layer Application Ontology | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+</body>
+</html>

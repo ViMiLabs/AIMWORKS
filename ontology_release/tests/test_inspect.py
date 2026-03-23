@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from aimworks_ontology_release.inspect import inspect_graph
+from aimworks_ontology_release.inspect import inspect_ontology
 
 
-def test_inspection_reports_missing_version(sample_graph, configs):
-    report, _ = inspect_graph(sample_graph, configs["namespace_policy"], configs["mapping_rules"])
-    assert report["ontology_iri"] == "https://w3id.org/h2kg/hydrogen-ontology"
-    assert "http://www.w3.org/2002/07/owl#versionIRI" in report["metadata_missing"]
-    assert report["category_counts"]["class"] >= 3
+def test_inspect_generates_reports(mini_ontology_file, output_dir):
+    report = inspect_ontology(mini_ontology_file, output_dir)
+    assert report["counts"]["class_count"] >= 2
+    assert (output_dir / "inspection_report.md").exists()
+    assert (output_dir / "inspection_report.json").exists()

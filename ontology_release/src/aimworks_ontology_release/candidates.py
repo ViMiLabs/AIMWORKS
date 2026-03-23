@@ -1,38 +1,44 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
-from .extract import LocalTerm
-from .index import SourceIndex
-from .normalize import normalize_label, token_set
-from .sources import SourceRecord
-
-
-def compatible_types(term_type: str, rules: dict[str, Any]) -> set[str]:
-    compatibility = rules.get("type_compatibility", {})
-    return set(compatibility.get(term_type, [term_type]))
+from .extract import extract_local_term_profiles
+from .index import build_source_index
+from .scorer import score_candidate
 
 
 def generate_candidates(
-    term: LocalTerm,
-    source_index: SourceIndex,
-    rules: dict[str, Any],
+    input_path: str | Path,
+    output_dir: str | Path,
+    config_dir: str | Path | None = None,
     limit: int = 5,
-) -> list[SourceRecord]:
-    wanted_types = compatible_types(term.term_type, rules)
-    tokens = token_set(term.label or term.local_name)
-    candidate_pool: list[SourceRecord] = []
-
-    exact = source_index.by_label.get(normalize_label(term.label), []) + source_index.by_label.get(normalize_label(term.local_name), [])
-    candidate_pool.extend(exact)
-    for token in tokens:
-        candidate_pool.extend(source_index.by_token.get(token, []))
-    if not candidate_pool:
-        for record_type in wanted_types:
-            candidate_pool.extend(source_index.by_type.get(record_type, []))
-
-    unique: dict[str, SourceRecord] = {}
-    for record in candidate_pool:
-        if record.record_type in wanted_types:
-            unique.setdefault(record.iri, record)
-    return list(unique.values())[: max(limit * 8, limit)]
+) -> list[dict[str, Any]]:
+    local_terms = [
+        term
+        for term in extract_local_term_profiles(input_path, output_dir, config_dir)
+        if term["is_local"] and term["kind"] in {"class", "object_property", "datatype_property", "controlled_vocabulary_term"}
+    ]
+    external_terms = build_source_index(config_dir)
+    candidates: list[dict[str, Any]] = []
+    for local in local_terms:
+        scored: list[dict[str, Any]] = []
+        for target in external_terms:
+            score = score_candidate(local["label"], target["label"], local["kind"], target["kind"])
+            if score <= 0.55:
+                continue
+            scored.append(
+                {
+                    "local_iri": local["iri"],
+                    "local_label": local["label"],
+                    "local_kind": local["kind"],
+                    "target_iri": target["iri"],
+                    "target_label": target["label"],
+                    "target_kind": target["kind"],
+                    "source": target["source"],
+                    "score": round(score, 3),
+                }
+            )
+        scored.sort(key=lambda row: row["score"], reverse=True)
+        candidates.extend(scored[:limit])
+    return candidates

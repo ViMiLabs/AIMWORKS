@@ -1,15 +1,10 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 [] a sh:NodeShape ;
-  sh:targetClass owl:Class ;
-  sh:property [
-    sh:path rdfs:label ;
-    sh:minCount 1 ;
-  ] ;
-  sh:or (
-    [ sh:property [ sh:path rdfs:comment ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path skos:definition ; sh:minCount 1 ] ]
-  ) .
+   sh:targetClass owl:Ontology ;
+   sh:property [ sh:path dcterms:creator ; sh:minCount 1 ] ;
+   sh:property [ sh:path dcterms:modified ; sh:minCount 1 ] ;
+   sh:property [ sh:path rdfs:comment ; sh:minCount 1 ] .

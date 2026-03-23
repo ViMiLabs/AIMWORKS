@@ -1,48 +1,15 @@
 from __future__ import annotations
 
-from aimworks_ontology_release.release import run_pipeline
+from pathlib import Path
+
+from aimworks_ontology_release.release import run_release
 
 
-def test_release_bundle_generation(temp_project):
-    run_pipeline("input/sample.ttl", root=temp_project, stage="release")
-    assert (temp_project / "output" / "ontology" / "schema.ttl").exists()
-    assert (temp_project / "output" / "ontology" / "asserted.ttl").exists()
-    assert (temp_project / "output" / "ontology" / "asserted.rdf").exists()
-    assert (temp_project / "output" / "ontology" / "full_inferred.ttl").exists()
-    assert (temp_project / "output" / "ontology" / "catalog-v001.xml").exists()
-    assert (temp_project / "output" / "ontology" / "modules" / "top.ttl").exists()
-    assert (temp_project / "output" / "ontology" / "modules" / "core.ttl").exists()
-    assert (temp_project / "output" / "mappings" / "alignments.ttl").exists()
-    assert (temp_project / "output" / "w3id" / ".htaccess").exists()
-    assert (temp_project / "output" / "publication" / "hydrogen-ontology.html").exists()
-    assert (temp_project / "output" / "publication" / "2026.3.0" / "ontology.ttl").exists()
-    assert (temp_project / "output" / "publication" / "source" / "asserted.ttl").exists()
-    assert (temp_project / "output" / "publication" / "source" / "catalog-v001.xml").exists()
-    assert (temp_project / "output" / "publication" / "source" / "modules" / "core.ttl").exists()
-    assert (temp_project / "output" / "publication" / "inferred" / "full_inferred.ttl").exists()
-    assert (temp_project / "output" / "release_bundle" / "manifest.json").exists()
-    assert (temp_project / "output" / "release_bundle" / "README.md").exists()
-    assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "ontology.ttl").exists()
-    assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "asserted.ttl").exists()
-    assert (temp_project / "output" / "release_bundle" / "publication" / "source" / "modules" / "core.ttl").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "quality-dashboard.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "queries.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "visualizations.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "import-catalog.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "get-started.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "architecture-workflow.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "emmo-alignment.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "module-index.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "metrics.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "developer-guide.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "h2kg-vs-battinfo.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "namespace-policy.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "deprecation-policy.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "worked-examples.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "docs" / "pages" / "cite.html").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "changelog_report.md").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "import_catalog.json").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "module_index.json").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "ontology_stats.json").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "engineering_workflow.json").exists()
-    assert (temp_project / "output" / "release_bundle" / "reports" / "emmo_alignment.json").exists()
+def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
+    project_root = tmp_path / "ontology_release"
+    for relative in ["config", "output/ontology", "output/reports", "output/review", "output/mappings", "output/examples", "output/docs", "output/w3id"]:
+        (project_root / relative).mkdir(parents=True, exist_ok=True)
+    summary = run_release(mini_ontology_file, project_root)
+    assert summary["mappings"] >= 1
+    assert (project_root / "output" / "docs" / "index.html").exists()
+    assert (project_root / "output" / "docs" / "pages" / "quality-dashboard.html").exists()

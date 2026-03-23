@@ -1,53 +1,68 @@
 # Validation Report
 
-- RDF syntax sanity: **pass**
-- Overall status: **pass**
-- Missing metadata predicates: **0**
-- Missing labels: **0**
-- Missing definitions/comments: **0**
-- Mapping issues: **0**
-- Namespace violations: **0**
-- SHACL conforms: **True**
-- OWL consistency hook: **skipped**
-- EMMO convention hook: **skipped**
-- OOPS! hook: **disabled**
-- FOOPS! hook: **disabled**
+- Overall valid: true
+- Namespace strategy: `preserve_hash_namespace`
+- SHACL executed: true
+- SHACL details: Validation Report
+Conforms: False
+Results (1):
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path skos:definition ]
+	Focus Node: electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29
+	Result Path: skos:definition
+	Message: Less than 1 values on electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29->skos:definition
+- Release candidate path: `output\ontology\schema.ttl`
 
-## Details
+## Release Candidate Checks
 
+- Local schema terms: 34
+- Missing labels: 0
+- Missing definitions: 0
+- Placeholder-style generated definitions: 34
+- Definition coverage: 1.0
+- Imports declared in release schema: 9
+- Mapping issues detected: 0
 
-## SHACL Summary
+## OOPS! Pitfall Scan
 
-- Validation Report
-- Conforms: True
+- Status: unavailable
+- Service: https://oops.linkeddata.es/rest
+- Message: OOPS! something went wrong. There was an unexpected error.
+- Pitfall count: not assessed
 
-## Optional Hooks
+- No pitfalls listed.
 
-- OWL consistency: owlready2 is not installed; OWL consistency loading and reasoner hooks were skipped.
-- EMMO checks: EMMOntoPy is not installed; optional EMMO convention checks were skipped.
-- OOPS!: OOPS! integration is configured but disabled by default for offline-safe local releases.
-- FOOPS!: FOOPS! integration is configured but disabled by default for offline-safe local releases.
+## FOOPS! FAIR Assessment
 
-## Resolver Checks
+- Status: assessed
+- Service: https://foops.linkeddata.es/FAIR_validator.html
+- Mode: file
+- Message: FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.
+- Overall score: 46.7
+- Findable: 60.0
+- Accessible: None
+- Interoperable: 33.3
+- Reusable: 44.4
 
-- Ontology IRI [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Ontology IRI [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Ontology IRI [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Source [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Source [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Source [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Inferred [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Latest [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Context [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Context [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Context [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned release [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [text/html]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [text/turtle]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
-- Versioned inferred [application/ld+json]: local_ready (Local publication artifact exists. Network resolver check was not executed because enable_network_checks is false.)
+## FOOPS! Failed Checks
+
+- F1: Unexpected error while running the test: null
+- F2: The following metadata was not found: version iri
+- R1: The following metadata was not found: version info, citation
+- R1: The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: previous version, backwards compatibility. Please consider adding them if appropriate.
+- R1.2: The following provenance information was not found: issued
+- I2: The ontology does not reuse vocabularies for common metadata
+- I2: The ontology does not import/extend other vocabularies.
+- R1: No ontology terms found
+- R1: No ontology terms found
+- F1: Version IRI  not defined. Version information not found.  Please consider adding it to describe the version number of the ontology.
+
+## Errors
+
+- None
+
+## Warnings
+
+- 34 local schema terms still use template-style generated definitions or comments.
+- Duplicate JSON-LD node identifiers were found and should be reviewed.

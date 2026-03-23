@@ -1,21 +1,13 @@
 from __future__ import annotations
 
-from pathlib import Path
-import shutil
-import uuid
-
-from aimworks_ontology_release.io import load_graph, save_graph
+from aimworks_ontology_release.io import dump_jsonld_items, dump_turtle_items, load_json_document, merge_document_items
 
 
-def test_read_write_rdf(sample_graph):
-    temp_root = Path(__file__).resolve().parents[1] / "pytest-cache-files-fixtures"
-    temp_root.mkdir(parents=True, exist_ok=True)
-    tmpdir = temp_root / f"testio-{uuid.uuid4().hex[:12]}"
-    tmpdir.mkdir(parents=True, exist_ok=False)
-    try:
-        target = tmpdir / "graph.ttl"
-        save_graph(sample_graph, target, "turtle")
-        reloaded = load_graph(target, "turtle")
-        assert len(reloaded) == len(sample_graph)
-    finally:
-        shutil.rmtree(tmpdir, ignore_errors=True)
+def test_load_and_dump_io(mini_ontology_file, output_dir):
+    document = load_json_document(mini_ontology_file)
+    merged = merge_document_items(document)
+    assert len(merged) >= 6
+    dump_jsonld_items(output_dir / "test.jsonld", merged)
+    dump_turtle_items(output_dir / "test.ttl", merged[:3])
+    assert (output_dir / "test.jsonld").exists()
+    assert (output_dir / "test.ttl").read_text(encoding="utf-8").startswith("@prefix")

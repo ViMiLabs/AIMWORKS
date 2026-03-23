@@ -1,19 +1,12 @@
 from __future__ import annotations
 
-from aimworks_ontology_release.mapper import align_terms
-from aimworks_ontology_release.split import split_graph
+from aimworks_ontology_release.mapper import propose_mappings
 
 
-def test_alignment_proposes_mappings(sample_graph, classifications, configs, package_root):
-    graphs, _ = split_graph(sample_graph, classifications)
-    _, review_rows, report = align_terms(
-        graphs["schema"],
-        graphs["controlled_vocabulary"],
-        classifications,
-        configs["source_ontologies"],
-        configs["namespace_policy"],
-        configs["mapping_rules"],
-        package_root,
-    )
-    assert report["local_term_count"] >= 4
-    assert any(row["target_iri"] for row in review_rows)
+def test_mapper_creates_review_files(mini_ontology_file, output_dir):
+    (output_dir / "review").mkdir()
+    (output_dir / "reports").mkdir()
+    (output_dir / "mappings").mkdir()
+    rows = propose_mappings(mini_ontology_file, output_dir / "review")
+    assert any(row["local_label"] == "Measurement" for row in rows)
+    assert (output_dir / "review" / "mapping_review.csv").exists()

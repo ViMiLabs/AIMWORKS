@@ -71,62 +71,39 @@ def _repair_visuals_js(path: Path) -> bool:
     updated = content
 
     if "const CANONICAL_PREFIXES = [" not in updated:
-        prefix_block = """const CANONICAL_PREFIXES = [
-  ["https://w3id.org/h2kg/hydrogen-ontology#", "h2kg"],
-  ["http://purl.org/holy/ns#", "holy"],
-  ["https://w3id.org/emmo/domain/electrochemistry#", "electrochemistry"],
-  ["https://w3id.org/emmo/domain/pemfc#", "pemfc"],
-  ["https://w3id.org/emmo#", "emmo"],
-  ["http://qudt.org/schema/qudt/", "qudt"],
-  ["http://qudt.org/vocab/unit/", "unit"],
-  ["http://qudt.org/vocab/quantitykind/", "quantitykind"],
-  ["http://purl.obolibrary.org/obo/CHEBI_", "chebi"],
-  ["http://openenergy-platform.org/ontology/oeo/", "oeo"],
-];
-"""
-        updated, count = re.subn(
-            r'(^\s*const MAX_HISTORY = 40;\s*$)',
-            lambda match: f"{match.group(1)}\n\n{prefix_block}",
-            updated,
-            count=1,
-            flags=re.MULTILINE,
-        )
-        if count == 0:
-            updated = prefix_block + "\n" + updated
+        marker_match = re.search(r"(^|\n)(\s*const MAX_HISTORY = 40;\n)", updated)
+        if marker_match:
+            indent = re.match(r"\s*", marker_match.group(2)).group(0)
+            insert = (
+                f"{marker_match.group(2)}\n"
+                f"{indent}const CANONICAL_PREFIXES = [\n"
+                f'{indent}  ["https://w3id.org/h2kg/hydrogen-ontology#", "h2kg"],\n'
+                f'{indent}  ["http://purl.org/holy/ns#", "holy"],\n'
+                f'{indent}  ["https://w3id.org/emmo/domain/electrochemistry#", "electrochemistry"],\n'
+                f'{indent}  ["https://w3id.org/emmo/domain/pemfc#", "pemfc"],\n'
+                f'{indent}  ["https://w3id.org/emmo#", "emmo"],\n'
+                f'{indent}  ["http://qudt.org/schema/qudt/", "qudt"],\n'
+                f'{indent}  ["http://qudt.org/vocab/unit/", "unit"],\n'
+                f'{indent}  ["http://qudt.org/vocab/quantitykind/", "quantitykind"],\n'
+                f'{indent}  ["http://purl.obolibrary.org/obo/CHEBI_", "chebi"],\n'
+                f'{indent}  ["http://openenergy-platform.org/ontology/oeo/", "oeo"],\n'
+                f"{indent}];\n"
+            )
+            updated = updated.replace(marker_match.group(2), insert, 1)
 
     if "function canonicalQnameFromIri(" not in updated:
-        helper_block = """function canonicalQnameFromIri(iri, fallback = "") {
-  const value = String(iri || "");
-  for (const [base, prefix] of CANONICAL_PREFIXES.slice().sort((left, right) => right[0].length - left[0].length)) {
-    if (value.startsWith(base)) {
-      const local = value.slice(base.length);
-      return local ? `${prefix}:${local}` : `${prefix}:`;
-    }
-  }
-  return fallback || value;
-}
-
-function nodeQname(node) {
-  return canonicalQnameFromIri(node.iri, node.qname || "");
-}
-
-function linkLabel(link) {
-  return canonicalQnameFromIri(link.predicate, link.value || "");
-}
-"""
-        updated, count = re.subn(
-            r'(^\s*function levenshtein\(left, right\) \{\s*$)',
-            lambda match: f"{helper_block}\n{match.group(1)}",
-            updated,
-            count=1,
-            flags=re.MULTILINE,
-        )
-        if count == 0:
-            updated += "\n\n" + helper_block
+        marker_match = re.search(r"(^|\n)(\s*function levenshtein\(left, right\) \{\n)", updated)
+        insert = """function canonicalQnameFromIri(iri, fallback = "") {\n  const value = String(iri || "");\n  for (const [base, prefix] of CANONICAL_PREFIXES.slice().sort((left, right) => right[0].length - left[0].length)) {\n    if (value.startsWith(base)) {\n      const local = value.slice(base.length);\n      return local ? `${prefix}:${local}` : `${prefix}:`;\n    }\n  }\n  return /^ns\\d+:/.test(String(fallback || "")) ? (fallback || value) : (fallback || value);\n}\n\nfunction nodeQname(node) {\n  return canonicalQnameFromIri(node.iri, node.qname || "");\n}\n\nfunction linkLabel(link) {\n  return canonicalQnameFromIri(link.predicate, link.value || "");\n}\n\n"""
+        if marker_match:
+            indent = re.match(r"\s*", marker_match.group(2)).group(0)
+            indented_insert = "\n".join(f"{indent}{line}" if line else "" for line in insert.splitlines()) + "\n"
+            updated = updated.replace(marker_match.group(2), indented_insert + marker_match.group(2), 1)
+        else:
+            updated = insert + updated
 
     updated = updated.replace('"font-family": "Aptos, Gill Sans, Trebuchet MS, sans-serif",', '"font-family": "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",')
-    updated = updated.replace("const qname = normalize(node.qname);", "const qname = normalize(nodeQname(node));")
     updated = updated.replace("    const qname = normalize(node.qname);", "    const qname = normalize(nodeQname(node));")
+    updated = updated.replace("const qname = normalize(node.qname);", "const qname = normalize(nodeQname(node));")
     updated = updated.replace("          qname: node.qname,", "          qname: nodeQname(node),")
     updated = updated.replace('        label: showEdgeLabels ? link.value : "",', '        label: showEdgeLabels ? linkLabel(link) : "",')
     updated = updated.replace("${escapeHtml(node.localName || node.qname || node.iri)}", "${escapeHtml(node.localName || nodeQname(node) || node.iri)}")
