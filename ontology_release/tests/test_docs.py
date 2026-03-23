@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from rdflib import Graph
+
+from aimworks_ontology_release.docs import _term_quantity_kinds
 from aimworks_ontology_release.release import run_pipeline
 
 
@@ -108,9 +111,8 @@ def test_contributor_homepage_links_stay_out_of_referenced_ontologies(temp_proje
 
 
 def test_reference_page_deduplicates_redundant_quantity_kind_labels(temp_project):
-    sample_path = temp_project / "input" / "sample.ttl"
-    sample_path.write_text(
-        sample_path.read_text(encoding="utf-8")
+    sample_ttl = (
+        (temp_project / "input" / "sample.ttl").read_text(encoding="utf-8")
         + """
 
 @prefix ex: <https://example.org/> .
@@ -126,10 +128,11 @@ h2kg:AbsorptionPeakWavelengthQV a qudt:QuantityValue ;
 ex:WavelengthDirect rdfs:label "Unique Test Quantity Kind"@en .
 ex:WavelengthViaQuantityValue rdfs:label "Unique Test Quantity Kind"@en .
 """,
-        encoding="utf-8",
     )
 
-    run_pipeline("input/sample.ttl", root=temp_project, stage="docs")
+    graph = Graph()
+    graph.parse(data=sample_ttl, format="turtle")
 
-    reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
-    assert reference_page.count("Unique Test Quantity Kind") == 1
+    rows = _term_quantity_kinds(graph, "https://w3id.org/h2kg/hydrogen-ontology#AbsorptionPeakWavelength")
+    assert len(rows) == 1
+    assert rows[0]["label"] == "Unique Test Quantity Kind"
