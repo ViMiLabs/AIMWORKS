@@ -1537,7 +1537,8 @@ def _append_quantity_kind_rows(graph: Graph, subject: Any, rows: list[dict[str, 
             if isinstance(quantity_kind, URIRef)
             else _clean_text(quantity_kind)
         ) or humanize_identifier(local_name(quantity_kind))
-        key = f"{quantity_kind_iri}|{label}"
+        normalized_label = _clean_text(label).lower()
+        key = normalized_label or quantity_kind_iri
         if key in seen:
             continue
         seen.add(key)

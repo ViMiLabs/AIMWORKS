@@ -105,3 +105,31 @@ def test_contributor_homepage_links_stay_out_of_referenced_ontologies(temp_proje
     assert "https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence" in reference_page
     assert "<h3>Referenced ontologies</h3>" in reference_page
     assert "<li><a href=\"https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence\"><code>https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence</code></a></li>" not in reference_page
+
+
+def test_reference_page_deduplicates_redundant_quantity_kind_labels(temp_project):
+    sample_path = temp_project / "input" / "sample.ttl"
+    sample_path.write_text(
+        sample_path.read_text(encoding="utf-8")
+        + """
+
+@prefix ex: <https://example.org/> .
+
+h2kg:AbsorptionPeakWavelength a h2kg:NormalizationBasis ;
+  rdfs:label "Absorption Peak Wavelength"@en ;
+  qudt:quantityKind ex:WavelengthDirect ;
+  h2kg:hasQuantityValue h2kg:AbsorptionPeakWavelengthQV .
+
+h2kg:AbsorptionPeakWavelengthQV a qudt:QuantityValue ;
+  qudt:quantityKind ex:WavelengthViaQuantityValue .
+
+ex:WavelengthDirect rdfs:label "Unique Test Quantity Kind"@en .
+ex:WavelengthViaQuantityValue rdfs:label "Unique Test Quantity Kind"@en .
+""",
+        encoding="utf-8",
+    )
+
+    run_pipeline("input/sample.ttl", root=temp_project, stage="docs")
+
+    reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
+    assert reference_page.count("Unique Test Quantity Kind") == 1
