@@ -83,3 +83,25 @@ def test_docs_generation(temp_project):
     home_page = (temp_project / "output" / "docs" / "index.html").read_text(encoding="utf-8")
     assert "Current Access Patterns" in home_page
     assert "GitHub Releases and Packaging" in home_page
+
+
+def test_contributor_homepage_links_stay_out_of_referenced_ontologies(temp_project):
+    sample_path = temp_project / "input" / "sample.ttl"
+    sample_path.write_text(
+        sample_path.read_text(encoding="utf-8")
+        + """
+
+<https://w3id.org/h2kg/hydrogen-ontology>
+  <http://xmlns.com/foaf/0.1/homepage> <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
+  <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
+""",
+        encoding="utf-8",
+    )
+
+    run_pipeline("input/sample.ttl", root=temp_project, stage="docs")
+
+    reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
+    assert "Contributors" in reference_page
+    assert "https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence" in reference_page
+    assert "<h3>Referenced ontologies</h3>" in reference_page
+    assert "<li><a href=\"https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence\"><code>https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence</code></a></li>" not in reference_page

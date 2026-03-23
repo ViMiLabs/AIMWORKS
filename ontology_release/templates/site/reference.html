@@ -89,7 +89,7 @@
           {% for row in metadata_rows %}
           <tr>
             <th>{{ row.label }}</th>
-            <td>{% if row.href %}<a href="{{ row.href }}"><code>{{ row.value }}</code></a>{% else %}{{ row.value }}{% endif %}</td>
+            <td>{% if row.html %}{{ row.html | safe }}{% elif row.href %}<a href="{{ row.href }}"><code>{{ row.value }}</code></a>{% else %}{{ row.value }}{% endif %}</td>
           </tr>
           {% endfor %}
         </tbody>

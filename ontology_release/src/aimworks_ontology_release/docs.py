@@ -6,7 +6,7 @@ from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
 from rdflib import BNode, Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS
+from rdflib.namespace import DCTERMS, FOAF, OWL, RDF, RDFS, SKOS
 
 from .extract import collect_examples, extract_local_terms
 from .inspect import find_ontology_node
@@ -2001,6 +2001,29 @@ def _is_web_url(value: str) -> bool:
     return text.startswith("https://") or text.startswith("http://")
 
 
+def _looks_like_ontology_reference(value: str) -> bool:
+    text = _clean_text(value).lower()
+    if not _is_web_url(text):
+        return False
+    if any(token in text for token in ("fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence", "helmholtz-metadaten.de", "github.com/")):
+        return False
+    ontology_tokens = (
+        "w3id.org/emmo",
+        "w3id.org/h2kg",
+        "purl.org/holy",
+        "qudt.org",
+        "purl.obolibrary.org/obo",
+        "openenergy-platform.org/ontology",
+        "/ontology/",
+        "ontolog",
+        ".owl",
+        ".ttl",
+        ".rdf",
+        ".jsonld",
+    )
+    return any(token in text for token in ontology_tokens)
+
+
 def _href_html(href: str, label: str | None = None, code: bool = False) -> str:
     target = _clean_text(href)
     text = _clean_text(label or href)
@@ -2049,6 +2072,16 @@ def _stack_html(values: list[str], empty: str = "None") -> str:
     if not clean:
         return f"<span class='term-note'>{escape(empty)}</span>"
     return "<div class='term-stack'>" + "".join(f"<span>{escape(value)}</span>" for value in clean) + "</div>"
+
+
+def _metadata_list_html(values: list[str], links: list[str] | None = None) -> str:
+    parts = [escape(_clean_text(value)) for value in _clean_values(values)]
+    for link in _clean_values(links or []):
+        if _is_web_url(link):
+            parts.append(_href_html(link, link, code=True))
+        else:
+            parts.append(escape(_clean_text(link)))
+    return ", ".join(parts) or "Not recorded"
 
 
 def _status_html(label: str) -> str:
@@ -2189,12 +2222,14 @@ def build_docs(
     ontology_node = find_ontology_node(schema_graph, namespace_policy) or URIRef(namespace_policy["ontology_iri"])
     creators = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.creator)])
     contributors = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.contributor)])
+    homepage_links = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, FOAF.homepage)])
     imports = _clean_values([str(obj) for obj in schema_graph.objects(ontology_node, OWL.imports)])
     references = _clean_values(
         [str(obj) for obj in schema_graph.objects(ontology_node, DCTERMS.references)]
         + [str(obj) for obj in schema_graph.objects(ontology_node, RDFS.seeAlso)]
     )
-    referenced_ontologies = [item for item in references if item not in imports]
+    referenced_ontologies = [item for item in references if item not in imports and _looks_like_ontology_reference(item)]
+    contributor_links = _clean_values(homepage_links + [item for item in references if item not in imports and not _looks_like_ontology_reference(item)])
     namespace_rows, hidden_local_namespace_count = _public_namespace_rows(inspection_report, namespace_policy)
     mapping_stats = _mapping_stats(review_rows)
     placeholder_definition_count = _placeholder_definition_count(classes + properties + vocabulary_rows)
@@ -2358,7 +2393,7 @@ def build_docs(
         {"label": "Namespace mode", "value": namespace_policy["namespace_mode"]},
         {"label": "License", "value": release_profile["release"]["ontology_license"], "href": release_profile["release"]["ontology_license"] if _is_web_url(release_profile["release"]["ontology_license"]) else ""},
         {"label": "Creators", "value": ", ".join(creators) or "Not recorded"},
-        {"label": "Contributors", "value": ", ".join(contributors) or "Not recorded"},
+        {"label": "Contributors", "value": ", ".join(contributors) or "Not recorded", "html": _metadata_list_html(contributors, contributor_links)},
     ]
     repository_url = _clean_text(resources_cfg.get("repository_url", ""))
     releases_url = _join_url(repository_url, "releases") if repository_url else ""
