@@ -215,12 +215,11 @@
         <col class="term-col-class">
         <col class="term-col-quantity-kind">
         <col class="term-col-unit">
-        <col class="term-col-alt-labels">
         <col class="term-col-definition">
         <col class="term-col-mappings">
       </colgroup>
       <thead>
-        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Class</th><th>Quantity kind</th><th>Unit</th><th>Alternative labels</th><th>Definition</th><th>Mappings</th></tr>
+        <tr><th>Label</th><th>IRI</th><th>Status</th><th>Class</th><th>Quantity kind</th><th>Unit</th><th>Definition</th><th>Mappings</th></tr>
       </thead>
       <tbody>
         {% for row in vocabulary_rows %}
@@ -235,7 +234,6 @@
           <td class="cell-class">{{ row.class_label_html | safe }}</td>
           <td>{{ row.quantity_kinds_html | safe }}</td>
           <td>{{ row.units_html | safe }}</td>
-          <td>{{ row.alternative_labels_html | safe }}</td>
           <td><div class="term-copy term-copy--wide">{{ row.definition }}</div></td>
           <td>{{ row.mappings_html | safe }}</td>
         </tr>
@@ -261,12 +259,11 @@
         <col class="term-col-iri">
         <col class="term-col-class">
         <col class="term-col-quantity-kind">
-        <col class="term-col-alt-labels">
         <col class="term-col-decision">
         <col class="term-col-note">
       </colgroup>
       <thead>
-        <tr><th>Label</th><th>IRI</th><th>Class</th><th>Quantity kind</th><th>Alternative labels</th><th>Decision</th><th>Note</th></tr>
+        <tr><th>Label</th><th>IRI</th><th>Class</th><th>Quantity kind</th><th>Decision</th><th>Note</th></tr>
       </thead>
       <tbody>
         {% for row in unit_review_rows %}
@@ -275,7 +272,6 @@
           <td class="iri-cell"><a href="{{ row.iri }}"><code>{{ row.iri }}</code></a></td>
           <td class="cell-class"><span class="term-chip term-chip--class">{{ row.class_label }}</span></td>
           <td>{{ row.quantity_kinds_html | safe }}</td>
-          <td>{{ row.alternative_labels_html | safe }}</td>
           <td><div class="term-note">{{ row.decision }}</div></td>
           <td><div class="term-copy">{{ row.note }}</div></td>
         </tr>

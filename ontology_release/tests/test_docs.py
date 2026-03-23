@@ -65,7 +65,7 @@ def test_docs_generation(temp_project):
     assert "cytoscape.min.js" in visuals_page
     reference_page = (temp_project / "output" / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Controlled Vocabulary" in reference_page
-    assert "<th>Class</th><th>Quantity kind</th><th>Unit</th><th>Alternative labels</th>" in reference_page
+    assert "<th>Class</th><th>Quantity kind</th><th>Unit</th><th>Definition</th><th>Mappings</th>" in reference_page
     assert "Unit Review Notes" in reference_page
     assert "Referenced ontologies" in reference_page
     assert "https://w3id.org/battinfo" in reference_page
