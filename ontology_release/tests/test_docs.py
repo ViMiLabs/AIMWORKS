@@ -127,7 +127,7 @@ h2kg:AbsorptionPeakWavelengthQV a qudt:QuantityValue ;
 
 ex:WavelengthDirect rdfs:label "Unique Test Quantity Kind"@en .
 ex:WavelengthViaQuantityValue rdfs:label "Unique Test Quantity Kind"@en .
-""",
+"""
     )
 
     graph = Graph()
