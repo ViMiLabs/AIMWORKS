@@ -13,6 +13,13 @@ from .inspect import find_ontology_node
 from .utils import is_local_iri, write_json, write_text
 
 
+def _coverage_ratio(total: int, missing: int) -> float:
+    if total <= 0:
+        return 1.0
+    covered = max(total - missing, 0)
+    return round(covered / total, 4)
+
+
 def _run_pyshacl(data_graph: Graph, shapes_dir: Path) -> tuple[bool, list[str]]:
     if importlib.util.find_spec("pyshacl") is None:
         return False, ["pySHACL is not installed; SHACL checks were skipped."]
@@ -46,7 +53,10 @@ def _optional_check(status: str, details: str, extra: dict[str, Any] | None = No
 
 def _run_owl_consistency_check(schema_graph: Graph, controlled_vocabulary_graph: Graph, root: Path) -> dict[str, Any]:
     if importlib.util.find_spec("owlready2") is None:
-        return _optional_check("skipped", "owlready2 is not installed; OWL consistency loading and reasoner hooks were skipped.")
+        return _optional_check(
+            "skipped",
+            "Optional deeper OWL consistency checks were skipped because owlready2 is not installed in this environment.",
+        )
     try:
         from owlready2 import World
 
@@ -77,7 +87,10 @@ def _run_emmo_check() -> dict[str, Any]:
             "available",
             "EMMOntoPy-compatible tooling is available in the environment. Dedicated EMMO convention checks are prepared but not enforced by default in the core pipeline.",
         )
-    return _optional_check("skipped", "EMMOntoPy is not installed; optional EMMO convention checks were skipped.")
+    return _optional_check(
+        "skipped",
+        "Optional EMMO convention checks were skipped because EMMOntoPy is not installed in this environment.",
+    )
 
 
 def _safe_int(value: Any, default: int = 0) -> int:
@@ -153,7 +166,12 @@ def _foops_dimension_rows(checks: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return rows
 
 
-def _run_foops_assessment(schema_graph: Graph, release_profile: dict[str, Any], validation_cfg: dict[str, Any]) -> dict[str, Any]:
+def _run_foops_assessment(
+    schema_graph: Graph,
+    release_profile: dict[str, Any],
+    validation_cfg: dict[str, Any],
+    assessed_artifact: str = "merged asserted release",
+) -> dict[str, Any]:
     homepage_url = validation_cfg.get("foops_url", "https://foops.linkeddata.es/FAIR_validator.html")
     catalogue_url = validation_cfg.get("foops_catalogue_url", "https://w3id.org/foops/catalogue")
     if not validation_cfg.get("enable_foops", False):
@@ -205,7 +223,7 @@ def _run_foops_assessment(schema_graph: Graph, release_profile: dict[str, Any], 
         ][:12]
         overall_score = round(_safe_float(payload.get("overall_score")) * 100, 1)
         unassessed_dimensions = [row["dimension"] for row in dimension_rows if row["score"] is None]
-        details = f"FOOPS! assessment completed in {mode} mode with an overall score of {overall_score} / 100."
+        details = f"FOOPS! assessment completed in {mode} mode against the {assessed_artifact} with an overall score of {overall_score} / 100."
         if unassessed_dimensions:
             details += f" The following dimensions were not assessed in this mode: {', '.join(unassessed_dimensions)}."
         return _optional_check(
@@ -216,6 +234,7 @@ def _run_foops_assessment(schema_graph: Graph, release_profile: dict[str, Any], 
                 "service_endpoint": request_target,
                 "catalogue_url": catalogue_url,
                 "mode": mode,
+                "assessed_artifact": assessed_artifact,
                 "ontology_uri": payload.get("ontology_URI", target_uri),
                 "ontology_title": payload.get("ontology_title", ""),
                 "ontology_license": payload.get("ontology_license", ""),
@@ -228,18 +247,23 @@ def _run_foops_assessment(schema_graph: Graph, release_profile: dict[str, Any], 
         )
     except Exception as exc:
         return _optional_check(
-            "warning",
-            f"FOOPS! assessment could not be completed: {exc}",
+            "unavailable",
+            f"FOOPS! service unavailable or request failed while assessing the {assessed_artifact}: {exc}",
             {
                 "service_url": homepage_url,
                 "service_endpoint": request_target,
                 "catalogue_url": catalogue_url,
                 "mode": mode,
+                "assessed_artifact": assessed_artifact,
             },
         )
 
 
-def _run_oops_assessment(schema_graph: Graph, validation_cfg: dict[str, Any]) -> dict[str, Any]:
+def _run_oops_assessment(
+    schema_graph: Graph,
+    validation_cfg: dict[str, Any],
+    assessed_artifact: str = "merged asserted release",
+) -> dict[str, Any]:
     homepage_url = validation_cfg.get("oops_homepage_url", "https://oops.linkeddata.es/")
     service_url = validation_cfg.get("oops_url", "https://oops.linkeddata.es/rest")
     if not validation_cfg.get("enable_oops", False):
@@ -299,11 +323,24 @@ def _run_oops_assessment(schema_graph: Graph, validation_cfg: dict[str, Any]) ->
             if title:
                 messages.append(title)
             messages.extend(detail_lines)
-        details = f"OOPS! assessed the ontology and reported {len(pitfalls)} pitfalls."
+        details = f"OOPS! assessed the {assessed_artifact} and reported {len(pitfalls)} pitfalls."
         if messages and len(pitfalls) == 0:
-            details = " ".join(messages[:2])
+            joined_messages = " ".join(messages[:2]).strip()
+            if any(token in joined_messages.lower() for token in ["something went wrong", "unexpected error", "internal error", "service unavailable"]):
+                return _optional_check(
+                    "unavailable",
+                    f"OOPS! returned a service error while assessing the {assessed_artifact}: {joined_messages}",
+                    {
+                        "service_url": homepage_url,
+                        "service_endpoint": service_url,
+                        "messages": messages[:6],
+                        "assessed_artifact": assessed_artifact,
+                    },
+                )
+            if joined_messages:
+                details = joined_messages
         return _optional_check(
-            "assessed" if pitfalls or not messages else "warning",
+            "assessed",
             details,
             {
                 "service_url": homepage_url,
@@ -312,13 +349,14 @@ def _run_oops_assessment(schema_graph: Graph, validation_cfg: dict[str, Any]) ->
                 "pitfalls": pitfalls[:20],
                 "severity_counts": dict(sorted(severity_counts.items())),
                 "messages": messages[:6],
+                "assessed_artifact": assessed_artifact,
             },
         )
     except Exception as exc:
         return _optional_check(
-            "warning",
-            f"OOPS! assessment could not be completed: {exc}",
-            {"service_url": homepage_url, "service_endpoint": service_url},
+            "unavailable",
+            f"OOPS! service unavailable or request failed while assessing the {assessed_artifact}: {exc}",
+            {"service_url": homepage_url, "service_endpoint": service_url, "assessed_artifact": assessed_artifact},
         )
 
 
@@ -384,6 +422,10 @@ def validate_release(
     for graph in (schema_graph, controlled_vocabulary_graph):
         for triple in graph:
             data_graph.add(triple)
+    combined_asserted_graph = Graph()
+    for graph in (schema_graph, controlled_vocabulary_graph, alignments_graph):
+        for triple in graph:
+            combined_asserted_graph.add(triple)
     ontology_node = find_ontology_node(schema_graph, namespace_policy)
     terms = extract_local_terms(data_graph, namespace_policy, classifications)
     missing_labels = [term.iri for term in terms if not list(data_graph.objects(URIRef(term.iri), RDFS.label))]
@@ -421,12 +463,21 @@ def validate_release(
     owl_consistency = _run_owl_consistency_check(schema_graph, controlled_vocabulary_graph, root)
     emmo_checks = _run_emmo_check()
     validation_cfg = release_profile.get("validation", {})
-    oops_checks = _run_oops_assessment(schema_graph, validation_cfg)
-    foops_checks = _run_foops_assessment(schema_graph, release_profile, validation_cfg)
+    oops_checks = _run_oops_assessment(combined_asserted_graph, validation_cfg, assessed_artifact="merged asserted release candidate")
+    foops_checks = _run_foops_assessment(
+        combined_asserted_graph,
+        release_profile,
+        validation_cfg,
+        assessed_artifact="merged asserted release candidate",
+    )
     resolver_checks = _resolver_check_rows(namespace_policy, release_profile, root)
+    release_term_count = len(terms)
     report = {
         "syntax_ok": True,
         "metadata_missing": metadata_missing,
+        "release_term_count": release_term_count,
+        "release_label_coverage": _coverage_ratio(release_term_count, len(missing_labels)),
+        "release_definition_coverage": _coverage_ratio(release_term_count, len(missing_definitions)),
         "missing_label_count": len(missing_labels),
         "missing_definition_count": len(missing_definitions),
         "mapping_issues": mapping_issues,
@@ -489,15 +540,21 @@ def write_validation_outputs(report: dict[str, Any], root: Path) -> None:
             "",
         ]
     )
-    if "pitfall_count" in oops_checks:
+    if oops_checks.get("status") == "assessed" and "pitfall_count" in oops_checks:
         lines.append(f"- OOPS! pitfall count: **{oops_checks['pitfall_count']}**")
         for importance, count in sorted(oops_checks.get("severity_counts", {}).items()):
             lines.append(f"- OOPS! {importance}: {count}")
-    if "overall_score" in foops_checks:
+    if foops_checks.get("status") == "assessed" and "overall_score" in foops_checks:
         lines.append(f"- FOOPS! overall score: **{foops_checks['overall_score']} / 100**")
         for row in foops_checks.get("dimension_scores", []):
             score = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
             lines.append(f"- FOOPS! {row['acronym']} ({row['dimension']}): {score}")
+        for row in foops_checks.get("failed_checks", []):
+            identifier = str(row.get("abbreviation") or row.get("category") or "check").strip()
+            title = str(row.get("title") or "Unnamed FOOPS! check").strip()
+            explanation = str(row.get("explanation") or "").strip()
+            detail = f"{title}. {explanation}".strip()
+            lines.append(f"- FOOPS! follow-up {identifier}: {detail}")
     if foops_checks.get("catalogue_url"):
         lines.append(f"- FOOPS! test catalogue: {foops_checks['catalogue_url']}")
     lines.extend(

@@ -2042,6 +2042,227 @@ def _join_url(base: str, suffix: str) -> str:
     return f"{root}/{tail}"
 
 
+def _external_assessment_value(status: str) -> str:
+    normalized = _clean_text(status).lower()
+    mapping = {
+        "assessed": "assessed",
+        "reachable": "reachable",
+        "available": "available",
+        "loaded": "loaded",
+        "disabled": "disabled",
+        "skipped": "skipped",
+        "unavailable": "service unavailable",
+        "not_reported": "not reported",
+    }
+    return mapping.get(normalized, _clean_text(status) or "unknown")
+
+
+def _external_assessment_status(status: str) -> str:
+    normalized = _clean_text(status).lower()
+    if normalized in {"assessed", "reachable", "available", "loaded"}:
+        return "good"
+    return "watch"
+
+
+def _build_foops_dashboard_rows(foops_external: dict[str, Any]) -> list[dict[str, str]]:
+    status_value = _clean_text(foops_external.get("status", "not_reported"))
+    if status_value != "assessed" or foops_external.get("overall_score") is None:
+        detail = _clean_text(foops_external.get("details", "No FOOPS! result was recorded."))
+        if foops_external.get("service_url"):
+            detail += f" Validator: {_href_html(foops_external['service_url'], foops_external['service_url'], code=True)}."
+        if foops_external.get("catalogue_url"):
+            detail += f" Catalogue: {_href_html(foops_external['catalogue_url'], foops_external['catalogue_url'], code=True)}."
+        return [
+            {
+                "label": "FOOPS! assessment",
+                "value": _external_assessment_value(status_value),
+                "status": _external_assessment_status(status_value),
+                "detail": detail.strip(),
+            }
+        ]
+
+    rows: list[dict[str, str]] = [
+        {
+            "label": "FOOPS! overall",
+            "value": f"{foops_external['overall_score']} / 100",
+            "status": _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7),
+            "detail": (
+                f"Actual FOOPS! assessment in {_clean_text(foops_external.get('mode', 'unspecified')) or 'unspecified'} mode "
+                f"against the {_clean_text(foops_external.get('assessed_artifact', 'merged asserted release'))}. "
+                + (
+                    f"Validator: {_href_html(foops_external['service_url'], foops_external['service_url'], code=True)}. "
+                    if foops_external.get("service_url")
+                    else ""
+                )
+                + (
+                    f"Catalogue: {_href_html(foops_external['catalogue_url'], foops_external['catalogue_url'], code=True)}."
+                    if foops_external.get("catalogue_url")
+                    else ""
+                )
+            ).strip(),
+        }
+    ]
+    for row in foops_external.get("dimension_scores", []):
+        value = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
+        detail = "Returned directly by the FOOPS! service."
+        if row.get("score") is None and _clean_text(foops_external.get("mode", "")).lower() == "file" and row.get("dimension") == "Accessible":
+            detail = "Returned directly by the FOOPS! service. File mode cannot assess live web accessibility or content negotiation."
+        rows.append(
+            {
+                "label": f"FOOPS! {row.get('acronym', row['dimension'][:1])} / {row['dimension']}",
+                "value": value,
+                "status": "watch" if row.get("score") is None else _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7),
+                "detail": detail,
+            }
+        )
+    for failed in foops_external.get("failed_checks", []):
+        identifier = _clean_text(failed.get("abbreviation") or failed.get("category") or "check")
+        title = _clean_text(failed.get("title") or "Unnamed FOOPS! check")
+        explanation = _clean_text(failed.get("explanation") or "")
+        detail = f"{title}. {explanation}".strip()
+        rows.append(
+            {
+                "label": f"FOOPS! follow-up {identifier}",
+                "value": _external_assessment_value(_clean_text(failed.get("status") or "requires_attention")),
+                "status": "action",
+                "detail": detail,
+            }
+        )
+    return rows
+
+
+def _build_oops_dashboard_rows(oops_external: dict[str, Any]) -> list[dict[str, str]]:
+    status_value = _clean_text(oops_external.get("status", "not_reported"))
+    if status_value != "assessed" or oops_external.get("pitfall_count") is None:
+        detail = _clean_text(oops_external.get("details", "No OOPS! result was recorded."))
+        if oops_external.get("service_url"):
+            detail += f" Service: {_href_html(oops_external['service_url'], oops_external['service_url'], code=True)}."
+        return [
+            {
+                "label": "OOPS! assessment",
+                "value": _external_assessment_value(status_value),
+                "status": _external_assessment_status(status_value),
+                "detail": detail.strip(),
+            }
+        ]
+
+    rows: list[dict[str, str]] = [
+        {
+            "label": "OOPS! pitfall count",
+            "value": str(oops_external["pitfall_count"]),
+            "status": _status_for_count(int(oops_external["pitfall_count"])),
+            "detail": (
+                f"{_clean_text(oops_external.get('details', ''))} "
+                + (
+                    f"Service: {_href_html(oops_external['service_url'], oops_external['service_url'], code=True)}."
+                    if oops_external.get("service_url")
+                    else ""
+                )
+            ).strip(),
+        }
+    ]
+    for level, count in sorted(oops_external.get("severity_counts", {}).items()):
+        rows.append(
+            {
+                "label": f"OOPS! {level}",
+                "value": str(count),
+                "status": _status_for_count(int(count)),
+                "detail": "Pitfalls grouped by the importance level returned by OOPS!.",
+            }
+        )
+    return rows
+
+
+def _build_publication_rows(root: Path, output_dir: Path, release_profile: dict[str, Any], build_stage: str) -> list[dict[str, str]]:
+    release_bundle_manifest = root / "output" / "release_bundle" / "manifest.json"
+    rows = [
+        {
+            "label": "HTML reference page",
+            "value": "ready" if (output_dir / release_profile["publication"]["reference_page"]).exists() else "missing",
+            "status": _status_for_flag((output_dir / release_profile["publication"]["reference_page"]).exists()),
+            "detail": "Human-readable reference page generated for the current publication build.",
+        },
+        {
+            "label": "Machine-readable source",
+            "value": "ready" if (root / "output" / "ontology" / "schema.ttl").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "schema.ttl").exists()),
+            "detail": "Core asserted schema serialization emitted by the release pipeline.",
+        },
+        {
+            "label": "Merged asserted release",
+            "value": "ready" if (root / "output" / "ontology" / "asserted.ttl").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "asserted.ttl").exists()),
+            "detail": "Merged asserted release candidate used for packaging and external assessments.",
+        },
+        {
+            "label": "Inferred serialization",
+            "value": "ready" if (root / "output" / "ontology" / "inferred.ttl").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "inferred.ttl").exists()),
+            "detail": "Inferred serialization for exploration and downstream review.",
+        },
+        {
+            "label": "Full inferred release",
+            "value": "ready" if (root / "output" / "ontology" / "full_inferred.ttl").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "full_inferred.ttl").exists()),
+            "detail": "Merged asserted graph plus inferred closure for engineering inspection.",
+        },
+        {
+            "label": "JSON-LD context",
+            "value": "ready" if (root / "output" / "ontology" / "context.jsonld").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "context.jsonld").exists()),
+            "detail": "JSON-LD context generated for linked-data clients.",
+        },
+        {
+            "label": "Catalog-v001",
+            "value": "ready" if (root / "output" / "ontology" / "catalog-v001.xml").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "catalog-v001.xml").exists()),
+            "detail": "XML catalog for stable local import resolution during development.",
+        },
+        {
+            "label": "Generated modules",
+            "value": "ready" if (root / "output" / "ontology" / "modules").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "ontology" / "modules").exists()),
+            "detail": "Generated module views used in the engineering and documentation outputs.",
+        },
+    ]
+    if release_bundle_manifest.exists():
+        rows.append(
+            {
+                "label": "Release bundle",
+                "value": "ready",
+                "status": "good",
+                "detail": "Packaged release bundle with ontology files, reports, docs, and publication tree.",
+            }
+        )
+    elif build_stage in {"docs", "fair"}:
+        rows.append(
+            {
+                "label": "Release bundle",
+                "value": "not built in docs-only run",
+                "status": "watch",
+                "detail": "The docs/pages workflow does not package output/release_bundle. Run release-all or the ontology release workflow to generate it.",
+            }
+        )
+    else:
+        rows.append(
+            {
+                "label": "Release bundle",
+                "value": "missing",
+                "status": "action",
+                "detail": "Release packaging was expected for this build, but output/release_bundle/manifest.json was not produced.",
+            }
+        )
+    rows.append(
+        {
+            "label": "w3id artifacts",
+            "value": "ready" if (root / "output" / "w3id" / ".htaccess").exists() else "missing",
+            "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists()),
+            "detail": "Redirect templates and content-negotiation support files for stable publishing.",
+        }
+    )
+    return rows
+
+
 def _pill_list_html(items: list[str], modifier: str = "") -> str:
     if not items:
         return "<span class='term-note'>—</span>"
@@ -2117,6 +2338,7 @@ def build_docs(
     source_registry: dict[str, Any],
     namespace_policy_raw: dict[str, Any],
     root: Path,
+    build_stage: str = "release",
 ) -> None:
     output_dir = root / "output" / "docs"
     pages_dir = ensure_dir(output_dir / "pages")
@@ -2297,8 +2519,8 @@ def build_docs(
     transparency_signals = [
         {
             "label": row["label"],
-            "value": row["status"],
-            "status": "good" if row["status"] in {"reachable", "assessed"} else "watch",
+            "value": _external_assessment_value(row["status"]),
+            "status": _external_assessment_status(row["status"]),
             "detail": (
                 f"{row['details']} "
                 + (
@@ -2316,73 +2538,17 @@ def build_docs(
         }
         for row in fair_scores.get("transparency_checks", [])
     ]
-    external_fair_rows: list[dict[str, str]] = []
-    if foops_external.get("overall_score") is not None:
-        external_fair_rows.append(
-            {
-                "label": "FOOPS! overall",
-                "value": f"{foops_external['overall_score']} / 100",
-                "status": _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7),
-                "detail": (
-                    f"Actual FOOPS! assessment in {foops_external.get('mode', 'unspecified')} mode. "
-                    + (
-                        f"Validator: {_href_html(foops_external['service_url'], foops_external['service_url'], code=True)}. "
-                        if foops_external.get("service_url")
-                        else ""
-                    )
-                    + (
-                        f"Catalogue: {_href_html(foops_external['catalogue_url'], foops_external['catalogue_url'], code=True)}."
-                        if foops_external.get("catalogue_url")
-                        else ""
-                    )
-                ),
-            }
-        )
-        for row in foops_external.get("dimension_scores", []):
-            row_status = "watch" if row.get("score") is None else _status_for_ratio(float(row["score"]) / 100.0, 0.85, 0.7)
-            value = "not assessed" if row.get("score") is None else f"{row['score']} / 100"
-            external_fair_rows.append(
-                {
-                    "label": f"FOOPS! {row.get('acronym', row['dimension'][:1])} / {row['dimension']}",
-                    "value": value,
-                    "status": row_status,
-                    "detail": "Returned directly by the FOOPS! service.",
-                }
-            )
-    oops_rows: list[dict[str, str]] = []
-    if oops_external.get("pitfall_count") is not None:
-        oops_rows.append(
-            {
-                "label": "OOPS! pitfall count",
-                "value": str(oops_external["pitfall_count"]),
-                "status": _status_for_count(int(oops_external["pitfall_count"])),
-                "detail": (
-                    f"{oops_external.get('details', '')} "
-                    + (
-                        f"Service: {_href_html(oops_external['service_url'], oops_external['service_url'], code=True)}."
-                        if oops_external.get("service_url")
-                        else ""
-                    )
-                ),
-            }
-        )
-        for level, count in sorted(oops_external.get("severity_counts", {}).items()):
-            oops_rows.append(
-                {
-                    "label": f"OOPS! {level}",
-                    "value": str(count),
-                    "status": _status_for_count(int(count)),
-                    "detail": "Pitfalls grouped by the importance level returned by OOPS!.",
-                }
-            )
+    external_fair_rows = _build_foops_dashboard_rows(foops_external)
+    oops_rows = _build_oops_dashboard_rows(oops_external)
     quality_signals = fair_dimension_signals + [
         {"label": "Source definition coverage", "value": f"{baseline_definition_coverage * 100:.1f}%", "status": _status_for_ratio(baseline_definition_coverage, 0.85, 0.6), "detail": "Coverage in the original mixed ontology before enrichment."},
+        {"label": "Release definition coverage", "value": f"{float(validation_report.get('release_definition_coverage', 0.0)) * 100:.1f}%", "status": _status_for_ratio(float(validation_report.get("release_definition_coverage", 0.0)), 0.85, 0.6), "detail": "Coverage on the enriched release graph after conservative metadata and annotation upgrades."},
         {"label": "Release missing definitions", "value": str(validation_report["missing_definition_count"]), "status": _status_for_count(int(validation_report["missing_definition_count"])), "detail": "Structural completeness after enrichment and validation."},
         {"label": "Generated annotations", "value": str(metadata_report.get("generated_annotations", 0)), "status": "watch" if metadata_report.get("generated_annotations", 0) else "good", "detail": "Generated annotations improve coverage but still require expert review."},
         {"label": "Hidden local file namespaces", "value": str(hidden_local_namespace_count), "status": "watch" if hidden_local_namespace_count else "good", "detail": "Local file-based namespaces are removed from the public namespace table."},
         {"label": "Placeholder-style definitions", "value": str(placeholder_definition_count), "status": "watch" if placeholder_definition_count else "good", "detail": "Generated definitions that still need editorial improvement."},
-        {"label": "FOOPS! overall", "value": "not assessed" if foops_external.get("overall_score") is None else f"{foops_external['overall_score']} / 100", "status": "watch" if foops_external.get("overall_score") is None else _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7), "detail": foops_external.get("details", "No FOOPS! result was recorded.")},
-        {"label": "OOPS! pitfalls", "value": "not assessed" if oops_external.get("pitfall_count") is None else str(oops_external["pitfall_count"]), "status": "watch" if oops_external.get("pitfall_count") is None else _status_for_count(int(oops_external["pitfall_count"])), "detail": oops_external.get("details", "No OOPS! result was recorded.")},
+        {"label": "FOOPS! overall", "value": "not assessed" if foops_external.get("status") != "assessed" or foops_external.get("overall_score") is None else f"{foops_external['overall_score']} / 100", "status": "watch" if foops_external.get("status") != "assessed" or foops_external.get("overall_score") is None else _status_for_ratio(float(foops_external["overall_score"]) / 100.0, 0.85, 0.7), "detail": foops_external.get("details", "No FOOPS! result was recorded.")},
+        {"label": "OOPS! pitfalls", "value": "not assessed" if oops_external.get("status") != "assessed" or oops_external.get("pitfall_count") is None else str(oops_external["pitfall_count"]), "status": "watch" if oops_external.get("status") != "assessed" or oops_external.get("pitfall_count") is None else _status_for_count(int(oops_external["pitfall_count"])), "detail": oops_external.get("details", "No OOPS! result was recorded.")},
         {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
         {"label": "w3id artifacts ready", "value": "Yes" if (root / "output" / "w3id" / ".htaccess").exists() else "No", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists()), "detail": "Redirect templates and content-negotiation notes are available."},
     ] + transparency_signals
@@ -2668,18 +2834,7 @@ def build_docs(
 
     release_template = env.get_template("release.html")
     release_files = [str(path.relative_to(root / "output")) for path in sorted((root / "output").rglob("*")) if path.is_file()]
-    publication_rows = [
-        {"label": "HTML reference page", "value": "ready" if (output_dir / release_profile["publication"]["reference_page"]).exists() else "missing", "status": _status_for_flag((output_dir / release_profile["publication"]["reference_page"]).exists())},
-        {"label": "Machine-readable source", "value": "ready" if (root / "output" / "ontology" / "schema.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "schema.ttl").exists())},
-        {"label": "Merged asserted release", "value": "ready" if (root / "output" / "ontology" / "asserted.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "asserted.ttl").exists())},
-        {"label": "Inferred serialization", "value": "ready" if (root / "output" / "ontology" / "inferred.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "inferred.ttl").exists())},
-        {"label": "Full inferred release", "value": "ready" if (root / "output" / "ontology" / "full_inferred.ttl").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "full_inferred.ttl").exists())},
-        {"label": "JSON-LD context", "value": "ready" if (root / "output" / "ontology" / "context.jsonld").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "context.jsonld").exists())},
-        {"label": "Catalog-v001", "value": "ready" if (root / "output" / "ontology" / "catalog-v001.xml").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "catalog-v001.xml").exists())},
-        {"label": "Generated modules", "value": "ready" if (root / "output" / "ontology" / "modules").exists() else "missing", "status": _status_for_flag((root / "output" / "ontology" / "modules").exists())},
-        {"label": "Release bundle", "value": "ready" if (root / "output" / "release_bundle" / "manifest.json").exists() else "missing", "status": _status_for_flag((root / "output" / "release_bundle" / "manifest.json").exists())},
-        {"label": "w3id artifacts", "value": "ready" if (root / "output" / "w3id" / ".htaccess").exists() else "missing", "status": _status_for_flag((root / "output" / "w3id" / ".htaccess").exists())},
-    ]
+    publication_rows = _build_publication_rows(root, output_dir, release_profile, build_stage)
     write_text(
         pages_dir / "release.html",
         release_template.render(
@@ -3438,8 +3593,8 @@ ex:run-001 a h2kg:Measurement ;
             {"label": "Mapping issues", "value": str(len(validation_report["mapping_issues"])), "status": _status_for_count(len(validation_report["mapping_issues"])), "detail": "Mappings that conflict with local term typing."},
             {"label": "OWL consistency hook", "value": validation_report["owl_consistency"]["status"], "status": "good" if validation_report["owl_consistency"]["status"] in {"loaded", "available"} else "watch", "detail": validation_report["owl_consistency"]["details"]},
             {"label": "EMMO checks", "value": validation_report["emmo_checks"]["status"], "status": "good" if validation_report["emmo_checks"]["status"] == "available" else "watch", "detail": validation_report["emmo_checks"]["details"]},
-            {"label": "OOPS! hook", "value": validation_report["oops_checks"]["status"], "status": "good" if validation_report["oops_checks"]["status"] in {"reachable", "assessed"} else "watch", "detail": validation_report["oops_checks"]["details"]},
-            {"label": "FOOPS! hook", "value": validation_report["foops_checks"]["status"], "status": "good" if validation_report["foops_checks"]["status"] in {"reachable", "assessed"} else "watch", "detail": validation_report["foops_checks"]["details"]},
+            {"label": "OOPS! hook", "value": _external_assessment_value(validation_report["oops_checks"]["status"]), "status": _external_assessment_status(validation_report["oops_checks"]["status"]), "detail": validation_report["oops_checks"]["details"]},
+            {"label": "FOOPS! hook", "value": _external_assessment_value(validation_report["foops_checks"]["status"]), "status": _external_assessment_status(validation_report["foops_checks"]["status"]), "detail": validation_report["foops_checks"]["details"]},
         ],
         "hygiene_rows": [
             {"label": "Preferred prefix in public table", "value": namespace_policy["preferred_namespace_prefix"], "status": "good", "detail": "Public docs normalize the preferred namespace prefix for the local ontology."},

@@ -29,6 +29,7 @@ def compute_fair_scores(root: Path) -> dict[str, Any]:
     has_version_info = bool(ontology_node and list(schema_graph.objects(ontology_node, OWL.versionInfo)))
     has_license = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.license)))
     has_provenance = bool(ontology_node and list(schema_graph.objects(ontology_node, DCTERMS.source)))
+    release_definition_coverage = float(validation.get("release_definition_coverage", inspection["definition_coverage"]))
 
     findable = sum(
         [
@@ -45,7 +46,7 @@ def compute_fair_scores(root: Path) -> dict[str, Any]:
         [
             25 if has_license else 0,
             20 if has_provenance or citation_ready else 0,
-            20 if inspection["definition_coverage"] >= 0.6 else 0,
+            20 if release_definition_coverage >= 0.6 else 0,
             20 if has_version_info else 0,
             15 if examples_ready else 0,
         ]

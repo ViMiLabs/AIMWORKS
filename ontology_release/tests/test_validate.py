@@ -42,6 +42,12 @@ def test_validation_runs(sample_graph, classifications, configs, package_root):
     assert report["overall_status"] in {"pass", "warning"}
     assert "owl_consistency" in report
     assert "resolver_checks" in report
+    assert report["release_term_count"] >= 0
+    assert report["release_definition_coverage"] == (
+        round((report["release_term_count"] - report["missing_definition_count"]) / report["release_term_count"], 4)
+        if report["release_term_count"]
+        else 1.0
+    )
 
 
 def test_foops_dimension_rows_aggregate() -> None:

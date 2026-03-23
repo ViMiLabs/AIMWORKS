@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from rdflib import Graph
 
-from aimworks_ontology_release.docs import _term_quantity_kinds
+from aimworks_ontology_release.docs import _build_foops_dashboard_rows, _build_oops_dashboard_rows, _term_quantity_kinds
 from aimworks_ontology_release.release import run_pipeline
 
 
@@ -58,6 +58,10 @@ def test_docs_generation(temp_project):
     quality_page = (temp_project / "output" / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
     assert "https://oops.linkeddata.es/" in quality_page
     assert "https://foops.linkeddata.es/FAIR_validator.html" in quality_page
+    assert "These are local, reproducible F/A/I/R scores computed from the generated release artifacts." in quality_page
+    assert "FOOPS! evaluates FAIR maturity against the generated merged asserted release." in quality_page
+    assert "OOPS! scans the generated merged asserted release for ontology modeling pitfalls" in quality_page
+    assert "not built in docs-only run" in quality_page
     visuals_page = (temp_project / "output" / "docs" / "pages" / "visualizations.html").read_text(encoding="utf-8")
     assert "Ontology Explorer" in visuals_page
     assert "data-visual-explorer" in visuals_page
@@ -86,6 +90,8 @@ def test_docs_generation(temp_project):
     home_page = (temp_project / "output" / "docs" / "index.html").read_text(encoding="utf-8")
     assert "Current Access Patterns" in home_page
     assert "GitHub Releases and Packaging" in home_page
+    fair_report = (temp_project / "output" / "reports" / "fair_readiness_report.md").read_text(encoding="utf-8")
+    assert "- R (Reusable): 100 / 100" in fair_report
 
 
 def test_contributor_homepage_links_stay_out_of_referenced_ontologies(temp_project):
@@ -136,3 +142,58 @@ ex:WavelengthViaQuantityValue rdfs:label "Unique Test Quantity Kind"@en .
     rows = _term_quantity_kinds(graph, "https://w3id.org/h2kg/hydrogen-ontology#AbsorptionPeakWavelength")
     assert len(rows) == 1
     assert rows[0]["label"] == "Unique Test Quantity Kind"
+
+
+def test_external_dashboard_rows_show_unavailable_services_without_fake_counts() -> None:
+    foops_rows = _build_foops_dashboard_rows(
+        {
+            "status": "unavailable",
+            "details": "FOOPS! service unavailable or request failed while assessing the merged asserted release candidate.",
+            "service_url": "https://foops.linkeddata.es/FAIR_validator.html",
+            "catalogue_url": "https://w3id.org/foops/catalogue",
+        }
+    )
+    assert foops_rows[0]["label"] == "FOOPS! assessment"
+    assert foops_rows[0]["value"] == "service unavailable"
+    assert foops_rows[0]["status"] == "watch"
+
+    oops_rows = _build_oops_dashboard_rows(
+        {
+            "status": "unavailable",
+            "details": "OOPS! returned a service error while assessing the merged asserted release candidate.",
+            "service_url": "https://oops.linkeddata.es/",
+        }
+    )
+    assert oops_rows[0]["label"] == "OOPS! assessment"
+    assert oops_rows[0]["value"] == "service unavailable"
+    assert oops_rows[0]["status"] == "watch"
+
+
+def test_foops_dashboard_rows_expose_failed_checks() -> None:
+    rows = _build_foops_dashboard_rows(
+        {
+            "status": "assessed",
+            "overall_score": 47.8,
+            "mode": "file",
+            "assessed_artifact": "merged asserted release candidate",
+            "service_url": "https://foops.linkeddata.es/FAIR_validator.html",
+            "catalogue_url": "https://w3id.org/foops/catalogue",
+            "dimension_scores": [
+                {"acronym": "F", "dimension": "Findable", "score": 60.0},
+                {"acronym": "A", "dimension": "Accessible", "score": None},
+            ],
+            "failed_checks": [
+                {
+                    "abbreviation": "F2",
+                    "category": "Findable",
+                    "title": "Persistent identifier metadata",
+                    "status": "error",
+                    "explanation": "The submitted file does not expose a persistent resolver endpoint in file mode.",
+                }
+            ],
+        }
+    )
+    assert any(row["label"] == "FOOPS! follow-up F2" for row in rows)
+    accessible_row = next(row for row in rows if row["label"] == "FOOPS! A / Accessible")
+    assert accessible_row["value"] == "not assessed"
+    assert "File mode cannot assess live web accessibility" in accessible_row["detail"]

@@ -20,6 +20,7 @@
 <section class="check-grid">
   <article class="check-card">
     <h2>FAIR Signals</h2>
+    <p>These are local, reproducible F/A/I/R scores computed from the generated release artifacts. They are separate from optional external web-service checks.</p>
     <ul class="simple-list">
       {% for row in fair_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -28,6 +29,7 @@
   </article>
   <article class="check-card">
     <h2>Transparency Hooks</h2>
+    <p>These optional external services add extra signal, but they are not folded into the base FAIR score because they depend on network reachability and third-party behavior.</p>
     <ul class="simple-list">
       {% for row in transparency_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -36,6 +38,7 @@
   </article>
   <article class="check-card">
     <h2>FOOPS! Assessment</h2>
+    <p>FOOPS! evaluates FAIR maturity against the generated merged asserted release. In file mode, live web accessibility checks are not assessed.</p>
     <ul class="simple-list">
       {% for row in external_fair_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -46,6 +49,7 @@
   </article>
   <article class="check-card">
     <h2>OOPS! Pitfalls</h2>
+    <p>OOPS! scans the generated merged asserted release for ontology modeling pitfalls when the external service is reachable and returns a valid result.</p>
     <ul class="simple-list">
       {% for row in oops_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -56,6 +60,7 @@
   </article>
   <article class="check-card">
     <h2>Validation Signals</h2>
+    <p>These are local release checks run directly in the pipeline across metadata, namespaces, mappings, SHACL, and optional tooling hooks.</p>
     <ul class="simple-list">
       {% for row in validation_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -64,6 +69,7 @@
   </article>
   <article class="check-card">
     <h2>Metadata and Hygiene</h2>
+    <p>These checks summarize annotation coverage, placeholder text, prefix hygiene, and declared ontology dependencies after the release rewrite.</p>
     <ul class="simple-list">
       {% for row in hygiene_rows %}
       <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
@@ -72,9 +78,10 @@
   </article>
   <article class="check-card">
     <h2>Publication Assets</h2>
+    <p>These rows describe which publication and packaging artifacts were produced by the current build stage.</p>
     <ul class="simple-list">
       {% for row in publication_rows %}
-      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}</li>
+      <li><span class="status-pill status-{{ row.status }}">{{ row.status | upper }}</span> <strong>{{ row.label }}</strong>: {{ row.value }}. {{ row.detail }}</li>
       {% endfor %}
     </ul>
   </article>

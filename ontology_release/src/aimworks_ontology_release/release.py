@@ -454,6 +454,7 @@ def run_pipeline(
         configs["source_ontologies"],
         configs["namespace_policy_raw"],
         root,
+        build_stage=stage,
     )
 
     fair_scores = compute_fair_scores(root)
@@ -473,6 +474,7 @@ def run_pipeline(
         configs["source_ontologies"],
         configs["namespace_policy_raw"],
         root,
+        build_stage=stage,
     )
     build_publication_layout(root, configs["release_profile"], configs["namespace_policy"], context_payload)
     if stage == "docs":
@@ -486,6 +488,24 @@ def run_pipeline(
     if stage == "fair":
         return {"fair_scores": fair_scores, "unit_enrichment_report": unit_report, "battinfo_overlap_report": battinfo_overlap_report}
 
+    _build_release_bundle(root, configs["release_profile"])
+    build_docs(
+        split_graphs["schema"],
+        split_graphs["controlled_vocabulary"],
+        split_graphs["examples"],
+        mapping_review,
+        inspection_report,
+        validation_report,
+        fair_scores,
+        classifications,
+        configs["release_profile"],
+        configs["namespace_policy"],
+        configs["source_ontologies"],
+        configs["namespace_policy_raw"],
+        root,
+        build_stage=stage,
+    )
+    build_publication_layout(root, configs["release_profile"], configs["namespace_policy"], context_payload)
     _build_release_bundle(root, configs["release_profile"])
     if configs["release_profile"]["release"].get("copy_outputs_to_ontology_directory", True):
         _mirror_release_artifacts(root)
