@@ -43,7 +43,7 @@ def build_docs(
     }
     release = _release_snapshot_for_docs(output_dir, fair_snapshot)
     pages = {
-        output_dir / "index.html": _page_template(project, "Home", _home_body(project, summary, ["EMMO core", "EMMO electrochemistry", "QUDT", "PROV-O", "DCTERMS"])),
+        output_dir / "index.html": _legacy_profile_home(),
         output_dir / "pages" / "user-guide.html": _page_template(project, "User Guide", _user_guide_body()),
         output_dir / "pages" / "ontology-overview.html": _page_template(project, "Ontology Overview", _overview_body(project, summary)),
         output_dir / "pages" / "class-index.html": _page_template(project, "Class Index", _class_body(classes)),
@@ -188,6 +188,81 @@ def _home_body(project: dict[str, Any], summary: dict[str, Any], imports: list[s
       </article>
     </section>
     """
+
+
+def _legacy_profile_home() -> str:
+    return """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>H2KG - Ontology for Hydrogen Electrochemical Systems</title>
+  <style>
+    :root {
+      --ink: #10242d;
+      --muted: #4d6370;
+      --line: rgba(16,36,45,0.14);
+      --accent: #0d7f83;
+      --paper: #ffffff;
+      --shadow: 0 16px 44px rgba(16,36,45,0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Aptos", "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(13,127,131,0.2), transparent 32%),
+        linear-gradient(180deg, #edf8f7 0%, #fbf6ef 100%);
+    }
+    main { max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    h1, h2 { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }
+    h1 { margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }
+    p { color: var(--muted); line-height: 1.55; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }
+    .links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    a {
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(135deg, #10242d, var(--accent));
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
+    <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
+    <div class="grid">
+
+      <article class="card">
+        <h2>PEMFC Profile</h2>
+        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <div class="links">
+          <a href="./pemfc/index.html">Open profile home</a>
+          <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
+          <a href="./pemfc/pages/queries.html">Open queries</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>PEMWE Profile</h2>
+        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <div class="links">
+          <a href="./pemwe/index.html">Open profile home</a>
+          <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
+          <a href="./pemwe/pages/queries.html">Open queries</a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+</body>
+</html>
+"""
 
 
 def _user_guide_body() -> str:

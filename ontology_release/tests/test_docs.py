@@ -26,9 +26,10 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "index.html").exists()
     assert (output_dir / "docs" / "pages" / "class-index.html").exists()
     home_page = (output_dir / "docs" / "index.html").read_text(encoding="utf-8")
-    assert "DECODE project" in home_page
-    assert "grant agreement No 101135537" in home_page
-    assert (output_dir / "docs" / "assets" / "decode-logo.png").exists()
+    assert "PEMFC Profile" in home_page
+    assert "PEMWE Profile" in home_page
+    assert "./pemfc/index.html" in home_page
+    assert "./pemwe/index.html" in home_page
     quality_page = (output_dir / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
     assert "FAIR Signals" in quality_page
     assert "FOOPS! Assessment" in quality_page
