@@ -3,13 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Explore | H2KG - Ontology for Hydrogen Electrochemical Systems</title>
+  <title>How to Cite | H2KG - Ontology for Hydrogen Electrochemical Systems</title>
   <meta name="description" content="FAIR, EMMO-aligned documentation for the PEMFC profile">
   <link rel="stylesheet" href="../assets/site.css">
   
-  <link rel="stylesheet" href="../assets/visuals.css">
-  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
-
   <script defer src="../assets/site.js"></script>
 </head>
 <body>
@@ -131,155 +128,16 @@
     </div>
     <main class="content">
       
-<section class="visual-shell" data-visual-explorer data-visual-data="../data/graph_explorer.json">
-  <section class="card card--feature visual-hero">
-    <div>
-      <p class="eyebrow">Explore</p>
-      <h2>Ontology Explorer</h2>
-      <p class="visual-hero__lede">Search the published ontology with ranked suggestions, start from a seed term, then expand the graph progressively by clicking visible nodes. The interface stays search-first so the graph grows in a controlled way instead of collapsing into a full release dump.</p>
-      <p class="visual-inline-note" style="margin-top: 0.85rem;">Need full SPARQL control? <a href="../pages/queries.html">Open Advanced SPARQL</a>.</p>
-      <div class="meta-row" style="margin-top: 1rem;">
-        <span>Profile PEMFC</span>
-        <span>Published modules 5</span>
-        <span>Release graph 37153 triples</span>
-      </div>
-    </div>
-    <div class="visual-kpi-grid">
-      <div class="visual-kpi"><span>Local terms</span><strong>2599</strong></div>
-      <div class="visual-kpi"><span>Active modules</span><strong data-visual-count="modules">5</strong></div>
-      <div class="visual-kpi"><span>Expanded nodes</span><strong data-visual-count="expanded">0</strong></div>
-      <div class="visual-kpi"><span>Visible relations</span><strong data-visual-count="edges">0</strong></div>
-    </div>
-  </section>
-
-  <section class="visual-layout">
-    <aside class="visual-sidebar">
-      <section class="visual-panel">
-        <p class="eyebrow">Find a term</p>
-        <h2>Search</h2>
-        <p>Search across the published local ontology terms. Suggestions update as you type and appear directly below the search box, while the graph stays stable until you choose a result.</p>
-        <div class="visual-field">
-          <label for="visual-search-input">Search for a term</label>
-          <input id="visual-search-input" type="search" data-visual-search placeholder="e.g., ionomer, platinum loading, AC input amplitude, spacer thickness">
-        </div>
-        <p class="visual-inline-note">Use <code>Arrow Up</code>, <code>Arrow Down</code>, and <code>Enter</code> to select suggestions quickly.</p>
-        <div class="visual-note" data-search-status>Local ontology suggestions will appear here.</div>
-        <div class="visual-results" data-search-results>
-          <div class="visual-empty">Start typing to search the published ontology, or use one of the suggested starting points.</div>
-        </div>
-        <div class="visual-field">
-          <label>Release modules</label>
-          <div class="visual-module-grid">
-            
-            <label class="visual-module">
-              <input type="checkbox" data-module-toggle value="schema" checked>
-              <span>
-                <strong>Asserted schema</strong>
-                <small>Asserted local schema terms and ontology header metadata.</small>
-              </span>
-              <span class="visual-module__meta">288 triples</span>
-            </label>
-            
-            <label class="visual-module">
-              <input type="checkbox" data-module-toggle value="vocabulary" checked>
-              <span>
-                <strong>Controlled vocabulary</strong>
-                <small>Curated named terms published outside the asserted schema module.</small>
-              </span>
-              <span class="visual-module__meta">23431 triples</span>
-            </label>
-            
-            <label class="visual-module">
-              <input type="checkbox" data-module-toggle value="alignments" checked>
-              <span>
-                <strong>Alignments</strong>
-                <small>Reviewed alignment assertions to external ontologies and vocabularies.</small>
-              </span>
-              <span class="visual-module__meta">345 triples</span>
-            </label>
-            
-            <label class="visual-module">
-              <input type="checkbox" data-module-toggle value="examples" >
-              <span>
-                <strong>Examples</strong>
-                <small>Separated example and data-like content retained for demonstration and tutorials.</small>
-              </span>
-              <span class="visual-module__meta">12452 triples</span>
-            </label>
-            
-            <label class="visual-module">
-              <input type="checkbox" data-module-toggle value="inferred" >
-              <span>
-                <strong>Inferred ontology</strong>
-                <small>Optional inferred export generated by the release pipeline.</small>
-              </span>
-              <span class="visual-module__meta">637 triples</span>
-            </label>
-            
-          </div>
-        </div>
-        <label class="visual-option visual-option--compact">
-          <input type="checkbox" data-visual-toggle="showExternalNeighbors">
-          Show directly linked external terms
-        </label>
-      </section>
-
-      <section class="visual-panel">
-        <div class="visual-section-heading">
-          <div>
-            <p class="eyebrow">Explorer trail</p>
-            <h3>Traversal history</h3>
-            <p>Use the trail to jump back to previously explored terms without losing context.</p>
-          </div>
-        </div>
-        <div class="visual-trail" data-visual-trail>
-          <div class="visual-empty">The exploration trail will appear after you select a term.</div>
-        </div>
-        <div class="visual-toolbar">
-          <button type="button" class="copy-button" data-visual-action="undo" disabled>Undo last step</button>
-          <button type="button" class="copy-button" data-visual-action="reset">Reset graph</button>
-          <button type="button" class="copy-button" data-visual-action="clear">Clear search</button>
-        </div>
-      </section>
-    </aside>
-
-    <section class="visual-main">
-      <section class="visual-stage">
-        <div class="visual-stage__head">
-          <div>
-            <p class="eyebrow">Progressive graph</p>
-            <h2>Selected neighborhood</h2>
-            <p>The graph starts from a seed term and expands as you click visible nodes. Blank nodes stay hidden, while units and similar details are projected into the inspector instead.</p>
-          </div>
-          <div class="visual-status">
-            <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">0</strong></span>
-            <span class="metric-pill">Visible edges <strong data-visual-count="edges-inline">0</strong></span>
-          </div>
-        </div>
-        <p class="visual-inline-note">Click a node in the graph to recenter the explorer and reveal the next local neighborhood.</p>
-        <div class="visual-chart" data-visual-chart="term"></div>
-        <div class="visual-note" data-visual-graph-note>The graph note updates with expansion and readability guidance.</div>
-      </section>
-
-      <section class="visual-detail-grid">
-        <section class="visual-panel">
-          <p class="eyebrow">Term details</p>
-          <h3>Annotations and mapping</h3>
-          <div class="visual-inspector__body" data-visual-inspector>
-            <div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>
-          </div>
-        </section>
-        <section class="visual-panel">
-          <p class="eyebrow">Visible relations</p>
-          <h3>Connected edges</h3>
-          <div class="visual-table-shell" data-visual-relations>
-            <div class="visual-empty">Visible relations will appear here after you select a term.</div>
-          </div>
-        </section>
-      </section>
-    </section>
-  </section>
+<section class="card card--feature">
+  <p class="section-kicker">Documentation page</p>
+  <h2>How to Cite</h2>
+  
+  <p class="lede">Citation guidance for both the ontology release and the release-preparation software package.</p>
+  
 </section>
+<article class="card prose">
+  <div class='chip-row'><span class='metric-pill'>Release 2026.3.0</span><span class='metric-pill'>DOI pending</span><span class='metric-pill'>License <a href='https://creativecommons.org/licenses/by/4.0/'>https://creativecommons.org/licenses/by/4.0/</a></span><span class='metric-pill'>FAIR 95.0</span></div><h3>Preferred ontology citation</h3><p><strong>H2KG — Ontology for Hydrogen Electrochemical Systems</strong>, version 2026.3.0.</p><h3>How to cite</h3><ul class='simple-list'><li>Cite both the ontology release and the release-preparation software package when the pipeline itself is methodologically relevant.</li><li>Prefer the versioned ontology release reference for published data packages and papers.</li><li>When a DOI is minted later, update the citation page and badges without changing the stable ontology IRI pattern.</li></ul><h3>Software package citation</h3><p>H2KG — Ontology for Hydrogen Electrochemical Systems Release Pipeline (2026.3.0).</p>
+</article>
 
     </main>
     <footer class="footer">
@@ -344,7 +202,5 @@
     </footer>
   </div>
   
-  <script defer src="../assets/visuals.js"></script>
-
 </body>
 </html>
