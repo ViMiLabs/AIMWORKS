@@ -23,6 +23,22 @@ body {
 }
 .eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem; color: var(--accent); }
 .subtitle { max-width: 60rem; font-size: 1.1rem; }
+.hero-support { margin-top: 1rem; display: grid; gap: 0.85rem; }
+.hero-support-copy { max-width: 60rem; margin: 0; color: rgba(21,32,37,0.84); }
+.support-strip { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.support-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.74);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+.support-chip img { height: 1.25rem; width: auto; display: block; }
 .nav { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1rem; }
 .nav a { color: var(--ink); text-decoration: none; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.55); }
 .content { padding: 2rem 0 4rem; }
@@ -51,3 +67,31 @@ body {
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
 code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
 .footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; }
+.acknowledgement {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 1rem 1.5rem;
+  padding: 0 0 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(21,32,37,0.08);
+}
+.acknowledgement-brand-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.acknowledgement-brand-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.74);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+.acknowledgement-brand-item img { display: block; max-height: 1.6rem; width: auto; }
+.acknowledgement-copy p { margin: 0 0 0.85rem; }
+.acknowledgement-copy p:last-child { margin-bottom: 0; }
+@media (max-width: 760px) {
+  .acknowledgement { grid-template-columns: 1fr; }
+}

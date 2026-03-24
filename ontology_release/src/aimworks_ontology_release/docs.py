@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from html import escape
 from pathlib import Path
+import shutil
 from typing import Any
 
 from .classify import classify_resources
@@ -53,6 +55,7 @@ def build_docs(
     }
     for path, content in pages.items():
         write_text(path, content)
+    _copy_site_assets(output_dir, project)
     write_text(output_dir / "assets" / "style.css", _style_css())
     dump_json(output_dir / "search-index.json", {"classes": classes, "properties": properties, "examples": examples, "mappings": mappings})
     return summary
@@ -103,10 +106,12 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
         nav_base = "pages/"
         css_base = "assets/style.css"
         home_link = "index.html"
+        asset_base = "assets/"
     else:
         nav_base = ""
         css_base = "../assets/style.css"
         home_link = "../index.html"
+        asset_base = "../assets/"
     nav = f"""
     <nav class="nav">
       <a href="{home_link}">Home</a>
@@ -120,6 +125,8 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
       <a href="{nav_base}release.html">Release</a>
     </nav>
     """
+    support_block = _support_block(project, asset_base)
+    acknowledgement_block = _acknowledgement_block(project, asset_base)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,6 +141,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
       <p class="eyebrow">{project['short_title']}</p>
       <h1>{page_title}</h1>
       <p class="subtitle">{project.get('subtitle', '')}</p>
+      {support_block}
       {nav}
     </div>
   </header>
@@ -142,6 +150,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
   </main>
   <footer class="footer">
     <div class="wrap">
+      {acknowledgement_block}
       <p>{project['title']} | Version {project['version']} | {project['namespace_uri']}</p>
     </div>
   </footer>
@@ -272,6 +281,84 @@ def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] |
     return release
 
 
+def _support_block(project: dict[str, Any], asset_base: str) -> str:
+    acknowledgements = project.get("acknowledgements", {})
+    support_copy = str(acknowledgements.get("support_copy", "")).strip()
+    initiatives = acknowledgements.get("initiatives", [])
+    if not support_copy and not initiatives:
+        return ""
+    chips = "".join(_initiative_chip(item, asset_base) for item in initiatives if isinstance(item, dict))
+    copy_html = f"<p class='hero-support-copy'>{escape(support_copy)}</p>" if support_copy else ""
+    chips_html = f"<div class='support-strip'>{chips}</div>" if chips else ""
+    return f"<div class='hero-support'>{copy_html}{chips_html}</div>"
+
+
+def _acknowledgement_block(project: dict[str, Any], asset_base: str) -> str:
+    acknowledgements = project.get("acknowledgements", {})
+    initiatives = acknowledgements.get("initiatives", [])
+    funding_notice = acknowledgements.get("funding_notice", [])
+    if not initiatives and not funding_notice:
+        return ""
+    brands = "".join(_initiative_brand(item, asset_base) for item in initiatives if isinstance(item, dict))
+    paragraphs = "".join(f"<p>{escape(str(item))}</p>" for item in funding_notice if str(item).strip())
+    return f"""
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid">{brands}</div>
+        </div>
+        <div class="acknowledgement-copy">
+          {paragraphs}
+        </div>
+      </section>
+    """
+
+
+def _initiative_chip(item: dict[str, Any], asset_base: str) -> str:
+    name = escape(str(item.get("name", "")))
+    url = escape(str(item.get("url", "#")))
+    logo = _asset_src(item, asset_base)
+    if logo:
+        alt = escape(str(item.get("logo_alt", item.get("name", "logo"))))
+        return f"<a class='support-chip support-chip-logo' href='{url}' target='_blank' rel='noopener noreferrer'><img src='{logo}' alt='{alt}'><span>{name}</span></a>"
+    return f"<a class='support-chip' href='{url}' target='_blank' rel='noopener noreferrer'>{name}</a>"
+
+
+def _initiative_brand(item: dict[str, Any], asset_base: str) -> str:
+    name = escape(str(item.get("name", "")))
+    url = escape(str(item.get("url", "#")))
+    logo = _asset_src(item, asset_base)
+    if logo:
+        alt = escape(str(item.get("logo_alt", item.get("name", "logo"))))
+        visual = f"<img src='{logo}' alt='{alt}'>"
+    else:
+        visual = f"<span>{name}</span>"
+    return f"<a class='acknowledgement-brand-item' href='{url}' target='_blank' rel='noopener noreferrer'>{visual}</a>"
+
+
+def _asset_src(item: dict[str, Any], asset_base: str) -> str:
+    logo = str(item.get("logo", "")).strip()
+    if not logo:
+        return ""
+    return f"{asset_base}{escape(Path(logo).name)}"
+
+
+def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
+    asset_dir = ensure_dir(output_dir / "assets")
+    source_dir = Path(__file__).resolve().parents[2] / "templates" / "site" / "assets"
+    acknowledgements = project.get("acknowledgements", {})
+    for item in acknowledgements.get("initiatives", []):
+        if not isinstance(item, dict):
+            continue
+        logo = str(item.get("logo", "")).strip()
+        if not logo:
+            continue
+        source_path = source_dir / Path(logo).name
+        target_path = asset_dir / Path(logo).name
+        if source_path.exists():
+            shutil.copyfile(source_path, target_path)
+
+
 def _quality_body(release: dict[str, Any]) -> str:
     explanations = release.get("section_explanations", {})
     return f"""
@@ -386,6 +473,22 @@ body {
 }
 .eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem; color: var(--accent); }
 .subtitle { max-width: 60rem; font-size: 1.1rem; }
+.hero-support { margin-top: 1rem; display: grid; gap: 0.85rem; }
+.hero-support-copy { max-width: 60rem; margin: 0; color: rgba(21,32,37,0.84); }
+.support-strip { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.support-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.74);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+.support-chip img { height: 1.25rem; width: auto; display: block; }
 .nav { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1rem; }
 .nav a { color: var(--ink); text-decoration: none; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.55); }
 .content { padding: 2rem 0 4rem; }
@@ -414,4 +517,32 @@ body {
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
 code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
 .footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; }
+.acknowledgement {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 1rem 1.5rem;
+  padding: 0 0 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(21,32,37,0.08);
+}
+.acknowledgement-brand-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.acknowledgement-brand-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.74);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+.acknowledgement-brand-item img { display: block; max-height: 1.6rem; width: auto; }
+.acknowledgement-copy p { margin: 0 0 0.85rem; }
+.acknowledgement-copy p:last-child { margin-bottom: 0; }
+@media (max-width: 760px) {
+  .acknowledgement { grid-template-columns: 1fr; }
+}
 """

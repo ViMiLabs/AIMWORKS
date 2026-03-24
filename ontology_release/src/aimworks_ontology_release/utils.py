@@ -192,6 +192,26 @@ def default_release_profile() -> dict[str, Any]:
             "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0",
             "prior_version": "https://w3id.org/h2kg/hydrogen-ontology",
             "license": "https://creativecommons.org/licenses/by/4.0/",
+            "acknowledgements": {
+                "support_copy": "Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.",
+                "initiatives": [
+                    {
+                        "name": "DECODE",
+                        "url": "https://decode-energy.eu/",
+                        "logo": "decode-logo.png",
+                        "logo_alt": "DECODE project logo",
+                    },
+                    {"name": "HMC", "url": "https://helmholtz-metadaten.de/"},
+                    {
+                        "name": "AIMWORKS",
+                        "url": "https://helmholtz-metadaten.de/inf-projects/aimworks",
+                    },
+                ],
+                "funding_notice": [
+                    "This publication is part of the DECODE project that has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.",
+                    "This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).",
+                ],
+            },
         },
         "maintainers": {
             "creator": ["AIMWORKS Maintainers"],
