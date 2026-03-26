@@ -93,6 +93,11 @@ def compute_fair_readiness(
     validation_signals = [
         _status_row("Overall validation status", "good" if validation["valid"] else "action", "pass" if validation["valid"] else "fail", "Combined metadata, namespace, mapping, and SHACL validation checks."),
         _status_row("SHACL conforms", "good" if validation["shacl"]["conforms"] is not False else "action", str(validation["shacl"]["conforms"]), "Local SHACL shape execution when pyshacl is available."),
+        _count_row(
+            "Duplicate @id conflicts",
+            int(validation.get("duplicate_review", {}).get("conflicting_count", 0)),
+            "Duplicate source nodes are tolerated only when they merge without schema-type conflicts.",
+        ),
         _count_row("Missing labels", release["missing_labels"], "Release-time missing labels on local schema terms."),
         _count_row("Missing definitions", release["missing_definitions"], "Release-time missing definitions or comments on local schema terms."),
         _count_row("Namespace violations", validation["namespace_violations"], "Violations against the active namespace policy."),

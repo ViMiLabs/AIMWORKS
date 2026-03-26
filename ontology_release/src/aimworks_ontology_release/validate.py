@@ -12,8 +12,10 @@ from urllib.parse import urljoin
 
 from .enrich import enrich_ontology
 from .inspect import inspect_ontology
+from .io import iter_document_items, load_json_document
 from .split import split_ontology
 from .utils import (
+    OWL_ANNOTATION_PROPERTY,
     OWL_CLASS,
     OWL_DATATYPE_PROPERTY,
     OWL_OBJECT_PROPERTY,
@@ -52,6 +54,7 @@ def validate_release(
     inspection = inspect_ontology(input_path, output_dir, config_root)
     candidate_path = _ensure_release_candidate(input_path, release_root, config_root)
     graph_metrics = _release_graph_metrics(candidate_path, profile["project"]["namespace_uri"], profile["project"]["ontology_iri"])
+    duplicate_review = _duplicate_review(input_path)
 
     errors: list[str] = []
     warnings: list[str] = []
@@ -63,8 +66,10 @@ def validate_release(
         warnings.append(f"{graph_metrics['placeholder_definition_count']} local schema terms still use template-style generated definitions or comments.")
     if not namespace_policy["policy"]["preserve_existing_term_iris"]:
         errors.append("Namespace policy no longer preserves existing term IRIs.")
-    if inspection["duplicate_ids"]:
-        warnings.append("Duplicate JSON-LD node identifiers were found and should be reviewed.")
+    if duplicate_review["conflicting_count"] > 0:
+        warnings.append(
+            f"{duplicate_review['conflicting_count']} duplicated @id values have conflicting schema typing and require source cleanup."
+        )
     if graph_metrics["metadata_gap_count"] > 0:
         warnings.append(f"{graph_metrics['metadata_gap_count']} release-header metadata fields are still missing.")
 
@@ -90,6 +95,7 @@ def validate_release(
             "metadata_gap_count": graph_metrics["metadata_gap_count"],
             "imports_count": graph_metrics["imports_count"],
         },
+        "duplicate_review": duplicate_review,
         "mapping_issues": mapping_issues,
         "namespace_violations": 0,
         "external_assessments": external,
@@ -180,6 +186,48 @@ def _release_graph_metrics(candidate_path: Path, namespace_uri: str, ontology_ir
         "definition_coverage": round((local_count - missing_definitions) / local_count, 3) if local_count else 1.0,
         "metadata_gap_count": metadata_gap_count,
         "imports_count": imports_count,
+    }
+
+
+def _duplicate_review(input_path: Path) -> dict[str, Any]:
+    schema_types = {OWL_CLASS, OWL_OBJECT_PROPERTY, OWL_DATATYPE_PROPERTY, OWL_ANNOTATION_PROPERTY}
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for item in iter_document_items(load_json_document(input_path)):
+        identifier = item.get("@id")
+        if isinstance(identifier, str):
+            grouped.setdefault(identifier, []).append(item)
+
+    duplicate_groups = {identifier: entries for identifier, entries in grouped.items() if len(entries) > 1}
+    duplicate_ids = sorted(duplicate_groups.keys())
+    conflict_rows: list[dict[str, Any]] = []
+    for identifier, entries in duplicate_groups.items():
+        types: set[str] = set()
+        for entry in entries:
+            raw_types = entry.get("@type", [])
+            values = raw_types if isinstance(raw_types, list) else [raw_types]
+            for value in values:
+                if isinstance(value, str):
+                    types.add(value)
+        schema_type_hits = [value for value in types if value in schema_types]
+        if len(schema_type_hits) > 1:
+            conflict_rows.append(
+                {
+                    "iri": identifier,
+                    "types": sorted(types),
+                    "entry_count": len(entries),
+                }
+            )
+
+    conflicting_ids = [row["iri"] for row in conflict_rows]
+    merged_without_conflict = [identifier for identifier in duplicate_ids if identifier not in conflicting_ids]
+    return {
+        "status": "conflict" if conflicting_ids else ("merged" if duplicate_ids else "none"),
+        "duplicate_count": len(duplicate_ids),
+        "conflicting_count": len(conflicting_ids),
+        "merged_without_conflict_count": len(merged_without_conflict),
+        "duplicate_ids": duplicate_ids[:100],
+        "conflicting_ids": conflicting_ids[:100],
+        "conflicts": conflict_rows[:20],
     }
 
 
@@ -762,6 +810,7 @@ def _validation_markdown(report: dict[str, Any]) -> str:
     errors = "\n".join(f"- {line}" for line in report["errors"]) or "- None"
     warnings = "\n".join(f"- {line}" for line in report["warnings"]) or "- None"
     release = report["release_candidate"]
+    duplicate_review = report.get("duplicate_review", {})
     oops = report["external_assessments"]["oops"]
     foops = report["external_assessments"]["foops"]
     foops_checks = "\n".join(f"- {item['label']}: {item['detail']}" for item in foops.get("failed_checks", [])) or "- No failed-check detail extracted."
@@ -783,6 +832,8 @@ def _validation_markdown(report: dict[str, Any]) -> str:
 - Definition coverage: {release['definition_coverage']}
 - Imports declared in release schema: {release['imports_count']}
 - Mapping issues detected: {report['mapping_issues']}
+- Duplicate @id groups in source: {duplicate_review.get('duplicate_count', 0)}
+- Duplicate @id conflicts in source: {duplicate_review.get('conflicting_count', 0)}
 
 ## OOPS! Pitfall Scan
 
