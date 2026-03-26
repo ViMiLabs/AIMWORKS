@@ -13,6 +13,8 @@ SRC_ROOT = Path(__file__).resolve().parents[1]
 
 COMMON_CONTEXT: dict[str, str] = {
     "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
     "holy": "http://purl.org/holy/ns#",
     "emmo": "https://w3id.org/emmo#",
     "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
@@ -55,6 +57,7 @@ QUDT_QUANTITY_VALUE = "http://qudt.org/schema/qudt/QuantityValue"
 QUDT_NUMERIC_VALUE = "http://qudt.org/schema/qudt/numericValue"
 QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
 QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
+H2KG_APPLIES_TO_PROFILE = "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile"
 
 
 def package_root() -> Path:
@@ -212,6 +215,40 @@ def default_release_profile() -> dict[str, Any]:
                     "This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).",
                 ],
             },
+            "profiles": {
+                "core": {
+                    "title": "H2KG Shared Core Ontology",
+                    "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
+                    "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
+                },
+                "pemfc": {
+                    "title": "H2KG PEMFC Application Ontology",
+                    "ontology_iri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology",
+                    "namespace_uri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+                    "imports": ["https://w3id.org/h2kg/hydrogen-ontology"],
+                    "indicators": [
+                        "pemfc",
+                        "cathode",
+                        "anode",
+                        "gas diffusion layer",
+                        "catalyst layer",
+                        "reference electrode",
+                    ],
+                },
+                "pemwe": {
+                    "title": "H2KG PEMWE Application Ontology",
+                    "ontology_iri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology",
+                    "namespace_uri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+                    "imports": ["https://w3id.org/h2kg/hydrogen-ontology"],
+                    "indicators": [
+                        "pemwe",
+                        "electrolyzer",
+                        "electrolysis",
+                        "oxygen evolution",
+                        "hydrogen evolution",
+                    ],
+                },
+            },
         },
         "maintainers": {
             "creator": ["AIMWORKS Maintainers"],
@@ -267,6 +304,14 @@ def default_release_profile() -> dict[str, Any]:
             ],
         },
     }
+
+
+def profile_registry(release_profile: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    project = release_profile.get("project", {})
+    profiles = project.get("profiles", {})
+    if isinstance(profiles, dict) and profiles:
+        return profiles
+    return default_release_profile()["project"]["profiles"]
 
 
 def default_metadata_defaults() -> dict[str, Any]:

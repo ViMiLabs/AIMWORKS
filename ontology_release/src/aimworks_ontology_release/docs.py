@@ -241,6 +241,7 @@ def _legacy_profile_home() -> str:
       <article class="card">
         <h2>PEMFC Profile</h2>
         <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemfc/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemfc/index.html">Open profile home</a>
           <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
@@ -251,6 +252,7 @@ def _legacy_profile_home() -> str:
       <article class="card">
         <h2>PEMWE Profile</h2>
         <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemwe/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemwe/index.html">Open profile home</a>
           <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
@@ -276,10 +278,18 @@ def _user_guide_body() -> str:
 
 
 def _overview_body(project: dict[str, Any], summary: dict[str, Any]) -> str:
+    profiles = project.get("profiles", {})
+    profile_lines = []
+    for key in ("core", "pemfc", "pemwe"):
+        profile_cfg = profiles.get(key, {})
+        iri = str(profile_cfg.get("ontology_iri", "")).strip()
+        if iri:
+            profile_lines.append(f"{key.upper()} ontology IRI: {iri}")
     paragraphs = [
         f"{project['title']} is an EMMO-aligned application ontology rather than a broad hydrogen-economy ontology.",
         "Its primary scope is PEMFC cathode catalyst-layer experiments, materials, processes, measurements, and provenance.",
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
+        *profile_lines,
     ]
     return f'<section class="prose">{html_paragraphs(paragraphs)}</section>'
 

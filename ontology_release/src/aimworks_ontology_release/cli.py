@@ -10,6 +10,7 @@ from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
+from .profile_modules import build_profile_modules
 from .prefix_repair import repair_doc_prefixes
 from .release import run_release
 from .split import split_ontology
@@ -20,7 +21,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "docs", "validate", "fair", "release"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
     annotate = subparsers.add_parser("annotate")
@@ -56,6 +57,8 @@ def main() -> None:
         result = propose_mappings(input_path, output / "review", config_dir)
     elif args.command == "enrich":
         result = enrich_ontology(input_path, output / "ontology", config_dir)
+    elif args.command == "profiles":
+        result = build_profile_modules(input_path, output / "ontology", config_dir)
     elif args.command == "annotate":
         result = draft_annotations(input_path, output / "review", args.draft_llm, config_dir / "llm_agent.example.yaml")
     elif args.command == "docs":

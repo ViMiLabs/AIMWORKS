@@ -1,0 +1,1920 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/pemfc/hydrogen-ontology>
+  a owl:Ontology ;
+  dcterms:title "H2KG PEMFC Application Ontology"@en ;
+  dcterms:description "Profile ontology module for H2KG PEMFC Application Ontology. This module preserves stable H2KG core term IRIs and scopes terms for profile publication."@en ;
+  owl:versionInfo "1.0.0"@en ;
+  owl:versionIRI <https://w3id.org/h2kg/pemfc/hydrogen-ontology/releases/1.0.0> ;
+  vann:preferredNamespacePrefix "h2kg-pemfc" ;
+  vann:preferredNamespaceUri <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> ;
+  owl:imports <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:hasParameter
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:Parameter ;
+  rdfs:label "hasParameter"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasProperty
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Measurement ;
+  rdfs:range h2kg:Property ;
+  rdfs:label "hasProperty"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:usesInstrument
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:Instrument ;
+  rdfs:label "usesInstrument"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasInputMaterial
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:Matter ;
+  rdfs:label "hasInputMaterial"@en ;
+  rdfs:subPropertyOf prov:used ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasOutputMaterial
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:Matter ;
+  rdfs:label "hasOutputMaterial"@en ;
+  owl:inverseOf prov:wasGeneratedBy ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasOutputData
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Measurement ;
+  rdfs:range h2kg:Data ;
+  rdfs:label "hasOutputData"@en ;
+  owl:inverseOf prov:wasGeneratedBy ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasInputData
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:Data ;
+  rdfs:label "hasInputData"@en ;
+  rdfs:subPropertyOf prov:used ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:measures
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:Measurement ;
+  rdfs:range h2kg:Property ;
+  rdfs:label "measures"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ECSABasis
+  a h2kg:NormalizationBasis ;
+  rdfs:label "ECSA Basis"@en ;
+  skos:altLabel "Pt surface area basis"@en, "cm2_Pt"@en ;
+  skos:prefLabel "ECSA Basis"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CathodeStoichiometricRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Cathode Stoichiometric Ratio"@en ;
+  h2kg:hasQuantityValue <_:CathodeStoichQV> ;
+  skos:altLabel "cathode stoichiometry"@en, "λ_cathode"@en, "λ_ca"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GDLType
+  a h2kg:Parameter ;
+  skos:prefLabel "GDL Type"@en ;
+  h2kg:hasQuantityValue <_:GDLTypeQV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MicroporousLayerPresence
+  a h2kg:Parameter ;
+  skos:prefLabel "Microporous Layer Presence"@en ;
+  h2kg:hasQuantityValue <_:MPLPresenceQV> ;
+  skos:altLabel "MPL"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FlowFieldDesign
+  a h2kg:Parameter ;
+  skos:prefLabel "Flow Field Design"@en ;
+  h2kg:hasQuantityValue <_:FlowFieldDesignQV> ;
+  skos:altLabel "straight channel flow field"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DynamicHydrogenElectrode
+  a electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29 ;
+  rdfs:label "Dynamic Hydrogen Electrode (H2 Anode in MEA)"@en ;
+  skos:altLabel "DHE"@en, "hydrogen electrode"@en, "H2 anode as reference electrode"@en ;
+  skos:prefLabel "Dynamic Hydrogen Electrode"@en ;
+  skos:closeMatch electrochemistry:electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MembraneType
+  a h2kg:Parameter ;
+  skos:prefLabel "Membrane Type"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ofProperty
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:DataPoint ;
+  rdfs:label "ofProperty"@en ;
+  rdfs:range h2kg:Property ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:fromMeasurement
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:DataPoint ;
+  rdfs:label "fromMeasurement"@en ;
+  rdfs:range h2kg:Measurement ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:isPartOf
+  a owl:ObjectProperty ;
+  rdfs:label "isPartOf"@en ;
+  owl:inverseOf h2kg:hasPart ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasIdentifier
+  a owl:DatatypeProperty ;
+  rdfs:label "hasIdentifier"@en ;
+  rdfs:range rdfs:Literal ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Agent
+  a owl:Class ;
+  rdfs:subClassOf prov:Agent ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Instrument
+  a owl:Class ;
+  rdfs:subClassOf prov:Entity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasSubProcess
+  a owl:ObjectProperty ;
+  rdfs:label "hasSubProcess"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PrecursorConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Precursor Concentration"@en ;
+  h2kg:hasQuantityValue <_:N2886d65e4de3481c83786ec488f78d6e> ;
+  skos:altLabel "ink concentration"@en, "catalyst ink concentration"@en, "porphyrin solution concentration"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:atCurrentDensity
+  a owl:ObjectProperty ;
+  rdfs:domain h2kg:DataPoint ;
+  rdfs:label "atCurrentDensity"@en ;
+  rdfs:range qudt:QuantityValue ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerType
+  a h2kg:Parameter ;
+  skos:prefLabel "Ionomer Type"@en ;
+  skos:altLabel "PTFE ionomer"@en, "PVDF ionomer"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerToCarbonRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ionomer To Carbon Ratio"@en ;
+  h2kg:hasQuantityValue <_:N91984db0f9d743ed89f9ac2992bd5107> ;
+  skos:altLabel "I/C ratio"@en, "I/C weight ratio"@en, "dry ionomer to carbon ratio"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Parameter
+  a owl:Class ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Unit
+  a owl:Class ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Process
+  a owl:Class ;
+  rdfs:subClassOf prov:Activity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystInkPreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Catalyst Ink Preparation"@en ;
+  prov:used h2kg:CatalystPowder, h2kg:Solvent, h2kg:IonomerSolution ;
+  h2kg:hasInputMaterial h2kg:CatalystPowder, h2kg:Solvent, h2kg:IonomerSolution, h2kg:PtOnCarbonCatalyst, h2kg:PFSAIonomer, h2kg:SolventMixture, h2kg:HydrocarbonIonomer, h2kg:Isopropanol, h2kg:Water, h2kg:NPropanol, h2kg:PtKetjenBlackCatalyst, h2kg:PtRuBlackCatalyst, h2kg:PlatinumBlackCatalyst, h2kg:nButylAcetate, h2kg:PtRuOnCarbonCatalyst, h2kg:IsopropylAlcohol, h2kg:Methanol, h2kg:DipropylKetone, h2kg:Polybenzimidazole, h2kg:Glycerol, h2kg:CoTMPPCatalyst, h2kg:CarbonSupport, h2kg:PTFEPolymer, h2kg:FeNCCatalyst, h2kg:IridiumOxideCatalyst, h2kg:TetrabutylammoniumHydroxide, h2kg:Ethanol, h2kg:EthylAcetate, h2kg:PDL, h2kg:Tetrahydrofuran, h2kg:SilverNanowire, h2kg:PdOnCarbonCatalyst, h2kg:GrapheneNanoplatelets, h2kg:VulcanXC72RCarbonBlack, h2kg:PolyAcrylicAcid, h2kg:AdditiveA, h2kg:PolycarbosilanePreceramicPolymerSMP10, h2kg:ZirconiumDiboridePowder, h2kg:SiliconCarbideChoppedFiber, h2kg:Acetone, h2kg:EthyleneGlycol, h2kg:EthyleneGlycolDimethylEther, h2kg:EthyleneGlycolDiethylEther, h2kg:PtAlloyCatalyst, h2kg:NMethyl2Pyrrolidone, h2kg:PolyvinylideneFluoride, h2kg:PtCoOnCarbonCatalyst, h2kg:PolyhedralOligomericSilsesquioxane, h2kg:BetaAg2Se, h2kg:BiomassDerivedFewLayerGrapheneFlakes, h2kg:NafionSolution, h2kg:AemionIonomer, h2kg:MoS2NiFe2O4Nanohybrid, h2kg:ActivatedCarbon, h2kg:SilicaCoatedPtOnCarbonCatalyst, h2kg:DimethylSulfoxide, h2kg:Dimethylacetamide, h2kg:Dimethylformamide, h2kg:SulfonatedPolyEtherEtherKetone, h2kg:CoNCCatalyst, h2kg:IronIIINitrateNonahydrate, h2kg:CobaltIINitrateHexahydrate, h2kg:PtNCNTFsCatalyst, h2kg:MesoporousCarbonSupport, h2kg:ZirconiaMillingBalls, h2kg:NSPCNFsCatalyst, h2kg:SPFSO2NHGCIOHIonomer, h2kg:NitrogenDopedGraphene, h2kg:SodiumLaurylSulfonate, h2kg:SodiumDodecylSulfate, h2kg:SodiumDodecylBenzeneSulfonate, h2kg:ProticIonicLiquidGraftedPolybenzimidazole, h2kg:PhosphoricAcidProtonatedPolybenzimidazole, h2kg:PolyethyleneGlycol, h2kg:CobaltHexadecanethiolate, h2kg:NickelButanethiolate, h2kg:Toluene, h2kg:AmmoniumCarbonate, h2kg:StCoDMAEMAOligomer, h2kg:PalladiumChloride, h2kg:ThreeDimensionalGrapheneNanosheets ;
+  h2kg:hasOutputMaterial h2kg:CatalystInk, h2kg:PDLAgNWCompositeInk, h2kg:SolventMixture, h2kg:PalladiumNanoparticles, h2kg:HydrophilicCatalystInk ;
+  h2kg:hasParameter h2kg:SolventType, h2kg:IonomerType, h2kg:IonomerMassFraction, h2kg:SolidContentFraction, h2kg:StirringSpeed, h2kg:StirringTime, h2kg:Temperature, h2kg:IonomerToCarbonRatio, h2kg:WaterToEthanolRatio, h2kg:BinderMassFraction, h2kg:BinderType, h2kg:WaterMassFractionInSolventMixture, h2kg:IonomerEquivalentWeight, h2kg:PtOnCarbonWeightPercent, h2kg:IonomerDispersionMassFraction, h2kg:EthyleneGlycolVolumeFraction, h2kg:PropyleneGlycolMethylEtherVolumeFraction, h2kg:AlcoholMassFractionInSolventMixture, h2kg:CatalystLoading, h2kg:DispersantMassFraction, h2kg:CoagulatingAgentMassFraction, h2kg:SolventToCarbonRatio, h2kg:CatalystToNafionWeightRatio, h2kg:SonicationTime, h2kg:WaterToNPropanolVolumeRatio, h2kg:AgNWWeightFraction, h2kg:PolymerSolutionConcentration, h2kg:InkMixingSpeed, h2kg:InkMixingTime, h2kg:pH, h2kg:CatalystToNafionSolutionMassRatio, h2kg:IsopropanolVolumeFractionInSolventMixture, h2kg:CatalystMassConcentrationInInk, h2kg:CatalystMassFractionInInkSolids, h2kg:OrganicSolventToWaterVolumeRatio, h2kg:CarbonMassFractionInInk, h2kg:SolventToWaterVolumeRatio, h2kg:CatalystToBinderMassRatio, h2kg:PtMassFractionInCatalyst, h2kg:NPropanolMassFractionInInk, h2kg:ParticleVolumeFraction, h2kg:UltrasonicationTime, h2kg:NafionSolutionMassFractionInInk, h2kg:InkStorageTime, h2kg:CarbonMass, h2kg:ComponentVolume, h2kg:SonicationAmplitudePercent, h2kg:InkSolventVolume, h2kg:InkWaterVolume, h2kg:IonomerToCatalystMassRatio, h2kg:PrecursorConcentration, h2kg:FeToCoMolarRatio, h2kg:InkAgingTime, h2kg:PtOnCarbonCatalystMassFractionInInk, h2kg:WaterMassFractionInInk, h2kg:CyclohexanolMassFractionInInk, h2kg:BallMillingTime, h2kg:MillingMediaDiameter, h2kg:DryingTemperature, h2kg:PtLoading, h2kg:NafionToPtMassRatio, h2kg:CatalystAndIonomerToPEGRatio, h2kg:MolecularWeight, h2kg:DielectricConstant, h2kg:ComponentMolarRatio, h2kg:InkBatchVolume, h2kg:CobaltThiolateMass, h2kg:NickelThiolateMass, h2kg:PalladiumChlorideConcentrationPpm, h2kg:PalladiumMassFractionInInk, h2kg:IsopropanolToWaterVolumeRatio, h2kg:WaterToNPropanolWeightRatio, h2kg:CoatingTemperature, h2kg:DryingTime ;
+  h2kg:usesInstrument h2kg:MagneticStirrer, h2kg:Ultrasonicator, h2kg:PlanetaryMixer, h2kg:RollingMachine, h2kg:UltrasonicBath, h2kg:PlanetaryCentrifugalMixer, h2kg:BeadMillMachine ;
+  skos:altLabel "ink preparation"@en, "catalyst ink"@en, "suspension preparation"@en ;
+  h2kg:hasOutputData h2kg:PolarizationCurveDataset, h2kg:ECSADataset, h2kg:CatalystInkStructureDataset, h2kg:ORRPerformanceDataset ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrolyteConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Electrolyte Concentration"@en ;
+  h2kg:hasQuantityValue <_:N23bc3efd9b0842d98958d7a36fd8ce9c>, <_ElectrolyteConcentration_QV> ;
+  skos:altLabel "H2SO4 concentration"@en, "dopant concentration"@en, "acid concentration"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Manufacturing
+  a owl:Class ;
+  rdfs:subClassOf h2kg:Process ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasPart
+  a owl:ObjectProperty ;
+  rdfs:label "hasPart"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventType
+  a h2kg:Parameter ;
+  skos:prefLabel "Solvent Type"@en ;
+  skos:altLabel "alcohol type"@en, "organic solvent"@en, "dispersing solvent"@en ;
+  h2kg:hasQuantityValue <_SolventType_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasQuantityValue
+  a owl:ObjectProperty ;
+  rdfs:label "hasQuantityValue"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:referenceElectrode
+  a owl:ObjectProperty ;
+  rdfs:label "referenceElectrode"@en ;
+  rdfs:range electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Data
+  a owl:Class ;
+  rdfs:subClassOf prov:Entity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:isSubProcessOf
+  a owl:ObjectProperty ;
+  rdfs:label "isSubProcessOf"@en ;
+  owl:inverseOf h2kg:hasSubProcess ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:normalizedTo
+  a owl:ObjectProperty ;
+  rdfs:label "normalizedTo"@en ;
+  rdfs:range h2kg:NormalizationBasis ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DataPoint
+  a owl:Class ;
+  rdfs:subClassOf prov:Entity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Matter
+  a owl:Class ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasName
+  a owl:DatatypeProperty ;
+  rdfs:label "hasName"@en ;
+  rdfs:range rdfs:Literal ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrolyteType
+  a h2kg:Parameter ;
+  skos:prefLabel "Electrolyte Type"@en ;
+  h2kg:hasQuantityValue <_:N6a7e700b9d60492cb0bf427afb58b3a3> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Metadata
+  a owl:Class ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrodeSubstrate
+  a h2kg:Matter ;
+  skos:prefLabel "Electrode Substrate"@en ;
+  skos:altLabel "macroporous substrate"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:BinderType
+  a h2kg:Parameter ;
+  skos:prefLabel "Binder Type"@en ;
+  h2kg:hasQuantityValue <_:N5752f30d025a4e458a2eed7f31789b3c> ;
+  skos:altLabel "polymer binder"@en, "I2 binder"@en, "PTFE binder"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:influences
+  a owl:ObjectProperty ;
+  rdfs:label "influences"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Measurement
+  a owl:Class ;
+  rdfs:subClassOf h2kg:Process ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Property
+  a owl:Class ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NormalizationBasis
+  a owl:Class, h2kg:Parameter ;
+  rdfs:label "Normalization Basis"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RelativeHumidityOperation
+  a h2kg:Parameter ;
+  skos:prefLabel "Relative Humidity Operation"@en ;
+  rdfs:label "Relative Humidity Operation"@en ;
+  skos:altLabel "RH_OP"@en, "RH during operation"@en, "RH"@en ;
+  dcterms:description "Relative humidity during a given measurement operation (CO stripping, polarization, etc.). Distinct from RH_AST in paper."@en ;
+  h2kg:hasQuantityValue <_RelativeHumidityOperation_QV>, <_RelativeHumidityOperation_QV_2> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SurfaceHydrophilicityRatio
+  a h2kg:Property ;
+  skos:prefLabel "Surface Hydrophilicity Ratio"@en ;
+  rdfs:label "Surface Hydrophilicity Ratio"@en ;
+  skos:altLabel "hydrophilicity ratio"@en, "surface hydrophobicity/hydrophilicity"@en ;
+  dcterms:description "Metric defined as ratio of BET areas from water vapor and nitrogen adsorption."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterUptakeRatio
+  a h2kg:Property ;
+  skos:prefLabel "Water Uptake Ratio"@en ;
+  rdfs:label "Water Uptake Ratio"@en ;
+  skos:altLabel "water uptake"@en, "water uptake (wt%)"@en ;
+  dcterms:description "Ratio of maximum adsorption volumes from water vapor vs N2 adsorption."@en ;
+  h2kg:hasQuantityValue <_WaterUptakeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AnodeStoichiometricRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Anode Stoichiometric Ratio"@en ;
+  rdfs:label "Anode Stoichiometric Ratio"@en ;
+  skos:altLabel "anode stoichiometry"@en, "λ_anode"@en, "λ_an"@en ;
+  dcterms:description "Anode stoichiometric ratio (H2) = 1.5 (paper reports)."@en ;
+  h2kg:hasQuantityValue <_AnodeStoichiometricRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterToEthanolRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Water To Ethanol Ratio"@en ;
+  rdfs:label "Water To Ethanol Ratio"@en ;
+  skos:altLabel "water/ethanol ratio 3:2"@en, "water/ethanol ratio"@en, "ethanol:water 1:1"@en ;
+  dcterms:description "Solvent mixing ratio water:ethanol = 3:2 used for inks and carbon dispersion."@en ;
+  h2kg:hasQuantityValue <_WaterToEthanolRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:HumidifierEquilibrationTime
+  a h2kg:Parameter ;
+  skos:prefLabel "Humidifier Equilibration Time"@en ;
+  rdfs:label "Humidifier Equilibration Time"@en ;
+  skos:altLabel "conditioning time"@en ;
+  dcterms:description "Equilibration time after RH change: 2 h."@en ;
+  h2kg:hasQuantityValue <_HumidifierEquilibrationTime_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ConcentrationExponent
+  a h2kg:Parameter ;
+  skos:prefLabel "Concentration Exponent"@en ;
+  rdfs:label "Concentration Exponent"@en ;
+  dcterms:description "desc=Concentration-dependent exponent in Butler–Volmer formulation (anode/cathode values)."@en ;
+  h2kg:hasQuantityValue <_ConcentrationExponent_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ReferenceConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Reference Concentration"@en ;
+  rdfs:label "Reference Concentration"@en ;
+  dcterms:description "desc=Reference concentration used in the Ansys electrochemistry model (reported as 1 in Table 2)."@en ;
+  h2kg:hasQuantityValue <_ReferenceConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterToIsopropanolMolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Water To Isopropanol Molar Ratio"@en ;
+  rdfs:label "Water To Isopropanol Molar Ratio"@en ;
+  skos:altLabel "[Water]/[IPA] (molar ratio)"@en ;
+  dcterms:description "Water-to-IPA molar ratio corresponding to solvent composition in Table 1."@en ;
+  h2kg:hasQuantityValue <_WaterToIsopropanolMolarRatio_QV>, <_WaterToIsopropanolMolarRatio_QV_2> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrodeCompressionPressure
+  a h2kg:Parameter ;
+  skos:prefLabel "Electrode Compression Pressure"@en ;
+  rdfs:label "Electrode Compression Pressure"@en ;
+  skos:altLabel "compression pressure"@en ;
+  dcterms:description "description: Compression pressure during MEA assembly affecting CL pore structure and oxygen accessibility."@en ;
+  h2kg:hasQuantityValue <_ElectrodeCompressionPressure_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MethanolConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Methanol Concentration"@en ;
+  rdfs:label "Methanol Concentration"@en ;
+  skos:altLabel "methanol conc."@en, "[CH3OH]"@en, "MeOH"@en ;
+  dcterms:description "Methanol molar concentration in anode feed"@en ;
+  h2kg:hasQuantityValue <_MethanolConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ColloidalMethodInkPreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Colloidal Method Ink Preparation"@en ;
+  rdfs:label "Colloidal Method Ink Preparation"@en ;
+  skos:altLabel "colloidal method"@en, "ink preparation"@en, "slurry preparation"@en ;
+  dcterms:description "Ink method where PBI forms colloid/precipitate when dripped into acetone and ultrasonicated; compared against solution method."@en ;
+  h2kg:hasInputMaterial h2kg:Acetone, h2kg:IsopropylAlcohol, h2kg:nButylAcetate, h2kg:PFSAIonomer, h2kg:PtOnCarbonCatalyst ;
+  h2kg:hasOutputMaterial h2kg:MicroporousLayerInk ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolutionMethodInkPreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Solution Method Ink Preparation"@en ;
+  rdfs:label "Solution Method Ink Preparation"@en ;
+  skos:altLabel "solution method"@en, "ink preparation"@en, "slurry preparation"@en ;
+  dcterms:description "Ink method where PBI remains dissolved in DMAc; compared against colloidal method."@en ;
+  h2kg:hasInputMaterial h2kg:Dimethylacetamide, h2kg:VulcanXC72RCarbonBlack, h2kg:CarbonXerogelX85, h2kg:PFSAIonomer, h2kg:Isopropanol, h2kg:Water, h2kg:IsopropylAlcohol, h2kg:PtOnCarbonCatalyst ;
+  h2kg:hasOutputMaterial h2kg:CatalystInk, h2kg:LigninGrapheneOxideInk ;
+  h2kg:hasParameter h2kg:CatalystToNafionWeightRatio, h2kg:IonomerDispersionMassFraction, h2kg:CarbonMassFractionInInk, h2kg:NafionSolutionMassFractionInInk, h2kg:IsopropanolMassFractionInInk, h2kg:WaterMassFractionInInk ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrodeSintering
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Electrode Sintering"@en ;
+  rdfs:label "Electrode Sintering"@en ;
+  skos:altLabel "dried and sintered"@en, "thermal sintering between layers"@en ;
+  dcterms:description "Thermal treatment of sprayed electrodes (190°C for 1 h in inert ventilated oven)."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ReferenceElectrodeMercurousSulfate
+  a h2kg:Instrument ;
+  skos:prefLabel "Reference Electrode Mercurous Sulfate"@en ;
+  rdfs:label "Reference Electrode Mercurous Sulfate"@en ;
+  skos:altLabel "mercurous sulfate electrode"@en ;
+  dcterms:description "Reference electrode used in half-cell; reported potentials converted/referenced to SHE."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AnionToCationMolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Anion To Cation Molar Ratio"@en ;
+  rdfs:label "Anion To Cation Molar Ratio"@en ;
+  skos:altLabel "A/C ratio"@en, "molar ratio (A/C)"@en, "A/C"@en ;
+  dcterms:description "Molar ratio between concentrations of anionic (A) and cationic (C) additives used to discuss flocculation extent (dimensionless)."@en ;
+  h2kg:hasQuantityValue <_AnionToCationMolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventToCarbonRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Solvent To Carbon Ratio"@en ;
+  rdfs:label "Solvent To Carbon Ratio"@en ;
+  skos:altLabel "SCR"@en, "GCR"@en, "glycerol-to-carbon ratio"@en ;
+  dcterms:description "Mass ratio of ink solvent (here mainly glycerol) to carbon in catalyst ink."@en ;
+  h2kg:hasQuantityValue <_SolventToCarbonRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystToNafionWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst To Nafion Weight Ratio"@en ;
+  rdfs:label "Catalyst To Nafion Weight Ratio"@en ;
+  skos:altLabel "catalyst:Nafion weight ratio"@en, "Nafion-to-carbon ratio"@en, "N/C"@en ;
+  dcterms:description "Weight ratio of catalyst (CoTMPP-based + additives) to Nafion in the cathode ink formulations (1:0.5, 1:1, 1:2, 1:3)."@en ;
+  h2kg:hasQuantityValue <_CatalystToNafionWeightRatio_QV>, <_CatalystToNafionWeightRatio_QV_2> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CoToNRatio
+  a h2kg:Property ;
+  skos:prefLabel "Co To N Ratio"@en ;
+  rdfs:label "Co To N Ratio"@en ;
+  skos:altLabel "Co/N"@en, "Co/N ratio"@en ;
+  dcterms:description "Ratio of cobalt to nitrogen signal (Co/N) reported from XPS quantification."@en ;
+  h2kg:hasQuantityValue <_CoToNRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FuelCellOperationTime
+  a h2kg:Parameter ;
+  skos:prefLabel "Fuel Cell Operation Time"@en ;
+  rdfs:label "Fuel Cell Operation Time"@en ;
+  skos:altLabel "continuous fuel cell operation"@en, "operation time"@en, "operating time"@en ;
+  dcterms:description "Duration of continuous fuel cell operation / durability testing reported in hours."@en ;
+  h2kg:hasQuantityValue <_FuelCellOperationTime_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RadiusOfGyration
+  a h2kg:Property ;
+  skos:prefLabel "Radius Of Gyration"@en ;
+  rdfs:label "Radius Of Gyration"@en ;
+  skos:altLabel "Rg"@en ;
+  dcterms:description "Radius of gyration (Rg) of ink aggregates/agglomerates extracted from Guinier fits to USAXS data."@en ;
+  h2kg:hasQuantityValue <_RadiusOfGyration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:InkDilutionRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ink Dilution Ratio"@en ;
+  rdfs:label "Ink Dilution Ratio"@en ;
+  skos:altLabel "dilution ratio"@en ;
+  dcterms:description "Ink dilution ratio used for DLS measurements (volume basis)."@en ;
+  h2kg:hasQuantityValue <_InkDilutionRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:StabilityRatio
+  a h2kg:Property ;
+  skos:prefLabel "Stability Ratio"@en ;
+  rdfs:label "Stability Ratio"@en ;
+  skos:altLabel "W"@en ;
+  dcterms:description "Colloidal stability ratio (inverse of collision efficiency) from DLVO-type model."@en ;
+  h2kg:hasQuantityValue <_StabilityRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ParticleVolumeConcentration
+  a h2kg:Property ;
+  skos:prefLabel "Particle Volume Concentration"@en ;
+  rdfs:label "Particle Volume Concentration"@en ;
+  skos:altLabel "solid volume concentration"@en, "vol.%"@en, "particle concentration"@en ;
+  dcterms:description "Particle volume concentration of ink samples used in DLS dilution study."@en ;
+  h2kg:hasQuantityValue <_ParticleVolumeConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PtToRuAtomicRatio
+  a h2kg:Property ;
+  skos:prefLabel "Pt To Ru Atomic Ratio"@en ;
+  rdfs:label "Pt To Ru Atomic Ratio"@en ;
+  skos:altLabel "Pt/Ru ratio"@en, "Pt/Ru"@en, "EDX"@en ;
+  dcterms:description "Atomic ratio Pt/Ru determined from EDX composition (dimensionless)."@en ;
+  h2kg:hasQuantityValue <_PtToRuAtomicRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SurfaceToVolumeRatio
+  a h2kg:Property ;
+  skos:prefLabel "Surface To Volume Ratio"@en ;
+  rdfs:label "Surface To Volume Ratio"@en ;
+  skos:altLabel "Surface/Volume [nm²/nm³]"@en, "SIRT/DART"@en ;
+  dcterms:description "Surface area divided by volume for catalyst network morphology (from tomography)."@en ;
+  h2kg:hasQuantityValue <_SurfaceToVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AnnealingDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Annealing Duration"@en ;
+  rdfs:label "Annealing Duration"@en ;
+  skos:altLabel "annealing time"@en ;
+  dcterms:description "Duration of Pt(111) annealing step during surface preparation (1 h)."@en ;
+  h2kg:hasQuantityValue <_AnnealingDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SurfacePreparationSpecification
+  a h2kg:Measurement ;
+  skos:prefLabel "Surface Preparation Specification"@en ;
+  rdfs:label "Surface Preparation Specification"@en ;
+  dcterms:description "Tabulated/specification-like numeric parameters describing Pt(111) substrate preparation and geometry (annealing T/time, dimensions)."@en ;
+  h2kg:hasInputMaterial h2kg:Pt111Surface ;
+  h2kg:hasParameter h2kg:AnnealingTemperature, h2kg:AnnealingDuration, h2kg:PtCrystalDiameter, h2kg:PtCrystalThickness ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterToNPropanolVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Water To N Propanol Volume Ratio"@en ;
+  rdfs:label "Water To N Propanol Volume Ratio"@en ;
+  skos:altLabel "H2O/alcohol volume ratio"@en, "H2O/n-PA volume ratio"@en, "water:propanol ratio"@en ;
+  dcterms:description "Paper reports H2O/alcohol volume ratio = 1.3 (alcohol = n-propanol). Not found as a specific ontology term (molar ratio terms exist for ethanol/isopropanol)."@en ;
+  h2kg:hasQuantityValue <_WaterToNPropanolVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonAggregateRadiusOfGyration
+  a h2kg:Property ;
+  skos:prefLabel "Carbon Aggregate Radius Of Gyration"@en ;
+  rdfs:label "Carbon Aggregate Radius Of Gyration"@en ;
+  skos:altLabel "Rg of carbon aggregates in catalyst ink"@en, "radius of gyration of carbon aggregates"@en, "Rg of carbon aggregates"@en ;
+  dcterms:description "Radius of gyration (Rg) of carbon support aggregates in catalyst ink (Nafion contrast-matched), from Guinier–Porod fits."@en ;
+  h2kg:hasQuantityValue <_CarbonAggregateRadiusOfGyration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonAggregateIonomerParticleRadiusOfGyration
+  a h2kg:Property ;
+  skos:prefLabel "Carbon Aggregate Ionomer Particle Radius Of Gyration"@en ;
+  rdfs:label "Carbon Aggregate Ionomer Particle Radius Of Gyration"@en ;
+  skos:altLabel "Rg of carbon aggregate–ionomer particles"@en, "carbon aggregate–Nafion particle size"@en ;
+  dcterms:description "Radius of gyration (Rg) of carbon aggregate–ionomer core–shell particles in catalyst ink (without contrast-match)."@en ;
+  h2kg:hasQuantityValue <_CarbonAggregateIonomerParticleRadiusOfGyration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerMassFractalRadiusOfGyration
+  a h2kg:Property ;
+  skos:prefLabel "Ionomer Mass Fractal Radius Of Gyration"@en ;
+  rdfs:label "Ionomer Mass Fractal Radius Of Gyration"@en ;
+  skos:altLabel "Rg of ionomer mass fractal"@en, "Rg of Nafon ionomer mass fractal in"@en ;
+  dcterms:description "Radius of gyration (Rg) of the ionomer mass-fractal structure forming the shell/percolating through carbon aggregates (carbon contrast-match)."@en ;
+  h2kg:hasQuantityValue <_IonomerMassFractalRadiusOfGyration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AcidMassUptakeRatio
+  a h2kg:Property ;
+  skos:prefLabel "Acid Mass Uptake Ratio"@en ;
+  rdfs:label "Acid Mass Uptake Ratio"@en ;
+  skos:altLabel "mass uptake ratio"@en ;
+  dcterms:description "Fractional mass increase upon acid doping measured by QCM (Δm/m0); used to estimate acid uptake."@en ;
+  h2kg:hasQuantityValue <_AcidMassUptakeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DesignedPorosity
+  a h2kg:Parameter ;
+  skos:prefLabel "Designed Porosity"@en ;
+  rdfs:label "Designed Porosity"@en ;
+  dcterms:description "Porosity specified by the lattice design (open channels only)."@en ;
+  h2kg:hasQuantityValue <_DesignedPorosity_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SiO2Al2O3MolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Si O 2 Al 2 O 3 Molar Ratio"@en ;
+  rdfs:label "Si O 2 Al 2 O 3 Molar Ratio"@en ;
+  skos:altLabel "SiO2/Al203"@en, "SiO2/Al2O3"@en ;
+  dcterms:description "Molar ratio SiO2/Al2O3 in geopolymer formulation."@en ;
+  h2kg:hasQuantityValue <_SiO2Al2O3MolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Na2OAl2O3MolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Na 2 O Al 2 O 3 Molar Ratio"@en ;
+  rdfs:label "Na 2 O Al 2 O 3 Molar Ratio"@en ;
+  skos:altLabel "Na20/Al203"@en, "Na2O/Al2O3"@en ;
+  dcterms:description "Molar ratio Na2O/Al2O3 in geopolymer formulation."@en ;
+  h2kg:hasQuantityValue <_Na2OAl2O3MolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:K2OAl2O3MolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "K 2 O Al 2 O 3 Molar Ratio"@en ;
+  rdfs:label "K 2 O Al 2 O 3 Molar Ratio"@en ;
+  skos:altLabel "K2O/Al203"@en, "K2O/Al2O3"@en ;
+  dcterms:description "Molar ratio K2O/Al2O3 in geopolymer formulation."@en ;
+  h2kg:hasQuantityValue <_K2OAl2O3MolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:H2OAl2O3MolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "H 2 O Al 2 O 3 Molar Ratio"@en ;
+  rdfs:label "H 2 O Al 2 O 3 Molar Ratio"@en ;
+  skos:altLabel "H2O/Al203"@en, "H2O/Al2O3"@en ;
+  dcterms:description "Molar ratio H2O/Al2O3 in geopolymer formulation."@en ;
+  h2kg:hasQuantityValue <_H2OAl2O3MolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PrintJobDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Print Job Duration"@en ;
+  rdfs:label "Print Job Duration"@en ;
+  skos:altLabel "print job"@en ;
+  dcterms:description "Typical duration of a DIW printing job for one lattice."@en ;
+  h2kg:hasQuantityValue <_PrintJobDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WorkingTimeDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Working Time Duration"@en ;
+  rdfs:label "Working Time Duration"@en ;
+  skos:altLabel "working time"@en ;
+  dcterms:description "Duration of working-time determination test."@en ;
+  h2kg:hasQuantityValue <_WorkingTimeDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ViscosityRecoveryHighShearDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Viscosity Recovery High Shear Duration"@en ;
+  rdfs:label "Viscosity Recovery High Shear Duration"@en ;
+  skos:altLabel "viscosity recovery"@en, "high shear duration"@en ;
+  dcterms:description "Duration of high shear step in viscosity recovery test."@en ;
+  h2kg:hasQuantityValue <_ViscosityRecoveryHighShearDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ChannelToSpacerAreaRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Channel To Spacer Area Ratio"@en ;
+  rdfs:label "Channel To Spacer Area Ratio"@en ;
+  dcterms:description "Geometric area ratio (channel-to-spacer) used for channel boundary condition (Table 2)."@en ;
+  h2kg:hasQuantityValue <_ChannelToSpacerAreaRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PolymerSolutionConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Polymer Solution Concentration"@en ;
+  rdfs:label "Polymer Solution Concentration"@en ;
+  dcterms:description "Concentration of PDL dissolved in THF during ink formulation (w/v)."@en ;
+  h2kg:hasQuantityValue <_PolymerSolutionConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:TestDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Test Duration"@en ;
+  rdfs:label "Test Duration"@en ;
+  skos:altLabel "stability duration"@en ;
+  dcterms:description "Duration of long-term cyclic straining test (21 days) and/or cell culture (7 days)."@en ;
+  h2kg:hasQuantityValue <_TestDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectrodeSideLength
+  a h2kg:Property ;
+  skos:prefLabel "Electrode Side Length"@en ;
+  rdfs:label "Electrode Side Length"@en ;
+  dcterms:description "Linear dimension of square/rectangular electrode or MEA (cm)."@en ;
+  h2kg:hasQuantityValue <_ElectrodeSideLength_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GlucoseConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Glucose Concentration"@en ;
+  rdfs:label "Glucose Concentration"@en ;
+  dcterms:description "IRI: (proposed_new) | description: Molar concentration of glucose in anode feed solution."@en ;
+  h2kg:hasQuantityValue <_GlucoseConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:KOHConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "KOH Concentration"@en ;
+  rdfs:label "KOH Concentration"@en ;
+  skos:altLabel "M KOH"@en ;
+  dcterms:description "IRI: (proposed_new) | description: Molar concentration of KOH in anode feed solution."@en ;
+  h2kg:hasQuantityValue <_KOHConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ProfilometrySamplePreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Profilometry Sample Preparation"@en ;
+  rdfs:label "Profilometry Sample Preparation"@en ;
+  dcterms:description "Preparation for profilometry: remove parallel strips of coating to expose substrate baseline for thickness calculation."@en ;
+  h2kg:hasInputMaterial h2kg:CathodeCatalystLayer ;
+  h2kg:hasParameter h2kg:RemovedStripWidth, h2kg:StripSpacing ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonToSurfactantWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Carbon To Surfactant Weight Ratio"@en ;
+  rdfs:label "Carbon To Surfactant Weight Ratio"@en ;
+  skos:altLabel "NG:surfactant mass ratio"@en, "surfactant-to-NG ratio"@en ;
+  dcterms:description "Mass ratio of carbon to surfactant used in ink preparation (fixed at 13.5 in this study)."@en ;
+  h2kg:hasQuantityValue <_CarbonToSurfactantWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystSuspensionConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst Suspension Concentration"@en ;
+  rdfs:label "Catalyst Suspension Concentration"@en ;
+  skos:altLabel "dilution concentration"@en, "NG concentration"@en ;
+  dcterms:description "Catalyst suspension concentration used in polymerization buffer."@en ;
+  h2kg:hasQuantityValue <_CatalystSuspensionConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DryingDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Drying Duration"@en ;
+  rdfs:label "Drying Duration"@en ;
+  dcterms:description "Oven drying duration for modified catalyst solids."@en ;
+  h2kg:hasQuantityValue <_DryingDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FerritinAnalyteConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Ferritin Analyte Concentration"@en ;
+  rdfs:label "Ferritin Analyte Concentration"@en ;
+  dcterms:description "Ferritin concentration in incubation solutions during sensing experiments (pM range)."@en ;
+  h2kg:hasQuantityValue <_FerritinAnalyteConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FerritinTemplateConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Ferritin Template Concentration"@en ;
+  rdfs:label "Ferritin Template Concentration"@en ;
+  dcterms:description "Ferritin concentration used as template during MIP formation (mass concentration)."@en ;
+  h2kg:hasQuantityValue <_FerritinTemplateConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MonomerConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Monomer Concentration"@en ;
+  rdfs:label "Monomer Concentration"@en ;
+  skos:altLabel "styrene concentration"@en, "DMAEMA concentration"@en, "DMAEMA"@en ;
+  dcterms:description "Monomer concentrations used for radical polymerization (in buffer)."@en ;
+  h2kg:hasQuantityValue <_MonomerConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PolarizationPointDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Polarization Point Duration"@en ;
+  rdfs:label "Polarization Point Duration"@en ;
+  dcterms:description "Dwell time per polarization curve point."@en ;
+  h2kg:hasQuantityValue <_PolarizationPointDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PolymerizationDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Polymerization Duration"@en ;
+  rdfs:label "Polymerization Duration"@en ;
+  skos:altLabel "polymerization time"@en ;
+  dcterms:description "Duration of radical polymerization step."@en ;
+  h2kg:hasQuantityValue <_PolymerizationDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:TemplateRemovalDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Template Removal Duration"@en ;
+  rdfs:label "Template Removal Duration"@en ;
+  dcterms:description "Duration of acid quench step to remove ferritin template."@en ;
+  h2kg:hasQuantityValue <_TemplateRemovalDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CriticalConcentrationOfParticlesPerVolume
+  a h2kg:Parameter ;
+  skos:prefLabel "Critical Concentration Of Particles Per Volume"@en ;
+  rdfs:label "Critical Concentration Of Particles Per Volume"@en ;
+  skos:altLabel "CCPV"@en ;
+  dcterms:description "Critical concentration of particles per volume (wt.%) defining maximum solids fraction before rheology transition."@en ;
+  h2kg:hasQuantityValue <_CriticalConcentrationOfParticlesPerVolume_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FixedChargeConcentrationInDryIonomer
+  a h2kg:Parameter ;
+  skos:prefLabel "Fixed Charge Concentration In Dry Ionomer"@en ;
+  rdfs:label "Fixed Charge Concentration In Dry Ionomer"@en ;
+  skos:altLabel "c_f"@en, "fixed charge concentration in dry Nafion"@en ;
+  dcterms:description "Fixed charge concentration in dry Nafion ionomer used for water storage calculations (mol/cm3)."@en ;
+  h2kg:hasQuantityValue <_FixedChargeConcentrationInDryIonomer_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerAggregateSizeRatio
+  a h2kg:Property ;
+  skos:prefLabel "Ionomer Aggregate Size Ratio"@en ;
+  rdfs:label "Ionomer Aggregate Size Ratio"@en ;
+  skos:altLabel "aggregate size ratio"@en ;
+  dcterms:description "Dimensionless ratio comparing ionomer aggregate sizes between two solvent conditions (e.g., water vs dipropylene glycol)."@en ;
+  h2kg:hasQuantityValue <_IonomerAggregateSizeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RamanIDToIGRatio
+  a h2kg:Property ;
+  skos:prefLabel "Raman ID To IG Ratio"@en ;
+  rdfs:label "Raman ID To IG Ratio"@en ;
+  skos:altLabel "ID/IG"@en, "D/G band intensity ratio"@en, "R = ID/IG"@en ;
+  dcterms:description "Proposed: Raman D-band to G-band intensity ratio (ID/IG) for carbon structure."@en ;
+  h2kg:hasQuantityValue <_RamanIDToIGRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:QDInkSolventWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "QD Ink Solvent Weight Ratio"@en ;
+  rdfs:label "QD Ink Solvent Weight Ratio"@en ;
+  skos:altLabel "solvent ratio"@en, "co-solvent ratio"@en, "HXA:MEK"@en ;
+  dcterms:description "Mass ratio(s) of solvent components used in ink formulations."@en ;
+  h2kg:hasQuantityValue <_QDInkSolventWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ReinfiltrationMassIncrease
+  a h2kg:Property ;
+  skos:prefLabel "Reinfiltration Mass Increase"@en ;
+  rdfs:label "Reinfiltration Mass Increase"@en ;
+  skos:altLabel "mass increase after reinfiltration"@en ;
+  dcterms:description "Percent mass increase after one polymer reinfiltration cycle (PIP trial)."@en ;
+  h2kg:hasQuantityValue <_ReinfiltrationMassIncrease_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystToNafionSolutionMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst To Nafion Solution Mass Ratio"@en ;
+  rdfs:label "Catalyst To Nafion Solution Mass Ratio"@en ;
+  skos:altLabel "ratio of 7:3"@en ;
+  dcterms:description "Mass ratio of Pt/C powder to Nafion solution used in ink preparation (reported as 7:3)."@en ;
+  h2kg:hasQuantityValue <_CatalystToNafionSolutionMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Solvent Mass Ratio"@en ;
+  rdfs:label "Solvent Mass Ratio"@en ;
+  dcterms:description "Mass ratio between solvents in ink formulation (e.g., IPA:butyl acetate = 1:1)."@en ;
+  h2kg:hasQuantityValue <_SolventMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectronicConductivityAnisotropyRatio
+  a h2kg:Property ;
+  skos:prefLabel "Electronic Conductivity Anisotropy Ratio"@en ;
+  rdfs:label "Electronic Conductivity Anisotropy Ratio"@en ;
+  skos:altLabel "IP/TP ratio"@en, "anisotropy ratio"@en ;
+  dcterms:description "Description: Anisotropy ratio of electronic conductivity (σ_ip / σ_tp)."@en ;
+  h2kg:hasQuantityValue <_ElectronicConductivityAnisotropyRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CrackAspectRatio
+  a h2kg:Property ;
+  skos:prefLabel "Crack Aspect Ratio"@en ;
+  rdfs:label "Crack Aspect Ratio"@en ;
+  skos:altLabel "aspect ratio of cracks"@en ;
+  dcterms:description "Description: Crack aspect ratio (long edge / short edge)."@en ;
+  h2kg:hasQuantityValue <_CrackAspectRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FabricationDesignSpecification
+  a h2kg:Measurement ;
+  skos:prefLabel "Fabrication Design Specification"@en ;
+  rdfs:label "Fabrication Design Specification"@en ;
+  skos:altLabel "design specification"@en ;
+  dcterms:description "Description: Reporting/record of catalyst layer design parameters (I/C ratio, dry milling time, drying temperature) as given in Table 1."@en ;
+  h2kg:measures h2kg:AnodeCatalystLoading, h2kg:CellActiveArea, h2kg:SegmentActiveArea ;
+  h2kg:hasParameter h2kg:StripSpacing ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ExSituHydrationTest
+  a h2kg:Measurement ;
+  skos:prefLabel "Ex Situ Hydration Test"@en ;
+  rdfs:label "Ex Situ Hydration Test"@en ;
+  skos:altLabel "hydration test"@en, "ex-situ hydration"@en ;
+  dcterms:description "Description: Ex-situ hydration of catalyst layer in hot deionized water to probe effect of ionomer swelling on conductivity."@en ;
+  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:ConditioningTime ;
+  h2kg:measures h2kg:WaterUptakeRatio, h2kg:ElectronicConductivityLossPercent, h2kg:SwellingFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SprayDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Spray Duration"@en ;
+  rdfs:label "Spray Duration"@en ;
+  dcterms:description "Duration of spraying/atomization during spray coating to tune catalyst/Pt loading."@en ;
+  h2kg:hasQuantityValue <_SprayDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GlassyCarbonDiskElectrode
+  a h2kg:Instrument ;
+  skos:prefLabel "Glassy Carbon Disk Electrode"@en ;
+  rdfs:label "Glassy Carbon Disk Electrode"@en ;
+  skos:altLabel "glassy carbon (GC) disk electrode"@en, "glassy carbon disk"@en, "glassy carbon electrode"@en ;
+  dcterms:description "Working electrode substrate (glassy carbon disk) used in RDE measurements."@en ;
+  skos:broadMatch electrochemistry:electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:TotalIonomerToCarbonRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Total Ionomer To Carbon Ratio"@en ;
+  rdfs:label "Total Ionomer To Carbon Ratio"@en ;
+  skos:altLabel "I_total/C"@en, "total ionomer/carbon ratio"@en ;
+  dcterms:description "Total ionomer-to-carbon mass ratio in iNFS-CL including both electrosprayed ionomer and electrospun fiber ionomer (paper notation Itotal/C)."@en ;
+  h2kg:hasQuantityValue <_TotalIonomerToCarbonRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FiberIonomerToCarbonRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Fiber Ionomer To Carbon Ratio"@en ;
+  rdfs:label "Fiber Ionomer To Carbon Ratio"@en ;
+  skos:altLabel "I_fiber/C"@en, "fiber/carbon ratio"@en ;
+  dcterms:description "Mass ratio of electrospun fiber ionomer to carbon in iNFS-CL (paper notation Ifiber/C in parentheses)."@en ;
+  h2kg:hasQuantityValue <_FiberIonomerToCarbonRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystMassConcentrationInInk
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst Mass Concentration In Ink"@en ;
+  rdfs:label "Catalyst Mass Concentration In Ink"@en ;
+  skos:altLabel "ink concentration"@en, "CQD ink concentration"@en ;
+  dcterms:description "desc: Catalyst mass concentration in the ink (mg/mL of solvent)."@en ;
+  h2kg:hasQuantityValue <_CatalystMassConcentrationInInk_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:OxygenConcentrationTimeSeriesData
+  a h2kg:Data ;
+  skos:prefLabel "Oxygen Concentration Time Series Data"@en ;
+  rdfs:label "Oxygen Concentration Time Series Data"@en ;
+  skos:altLabel "oxygen concentration vs time"@en ;
+  dcterms:description "desc: Time series data of O2 concentration at sample center during radial diffusivity test."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventEvaporationByRotavapor
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Solvent Evaporation By Rotavapor"@en ;
+  rdfs:label "Solvent Evaporation By Rotavapor"@en ;
+  skos:altLabel "rotavapor evaporation"@en, "solvent evaporation"@en ;
+  dcterms:description "Removal of THF solvent from reaction mixture using rotary evaporation at elevated temperature."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:EvaporationTemperature
+  a h2kg:Parameter ;
+  skos:prefLabel "Evaporation Temperature"@en ;
+  rdfs:label "Evaporation Temperature"@en ;
+  skos:altLabel "rotavapor temperature"@en ;
+  dcterms:description "Temperature used during solvent evaporation by rotary evaporation."@en ;
+  h2kg:hasQuantityValue <_EvaporationTemperature_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MercuryMercuryOxideReferenceElectrode
+  a h2kg:Instrument ;
+  skos:prefLabel "Mercury Mercury Oxide Reference Electrode"@en ;
+  rdfs:label "Mercury Mercury Oxide Reference Electrode"@en ;
+  skos:altLabel "Hg/HgO reference electrode"@en ;
+  dcterms:description "Proposed new term. Reference electrode used in alkaline RRDE measurements; potentials converted to RHE in the paper."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PlatinumWireCounterElectrode
+  a h2kg:Instrument ;
+  skos:prefLabel "Platinum Wire Counter Electrode"@en ;
+  rdfs:label "Platinum Wire Counter Electrode"@en ;
+  skos:altLabel "Pt wire counter electrode"@en ;
+  dcterms:description "Proposed new term. Counter electrode used in electrochemical measurements."@en ;
+  skos:broadMatch electrochemistry:electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RotatingDiskElectrodeSystem
+  a h2kg:Instrument ;
+  skos:prefLabel "Rotating Disk Electrode System"@en ;
+  rdfs:label "Rotating Disk Electrode System"@en ;
+  skos:altLabel "rotating disk electrode system (Pine Research)"@en, "RDE"@en, "Pine Research rotating system"@en ;
+  dcterms:description "RDE system used for ORR testing (RDE; ontology contains RRDE terms but paper uses RDE)."@en ;
+  skos:closeMatch electrochemistry:electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:VacuumFiltrationProcess
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Vacuum Filtration Process"@en ;
+  rdfs:label "Vacuum Filtration Process"@en ;
+  skos:altLabel "vacuum filtration"@en ;
+  dcterms:description "Vacuum filtration used to make free-standing graphene films."@en ;
+  h2kg:hasOutputMaterial h2kg:BiomassDerivedFewLayerGrapheneFlakes ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RamanI2DToIGRatio
+  a h2kg:Property ;
+  skos:prefLabel "Raman I 2 D To IG Ratio"@en ;
+  rdfs:label "Raman I 2 D To IG Ratio"@en ;
+  skos:altLabel "I2D/IG"@en ;
+  dcterms:description "Intensity ratio of Raman 2D band to G band used to indicate graphene stacking/restacking."@en ;
+  h2kg:hasQuantityValue <_RamanI2DToIGRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonToOxygenAtomRatio
+  a h2kg:Property ;
+  skos:prefLabel "Carbon To Oxygen Atom Ratio"@en ;
+  rdfs:label "Carbon To Oxygen Atom Ratio"@en ;
+  skos:altLabel "C/O atom ratio"@en, "C/O"@en, "C/0 atom ratio"@en ;
+  dcterms:description "Carbon-to-oxygen atomic ratio reported from XPS."@en ;
+  h2kg:hasQuantityValue <_CarbonToOxygenAtomRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:HydrochloricAcidConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Hydrochloric Acid Concentration"@en ;
+  rdfs:label "Hydrochloric Acid Concentration"@en ;
+  skos:altLabel "HCl concentration"@en ;
+  dcterms:description "HCl molarity used for etching."@en ;
+  h2kg:hasQuantityValue <_HydrochloricAcidConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PrintedGoldElectrode
+  a h2kg:Matter ;
+  skos:prefLabel "Printed Gold Electrode"@en ;
+  rdfs:label "Printed Gold Electrode"@en ;
+  skos:altLabel "printed Au electrode"@en, "gold electrode"@en, "Au electrode"@en ;
+  dcterms:description "Proposed new term (no exact match in provided ontology). Inkjet-printed gold electrode pattern on Kapton after thermal sintering."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NanoparticleMassConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Nanoparticle Mass Concentration"@en ;
+  rdfs:label "Nanoparticle Mass Concentration"@en ;
+  skos:altLabel "g/L"@en ;
+  dcterms:description "Proposed new term (no exact match in provided ontology). Mass concentration of Au nanoparticles in the ink suspension."@en ;
+  h2kg:hasQuantityValue <_NanoparticleMassConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SurfaceConcentration
+  a h2kg:Property ;
+  skos:prefLabel "Surface Concentration"@en ;
+  rdfs:label "Surface Concentration"@en ;
+  skos:altLabel "mol/cm2"@en ;
+  dcterms:description "Proposed new term (no exact match in provided ontology). Surface concentration of immobilized species (e.g., ferrocene-functional monolayer) derived from CV integration."@en ;
+  h2kg:hasQuantityValue <_SurfaceConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FeedMethaneVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Feed Methane Volume Ratio"@en ;
+  rdfs:label "Feed Methane Volume Ratio"@en ;
+  skos:altLabel "volume ratio of feed methane"@en ;
+  dcterms:description "Volume ratio of feed methane in inlet mixture (dimensionless)."@en ;
+  h2kg:hasQuantityValue <_FeedMethaneVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NiToPAtomicRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ni To P Atomic Ratio"@en ;
+  rdfs:label "Ni To P Atomic Ratio"@en ;
+  skos:altLabel "Ni:P atomic ratio"@en ;
+  dcterms:description "Nominal atomic ratio of Ni:P in NiPB catalyst preparation."@en ;
+  h2kg:hasQuantityValue <_NiToPAtomicRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MassToChargeRatio
+  a h2kg:Property ;
+  skos:prefLabel "Mass To Charge Ratio"@en ;
+  rdfs:label "Mass To Charge Ratio"@en ;
+  skos:altLabel "m/z"@en ;
+  dcterms:description "Mass-to-charge ratio peaks reported in GC-MS analysis."@en ;
+  h2kg:hasQuantityValue <_MassToChargeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DyeConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Dye Concentration"@en ;
+  rdfs:label "Dye Concentration"@en ;
+  skos:altLabel "MB concentration"@en, "dye concentration (MB etc.)"@en ;
+  dcterms:description "Initial Rhodamine B concentration in aqueous solution for degradation tests."@en ;
+  h2kg:hasQuantityValue <_DyeConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ReferenceElectrodeMercuryMercuryOxide
+  a h2kg:Instrument ;
+  skos:prefLabel "Reference Electrode Mercury Mercury Oxide"@en ;
+  rdfs:label "Reference Electrode Mercury Mercury Oxide"@en ;
+  dcterms:description "Reference electrode used for electrochemical measurements; potentials converted to RHE scale."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GraphiteRodCounterElectrode
+  a h2kg:Instrument ;
+  skos:prefLabel "Graphite Rod Counter Electrode"@en ;
+  rdfs:label "Graphite Rod Counter Electrode"@en ;
+  skos:altLabel "graphite rod counter"@en ;
+  dcterms:description "desc: Graphite rod used as counter electrode during CV in this paper."@en, "Graphite rod used as counter electrode in electrochemical cell (not present in current ontology)."@en ;
+  skos:broadMatch electrochemistry:electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MercurySulfateReferenceElectrode
+  a h2kg:Instrument ;
+  skos:prefLabel "Mercury Sulfate Reference Electrode"@en ;
+  rdfs:label "Mercury Sulfate Reference Electrode"@en ;
+  skos:altLabel "Hg/Hg2SO4 reference electrode"@en ;
+  dcterms:description "desc: Mercury/mercury sulfate reference electrode used for CV measurements (paper also reports potentials vs RHE)."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DoubleLayerCapacitanceRatio
+  a h2kg:Property ;
+  skos:prefLabel "Double Layer Capacitance Ratio"@en ;
+  rdfs:label "Double Layer Capacitance Ratio"@en ;
+  dcterms:description "desc: Ratio of double-layer capacitance measured at two scan rates (e.g., 1000 vs 100 mV/s) used as an interface-accessibility metric in this paper."@en ;
+  h2kg:hasQuantityValue <_DoubleLayerCapacitanceRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:OrganicSolventToWaterVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Organic Solvent To Water Volume Ratio"@en ;
+  rdfs:label "Organic Solvent To Water Volume Ratio"@en ;
+  dcterms:description "desc: Volume ratio of organic solvent to water in the ink dispersion medium (v/v)."@en ;
+  h2kg:hasQuantityValue <_OrganicSolventToWaterVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:EthanolToWaterVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ethanol To Water Volume Ratio"@en ;
+  rdfs:label "Ethanol To Water Volume Ratio"@en ;
+  dcterms:description "desc: Volume ratio of ethanol to water in the pre-wetting dip solution (v/v)."@en ;
+  h2kg:hasQuantityValue <_EthanolToWaterVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonFeltElectrode
+  a h2kg:Matter ;
+  skos:prefLabel "Carbon Felt Electrode"@en ;
+  rdfs:label "Carbon Felt Electrode"@en ;
+  skos:altLabel "carbon felt"@en, "Panex35 carbon felt"@en ;
+  dcterms:description "Carbon felt substrate used as both anode and cathode electrode material in the MFC."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:LiClToBIMolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Li Cl To BI Molar Ratio"@en ;
+  rdfs:label "Li Cl To BI Molar Ratio"@en ;
+  skos:altLabel "[LiCl]/[BI] molar ratio"@en ;
+  dcterms:description "LiCl-to-benzimidazole repeat unit (BI) molar ratio used in DLS solutions."@en ;
+  h2kg:hasQuantityValue <_LiClToBIMolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:LiClToPBIWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Li Cl To PBI Weight Ratio"@en ;
+  rdfs:label "Li Cl To PBI Weight Ratio"@en ;
+  skos:altLabel "[LiCl]/[PBI] weight ratio"@en ;
+  dcterms:description "LiCl-to-PBI weight ratio in catalyst ink series-1 (reported as 1/1 g/g)."@en ;
+  h2kg:hasQuantityValue <_LiClToPBIWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PtCToPBIWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Pt C To PBI Weight Ratio"@en ;
+  rdfs:label "Pt C To PBI Weight Ratio"@en ;
+  skos:altLabel "[Pt-C]/[PBI] weight ratio"@en, "Pt-C/PBI"@en ;
+  dcterms:description "Fixed at 19/1 in MEA catalyst layer per paper."@en ;
+  h2kg:hasQuantityValue <_PtCToPBIWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventToWaterVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Solvent To Water Volume Ratio"@en ;
+  rdfs:label "Solvent To Water Volume Ratio"@en ;
+  dcterms:description "Volume ratio of organic solvent to water in ink dispersion media (2:1 v/v in this paper)."@en ;
+  h2kg:hasQuantityValue <_SolventToWaterVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WettingSolventToWaterVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Wetting Solvent To Water Volume Ratio"@en ;
+  rdfs:label "Wetting Solvent To Water Volume Ratio"@en ;
+  dcterms:description "Volume ratio used for pre-wetting coated electrode prior to CV (~1:9 ethanol:water v/v)."@en ;
+  h2kg:hasQuantityValue <_WettingSolventToWaterVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DLC1000to100Ratio
+  a h2kg:Property ;
+  skos:prefLabel "DLC 1000 to 100 Ratio"@en ;
+  rdfs:label "DLC 1000 to 100 Ratio"@en ;
+  skos:altLabel "DLC_1000/DLC_100"@en ;
+  dcterms:description "Ratio of DLC at 1000 mV/s to DLC at 100 mV/s; used as interface screening metric in this paper."@en ;
+  h2kg:hasQuantityValue <_DLC1000to100Ratio_QV> ;
+  h2kg:ofProperty h2kg:GravimetricSpecificCapacitance ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystToBinderMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst To Binder Mass Ratio"@en ;
+  rdfs:label "Catalyst To Binder Mass Ratio"@en ;
+  skos:altLabel "Pt black to sPEEK ratio (19:1)"@en ;
+  dcterms:description "Mass ratio of Pt black catalyst to sPEEK binder in cathode ink."@en ;
+  h2kg:hasQuantityValue <_CatalystToBinderMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:InkPreparationBurningReaction
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Ink Preparation Burning Reaction"@en ;
+  rdfs:label "Ink Preparation Burning Reaction"@en ;
+  skos:altLabel "burning reaction"@en, "purposely burning reaction"@en ;
+  dcterms:description "Occurs when Nafion solution or isopropyl alcohol contacts dry Pt/C during ink preparation; reported to cause exothermic 'burning reaction' leading to Pt nanoparticle agglomeration and reduced BET surface area/ECSA."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerAdsorptionRatio
+  a h2kg:Property ;
+  skos:prefLabel "Ionomer Adsorption Ratio"@en ;
+  rdfs:label "Ionomer Adsorption Ratio"@en ;
+  skos:altLabel "adsorption ratio"@en, "I (ionomer adsorption ratio)"@en, "ionomer adsorption"@en ;
+  dcterms:description "Dimensionless ratio of ionomers adsorbed on Pt/C: Γ = (Cp0 - Cp)/Cp0 (Eq. 2)."@en ;
+  h2kg:hasQuantityValue <_IonomerAdsorptionRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NiToSXRFPeakAreaRatio
+  a h2kg:Property ;
+  skos:prefLabel "Ni To SXRF Peak Area Ratio"@en ;
+  rdfs:label "Ni To SXRF Peak Area Ratio"@en ;
+  skos:altLabel "Ni/S XRF ratio"@en, "Ni/S XRF peak area ratio"@en, "Ni:S XRF peak area ratio (aqueous ink)"@en ;
+  dcterms:description "proposed_definition=Ratio of Ni to S XRF peak areas in dried supernatant (proxy for Ni2+ leached into ionomer-solvent).; Reported values: 16 (aqueous ink) and 2.7 (organic ink) in Fig. 2 caption."@en ;
+  h2kg:hasQuantityValue <_NiToSXRFPeakAreaRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ElectronBeamEvaporationDeposition
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Electron Beam Evaporation Deposition"@en ;
+  rdfs:label "Electron Beam Evaporation Deposition"@en ;
+  skos:altLabel "electron beam evaporation"@en, "e-beam evaporation"@en ;
+  dcterms:description "Deposition process used to coat Si wafer with aluminum thin film."@en ;
+  h2kg:hasOutputMaterial h2kg:AluminumThinFilmLayer ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AluminumNitrateMolarConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Aluminum Nitrate Molar Concentration"@en ;
+  rdfs:label "Aluminum Nitrate Molar Concentration"@en ;
+  skos:altLabel "Al(NO3)3 concentration"@en ;
+  dcterms:description "Molar concentration of aluminum nitrate stock/additive solution (mM)."@en ;
+  h2kg:hasQuantityValue <_AluminumNitrateMolarConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SurfactantSolutionConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Surfactant Solution Concentration"@en ;
+  rdfs:label "Surfactant Solution Concentration"@en ;
+  dcterms:description "Concentration of alkylpolyglycoside surfactant in water used for ferritin stabilization (paper states 2% solution; basis not specified)."@en ;
+  h2kg:hasQuantityValue <_SurfactantSolutionConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterVaporConcentrationPpm
+  a h2kg:Parameter ;
+  skos:prefLabel "Water Vapor Concentration Ppm"@en ;
+  rdfs:label "Water Vapor Concentration Ppm"@en ;
+  skos:altLabel "water vapour concentration"@en ;
+  dcterms:description "Water vapor concentration in the CVD gas stream, reported as ppm."@en ;
+  h2kg:hasQuantityValue <_WaterVaporConcentrationPpm_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:RamanIGToIDRatio
+  a h2kg:Property ;
+  skos:prefLabel "Raman IG To ID Ratio"@en ;
+  rdfs:label "Raman IG To ID Ratio"@en ;
+  skos:altLabel "I_G/I_D ratio"@en, "I_G/I_D"@en ;
+  dcterms:description "Ratio of Raman G-band intensity to D-band intensity; reported as 1.2 in this paper."@en ;
+  h2kg:hasQuantityValue <_RamanIGToIDRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FerritinMassConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Ferritin Mass Concentration"@en ;
+  rdfs:label "Ferritin Mass Concentration"@en ;
+  skos:altLabel "concentration of ferritin"@en, "ferritin concentration"@en ;
+  dcterms:description "Mass concentration of ferritin in dialyzed precursor solutions (mg/L protein)."@en ;
+  h2kg:hasQuantityValue <_FerritinMassConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ComponentMolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Component Molar Ratio"@en ;
+  rdfs:label "Component Molar Ratio"@en ;
+  skos:altLabel "ratio 1.13:1"@en, "molar ratio"@en, "Co:Ni molar ratio"@en ;
+  dcterms:description "Molar ratio between RM257 and EDDET (dimensionless)."@en ;
+  h2kg:hasQuantityValue <_ComponentMolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IonomerToCatalystMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ionomer To Catalyst Mass Ratio"@en ;
+  rdfs:label "Ionomer To Catalyst Mass Ratio"@en ;
+  skos:altLabel "ratio of FAA-3 ionomer to catalyst"@en, "ionomer-to-catalyst ratio"@en, "I/Cat"@en ;
+  dcterms:description "label: Ionomer To Catalyst Mass Ratio\ndescription: Mass ratio of ionomer to catalyst in the catalyst layer (paper reports 66.7 wt% ionomer-to-catalyst)."@en ;
+  h2kg:hasQuantityValue <_IonomerToCatalystMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventEvaporationThickening
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Solvent Evaporation Thickening"@en ;
+  rdfs:label "Solvent Evaporation Thickening"@en ;
+  skos:altLabel "solvent evaporation"@en, "thickened"@en ;
+  dcterms:description "Ink thickening via solvent evaporation in heated sonicated bath to reach printable viscosity."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:BallToPowderRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Ball To Powder Ratio"@en ;
+  rdfs:label "Ball To Powder Ratio"@en ;
+  dcterms:description "Mass ratio of milling media to powder during dry milling."@en ;
+  h2kg:hasQuantityValue <_BallToPowderRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:LaB6CalibrationStandard
+  a h2kg:Matter ;
+  skos:prefLabel "La B 6 Calibration Standard"@en ;
+  rdfs:label "La B 6 Calibration Standard"@en ;
+  dcterms:description "Calibration standard powder for diffraction setup."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SiliconCalibrationStandard
+  a h2kg:Matter ;
+  skos:prefLabel "Silicon Calibration Standard"@en ;
+  rdfs:label "Silicon Calibration Standard"@en ;
+  dcterms:description "Calibration standard powder for diffraction setup."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GrapheneOxideToLigninMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Graphene Oxide To Lignin Mass Ratio"@en ;
+  rdfs:label "Graphene Oxide To Lignin Mass Ratio"@en ;
+  skos:altLabel "GO/lignin ratio"@en, "GO:lignin"@en, "initial GO/lignin ratio"@en ;
+  dcterms:description "Mass ratio of graphene oxide to lignin in the ink/printed structure precursor (values: 15/85, 30/70, 50/50, 70/30, 100/0)."@en ;
+  h2kg:hasQuantityValue <_GrapheneOxideToLigninMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:FeToCoMolarRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Fe To Co Molar Ratio"@en ;
+  rdfs:label "Fe To Co Molar Ratio"@en ;
+  skos:altLabel "Fe:Co ratio"@en, "Fe"@en, "Co=2:3"@en ;
+  dcterms:description "label_human: FeToCoMolarRatio | description: Molar ratio of iron to cobalt precursors in the catalyst ink (e.g., Fe:Co=1:3 to 3:1; optimum 2:3)."@en ;
+  h2kg:hasQuantityValue <_FeToCoMolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ThermalDecompositionElectrodePreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Thermal Decomposition Electrode Preparation"@en ;
+  rdfs:label "Thermal Decomposition Electrode Preparation"@en ;
+  skos:altLabel "thermal decomposition method"@en, "thermal decomposition"@en ;
+  dcterms:description "desc: Electrode preparation via repeated coating of precursor solution and calcination (e.g., 600°C) to form LaNiO3 film on substrate."@en ;
+  h2kg:hasInputMaterial h2kg:CobaltHexadecanethiolate, h2kg:NickelButanethiolate, h2kg:CarbonClothSubstrate ;
+  h2kg:hasParameter h2kg:AnnealingTemperature, h2kg:AnnealingTime ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PressureBondingElectrodePreparation
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Pressure Bonding Electrode Preparation"@en ;
+  rdfs:label "Pressure Bonding Electrode Preparation"@en ;
+  skos:altLabel "pressure-bonding method"@en, "pressure-bonded electrode"@en ;
+  dcterms:description "desc: Electrode preparation by uniaxial pressing and cold isostatic pressing (CIP) of powder on Pt substrate, followed by heat treatment."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:InkStorageStabilityDuration
+  a h2kg:Property ;
+  skos:prefLabel "Ink Storage Stability Duration"@en ;
+  rdfs:label "Ink Storage Stability Duration"@en ;
+  skos:altLabel "ink stability"@en, "storage stability"@en, "ink stability duration"@en ;
+  dcterms:description "Duration an ink remains stable (e.g., no aggregation) under storage conditions."@en ;
+  h2kg:hasQuantityValue <_InkStorageStabilityDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IfIbRatio
+  a h2kg:Property ;
+  skos:prefLabel "If Ib Ratio"@en ;
+  rdfs:label "If Ib Ratio"@en ;
+  skos:altLabel "If/Ib"@en ;
+  dcterms:description "Ratio of forward to reverse peak current (dimensionless), used as CO-tolerance indicator in methanol oxidation CV."@en ;
+  h2kg:hasQuantityValue <_IfIbRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NafionToPtMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Nafion To Pt Mass Ratio"@en ;
+  rdfs:label "Nafion To Pt Mass Ratio"@en ;
+  dcterms:description "Mass ratio of Nafion (ionomer) to Pt mass applied to Pt/VACNT prior to hot pressing."@en ;
+  h2kg:hasQuantityValue <_NafionToPtMassRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CatalystAndIonomerToPEGRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Catalyst And Ionomer To PEG Ratio"@en ;
+  rdfs:label "Catalyst And Ionomer To PEG Ratio"@en ;
+  skos:altLabel "ratio of catalyst and ionomer to PEG"@en, "PEG200-3"@en, "(cat+ionomer):PEG"@en ;
+  dcterms:description "desc: Ratio of (catalyst + ionomer) to PEG additive used to define PEG addition level (e.g., 4:3)."@en ;
+  h2kg:hasQuantityValue <_CatalystAndIonomerToPEGRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:GasDiffusionElectrodeMethod
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Gas Diffusion Electrode Method"@en ;
+  rdfs:label "Gas Diffusion Electrode Method"@en ;
+  skos:altLabel "GDE method"@en ;
+  dcterms:description "MEA fabrication route where catalyst layer is prepared on GDL (forming GDE) then hot-pressed with PEM."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:DropletPenetrationTime
+  a h2kg:Property ;
+  skos:prefLabel "Droplet Penetration Time"@en ;
+  rdfs:label "Droplet Penetration Time"@en ;
+  skos:altLabel "sessile drop penetrates into membrane"@en ;
+  dcterms:description "desc=Time for sessile droplet to fully penetrate into membrane (as observed in contact-angle experiment)."@en ;
+  h2kg:hasQuantityValue <_DropletPenetrationTime_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Co2Co3Ratio
+  a h2kg:Property ;
+  skos:prefLabel "Co 2 Co 3 Ratio"@en ;
+  rdfs:label "Co 2 Co 3 Ratio"@en ;
+  skos:altLabel "Co2+/Co3+"@en ;
+  dcterms:description "XPS-derived surface oxidation-state ratio for Co"@en ;
+  h2kg:hasQuantityValue <_Co2Co3Ratio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Ni3Ni2Ratio
+  a h2kg:Property ;
+  skos:prefLabel "Ni 3 Ni 2 Ratio"@en ;
+  rdfs:label "Ni 3 Ni 2 Ratio"@en ;
+  skos:altLabel "Ni3+/Ni2+"@en ;
+  dcterms:description "XPS-derived surface oxidation-state ratio for Ni"@en ;
+  h2kg:hasQuantityValue <_Ni3Ni2Ratio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:OHO1sRatio
+  a h2kg:Property ;
+  skos:prefLabel "OHO 1 s Ratio"@en ;
+  rdfs:label "OHO 1 s Ratio"@en ;
+  dcterms:description "XPS O1s peak ratio (hydroxylation indicator)"@en ;
+  h2kg:hasQuantityValue <_OHO1sRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PDMSBaseToCatalystWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "PDMS Base To Catalyst Weight Ratio"@en ;
+  rdfs:label "PDMS Base To Catalyst Weight Ratio"@en ;
+  skos:altLabel "base-to-catalyst ratio"@en, "weight ratio 10:1"@en, "base:catalyst ratio"@en ;
+  dcterms:description "Proposed new Parameter: weight ratio of PDMS base to catalyst/curing agent used in preparing the PDMS shell ink (reported as 10:1)."@en ;
+  h2kg:hasQuantityValue <_PDMSBaseToCatalystWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CarbonBlackAggregateAnisotropyRatio
+  a h2kg:Property ;
+  skos:prefLabel "Carbon Black Aggregate Anisotropy Ratio"@en ;
+  rdfs:label "Carbon Black Aggregate Anisotropy Ratio"@en ;
+  skos:altLabel "anisotropy ratio"@en ;
+  dcterms:description "Anisotropy ratio of CB aggregates (ratio of long to short axis length in circumscribing prolate spheroid), used for validation (range ~1–4)."@en ;
+  h2kg:hasQuantityValue <_CarbonBlackAggregateAnisotropyRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AmmoniumCarbonateSolutionConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Ammonium Carbonate Solution Concentration"@en ;
+  rdfs:label "Ammonium Carbonate Solution Concentration"@en ;
+  dcterms:description "Proposed: molar concentration of ammonium carbonate pore-former solution added to ink."@en ;
+  h2kg:hasQuantityValue <_AmmoniumCarbonateSolutionConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:SolventEvaporationRate
+  a h2kg:Parameter ;
+  skos:prefLabel "Solvent Evaporation Rate"@en ;
+  rdfs:label "Solvent Evaporation Rate"@en ;
+  skos:altLabel "evaporation rate of solvent"@en, "evaporation rate"@en ;
+  dcterms:description "Mass-fraction evaporation rate during annealing (controlled constant)."@en ;
+  h2kg:hasQuantityValue <_SolventEvaporationRate_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MolarConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Molar Concentration"@en ;
+  rdfs:label "Molar Concentration"@en ;
+  skos:altLabel "molarity"@en ;
+  dcterms:description "Proposed: molar concentration (e.g., 0.5 M H2SO4)."@en ;
+  h2kg:hasQuantityValue <_MolarConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:HydrazineConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Hydrazine Concentration"@en ;
+  rdfs:label "Hydrazine Concentration"@en ;
+  dcterms:description "Hydrazine (N2H4) concentration in alkaline anolyte feed."@en ;
+  h2kg:hasQuantityValue <_HydrazineConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:NiPlusMgToAlMolarRatio
+  a h2kg:Property ;
+  skos:prefLabel "Ni Plus Mg To Al Molar Ratio"@en ;
+  rdfs:label "Ni Plus Mg To Al Molar Ratio"@en ;
+  skos:altLabel "(Ni+Mg)/Al"@en ;
+  dcterms:description "Molar ratio of total divalent metals to Al in LDH composition (nominal and experimental)."@en ;
+  h2kg:hasQuantityValue <_NiPlusMgToAlMolarRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:AggregateAspectRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Aggregate Aspect Ratio"@en ;
+  rdfs:label "Aggregate Aspect Ratio"@en ;
+  skos:altLabel "a_R"@en ;
+  dcterms:description "Shape descriptor for aggregates extracted from nano-CT (a_R=1 for sphere)."@en ;
+  h2kg:hasQuantityValue <_AggregateAspectRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:Cu2WS4CounterElectrode
+  a h2kg:Matter ;
+  skos:prefLabel "Cu 2 WS 4 Counter Electrode"@en ;
+  rdfs:label "Cu 2 WS 4 Counter Electrode"@en ;
+  dcterms:description "Counter electrode film based on Cu2WS4 nanocubes deposited on FTO glass."@en ;
+  skos:broadMatch electrochemistry:electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PtCounterElectrode
+  a h2kg:Matter ;
+  skos:prefLabel "Pt Counter Electrode"@en ;
+  rdfs:label "Pt Counter Electrode"@en ;
+  skos:altLabel "platinized counter electrode"@en ;
+  dcterms:description "Reference counter electrode: Pt film deposited on FTO."@en ;
+  skos:broadMatch electrochemistry:electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200 ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PeakToPeakSeparation
+  a h2kg:Property ;
+  skos:prefLabel "Peak To Peak Separation"@en ;
+  rdfs:label "Peak To Peak Separation"@en ;
+  skos:altLabel "Epp"@en ;
+  dcterms:description "Peak-to-peak potential separation in CV, used as a criterion for catalytic activity/reversibility in I3-/I- redox."@en ;
+  h2kg:hasQuantityValue <_PeakToPeakSeparation_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:TriiodideConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Triiodide Concentration"@en ;
+  rdfs:label "Triiodide Concentration"@en ;
+  dcterms:description "Concentration of triiodide species used in diffusion coefficient estimation (reported as 0.1 M)."@en ;
+  h2kg:hasQuantityValue <_TriiodideConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterToIsopropanolVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Water To Isopropanol Volume Ratio"@en ;
+  rdfs:label "Water To Isopropanol Volume Ratio"@en ;
+  dcterms:description "proposed_new_term. paper_context: Ratio of water to isopropanol in ink solvent (stated as 1:1)."@en ;
+  h2kg:hasQuantityValue <_WaterToIsopropanolVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PhosphoricAcidSaturationInCracks
+  a h2kg:Property ;
+  skos:prefLabel "Phosphoric Acid Saturation In Cracks"@en ;
+  rdfs:label "Phosphoric Acid Saturation In Cracks"@en ;
+  skos:altLabel "acid saturation in cracks"@en, "PA content in cracks"@en, "crack flooding saturation"@en ;
+  dcterms:description "proposed_new_term. paper_context: Volume fraction (%) of phosphoric acid filling catalyst-layer cracks for a given crack-width category."@en ;
+  h2kg:hasQuantityValue <_PhosphoricAcidSaturationInCracks_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:InitiatorConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Initiator Concentration"@en ;
+  rdfs:label "Initiator Concentration"@en ;
+  skos:altLabel "KPS concentration"@en ;
+  dcterms:description "Initiator (potassium persulfate) concentration used for free-radical polymerization."@en ;
+  h2kg:hasQuantityValue <_InitiatorConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PalladiumChlorideConcentrationPpm
+  a h2kg:Parameter ;
+  skos:prefLabel "Palladium Chloride Concentration Ppm"@en ;
+  rdfs:label "Palladium Chloride Concentration Ppm"@en ;
+  skos:altLabel "ppm PdCl2"@en, "ppm Pd"@en ;
+  dcterms:description "Concentration of Pd precursor/catalyst in aqueous solution reported in ppm."@en ;
+  h2kg:hasQuantityValue <_PalladiumChlorideConcentrationPpm_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:CentrifugalAcceleration
+  a h2kg:Parameter ;
+  skos:prefLabel "Centrifugal Acceleration"@en ;
+  rdfs:label "Centrifugal Acceleration"@en ;
+  skos:altLabel "RCF"@en ;
+  dcterms:description "Centrifugal acceleration (relative centrifugal force) used in centrifugation tests."@en ;
+  h2kg:hasQuantityValue <_CentrifugalAcceleration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:BathSoluteMassConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Bath Solute Mass Concentration"@en ;
+  rdfs:label "Bath Solute Mass Concentration"@en ;
+  skos:altLabel "g/L"@en ;
+  dcterms:description "Mass concentration of solutes in electroless copper plating bath."@en ;
+  h2kg:hasQuantityValue <_BathSoluteMassConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:BathSoluteVolumeConcentration
+  a h2kg:Parameter ;
+  skos:prefLabel "Bath Solute Volume Concentration"@en ;
+  rdfs:label "Bath Solute Volume Concentration"@en ;
+  skos:altLabel "mL/L"@en ;
+  dcterms:description "Volume-based concentration of additives/reductant in electroless copper plating bath."@en ;
+  h2kg:hasQuantityValue <_BathSoluteVolumeConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PulseDuration
+  a h2kg:Parameter ;
+  skos:prefLabel "Pulse Duration"@en ;
+  rdfs:label "Pulse Duration"@en ;
+  skos:altLabel "t_pulse"@en, "pulse time"@en ;
+  dcterms:description "description=Duration of galvanostatic discharge pulse."@en ;
+  h2kg:hasQuantityValue <_PulseDuration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:IsopropanolToWaterVolumeRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Isopropanol To Water Volume Ratio"@en ;
+  rdfs:label "Isopropanol To Water Volume Ratio"@en ;
+  skos:altLabel "isopropanol and water ratio 2:1"@en ;
+  dcterms:description "description=Volume ratio of isopropanol to water in RRDE catalyst ink solvent mixture (2:1)."@en ;
+  h2kg:hasQuantityValue <_IsopropanolToWaterVolumeRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WaterToNPropanolWeightRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Water To N Propanol Weight Ratio"@en ;
+  rdfs:label "Water To N Propanol Weight Ratio"@en ;
+  skos:altLabel "water/propan-1-ol weight ratio"@en, "water/propan-1-ol weight ratio = 4.32"@en ;
+  dcterms:description "Mass ratio of water to n-propanol in solvent mixture (paper reports weight ratio; ontology has volume-ratio variants)."@en ;
+  h2kg:hasQuantityValue <_WaterToNPropanolWeightRatio_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:OxygenConcentration
+  a h2kg:Property ;
+  skos:prefLabel "Oxygen Concentration"@en ;
+  rdfs:label "Oxygen Concentration"@en ;
+  skos:altLabel "C_O2"@en ;
+  dcterms:description "Local oxygen concentration field (reported in mol m^-3 in simulation figures)."@en ;
+  h2kg:hasQuantityValue <_OxygenConcentration_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:HydrationNumberLambda
+  a h2kg:Property ;
+  skos:prefLabel "Hydration Number Lambda"@en ;
+  rdfs:label "Hydration Number Lambda"@en ;
+  skos:altLabel "hydration number Î»"@en ;
+  dcterms:description "Hydration number (mol H2O per mol âSO3H) reported as Î» in Table 2."@en ;
+  h2kg:hasQuantityValue <_HydrationNumberLambda_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .

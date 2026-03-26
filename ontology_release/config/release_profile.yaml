@@ -16,6 +16,36 @@ project:
   license: https://creativecommons.org/licenses/by/4.0/
   citation:
     preferred_citation: AIMWORKS Maintainers (2026). H2KG PEMFC Catalyst Layer Application Ontology.
+  profiles:
+    core:
+      title: H2KG Shared Core Ontology
+      ontology_iri: https://w3id.org/h2kg/hydrogen-ontology
+      namespace_uri: https://w3id.org/h2kg/hydrogen-ontology#
+    pemfc:
+      title: H2KG PEMFC Application Ontology
+      ontology_iri: https://w3id.org/h2kg/pemfc/hydrogen-ontology
+      namespace_uri: https://w3id.org/h2kg/pemfc/hydrogen-ontology#
+      imports:
+        - https://w3id.org/h2kg/hydrogen-ontology
+      indicators:
+        - pemfc
+        - cathode
+        - anode
+        - gas diffusion layer
+        - catalyst layer
+        - reference electrode
+    pemwe:
+      title: H2KG PEMWE Application Ontology
+      ontology_iri: https://w3id.org/h2kg/pemwe/hydrogen-ontology
+      namespace_uri: https://w3id.org/h2kg/pemwe/hydrogen-ontology#
+      imports:
+        - https://w3id.org/h2kg/hydrogen-ontology
+      indicators:
+        - pemwe
+        - electrolyzer
+        - electrolysis
+        - oxygen evolution
+        - hydrogen evolution
   acknowledgements:
     support_copy: Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.
     initiatives:

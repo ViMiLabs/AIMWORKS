@@ -11,6 +11,7 @@ from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
+from .profile_modules import build_profile_modules
 from .split import split_ontology
 from .utils import ensure_dir, write_text
 from .validate import validate_release
@@ -35,6 +36,7 @@ def run_release(
     split_summary = split_ontology(input_path, ontology_dir, project_root / "config")
     mappings = propose_mappings(input_path, review_dir, project_root / "config")
     enrich_ontology(input_path, ontology_dir, project_root / "config")
+    profile_modules = build_profile_modules(input_path, ontology_dir, project_root / "config")
     drafts = draft_annotations(input_path, review_dir, draft_llm, project_root / "config" / "llm_agent.example.yaml")
     validation = validate_release(input_path, reports_dir, project_root / "config")
     fair = compute_fair_readiness(input_path, reports_dir, project_root / "config")
@@ -47,6 +49,7 @@ def run_release(
         "inspection": inspection["counts"],
         "split": split_summary,
         "mappings": len(mappings),
+        "profile_modules": profile_modules,
         "annotation_drafts": len(drafts),
         "validation": validation,
         "fair": fair,

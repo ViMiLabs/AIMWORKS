@@ -12,6 +12,7 @@ The package is designed to:
 - validate the ontology locally with SHACL and policy checks
 - generate a polished static documentation site
 - prepare w3id publication artifacts, GitHub Pages assets, and release bundles
+- generate profile ontology modules for `pemfc` and `pemwe` without breaking shared `h2kg` term IRIs
 
 ## Scope
 
@@ -35,6 +36,19 @@ Run the end-to-end release preparation flow:
 ```bash
 python -m aimworks_ontology_release.cli run --input input/current_ontology.jsonld --rewrite --split --build-docs --build-release --fair-check
 ```
+
+Build profile-specific ontology modules directly:
+
+```bash
+python -m aimworks_ontology_release.cli profiles --input input/current_ontology.jsonld
+```
+
+This writes:
+
+- `output/ontology/core_schema.ttl` and `.jsonld`
+- `output/ontology/pemfc_schema.ttl` and `.jsonld`
+- `output/ontology/pemwe_schema.ttl` and `.jsonld`
+- `output/reports/profile_module_report.md` and `.json`
 
 ## Detailed Coding Plan
 
