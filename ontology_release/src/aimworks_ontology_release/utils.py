@@ -208,8 +208,6 @@ def default_release_profile() -> dict[str, Any]:
                     {
                         "name": "AIMWORKS",
                         "url": "https://helmholtz-metadaten.de/inf-projects/aimworks",
-                        "logo": "aimworks-logo.svg",
-                        "logo_alt": "AIMWORKS logo",
                     },
                 ],
                 "funding_notice": [

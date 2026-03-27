@@ -1,5 +1,9 @@
 # AIMWORKS
 
+<p align="center">
+  <img src="./docs/assets/AIMWORKS_Logo.png" alt="AIMWORKS logo" width="320">
+</p>
+
 AIMWORKS is the source repository for H2KG, an ontology engineering and publication workflow for hydrogen electrochemical systems. The repository combines ontology source inputs with a Python-based release pipeline that inspects, splits, aligns, enriches, validates, documents, and publishes profile-specific H2KG releases.
 
 The current repository builds two public application profiles:

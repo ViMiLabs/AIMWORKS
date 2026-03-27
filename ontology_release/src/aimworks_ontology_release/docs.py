@@ -219,9 +219,6 @@ def _legacy_profile_home() -> str:
     h1, h2 { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }
     h1 { margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }
     p { color: var(--muted); line-height: 1.55; }
-    .brand-row { margin-top: 1rem; display: flex; align-items: center; gap: 0.85rem; }
-    .brand-row img { width: 220px; max-width: 45vw; height: auto; display: block; }
-    .brand-row span { font-size: 0.92rem; color: var(--muted); }
     .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
     .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }
     .links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
@@ -239,10 +236,6 @@ def _legacy_profile_home() -> str:
   <main>
     <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
     <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
-    <div class="brand-row">
-      <img src="./assets/aimworks-logo.svg" alt="AIMWORKS logo">
-      <span>AIMWORKS ontology release profiles and documentation portal</span>
-    </div>
     <div class="grid">
 
       <article class="card">
