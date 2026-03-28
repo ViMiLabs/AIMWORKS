@@ -204,7 +204,7 @@ def default_release_profile() -> dict[str, Any]:
                         "logo": "decode-logo.png",
                         "logo_alt": "DECODE project logo",
                     },
-                    {"name": "HMC", "url": "https://helmholtz-metadaten.de/"},
+                    {"name": "HMC", "url": "https://helmholtz-metadaten.de/", "logo": "hmc-logo.png", "logo_alt": "Helmholtz Metadata Collaboration logo"},
                     {
                         "name": "AIMWORKS",
                         "url": "https://helmholtz-metadaten.de/inf-projects/aimworks",
