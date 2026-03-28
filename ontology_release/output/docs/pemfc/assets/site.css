@@ -245,7 +245,7 @@ pre code {
   margin: 0 0 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--copper-500);
+  color: var(--teal-700);
   font-size: 0.78rem;
   font-weight: 700;
 }
@@ -257,7 +257,7 @@ h3 {
   letter-spacing: -0.02em;
 }
 h1 {
-  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  font-size: clamp(1.45rem, 3vw, 2.25rem);
   margin: 0.15rem 0 0.8rem;
   max-width: 16ch;
   text-wrap: balance;
@@ -265,16 +265,20 @@ h1 {
 .hero__title-row {
   display: flex;
   align-items: flex-start;
-  gap: 0.85rem;
+  justify-content: space-between;
+  gap: 0.9rem;
 }
 .hero__title-logo {
-  width: clamp(72px, 8.5vw, 118px);
+  order: 2;
+  width: clamp(92px, 10.5vw, 136px);
   height: auto;
   flex: 0 0 auto;
-  margin-top: 0.08rem;
+  margin-top: 0.14rem;
 }
 .hero__title-row h1 {
-  margin-top: 0.15rem;
+  order: 1;
+  flex: 1 1 auto;
+  margin-top: 0.12rem;
 }
 h2 {
   margin-top: 0;
@@ -1070,7 +1074,7 @@ h3 {
   letter-spacing: 0.14em;
   font-size: 0.73rem;
   font-weight: 700;
-  color: var(--copper-500);
+  color: var(--teal-700);
 }
 @media (max-width: 980px) {
   .hero__grid,
@@ -1085,9 +1089,9 @@ h3 {
 @media (max-width: 720px) {
   body::before,
   body::after { display: none; }
-  h1 { font-size: clamp(2.1rem, 10.5vw, 3.15rem); }
-  .hero__title-row { gap: 0.6rem; }
-  .hero__title-logo { width: clamp(56px, 22vw, 86px); }
+  h1 { font-size: clamp(1.55rem, 8.2vw, 2.15rem); }
+  .hero__title-row { gap: 0.55rem; align-items: flex-start; }
+  .hero__title-logo { width: clamp(66px, 25vw, 98px); margin-top: 0.05rem; }
   .hero__content,
   .hero__panel,
   .card,
@@ -1107,4 +1111,6 @@ h3 {
   .home-showcase__caption,
   .poster-card__caption { flex-direction: column; }
 }
+
+
 
