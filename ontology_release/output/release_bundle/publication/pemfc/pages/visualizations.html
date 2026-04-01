@@ -136,7 +136,7 @@
     <div>
       <p class="eyebrow">Explore</p>
       <h2>Ontology Explorer</h2>
-      <p class="visual-hero__lede">Search the published ontology with ranked suggestions, start from a seed term, then expand the graph progressively by clicking visible nodes. The interface stays search-first so the graph grows in a controlled way instead of collapsing into a full release dump.</p>
+        <p class="visual-hero__lede">Search the published ontology with ranked suggestions, start from a seed term, then expand the graph progressively by clicking visible nodes. The explorer now renders the full directly connected neighborhood for the selected term under the active module and external-term filters.</p>
       <p class="visual-inline-note" style="margin-top: 0.85rem;">Need full SPARQL control? <a href="../pages/queries.html">Open Advanced SPARQL</a>.</p>
       <div class="meta-row" style="margin-top: 1rem;">
         <span>Profile PEMFC</span>
@@ -218,10 +218,10 @@
             
           </div>
         </div>
-        <label class="visual-option visual-option--compact">
-          <input type="checkbox" data-visual-toggle="showExternalNeighbors">
-          Show directly linked external terms
-        </label>
+          <label class="visual-option visual-option--compact">
+            <input type="checkbox" data-visual-toggle="showExternalNeighbors" checked>
+            Show directly linked external terms
+          </label>
       </section>
 
       <section class="visual-panel">
@@ -249,14 +249,14 @@
           <div>
             <p class="eyebrow">Progressive graph</p>
             <h2>Selected neighborhood</h2>
-            <p>The graph starts from a seed term and expands as you click visible nodes. Blank nodes stay hidden, while units and similar details are projected into the inspector instead.</p>
+            <p>The graph starts from a seed term and shows its full directly connected neighborhood. Click visible nodes to add the next hop; blank nodes stay hidden, while units and similar details are projected into the inspector instead.</p>
           </div>
           <div class="visual-status">
             <span class="metric-pill">Visible nodes <strong data-visual-count="nodes">0</strong></span>
             <span class="metric-pill">Visible edges <strong data-visual-count="edges-inline">0</strong></span>
           </div>
         </div>
-        <p class="visual-inline-note">Click a node in the graph to recenter the explorer and reveal the next local neighborhood.</p>
+        <p class="visual-inline-note">Click a node in the graph to recenter the explorer and add its full connected neighborhood under the current filters.</p>
         <div class="visual-chart" data-visual-chart="term"></div>
         <div class="visual-note" data-visual-graph-note>The graph note updates with expansion and readability guidance.</div>
       </section>

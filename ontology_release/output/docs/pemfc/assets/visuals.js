@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const state = {
     selectedId: null,
     seedId: null,
-    showExternalNeighbors: false,
+    showExternalNeighbors: true,
     expandedIds: new Set(),
     trail: [],
     history: [],
@@ -45,10 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
     "agent",
   ];
   const MAX_SUGGESTIONS = 16;
-  const MAX_VISIBLE_NODES = 72;
-  const MAX_NEW_NEIGHBORS_PER_SOURCE = 22;
-  const MAX_EDGE_LABELS = 50;
+  const MAX_EDGE_LABELS = 24;
   const MAX_HISTORY = 40;
+  const DENSE_GRAPH_NODE_THRESHOLD = 32;
+  const DENSE_GRAPH_EDGE_THRESHOLD = 40;
+  const RADIAL_RING_BASE = 14;
+  const RADIAL_RING_STEP = 8;
+  const RADIAL_RING_GAP = 170;
 
   const CANONICAL_PREFIXES = [
     ["https://w3id.org/h2kg/hydrogen-ontology#", "h2kg"],
@@ -249,15 +252,15 @@ document.addEventListener("DOMContentLoaded", () => {
             "border-width": "data(borderWidth)",
             "width": "data(size)",
             "height": "data(size)",
-            "label": "data(name)",
+            "label": "data(labelText)",
             "color": "#10242d",
-            "font-size": "11px",
+            "font-size": "data(fontSize)",
             "font-family": "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
             "text-wrap": "wrap",
-            "text-max-width": "150px",
+            "text-max-width": "data(textMaxWidth)",
             "text-valign": "center",
             "text-halign": "center",
-            "text-background-opacity": 0.88,
+            "text-background-opacity": "data(textBackgroundOpacity)",
             "text-background-color": "#ffffff",
             "text-background-padding": "3px",
             "text-background-shape": "roundrectangle",
@@ -272,6 +275,13 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         },
         {
+          selector: "node.outside-label",
+          style: {
+            "text-valign": "bottom",
+            "text-margin-y": 10,
+          },
+        },
+        {
           selector: "edge",
           style: {
             "curve-style": "bezier",
@@ -280,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "target-arrow-shape": "triangle",
             "arrow-scale": 0.9,
             "width": "data(width)",
-            "opacity": 0.9,
+            "opacity": "data(opacity)",
             "label": "data(label)",
             "font-size": "9px",
             "color": "#334155",
@@ -295,6 +305,12 @@ document.addEventListener("DOMContentLoaded", () => {
           selector: "edge.no-label",
           style: {
             "label": "",
+          },
+        },
+        {
+          selector: "edge.dense-edge",
+          style: {
+            "text-background-opacity": 0.72,
           },
         },
         {
@@ -452,6 +468,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return score;
   }
 
+  function computeDepthMap(centerId, links) {
+    const adjacency = new Map();
+    links.forEach((link) => {
+      if (!adjacency.has(link.source)) adjacency.set(link.source, new Set());
+      if (!adjacency.has(link.target)) adjacency.set(link.target, new Set());
+      adjacency.get(link.source).add(link.target);
+      adjacency.get(link.target).add(link.source);
+    });
+
+    const depthMap = { [centerId]: 0 };
+    const queue = [centerId];
+    while (queue.length) {
+      const current = queue.shift();
+      const currentDepth = Number(depthMap[current] || 0);
+      Array.from(adjacency.get(current) || []).forEach((neighborId) => {
+        if (Object.prototype.hasOwnProperty.call(depthMap, neighborId)) return;
+        depthMap[neighborId] = currentDepth + 1;
+        queue.push(neighborId);
+      });
+    }
+    return depthMap;
+  }
+
   function buildExpandedGraph(view) {
     const center = view.nodeMap.get(state.selectedId);
     if (!center) {
@@ -468,7 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
     expandedIds.add(center.id);
 
     const visibleIds = new Set([center.id]);
-    let hiddenNeighborCount = 0;
+    const hiddenNeighborIds = new Set();
 
     Array.from(expandedIds).forEach((sourceId) => {
       const related = (view.adjacency.get(sourceId) || [])
@@ -476,24 +515,17 @@ document.addEventListener("DOMContentLoaded", () => {
           const neighborId = link.source === sourceId ? link.target : link.source;
           const neighbor = view.nodeMap.get(neighborId);
           if (!neighbor) return false;
-          if (!state.showExternalNeighbors && !neighbor.local && neighbor.id !== center.id) return false;
+          if (!state.showExternalNeighbors && !neighbor.local && neighbor.id !== center.id) {
+            hiddenNeighborIds.add(`${link.source}|${link.target}|${link.predicate}`);
+            return false;
+          }
           return true;
         })
         .sort((left, right) => rankExpansionLink(view, sourceId, right) - rankExpansionLink(view, sourceId, left));
 
-      let newNeighbors = 0;
       related.forEach((link) => {
-        const neighborId = link.source === sourceId ? link.target : link.source;
-        const isNew = !visibleIds.has(neighborId);
-        if (isNew && (visibleIds.size >= MAX_VISIBLE_NODES || newNeighbors >= MAX_NEW_NEIGHBORS_PER_SOURCE)) {
-          hiddenNeighborCount += 1;
-          return;
-        }
         visibleIds.add(link.source);
         visibleIds.add(link.target);
-        if (isNew) {
-          newNeighbors += 1;
-        }
       });
     });
 
@@ -507,6 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
     const links = view.links.filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target));
+    const depthMap = computeDepthMap(center.id, links);
 
     return {
       center,
@@ -515,8 +548,9 @@ document.addEventListener("DOMContentLoaded", () => {
       nodeMap,
       meta: {
         expandedCount: expandedIds.size,
-        hiddenNeighborCount,
+        hiddenNeighborCount: hiddenNeighborIds.size,
         selectionLabel: center.name,
+        depthMap,
       },
     };
   }
@@ -530,29 +564,112 @@ document.addEventListener("DOMContentLoaded", () => {
     return "#64748b";
   }
 
+  function graphIsDense(graph) {
+    return graph.nodes.length >= DENSE_GRAPH_NODE_THRESHOLD || graph.links.length >= DENSE_GRAPH_EDGE_THRESHOLD;
+  }
+
+  function shortDisplayName(label, length = 30) {
+    const value = String(label || "").trim();
+    if (!value) return "";
+    return value.length <= length ? value : `${value.slice(0, length - 1)}...`;
+  }
+
+  function splitIntoRings(nodes) {
+    const rings = [];
+    let cursor = 0;
+    let ringIndex = 0;
+    while (cursor < nodes.length) {
+      const capacity = RADIAL_RING_BASE + (ringIndex * RADIAL_RING_STEP);
+      rings.push(nodes.slice(cursor, cursor + capacity));
+      cursor += capacity;
+      ringIndex += 1;
+    }
+    return rings;
+  }
+
+  function radialPositions(graph) {
+    const positions = new Map();
+    if (!graph.center) return positions;
+    positions.set(graph.center.id, { x: 0, y: 0 });
+
+    const depthGroups = new Map();
+    graph.nodes.forEach((node) => {
+      if (node.id === graph.center.id) return;
+      const depth = Number(graph.meta.depthMap?.[node.id] ?? 1);
+      if (!depthGroups.has(depth)) depthGroups.set(depth, []);
+      depthGroups.get(depth).push(node);
+    });
+
+    const depths = Array.from(depthGroups.keys()).sort((left, right) => left - right);
+    let radius = 220;
+    depths.forEach((depth) => {
+      const ordered = depthGroups.get(depth)
+        .slice()
+        .sort((left, right) => {
+          const leftExpanded = state.expandedIds.has(left.id) ? 1 : 0;
+          const rightExpanded = state.expandedIds.has(right.id) ? 1 : 0;
+          if (rightExpanded !== leftExpanded) return rightExpanded - leftExpanded;
+          const leftLocal = left.local ? 1 : 0;
+          const rightLocal = right.local ? 1 : 0;
+          if (rightLocal !== leftLocal) return rightLocal - leftLocal;
+          const leftDegree = Number(left.degree || 0);
+          const rightDegree = Number(right.degree || 0);
+          if (rightDegree !== leftDegree) return rightDegree - leftDegree;
+          return left.name.localeCompare(right.name);
+        });
+      const rings = splitIntoRings(ordered);
+      rings.forEach((ringNodes, ringIndex) => {
+        const ringRadius = radius + (ringIndex * RADIAL_RING_GAP);
+        const angleOffset = ((depth + ringIndex) % 2) * (Math.PI / Math.max(ringNodes.length, 2));
+        ringNodes.forEach((node, index) => {
+          const angle = angleOffset + ((Math.PI * 2 * index) / Math.max(ringNodes.length, 1));
+          positions.set(node.id, {
+            x: Math.cos(angle) * ringRadius,
+            y: Math.sin(angle) * ringRadius,
+          });
+        });
+      });
+      radius += Math.max(1, rings.length) * RADIAL_RING_GAP + 48;
+    });
+
+    return positions;
+  }
+
   function buildCyElements(graph) {
+    const denseGraph = graphIsDense(graph);
     const showEdgeLabels = graph.links.length <= MAX_EDGE_LABELS;
     const expandedIds = new Set(state.expandedIds);
     const nodeElements = graph.nodes.map((node) => {
       const isCenter = node.id === graph.center.id;
       const isExpanded = expandedIds.has(node.id);
+      const depth = Number(graph.meta.depthMap?.[node.id] ?? (isCenter ? 0 : 1));
+      const outsideLabel = denseGraph && !isCenter;
       return {
         data: {
           id: node.id,
           name: node.name,
+          labelText: denseGraph && !isCenter && !isExpanded ? shortDisplayName(node.name, 28) : node.name,
           iri: node.iri,
           qname: nodeQname(node),
           localName: node.localName || "",
           description: node.description || "",
           display_class: node.display_class || node.category,
           degree: Number(node.degree || 0),
+          depth,
           modules: node.modules || [],
           fill: isCenter ? "#ca6d2c" : isExpanded ? "#1f7a7a" : node.color,
           borderColor: isExpanded && !isCenter ? "#10242d" : "rgba(16, 36, 45, 0.18)",
           borderWidth: isExpanded ? 2 : 1,
-          size: isCenter ? 54 : isExpanded ? 42 : Math.max(24, Number(node.symbolSize || 18) + 8),
+          size: isCenter
+            ? 58
+            : isExpanded
+              ? (denseGraph ? 34 : 42)
+              : Math.max(denseGraph ? 18 : 24, Math.min(denseGraph ? 30 : 40, Number(node.symbolSize || 18) + (denseGraph ? 4 : 8))),
+          fontSize: isCenter ? 14 : isExpanded ? (denseGraph ? 10 : 11) : (denseGraph ? 9 : 11),
+          textMaxWidth: isCenter ? 220 : denseGraph ? 118 : 150,
+          textBackgroundOpacity: isCenter ? 0.92 : denseGraph ? 0.72 : 0.88,
         },
-        classes: `${isCenter ? "center " : ""}${isExpanded ? "expanded" : ""}`.trim(),
+        classes: `${isCenter ? "center " : ""}${isExpanded ? "expanded " : ""}${outsideLabel ? "outside-label" : ""}`.trim(),
       };
     });
 
@@ -567,32 +684,46 @@ document.addEventListener("DOMContentLoaded", () => {
         edgeFamily: link.edgeFamily,
         color: edgeColor(link.edgeFamily),
         width: link.edgeFamily === "schema" ? 2.6 : link.edgeFamily === "relation" || link.edgeFamily === "object_property" ? 2.1 : 1.7,
+        opacity: denseGraph
+          ? (link.edgeFamily === "schema" ? 0.72 : 0.46)
+          : 0.9,
         sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
         targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
       },
-      classes: showEdgeLabels ? "" : "no-label",
+      classes: `${showEdgeLabels ? "" : "no-label "}${denseGraph ? "dense-edge" : ""}`.trim(),
     }));
 
     return [...nodeElements, ...edgeElements];
   }
 
-  function runLayout(instance, centerId) {
+  function runLayout(instance, graph) {
     if (!instance.nodes().length) return;
-    instance.layout({
-      name: "cose",
-      animate: false,
-      fit: true,
-      padding: 36,
-      nodeRepulsion: 420000,
-      idealEdgeLength: 130,
-      edgeElasticity: 120,
-      gravity: 0.22,
-      numIter: 900,
-      initialTemp: 180,
-      coolingFactor: 0.95,
-      componentSpacing: 80,
-    }).run();
-    const centerNode = instance.getElementById(centerId);
+    if (graphIsDense(graph)) {
+      const positions = radialPositions(graph);
+      instance.layout({
+        name: "preset",
+        animate: false,
+        fit: true,
+        padding: graph.links.length > 90 ? 120 : 84,
+        positions: (node) => positions.get(node.id()) || { x: 0, y: 0 },
+      }).run();
+    } else {
+      instance.layout({
+        name: "cose",
+        animate: false,
+        fit: true,
+        padding: 36,
+        nodeRepulsion: 420000,
+        idealEdgeLength: 130,
+        edgeElasticity: 120,
+        gravity: 0.22,
+        numIter: 900,
+        initialTemp: 180,
+        coolingFactor: 0.95,
+        componentSpacing: 80,
+      }).run();
+    }
+    const centerNode = instance.getElementById(graph.center.id);
     if (centerNode && centerNode.nonempty()) {
       instance.center(centerNode);
     }
@@ -638,7 +769,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="visual-result__meta">
           <span class="visual-badge">${escapeHtml(node.localName || nodeQname(node) || node.iri)}</span>
           <span class="visual-badge">${escapeHtml(node.modules.join(", "))}</span>
-          <span class="visual-badge">${escapeHtml(String(node.degree || 0))} links</span>
+          <span class="visual-badge">${escapeHtml(String(node.degree || 0))} direct links</span>
         </div>
         <small>${escapeHtml(snippet(node.description || ""))}</small>
       </button>
@@ -711,7 +842,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="visual-inspector__section">
         <strong>Explorer status</strong>
-        <p>${escapeHtml(node.id === graph.center?.id ? "Current focus node." : "Visible through the current expanded neighborhood.")} ${escapeHtml(node.id === state.seedId ? "This is also the current search seed." : "")} Degree: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml(node.modules.join(", "))}.</p>
+          <p>${escapeHtml(node.id === graph.center?.id ? "Current focus node." : "Visible through the current expanded neighborhood.")} ${escapeHtml(node.id === state.seedId ? "This is also the current search seed." : "")} Direct links: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml(node.modules.join(", "))}.</p>
       </div>
       ${detailSections.join("")}
     `;
@@ -748,11 +879,11 @@ document.addEventListener("DOMContentLoaded", () => {
       graphNoteEl.textContent = "This term is loaded, but no visible relationships remain with the current module and external-term filters.";
       return;
     }
-    if (graph.meta.hiddenNeighborCount > 0) {
-      graphNoteEl.textContent = `Showing a readable connected subset around ${graph.meta.selectionLabel}. ${graph.meta.hiddenNeighborCount} additional neighbor links are hidden for clarity. Click a visible node to keep exploring.`;
+    if (!state.showExternalNeighbors && graph.meta.hiddenNeighborCount > 0) {
+      graphNoteEl.textContent = `Showing all connected local nodes around ${graph.meta.selectionLabel}. ${graph.meta.hiddenNeighborCount} directly linked external relation${graph.meta.hiddenNeighborCount === 1 ? "" : "s"} are hidden because the external-term toggle is off. Click a visible node to expand further or use Undo to step back.`;
       return;
     }
-    graphNoteEl.textContent = `Showing the current connected neighborhood around ${graph.meta.selectionLabel}. Click any visible node to expand further.`;
+    graphNoteEl.textContent = `Showing all connected nodes and visible relations around ${graph.meta.selectionLabel} for the active modules. Click any visible node to expand further or use Undo to step back.`;
   }
 
   function renderGraph(graph) {
@@ -774,7 +905,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const instance = ensureCy();
     instance.elements().remove();
     instance.add(buildCyElements(graph));
-    runLayout(instance, graph.center.id);
+    runLayout(instance, graph);
   }
 
   function currentSuggestionMode(query) {
