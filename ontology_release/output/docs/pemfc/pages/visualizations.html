@@ -257,25 +257,48 @@
           </div>
         </div>
         <p class="visual-inline-note">Click a node in the graph to recenter the explorer and add its full connected neighborhood under the current filters.</p>
+        <div class="visual-direct-summary" data-visual-direct-summary>Direct-neighborhood counts appear here after you select a term.</div>
         <div class="visual-chart" data-visual-chart="term"></div>
         <div class="visual-note" data-visual-graph-note>The graph note updates with expansion and readability guidance.</div>
       </section>
 
       <section class="visual-detail-grid">
         <section class="visual-panel">
+          <p class="eyebrow">Connected nodes</p>
+          <h3>Direct neighborhood controls</h3>
+          <div class="visual-neighbor-panel">
+            <div class="visual-neighbor-summary" data-visual-neighbor-summary>
+              <div class="visual-empty">Select a term to review its full direct neighborhood and manage what is shown in the graph.</div>
+            </div>
+            <div class="visual-neighbor-toolbar">
+              <button type="button" class="copy-button" data-neighbor-preset="show-all">Show all</button>
+              <button type="button" class="copy-button" data-neighbor-preset="hide-all">Hide all</button>
+              <button type="button" class="copy-button" data-neighbor-preset="reset-direct">Reset to direct neighborhood</button>
+              <button type="button" class="copy-button" data-neighbor-preset="local-only">Local only</button>
+              <button type="button" class="copy-button" data-neighbor-preset="external-only">External only</button>
+            </div>
+            <div class="visual-neighbor-filters" data-visual-class-filters></div>
+            <div class="visual-neighbor-groups" data-visual-neighbor-groups>
+              <div class="visual-empty">Connected nodes grouped by relation will appear here after you select a term.</div>
+            </div>
+          </div>
+        </section>
+        <div class="visual-detail-stack">
+          <section class="visual-panel">
           <p class="eyebrow">Term details</p>
           <h3>Annotations and mapping</h3>
           <div class="visual-inspector__body" data-visual-inspector>
             <div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>
           </div>
-        </section>
-        <section class="visual-panel">
-          <p class="eyebrow">Visible relations</p>
-          <h3>Connected edges</h3>
-          <div class="visual-table-shell" data-visual-relations>
-            <div class="visual-empty">Visible relations will appear here after you select a term.</div>
-          </div>
-        </section>
+          </section>
+          <section class="visual-panel">
+            <p class="eyebrow">Visible relations</p>
+            <h3>Connected edges</h3>
+            <div class="visual-table-shell" data-visual-relations>
+              <div class="visual-empty">Visible relations will appear here after you select a term.</div>
+            </div>
+          </section>
+        </div>
       </section>
     </section>
   </section>
