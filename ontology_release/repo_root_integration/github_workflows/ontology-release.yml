@@ -25,7 +25,7 @@ jobs:
       - name: Prepare ODK seed inputs
         run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --prepare-only
       - name: Refresh ODK repository scaffolding
-        run: bash odk/src/ontology/run.sh update_repo
+        run: docker run --rm -e ROBOT_JAVA_ARGS=-Xmx6G -v "$PWD:/work" -w /work/odk/src/ontology obolibrary/odkfull update_repo
       - name: Reapply AIMWORKS ODK customizations
         run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --prepare-only
       - name: Run ODK version check
