@@ -1,0 +1,135 @@
+@prefix : <http://purl.obolibrary.org/obo/h2kg.ttl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://purl.obolibrary.org/obo/h2kg.ttl> .
+
+<http://purl.obolibrary.org/obo/h2kg.ttl> rdf:type owl:Ontology ;
+                                           owl:versionIRI <http://purl.obolibrary.org/obo/h2kg/releases/2026-04-09/h2kg.ttl> ;
+                                           dc:type <http://purl.obolibrary.org/obo/IAO_8000001> ;
+                                           dcterms:abstract """Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.
+"""@en ;
+                                           dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany" ;
+                                           dcterms:created "2026-03-19" ;
+                                           dcterms:creator "Electrochemistry Research Group" ;
+                                           dcterms:description "Canonical schema module for the H2KG PEMFC catalyst-layer application ontology."@en ,
+                                                               "Ontology for representing proton exchange membrane fuel cell materials, components, devices, processes, measurements, and experiments." ;
+                                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                           dcterms:modified "2026-03-19" ;
+                                           dcterms:publisher "Forschungszentrum Juelich GmbH" ;
+                                           dcterms:references <http://purl.org/holy/ns#> ,
+                                                              <https://w3id.org/emmo> ,
+                                                              <https://w3id.org/emmo/domain/electrochemistry> ,
+                                                              <https://w3id.org/emmo/domain/pemfc> ,
+                                                              <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> ,
+                                                              <https://w3id.org/emmo/domain/coating#> ,
+                                                              <https://w3id.org/emmo/domain/equivalent-circuit-model#> ,
+                                                              <https://w3id.org/emmo/domain/manufacturing#> ,
+                                                              <https://w3id.org/emmo/domain/microscopy#> ;
+                                           dcterms:title "H2KG PEMFC Catalyst Layer Application Ontology"@en ,
+                                                         "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments" ;
+                                           vann:preferredNamespacePrefix "h2kg" ;
+                                           vann:preferredNamespaceUri h2kg: ;
+                                           rdfs:comment """The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.
+"""@en ;
+                                           rdfs:seeAlso <http://purl.org/holy/ns#BipolarPlate> ,
+                                                        <http://purl.org/holy/ns#CatalystLayer> ,
+                                                        <http://purl.org/holy/ns#FuelCellStack> ,
+                                                        <http://purl.org/holy/ns#GasDiffusionLayer> ,
+                                                        <http://purl.org/holy/ns#Gasket> ,
+                                                        <http://purl.org/holy/ns#Membrane> ,
+                                                        <http://purl.org/holy/ns#MembraneElectrodeAssembly> ,
+                                                        <http://purl.org/holy/ns#PolymerElectrolyteMembraneFuelCell> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_abe17c61_6a3d_4ec6_b4db_450b5654dbc6> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_b24401b7_35e4_40be_8c8b_36ee8869cc1a> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_e072436a_2656_4e03_b600_a7f41c486339> ,
+                                                        <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
+                                           owl:priorVersion <https://w3id.org/h2kg/hydrogen-ontology> ;
+                                           owl:versionInfo "1.0.0"@en ,
+                                                           "2026-04-09" ;
+                                           foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/type
+dc:type rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/abstract
+dcterms:abstract rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/references
+dcterms:references rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+vann:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+
+###  http://xmlns.com/foaf/0.1/homepage
+foaf:homepage rdf:type owl:AnnotationProperty .
+
+
+###  Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi

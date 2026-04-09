@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const trailEl = root.querySelector("[data-visual-trail]");
   const inspectorEl = root.querySelector("[data-visual-inspector]");
   const relationsEl = root.querySelector("[data-visual-relations]");
+  const directSummaryEl = root.querySelector("[data-visual-direct-summary]");
+  const neighborSummaryEl = root.querySelector("[data-visual-neighbor-summary]");
+  const classFiltersEl = root.querySelector("[data-visual-class-filters]");
+  const neighborGroupsEl = root.querySelector("[data-visual-neighbor-groups]");
   const countNodesEl = root.querySelector('[data-visual-count="nodes"]');
   const countEdgesEl = root.querySelector('[data-visual-count="edges"]');
   const countEdgesInlineEl = root.querySelector('[data-visual-count="edges-inline"]');
@@ -30,6 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
     trail: [],
     history: [],
     highlightedIndex: 0,
+    neighborVisibilityMode: "all",
+    hiddenPredicateKeys: new Set(),
+    hiddenClassKeys: new Set(),
+    hiddenDirectNodeIds: new Set(),
   };
 
   const STARTER_LABELS = [
@@ -75,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
+  const classKey = (value) => stripKey(value || "other");
   const activeModules = () => Array.from(root.querySelectorAll("[data-module-toggle]:checked")).map((input) => input.value);
   const moduleInputs = () => Array.from(root.querySelectorAll("[data-module-toggle]"));
 
@@ -135,6 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function resetDirectVisibilityState() {
+    state.neighborVisibilityMode = "all";
+    state.hiddenPredicateKeys = new Set();
+    state.hiddenClassKeys = new Set();
+    state.hiddenDirectNodeIds = new Set();
+  }
+
   function captureSnapshot() {
     return {
       selectedId: state.selectedId,
@@ -142,6 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
       expandedIds: Array.from(state.expandedIds),
       trail: state.trail.slice(),
       highlightedIndex: state.highlightedIndex,
+      neighborVisibilityMode: state.neighborVisibilityMode,
+      hiddenPredicateKeys: Array.from(state.hiddenPredicateKeys),
+      hiddenClassKeys: Array.from(state.hiddenClassKeys),
+      hiddenDirectNodeIds: Array.from(state.hiddenDirectNodeIds),
       searchValue: searchInputEl.value,
       activeModules: activeModules(),
       toggles: Object.fromEntries(
@@ -172,6 +192,10 @@ document.addEventListener("DOMContentLoaded", () => {
     state.expandedIds = new Set(snapshot.expandedIds || []);
     state.trail = Array.isArray(snapshot.trail) ? snapshot.trail.slice(-8) : [];
     state.highlightedIndex = Number.isInteger(snapshot.highlightedIndex) ? snapshot.highlightedIndex : 0;
+    state.neighborVisibilityMode = snapshot.neighborVisibilityMode || "all";
+    state.hiddenPredicateKeys = new Set(snapshot.hiddenPredicateKeys || []);
+    state.hiddenClassKeys = new Set(snapshot.hiddenClassKeys || []);
+    state.hiddenDirectNodeIds = new Set(snapshot.hiddenDirectNodeIds || []);
     syncState();
   }
 
@@ -189,7 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function selectNode(nodeId, options = {}) {
     if (!nodeId) return;
+    const centerChanged = state.selectedId !== nodeId;
     state.selectedId = nodeId;
+    if (centerChanged) {
+      resetDirectVisibilityState();
+    }
     if (options.reset || !state.expandedIds.size) {
       state.expandedIds = new Set([nodeId]);
     } else {
@@ -311,6 +339,21 @@ document.addEventListener("DOMContentLoaded", () => {
           selector: "edge.dense-edge",
           style: {
             "text-background-opacity": 0.72,
+          },
+        },
+        {
+          selector: "edge.direct-edge",
+          style: {
+            "line-style": "solid",
+            "opacity": 0.9,
+          },
+        },
+        {
+          selector: "edge.context-edge",
+          style: {
+            "line-style": "dashed",
+            "opacity": 0.22,
+            "target-arrow-shape": "vee",
           },
         },
         {
@@ -491,6 +534,138 @@ document.addEventListener("DOMContentLoaded", () => {
     return depthMap;
   }
 
+  function linkKey(link) {
+    return `${link.source}|${link.target}|${link.predicate}|${link.module}`;
+  }
+
+  function isDirectLink(centerId, link) {
+    return link.source === centerId || link.target === centerId;
+  }
+
+  function buildDirectRows(view, center) {
+    if (!center) return [];
+    return (view.adjacency.get(center.id) || [])
+      .filter((link) => {
+        const neighborId = link.source === center.id ? link.target : link.source;
+        const neighbor = view.nodeMap.get(neighborId);
+        if (!neighbor) return false;
+        if (!state.showExternalNeighbors && !neighbor.local) return false;
+        return true;
+      })
+      .map((link) => {
+        const neighborId = link.source === center.id ? link.target : link.source;
+        const neighbor = view.nodeMap.get(neighborId);
+        const predicate = linkLabel(link);
+        const neighborClassLabel = neighbor.display_class || neighbor.category || "Other";
+        return {
+          id: linkKey(link),
+          link,
+          predicate,
+          predicateKey: stripKey(predicate || link.predicate),
+          neighborId,
+          neighbor,
+          neighborClassLabel,
+          neighborClassKey: classKey(neighborClassLabel),
+          locality: neighbor.local ? "local" : "external",
+        };
+      })
+      .sort((left, right) => {
+        const predicateOrder = left.predicate.localeCompare(right.predicate);
+        if (predicateOrder !== 0) return predicateOrder;
+        return left.neighbor.name.localeCompare(right.neighbor.name);
+      });
+  }
+
+  function directRowVisible(row) {
+    if (state.hiddenPredicateKeys.has(row.predicateKey)) return false;
+    if (state.hiddenClassKeys.has(row.neighborClassKey)) return false;
+    if (state.hiddenDirectNodeIds.has(row.neighborId)) return false;
+    if (state.neighborVisibilityMode === "local" && !row.neighbor.local) return false;
+    if (state.neighborVisibilityMode === "external" && row.neighbor.local) return false;
+    return true;
+  }
+
+  function summarizeDirectRows(rows, visibleRows) {
+    const visibleRowIds = new Set(visibleRows.map((row) => row.id));
+    const totalNeighborIds = new Set(rows.map((row) => row.neighborId));
+    const visibleNeighborIds = new Set(visibleRows.map((row) => row.neighborId));
+    const classMap = new Map();
+    const groupMap = new Map();
+
+    rows.forEach((row) => {
+      if (!classMap.has(row.neighborClassKey)) {
+        classMap.set(row.neighborClassKey, {
+          key: row.neighborClassKey,
+          label: row.neighborClassLabel,
+          totalRows: 0,
+          totalNodes: new Set(),
+          visibleNodes: new Set(),
+        });
+      }
+      const classEntry = classMap.get(row.neighborClassKey);
+      classEntry.totalRows += 1;
+      classEntry.totalNodes.add(row.neighborId);
+      if (visibleRowIds.has(row.id)) {
+        classEntry.visibleNodes.add(row.neighborId);
+      }
+
+      if (!groupMap.has(row.predicateKey)) {
+        groupMap.set(row.predicateKey, {
+          key: row.predicateKey,
+          label: row.predicate,
+          rows: [],
+          classLabels: new Set(),
+          visibleRows: 0,
+          visibleNodes: new Set(),
+          totalNodes: new Set(),
+        });
+      }
+      const groupEntry = groupMap.get(row.predicateKey);
+      groupEntry.rows.push(row);
+      groupEntry.classLabels.add(row.neighborClassLabel);
+      groupEntry.totalNodes.add(row.neighborId);
+      if (visibleRowIds.has(row.id)) {
+        groupEntry.visibleRows += 1;
+        groupEntry.visibleNodes.add(row.neighborId);
+      }
+    });
+
+    return {
+      totalRowCount: rows.length,
+      visibleRowCount: visibleRows.length,
+      totalNeighborCount: totalNeighborIds.size,
+      visibleNeighborCount: visibleNeighborIds.size,
+      hiddenNeighborCount: Math.max(totalNeighborIds.size - visibleNeighborIds.size, 0),
+      classes: Array.from(classMap.values())
+        .map((entry) => ({
+          key: entry.key,
+          label: entry.label,
+          totalRows: entry.totalRows,
+          totalNodes: entry.totalNodes.size,
+          visibleNodes: entry.visibleNodes.size,
+        }))
+        .sort((left, right) => {
+          if (right.totalNodes !== left.totalNodes) return right.totalNodes - left.totalNodes;
+          return left.label.localeCompare(right.label);
+        }),
+      groups: Array.from(groupMap.values())
+        .map((entry) => ({
+          key: entry.key,
+          label: entry.label,
+          rows: entry.rows,
+          classLabels: Array.from(entry.classLabels).sort((left, right) => left.localeCompare(right)),
+          visibleRows: entry.visibleRows,
+          totalRows: entry.rows.length,
+          visibleNodes: entry.visibleNodes.size,
+          totalNodes: entry.totalNodes.size,
+        }))
+        .sort((left, right) => {
+          if (right.totalRows !== left.totalRows) return right.totalRows - left.totalRows;
+          return left.label.localeCompare(right.label);
+        }),
+    };
+  }
+
   function buildExpandedGraph(view) {
     const center = view.nodeMap.get(state.selectedId);
     if (!center) {
@@ -499,12 +674,28 @@ document.addEventListener("DOMContentLoaded", () => {
         nodes: [],
         links: [],
         nodeMap: new Map(),
-        meta: { expandedCount: 0, hiddenNeighborCount: 0, selectionLabel: "" },
+        meta: {
+          expandedCount: 0,
+          hiddenNeighborCount: 0,
+          selectionLabel: "",
+          directRows: [],
+          directSummary: summarizeDirectRows([], []),
+          visibleDirectRowIds: new Set(),
+          visibleDirectNodeIds: new Set(),
+        },
       };
     }
 
+    const directRows = buildDirectRows(view, center);
+    const visibleDirectRows = directRows.filter((row) => directRowVisible(row));
+    const visibleDirectRowIds = new Set(visibleDirectRows.map((row) => row.id));
+    const visibleDirectNodeIds = new Set(visibleDirectRows.map((row) => row.neighborId));
+    const hiddenDirectNodeIds = new Set(
+      Array.from(new Set(directRows.map((row) => row.neighborId))).filter((neighborId) => !visibleDirectNodeIds.has(neighborId))
+    );
     const expandedIds = new Set(Array.from(state.expandedIds).filter((id) => view.nodeMap.has(id)));
     expandedIds.add(center.id);
+    hiddenDirectNodeIds.forEach((nodeId) => expandedIds.delete(nodeId));
 
     const visibleIds = new Set([center.id]);
     const hiddenNeighborIds = new Set();
@@ -517,6 +708,12 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!neighbor) return false;
           if (!state.showExternalNeighbors && !neighbor.local && neighbor.id !== center.id) {
             hiddenNeighborIds.add(`${link.source}|${link.target}|${link.predicate}`);
+            return false;
+          }
+          if ((hiddenDirectNodeIds.has(link.source) && link.source !== center.id) || (hiddenDirectNodeIds.has(link.target) && link.target !== center.id)) {
+            return false;
+          }
+          if (isDirectLink(center.id, link) && !visibleDirectRowIds.has(linkKey(link))) {
             return false;
           }
           return true;
@@ -538,7 +735,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return left.name.localeCompare(right.name);
       });
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
-    const links = view.links.filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target));
+    const links = view.links.filter((link) => {
+      if (!nodeMap.has(link.source) || !nodeMap.has(link.target)) return false;
+      if (isDirectLink(center.id, link) && !visibleDirectRowIds.has(linkKey(link))) return false;
+      return true;
+    });
     const depthMap = computeDepthMap(center.id, links);
 
     return {
@@ -551,6 +752,10 @@ document.addEventListener("DOMContentLoaded", () => {
         hiddenNeighborCount: hiddenNeighborIds.size,
         selectionLabel: center.name,
         depthMap,
+        directRows,
+        directSummary: summarizeDirectRows(directRows, visibleDirectRows),
+        visibleDirectRowIds,
+        visibleDirectNodeIds,
       },
     };
   }
@@ -639,11 +844,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const denseGraph = graphIsDense(graph);
     const showEdgeLabels = graph.links.length <= MAX_EDGE_LABELS;
     const expandedIds = new Set(state.expandedIds);
+    const visibleDirectNodeIds = new Set(graph.meta.visibleDirectNodeIds || []);
+    const visibleDirectRowIds = new Set(graph.meta.visibleDirectRowIds || []);
     const nodeElements = graph.nodes.map((node) => {
       const isCenter = node.id === graph.center.id;
       const isExpanded = expandedIds.has(node.id);
+      const isDirectNeighbor = visibleDirectNodeIds.has(node.id);
       const depth = Number(graph.meta.depthMap?.[node.id] ?? (isCenter ? 0 : 1));
-      const outsideLabel = denseGraph && !isCenter;
+      const outsideLabel = denseGraph && !isCenter && !isDirectNeighbor;
       return {
         data: {
           id: node.id,
@@ -669,7 +877,7 @@ document.addEventListener("DOMContentLoaded", () => {
           textMaxWidth: isCenter ? 220 : denseGraph ? 118 : 150,
           textBackgroundOpacity: isCenter ? 0.92 : denseGraph ? 0.72 : 0.88,
         },
-        classes: `${isCenter ? "center " : ""}${isExpanded ? "expanded " : ""}${outsideLabel ? "outside-label" : ""}`.trim(),
+        classes: `${isCenter ? "center " : ""}${isExpanded ? "expanded " : ""}${isDirectNeighbor ? "direct-node " : "context-node "}${outsideLabel ? "outside-label" : ""}`.trim(),
       };
     });
 
@@ -689,8 +897,9 @@ document.addEventListener("DOMContentLoaded", () => {
           : 0.9,
         sourceLabel: graph.nodeMap.get(link.source)?.name || link.source,
         targetLabel: graph.nodeMap.get(link.target)?.name || link.target,
+        isDirect: visibleDirectRowIds.has(linkKey(link)),
       },
-      classes: `${showEdgeLabels ? "" : "no-label "}${denseGraph ? "dense-edge" : ""}`.trim(),
+      classes: `${showEdgeLabels ? "" : "no-label "}${denseGraph ? "dense-edge " : ""}${visibleDirectRowIds.has(linkKey(link)) ? "direct-edge" : "context-edge"}`.trim(),
     }));
 
     return [...nodeElements, ...edgeElements];
@@ -806,6 +1015,151 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function renderDirectSummary(graph) {
+    if (!directSummaryEl) return;
+    if (!graph.center) {
+      directSummaryEl.textContent = "Direct-neighborhood counts appear here after you select a term.";
+      return;
+    }
+    const summary = graph.meta.directSummary;
+    directSummaryEl.innerHTML = `
+      <span><strong>${escapeHtml(String(summary.totalRowCount))}</strong> direct relations</span>
+      <span><strong>${escapeHtml(String(summary.totalNeighborCount))}</strong> connected nodes</span>
+      <span><strong>${escapeHtml(String(summary.visibleNeighborCount))}</strong> currently visible</span>
+    `;
+  }
+
+  function renderNeighborPanel(graph) {
+    if (!neighborSummaryEl || !classFiltersEl || !neighborGroupsEl) return;
+    if (!graph.center) {
+      neighborSummaryEl.innerHTML = '<div class="visual-empty">Select a term to review its full direct neighborhood and manage what is shown in the graph.</div>';
+      classFiltersEl.innerHTML = "";
+      neighborGroupsEl.innerHTML = '<div class="visual-empty">Connected nodes grouped by relation will appear here after you select a term.</div>';
+      return;
+    }
+
+    const summary = graph.meta.directSummary;
+    const visibleDirectRowIds = new Set(graph.meta.visibleDirectRowIds || []);
+    const visibleDirectNodeIds = new Set(graph.meta.visibleDirectNodeIds || []);
+
+    neighborSummaryEl.innerHTML = `
+      <div class="visual-neighbor-summary__headline">
+        <div>
+          <strong>${escapeHtml(graph.center.name)}</strong>
+          <small>${escapeHtml(graph.center.display_class || graph.center.category)}</small>
+        </div>
+        <span class="visual-chip">${escapeHtml(String(summary.visibleNeighborCount))} visible / ${escapeHtml(String(summary.totalNeighborCount))} total</span>
+      </div>
+      <div class="visual-neighbor-summary__stats">
+        <span class="visual-chip">Direct relations ${escapeHtml(String(summary.totalRowCount))}</span>
+        <span class="visual-chip">Connected nodes ${escapeHtml(String(summary.totalNeighborCount))}</span>
+        <span class="visual-chip">Hidden nodes ${escapeHtml(String(summary.hiddenNeighborCount))}</span>
+      </div>
+    `;
+
+    classFiltersEl.innerHTML = summary.classes.map((entry) => `
+      <button
+        type="button"
+        class="visual-filter-chip ${state.hiddenClassKeys.has(entry.key) ? "" : "is-active"}"
+        data-neighbor-class-key="${escapeHtml(entry.key)}"
+        aria-pressed="${state.hiddenClassKeys.has(entry.key) ? "false" : "true"}"
+      >
+        <span>${escapeHtml(entry.label)}</span>
+        <small>${escapeHtml(String(entry.visibleNodes))}/${escapeHtml(String(entry.totalNodes))}</small>
+      </button>
+    `).join("");
+
+    if (!summary.groups.length) {
+      neighborGroupsEl.innerHTML = '<div class="visual-empty">No direct neighbors remain under the current module and external-term filters.</div>';
+      return;
+    }
+
+    neighborGroupsEl.innerHTML = summary.groups.map((group) => `
+      <section class="visual-neighbor-group">
+        <header class="visual-neighbor-group__head">
+          <div>
+            <strong><code>${escapeHtml(group.label)}</code></strong>
+            <div class="visual-neighbor-group__meta">
+              <span class="visual-chip">${escapeHtml(String(group.visibleNodes))}/${escapeHtml(String(group.totalNodes))} nodes visible</span>
+              <span class="visual-chip">${escapeHtml(String(group.visibleRows))}/${escapeHtml(String(group.totalRows))} relations visible</span>
+            </div>
+          </div>
+          <div class="visual-neighbor-group__actions">
+            <button type="button" class="copy-button" data-neighbor-group-action="show" data-predicate-key="${escapeHtml(group.key)}">Show group</button>
+            <button type="button" class="copy-button" data-neighbor-group-action="hide" data-predicate-key="${escapeHtml(group.key)}">Hide group</button>
+          </div>
+        </header>
+        <div class="visual-neighbor-group__classes">
+          ${group.classLabels.slice(0, 6).map((label) => `<span class="visual-chip">${escapeHtml(label)}</span>`).join("")}
+        </div>
+        <div class="visual-neighbor-group__rows">
+          ${group.rows.map((row) => `
+            <div class="visual-neighbor-row ${visibleDirectRowIds.has(row.id) ? "is-visible" : "is-hidden"}">
+              <div class="visual-neighbor-row__body">
+                <strong>${escapeHtml(row.neighbor.name)}</strong>
+                <div class="visual-neighbor-row__meta">
+                  <span class="visual-chip">${escapeHtml(row.neighborClassLabel)}</span>
+                  <span class="visual-chip">${row.neighbor.local ? "Local" : "External"}</span>
+                  ${row.neighbor.modules.map((moduleId) => `<span class="visual-chip">${escapeHtml(moduleId)}</span>`).join("")}
+                </div>
+                <small>${escapeHtml(visibleDirectNodeIds.has(row.neighborId) ? "Shown in graph." : "Hidden from graph by the current controls.")}</small>
+              </div>
+              <div class="visual-neighbor-row__actions">
+                <button type="button" class="copy-button" data-neighbor-node-action="${visibleDirectNodeIds.has(row.neighborId) ? "hide" : "show"}" data-neighbor-id="${escapeHtml(row.neighborId)}">${visibleDirectNodeIds.has(row.neighborId) ? "Hide node" : "Show node"}</button>
+                <button type="button" class="copy-button" data-neighbor-node-action="focus" data-neighbor-id="${escapeHtml(row.neighborId)}">Focus</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </section>
+    `).join("");
+
+    classFiltersEl.querySelectorAll("[data-neighbor-class-key]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          const key = button.dataset.neighborClassKey;
+          if (state.hiddenClassKeys.has(key)) {
+            state.hiddenClassKeys.delete(key);
+          } else {
+            state.hiddenClassKeys.add(key);
+          }
+        });
+      });
+    });
+
+    neighborGroupsEl.querySelectorAll("[data-neighbor-group-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          const key = button.dataset.predicateKey;
+          if (button.dataset.neighborGroupAction === "show") {
+            state.hiddenPredicateKeys.delete(key);
+          } else {
+            state.hiddenPredicateKeys.add(key);
+          }
+        });
+      });
+    });
+
+    neighborGroupsEl.querySelectorAll("[data-neighbor-node-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          const nodeId = button.dataset.neighborId;
+          if (button.dataset.neighborNodeAction === "focus") {
+            state.hiddenDirectNodeIds.delete(nodeId);
+            state.seedId = nodeId;
+            selectNode(nodeId, { reset: false });
+            return;
+          }
+          if (button.dataset.neighborNodeAction === "show") {
+            state.hiddenDirectNodeIds.delete(nodeId);
+            return;
+          }
+          state.hiddenDirectNodeIds.add(nodeId);
+        });
+      });
+    });
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="visual-empty">Select a suggestion to inspect its label, class, units, mappings, and release metadata.</div>';
@@ -849,16 +1203,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderRelations(graph) {
-    const rows = graph.links.map((link) => ({
-      source: graph.nodeMap.get(link.source)?.name || link.source,
-      predicate: linkLabel(link),
-      target: graph.nodeMap.get(link.target)?.name || link.target,
-      edgeFamily: link.edgeFamily,
-      module: link.module,
-    }));
+    const directIds = new Set(graph.meta.visibleDirectRowIds || []);
+    const rows = graph.links
+      .map((link) => ({
+        source: graph.nodeMap.get(link.source)?.name || link.source,
+        predicate: linkLabel(link),
+        target: graph.nodeMap.get(link.target)?.name || link.target,
+        edgeFamily: link.edgeFamily,
+        module: link.module,
+        scope: directIds.has(linkKey(link)) ? "Direct" : "Context",
+      }))
+      .sort((left, right) => {
+        if (left.scope !== right.scope) return left.scope === "Direct" ? -1 : 1;
+        const predicateOrder = left.predicate.localeCompare(right.predicate);
+        if (predicateOrder !== 0) return predicateOrder;
+        return left.target.localeCompare(right.target);
+      });
 
     relationsEl.innerHTML = renderTable(
       [
+        { label: "Scope", render: (row) => escapeHtml(row.scope) },
         { label: "Source", render: (row) => escapeHtml(row.source) },
         { label: "Predicate", render: (row) => `<code>${escapeHtml(row.predicate)}</code>` },
         { label: "Target", render: (row) => escapeHtml(row.target) },
@@ -875,15 +1239,16 @@ document.addEventListener("DOMContentLoaded", () => {
       graphNoteEl.textContent = "Search for a local ontology term or use a suggested starting point to initialize the explorer.";
       return;
     }
+    const summary = graph.meta.directSummary;
     if (!graph.links.length) {
       graphNoteEl.textContent = "This term is loaded, but no visible relationships remain with the current module and external-term filters.";
       return;
     }
     if (!state.showExternalNeighbors && graph.meta.hiddenNeighborCount > 0) {
-      graphNoteEl.textContent = `Showing all connected local nodes around ${graph.meta.selectionLabel}. ${graph.meta.hiddenNeighborCount} directly linked external relation${graph.meta.hiddenNeighborCount === 1 ? "" : "s"} are hidden because the external-term toggle is off. Click a visible node to expand further or use Undo to step back.`;
+      graphNoteEl.textContent = `The connected-node panel lists the full direct neighborhood for ${graph.meta.selectionLabel}. The graph currently shows ${summary.visibleNeighborCount} direct node${summary.visibleNeighborCount === 1 ? "" : "s"} and ${graph.links.length} visible relation${graph.links.length === 1 ? "" : "s"}; ${graph.meta.hiddenNeighborCount} directly linked external relation${graph.meta.hiddenNeighborCount === 1 ? "" : "s"} are hidden because the external-term toggle is off.`;
       return;
     }
-    graphNoteEl.textContent = `Showing all connected nodes and visible relations around ${graph.meta.selectionLabel} for the active modules. Click any visible node to expand further or use Undo to step back.`;
+    graphNoteEl.textContent = `The connected-node panel lists the full direct neighborhood for ${graph.meta.selectionLabel}. The graph currently shows ${summary.visibleNeighborCount} direct node${summary.visibleNeighborCount === 1 ? "" : "s"} out of ${summary.totalNeighborCount}, plus any second-hop context revealed by expansion. Click any visible node to expand further or use Undo to step back.`;
   }
 
   function renderGraph(graph) {
@@ -891,6 +1256,7 @@ document.addEventListener("DOMContentLoaded", () => {
     countEdgesEl.textContent = String(graph.links.length);
     countEdgesInlineEl.textContent = String(graph.links.length);
     countExpandedEl.textContent = String(graph.meta.expandedCount);
+    renderDirectSummary(graph);
     renderGraphNote(graph);
 
     if (!graph.center) {
@@ -976,6 +1342,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const graph = buildExpandedGraph(view);
     renderGraph(graph);
+    renderNeighborPanel(graph);
     renderInspector(graph.center, graph);
     renderRelations(graph);
   }
@@ -993,6 +1360,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const seed = state.seedId || state.selectedId;
           state.selectedId = seed;
           state.expandedIds = new Set([seed]);
+          resetDirectVisibilityState();
         });
       }
       if (button.dataset.visualAction === "clear") {
@@ -1003,8 +1371,43 @@ document.addEventListener("DOMContentLoaded", () => {
           state.expandedIds = new Set();
           state.trail = [];
           state.highlightedIndex = 0;
+          resetDirectVisibilityState();
         });
       }
+    });
+  });
+  root.querySelectorAll("[data-neighbor-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      runUndoable(() => {
+        const action = button.dataset.neighborPreset;
+        if (action === "show-all") {
+          resetDirectVisibilityState();
+          return;
+        }
+        if (action === "hide-all") {
+          state.neighborVisibilityMode = "all";
+          state.hiddenPredicateKeys = new Set();
+          state.hiddenClassKeys = new Set();
+          state.hiddenDirectNodeIds = new Set(
+            (buildExpandedGraph(buildBaseView()).meta.directRows || []).map((row) => row.neighborId)
+          );
+          return;
+        }
+        if (action === "reset-direct" && state.selectedId) {
+          state.expandedIds = new Set([state.selectedId]);
+          resetDirectVisibilityState();
+          return;
+        }
+        if (action === "local-only") {
+          resetDirectVisibilityState();
+          state.neighborVisibilityMode = "local";
+          return;
+        }
+        if (action === "external-only") {
+          resetDirectVisibilityState();
+          state.neighborVisibilityMode = "external";
+        }
+      });
     });
   });
   searchInputEl.addEventListener("input", () => {
@@ -1076,6 +1479,10 @@ document.addEventListener("DOMContentLoaded", () => {
       setChartEmpty(error.message);
       resultsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       trailEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      if (directSummaryEl) directSummaryEl.textContent = error.message;
+      if (neighborSummaryEl) neighborSummaryEl.innerHTML = `<div class="visual-empty">${message}</div>`;
+      if (classFiltersEl) classFiltersEl.innerHTML = "";
+      if (neighborGroupsEl) neighborGroupsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       inspectorEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       relationsEl.innerHTML = `<div class="visual-empty">${message}</div>`;
       graphNoteEl.textContent = error.message;

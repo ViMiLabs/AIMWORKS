@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+import os
+import shutil
 from html import escape
 from pathlib import Path
-import shutil
 from typing import Any
 
 from .classify import classify_resources
+from .hdo import load_hdo_alignment_report
 from .io import load_json_document, merge_document_items
 from .mapper import propose_mappings
 from .normalize import best_description, best_label
+from .odk import load_odk_manifest
 from .utils import (
     default_release_profile,
     dump_json,
@@ -29,6 +32,8 @@ def build_docs(
     output_dir = ensure_dir(Path(output_dir))
     ensure_dir(output_dir / "pages")
     ensure_dir(output_dir / "assets")
+    ensure_dir(output_dir / "pemfc")
+    ensure_dir(output_dir / "pemwe")
     write_text(output_dir / ".nojekyll", "")
     profile = try_load_yaml(Path(config_dir or Path(input_path).parent.parent / "config") / "release_profile.yaml", default_release_profile())
     project = profile["project"]
@@ -42,26 +47,53 @@ def build_docs(
         "mapping_count": len(mappings),
     }
     release = _release_snapshot_for_docs(output_dir, fair_snapshot)
-    pages = {
-        output_dir / "index.html": _legacy_profile_home(),
-        output_dir / "pages" / "user-guide.html": _page_template(project, "User Guide", _user_guide_body()),
-        output_dir / "pages" / "ontology-overview.html": _page_template(project, "Ontology Overview", _overview_body(project, summary)),
-        output_dir / "pages" / "class-index.html": _page_template(project, "Class Index", _class_body(classes)),
-        output_dir / "pages" / "property-index.html": _page_template(project, "Property Index", _property_body(properties)),
-        output_dir / "pages" / "alignment.html": _page_template(project, "Alignment", _alignment_body(mappings)),
-        output_dir / "pages" / "examples.html": _page_template(project, "Examples", _examples_body(examples)),
-        output_dir / "pages" / "quality-dashboard.html": _page_template(project, "Quality Dashboard", _quality_body(release)),
-        output_dir / "pages" / "release.html": _page_template(project, "Release", _release_body(release)),
-    }
-    for path, content in pages.items():
-        write_text(path, content)
+    odk = load_odk_manifest(output_dir.parent)
+    hdo = load_hdo_alignment_report(output_dir.parent / "reports")
+
+    page_specs: list[tuple[Path, str, str]] = [
+        (output_dir / "pages" / "user-guide.html", "User Guide", _user_guide_body()),
+        (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
+        (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
+        (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
+        (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings)),
+        (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
+        (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo)),
+        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, output_dir / "pages" / "release.html", output_dir)),
+        (output_dir / "pages" / "import-guide.html", "Import Guide", _import_guide_body(odk, hdo)),
+        (output_dir / "pages" / "import-catalog.html", "Import Catalog", _import_catalog_body(odk)),
+        (output_dir / "pages" / "developer-guide.html", "Developer Guide", _developer_body(odk, hdo)),
+        (output_dir / "pages" / "architecture-workflow.html", "Architecture Workflow", _architecture_body(project, odk, hdo)),
+        (output_dir / "pemfc" / "index.html", "PEMFC Profile", _profile_home_body(project, "pemfc", odk, hdo, output_dir / "pemfc" / "index.html", output_dir)),
+        (output_dir / "pemfc" / "hydrogen-ontology.html", "PEMFC Reference", _reference_body(project, "pemfc", odk, hdo, output_dir / "pemfc" / "hydrogen-ontology.html", output_dir)),
+        (output_dir / "pemwe" / "index.html", "PEMWE Profile", _profile_home_body(project, "pemwe", odk, hdo, output_dir / "pemwe" / "index.html", output_dir)),
+        (output_dir / "pemwe" / "hydrogen-ontology.html", "PEMWE Reference", _reference_body(project, "pemwe", odk, hdo, output_dir / "pemwe" / "hydrogen-ontology.html", output_dir)),
+    ]
+    for path, title, body in page_specs:
+        write_text(path, _page_template(project, title, body, path, output_dir))
+
+    write_text(output_dir / "index.html", _legacy_profile_home())
     _copy_site_assets(output_dir, project)
     write_text(output_dir / "assets" / "style.css", _style_css())
-    dump_json(output_dir / "search-index.json", {"classes": classes, "properties": properties, "examples": examples, "mappings": mappings})
+    dump_json(
+        output_dir / "search-index.json",
+        {
+            "classes": classes,
+            "properties": properties,
+            "examples": examples,
+            "mappings": mappings,
+            "odk": {"status": odk.get("status"), "parity": odk.get("parity", {}).get("status")},
+            "hdo": hdo.get("summary", {}),
+        },
+    )
     return summary
 
 
-def _term_views(input_path: str | Path, review_dir: Path, config_dir: str | Path | None, items: dict[str, dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+def _term_views(
+    input_path: str | Path,
+    review_dir: Path,
+    config_dir: str | Path | None,
+    items: dict[str, dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     classes: list[dict[str, Any]] = []
     properties: list[dict[str, Any]] = []
     examples: list[dict[str, Any]] = []
@@ -101,28 +133,25 @@ def _first_iri(value: Any) -> str:
     return ""
 
 
-def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
-    if page_title == "Home":
-        nav_base = "pages/"
-        css_base = "assets/style.css"
-        home_link = "index.html"
-        asset_base = "assets/"
-    else:
-        nav_base = ""
-        css_base = "../assets/style.css"
-        home_link = "../index.html"
-        asset_base = "../assets/"
+def _page_template(project: dict[str, Any], page_title: str, body: str, page_path: Path, docs_root: Path) -> str:
+    home_link = _relative_href(page_path, docs_root / "index.html")
+    css_href = _relative_href(page_path, docs_root / "assets" / "style.css")
+    asset_base = _relative_href(page_path, docs_root / "assets")
     nav = f"""
     <nav class="nav">
       <a href="{home_link}">Home</a>
-      <a href="{nav_base}user-guide.html">User Guide</a>
-      <a href="{nav_base}ontology-overview.html">Overview</a>
-      <a href="{nav_base}class-index.html">Classes</a>
-      <a href="{nav_base}property-index.html">Properties</a>
-      <a href="{nav_base}alignment.html">Alignments</a>
-      <a href="{nav_base}examples.html">Examples</a>
-      <a href="{nav_base}quality-dashboard.html">Quality</a>
-      <a href="{nav_base}release.html">Release</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'user-guide.html')}">User Guide</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'ontology-overview.html')}">Overview</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'architecture-workflow.html')}">Architecture</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'class-index.html')}">Classes</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'property-index.html')}">Properties</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'alignment.html')}">Alignments</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'examples.html')}">Examples</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'import-guide.html')}">Import</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'import-catalog.html')}">Import Catalog</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'quality-dashboard.html')}">Quality</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'developer-guide.html')}">Developer</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'release.html')}">Release</a>
     </nav>
     """
     support_block = _support_block(project, asset_base)
@@ -133,7 +162,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page_title} | {project['title']}</title>
-  <link rel="stylesheet" href="{css_base}">
+  <link rel="stylesheet" href="{css_href}">
 </head>
 <body>
   <header class="hero">
@@ -157,37 +186,6 @@ def _page_template(project: dict[str, Any], page_title: str, body: str) -> str:
 </body>
 </html>
 """
-
-
-def _home_body(project: dict[str, Any], summary: dict[str, Any], imports: list[str]) -> str:
-    import_list = "".join(f"<li>{item}</li>" for item in imports)
-    return f"""
-    <section class="grid">
-      <article class="card">
-        <h2>Scope</h2>
-        <p>{project['description']}</p>
-      </article>
-      <article class="card">
-        <h2>Release Snapshot</h2>
-        <ul class="stats">
-          <li><strong>{summary['schema_count']}</strong> schema terms</li>
-          <li><strong>{summary['vocabulary_count']}</strong> curated vocabulary terms</li>
-          <li><strong>{summary['example_count']}</strong> example or data-like resources</li>
-          <li><strong>{summary['mapping_count']}</strong> mapping proposals</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h2>Imports and Alignments</h2>
-        <ul>{import_list}</ul>
-      </article>
-      <article class="card">
-        <h2>Publication</h2>
-        <p>Stable ontology IRI: <code>{project['ontology_iri']}</code></p>
-        <p>Version IRI: <code>{project['version_iri']}</code></p>
-        <p>License: <a href="{project['license']}">{project['license']}</a></p>
-      </article>
-    </section>
-    """
 
 
 def _legacy_profile_home() -> str:
@@ -237,7 +235,6 @@ def _legacy_profile_home() -> str:
     <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
     <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
     <div class="grid">
-
       <article class="card">
         <h2>PEMFC Profile</h2>
         <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
@@ -245,10 +242,8 @@ def _legacy_profile_home() -> str:
         <div class="links">
           <a href="./pemfc/index.html">Open profile home</a>
           <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
-          <a href="./pemfc/pages/queries.html">Open queries</a>
         </div>
       </article>
-
       <article class="card">
         <h2>PEMWE Profile</h2>
         <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
@@ -256,10 +251,8 @@ def _legacy_profile_home() -> str:
         <div class="links">
           <a href="./pemwe/index.html">Open profile home</a>
           <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
-          <a href="./pemwe/pages/queries.html">Open queries</a>
         </div>
       </article>
-
     </div>
   </main>
 </body>
@@ -277,7 +270,7 @@ def _user_guide_body() -> str:
     """
 
 
-def _overview_body(project: dict[str, Any], summary: dict[str, Any]) -> str:
+def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any]) -> str:
     profiles = project.get("profiles", {})
     profile_lines = []
     for key in ("core", "pemfc", "pemwe"):
@@ -291,7 +284,34 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any]) -> str:
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
         *profile_lines,
     ]
-    return f'<section class="prose">{html_paragraphs(paragraphs)}</section>'
+    architecture = """
+    <section class="grid">
+      <article class="card">
+        <h2>Release Architecture</h2>
+        <p>AIMWORKS remains the domain-specific release and documentation layer, while ODK is introduced as a nested standard ontology engineering and QC backend.</p>
+        <p>PEMFC and PEMWE profile modules remain AIMWORKS outputs in shadow mode, and ODK does not change public H2KG IRIs unless a later promotion step is explicitly approved.</p>
+      </article>
+      <article class="card">
+        <h2>ODK Shadow Mode</h2>
+        <p>Status: <strong>{status}</strong></p>
+        <p>Primary artefact: <strong>{artifact}</strong> | Reasoner: <strong>{reasoner}</strong></p>
+        <p>{message}</p>
+      </article>
+      <article class="card">
+        <h2>Semantic Division of Labor</h2>
+        <p><strong>HDO</strong> is the primary alignment source for Helmholtz-community digital-data concepts such as metadata, identifiers, digital objects, schemas, and validation.</p>
+        <p><strong>EMMO / ECHO</strong> remain the scientific and electrochemistry anchors, <strong>QUDT</strong> covers quantities and units, <strong>ChEBI</strong> covers chemistry, and <strong>PROV-O / DCTERMS</strong> remain publication metadata anchors.</p>
+        <p class="muted">Reviewed against HDO in the current run: {reviewed}</p>
+      </article>
+    </section>
+    """.format(
+        status=escape(str(odk.get("status", "not built"))),
+        artifact=escape(str(odk.get("primary_artifact", "base"))),
+        reasoner=escape(str(odk.get("reasoner", "ELK"))),
+        message=escape(str(odk.get("parity", {}).get("message", "ODK shadow parity has not been computed yet."))),
+        reviewed=escape(str(hdo.get("summary", {}).get("reviewed_against_hdo", 0))),
+    )
+    return f'<section class="prose">{html_paragraphs(paragraphs)}</section>{architecture}'
 
 
 def _class_body(classes: list[dict[str, Any]]) -> str:
@@ -326,13 +346,17 @@ def _examples_body(examples: list[dict[str, Any]]) -> str:
     return f"<section class='list-grid'>{cards}</section>"
 
 
-def _release_body(release: dict[str, Any]) -> str:
-    artifacts = "".join(f"<li>{item}</li>" for item in release.get("artifacts", []))
+def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any], page_path: Path, docs_root: Path) -> str:
+    artifacts = "".join(f"<li>{escape(str(item))}</li>" for item in release.get("artifacts", []))
+    odk_base = _relative_href(page_path, docs_root.parent / "odk")
+    odk_artifacts = _odk_artifact_cards(odk, odk_base)
+    gates = _render_rows(odk.get("promotion_gates", []))
+    parity = odk.get("parity", {})
     return f"""
     <section class="grid">
       <article class="card">
         <h2>Release Readiness</h2>
-        <p>{release.get('summary', 'No release summary available.')}</p>
+        <p>{escape(str(release.get('summary', 'No release summary available.')))}</p>
         <p>The detailed quality and transparency view is published on the <a href="quality-dashboard.html">Quality Dashboard</a>.</p>
       </article>
       <article class="card">
@@ -345,15 +369,373 @@ def _release_body(release: dict[str, Any]) -> str:
         </ul>
       </article>
       <article class="card">
-        <h2>Artifacts</h2>
+        <h2>AIMWORKS Artifacts</h2>
         <ul>{artifacts}</ul>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <h2>ODK Release Artefacts</h2>
+        <p class="muted">ODK remains in shadow mode. These machine artefacts are generated in parallel for comparison, QC, and downstream tooling.</p>
+        {odk_artifacts}
+      </article>
+      <article class="card">
+        <h2>Shadow Mode Status</h2>
+        <ul class="stats">
+          <li><strong>Current authority:</strong> {escape(str(odk.get('authority', 'AIMWORKS pipeline')))}</li>
+          <li><strong>ODK status:</strong> {escape(str(odk.get('mode', 'shadow')))}</li>
+          <li><strong>Reasoner:</strong> {escape(str(odk.get('reasoner', 'ELK')))}</li>
+          <li><strong>ODK version:</strong> {escape(str(odk.get('odk_version', 'shadow scaffold')))}</li>
+          <li><strong>Parity:</strong> {escape(str(parity.get('status', 'under review')))}</li>
+        </ul>
+        <p>{escape(str(parity.get('message', 'ODK parity has not yet been reviewed.')))}</p>
+        {gates}
+      </article>
+      <article class="card">
+        <h2>ODK and HDO Integration</h2>
+        <ul class="stats">
+          <li><strong>HDO import status:</strong> {_hdo_import_status(odk)}</li>
+          <li><strong>Last refresh:</strong> {_hdo_import_refresh(odk)}</li>
+          <li><strong>Included in current shadow build:</strong> {_hdo_import_included(odk)}</li>
+          <li><strong>HDO-reviewed local terms:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</li>
+          <li><strong>Aligned to HDO:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</li>
+        </ul>
+        <p>HDO is the primary shadow-mode alignment source for data, metadata, digital-object, information-profile, identifier, schema, and validation concepts in H2KG.</p>
+        <p class="muted">{escape(str(hdo.get('cache_note', '')))}</p>
+      </article>
+    </section>
+    """
+
+
+def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any]) -> str:
+    explanations = release.get("section_explanations", {})
+    odk_rows = [
+        {
+            "label": "ROBOT status",
+            "status": odk.get("robot_summary", {}).get("status", "watch"),
+            "value": odk.get("robot_summary", {}).get("reasoning_status", "not built"),
+            "detail": odk.get("robot_summary", {}).get("detail", ""),
+        },
+        {
+            "label": "ROBOT errors",
+            "status": "good" if odk.get("robot_summary", {}).get("errors", 0) == 0 else "action",
+            "value": str(odk.get("robot_summary", {}).get("errors", 0)),
+            "detail": "Shadow-mode ROBOT summary from the nested ODK workbench.",
+        },
+        {
+            "label": "ROBOT warnings",
+            "status": "watch" if odk.get("robot_summary", {}).get("warnings", 0) else "good",
+            "value": str(odk.get("robot_summary", {}).get("warnings", 0)),
+            "detail": "Warnings indicate shadow scaffolding or follow-up work still required before promotion.",
+        },
+        {
+            "label": "Import refresh health",
+            "status": "good" if all(item.get("required") is False or item.get("enabled") for item in odk.get("imports", [])) else "action",
+            "value": f"{sum(1 for item in odk.get('imports', []) if item.get('enabled'))} configured",
+            "detail": "Imports are tracked through the nested ODK workbench and surfaced here alongside H2KG-specific checks.",
+        },
+        {
+            "label": "Parity status",
+            "status": "good" if odk.get("parity", {}).get("status") == "aligned" else "watch",
+            "value": odk.get("parity", {}).get("status", "under review"),
+            "detail": odk.get("parity", {}).get("message", ""),
+        },
+        {
+            "label": "IRI drift",
+            "status": "good" if not odk.get("parity", {}).get("iri_drift", False) else "action",
+            "value": "none" if not odk.get("parity", {}).get("iri_drift", False) else "detected",
+            "detail": "Shadow mode should preserve existing H2KG identifiers.",
+        },
+        {
+            "label": "HDO review coverage",
+            "status": "good" if hdo.get("summary", {}).get("reviewed_against_hdo", 0) > 0 else "watch",
+            "value": str(hdo.get("summary", {}).get("reviewed_against_hdo", 0)),
+            "detail": "Local H2KG terms reviewed against HDO for data, metadata, identifier, schema, validation, and digital-object semantics.",
+        },
+        {
+            "label": "HDO mapping coverage",
+            "status": "good" if hdo.get("summary", {}).get("aligned_to_hdo", 0) > 0 else "watch",
+            "value": str(hdo.get("summary", {}).get("aligned_to_hdo", 0)),
+            "detail": "Mappings or reuse proposals that currently point to HDO anchors.",
+        },
+        {
+            "label": "H2KG terms still local after HDO review",
+            "status": "watch" if hdo.get("summary", {}).get("stayed_local", 0) > 0 else "good",
+            "value": str(hdo.get("summary", {}).get("stayed_local", 0)),
+            "detail": "Reviewed terms intentionally kept local until direct HDO reuse is accepted or a more precise HDO target is loaded.",
+        },
+    ]
+    return f"""
+    <section class="prose">
+      <p>{escape(str(release.get('summary', 'No quality summary available.')))}</p>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <h2>FAIR Signals</h2>
+        <p class="muted">{escape(str(explanations.get('fair_signals', 'Internal FAIR signals estimate release readiness from locally built ontology artifacts.')))}</p>
+        {_render_rows(release.get('fair_signals', []))}
+      </article>
+      <article class="card">
+        <h2>Transparency Hooks</h2>
+        <p class="muted">{escape(str(explanations.get('transparency_hooks', 'External assessment hooks report what third-party services returned, or state clearly when they were unavailable.')))}</p>
+        {_render_rows(release.get('transparency_hooks', []))}
+      </article>
+      <article class="card">
+        <h2>ODK / ROBOT QC</h2>
+        <p class="muted">ODK / ROBOT signals reflect standard ontology engineering QC and are reported in addition to H2KG-specific FAIR and publication checks.</p>
+        {_render_rows(odk_rows)}
+      </article>
+      <article class="card">
+        <h2>FOOPS! Assessment</h2>
+        <p class="muted">FOOPS! is an external FAIR-oriented ontology validator. In file mode it does not run accessibility checks, so the Accessible dimension may appear as not assessed.</p>
+        {_foops_details(release.get('foops', {}))}
+      </article>
+      <article class="card">
+        <h2>OOPS! Pitfalls</h2>
+        <p class="muted">OOPS! is an external ontology pitfall scanner. Service errors are shown as availability problems rather than as zero pitfalls.</p>
+        {_oops_details(release.get('oops', {}))}
+      </article>
+      <article class="card">
+        <h2>Validation Signals</h2>
+        <p class="muted">{escape(str(explanations.get('validation_signals', 'Validation signals summarize local structural and metadata checks against the release candidate ontology.')))}</p>
+        {_render_rows(release.get('validation_signals', []))}
+      </article>
+      <article class="card">
+        <h2>Publication Assets</h2>
+        <p class="muted">{escape(str(explanations.get('publication_assets', 'Publication asset rows show whether files were generated in the current run rather than assuming they exist.')))}</p>
+        {_render_rows(release.get('publication_assets', []))}
+      </article>
+    </section>
+    """
+
+
+def _import_guide_body(odk: dict[str, Any], hdo: dict[str, Any]) -> str:
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>Nested ODK Import Flow</h2>
+        <p>Imports are refreshed through the nested ODK workbench and then surfaced through the AIMWORKS release pipeline.</p>
+        <ol class="ordered">
+          <li>Open <code>ontology_release/odk/src/ontology/</code>.</li>
+          <li>Run <code>run.bat make refresh-imports</code>.</li>
+          <li>Review generated import modules under <code>ontology_release/odk/src/ontology/imports/</code>.</li>
+          <li>Run the normal AIMWORKS release pipeline so the refreshed import status is copied into <code>output/odk/</code> and reflected in the site.</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h2>Shadow Mode Context</h2>
+        <p>ODK is currently operating in <strong>{escape(str(odk.get('mode', 'shadow')))}</strong> mode. The AIMWORKS pipeline remains authoritative while ODK manages standard machine artefacts and import/QC infrastructure in parallel.</p>
+        <p><strong>HDO role:</strong> HDO is the preferred Helmholtz-community source for data-management, metadata, identifier, digital-object, information-profile, schema, and validation concepts.</p>
+        <p class="muted">Current HDO-reviewed term count: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+      </article>
+    </section>
+    """
+
+
+def _import_catalog_body(odk: dict[str, Any]) -> str:
+    rows = []
+    for item in odk.get("imports", []):
+        rows.append(
+            f"""
+            <tr>
+              <td>{escape(str(item.get('title', item.get('id', ''))))}</td>
+              <td><code>{escape(str(item.get('source_iri', '')))}</code></td>
+              <td><code>{escape(str(item.get('local_cache', '')))}</code></td>
+              <td><code>{escape(str(item.get('product_id', '')))}</code></td>
+              <td>{'required' if item.get('required') else 'optional'}</td>
+              <td>{escape(str(item.get('last_refresh_status', '')))}</td>
+              <td>{'yes' if item.get('included_in_release') else 'no'}</td>
+              <td>{escape(str(item.get('semantic_role', '')))}</td>
+            </tr>
+            """
+        )
+    body = "".join(rows) or "<tr><td colspan='8'>No ODK import data available.</td></tr>"
+    return f"""
+    <section class="card">
+      <h2>ODK-Managed Import Catalog</h2>
+      <div class="table-wrap">
+        <table class="catalog-table">
+          <thead>
+            <tr>
+              <th>Import</th>
+              <th>Source IRI</th>
+              <th>Local cache</th>
+              <th>ODK product</th>
+              <th>Requirement</th>
+              <th>Last refresh</th>
+              <th>Included</th>
+              <th>Semantic role</th>
+            </tr>
+          </thead>
+          <tbody>{body}</tbody>
+        </table>
+      </div>
+    </section>
+    """
+
+
+def _developer_body(odk: dict[str, Any], hdo: dict[str, Any]) -> str:
+    commands = """
+    <ul class="command-list">
+      <li><code>ontology_release/odk/src/ontology/run.bat make odkversion</code></li>
+      <li><code>ontology_release/odk/src/ontology/run.bat make test</code></li>
+      <li><code>ontology_release/odk/src/ontology/run.bat make refresh-imports</code></li>
+      <li><code>ontology_release/odk/src/ontology/run.bat make prepare_release</code></li>
+      <li><code>ontology_release/odk/src/ontology/run.bat make validate_profile_h2kg-edit.owl</code></li>
+    </ul>
+    """
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>ODK Operations</h2>
+        <p>The nested ODK project lives under <code>ontology_release/odk/</code>. Its outputs are copied into <code>ontology_release/output/odk/</code> and then rendered through the AIMWORKS docs site.</p>
+        {commands}
+      </article>
+      <article class="card">
+        <h2>Ownership Boundary</h2>
+        <p>ODK handles edit-file lifecycle, imports, ROBOT-oriented QC, and standard machine releases. The Python release pipeline still owns schema/example separation, mappings, FAIR reporting, custom docs, profile modules, w3id assets, and the release bundle.</p>
+        <p><strong>Architecture note:</strong> ODK is nested and intentionally not allowed to overwrite the AIMWORKS repo-root workflow structure.</p>
+      </article>
+      <article class="card">
+        <h2>Current ODK Status</h2>
+        <p>Status: <strong>{escape(str(odk.get('status', 'not built')))}</strong></p>
+        <p>Last built: <strong>{escape(str(odk.get('last_built', 'unknown')))}</strong></p>
+      </article>
+      <article class="card">
+        <h2>When to Use HDO vs EMMO vs PROV / DCTERMS</h2>
+        <ul class="stats">
+          <li><strong>HDO first:</strong> data, metadata, identifier, digital object, information profile, schema, validation, and provenance-record concepts.</li>
+          <li><strong>EMMO / ECHO first:</strong> scientific process, material, measurement, and electrochemistry semantics.</li>
+          <li><strong>QUDT first:</strong> quantity kinds, quantity values, and units.</li>
+          <li><strong>ChEBI first:</strong> chemical entities.</li>
+          <li><strong>PROV-O / DCTERMS first:</strong> publication provenance and ontology release metadata.</li>
+        </ul>
+        <p class="muted">Current HDO-aligned terms in this run: {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</p>
+      </article>
+    </section>
+    """
+
+
+def _architecture_body(project: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any]) -> str:
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>AIMWORKS Layer</h2>
+        <p>AIMWORKS remains the domain-specific documentation and release layer for H2KG, including FAIR reporting, profile generation for PEMFC and PEMWE, w3id assets, release bundles, and custom HTML docs.</p>
+      </article>
+      <article class="card">
+        <h2>ODK Layer</h2>
+        <p>ODK now runs as a nested shadow-mode ontology engineering backend for edit-file management, import refresh, ROBOT-oriented QC, and standard machine artefacts such as <code>base</code>, <code>full</code>, and <code>simple</code>.</p>
+        <p>Current status: <strong>{escape(str(odk.get('mode', 'shadow')))}</strong>. Public H2KG IRIs remain unchanged.</p>
+      </article>
+      <article class="card">
+        <h2>Profile Modules</h2>
+        <p>The <code>pemfc</code> and <code>pemwe</code> profiles remain AIMWORKS outputs in v1. ODK does not replace them or publish a competing documentation site.</p>
+        <p>{escape(str(project.get('title', 'H2KG')))} keeps the current profile-oriented website while gaining a standards-based machine release and QC backend.</p>
+      </article>
+      <article class="card">
+        <h2>HDO Integration</h2>
+        <p>HDO is integrated as the Helmholtz-community anchor for digital-data concepts, complementing EMMO/ECHO, QUDT, ChEBI, and PROV-O / DCTERMS.</p>
+        <p><strong>Reviewed against HDO:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)} | <strong>Aligned:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</p>
+      </article>
+    </section>
+    """
+
+
+def _profile_home_body(project: dict[str, Any], profile_key: str, odk: dict[str, Any], hdo: dict[str, Any], page_path: Path, docs_root: Path) -> str:
+    profiles = project.get("profiles", {})
+    profile_cfg = profiles.get(profile_key, {})
+    parity_status = odk.get("parity", {}).get("status", "under review")
+    import_link = _relative_href(page_path, docs_root / "pages" / "import-guide.html")
+    quality_link = _relative_href(page_path, docs_root / "pages" / "quality-dashboard.html")
+    release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
+    reference_link = _relative_href(page_path, page_path.parent / "hydrogen-ontology.html")
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>{escape(str(profile_cfg.get('title', profile_key.upper())))}</h2>
+        <p>Ontology IRI: <code>{escape(str(profile_cfg.get('ontology_iri', '')))}</code></p>
+        <p>Namespace: <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
+        <p>This profile remains an AIMWORKS-generated public view while ODK runs in parallel as a machine release and QC backend.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{reference_link}">Open reference</a>
+          <a class="inline-button" href="{release_link}">Release</a>
+          <a class="inline-button" href="{quality_link}">Quality</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Machine Release Backend</h2>
+        <ul class="stats">
+          <li><strong>Status:</strong> {escape(str(odk.get('status', 'not built')))}</li>
+          <li><strong>Last built:</strong> {escape(str(odk.get('last_built', 'unknown')))}</li>
+          <li><strong>Reasoner:</strong> {escape(str(odk.get('reasoner', 'ELK')))}</li>
+          <li><strong>Primary artefact:</strong> {escape(str(odk.get('primary_artifact', 'base')))}</li>
+          <li><strong>Parity:</strong> {escape(str(parity_status))}</li>
+        </ul>
+        <p>Standard ODK machine artefacts and ROBOT QC are generated in parallel with the AIMWORKS release pipeline.</p>
+        <p class="muted">Managed imports include HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS. HDO is the preferred anchor for data and metadata-management concepts.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{release_link}">Release</a>
+          <a class="inline-button" href="{quality_link}">Quality</a>
+          <a class="inline-button" href="{import_link}">Import</a>
+        </div>
+      </article>
+    </section>
+    """
+
+
+def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, Any], hdo: dict[str, Any], page_path: Path, docs_root: Path) -> str:
+    profiles = project.get("profiles", {})
+    profile_cfg = profiles.get(profile_key, {})
+    ontology_base = docs_root.parent / "ontology"
+    canonical_file = ontology_base / f"{profile_key}_schema.ttl"
+    if not canonical_file.exists():
+        canonical_file = ontology_base / "schema.ttl"
+    canonical_href = _relative_href(page_path, canonical_file)
+    odk_base = _relative_href(page_path, docs_root.parent / "odk")
+    parity = odk.get("parity", {})
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>Profile Metadata</h2>
+        <p><strong>Title:</strong> {escape(str(profile_cfg.get('title', profile_key.upper())))}</p>
+        <p><strong>Ontology IRI:</strong> <code>{escape(str(profile_cfg.get('ontology_iri', '')))}</code></p>
+        <p><strong>Namespace:</strong> <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
+      </article>
+      <article class="card">
+        <h2>Machine Artefacts</h2>
+        <ul class="stats">
+          <li><a href="{canonical_href}">Canonical AIMWORKS ontology download</a></li>
+          {_artifact_line(odk, 'base', odk_base)}
+          {_artifact_line(odk, 'full', odk_base)}
+          {_artifact_line(odk, 'simple', odk_base)}
+        </ul>
+        <p>ODK artefacts are machine-oriented companion releases. Example and data-like content remain outside ODK v1.</p>
+        <p>HDO is used as a primary alignment source for data, metadata, digital-object, and process-management concepts.</p>
+        <p class="muted">HDO-reviewed H2KG terms in this run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+        {_shadow_note(parity)}
       </article>
     </section>
     """
 
 
 def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] | None) -> dict[str, Any]:
-    release = dict(fair_snapshot or {"findable": 0, "accessible": 0, "interoperable": 0, "reusable": 0, "summary": "Release summary unavailable.", "artifacts": [], "fair_signals": [], "transparency_hooks": [], "validation_signals": [], "publication_assets": [], "section_explanations": {}})
+    release = dict(
+        fair_snapshot
+        or {
+            "findable": 0,
+            "accessible": 0,
+            "interoperable": 0,
+            "reusable": 0,
+            "summary": "Release summary unavailable.",
+            "artifacts": [],
+            "fair_signals": [],
+            "transparency_hooks": [],
+            "validation_signals": [],
+            "publication_assets": [],
+            "section_explanations": {},
+        }
+    )
     publication_assets = [dict(item) for item in release.get("publication_assets", [])]
     for asset in publication_assets:
         if asset.get("label") == "HTML reference page":
@@ -364,6 +746,53 @@ def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] |
             asset["status"] = "good"
     release["publication_assets"] = publication_assets
     return release
+
+
+def _render_rows(rows: list[dict[str, Any]]) -> str:
+    if not rows:
+        return "<p>No data available.</p>"
+    items = "".join(
+        f"<li><strong>{escape(str(item.get('label', 'Metric')))}</strong> <span class='badge {escape(str(item.get('status', 'watch')))}'>{escape(str(item.get('status', 'watch')).upper())}</span> <span class='value'>{escape(str(item.get('value', '')))}</span><br><span class='muted'>{escape(str(item.get('detail', '')))}</span></li>"
+        for item in rows
+    )
+    return f"<ul class='metric-list'>{items}</ul>"
+
+
+def _foops_details(assessment: dict[str, Any]) -> str:
+    dimensions = assessment.get("dimensions", {})
+    rows = [
+        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
+        {"label": "Overall score", "status": "good" if (assessment.get("overall_score") or 0) >= 70 else "watch" if assessment.get("overall_score") is not None else "watch", "value": f"{assessment.get('overall_score')} / 100" if assessment.get("overall_score") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
+        {"label": "F / Findable", "status": "good" if dimensions.get("findable") is not None and dimensions.get("findable") >= 70 else "action" if dimensions.get("findable") is not None else "watch", "value": f"{dimensions.get('findable')} / 100" if dimensions.get("findable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
+        {"label": "A / Accessible", "status": "good" if dimensions.get("accessible") is not None and dimensions.get("accessible") >= 70 else "watch", "value": f"{dimensions.get('accessible')} / 100" if dimensions.get("accessible") is not None else "not assessed", "detail": "In file mode this dimension is commonly not assessed by FOOPS!."},
+        {"label": "I / Interoperable", "status": "good" if dimensions.get("interoperable") is not None and dimensions.get("interoperable") >= 70 else "action" if dimensions.get("interoperable") is not None else "watch", "value": f"{dimensions.get('interoperable')} / 100" if dimensions.get("interoperable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
+        {"label": "R / Reusable", "status": "good" if dimensions.get("reusable") is not None and dimensions.get("reusable") >= 70 else "action" if dimensions.get("reusable") is not None else "watch", "value": f"{dimensions.get('reusable')} / 100" if dimensions.get("reusable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
+    ]
+    failed_checks = assessment.get("failed_checks", [])
+    if failed_checks:
+        rows.extend(
+            {
+                "label": f"FOOPS! follow-up {index + 1}",
+                "status": "watch",
+                "value": item.get("label", "check"),
+                "detail": item.get("detail", ""),
+            }
+            for index, item in enumerate(failed_checks[:8])
+        )
+    return _render_rows(rows)
+
+
+def _oops_details(assessment: dict[str, Any]) -> str:
+    rows = [
+        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
+        {"label": "Pitfall count", "status": "good" if assessment.get("status") == "assessed" and assessment.get("pitfall_count", 0) == 0 else "watch" if assessment.get("status") == "assessed" else "watch", "value": str(assessment.get("pitfall_count", "not assessed")) if assessment.get("status") == "assessed" else "not assessed", "detail": "Returned directly by the OOPS! service when the scan succeeds."},
+    ]
+    for item in assessment.get("pitfalls", [])[:8]:
+        code = item.get("code") or "Pitfall"
+        name = item.get("name", "Unnamed pitfall")
+        detail = item.get("description", "")
+        rows.append({"label": code, "status": "action", "value": name, "detail": detail})
+    return _render_rows(rows)
 
 
 def _support_block(project: dict[str, Any], asset_base: str) -> str:
@@ -425,7 +854,7 @@ def _asset_src(item: dict[str, Any], asset_base: str) -> str:
     logo = str(item.get("logo", "")).strip()
     if not logo:
         return ""
-    return f"{asset_base}{escape(Path(logo).name)}"
+    return f"{asset_base}/{escape(Path(logo).name)}"
 
 
 def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
@@ -444,92 +873,70 @@ def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
             shutil.copyfile(source_path, target_path)
 
 
-def _quality_body(release: dict[str, Any]) -> str:
-    explanations = release.get("section_explanations", {})
-    return f"""
-    <section class="prose">
-      <p>{release.get('summary', 'No quality summary available.')}</p>
-    </section>
-    <section class="stack">
-      <article class="card">
-        <h2>FAIR Signals</h2>
-        <p class="muted">{explanations.get('fair_signals', 'Internal FAIR signals estimate release readiness from locally built ontology artifacts.')}</p>
-        {_render_rows(release.get('fair_signals', []))}
-      </article>
-      <article class="card">
-        <h2>Transparency Hooks</h2>
-        <p class="muted">{explanations.get('transparency_hooks', 'External assessment hooks report what third-party services returned, or state clearly when they were unavailable.')}</p>
-        {_render_rows(release.get('transparency_hooks', []))}
-      </article>
-      <article class="card">
-        <h2>FOOPS! Assessment</h2>
-        <p class="muted">FOOPS! is an external FAIR-oriented ontology validator. In file mode it does not run accessibility checks, so the Accessible dimension may appear as not assessed.</p>
-        {_foops_details(release.get('foops', {}))}
-      </article>
-      <article class="card">
-        <h2>OOPS! Pitfalls</h2>
-        <p class="muted">OOPS! is an external ontology pitfall scanner. Service errors are shown as availability problems rather than as zero pitfalls.</p>
-        {_oops_details(release.get('oops', {}))}
-      </article>
-      <article class="card">
-        <h2>Validation Signals</h2>
-        <p class="muted">{explanations.get('validation_signals', 'Validation signals summarize local structural and metadata checks against the release candidate ontology.')}</p>
-        {_render_rows(release.get('validation_signals', []))}
-      </article>
-      <article class="card">
-        <h2>Publication Assets</h2>
-        <p class="muted">{explanations.get('publication_assets', 'Publication asset rows show whether files were generated in the current run rather than assuming they exist.')}</p>
-        {_render_rows(release.get('publication_assets', []))}
-      </article>
-    </section>
-    """
-
-
-def _render_rows(rows: list[dict[str, Any]]) -> str:
-    if not rows:
-        return "<p>No data available.</p>"
-    items = "".join(
-        f"<li><strong>{item.get('label', 'Metric')}</strong> <span class='badge {item.get('status', 'watch')}'>{item.get('status', 'watch').upper()}</span> <span class='value'>{item.get('value', '')}</span><br><span class='muted'>{item.get('detail', '')}</span></li>"
-        for item in rows
-    )
-    return f"<ul class='metric-list'>{items}</ul>"
-
-
-def _foops_details(assessment: dict[str, Any]) -> str:
-    dimensions = assessment.get("dimensions", {})
-    rows = [
-        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
-        {"label": "Overall score", "status": "good" if (assessment.get("overall_score") or 0) >= 70 else "watch" if assessment.get("overall_score") is not None else "watch", "value": f"{assessment.get('overall_score')} / 100" if assessment.get("overall_score") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "F / Findable", "status": "good" if dimensions.get("findable") is not None and dimensions.get("findable") >= 70 else "action" if dimensions.get("findable") is not None else "watch", "value": f"{dimensions.get('findable')} / 100" if dimensions.get("findable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "A / Accessible", "status": "good" if dimensions.get("accessible") is not None and dimensions.get("accessible") >= 70 else "watch", "value": f"{dimensions.get('accessible')} / 100" if dimensions.get("accessible") is not None else "not assessed", "detail": "In file mode this dimension is commonly not assessed by FOOPS!."},
-        {"label": "I / Interoperable", "status": "good" if dimensions.get("interoperable") is not None and dimensions.get("interoperable") >= 70 else "action" if dimensions.get("interoperable") is not None else "watch", "value": f"{dimensions.get('interoperable')} / 100" if dimensions.get("interoperable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "R / Reusable", "status": "good" if dimensions.get("reusable") is not None and dimensions.get("reusable") >= 70 else "action" if dimensions.get("reusable") is not None else "watch", "value": f"{dimensions.get('reusable')} / 100" if dimensions.get("reusable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-    ]
-    failed_checks = assessment.get("failed_checks", [])
-    if failed_checks:
-        rows.extend(
-            {
-                "label": f"FOOPS! follow-up {index + 1}",
-                "status": "watch",
-                "value": item.get("label", "check"),
-                "detail": item.get("detail", ""),
-            }
-            for index, item in enumerate(failed_checks[:8])
+def _odk_artifact_cards(odk: dict[str, Any], odk_base: str) -> str:
+    if not odk.get("artifacts"):
+        return "<p>No ODK artefacts available.</p>"
+    cards = []
+    for artifact in odk.get("artifacts", []):
+        links = []
+        for fmt in artifact.get("formats", []):
+            filename = fmt.get("filename", "")
+            href = f"{odk_base}/artifacts/{escape(str(filename))}"
+            label = escape(str(fmt.get("format", ""))).upper()
+            links.append(f"<a class='inline-button' href='{href}'>{label}</a>")
+        cards.append(
+            f"""
+            <article class="term-card">
+              <h3>{escape(str(artifact.get('title', artifact.get('name', 'artifact'))))}</h3>
+              <p>{escape(str(artifact.get('description', '')))}</p>
+              <p class="muted">Generated: {escape(str(artifact.get('generated_at', '')))} | Size: {artifact.get('size_bytes', 0)} bytes</p>
+              <div class="button-row">{''.join(links)}</div>
+            </article>
+            """
         )
-    return _render_rows(rows)
+    return f"<section class='list-grid'>{''.join(cards)}</section>"
 
 
-def _oops_details(assessment: dict[str, Any]) -> str:
-    rows = [
-        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
-        {"label": "Pitfall count", "status": "good" if assessment.get("status") == "assessed" and assessment.get("pitfall_count", 0) == 0 else "watch" if assessment.get("status") == "assessed" else "watch", "value": str(assessment.get("pitfall_count", "not assessed")) if assessment.get("status") == "assessed" else "not assessed", "detail": "Returned directly by the OOPS! service when the scan succeeds."},
-    ]
-    for item in assessment.get("pitfalls", [])[:8]:
-        code = item.get("code") or "Pitfall"
-        name = item.get("name", "Unnamed pitfall")
-        detail = item.get("description", "")
-        rows.append({"label": code, "status": "action", "value": name, "detail": detail})
-    return _render_rows(rows)
+def _artifact_line(odk: dict[str, Any], name: str, odk_base: str) -> str:
+    for artifact in odk.get("artifacts", []):
+        if artifact.get("name") != name:
+            continue
+        first = artifact.get("formats", [{}])[0]
+        href = f"{odk_base}/artifacts/{escape(str(first.get('filename', '')))}"
+        return f"<li><a href=\"{href}\">ODK {escape(name)}</a></li>"
+    return f"<li>ODK {escape(name)} unavailable</li>"
+
+
+def _shadow_note(parity: dict[str, Any]) -> str:
+    if parity.get("status") == "aligned":
+        return "<p class='muted'>ODK shadow-mode artefacts are currently aligned with the curated release baseline.</p>"
+    return "<p class='muted'>ODK artefacts are currently shadow-mode outputs for comparison and QC.</p>"
+
+
+def _hdo_import_record(odk: dict[str, Any]) -> dict[str, Any]:
+    for item in odk.get("imports", []):
+        if item.get("id") == "hdo":
+            return item
+    return {}
+
+
+def _hdo_import_status(odk: dict[str, Any]) -> str:
+    item = _hdo_import_record(odk)
+    return escape(str(item.get("status", "not configured")))
+
+
+def _hdo_import_refresh(odk: dict[str, Any]) -> str:
+    item = _hdo_import_record(odk)
+    return escape(str(item.get("last_refresh_status", "not recorded")))
+
+
+def _hdo_import_included(odk: dict[str, Any]) -> str:
+    item = _hdo_import_record(odk)
+    return "yes" if item.get("included_in_release") else "no"
+
+
+def _relative_href(page_path: Path, target_path: Path) -> str:
+    return Path(os.path.relpath(target_path, page_path.parent)).as_posix()
 
 
 def _style_css() -> str:
@@ -575,7 +982,14 @@ body {
 }
 .support-chip img { height: 1.25rem; width: auto; display: block; }
 .nav { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1rem; }
-.nav a { color: var(--ink); text-decoration: none; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.55); }
+.nav a, .inline-button {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+}
 .content { padding: 2rem 0 4rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
 .stack { display: grid; gap: 1rem; }
@@ -602,6 +1016,15 @@ body {
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
 code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
 .footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; }
+.button-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 0.8rem; }
+.ordered { margin: 0; padding-left: 1.2rem; }
+.ordered li { margin-bottom: 0.45rem; }
+.command-list { margin: 0; padding-left: 1.2rem; }
+.command-list li { margin-bottom: 0.45rem; }
+.table-wrap { overflow-x: auto; }
+.catalog-table { width: 100%; border-collapse: collapse; }
+.catalog-table th, .catalog-table td { text-align: left; padding: 0.65rem; border-bottom: 1px solid rgba(21,32,37,0.08); vertical-align: top; }
+.catalog-table th { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(21,32,37,0.72); }
 .acknowledgement {
   display: grid;
   grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);

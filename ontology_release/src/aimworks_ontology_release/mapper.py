@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .candidates import generate_candidates
+from .hdo import generate_hdo_alignment_report
 from .normalize import normalize_token
 from .utils import (
     OWL_EQUIVALENT_CLASS,
@@ -41,6 +42,7 @@ def propose_mappings(
     selected: list[dict[str, Any]] = []
     thresholds = rules["policies"]
     manual = rules.get("manual_overrides", {})
+    hdo_indicators = [normalize_token(text) for text in rules.get("term_hints", {}).get("hdo_indicators", [])]
     for candidate in candidates:
         local_fragment = local_name(candidate["local_iri"])
         override = manual.get(local_fragment)
@@ -56,18 +58,27 @@ def propose_mappings(
                 }
             )
             continue
+        adjusted_score = candidate["score"]
+        if candidate.get("source") == "hdo":
+            local_tokens = normalize_token(candidate["local_label"])
+            if any(indicator and indicator in local_tokens for indicator in hdo_indicators):
+                adjusted_score = round(min(0.995, adjusted_score + 0.08), 3)
         relation = "skos:closeMatch"
         rationale = "Lexical similarity with a compatible external term."
-        if candidate["score"] >= thresholds["equivalence_threshold"]:
+        if candidate.get("source") == "hdo":
+            rationale = "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics."
+        if adjusted_score >= thresholds["equivalence_threshold"]:
             relation = "owl:equivalentClass" if candidate["local_kind"] == "class" else "owl:equivalentProperty"
             rationale = "High lexical similarity and compatible kind support a strong equivalence proposal."
-        elif candidate["score"] >= thresholds["subclass_threshold"]:
+        elif adjusted_score >= thresholds["subclass_threshold"]:
             relation = "rdfs:subClassOf" if candidate["local_kind"] == "class" else "rdfs:subPropertyOf"
             rationale = "Conservative anchoring favors specialization over strict equivalence."
-        elif candidate["score"] >= thresholds["exact_match_threshold"]:
+            if candidate.get("source") == "hdo":
+                rationale = "Conservative HDO anchoring favors specialization for data-governance and metadata-management concepts."
+        elif adjusted_score >= thresholds["exact_match_threshold"]:
             relation = "skos:exactMatch"
             rationale = "Strong lexical match without enough evidence for OWL equivalence."
-        selected.append({**candidate, "relation": relation, "rationale": rationale, "status": "proposed"})
+        selected.append({**candidate, "score": adjusted_score, "relation": relation, "rationale": rationale, "status": "proposed"})
     unique: dict[tuple[str, str], dict[str, Any]] = {}
     for row in selected:
         key = (row["local_iri"], row["target_iri"])
@@ -77,6 +88,7 @@ def propose_mappings(
     _write_review_csv(output_dir / "mapping_review.csv", rows)
     _write_alignments_ttl(output_dir.parent / "mappings" / "alignments.ttl", rows)
     write_text(output_dir.parent / "reports" / "alignment_report.md", _alignment_report(rows))
+    generate_hdo_alignment_report(input_path, rows, output_dir.parent / "reports", config_dir)
     return rows
 
 
@@ -143,5 +155,6 @@ def _alignment_report(rows: list[dict[str, Any]]) -> str:
 - Generic process, material, measurement, and property concepts are anchored conservatively to EMMO and ECHO.
 - Units and quantity-value semantics reuse QUDT when possible.
 - Metadata and provenance terms prefer DCTERMS, FOAF, and PROV-O.
+- HDO is the preferred shadow-mode alignment source for data, metadata, identifier, digital-object, schema, validation, and information-profile concepts.
 - Local PEMFC catalyst-layer terms remain in the `h2kg` namespace for v1 unless a later migration policy is explicitly enabled.
 """

@@ -30,7 +30,25 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "PEMWE Profile" in home_page
     assert "./pemfc/index.html" in home_page
     assert "./pemwe/index.html" in home_page
+    assert (output_dir / "docs" / "pemfc" / "index.html").exists()
+    assert (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").exists()
+    assert (output_dir / "docs" / "pemwe" / "index.html").exists()
+    assert (output_dir / "docs" / "pemwe" / "hydrogen-ontology.html").exists()
+    assert (output_dir / "docs" / "pages" / "import-guide.html").exists()
+    assert (output_dir / "docs" / "pages" / "import-catalog.html").exists()
+    assert (output_dir / "docs" / "pages" / "developer-guide.html").exists()
+    assert (output_dir / "docs" / "pages" / "architecture-workflow.html").exists()
     quality_page = (output_dir / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
     assert "FAIR Signals" in quality_page
     assert "FOOPS! Assessment" in quality_page
+    assert "ODK / ROBOT QC" in quality_page
     assert "not built in docs-only run" in quality_page
+    release_page = (output_dir / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
+    assert "ODK Release Artefacts" in release_page
+    assert "ODK and HDO Integration" in release_page
+    import_page = (output_dir / "docs" / "pages" / "import-guide.html").read_text(encoding="utf-8")
+    assert "run.bat make refresh-imports" in import_page
+    assert "HDO is the preferred Helmholtz-community source" in import_page
+    developer_page = (output_dir / "docs" / "pages" / "developer-guide.html").read_text(encoding="utf-8")
+    assert "ontology_release/odk/src/ontology/run.bat make prepare_release" in developer_page
+    assert "When to Use HDO vs EMMO vs PROV / DCTERMS" in developer_page

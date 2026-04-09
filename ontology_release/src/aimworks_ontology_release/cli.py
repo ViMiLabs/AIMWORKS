@@ -10,6 +10,7 @@ from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
+from .odk import prepare_odk_shadow
 from .profile_modules import build_profile_modules
 from .prefix_repair import repair_doc_prefixes
 from .release import run_release
@@ -21,9 +22,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
+        if command == "odk":
+            sub.add_argument("--prepare-only", action="store_true")
+            sub.add_argument("--collect-only", action="store_true")
+            sub.add_argument("--execute", action="store_true")
     annotate = subparsers.add_parser("annotate")
     annotate.add_argument("--input", required=True)
     annotate.add_argument("--draft-llm", action="store_true")
@@ -68,6 +73,15 @@ def main() -> None:
         result = validate_release(input_path, output / "reports", config_dir)
     elif args.command == "fair":
         result = compute_fair_readiness(input_path, output / "reports", config_dir)
+    elif args.command == "odk":
+        result = prepare_odk_shadow(
+            input_path,
+            project_root,
+            config_dir,
+            prepare_only=getattr(args, "prepare_only", False),
+            collect_only=getattr(args, "collect_only", False),
+            execute=getattr(args, "execute", False),
+        )
     else:
         result = run_release(input_path, project_root, draft_llm=getattr(args, "draft_llm", False))
     print(json.dumps(result, indent=2, ensure_ascii=False, default=str))

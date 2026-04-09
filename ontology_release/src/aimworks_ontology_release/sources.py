@@ -115,4 +115,12 @@ def builtin_source_terms() -> list[dict[str, Any]]:
             "description": "A human-readable name for a resource.",
             "synonyms": ["has name"],
         },
+        {
+            "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000000",
+            "label": "Helmholtz Digitisation Ontology root",
+            "kind": "class",
+            "source": "hdo",
+            "description": "Top-level HDO anchor used for shadow-mode reporting until a local HDO cache is supplied.",
+            "synonyms": ["HDO root", "Helmholtz Digitisation Ontology"],
+        },
     ]

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Import Guide | H2KG PEMFC Catalyst Layer Application Ontology</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">H2KG PEMFC Catalyst Layer Ontology</p>
+      <h1>Import Guide</h1>
+      <p class="subtitle">EMMO-aligned ontology for PEMFC catalyst-layer experiments</p>
+      <div class='hero-support'><p class='hero-support-copy'>Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
+      
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="architecture-workflow.html">Architecture</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="developer-guide.html">Developer</a>
+      <a href="release.html">Release</a>
+    </nav>
+    
+    </div>
+  </header>
+  <main class="wrap content">
+    
+    <section class="grid">
+      <article class="card">
+        <h2>Nested ODK Import Flow</h2>
+        <p>Imports are refreshed through the nested ODK workbench and then surfaced through the AIMWORKS release pipeline.</p>
+        <ol class="ordered">
+          <li>Open <code>ontology_release/odk/src/ontology/</code>.</li>
+          <li>Run <code>run.bat make refresh-imports</code>.</li>
+          <li>Review generated import modules under <code>ontology_release/odk/src/ontology/imports/</code>.</li>
+          <li>Run the normal AIMWORKS release pipeline so the refreshed import status is copied into <code>output/odk/</code> and reflected in the site.</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h2>Shadow Mode Context</h2>
+        <p>ODK is currently operating in <strong>shadow</strong> mode. The AIMWORKS pipeline remains authoritative while ODK manages standard machine artefacts and import/QC infrastructure in parallel.</p>
+        <p><strong>HDO role:</strong> HDO is the preferred Helmholtz-community source for data-management, metadata, identifier, digital-object, information-profile, schema, and validation concepts.</p>
+        <p class="muted">Current HDO-reviewed term count: 10</p>
+      </article>
+    </section>
+    
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
+        </div>
+        <div class="acknowledgement-copy">
+          <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
+        </div>
+      </section>
+    
+      <p>H2KG PEMFC Catalyst Layer Application Ontology | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+</body>
+</html>

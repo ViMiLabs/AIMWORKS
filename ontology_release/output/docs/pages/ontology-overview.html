@@ -12,17 +12,21 @@
       <p class="eyebrow">H2KG PEMFC Catalyst Layer Ontology</p>
       <h1>Ontology Overview</h1>
       <p class="subtitle">EMMO-aligned ontology for PEMFC catalyst-layer experiments</p>
-      <div class='hero-support'><p class='hero-support-copy'>Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip support-chip-logo' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><img src='../assets/hmc-logo.png' alt='Helmholtz Metadata Collaboration logo'><span>HMC</span></a><a class='support-chip support-chip-logo' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><img src='../assets/aimworks-logo.png' alt='AIMWORKS logo'><span>AIMWORKS</span></a></div></div>
+      <div class='hero-support'><p class='hero-support-copy'>Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
       
     <nav class="nav">
       <a href="../index.html">Home</a>
       <a href="user-guide.html">User Guide</a>
       <a href="ontology-overview.html">Overview</a>
+      <a href="architecture-workflow.html">Architecture</a>
       <a href="class-index.html">Classes</a>
       <a href="property-index.html">Properties</a>
       <a href="alignment.html">Alignments</a>
       <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
       <a href="quality-dashboard.html">Quality</a>
+      <a href="developer-guide.html">Developer</a>
       <a href="release.html">Release</a>
     </nav>
     
@@ -31,7 +35,30 @@
   <main class="wrap content">
     <section class="prose"><p>H2KG PEMFC Catalyst Layer Application Ontology is an EMMO-aligned application ontology rather than a broad hydrogen-economy ontology.</p>
 <p>Its primary scope is PEMFC cathode catalyst-layer experiments, materials, processes, measurements, and provenance.</p>
-<p>The current release snapshot contains 35 schema terms and preserves the original h2kg identifiers by default.</p></section>
+<p>The current release snapshot contains 35 schema terms and preserves the original h2kg identifiers by default.</p>
+<p>CORE ontology IRI: https://w3id.org/h2kg/hydrogen-ontology</p>
+<p>PEMFC ontology IRI: https://w3id.org/h2kg/pemfc/hydrogen-ontology</p>
+<p>PEMWE ontology IRI: https://w3id.org/h2kg/pemwe/hydrogen-ontology</p></section>
+    <section class="grid">
+      <article class="card">
+        <h2>Release Architecture</h2>
+        <p>AIMWORKS remains the domain-specific release and documentation layer, while ODK is introduced as a nested standard ontology engineering and QC backend.</p>
+        <p>PEMFC and PEMWE profile modules remain AIMWORKS outputs in shadow mode, and ODK does not change public H2KG IRIs unless a later promotion step is explicitly approved.</p>
+      </article>
+      <article class="card">
+        <h2>ODK Shadow Mode</h2>
+        <p>Status: <strong>enabled</strong></p>
+        <p>Primary artefact: <strong>base</strong> | Reasoner: <strong>ELK</strong></p>
+        <p>ODK base artefact differs slightly from the current curated release and remains in shadow-mode comparison.</p>
+      </article>
+      <article class="card">
+        <h2>Semantic Division of Labor</h2>
+        <p><strong>HDO</strong> is the primary alignment source for Helmholtz-community digital-data concepts such as metadata, identifiers, digital objects, schemas, and validation.</p>
+        <p><strong>EMMO / ECHO</strong> remain the scientific and electrochemistry anchors, <strong>QUDT</strong> covers quantities and units, <strong>ChEBI</strong> covers chemistry, and <strong>PROV-O / DCTERMS</strong> remain publication metadata anchors.</p>
+        <p class="muted">Reviewed against HDO in the current run: 10</p>
+      </article>
+    </section>
+    
   </main>
   <footer class="footer">
     <div class="wrap">
@@ -39,7 +66,7 @@
       <section class="acknowledgement" aria-labelledby="acknowledgement-title">
         <div class="acknowledgement-brand">
           <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
-          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><img src='../assets/hmc-logo.png' alt='Helmholtz Metadata Collaboration logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><img src='../assets/aimworks-logo.png' alt='AIMWORKS logo'></a></div>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
         </div>
         <div class="acknowledgement-copy">
           <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>

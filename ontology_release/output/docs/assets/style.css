@@ -40,7 +40,14 @@ body {
 }
 .support-chip img { height: 1.25rem; width: auto; display: block; }
 .nav { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1rem; }
-.nav a { color: var(--ink); text-decoration: none; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.55); }
+.nav a, .inline-button {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+}
 .content { padding: 2rem 0 4rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
 .stack { display: grid; gap: 1rem; }
@@ -67,6 +74,15 @@ body {
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
 code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
 .footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; }
+.button-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 0.8rem; }
+.ordered { margin: 0; padding-left: 1.2rem; }
+.ordered li { margin-bottom: 0.45rem; }
+.command-list { margin: 0; padding-left: 1.2rem; }
+.command-list li { margin-bottom: 0.45rem; }
+.table-wrap { overflow-x: auto; }
+.catalog-table { width: 100%; border-collapse: collapse; }
+.catalog-table th, .catalog-table td { text-align: left; padding: 0.65rem; border-bottom: 1px solid rgba(21,32,37,0.08); vertical-align: top; }
+.catalog-table th { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(21,32,37,0.72); }
 .acknowledgement {
   display: grid;
   grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);

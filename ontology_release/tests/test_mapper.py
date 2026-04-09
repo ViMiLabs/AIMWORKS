@@ -10,3 +10,4 @@ def test_mapper_creates_review_files(mini_ontology_file, output_dir):
     rows = propose_mappings(mini_ontology_file, output_dir / "review")
     assert any(row["local_label"] == "Measurement" for row in rows)
     assert (output_dir / "review" / "mapping_review.csv").exists()
+    assert (output_dir / "reports" / "hdo_alignment_report.json").exists()

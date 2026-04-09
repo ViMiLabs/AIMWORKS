@@ -10,7 +10,7 @@
 ## Transparency Hooks
 
 - OOPS! ontology pitfall scan: service unavailable (watch)
-- FOOPS! FAIR assessment: 46.7 / 100 (action)
+- FOOPS! FAIR assessment: service unavailable (watch)
 
 ## Summary
 

@@ -22,6 +22,20 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Install ontology_release package
         run: python -m pip install --no-build-isolation -e .
+      - name: Prepare ODK seed inputs
+        run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --prepare-only
+      - name: Refresh ODK repository scaffolding
+        run: sh odk/src/ontology/run.sh update_repo
+      - name: Run ODK version check
+        run: sh odk/src/ontology/run.sh make odkversion
+      - name: Refresh ODK imports
+        run: sh odk/src/ontology/run.sh make refresh-imports
+      - name: Run ODK tests
+        run: sh odk/src/ontology/run.sh make test
+      - name: Build ODK release artefacts
+        run: sh odk/src/ontology/run.sh make prepare_release
+      - name: Collect actual ODK outputs
+        run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --collect-only
       - name: Run tests
         run: python -m pytest
       - name: Build ontology release bundle

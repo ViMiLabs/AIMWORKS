@@ -6,7 +6,7 @@ sources:
     required: true
     kind: ontology
     local_cache: cache/sources/emmo-core.ttl
-    remote_url: https://w3id.org/emmo#inferred
+    remote_url: https://w3id.org/emmo
     focus: [process, material, property, measurement]
   - id: emmo-electrochemistry
     title: EMMO Electrochemistry / ECHO
@@ -80,6 +80,16 @@ sources:
     local_cache: cache/sources/vann.ttl
     remote_url: http://purl.org/vocab/vann/
     focus: [namespace-metadata]
+  - id: hdo
+    title: Helmholtz Digitisation Ontology
+    enabled: true
+    priority: 78
+    required: true
+    kind: ontology
+    local_cache: cache/sources/hdo.owl
+    remote_url: https://purls.helmholtz-metadaten.de/hob/hdo.owl
+    source_iri: https://purls.helmholtz-metadaten.de/hob/HDO_00000000
+    focus: [data, metadata, identifier, digital-object, information-profile, schema, validation, provenance-record]
   - id: oeo
     title: Open Energy Ontology
     enabled: false

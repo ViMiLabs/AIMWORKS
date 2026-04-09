@@ -44,13 +44,13 @@
       "label": "OOPS! ontology pitfall scan",
       "status": "watch",
       "value": "service unavailable",
-      "detail": "OOPS! something went wrong. There was an unexpected error."
+      "detail": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     },
     {
       "label": "FOOPS! FAIR assessment",
-      "status": "action",
-      "value": "46.7 / 100",
-      "detail": "External FAIR-oriented ontology assessment against the release candidate. File mode does not assess accessibility."
+      "status": "watch",
+      "value": "service unavailable",
+      "detail": "FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError(\"HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     }
   ],
   "validation_signals": [
@@ -65,6 +65,12 @@
       "status": "action",
       "value": "False",
       "detail": "Local SHACL shape execution when pyshacl is available."
+    },
+    {
+      "label": "Duplicate @id conflicts",
+      "status": "good",
+      "value": "0",
+      "detail": "Duplicate source nodes are tolerated only when they merge without schema-type conflicts."
     },
     {
       "label": "Missing labels",
@@ -106,13 +112,13 @@
       "label": "OOPS! hook",
       "status": "watch",
       "value": "service unavailable",
-      "detail": "OOPS! something went wrong. There was an unexpected error."
+      "detail": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     },
     {
       "label": "FOOPS! hook",
-      "status": "good",
-      "value": "assessed",
-      "detail": "FOOPS! assessment completed in file mode. Accessible checks may remain unassessed."
+      "status": "watch",
+      "value": "service unavailable",
+      "detail": "FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError(\"HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     }
   ],
   "publication_assets": [
@@ -160,69 +166,18 @@
     }
   ],
   "foops": {
-    "overall_score": 46.7,
-    "dimensions": {
-      "findable": 60.0,
-      "accessible": null,
-      "interoperable": 33.3,
-      "reusable": 44.4
-    },
-    "failed_checks": [
-      {
-        "label": "F1",
-        "detail": "Unexpected error while running the test: null"
-      },
-      {
-        "label": "F2",
-        "detail": "The following metadata was not found: version iri"
-      },
-      {
-        "label": "R1",
-        "detail": "The following metadata was not found: version info, citation"
-      },
-      {
-        "label": "R1",
-        "detail": "The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: previous version, backwards compatibility. Please consider adding them if appropriate."
-      },
-      {
-        "label": "R1.2",
-        "detail": "The following provenance information was not found: issued"
-      },
-      {
-        "label": "I2",
-        "detail": "The ontology does not reuse vocabularies for common metadata"
-      },
-      {
-        "label": "I2",
-        "detail": "The ontology does not import/extend other vocabularies."
-      },
-      {
-        "label": "R1",
-        "detail": "No ontology terms found"
-      },
-      {
-        "label": "R1",
-        "detail": "No ontology terms found"
-      },
-      {
-        "label": "F1",
-        "detail": "Version IRI  not defined. Version information not found.  Please consider adding it to describe the version number of the ontology."
-      }
-    ],
-    "message": "FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.",
-    "ontology_title": "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments",
-    "ontology_uri": "null",
-    "status": "assessed",
+    "status": "unavailable",
     "service": "https://foops.linkeddata.es/FAIR_validator.html",
-    "mode": "file"
+    "mode": "file",
+    "message": "FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError(\"HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
   },
   "oops": {
     "status": "unavailable",
     "service": "https://oops.linkeddata.es/rest",
-    "message": "OOPS! something went wrong. There was an unexpected error."
+    "message": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
   },
   "release_metrics": {
-    "path": "output\\ontology\\schema.ttl",
+    "path": "ontology_release\\output\\ontology\\schema.ttl",
     "schema_term_count": 35,
     "local_schema_term_count": 34,
     "missing_labels": 0,

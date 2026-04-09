@@ -204,12 +204,10 @@ def default_release_profile() -> dict[str, Any]:
                         "logo": "decode-logo.png",
                         "logo_alt": "DECODE project logo",
                     },
-                    {"name": "HMC", "url": "https://helmholtz-metadaten.de/", "logo": "hmc-logo.png", "logo_alt": "Helmholtz Metadata Collaboration logo"},
+                    {"name": "HMC", "url": "https://helmholtz-metadaten.de/"},
                     {
                         "name": "AIMWORKS",
                         "url": "https://helmholtz-metadaten.de/inf-projects/aimworks",
-                        "logo": "aimworks-logo.png",
-                        "logo_alt": "AIMWORKS logo",
                     },
                 ],
                 "funding_notice": [
@@ -419,6 +417,7 @@ def default_source_registry() -> dict[str, Any]:
             {"id": "chebi", "title": "ChEBI", "enabled": True, "priority": 85, "required": False},
             {"id": "prov-o", "title": "PROV-O", "enabled": True, "priority": 80, "required": True},
             {"id": "dcterms", "title": "Dublin Core Terms", "enabled": True, "priority": 80, "required": True},
+            {"id": "hdo", "title": "Helmholtz Digitisation Ontology", "enabled": True, "priority": 78, "required": True, "local_cache": "cache/sources/hdo.owl", "remote_url": "https://purls.helmholtz-metadaten.de/hob/hdo.owl"},
             {"id": "vann", "title": "VANN", "enabled": True, "priority": 70, "required": True},
             {"id": "oeo", "title": "Open Energy Ontology", "enabled": False, "priority": 20, "required": False},
             {"id": "pemfc-external", "title": "Optional PEMFC-specific Source Ontology", "enabled": False, "priority": 99, "required": False},

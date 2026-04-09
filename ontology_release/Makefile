@@ -2,7 +2,7 @@ PYTHON ?= python
 PACKAGE = aimworks_ontology_release
 INPUT ?= input/current_ontology.jsonld
 
-.PHONY: install inspect split map enrich annotate docs validate fair release run test
+.PHONY: install inspect split map enrich annotate docs validate fair release run test odk odk-prepare odk-collect
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -33,6 +33,15 @@ fair:
 
 release:
 	$(PYTHON) -m $(PACKAGE).cli release --input $(INPUT)
+
+odk:
+	$(PYTHON) -m $(PACKAGE).cli odk --input $(INPUT) --execute
+
+odk-prepare:
+	$(PYTHON) -m $(PACKAGE).cli odk --input $(INPUT) --prepare-only
+
+odk-collect:
+	$(PYTHON) -m $(PACKAGE).cli odk --input $(INPUT) --collect-only
 
 run:
 	$(PYTHON) -m $(PACKAGE).cli run --input $(INPUT) --rewrite --split --build-docs --build-release --fair-check
