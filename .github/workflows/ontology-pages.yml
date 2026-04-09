@@ -27,11 +27,12 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - run: python -m pip install --no-build-isolation -e .
       - run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --prepare-only
-      - run: sh odk/src/ontology/run.sh update_repo
-      - run: sh odk/src/ontology/run.sh make odkversion
-      - run: sh odk/src/ontology/run.sh make refresh-imports
-      - run: sh odk/src/ontology/run.sh make test
-      - run: sh odk/src/ontology/run.sh make prepare_release
+      - run: bash odk/src/ontology/run.sh update_repo
+      - run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --prepare-only
+      - run: bash odk/src/ontology/run.sh make odkversion
+      - run: bash odk/src/ontology/run.sh make refresh-imports
+      - run: bash odk/src/ontology/run.sh make test
+      - run: bash odk/src/ontology/run.sh make prepare_release
       - run: python -m aimworks_ontology_release.cli --project-root . odk --input input/current_ontology.jsonld --collect-only
       - run: python -m aimworks_ontology_release.cli --project-root . run --input input/current_ontology.jsonld --rewrite --split --build-docs --build-release --fair-check
       - uses: actions/configure-pages@v5
