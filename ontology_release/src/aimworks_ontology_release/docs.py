@@ -75,6 +75,7 @@ def build_docs(
 
     write_text(output_dir / "index.html", _legacy_profile_home())
     _copy_site_assets(output_dir, project)
+    _copy_odk_artifacts(output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
     dump_json(
         output_dir / "search-index.json",
@@ -412,7 +413,7 @@ def _examples_body(examples: list[dict[str, Any]]) -> str:
 
 def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any], page_path: Path, docs_root: Path) -> str:
     artifacts = "".join(f"<li>{escape(str(item))}</li>" for item in release.get("artifacts", []))
-    odk_base = _relative_href(page_path, docs_root.parent / "odk")
+    odk_base = _relative_href(page_path, docs_root / "odk")
     odk_artifacts = _odk_artifact_cards(odk, odk_base)
     gates = _render_rows(odk.get("promotion_gates", []))
     parity = odk.get("parity", {})
@@ -958,6 +959,16 @@ def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
         target_path = asset_dir / Path(logo).name
         if source_path.exists():
             shutil.copyfile(source_path, target_path)
+
+
+def _copy_odk_artifacts(output_dir: Path) -> None:
+    source_dir = output_dir.parent / "odk" / "artifacts"
+    target_dir = ensure_dir(output_dir / "odk" / "artifacts")
+    if not source_dir.exists():
+        return
+    for artifact in source_dir.iterdir():
+        if artifact.is_file():
+            shutil.copyfile(artifact, target_dir / artifact.name)
 
 
 def _odk_artifact_cards(odk: dict[str, Any], odk_base: str) -> str:
