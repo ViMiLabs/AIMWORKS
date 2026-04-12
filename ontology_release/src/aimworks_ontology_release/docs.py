@@ -171,11 +171,13 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
 <body>
   <header class="hero">
     <div class="wrap">
-      {hero_brand}
-      <div class="hero-copy">
-        <p class="eyebrow">{project['short_title']}</p>
-        <h1>{page_title}</h1>
-        <p class="subtitle">{project.get('subtitle', '')}</p>
+      <div class="hero-head">
+        <div class="hero-copy">
+          <p class="eyebrow">{project['short_title']}</p>
+          <h1>{page_title}</h1>
+          <p class="subtitle">{project.get('subtitle', '')}</p>
+        </div>
+        {hero_brand}
       </div>
       {support_block}
       {nav}
@@ -874,7 +876,7 @@ def _support_block(project: dict[str, Any], asset_base: str) -> str:
 def _hero_brand(project: dict[str, Any], asset_base: str) -> str:
     logo = f"{asset_base}/h2kg-logo.png"
     alt = escape(f"{project['short_title']} logo")
-    return f"<div class='hero-brand'><img src='{logo}' alt='{alt}'><span class='hero-brand-mark'>AIMWORKS release</span></div>"
+    return f"<div class='hero-brand'><img src='{logo}' alt='{alt}'><span class='hero-brand-mark'>Ontology release</span></div>"
 
 
 def _profile_description(profile_key: str, profile_cfg: dict[str, Any]) -> str:
@@ -1067,31 +1069,41 @@ body {
   background: radial-gradient(circle, rgba(200,106,43,0.16), transparent 68%);
   pointer-events: none;
 }
+.hero-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.2rem;
+  align-items: start;
+}
 .hero-brand {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
-  padding: 0.45rem 0.8rem;
-  border-radius: 999px;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 148px;
+  padding: 0.75rem 0.9rem;
+  border-radius: 22px;
   border: 1px solid rgba(19, 33, 41, 0.08);
-  background: rgba(255,255,255,0.68);
+  background: rgba(255,255,255,0.62);
   backdrop-filter: blur(12px);
+  box-shadow: 0 14px 34px rgba(17, 29, 36, 0.08);
 }
 .hero-brand img {
-  width: 48px;
-  height: 48px;
+  width: 104px;
+  height: auto;
   object-fit: contain;
   display: block;
 }
 .hero-brand-mark {
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  font-size: 0.68rem;
   color: var(--accent);
   font-weight: 700;
+  text-align: center;
 }
 .hero-copy {
-  margin-top: 1rem;
   max-width: 58rem;
 }
 .eyebrow {
@@ -1107,15 +1119,15 @@ h1, h2, h3 {
 }
 h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 5.2vw, 4.8rem);
-  line-height: 0.94;
-  max-width: 12ch;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 0.98;
+  max-width: 14ch;
   text-wrap: balance;
 }
 .subtitle {
   max-width: 50rem;
-  margin: 1rem 0 0;
-  font-size: 1.08rem;
+  margin: 0.8rem 0 0;
+  font-size: 1rem;
   color: var(--muted);
 }
 .hero-support { margin-top: 1rem; display: grid; gap: 0.85rem; }
@@ -1210,7 +1222,9 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
 .acknowledgement-copy p:last-child { margin-bottom: 0; }
 @media (max-width: 760px) {
   .acknowledgement { grid-template-columns: 1fr; }
+  .hero-head { grid-template-columns: 1fr; }
+  .hero-brand { justify-self: start; min-width: 0; width: fit-content; }
+  .hero-brand img { width: 88px; }
   h1 { max-width: 13ch; }
-  .hero-brand { width: fit-content; }
 }
 """
