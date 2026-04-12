@@ -188,8 +188,8 @@ def default_release_profile() -> dict[str, Any]:
             "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
             "namespace_prefix": "h2kg",
             "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
-            "repository_url": "https://github.com/aimworks/AIMWORKS",
-            "docs_url": "https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/",
+            "repository_url": "https://github.com/ViMiLabs/AIMWORKS",
+            "docs_url": "https://vimilabs.github.io/AIMWORKS/",
             "version": "1.0.0",
             "version_tag": "v1.0.0",
             "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0",
@@ -363,6 +363,46 @@ def default_mapping_rules() -> dict[str, Any]:
                 "target": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
                 "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice.",
             },
+            "Water": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_15377",
+                "rationale": "Water is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "Ethanol": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_16236",
+                "rationale": "Ethanol is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "Hydrazine": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_18280",
+                "rationale": "Hydrazine is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "HydrochloricAcid": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_17883",
+                "rationale": "Hydrochloric acid is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "HydrofluoricAcid": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_29241",
+                "rationale": "Hydrofluoric acid is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "CarbonDioxide": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_16526",
+                "rationale": "Carbon dioxide is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "FormicAcid": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_30751",
+                "rationale": "Formic acid is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
+            "PotassiumHydroxide": {
+                "relation": "skos:exactMatch",
+                "target": "http://purl.obolibrary.org/obo/CHEBI_32035",
+                "rationale": "Potassium hydroxide is an unambiguous chemical entity that should align directly to ChEBI.",
+            },
             "hasQuantityValue": {
                 "relation": "rdfs:subPropertyOf",
                 "target": "http://qudt.org/schema/qudt/quantityValue",
@@ -392,8 +432,8 @@ def default_namespace_policy() -> dict[str, Any]:
             "current_ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
             "current_namespace_prefix": "h2kg",
             "current_namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
-            "publication_base_html": "https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/",
-            "publication_base_rdf": "https://raw.githubusercontent.com/aimworks/AIMWORKS/main/ontology_release/output/ontology/",
+            "publication_base_html": "https://vimilabs.github.io/AIMWORKS/",
+            "publication_base_rdf": "https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/",
             "slash_namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology/",
             "version_path_template": "releases/{version}",
             "migration": {
@@ -418,7 +458,7 @@ def default_source_registry() -> dict[str, Any]:
             {"id": "prov-o", "title": "PROV-O", "enabled": True, "priority": 80, "required": True},
             {"id": "dcterms", "title": "Dublin Core Terms", "enabled": True, "priority": 80, "required": True},
             {"id": "hdo", "title": "Helmholtz Digitisation Ontology", "enabled": True, "priority": 78, "required": True, "local_cache": "cache/sources/hdo.owl", "remote_url": "https://purls.helmholtz-metadaten.de/hob/hdo.owl"},
-            {"id": "vann", "title": "VANN", "enabled": True, "priority": 70, "required": True},
+            {"id": "vann", "title": "VANN", "enabled": True, "priority": 70, "required": False},
             {"id": "oeo", "title": "Open Energy Ontology", "enabled": False, "priority": 20, "required": False},
             {"id": "pemfc-external", "title": "Optional PEMFC-specific Source Ontology", "enabled": False, "priority": 99, "required": False},
         ]

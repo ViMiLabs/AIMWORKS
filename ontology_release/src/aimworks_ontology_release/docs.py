@@ -17,6 +17,7 @@ from .utils import (
     dump_json,
     ensure_dir,
     html_paragraphs,
+    load_json,
     short_text,
     try_load_yaml,
     write_text,
@@ -40,6 +41,7 @@ def build_docs(
     items = {item["@id"]: item for item in merge_document_items(load_json_document(input_path)) if isinstance(item.get("@id"), str)}
     classes, properties, examples = _term_views(input_path, output_dir.parent / "review", config_dir, items)
     mappings = propose_mappings(input_path, output_dir.parent / "review", config_dir)
+    mapping_summary = _load_alignment_summary(output_dir.parent / "reports")
     summary = {
         "schema_count": len(classes) + len(properties),
         "vocabulary_count": sum(1 for item in examples if "basis" in item["label"].lower() or "type" in item["label"].lower()),
@@ -55,7 +57,7 @@ def build_docs(
         (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
         (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
-        (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings)),
+        (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary)),
         (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
         (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo)),
         (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, output_dir / "pages" / "release.html", output_dir)),
@@ -81,6 +83,7 @@ def build_docs(
             "properties": properties,
             "examples": examples,
             "mappings": mappings,
+            "mapping_summary": mapping_summary,
             "odk": {"status": odk.get("status"), "parity": odk.get("parity", {}).get("status")},
             "hdo": hdo.get("summary", {}),
         },
@@ -111,11 +114,11 @@ def _term_views(
             "range": _first_iri(item.get("http://www.w3.org/2000/01/rdf-schema#range")),
             "mappings": mapping_index.get(classification.iri, []),
         }
-        if classification.kind == "class":
+        if classification.kind == "class" and classification.is_local:
             classes.append(view)
-        elif classification.kind in {"object_property", "datatype_property"}:
+        elif classification.kind in {"object_property", "datatype_property"} and classification.is_local:
             properties.append(view)
-        elif classification.kind in {"controlled_vocabulary_term", "example_individual", "ephemeral_generated_instance", "quantity_value_data_node"} and len(examples) < 60:
+        elif classification.is_local and classification.kind in {"controlled_vocabulary_term", "example_individual", "ephemeral_generated_instance", "quantity_value_data_node"} and len(examples) < 60:
             examples.append(view)
     classes.sort(key=lambda item: item["label"])
     properties.sort(key=lambda item: item["label"])
@@ -137,6 +140,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
     home_link = _relative_href(page_path, docs_root / "index.html")
     css_href = _relative_href(page_path, docs_root / "assets" / "style.css")
     asset_base = _relative_href(page_path, docs_root / "assets")
+    hero_brand = _hero_brand(project, asset_base)
     nav = f"""
     <nav class="nav">
       <a href="{home_link}">Home</a>
@@ -167,9 +171,12 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
 <body>
   <header class="hero">
     <div class="wrap">
-      <p class="eyebrow">{project['short_title']}</p>
-      <h1>{page_title}</h1>
-      <p class="subtitle">{project.get('subtitle', '')}</p>
+      {hero_brand}
+      <div class="hero-copy">
+        <p class="eyebrow">{project['short_title']}</p>
+        <h1>{page_title}</h1>
+        <p class="subtitle">{project.get('subtitle', '')}</p>
+      </div>
       {support_block}
       {nav}
     </div>
@@ -198,11 +205,12 @@ def _legacy_profile_home() -> str:
   <style>
     :root {
       --ink: #10242d;
-      --muted: #4d6370;
-      --line: rgba(16,36,45,0.14);
+      --muted: #52656e;
+      --line: rgba(16,36,45,0.12);
       --accent: #0d7f83;
-      --paper: #ffffff;
-      --shadow: 0 16px 44px rgba(16,36,45,0.12);
+      --accent-2: #c86a2b;
+      --paper: rgba(255,255,255,0.84);
+      --shadow: 0 22px 64px rgba(16,36,45,0.12);
     }
     * { box-sizing: border-box; }
     body {
@@ -210,47 +218,82 @@ def _legacy_profile_home() -> str:
       font-family: "Aptos", "Trebuchet MS", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(13,127,131,0.2), transparent 32%),
-        linear-gradient(180deg, #edf8f7 0%, #fbf6ef 100%);
+        radial-gradient(circle at 12% 16%, rgba(13,127,131,0.16), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(200,106,43,0.16), transparent 24%),
+        linear-gradient(180deg, #eef7f6 0%, #f8f1e7 100%);
     }
-    main { max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    main { max-width: 1180px; margin: 0 auto; padding: 2rem 1rem 3.5rem; }
     h1, h2 { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }
-    h1 { margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }
+    h1 { margin: 0 0 0.8rem; font-size: clamp(2.3rem, 5vw, 4.6rem); line-height: 0.96; max-width: 11ch; text-wrap: balance; }
     p { color: var(--muted); line-height: 1.55; }
-    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
-    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: 1.2rem; align-items: end; }
+    .eyebrow { display: inline-block; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(255,255,255,0.72); border: 1px solid var(--line); color: var(--accent); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .brand { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    .brand img { width: 82px; height: auto; display: block; }
+    .hero-card { background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,250,243,0.88)); border: 1px solid var(--line); border-radius: 1.4rem; padding: 1.15rem; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+    .hero-metrics { display: grid; gap: 0.85rem; }
+    .metric { display: grid; gap: 0.2rem; }
+    .metric strong { color: var(--ink); }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 1.7rem; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.4rem; padding: 1.2rem; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
     .links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
     a {
       text-decoration: none;
       color: white;
       background: linear-gradient(135deg, #10242d, var(--accent));
       border-radius: 999px;
-      padding: 0.45rem 0.82rem;
-      font-size: 0.9rem;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(16,36,45,0.15);
+    }
+    .ghost { color: var(--ink); background: rgba(255,255,255,0.72); border: 1px solid var(--line); box-shadow: none; }
+    code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      h1 { max-width: 13ch; }
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
-    <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
+    <section class="hero">
+      <div>
+        <div class="brand">
+          <img src="./pemfc/assets/h2kg-logo.png" alt="H2KG logo">
+          <span class="eyebrow">AIMWORKS ontology release</span>
+        </div>
+        <h1>H2KG for hydrogen electrochemical systems</h1>
+        <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
+        <div class="links">
+          <a href="./pemfc/index.html">Explore PEMFC</a>
+          <a href="./pemwe/index.html">Explore PEMWE</a>
+          <a class="ghost" href="./pages/release.html">Open release overview</a>
+        </div>
+      </div>
+      <aside class="hero-card hero-metrics">
+        <div class="metric"><strong>Shared core</strong><span>Stable H2KG namespace with profile-specific PEMFC and PEMWE views.</span></div>
+        <div class="metric"><strong>Standards-aligned</strong><span>EMMO, HDO, QUDT, ChEBI, PROV-O, and DCTERMS integration through the AIMWORKS release pipeline.</span></div>
+        <div class="metric"><strong>Publication-ready</strong><span>GitHub Pages documentation, downloadable ontology artefacts, mappings, and quality reports.</span></div>
+      </aside>
+    </section>
     <div class="grid">
       <article class="card">
         <h2>PEMFC Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p>Profile documentation for proton exchange membrane fuel cell experiments, materials, processes, measurements, and data assets.</p>
         <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemfc/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemfc/index.html">Open profile home</a>
-          <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pemfc/hydrogen-ontology.html">Open reference</a>
         </div>
       </article>
       <article class="card">
         <h2>PEMWE Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p>Profile documentation for proton exchange membrane water electrolysis experiments, materials, processes, measurements, and data assets.</p>
         <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemwe/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemwe/index.html">Open profile home</a>
-          <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pemwe/hydrogen-ontology.html">Open reference</a>
         </div>
       </article>
     </div>
@@ -263,8 +306,8 @@ def _legacy_profile_home() -> str:
 def _user_guide_body() -> str:
     return """
     <section class="prose">
-      <p>The H2KG PEMFC Catalyst Layer Application Ontology is published conservatively. The recommended maintenance workflow is inspect, split, review mappings, enrich metadata, validate, build docs, then publish.</p>
-      <p>Maintain local PEMFC-specific terms under the <code>h2kg</code> namespace unless a future migration policy is approved and redirect artifacts are prepared.</p>
+      <p>The H2KG application ontology is published conservatively. The recommended maintenance workflow is inspect, split, review mappings, enrich metadata, validate, build docs, then publish.</p>
+      <p>Maintain local H2KG terms under the <code>h2kg</code> namespace unless a future migration policy is approved and redirect artifacts are prepared.</p>
       <p>Use QUDT for quantity kinds and units, ChEBI for chemicals when resolvable, and PROV-O plus DCTERMS for release metadata and provenance.</p>
     </section>
     """
@@ -280,7 +323,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
             profile_lines.append(f"{key.upper()} ontology IRI: {iri}")
     paragraphs = [
         f"{project['title']} is an EMMO-aligned application ontology rather than a broad hydrogen-economy ontology.",
-        "Its primary scope is PEMFC cathode catalyst-layer experiments, materials, processes, measurements, and provenance.",
+        "Its primary scope is hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, data, and provenance.",
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
         *profile_lines,
     ]
@@ -330,12 +373,31 @@ def _property_body(properties: list[dict[str, Any]]) -> str:
     return f"<section class='list-grid'>{cards}</section>"
 
 
-def _alignment_body(mappings: list[dict[str, Any]]) -> str:
+def _load_alignment_summary(reports_dir: Path) -> dict[str, Any]:
+    path = reports_dir / "alignment_summary.json"
+    if path.exists():
+        return load_json(path)
+    return {
+        "accepted_count": 0,
+        "exploratory_count": 0,
+        "accepted_by_relation": {},
+        "rejected_by_rule": {},
+        "accepted_by_source": {},
+    }
+
+
+def _alignment_body(mappings: list[dict[str, Any]], summary: dict[str, Any]) -> str:
+    stats = f"""
+    <section class='grid'>
+      <article class='card'><h2>Accepted Alignments</h2><p><strong>{summary.get('accepted_count', len(mappings))}</strong> review-ready mappings are included in the published alignment layer.</p></article>
+      <article class='card'><h2>Exploratory Candidates</h2><p><strong>{summary.get('exploratory_count', 0)}</strong> exploratory candidates are kept out of the published TTL and remain internal review material only.</p></article>
+    </section>
+    """
     cards = "".join(
         f"<article class='term-card'><h2>{item['local_label']}</h2><p class='iri'>{item['local_iri']}</p><p><strong>{item['relation']}</strong> {item['target_iri']}</p><p>{item['rationale']}</p></article>"
         for item in mappings[:60]
     )
-    return f"<section class='list-grid'>{cards}</section>"
+    return stats + f"<section class='list-grid'>{cards}</section>"
 
 
 def _examples_body(examples: list[dict[str, Any]]) -> str:
@@ -654,6 +716,7 @@ def _profile_home_body(project: dict[str, Any], profile_key: str, odk: dict[str,
     <section class="grid">
       <article class="card">
         <h2>{escape(str(profile_cfg.get('title', profile_key.upper())))}</h2>
+        <p>{escape(_profile_description(profile_key, profile_cfg))}</p>
         <p>Ontology IRI: <code>{escape(str(profile_cfg.get('ontology_iri', '')))}</code></p>
         <p>Namespace: <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
         <p>This profile remains an AIMWORKS-generated public view while ODK runs in parallel as a machine release and QC backend.</p>
@@ -699,6 +762,7 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
       <article class="card">
         <h2>Profile Metadata</h2>
         <p><strong>Title:</strong> {escape(str(profile_cfg.get('title', profile_key.upper())))}</p>
+        <p><strong>Scope:</strong> {escape(_profile_description(profile_key, profile_cfg))}</p>
         <p><strong>Ontology IRI:</strong> <code>{escape(str(profile_cfg.get('ontology_iri', '')))}</code></p>
         <p><strong>Namespace:</strong> <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
       </article>
@@ -807,6 +871,23 @@ def _support_block(project: dict[str, Any], asset_base: str) -> str:
     return f"<div class='hero-support'>{copy_html}{chips_html}</div>"
 
 
+def _hero_brand(project: dict[str, Any], asset_base: str) -> str:
+    logo = f"{asset_base}/h2kg-logo.png"
+    alt = escape(f"{project['short_title']} logo")
+    return f"<div class='hero-brand'><img src='{logo}' alt='{alt}'><span class='hero-brand-mark'>AIMWORKS release</span></div>"
+
+
+def _profile_description(profile_key: str, profile_cfg: dict[str, Any]) -> str:
+    custom = str(profile_cfg.get("subtitle", "")).strip()
+    if custom:
+        return custom
+    if profile_key == "pemfc":
+        return "Proton exchange membrane fuel cell profile for experiments, materials, processes, measurements, and data."
+    if profile_key == "pemwe":
+        return "Proton exchange membrane water electrolysis profile for experiments, materials, processes, measurements, and data."
+    return "Shared core profile for hydrogen electrochemical systems."
+
+
 def _acknowledgement_block(project: dict[str, Any], asset_base: str) -> str:
     acknowledgements = project.get("acknowledgements", {})
     initiatives = acknowledgements.get("initiatives", [])
@@ -860,6 +941,10 @@ def _asset_src(item: dict[str, Any], asset_base: str) -> str:
 def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
     asset_dir = ensure_dir(output_dir / "assets")
     source_dir = Path(__file__).resolve().parents[2] / "templates" / "site" / "assets"
+    for filename in ("h2kg-logo.png",):
+        source_path = source_dir / filename
+        if source_path.exists():
+            shutil.copyfile(source_path, asset_dir / filename)
     acknowledgements = project.get("acknowledgements", {})
     for item in acknowledgements.get("initiatives", []):
         if not isinstance(item, dict):
@@ -942,31 +1027,99 @@ def _relative_href(page_path: Path, target_path: Path) -> str:
 def _style_css() -> str:
     return """
 :root {
-  --bg: #f6f1e8;
-  --panel: #fffaf3;
-  --ink: #152025;
+  --bg: #f5efe4;
+  --panel: rgba(255, 251, 245, 0.88);
+  --panel-strong: rgba(255, 255, 255, 0.92);
+  --ink: #132129;
+  --muted: rgba(19, 33, 41, 0.76);
   --accent: #0f6d7a;
-  --line: #d6c6ae;
+  --accent-2: #c86a2b;
+  --line: rgba(19, 33, 41, 0.1);
+  --shadow: 0 18px 48px rgba(17, 29, 36, 0.1);
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Aptos", "Segoe UI", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(200,106,43,0.12), transparent 30%),
-    linear-gradient(180deg, #fffaf3 0%, #f6f1e8 100%);
+    radial-gradient(circle at 12% 10%, rgba(15,109,122,0.15), transparent 24%),
+    radial-gradient(circle at 84% 8%, rgba(200,106,43,0.16), transparent 22%),
+    linear-gradient(180deg, #f7fbfb 0%, #f5efe4 100%);
 }
 .wrap { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
 .hero {
-  padding: 3rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  padding: 3.4rem 0 2.2rem;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(135deg, rgba(15,109,122,0.12), rgba(200,106,43,0.08));
+  background:
+    linear-gradient(135deg, rgba(15,109,122,0.12), rgba(200,106,43,0.08)),
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.15));
 }
-.eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem; color: var(--accent); }
-.subtitle { max-width: 60rem; font-size: 1.1rem; }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -120px auto;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,106,43,0.16), transparent 68%);
+  pointer-events: none;
+}
+.hero-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(19, 33, 41, 0.08);
+  background: rgba(255,255,255,0.68);
+  backdrop-filter: blur(12px);
+}
+.hero-brand img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+.hero-brand-mark {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.hero-copy {
+  margin-top: 1rem;
+  max-width: 58rem;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin: 0 0 0.85rem;
+}
+h1, h2, h3 {
+  font-family: "Iowan Old Style", Georgia, serif;
+  letter-spacing: -0.03em;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5.2vw, 4.8rem);
+  line-height: 0.94;
+  max-width: 12ch;
+  text-wrap: balance;
+}
+.subtitle {
+  max-width: 50rem;
+  margin: 1rem 0 0;
+  font-size: 1.08rem;
+  color: var(--muted);
+}
 .hero-support { margin-top: 1rem; display: grid; gap: 0.85rem; }
-.hero-support-copy { max-width: 60rem; margin: 0; color: rgba(21,32,37,0.84); }
+.hero-support-copy { max-width: 60rem; margin: 0; color: var(--muted); }
 .support-strip { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .support-chip {
   display: inline-flex;
@@ -975,33 +1128,37 @@ body {
   padding: 0.45rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255,255,255,0.74);
+  background: rgba(255,255,255,0.76);
   color: var(--ink);
   text-decoration: none;
   font-weight: 600;
+  backdrop-filter: blur(8px);
 }
 .support-chip img { height: 1.25rem; width: auto; display: block; }
-.nav { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1rem; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.15rem; }
 .nav a, .inline-button {
   color: var(--ink);
   text-decoration: none;
-  padding: 0.45rem 0.8rem;
+  padding: 0.52rem 0.86rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(8px);
 }
+.nav a:hover, .inline-button:hover, .support-chip:hover, .acknowledgement-brand-item:hover { transform: translateY(-1px); }
 .content { padding: 2rem 0 4rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
 .stack { display: grid; gap: 1rem; }
 .card, .term-card {
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 1rem 1.1rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border-radius: 22px;
+  padding: 1.05rem 1.15rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
 }
 .list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-.prose { max-width: 70rem; line-height: 1.65; }
+.prose { max-width: 70rem; line-height: 1.68; }
 .stats { list-style: none; padding: 0; margin: 0; }
 .stats li { padding: 0.25rem 0; }
 .metric-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; }
@@ -1012,7 +1169,7 @@ body {
 .badge.watch { background: rgba(198,130,36,0.14); color: #8b5f0a; }
 .badge.action { background: rgba(176,51,51,0.12); color: #8a2323; }
 .value { font-weight: 700; margin-left: 0.4rem; }
-.muted { color: rgba(21,32,37,0.74); }
+.muted { color: var(--muted); }
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
 code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
 .footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; }
@@ -1042,15 +1199,18 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
   padding: 0.45rem 0.8rem;
   border-radius: 14px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,0.74);
+  background: rgba(255,255,255,0.78);
   color: var(--ink);
   text-decoration: none;
   font-weight: 700;
+  backdrop-filter: blur(8px);
 }
 .acknowledgement-brand-item img { display: block; max-height: 1.6rem; width: auto; }
 .acknowledgement-copy p { margin: 0 0 0.85rem; }
 .acknowledgement-copy p:last-child { margin-bottom: 0; }
 @media (max-width: 760px) {
   .acknowledgement { grid-template-columns: 1fr; }
+  h1 { max-width: 13ch; }
+  .hero-brand { width: fit-content; }
 }
 """

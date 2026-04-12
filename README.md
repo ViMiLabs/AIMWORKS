@@ -4,68 +4,49 @@
   <img src="./docs/assets/AIMWORKS_Logo.png" alt="AIMWORKS logo" width="320">
 </p>
 
-AIMWORKS is the source repository for H2KG, an ontology engineering and publication workflow for hydrogen electrochemical systems. The repository combines ontology source inputs with a Python-based release pipeline that inspects, splits, aligns, enriches, validates, documents, and publishes profile-specific H2KG releases.
+AIMWORKS is the source repository for the H2KG ontology engineering and publication workflow for hydrogen electrochemical systems. It combines ontology source material, release automation, standards alignment, quality control, and GitHub Pages publication for profile-specific H2KG releases.
 
-The current repository builds two public application profiles:
+The repository currently publishes two application profiles:
 
-- `PEMFC`: Proton Exchange Membrane Fuel Cell
-- `PEMWE`: Proton Exchange Membrane Water Electrolysis
+- `PEMFC`: proton exchange membrane fuel cell systems
+- `PEMWE`: proton exchange membrane water electrolysis systems
 
-## Overview
+## What This Repository Delivers
 
-This repository is organized around two concerns:
+This repository is designed to produce a professional ontology release, not only raw RDF files. The workflow generates:
 
-- ontology source inputs in [`input/`](./input)
-- the release-engineering package in [`ontology_release/`](./ontology_release)
-
-The release package turns the profile inputs into:
-
-- asserted and inferred ontology artifacts
-- split modules such as schema, controlled vocabulary, examples, and mappings
+- profile-specific ontology artefacts for PEMFC and PEMWE
+- split modules for schema, examples, mappings, and release views
+- standards-aligned mappings to HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS
 - validation, FAIRness, and engineering reports
-- static documentation for GitHub Pages
-- packaged release bundles and GitHub Release assets
+- static GitHub Pages documentation and downloadable release bundles
+- ODK-compatible machine-release artefacts in parallel with the AIMWORKS publication layer
 
-## Repository Layout
+## Repository Structure
 
 | Path | Purpose |
 | --- | --- |
-| [`input/`](./input) | Source ontology inputs used for publication, including `ONTOLOGY_PEMFC.jsonld` and `ONTOLOGY_PEMWE.jsonld` |
-| [`ontology_release/src/aimworks_ontology_release/`](./ontology_release/src/aimworks_ontology_release) | Python package implementing the pipeline |
-| [`ontology_release/config/`](./ontology_release/config) | Release, namespace, profile, mapping, and source-ontology configuration |
-| [`ontology_release/templates/`](./ontology_release/templates) | Jinja templates and frontend assets for generated docs |
-| [`ontology_release/shapes/`](./ontology_release/shapes) | SHACL validation shapes |
-| [`ontology_release/tests/`](./ontology_release/tests) | Pytest suite for pipeline behavior |
-| [`ontology_release/output/`](./ontology_release/output) | Generated reports, docs, publication trees, and release bundles |
-| [`ontology_release/ontology/`](./ontology_release/ontology) | Mirrored canonical artifacts copied from the latest build |
-| [`.github/workflows/`](./.github/workflows) | CI workflows for tests, release builds, Pages, and tagged GitHub Releases |
-| [`docs/`](./docs) | Repository-level documentation for developers and maintainers |
+| [`ontology_release/`](./ontology_release) | Release-engineering package, config, templates, tests, and generated outputs |
+| [`ontology_release/src/aimworks_ontology_release/`](./ontology_release/src/aimworks_ontology_release) | Python implementation of the release pipeline |
+| [`ontology_release/config/`](./ontology_release/config) | Release, profile, namespace, mapping, and source-ontology configuration |
+| [`ontology_release/templates/`](./ontology_release/templates) | HTML and asset templates for generated documentation |
+| [`ontology_release/tests/`](./ontology_release/tests) | Regression and release-pipeline tests |
+| [`ontology_release/output/`](./ontology_release/output) | Generated docs, reports, release bundles, and ontology artefacts |
+| [`ontology_release/odk/`](./ontology_release/odk) | Nested ODK workbench used as the machine-oriented backend |
+| [`docs/`](./docs) | Repository-level guidance for maintainers and contributors |
+| [`.github/workflows/`](./.github/workflows) | CI workflows for tests, release builds, GitHub Pages, and release publication |
 
-## What To Edit
+## Working Model
 
-Edit these files and directories:
+The repository follows an ontology-first release model:
 
-- [`input/ONTOLOGY_PEMFC.jsonld`](./input/ONTOLOGY_PEMFC.jsonld)
-- [`input/ONTOLOGY_PEMWE.jsonld`](./input/ONTOLOGY_PEMWE.jsonld)
-- [`ontology_release/src/aimworks_ontology_release/`](./ontology_release/src/aimworks_ontology_release)
-- [`ontology_release/config/`](./ontology_release/config)
-- [`ontology_release/templates/`](./ontology_release/templates)
-- [`ontology_release/shapes/`](./ontology_release/shapes)
+1. stabilize the ontology schema
+2. separate schema from example and KG-like content
+3. align to external standards conservatively
+4. validate and document the release
+5. publish profile-specific outputs
 
-Do not edit generated outputs directly unless you are inspecting them:
-
-- [`ontology_release/output/`](./ontology_release/output)
-- [`ontology_release/ontology/`](./ontology_release/ontology)
-
-Those directories are regenerated by the pipeline.
-
-## Requirements
-
-- Python `3.11+`
-- `pip`
-- network access only if you intentionally enable remote fetches or external service checks
-
-The package dependencies are defined in [`ontology_release/requirements.txt`](./ontology_release/requirements.txt) and [`ontology_release/pyproject.toml`](./ontology_release/pyproject.toml).
+This separation is intentional. It reduces schema drift and supports interoperability, reproducibility, and stable public release artefacts.
 
 ## Quick Start
 
@@ -99,81 +80,46 @@ Run these from [`ontology_release/`](./ontology_release):
 
 | Command | Purpose |
 | --- | --- |
-| `python -m aimworks_ontology_release.cli profiles` | List configured profiles |
+| `python -m aimworks_ontology_release.cli profiles` | List configured ontology profiles |
 | `python -m aimworks_ontology_release.cli inspect --profile pemfc` | Inspect and classify ontology terms |
-| `python -m aimworks_ontology_release.cli split --profile pemfc` | Build schema / vocabulary / example splits |
-| `python -m aimworks_ontology_release.cli map --profile pemfc` | Generate ontology alignments and mapping review rows |
-| `python -m aimworks_ontology_release.cli enrich --profile pemfc` | Add metadata and unit enrichment |
+| `python -m aimworks_ontology_release.cli map --profile pemfc` | Generate accepted and exploratory mapping outputs |
 | `python -m aimworks_ontology_release.cli validate --profile pemfc` | Run validation and reporting |
-| `python -m aimworks_ontology_release.cli docs --profile pemfc` | Build docs for one profile |
-| `python -m aimworks_ontology_release.cli release --profile pemfc` | Build a full release for one profile |
-| `python -m aimworks_ontology_release.cli docs-all` | Build docs for all configured profiles |
-| `python -m aimworks_ontology_release.cli release-all` | Build releases for all configured profiles |
+| `python -m aimworks_ontology_release.cli docs-all` | Build GitHub Pages documentation for all profiles |
+| `python -m aimworks_ontology_release.cli release-all` | Build the full release stack for all profiles |
 | `python -m pytest` | Run the test suite |
-| `make release-all` | Convenience wrapper for the same release build |
 
-## How The Pipeline Works
+## Publication
 
-At a high level, the pipeline executed by [`release.py`](./ontology_release/src/aimworks_ontology_release/release.py) is:
+The GitHub Pages workflow publishes the generated documentation from `ontology_release/output/docs`. The release pipeline also generates:
 
-1. Load the profile input ontology.
-2. Apply JSON-LD quality cleanup when the input is JSON-LD.
-3. Inspect and classify ontology terms.
-4. Split content into schema, controlled vocabulary, and example/data-like modules.
-5. Align local terms to configured external ontologies.
-6. Enrich metadata, definitions, and units.
-7. Validate the release with local checks and SHACL.
-8. Build docs, FAIRness reports, engineering reports, and publication assets.
-9. Assemble profile-specific and multi-profile release bundles.
+- release-ready HTML reference pages
+- RDF/JSON-LD ontology downloads
+- mapping review artefacts
+- import and quality dashboards
+- release bundles and machine-oriented ODK artefacts
 
-The multi-profile orchestration lives in [`profiles.py`](./ontology_release/src/aimworks_ontology_release/profiles.py). Profile definitions live in [`ontology_profiles.yaml`](./ontology_release/config/ontology_profiles.yaml).
+## Standards and Dependencies
 
-## Profiles
+H2KG is engineered conservatively and reuses external ontologies where appropriate:
 
-Configured profiles:
-
-- `pemfc` -> source input: [`input/ONTOLOGY_PEMFC.jsonld`](./input/ONTOLOGY_PEMFC.jsonld)
-- `pemwe` -> source input: [`input/ONTOLOGY_PEMWE.jsonld`](./input/ONTOLOGY_PEMWE.jsonld)
-
-The profile system builds isolated runtime workspaces under `ontology_release/output/profiles/<profile>/workspace`, then assembles combined Pages and release outputs at the repo level.
-
-## Generated Outputs
-
-Main outputs are written under [`ontology_release/output/`](./ontology_release/output):
-
-- `docs/`: generated static site content
-- `publication/`: GitHub Pages-ready publication tree
-- `release_bundle/`: packaged release artifacts and reports
-- `reports/`: inspection, mapping, FAIRness, validation, engineering, and changelog reports
-- `ontology/`: asserted, inferred, import, context, and module artifacts
-- `profiles/`: per-profile runtime and copied outputs
-
-The latest mirrored ontology artifacts are also copied into [`ontology_release/ontology/`](./ontology_release/ontology).
+- `EMMO` and electrochemistry-aligned imports for scientific and process semantics
+- `HDO` for data, metadata, and digital-object concepts
+- `QUDT` for quantities, units, and quantity-value structures
+- `ChEBI` for chemical entities
+- `PROV-O` and `DCTERMS` for provenance and release metadata
 
 ## Documentation
 
-- Repo guide: [`docs/REPOSITORY_GUIDE.md`](./docs/REPOSITORY_GUIDE.md)
-- Package-level pipeline notes: [`ontology_release/README.md`](./ontology_release/README.md)
+- Repository and maintainer guidance: [`docs/`](./docs)
+- Release package details: [`ontology_release/README.md`](./ontology_release/README.md)
 - Citation metadata: [`ontology_release/CITATION.cff`](./ontology_release/CITATION.cff)
 
-## CI/CD
+## Funding and Acknowledgement
 
-This repository includes three main GitHub workflows:
+This publication is part of the DECODE project that has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.
 
-- [`ontology-release.yml`](./.github/workflows/ontology-release.yml): runs tests and builds `release-all`
-- [`ontology-pages.yml`](./.github/workflows/ontology-pages.yml): builds `docs-all` and deploys Pages
-- [`ontology-github-release.yml`](./.github/workflows/ontology-github-release.yml): builds release assets and publishes tagged GitHub Releases
-
-## Live Publication
-
-- Profile selector: `https://vimilabs.github.io/AIMWORKS/`
-- PEMFC profile: `https://vimilabs.github.io/AIMWORKS/pemfc/`
-- PEMWE profile: `https://vimilabs.github.io/AIMWORKS/pemwe/`
-
-## Citation
-
-If you use this repository or its generated release bundles, see [`ontology_release/CITATION.cff`](./ontology_release/CITATION.cff).
+This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).
 
 ## License
 
-The release package is distributed under the MIT License in [`ontology_release/LICENSE`](./ontology_release/LICENSE).
+The release-engineering package is distributed under the MIT License in [`ontology_release/LICENSE`](./ontology_release/LICENSE).

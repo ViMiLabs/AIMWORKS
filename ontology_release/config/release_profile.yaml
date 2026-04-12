@@ -1,13 +1,13 @@
 project:
-  title: H2KG PEMFC Catalyst Layer Application Ontology
-  short_title: H2KG PEMFC Catalyst Layer Ontology
-  subtitle: EMMO-aligned ontology for PEMFC catalyst-layer experiments
-  description: Application ontology for low-Pt PEMFC cathode catalyst-layer experiments, materials, measurements, quantity values, and FAIR provenance.
+  title: H2KG Application Ontology for Hydrogen Electrochemical Systems
+  short_title: H2KG Ontology
+  subtitle: EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, measurements, and FAIR metadata
+  description: Application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, quantity values, datasets, and FAIR provenance.
   ontology_iri: https://w3id.org/h2kg/hydrogen-ontology
   namespace_prefix: h2kg
   namespace_uri: https://w3id.org/h2kg/hydrogen-ontology#
-  repository_url: https://github.com/aimworks/AIMWORKS
-  docs_url: https://aimworks.github.io/AIMWORKS/ontology_release/output/docs/
+  repository_url: https://github.com/ViMiLabs/AIMWORKS
+  docs_url: https://vimilabs.github.io/AIMWORKS/
   release_series: 1
   version: 1.0.0
   version_tag: v1.0.0
@@ -15,14 +15,15 @@ project:
   prior_version: https://w3id.org/h2kg/hydrogen-ontology
   license: https://creativecommons.org/licenses/by/4.0/
   citation:
-    preferred_citation: AIMWORKS Maintainers (2026). H2KG PEMFC Catalyst Layer Application Ontology.
+    preferred_citation: AIMWORKS Maintainers (2026). H2KG Application Ontology for Hydrogen Electrochemical Systems.
   profiles:
     core:
       title: H2KG Shared Core Ontology
       ontology_iri: https://w3id.org/h2kg/hydrogen-ontology
       namespace_uri: https://w3id.org/h2kg/hydrogen-ontology#
     pemfc:
-      title: H2KG PEMFC Application Ontology
+      title: H2KG PEMFC Profile
+      subtitle: Proton exchange membrane fuel cell profile for experiments, materials, processes, and measurements
       ontology_iri: https://w3id.org/h2kg/pemfc/hydrogen-ontology
       namespace_uri: https://w3id.org/h2kg/pemfc/hydrogen-ontology#
       imports:
@@ -35,7 +36,8 @@ project:
         - catalyst layer
         - reference electrode
     pemwe:
-      title: H2KG PEMWE Application Ontology
+      title: H2KG PEMWE Profile
+      subtitle: Proton exchange membrane water electrolysis profile for experiments, materials, processes, and measurements
       ontology_iri: https://w3id.org/h2kg/pemwe/hydrogen-ontology
       namespace_uri: https://w3id.org/h2kg/pemwe/hydrogen-ontology#
       imports:
@@ -47,7 +49,7 @@ project:
         - oxygen evolution
         - hydrogen evolution
   acknowledgements:
-    support_copy: Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.
+    support_copy: Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.
     initiatives:
       - name: DECODE
         url: https://decode-energy.eu/
@@ -59,7 +61,7 @@ project:
         url: https://helmholtz-metadaten.de/inf-projects/aimworks
     funding_notice:
       - This publication is part of the DECODE project that has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.
-      - This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).
+      - This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).
 maintainers:
   creator: [AIMWORKS Maintainers]
   contributor: [Electrochemistry Research Group]

@@ -1,6 +1,6 @@
 # AIMWORKS Ontology Release Pipeline
 
-`ontology_release/` is a self-contained release-preparation package for the H2KG PEMFC Catalyst Layer Application Ontology. It treats the existing `h2kg` ontology as a conservative, EMMO-aligned application ontology focused on low-Pt PEMFC cathode catalyst layers, experiments, measurements, materials, provenance, and related FAIR release assets.
+`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats the existing `h2kg` ontology as a conservative, EMMO-aligned application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and related FAIR release assets.
 
 The package is designed to:
 
@@ -20,7 +20,7 @@ This pipeline is intentionally conservative:
 
 - the ontology IRI remains `https://w3id.org/h2kg/hydrogen-ontology` by default
 - hash-style term IRIs are preserved by default for backward compatibility
-- local PEMFC catalyst-layer terms remain in the `h2kg` namespace unless an explicit migration policy is enabled
+- local H2KG terms remain in the `h2kg` namespace unless an explicit migration policy is enabled
 - the pipeline does not silently delete terms or rewrite unrelated repository content
 
 ## Quick Start
