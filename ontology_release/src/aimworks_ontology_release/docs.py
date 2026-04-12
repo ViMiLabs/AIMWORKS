@@ -1088,12 +1088,12 @@ body {
   box-shadow: none;
 }
 .hero-brand img {
-  width: 152px;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 10px 22px rgba(17, 29, 36, 0.12));
-}
+    width: 168px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 10px 22px rgba(17, 29, 36, 0.12));
+  }
 .hero-brand-mark {
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1223,7 +1223,7 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
   .acknowledgement { grid-template-columns: 1fr; }
   .hero-head { grid-template-columns: 1fr; }
   .hero-brand { justify-self: start; min-width: 0; width: fit-content; }
-  .hero-brand img { width: 118px; }
+  .hero-brand img { width: 126px; }
   h1 { max-width: 13ch; }
 }
 """
