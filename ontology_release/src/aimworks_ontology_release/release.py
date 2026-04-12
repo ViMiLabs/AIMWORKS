@@ -96,7 +96,7 @@ def build_release_bundle(project_root: str | Path) -> Path:
 def _release_notes() -> str:
     return """# Release Notes Template
 
-- Release title: H2KG PEMFC Catalyst Layer Application Ontology
+- Release title: H2KG Application Ontology for Hydrogen Electrochemical Systems
 - Namespace policy: preserve existing h2kg hash IRIs
 - Major release focus: metadata enrichment, schema/example separation, alignment review, static documentation, and FAIR readiness
 """

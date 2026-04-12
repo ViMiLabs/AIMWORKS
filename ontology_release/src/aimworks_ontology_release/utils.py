@@ -181,10 +181,10 @@ def deep_get(data: dict[str, Any], *keys: str, default: Any = None) -> Any:
 def default_release_profile() -> dict[str, Any]:
     return {
         "project": {
-            "title": "H2KG PEMFC Catalyst Layer Application Ontology",
-            "short_title": "H2KG PEMFC Catalyst Layer Ontology",
-            "subtitle": "EMMO-aligned ontology for PEMFC catalyst-layer experiments",
-            "description": "Application ontology for low-Pt PEMFC cathode catalyst-layer experiments, materials, measurements, quantity values, and FAIR provenance.",
+            "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
+            "short_title": "H2KG Ontology",
+            "subtitle": "EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, measurements, and FAIR metadata",
+            "description": "Application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, quantity values, datasets, and FAIR provenance.",
             "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
             "namespace_prefix": "h2kg",
             "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
@@ -196,7 +196,7 @@ def default_release_profile() -> dict[str, Any]:
             "prior_version": "https://w3id.org/h2kg/hydrogen-ontology",
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "acknowledgements": {
-                "support_copy": "Supported through the DECODE project, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS, connecting FAIR ontology publication with reusable metadata infrastructure.",
+                "support_copy": "Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.",
                 "initiatives": [
                     {
                         "name": "DECODE",
@@ -212,7 +212,7 @@ def default_release_profile() -> dict[str, Any]:
                 ],
                 "funding_notice": [
                     "This publication is part of the DECODE project that has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.",
-                    "This work was also partially funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).",
+                    "This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).",
                 ],
             },
             "profiles": {
@@ -222,7 +222,8 @@ def default_release_profile() -> dict[str, Any]:
                     "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
                 },
                 "pemfc": {
-                    "title": "H2KG PEMFC Application Ontology",
+                    "title": "H2KG PEMFC Profile",
+                    "subtitle": "Proton exchange membrane fuel cell profile for experiments, materials, processes, and measurements",
                     "ontology_iri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology",
                     "namespace_uri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
                     "imports": ["https://w3id.org/h2kg/hydrogen-ontology"],
@@ -236,7 +237,8 @@ def default_release_profile() -> dict[str, Any]:
                     ],
                 },
                 "pemwe": {
-                    "title": "H2KG PEMWE Application Ontology",
+                    "title": "H2KG PEMWE Profile",
+                    "subtitle": "Proton exchange membrane water electrolysis profile for experiments, materials, processes, and measurements",
                     "ontology_iri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology",
                     "namespace_uri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
                     "imports": ["https://w3id.org/h2kg/hydrogen-ontology"],
@@ -317,10 +319,10 @@ def profile_registry(release_profile: dict[str, Any]) -> dict[str, dict[str, Any
 def default_metadata_defaults() -> dict[str, Any]:
     return {
         "ontology": {
-            "title": "H2KG PEMFC Catalyst Layer Application Ontology",
-            "subtitle": "EMMO-aligned ontology for low-Pt PEMFC catalyst-layer experiments and related provenance",
-            "abstract": "Application ontology for low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata.",
-            "description": "The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and FAIR provenance.",
+            "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
+            "subtitle": "EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, and FAIR provenance",
+            "abstract": "Application ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, and release metadata.",
+            "description": "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, including parameters, properties, measurements, instruments, materials, data, and FAIR provenance.",
             "created": "2026-03-19",
             "modified": "2026-03-19",
             "language": "en",
