@@ -12,7 +12,7 @@ def generate_candidates(
     input_path: str | Path,
     output_dir: str | Path,
     config_dir: str | Path | None = None,
-    limit: int = 5,
+    limit: int = 12,
 ) -> list[dict[str, Any]]:
     local_terms = [
         term
@@ -31,9 +31,12 @@ def generate_candidates(
                 {
                     "local_iri": local["iri"],
                     "local_label": local["label"],
+                    "local_description": local.get("description", ""),
                     "local_kind": local["kind"],
+                    "local_predicates": local.get("predicates", []),
                     "target_iri": target["iri"],
                     "target_label": target["label"],
+                    "target_description": target.get("description", ""),
                     "target_kind": target["kind"],
                     "source": target["source"],
                     "score": round(score, 3),

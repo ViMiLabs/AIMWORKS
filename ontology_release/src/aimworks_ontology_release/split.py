@@ -27,14 +27,16 @@ def split_ontology(
         identifier = item.get("@id")
         if not isinstance(identifier, str) or identifier not in kind_by_iri:
             continue
-        kind = kind_by_iri[identifier].kind
+        classification = kind_by_iri[identifier]
+        kind = classification.kind
         if kind in {"ontology_header", "class", "object_property", "datatype_property", "annotation_property"}:
-            schema_items.append(item)
-            counts["schema"] += 1
-        elif kind == "controlled_vocabulary_term":
+            if classification.is_local:
+                schema_items.append(item)
+                counts["schema"] += 1
+        elif kind == "controlled_vocabulary_term" and classification.is_local:
             vocab_items.append(item)
             counts["vocabulary"] += 1
-        elif kind in {"example_individual", "ephemeral_generated_instance", "quantity_value_data_node"}:
+        elif kind in {"example_individual", "ephemeral_generated_instance", "quantity_value_data_node"} and classification.is_local:
             example_items.append(item)
             counts["examples"] += 1
     dump_turtle_items(output_dir / "schema.ttl", schema_items)

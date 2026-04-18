@@ -209,7 +209,7 @@
       ],
       "http://purl.org/dc/terms/abstract": [
         {
-          "@value": "Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n",
+          "@value": "Application ontology for representing hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n",
           "@language": "en"
         }
       ],
@@ -245,7 +245,7 @@
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n",
+          "@value": "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, including parameters, properties, measurements, instruments, materials, data, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n",
           "@language": "en"
         }
       ]
@@ -271,15 +271,21 @@
           "@value": "hasParameter"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process or measurement to a parameter that specifies one of its inputs, settings, or operating conditions.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process, measurement, or resource to a parameter used to characterize its conditions or settings.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasParameter is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasparameter.",
           "@language": "en"
         }
       ],
@@ -310,15 +316,21 @@
           "@value": "hasProperty"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a resource to a property that it bears, reports, or is described in terms of.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasProperty is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasproperty.",
           "@language": "en"
         }
       ],
@@ -349,15 +361,21 @@
           "@value": "usesInstrument"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process or measurement to an instrument used to carry it out or support it.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process or measurement to an instrument used in carrying it out.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "usesInstrument is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for usesinstrument.",
           "@language": "en"
         }
       ],
@@ -393,15 +411,21 @@
           "@id": "http://www.w3.org/ns/prov#used"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process or measurement to a material entity that serves as an input.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process to a material that serves as an input to that process.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasInputMaterial is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasinputmaterial.",
           "@language": "en"
         }
       ],
@@ -437,15 +461,21 @@
           "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process to a material entity produced as an output.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process to a material produced by that process.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasOutputMaterial is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasoutputmaterial.",
           "@language": "en"
         }
       ],
@@ -481,15 +511,21 @@
           "@id": "http://www.w3.org/ns/prov#wasGeneratedBy"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a measurement or process to data generated as an output.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process or measurement to data generated as its output.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasOutputData is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasoutputdata.",
           "@language": "en"
         }
       ],
@@ -525,15 +561,21 @@
           "@id": "http://www.w3.org/ns/prov#used"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process or measurement to data used as an input.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process, analysis, or transformation to data used as its input.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasInputData is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasinputdata.",
           "@language": "en"
         }
       ],
@@ -564,15 +606,21 @@
           "@value": "measures"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a measurement to a property that it determines.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a measurement to the property it determines or quantifies.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "measures is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for measures.",
           "@language": "en"
         }
       ],
@@ -603,15 +651,21 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#Property"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a data point to the property represented by that data point.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a result, value, or derived statement to the property that it is about.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "ofProperty is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for ofproperty.",
           "@language": "en"
         }
       ],
@@ -642,15 +696,21 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a data point to the measurement from which it was generated.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates data, a result, or a derived statement to the measurement from which it originates.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "fromMeasurement is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for frommeasurement.",
           "@language": "en"
         }
       ],
@@ -676,15 +736,21 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasPart"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating an entity or process to a larger entity or process of which it forms a part.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates an entity to a larger entity of which it is a constituent part.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "isPartOf is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for ispartof.",
           "@language": "en"
         }
       ],
@@ -710,15 +776,21 @@
           "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A datatype property relating a resource to a literal identifier used to distinguish or reference it.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Datatype property used to attach literal metadata or values related to hasidentifier.",
+          "@value": "A datatype property that relates a resource to a literal identifier used to denote or reference it.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasIdentifier is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG datatype relation for hasidentifier.",
           "@language": "en"
         }
       ],
@@ -738,6 +810,12 @@
           "@id": "http://www.w3.org/ns/prov#Agent"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing an agent that is responsible for carrying out a process, producing data, or contributing to the provenance of a resource in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Agent",
@@ -746,13 +824,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing agent in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A person, organization, software system, or other actor that bears responsibility for an activity, resource, or assertion in H2KG.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Agent is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for responsible actors and provenance-bearing entities.",
           "@language": "en"
         }
       ],
@@ -772,6 +850,12 @@
           "@id": "http://www.w3.org/ns/prov#Entity"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing an instrument used to perform, support, or control a measurement or manufacturing process in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Instrument",
@@ -780,13 +864,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing instrument in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A device or apparatus used to perform, control, or monitor a measurement, manufacturing step, or experimental operation.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Instrument is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for experimental and processing apparatus.",
           "@language": "en"
         }
       ],
@@ -807,15 +891,21 @@
           "@value": "hasSubProcess"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a process to a subprocess that forms part of its overall execution.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a process to a subprocess that forms part of its execution.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasSubProcess is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hassubprocess.",
           "@language": "en"
         }
       ],
@@ -846,15 +936,21 @@
           "@id": "http://qudt.org/schema/qudt/QuantityValue"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a data point to the current-density value at which it is reported.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates an observation, result, or condition to the current-density setting at which it applies.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "atCurrentDensity is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for atcurrentdensity.",
           "@language": "en"
         }
       ],
@@ -869,6 +965,12 @@
       "@type": [
         "http://www.w3.org/2002/07/owl#Class"
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a parameter specified as an input, setting, or condition for a process or measurement in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Parameter",
@@ -877,13 +979,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing parameter in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A condition, setting, or specified variable used to characterize how a process, measurement, or material state is defined.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Parameter is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for reusable condition and setting concepts.",
           "@language": "en"
         }
       ],
@@ -898,6 +1000,12 @@
       "@type": [
         "http://www.w3.org/2002/07/owl#Class"
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a unit used to express the value of a quantity in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Unit",
@@ -906,31 +1014,19 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing unit in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A unit of measure used to express the magnitude of a quantity value in H2KG.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Unit is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for measurement units used with quantity values.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
-      "@type": [
-        "http://www.w3.org/2002/07/owl#Class"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        {
-          "@language": "en",
-          "@value": "Reference Electrode"
         }
       ]
     },
@@ -944,6 +1040,12 @@
           "@id": "http://www.w3.org/ns/prov#Activity"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a process that transforms material, produces data, or changes the state of a system in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Process",
@@ -952,13 +1054,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing process in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A temporally extended activity or operation that unfolds through one or more steps and may involve materials, instruments, parameters, and outputs.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Process is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for activities and operations in the experimental workflow.",
           "@language": "en"
         }
       ],
@@ -978,6 +1080,12 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a manufacturing process that prepares, assembles, coats, or otherwise fabricates a material or device in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Manufacturing",
@@ -986,13 +1094,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing manufacturing in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A process that prepares, fabricates, modifies, or assembles a material, component, or device.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Manufacturing is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for fabrication, preparation, and assembly processes.",
           "@language": "en"
         }
       ],
@@ -1013,15 +1121,21 @@
           "@value": "hasPart"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating an entity or process to a constituent part.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a composite entity to one of its constituent parts.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasPart is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for haspart.",
           "@language": "en"
         }
       ],
@@ -1042,15 +1156,21 @@
           "@value": "hasQuantityValue"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a parameter, property, or data point to the quantity value that expresses it.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a parameter, property, or data point to a quantity-value node that carries its numeric value and unit.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "hasQuantityValue is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for hasquantityvalue.",
           "@language": "en"
         }
       ],
@@ -1076,15 +1196,21 @@
           "@id": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating an electrochemical measurement setup or process to the reference electrode it uses.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates an electrochemical setup or measurement to the reference electrode used in that context.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "referenceElectrode is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for referenceelectrode.",
           "@language": "en"
         }
       ],
@@ -1104,6 +1230,12 @@
           "@id": "http://www.w3.org/ns/prov#Entity"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing data produced, used, or referenced by a process or measurement in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Data",
@@ -1112,13 +1244,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing data in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A recorded informational entity that captures observations, derived results, metadata, or other digitally expressed content.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Data is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for recorded informational outputs and data artefacts.",
           "@language": "en"
         }
       ],
@@ -1144,15 +1276,21 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a subprocess to the larger process of which it forms a part.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a subprocess to the larger process of which it forms a part.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "isSubProcessOf is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for issubprocessof.",
           "@language": "en"
         }
       ],
@@ -1178,15 +1316,21 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a property or result to the basis used for its normalization.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An object property that relates a quantitative result or property to the basis against which it is normalized.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "normalizedTo is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG relation for normalizedto.",
           "@language": "en"
         }
       ],
@@ -1206,6 +1350,12 @@
           "@id": "http://www.w3.org/ns/prov#Entity"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a single data point that links a value to the property and measurement context it belongs to in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Data Point",
@@ -1214,13 +1364,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing data point in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "An individual recorded value or observation within a dataset, measurement series, or derived data collection.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Data Point is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for individual recorded observations or values.",
           "@language": "en"
         }
       ],
@@ -1235,6 +1385,12 @@
       "@type": [
         "http://www.w3.org/2002/07/owl#Class"
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a material entity that participates in a process, measurement, or device configuration in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Matter",
@@ -1243,47 +1399,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing matter in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A material entity, substance, mixture, component, or physical artefact used, produced, or studied in the domain.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Matter is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
-          "@language": "en"
-        }
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasName",
-      "@type": [
-        "http://www.w3.org/2002/07/owl#DatatypeProperty"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        {
-          "@language": "en",
-          "@value": "hasName"
-        }
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#range": [
-        {
-          "@id": "http://www.w3.org/2000/01/rdf-schema#Literal"
-        }
-      ],
-      "http://www.w3.org/2004/02/skos/core#definition": [
-        {
-          "@value": "Datatype property used to attach literal metadata or values related to hasname.",
-          "@language": "en"
-        }
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#comment": [
-        {
-          "@value": "hasName is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG class for material entities and physical artefacts.",
           "@language": "en"
         }
       ],
@@ -1298,6 +1420,12 @@
       "@type": [
         "http://www.w3.org/2002/07/owl#Class"
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Metadata",
@@ -1306,42 +1434,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing metadata in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "Information that describes the provenance, identity, structure, context, or management of another resource.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Metadata is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
-          "@language": "en"
-        }
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/h2kg/hydrogen-ontology#influences",
-      "@type": [
-        "http://www.w3.org/2002/07/owl#ObjectProperty"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        {
-          "@language": "en",
-          "@value": "influences"
-        }
-      ],
-      "http://www.w3.org/2004/02/skos/core#definition": [
-        {
-          "@value": "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.",
-          "@language": "en"
-        }
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#comment": [
-        {
-          "@value": "influences is a local H2KG relation preserved for backward-compatible release preparation.",
+          "@value": "Core H2KG class for descriptive information about resources and activities.",
           "@language": "en"
         }
       ],
@@ -1361,6 +1460,12 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a measurement process that determines one or more properties of a material, device, or system in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Measurement",
@@ -1369,13 +1474,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing measurement in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A process that determines, estimates, or records the value of a property under specified conditions.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Measurement is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for value-determining experimental activities.",
           "@language": "en"
         }
       ],
@@ -1390,6 +1495,12 @@
       "@type": [
         "http://www.w3.org/2002/07/owl#Class"
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A class representing a property that can be measured, computed, or otherwise assigned to a material, process, or system in H2KG.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@value": "Property",
@@ -1398,13 +1509,13 @@
       ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing property in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "A characteristic, attribute, or measurable feature of an entity, material, process, or system.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Property is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for characteristics that can be observed, measured, or reported.",
           "@language": "en"
         }
       ],
@@ -1426,15 +1537,21 @@
           "@value": "Normalization Basis"
         }
       ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying normalization basis.",
+          "@language": "en"
+        }
+      ],
       "http://www.w3.org/2004/02/skos/core#definition": [
         {
-          "@value": "Class representing normalization basis in the H2KG PEMFC catalyst-layer application ontology.",
+          "@value": "The basis with respect to which a quantitative result or property is normalized.",
           "@language": "en"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#comment": [
         {
-          "@value": "Normalization Basis is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling.",
+          "@value": "Core H2KG class for normalization reference concepts such as area, mass, or active surface area.",
           "@language": "en"
         }
       ],

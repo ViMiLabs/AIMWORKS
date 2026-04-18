@@ -1,55 +1,59 @@
 {
-  "findable": 86,
-  "accessible": 85,
-  "interoperable": 90,
-  "reusable": 65,
-  "summary": "Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.",
-  "artifacts": [
-    "HTML reference page",
-    "Machine-readable source",
-    "JSON-LD source",
-    "Alignment mappings",
-    "Examples module",
-    "Release bundle",
-    "w3id artifacts"
-  ],
+  "generated_at": "2026-04-18T17:36:03.075962+00:00",
+  "findable": 80,
+  "accessible": 73,
+  "interoperable": 100,
+  "reusable": 100,
+  "summary": "FAIR signals on this page follow a public-first policy: local build artefacts improve readiness, but full findability and accessibility require publicly established publication infrastructure. External OOPS! and FOOPS! results are reported separately as observability signals so service outages do not masquerade as ontology quality.",
+  "publication_evidence": {
+    "publication_status": "local-build",
+    "resolver_status": "prepared",
+    "docs_publication_status": "prepared",
+    "artifact_publication_status": "prepared",
+    "prepared_discovery": true,
+    "resolver_established": false,
+    "docs_published": false,
+    "artifacts_published": false,
+    "public_establishment_pending": true
+  },
+  "artifacts": [],
   "fair_signals": [
     {
       "label": "F / Findable",
-      "status": "good",
-      "value": "86 / 100",
-      "detail": "Internal score for identifiers, versioning, citation, namespace, and findable publication metadata."
+      "status": "watch",
+      "value": "80 / 100",
+      "detail": "Public-first release score for identifiers, versioning, citation, and publication establishment. Local build assets alone do not yield full credit."
     },
     {
       "label": "A / Accessible",
-      "status": "good",
-      "value": "85 / 100",
-      "detail": "Internal score for machine-readable outputs, docs presence, resolver artifacts, and public access hooks."
+      "status": "watch",
+      "value": "73 / 100",
+      "detail": "Public-first release score for machine-readable outputs, documentation, resolver state, and publication establishment. Local files alone do not yield full credit."
     },
     {
       "label": "I / Interoperable",
       "status": "good",
-      "value": "90 / 100",
-      "detail": "Internal score for reuse of imports, mappings, namespace hygiene, and standards-based serializations."
+      "value": "100 / 100",
+      "detail": "Purely internal release-quality score for reuse of imports, mappings, namespace hygiene, and standards-based serializations."
     },
     {
       "label": "R / Reusable",
-      "status": "watch",
-      "value": "65 / 100",
-      "detail": "Internal score for license, provenance, versioning, definitions, examples, and release packaging."
+      "status": "good",
+      "value": "100 / 100",
+      "detail": "Purely internal release-quality score for license, provenance, versioning, definitions, examples, and release packaging."
     }
   ],
   "transparency_hooks": [
     {
       "label": "OOPS! ontology pitfall scan",
-      "status": "watch",
-      "value": "service unavailable",
+      "status": "unavailable",
+      "value": "external service unreachable",
       "detail": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     },
     {
       "label": "FOOPS! FAIR assessment",
-      "status": "watch",
-      "value": "service unavailable",
+      "status": "unavailable",
+      "value": "external service unreachable",
       "detail": "FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError(\"HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     }
   ],
@@ -62,8 +66,8 @@
     },
     {
       "label": "SHACL conforms",
-      "status": "action",
-      "value": "False",
+      "status": "good",
+      "value": "True",
       "detail": "Local SHACL shape execution when pyshacl is available."
     },
     {
@@ -98,71 +102,71 @@
     },
     {
       "label": "OWL consistency hook",
-      "status": "watch",
-      "value": "skipped (owlready2 not installed)",
-      "detail": "Optional OWL reasoner hook. It is skipped when owlready2 is not installed."
+      "status": "optional",
+      "value": "not enabled in current environment (owlready2 not installed)",
+      "detail": "Optional OWL reasoner hook. It is non-blocking and only runs when owlready2 is installed."
     },
     {
       "label": "EMMO checks",
-      "status": "watch",
-      "value": "skipped (EMMOntoPy not installed)",
-      "detail": "Optional EMMO convention hook. It is skipped when EMMOntoPy is not installed."
+      "status": "optional",
+      "value": "not enabled in current environment (EMMOntoPy not installed)",
+      "detail": "Optional EMMO convention hook. It is non-blocking and only runs when EMMOntoPy is installed."
     },
     {
       "label": "OOPS! hook",
-      "status": "watch",
-      "value": "service unavailable",
+      "status": "unavailable",
+      "value": "external service unreachable",
       "detail": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     },
     {
       "label": "FOOPS! hook",
-      "status": "watch",
-      "value": "service unavailable",
+      "status": "unavailable",
+      "value": "external service unreachable",
       "detail": "FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError(\"HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
     }
   ],
   "publication_assets": [
     {
       "label": "HTML reference page",
-      "status": "good",
-      "value": "ready",
-      "detail": "Generated public documentation page."
+      "status": "watch",
+      "value": "prepared",
+      "detail": "Generated documentation assets. Public availability is tracked separately from local generation."
     },
     {
       "label": "Machine-readable source",
-      "status": "good",
-      "value": "ready",
+      "status": "watch",
+      "value": "prepared",
       "detail": "Primary Turtle serialization for the release candidate."
     },
     {
       "label": "JSON-LD source",
-      "status": "good",
-      "value": "ready",
+      "status": "watch",
+      "value": "prepared",
       "detail": "JSON-LD serialization for the release candidate."
     },
     {
       "label": "Alignment mappings",
-      "status": "good",
-      "value": "ready",
+      "status": "watch",
+      "value": "prepared",
       "detail": "Conservative alignment output for review and publication."
     },
     {
       "label": "Examples module",
-      "status": "good",
-      "value": "ready",
+      "status": "watch",
+      "value": "prepared",
       "detail": "Separated example and data-like instances."
     },
     {
       "label": "Release bundle",
-      "status": "good",
-      "value": "ready",
+      "status": "watch",
+      "value": "prepared",
       "detail": "Bundle status depends on whether the current command executed the release-bundle stage."
     },
     {
       "label": "w3id artifacts",
-      "status": "good",
-      "value": "ready",
-      "detail": "Redirect templates and publication notes for stable public identifiers."
+      "status": "watch",
+      "value": "prepared",
+      "detail": "Resolver templates may be prepared locally even when public resolver registration is still pending."
     }
   ],
   "foops": {
@@ -177,21 +181,21 @@
     "message": "OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError(\"HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions\"))"
   },
   "release_metrics": {
-    "path": "ontology_release\\output\\ontology\\schema.ttl",
-    "schema_term_count": 35,
-    "local_schema_term_count": 34,
+    "path": "output\\ontology\\schema.ttl",
+    "schema_term_count": 32,
+    "local_schema_term_count": 32,
     "missing_labels": 0,
     "missing_definitions": 0,
-    "placeholder_definition_count": 34,
+    "placeholder_definition_count": 0,
     "label_coverage": 1.0,
     "definition_coverage": 1.0,
     "metadata_gap_count": 0,
     "imports_count": 9
   },
   "section_explanations": {
-    "fair_signals": "Internal FAIR signals estimate release readiness from the built ontology package itself. They are conservative but not equivalent to live post-publication FAIR audits.",
-    "transparency_hooks": "External transparency hooks call public assessment services. Their availability depends on external infrastructure and network access.",
-    "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, and optional SHACL checks on the release candidate.",
-    "publication_assets": "Publication asset rows show whether the files required for public release were actually built in the current run."
+    "fair_signals": "FAIR signals are public-first release indicators. Local artefacts and metadata improve readiness, but full Findable and Accessible credit requires publication to be explicitly established.",
+    "transparency_hooks": "External service rows report what third-party assessment services returned, or state clearly when they were unavailable.",
+    "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, SHACL, and optional non-blocking hook checks on the release candidate.",
+    "publication_assets": "Publication asset rows distinguish assets that were prepared locally from those explicitly treated as publicly established."
   }
 }

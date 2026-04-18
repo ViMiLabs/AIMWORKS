@@ -46,14 +46,31 @@ def classify_resources(
     profile = try_load_yaml(Path(config_dir or input_path.parent.parent / "config") / "release_profile.yaml", default_release_profile())
     namespace_uri = deep_get(profile, "project", "namespace_uri", default="https://w3id.org/h2kg/hydrogen-ontology#")
     ontology_iri = deep_get(profile, "project", "ontology_iri", default="https://w3id.org/h2kg/hydrogen-ontology")
+    local_semantic_priority = set(
+        deep_get(
+            profile,
+            "separation",
+            "local_schema_priority",
+            default=["Process", "Manufacturing", "Measurement", "Instrument", "Matter", "Parameter", "Property", "Data"],
+        )
+    )
     merged = merge_document_items(load_json_document(input_path))
-    results = [_classify_item(item, ontology_iri, namespace_uri) for item in merged if isinstance(item.get("@id"), str)]
+    results = [
+        _classify_item(item, ontology_iri, namespace_uri, local_semantic_priority)
+        for item in merged
+        if isinstance(item.get("@id"), str)
+    ]
     dump_json(output_dir / "classification_report.json", [item.to_dict() for item in results])
     dump_jsonld_items(output_dir / "classification_snapshot.jsonld", [item for item in merged if isinstance(item.get("@id"), str)])
     return results
 
 
-def _classify_item(item: dict[str, Any], ontology_iri: str, namespace_uri: str) -> ResourceClassification:
+def _classify_item(
+    item: dict[str, Any],
+    ontology_iri: str,
+    namespace_uri: str,
+    local_semantic_priority: set[str],
+) -> ResourceClassification:
     identifier = str(item.get("@id", ""))
     label = best_label(item)
     is_local = identifier == ontology_iri or identifier.startswith(namespace_uri)
@@ -75,6 +92,18 @@ def _classify_item(item: dict[str, Any], ontology_iri: str, namespace_uri: str) 
         return ResourceClassification(identifier, label, "quantity_value_data_node", 0.95, reasons, is_local)
     if not is_local:
         return ResourceClassification(identifier, label, "external_resource", 0.8, ["External namespace resource."], is_local)
+    local_semantic_types = sorted(
+        {
+            local_name(type_value)
+            for type_value in type_values
+            if isinstance(type_value, str) and type_value.startswith(namespace_uri) and local_name(type_value) in local_semantic_priority
+        }
+    )
+    if local_semantic_types:
+        reasons.append(
+            "Explicit local semantic type(s) detected: " + ", ".join(local_semantic_types) + "."
+        )
+        return ResourceClassification(identifier, label, "controlled_vocabulary_term", 0.97, reasons, is_local)
     local = local_name(identifier)
     signature = lexical_signature(item)
     if any(token in signature for token in ["basis", "type", "design", "presence", "ratio", "electrode"]) and "measurement" not in signature:

@@ -5,11 +5,13 @@ import json
 from pathlib import Path
 
 from .docs import build_docs
+from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
+from .normalize_source import normalize_source_document
 from .odk import prepare_odk_shadow
 from .profile_modules import build_profile_modules
 from .prefix_repair import repair_doc_prefixes
@@ -32,6 +34,12 @@ def main() -> None:
     annotate = subparsers.add_parser("annotate")
     annotate.add_argument("--input", required=True)
     annotate.add_argument("--draft-llm", action="store_true")
+    curate = subparsers.add_parser("curate-definitions")
+    curate.add_argument("--input", required=True)
+    curate.add_argument("--write-in-place", action="store_true")
+    normalize_source = subparsers.add_parser("normalize-source")
+    normalize_source.add_argument("--input", required=True)
+    normalize_source.add_argument("--write-in-place", action="store_true")
     run = subparsers.add_parser("run")
     run.add_argument("--input", required=True)
     run.add_argument("--rewrite", action="store_true")
@@ -66,6 +74,10 @@ def main() -> None:
         result = build_profile_modules(input_path, output / "ontology", config_dir)
     elif args.command == "annotate":
         result = draft_annotations(input_path, output / "review", args.draft_llm, config_dir / "llm_agent.example.yaml")
+    elif args.command == "curate-definitions":
+        result = curate_source_definitions(input_path, output / "reports", config_dir, write_in_place=args.write_in_place)
+    elif args.command == "normalize-source":
+        result = normalize_source_document(input_path, output / "reports", write_in_place=args.write_in_place)
     elif args.command == "docs":
         fair_snapshot = compute_fair_readiness(input_path, output / "reports", config_dir)
         result = build_docs(input_path, output / "docs", config_dir, fair_snapshot)

@@ -1,19 +1,20 @@
 {
   "summary": {
-    "reviewed_against_hdo": 10,
-    "aligned_to_hdo": 130,
-    "reused_from_hdo": 130,
-    "stayed_local": 3,
-    "overlap_with_other_standards": 1
+    "reviewed_against_hdo": 96,
+    "aligned_to_hdo": 0,
+    "reused_from_hdo": 0,
+    "stayed_local": 96,
+    "overlap_with_other_standards": 3
   },
   "reviewed_terms": [
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
       "label": "hasOutputData",
-      "description": "",
+      "description": "An object property relating a measurement or process to data generated as an output.",
       "kind": "object_property",
       "is_local": true,
       "predicates": [
+        "http://purl.org/dc/terms/description",
         "http://www.w3.org/2000/01/rdf-schema#domain",
         "http://www.w3.org/2000/01/rdf-schema#label",
         "http://www.w3.org/2000/01/rdf-schema#range",
@@ -23,10 +24,11 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
       "label": "hasInputData",
-      "description": "",
+      "description": "An object property relating a process or measurement to data used as an input.",
       "kind": "object_property",
       "is_local": true,
       "predicates": [
+        "http://purl.org/dc/terms/description",
         "http://www.w3.org/2000/01/rdf-schema#domain",
         "http://www.w3.org/2000/01/rdf-schema#label",
         "http://www.w3.org/2000/01/rdf-schema#range",
@@ -34,77 +36,362 @@
       ]
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
-      "label": "hasIdentifier",
-      "description": "",
-      "kind": "datatype_property",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenGainLossMeasurement",
+      "label": "Oxygen Gain/Loss Measurement",
+      "description": "A measurement process that uses oxygen Gain/Loss measurement to determine Local Oxygen Transport Resistance, Limiting Current Density, and Local Gas Transport Resistance using Fuel Cell Test Station and Gas Humidification Unit and generating Experiment Dataset and Local Oxygen Transport Resistance Dataset.",
+      "kind": "controlled_vocabulary_term",
       "is_local": true,
       "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#O2N2SwitchingMeasurement",
+      "label": "O2–N2 Switching Measurement",
+      "description": "A measurement process that uses O2–N2 switching measurement to determine Local Oxygen Transport Resistance using Fuel Cell Test Station and Gas Humidification Unit and generating Experiment Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneGasTransportMeasurement",
+      "label": "Through-Plane Gas Transport Measurement",
+      "description": "A measurement process that uses Through-Plane gas transport measurement to determine Local Oxygen Transport Resistance, Effective Oxygen Diffusion Coefficient, and Mass Transport Resistance using Through-Plane Transport Cell and Environmental Chamber and generating Experiment Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentInterruptHFRMeasurement",
+      "label": "Current-Interrupt HFR Measurement",
+      "description": "A measurement process that uses Current-Interrupt HFR measurement to determine Ohmic Resistance and High Frequency Resistance using Fuel Cell Test Station and Milli Ohmmeter and generating Experiment Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "description": "An object property relating a data point to the property represented by that data point.",
+      "kind": "object_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#domain",
         "http://www.w3.org/2000/01/rdf-schema#label",
         "http://www.w3.org/2000/01/rdf-schema#range"
       ]
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "label": "Data",
-      "description": "",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement",
+      "label": "fromMeasurement",
+      "description": "An object property relating a data point to the measurement from which it was generated.",
+      "kind": "object_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#domain",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2000/01/rdf-schema#range"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MEAPolarization",
+      "label": "MEA Polarization",
+      "description": "A measurement process that records membrane electrode assembly polarization behavior to determine current density, power density, mass activity, and related electrochemical performance properties under controlled operating conditions.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
+      "label": "hasIdentifier",
+      "description": "A datatype property relating a resource to a literal identifier used to distinguish or reference it.",
+      "kind": "datatype_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2000/01/rdf-schema#range"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SquareWaveVoltammetry",
+      "label": "Square Wave Voltammetry",
+      "description": "A measurement process that uses square wave voltammetry to determine Peak Current and Peak Potential using Electrochemical Workstation and generating Experiment Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
+      "label": "Agent",
+      "description": "A class representing an agent that is responsible for carrying out a process, producing data, or contributing to the provenance of a resource in H2KG.",
       "kind": "class",
       "is_local": true,
       "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#atCurrentDensity",
+      "label": "atCurrentDensity",
+      "description": "An object property relating a data point to the current-density value at which it is reported.",
+      "kind": "object_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#domain",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2000/01/rdf-schema#range"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalImpedanceSpectroscopyPotentiostatic",
+      "label": "Electrochemical Impedance Spectroscopy Potentiostatic",
+      "description": "A measurement process that uses electrochemical impedance spectroscopy potentiostatic to determine Charge Transfer Resistance, Double Layer Capacitance, and Ohmic Resistance using Electrochemical Workstation, Potentiostat, and Segmented Cell System and generating Experiment Dataset, Impedance Dataset, and EIS Nyquist Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry",
+      "label": "Rotating Ring Disk Voltammetry",
+      "description": "A measurement process that uses rotating ring disk voltammetry to determine Current Density, Kinetic Current, and Electron Transfer Number using Electrochemical Workstation, RRDEAssembly, and Glassy Carbon Disk Electrode and generating Experiment Dataset and Limiting Current Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "label": "Process",
+      "description": "A class representing a process that transforms material, produces data, or changes the state of a system in H2KG.",
+      "kind": "class",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalImpedanceSpectroscopyGalvanostatic",
+      "label": "Electrochemical Impedance Spectroscopy Galvanostatic",
+      "description": "A measurement process that uses electrochemical impedance spectroscopy galvanostatic to determine Charge Transfer Resistance, Double Layer Capacitance, and Ohmic Resistance using Electrochemical Workstation, Potentiostat, and Fuel Cell Test Station and generating Experiment Dataset, Impedance Dataset, and EIS Nyquist Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CyclicVoltammetry",
+      "label": "Cyclic Voltammetry",
+      "description": "A measurement process that uses cyclic voltammetry to determine Double Layer Capacitance, Electrochemically Active Surface Area, and Onset Potential using Electrochemical Workstation, Potentiostat, and Fuel Cell Test Station and generating Experiment Dataset, ECSA Dataset, and Cyclic Voltammogram Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset",
+      "label": "Experiment Dataset",
+      "description": "A dataset containing experiment data generated by Oxygen Gain/Loss Measurement, O2–N2 Switching Measurement, and Through-Plane Gas Transport Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/creator",
+        "http://purl.org/dc/terms/description",
+        "http://purl.org/dc/terms/format",
+        "http://purl.org/dc/terms/issued",
+        "http://purl.org/dc/terms/license",
+        "http://purl.org/dc/terms/title",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "http://www.w3.org/ns/dcat#downloadURL",
+        "http://www.w3.org/ns/prov#wasGeneratedBy"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSAByDoubleLayerCapacitance",
+      "label": "ECSA by Double-Layer Capacitance",
+      "description": "A measurement process that determines electrochemically active surface area from double-layer capacitance measurements using an electrochemical workstation and generating an experiment dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "label": "hasQuantityValue",
+      "description": "An object property relating a parameter, property, or data point to the quantity value that expresses it.",
+      "kind": "object_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "label": "Data",
+      "description": "A class representing data produced, used, or referenced by a process or measurement in H2KG.",
+      "kind": "class",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
         "http://www.w3.org/2000/01/rdf-schema#subClassOf"
       ]
     },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "label": "Data Point",
-      "description": "",
+      "description": "A class representing a single data point that links a value to the property and measurement context it belongs to in H2KG.",
       "kind": "class",
       "is_local": true,
       "predicates": [
+        "http://purl.org/dc/terms/description",
         "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LinearSweepVoltammetry",
+      "label": "Linear Sweep Voltammetry",
+      "description": "A measurement process that uses linear sweep voltammetry to determine Current Density, Tafel Slope, and Overpotential using Electrochemical Workstation, Potentiostat, and RDERotator and generating Experiment Dataset and Polarization Curve Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
+        "https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
       ]
     },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
       "label": "Metadata",
-      "description": "",
+      "description": "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG.",
       "kind": "class",
       "is_local": true,
-      "predicates": []
-    },
-    {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RadiusOfGyration",
-      "label": "Radius Of Gyration",
-      "description": "Radius of gyration (Rg) of ink aggregates/agglomerates extracted from Guinier fits to USAXS data.",
-      "kind": "controlled_vocabulary_term",
-      "is_local": true,
       "predicates": [
-        "http://purl.org/dc/terms/description",
-        "http://www.w3.org/2000/01/rdf-schema#label",
-        "http://www.w3.org/2004/02/skos/core#altLabel",
-        "http://www.w3.org/2004/02/skos/core#prefLabel",
-        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+        "http://purl.org/dc/terms/description"
       ]
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "label": "Fabrication Design Specification",
-      "description": "Description: Reporting/record of catalyst layer design parameters (I/C ratio, dry milling time, drying temperature) as given in Table 1.",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CathodicStrippingVoltammetry",
+      "label": "Cathodic Stripping Voltammetry",
+      "description": "A measurement process that uses cathodic stripping voltammetry to determine Cathodic Stripping Peak Current and Peak Potential using Electrochemical Workstation and generating Experiment Dataset.",
       "kind": "controlled_vocabulary_term",
       "is_local": true,
       "predicates": [
         "http://purl.org/dc/terms/description",
-        "http://www.w3.org/2000/01/rdf-schema#label",
-        "http://www.w3.org/2004/02/skos/core#altLabel",
         "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
         "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-        "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
       ]
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenConcentrationTimeSeriesData",
-      "label": "Oxygen Concentration Time Series Data",
-      "description": "desc: Time series data of O2 concentration at sample center during radial diffusivity test.",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSADataset",
+      "label": "ECSA Dataset",
+      "description": "A dataset containing ECSA data generated by Catalyst Ink Preparation, Cyclic Voltammetry, and Carbon Monoxide Stripping Voltammetry.",
       "kind": "controlled_vocabulary_term",
       "is_local": true,
       "predicates": [
@@ -115,9 +402,108 @@
       ]
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonBlackAggregateAnisotropyRatio",
-      "label": "Carbon Black Aggregate Anisotropy Ratio",
-      "description": "Anisotropy ratio of CB aggregates (ratio of long to short axis length in circumscribing prolate spheroid), used for validation (range ~1–4).",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImpedanceDataset",
+      "label": "Impedance Dataset",
+      "description": "A dataset containing impedance data generated by Electrochemical Impedance Spectroscopy Potentiostatic, Electrochemical Impedance Spectroscopy Galvanostatic, and Proton Conductivity Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LimitingCurrentDataset",
+      "label": "Limiting Current Dataset",
+      "description": "Limiting current values and derived O2 transport resistances vs pressure and O2 concentration.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PolarizationCurveDataset",
+      "label": "Polarization Curve Dataset",
+      "description": "Polarization curves (U-I / I-V) measured at different RH and degradation states.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerDispersionPropertyDataset",
+      "label": "Ionomer Dispersion Property Dataset",
+      "description": "A dataset containing ionomer dispersion property data generated by Ionomer Dispersion Property Compilation.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPhysicalPropertyDataset",
+      "label": "Solvent Physical Property Dataset",
+      "description": "A dataset containing solvent physical property data generated by Rheology Measurement, Solvent Physical Property Compilation, and Solvent Property Lookup.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerDispersionPropertyCompilation",
+      "label": "Ionomer Dispersion Property Compilation",
+      "description": "A measurement process that uses ionomer dispersion property compilation to determine Alcohol Mass Fraction In Solvent Mixture, Ion Exchange Capacity, and Ionomer Dispersion Mass Fraction and generating Ionomer Dispersion Property Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPhysicalPropertyCompilation",
+      "label": "Solvent Physical Property Compilation",
+      "description": "A measurement process that uses solvent physical property compilation to determine Boiling Point, Dielectric Constant, and Hansen Solubility Parameter Dispersion using Rheometer and generating Solvent Physical Property Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonMass",
+      "label": "Carbon Mass",
+      "description": "Metadata corresponding to carbon mass and used to describe the provenance, identity, or context of another resource.",
       "kind": "controlled_vocabulary_term",
       "is_local": true,
       "predicates": [
@@ -127,1055 +513,943 @@
         "http://www.w3.org/2004/02/skos/core#prefLabel",
         "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
       ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MembraneThicknessMeasurement",
+      "label": "Membrane Thickness Measurement",
+      "description": "Measurement/record of membrane thickness (e.g., micrometer); reported ~80 µm.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "label": "PEMFCCFD Simulation",
+      "description": "A measurement process that uses PEMFCCFD simulation to determine Oxygen Concentration, Current Density Per Pt Surface Area, and Low Activity Pt Particle Fraction using Ansys Fluent Fuel Cell Module and Comsol Multiphysics and generating Polarization Curve Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DRTDataset",
+      "label": "DRT Dataset",
+      "description": "Dataset containing calculated DRT spectra (e.g., G(f) vs frequency) and derived peak features from impedance spectra.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LocalOxygenTransportResistanceDataset",
+      "label": "Local Oxygen Transport Resistance Dataset",
+      "description": "A dataset containing local oxygen transport resistance data generated by Oxygen Gain/Loss Measurement and Limiting Current Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ReviewStatementExtraction",
+      "label": "Review Statement Extraction",
+      "description": "Use for numeric values stated in review text (targets/ranges) rather than newly measured data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#AgglomerateSizeDistributionDataset",
+      "label": "Agglomerate Size Distribution Dataset",
+      "description": "A dataset containing agglomerate size distribution data generated by Dynamic Light Scattering Measurement, Laser Diffraction Scattering Particle Size Measurement, and Ultra Small Angle X Ray Scattering Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PoreSizeDistributionDataset",
+      "label": "Pore Size Distribution Dataset",
+      "description": "A dataset containing pore size distribution data generated by Nitrogen Physisorption Measurement and Mercury Intrusion Porosimetry Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset",
+      "label": "SEM Image Dataset",
+      "description": "A dataset containing SEM image data generated by SEM Imaging Measurement and Energy Dispersive X Ray Spectroscopy.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset",
+      "label": "SEM Micrograph Dataset",
+      "description": "A dataset containing SEM micrograph data generated by SEM Imaging Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FuelCellPolarizationDataset",
+      "label": "Fuel Cell Polarization Dataset",
+      "description": "A dataset containing fuel cell polarization data generated by MEAPolarization and Fuel Cell Polarization Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#EISNyquistDataset",
+      "label": "EIS Nyquist Dataset",
+      "description": "A dataset containing EIS nyquist data generated by Electrochemical Impedance Spectroscopy Potentiostatic and Electrochemical Impedance Spectroscopy Galvanostatic.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CyclicVoltammogramDataset",
+      "label": "Cyclic Voltammogram Dataset",
+      "description": "A dataset containing cyclic voltammogram data generated by Cyclic Voltammetry.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#HighSpeedVideoDataset",
+      "label": "High Speed Video Dataset",
+      "description": "Dataset of recorded high-speed video frames during printing.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImageWidthPixels",
+      "label": "Image Width Pixels",
+      "description": "A parameter specifying image width in pixels for recorded frames.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImageHeightPixels",
+      "label": "Image Height Pixels",
+      "description": "A parameter specifying image height in pixels for recorded frames.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPropertyMeasurement",
+      "label": "Solvent Property Measurement",
+      "description": "A measurement process that uses solvent property measurement to determine Dielectric Constant, Boiling Point, and Viscosity using Ubbelohde Viscometer, Tensiometer, and Contact Angle Goniometer and generating Solvent Physical Property Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#XPSDataset",
+      "label": "XPS Dataset",
+      "description": "A dataset containing XPS data generated by X Ray Photoelectron Spectroscopy Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RadiusOfGyration",
+      "label": "Radius Of Gyration",
+      "description": "A property denoting radius of gyration (Rg) of ink aggregates/agglomerates extracted from Guinier fits to USAXS data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IntrinsicViscosity",
+      "label": "Intrinsic Viscosity",
+      "description": "A parameter specifying intrinsic viscosity parameter from Krieger–Dougherty fit to high-shear relative viscosity data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInkStructureDataset",
+      "label": "Catalyst Ink Structure Dataset",
+      "description": "A dataset containing catalyst ink structure data generated by Catalyst Ink Preparation, Dynamic Light Scattering Measurement, and Contrast Variation SANSUSANS Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#AcidUptakeDataset",
+      "label": "Acid Uptake Dataset",
+      "description": "Dataset of QCM-measured mass uptake and derived proton concentration vs dopant concentration.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SwellingDataset",
+      "label": "Swelling Dataset",
+      "description": "Dataset of swelling fraction vs RH and dopant concentration from ellipsometry.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ConductivityDataset",
+      "label": "Conductivity Dataset",
+      "description": "Dataset of thin-film conductivity vs RH, thickness, and dopant concentration.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RapidCoolDownActivation",
+      "label": "Rapid Cool Down Activation",
+      "description": "Break-in method combining operation with rapid cool-down below dew point to condense liquid water.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTopographyDataset",
+      "label": "Surface Topography Dataset",
+      "description": "Processed 3D surface topography (height map) reconstructed from profilometry or microscopy data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OrganicFlowBatteryPolarizationMeasurement",
+      "label": "Organic Flow Battery Polarization Measurement",
+      "description": "A measurement process that uses organic flow battery polarization measurement to determine Power Density, Peak Power Density, and Open Circuit Voltage using Battery Analyzer and Diaphragm Pump and generating Polarization Curve Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GalvanostaticChargeDischargeMeasurement",
+      "label": "Galvanostatic Charge Discharge Measurement",
+      "description": "A measurement process that uses galvanostatic charge discharge measurement to determine Coulombic Efficiency, Energy Efficiency, and Ohmic Resistance using Battery Analyzer, Electrochemical Workstation, and Ag/AgCl and generating Charge Discharge Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ChargeDischargeDataset",
+      "label": "Charge Discharge Dataset",
+      "description": "A dataset containing charge discharge data generated by Galvanostatic Charge Discharge Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#InPlaneElectronicConductivityMeasurement",
+      "label": "In Plane Electronic Conductivity Measurement",
+      "description": "A measurement process that uses in plane electronic conductivity measurement to determine In Plane Electronic Conductivity using Micro Ohm Meter and Digital Multimeter and generating Conductivity Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneElectronicConductivityMeasurement",
+      "label": "Through Plane Electronic Conductivity Measurement",
+      "description": "A measurement process that uses through plane electronic conductivity measurement to determine Through Plane Electronic Conductivity, Scaling Exponent T, and Electrical Percolation Threshold Volume Fraction using Micro Ohm Meter, Gold Plated Probes, and Pneumatic Jack and generating Conductivity Dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#InPlaneEffectiveDiffusivityMeasurement",
+      "label": "In Plane Effective Diffusivity Measurement",
+      "description": "A measurement process that determines the in-plane effective oxygen diffusion coefficient from radial oxygen-transport measurements using a fiber-optic oxygen probe and generating oxygen concentration time-series data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenConcentrationTimeSeriesData",
+      "label": "Oxygen Concentration Time Series Data",
+      "description": "A data resource used to represent oxygen concentration time series data generated by In Plane Effective Diffusivity Measurement.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DifferentialScanningCalorimetryMeasurement",
+      "label": "Differential Scanning Calorimetry Measurement",
+      "description": "A measurement process used to determine thermal event peak temperature and phase transition temperature by differential scanning calorimetry, typically using a differential scanning calorimeter, DSC instrument, or synchronous thermal analyzer, and generating a thermal analysis dataset.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#measures",
+        "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RheologyDataset",
+      "label": "Rheology Dataset",
+      "description": "Dataset of dynamic rheology and curing-time photorheology measurements (frequency sweeps and modulus evolution).",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "label": "FTIR Dataset",
+      "description": "Dataset of FTIR spectra versus UV exposure time and versus pyrolysis temperature.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThermalAnalysisDataset",
+      "label": "Thermal Analysis Dataset",
+      "description": "Dataset of DSC and TG curves during thermal treatment.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset",
+      "label": "XRD Pattern Dataset",
+      "description": "Dataset of XRD diffractograms versus sintering temperature.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "label": "Microstructure Image Dataset",
+      "description": "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ORRPerformanceDataset",
+      "label": "ORR Performance Dataset",
+      "description": "Electrochemical ORR activity and stability data for SG-Fe compared with Pt/C in 0.1 M KOH.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PorousCeramicPropertyDataset",
+      "label": "Porous Ceramic Property Dataset",
+      "description": "Dataset of porous ceramic properties across processing conditions.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DRMPerformanceDataset",
+      "label": "DRM Performance Dataset",
+      "description": "Dataset of DRM catalytic performance (conversions, etc.).",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OERPerformanceDataset",
+      "label": "OER Performance Dataset",
+      "description": "Dataset containing OER performance metrics (current density vs potential, overpotential, Tafel slope).",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PhotodegradationDataset",
+      "label": "Photodegradation Dataset",
+      "description": "Dataset containing RhB concentration/degradation vs irradiation time and kinetic analysis.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PlateauStorageModulus",
+      "label": "Plateau Storage Modulus",
+      "description": "A property denoting plateau (low-strain) storage modulus extrapolated from 0.01–0.03% strain data.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#altLabel",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea_2",
+      "label": "Geometric Area",
+      "description": "Metadata corresponding to geometric area and used to describe the provenance, identity, or context of another resource.",
+      "kind": "controlled_vocabulary_term",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
+      ]
     }
   ],
-  "aligned_terms": [
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio",
-      "local_label": "Aggregate Aspect Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006044",
-      "target_label": "creates specification",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.651,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio",
-      "local_label": "Aggregate Aspect Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006028",
-      "target_label": "semantic artefact",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.564,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio",
-      "local_label": "Aggregate Aspect Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007033",
-      "target_label": "directed graph specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.56,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#AnnealingDuration",
-      "local_label": "Annealing Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000025",
-      "target_label": "Information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.552,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ComponentMolarRatio",
-      "local_label": "Component Molar Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000030",
-      "target_label": "information content entity",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.553,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ConcentrationExponent",
-      "local_label": "Concentration Exponent",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/BFO_0000004",
-      "target_label": "independent continuant",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.636,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#CrackAspectRatio",
-      "local_label": "Crack Aspect Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000104",
-      "target_label": "plan specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.556,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "local_label": "Data",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000009",
-      "target_label": "Daten",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.747,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "local_label": "Data",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000116",
-      "target_label": "Datei",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.747,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "local_label": "Data",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000107",
-      "target_label": "Datenbank",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.695,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "local_label": "Data",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001037",
-      "target_label": "Datensatz",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.695,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
-      "local_label": "Data",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001039",
-      "target_label": "Data Lake",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.695,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "local_label": "Data Point",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
-      "target_label": "FAIR data",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.712,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "local_label": "Data Point",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007008",
-      "target_label": "obsolete data",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.689,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "local_label": "Data Point",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000108",
-      "target_label": "digital repository",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.651,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "local_label": "Data Point",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
-      "target_label": "simulation data",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.64,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "local_label": "Data Point",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000007",
-      "target_label": "Datentyp",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.636,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DesignedPorosity",
-      "local_label": "Designed Porosity",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000108",
-      "target_label": "digital repository",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryingDuration",
-      "local_label": "Drying Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000025",
-      "target_label": "Information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.615,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryingDuration",
-      "local_label": "Drying Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006025",
-      "target_label": "Datentypinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.588,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryingDuration",
-      "local_label": "Drying Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00005003",
-      "target_label": "misinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.552,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#DyeConcentration",
-      "local_label": "Dye Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000030",
-      "target_label": "information content entity",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSABasis",
-      "local_label": "ECSA Basis",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006037",
-      "target_label": "accesses",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.556,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrodeSubstrate",
-      "local_label": "Electrode Substrate",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000121",
-      "target_label": "DEPRECATED unstructured",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrodeSubstrate",
-      "local_label": "Electrode Substrate",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006031",
-      "target_label": "data storage role",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.556,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrolyteConcentration",
-      "local_label": "Electrolyte Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007022",
-      "target_label": "Informations Rolle",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrolyteType",
-      "local_label": "Electrolyte Type",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000119",
-      "target_label": "obsolete file type",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.647,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "local_label": "Fabrication Design Specification",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000007",
-      "target_label": "action specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.769,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "local_label": "Fabrication Design Specification",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007028",
-      "target_label": "dictionary specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.75,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "local_label": "Fabrication Design Specification",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007038",
-      "target_label": "digital object specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.7,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "local_label": "Fabrication Design Specification",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007037",
-      "target_label": "database specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.667,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FabricationDesignSpecification",
-      "local_label": "Fabrication Design Specification",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000005",
-      "target_label": "objective specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.655,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#IfIbRatio",
-      "local_label": "If Ib Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00005003",
-      "target_label": "misinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.64,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#IfIbRatio",
-      "local_label": "If Ib Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000025",
-      "target_label": "Information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.636,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#IfIbRatio",
-      "local_label": "If Ib Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002012",
-      "target_label": "Lizenzinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#InitiatorConcentration",
-      "local_label": "Initiator Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000030",
-      "target_label": "information content entity",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkDilutionRatio",
-      "local_label": "Ink Dilution Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002012",
-      "target_label": "Lizenzinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkDilutionRatio",
-      "local_label": "Ink Dilution Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007028",
-      "target_label": "dictionary specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkDilutionRatio",
-      "local_label": "Ink Dilution Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000033",
-      "target_label": "directive information entity",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.565,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkStorageStabilityDuration",
-      "local_label": "Ink Storage Stability Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006031",
-      "target_label": "data storage role",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.553,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-      "local_label": "Instrument",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002028",
-      "target_label": "Infrastruktur",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.609,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCatalystMassRatio",
-      "local_label": "Ionomer To Catalyst Mass Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006048",
-      "target_label": "grants permission to",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.56,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerType",
-      "local_label": "Ionomer Type",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000119",
-      "target_label": "obsolete file type",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.6,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#KOHConcentration",
-      "local_label": "KOH Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000030",
-      "target_label": "information content entity",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#LaB6CalibrationStandard",
-      "local_label": "La B 6 Calibration Standard",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006043",
-      "target_label": "based on standard",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.591,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
-      "local_label": "Manufacturing",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000039",
-      "target_label": "Aufzeichung",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.583,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "local_label": "Metadata",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
-      "target_label": "Metadaten",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.904,
-      "relation": "rdfs:subClassOf",
-      "rationale": "Conservative HDO anchoring favors specialization for data-governance and metadata-management concepts.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "local_label": "Metadata",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006016",
-      "target_label": "Metadatensatz",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.842,
-      "relation": "rdfs:subClassOf",
-      "rationale": "Conservative HDO anchoring favors specialization for data-governance and metadata-management concepts.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "local_label": "Metadata",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
-      "target_label": "Metadatenschema",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.776,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "local_label": "Metadata",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000026",
-      "target_label": "intrinsic metadata",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.695,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "local_label": "Metadata",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001071",
-      "target_label": "Messdaten",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.668,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#MolarConcentration",
-      "local_label": "Molar Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001068",
-      "target_label": "computational modelling",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#MonomerConcentration",
-      "local_label": "Monomer Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007039",
-      "target_label": "taxonomy specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NafionToPtMassRatio",
-      "local_label": "Nafion To Pt Mass Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006042",
-      "target_label": "assigns data type to",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
-      "local_label": "Normalization Basis",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000025",
-      "target_label": "Information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.667,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
-      "local_label": "Normalization Basis",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00005003",
-      "target_label": "misinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.667,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
-      "local_label": "Normalization Basis",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
-      "target_label": "simulation data",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.588,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
-      "local_label": "Normalization Basis",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000111",
-      "target_label": "Einheitsinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.579,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
-      "local_label": "Normalization Basis",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006025",
-      "target_label": "Datentypinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.579,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#OHO1sRatio",
-      "local_label": "OHO 1 s Ratio",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007005",
-      "target_label": "self-information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.552,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenConcentration",
-      "local_label": "Oxygen Concentration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001068",
-      "target_label": "computational modelling",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.558,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenConcentrationTimeSeriesData",
-      "local_label": "Oxygen Concentration Time Series Data",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000006",
-      "target_label": "data type classification system",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.639,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolarizationPointDuration",
-      "local_label": "Polarization Point Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006025",
-      "target_label": "Datentypinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.609,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolarizationPointDuration",
-      "local_label": "Polarization Point Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000007",
-      "target_label": "action specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.596,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolymerizationDuration",
-      "local_label": "Polymerization Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/IAO_0000007",
-      "target_label": "action specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.651,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolymerizationDuration",
-      "local_label": "Polymerization Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007028",
-      "target_label": "dictionary specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.596,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolymerizationDuration",
-      "local_label": "Polymerization Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006025",
-      "target_label": "Datentypinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PolymerizationDuration",
-      "local_label": "Polymerization Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007043",
-      "target_label": "obsolete data validation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.553,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "local_label": "Process",
-      "local_kind": "class",
-      "target_iri": "http://purl.obolibrary.org/obo/BFO_0000015",
-      "target_label": "process",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 1.0,
-      "relation": "owl:equivalentClass",
-      "rationale": "High lexical similarity and compatible kind support a strong equivalence proposal.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "local_label": "Process",
-      "local_kind": "class",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001070",
-      "target_label": "Messprozess",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.667,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PulseDuration",
-      "local_label": "Pulse Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007005",
-      "target_label": "self-information",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.6,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PulseDuration",
-      "local_label": "Pulse Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007022",
-      "target_label": "Informations Rolle",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.562,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PulseDuration",
-      "local_label": "Pulse Duration",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000004",
-      "target_label": "Datenquelle",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.56,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ReinfiltrationMassIncrease",
-      "local_label": "Reinfiltration Mass Increase",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006044",
-      "target_label": "creates specification",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.653,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ReinfiltrationMassIncrease",
-      "local_label": "Reinfiltration Mass Increase",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007033",
-      "target_label": "directed graph specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.571,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ReinfiltrationMassIncrease",
-      "local_label": "Reinfiltration Mass Increase",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006010",
-      "target_label": "JSON Schema Spezifikation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.566,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ReinfiltrationMassIncrease",
-      "local_label": "Reinfiltration Mass Increase",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00007037",
-      "target_label": "database specification",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.56,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#ReinfiltrationMassIncrease",
-      "local_label": "Reinfiltration Mass Increase",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000111",
-      "target_label": "Einheitsinformation",
-      "target_kind": "class",
-      "source": "hdo",
-      "score": 0.553,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#SiliconCalibrationStandard",
-      "local_label": "Silicon Calibration Standard",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006043",
-      "target_label": "based on standard",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.622,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    },
-    {
-      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#SolutionMethodInkPreparation",
-      "local_label": "Solution Method Ink Preparation",
-      "local_kind": "controlled_vocabulary_term",
-      "target_iri": "http://purl.obolibrary.org/obo/RO_0002592",
-      "target_label": "results in organization of",
-      "target_kind": "object_property",
-      "source": "hdo",
-      "score": 0.561,
-      "relation": "skos:closeMatch",
-      "rationale": "HDO is preferred for Helmholtz-community data, metadata, identifier, digital-object, and validation semantics.",
-      "status": "proposed"
-    }
-  ],
+  "aligned_terms": [],
   "stayed_local_terms": [
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
+      "kind": "object_property",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
+      "kind": "object_property",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenGainLossMeasurement",
+      "label": "Oxygen Gain/Loss Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#O2N2SwitchingMeasurement",
+      "label": "O2–N2 Switching Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneGasTransportMeasurement",
+      "label": "Through-Plane Gas Transport Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentInterruptHFRMeasurement",
+      "label": "Current-Interrupt HFR Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "kind": "object_property",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement",
+      "label": "fromMeasurement",
+      "kind": "object_property",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MEAPolarization",
+      "label": "MEA Polarization",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier",
       "label": "hasIdentifier",
       "kind": "datatype_property",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SquareWaveVoltammetry",
+      "label": "Square Wave Voltammetry",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
+      "label": "Agent",
+      "kind": "class",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#atCurrentDensity",
+      "label": "atCurrentDensity",
+      "kind": "object_property",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalImpedanceSpectroscopyPotentiostatic",
+      "label": "Electrochemical Impedance Spectroscopy Potentiostatic",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry",
+      "label": "Rotating Ring Disk Voltammetry",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "label": "Process",
+      "kind": "class",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalImpedanceSpectroscopyGalvanostatic",
+      "label": "Electrochemical Impedance Spectroscopy Galvanostatic",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CyclicVoltammetry",
+      "label": "Cyclic Voltammetry",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset",
+      "label": "Experiment Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSAByDoubleLayerCapacitance",
+      "label": "ECSA by Double-Layer Capacitance",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "label": "hasQuantityValue",
+      "kind": "object_property",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "label": "Data",
+      "kind": "class",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "label": "Data Point",
+      "kind": "class",
+      "reason": "Kept local pending a more precise HDO term-level match while retaining H2KG experimental granularity."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LinearSweepVoltammetry",
+      "label": "Linear Sweep Voltammetry",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "label": "Metadata",
+      "kind": "class",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CathodicStrippingVoltammetry",
+      "label": "Cathodic Stripping Voltammetry",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ECSADataset",
+      "label": "ECSA Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImpedanceDataset",
+      "label": "Impedance Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LimitingCurrentDataset",
+      "label": "Limiting Current Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PolarizationCurveDataset",
+      "label": "Polarization Curve Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerDispersionPropertyDataset",
+      "label": "Ionomer Dispersion Property Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPhysicalPropertyDataset",
+      "label": "Solvent Physical Property Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerDispersionPropertyCompilation",
+      "label": "Ionomer Dispersion Property Compilation",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPhysicalPropertyCompilation",
+      "label": "Solvent Physical Property Compilation",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonMass",
+      "label": "Carbon Mass",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MembraneThicknessMeasurement",
+      "label": "Membrane Thickness Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "label": "PEMFCCFD Simulation",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DRTDataset",
+      "label": "DRT Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#LocalOxygenTransportResistanceDataset",
+      "label": "Local Oxygen Transport Resistance Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ReviewStatementExtraction",
+      "label": "Review Statement Extraction",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#AgglomerateSizeDistributionDataset",
+      "label": "Agglomerate Size Distribution Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PoreSizeDistributionDataset",
+      "label": "Pore Size Distribution Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset",
+      "label": "SEM Image Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset",
+      "label": "SEM Micrograph Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FuelCellPolarizationDataset",
+      "label": "Fuel Cell Polarization Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#EISNyquistDataset",
+      "label": "EIS Nyquist Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CyclicVoltammogramDataset",
+      "label": "Cyclic Voltammogram Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#HighSpeedVideoDataset",
+      "label": "High Speed Video Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImageWidthPixels",
+      "label": "Image Width Pixels",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ImageHeightPixels",
+      "label": "Image Height Pixels",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SolventPropertyMeasurement",
+      "label": "Solvent Property Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#XPSDataset",
+      "label": "XPS Dataset",
+      "kind": "controlled_vocabulary_term",
       "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
     },
     {
@@ -1185,13 +1459,181 @@
       "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonBlackAggregateAnisotropyRatio",
-      "label": "Carbon Black Aggregate Anisotropy Ratio",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#IntrinsicViscosity",
+      "label": "Intrinsic Viscosity",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInkStructureDataset",
+      "label": "Catalyst Ink Structure Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#AcidUptakeDataset",
+      "label": "Acid Uptake Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SwellingDataset",
+      "label": "Swelling Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ConductivityDataset",
+      "label": "Conductivity Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RapidCoolDownActivation",
+      "label": "Rapid Cool Down Activation",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTopographyDataset",
+      "label": "Surface Topography Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OrganicFlowBatteryPolarizationMeasurement",
+      "label": "Organic Flow Battery Polarization Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GalvanostaticChargeDischargeMeasurement",
+      "label": "Galvanostatic Charge Discharge Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ChargeDischargeDataset",
+      "label": "Charge Discharge Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#InPlaneElectronicConductivityMeasurement",
+      "label": "In Plane Electronic Conductivity Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThroughPlaneElectronicConductivityMeasurement",
+      "label": "Through Plane Electronic Conductivity Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#InPlaneEffectiveDiffusivityMeasurement",
+      "label": "In Plane Effective Diffusivity Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenConcentrationTimeSeriesData",
+      "label": "Oxygen Concentration Time Series Data",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DifferentialScanningCalorimetryMeasurement",
+      "label": "Differential Scanning Calorimetry Measurement",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#RheologyDataset",
+      "label": "Rheology Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "label": "FTIR Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThermalAnalysisDataset",
+      "label": "Thermal Analysis Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset",
+      "label": "XRD Pattern Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "label": "Microstructure Image Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#ORRPerformanceDataset",
+      "label": "ORR Performance Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PorousCeramicPropertyDataset",
+      "label": "Porous Ceramic Property Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DRMPerformanceDataset",
+      "label": "DRM Performance Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#OERPerformanceDataset",
+      "label": "OER Performance Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PhotodegradationDataset",
+      "label": "Photodegradation Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PlateauStorageModulus",
+      "label": "Plateau Storage Modulus",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea_2",
+      "label": "Geometric Area",
       "kind": "controlled_vocabulary_term",
       "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
     }
   ],
   "overlap_notes": [
+    {
+      "local_label": "Agent",
+      "source": "prov-o",
+      "target_iri": "http://www.w3.org/ns/prov#Agent",
+      "relation": "rdfs:subClassOf"
+    },
+    {
+      "local_label": "Process",
+      "source": "emmo-core",
+      "target_iri": "https://w3id.org/emmo#EMMO_process",
+      "relation": "owl:equivalentClass"
+    },
     {
       "local_label": "hasIdentifier",
       "source": "dcterms",

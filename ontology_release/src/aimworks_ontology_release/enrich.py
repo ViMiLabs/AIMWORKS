@@ -21,6 +21,57 @@ from .utils import (
     write_text,
 )
 
+SCHEMA_DEFINITIONS: dict[str, str] = {
+    "Agent": "A person, organization, software system, or other actor that bears responsibility for an activity, resource, or assertion in H2KG.",
+    "Instrument": "A device or apparatus used to perform, control, or monitor a measurement, manufacturing step, or experimental operation.",
+    "Parameter": "A condition, setting, or specified variable used to characterize how a process, measurement, or material state is defined.",
+    "Unit": "A unit of measure used to express the magnitude of a quantity value in H2KG.",
+    "Process": "A temporally extended activity or operation that unfolds through one or more steps and may involve materials, instruments, parameters, and outputs.",
+    "Manufacturing": "A process that prepares, fabricates, modifies, or assembles a material, component, or device.",
+    "Data": "A recorded informational entity that captures observations, derived results, metadata, or other digitally expressed content.",
+    "Data Point": "An individual recorded value or observation within a dataset, measurement series, or derived data collection.",
+    "Matter": "A material entity, substance, mixture, component, or physical artefact used, produced, or studied in the domain.",
+    "Metadata": "Information that describes the provenance, identity, structure, context, or management of another resource.",
+    "Measurement": "A process that determines, estimates, or records the value of a property under specified conditions.",
+    "Property": "A characteristic, attribute, or measurable feature of an entity, material, process, or system.",
+    "Normalization Basis": "The basis with respect to which a quantitative result or property is normalized.",
+    "hasParameter": "An object property that relates a process, measurement, or resource to a parameter used to characterize its conditions or settings.",
+    "hasProperty": "An object property that relates a resource to a property that it bears, reports, or is described in terms of.",
+    "usesInstrument": "An object property that relates a process or measurement to an instrument used in carrying it out.",
+    "hasInputMaterial": "An object property that relates a process to a material that serves as an input to that process.",
+    "hasOutputMaterial": "An object property that relates a process to a material produced by that process.",
+    "hasOutputData": "An object property that relates a process or measurement to data generated as its output.",
+    "hasInputData": "An object property that relates a process, analysis, or transformation to data used as its input.",
+    "measures": "An object property that relates a measurement to the property it determines or quantifies.",
+    "ofProperty": "An object property that relates a result, value, or derived statement to the property that it is about.",
+    "fromMeasurement": "An object property that relates data, a result, or a derived statement to the measurement from which it originates.",
+    "isPartOf": "An object property that relates an entity to a larger entity of which it is a constituent part.",
+    "hasIdentifier": "A datatype property that relates a resource to a literal identifier used to denote or reference it.",
+    "hasSubProcess": "An object property that relates a process to a subprocess that forms part of its execution.",
+    "atCurrentDensity": "An object property that relates an observation, result, or condition to the current-density setting at which it applies.",
+    "hasPart": "An object property that relates a composite entity to one of its constituent parts.",
+    "hasQuantityValue": "An object property that relates a parameter, property, or data point to a quantity-value node that carries its numeric value and unit.",
+    "referenceElectrode": "An object property that relates an electrochemical setup or measurement to the reference electrode used in that context.",
+    "isSubProcessOf": "An object property that relates a subprocess to the larger process of which it forms a part.",
+    "normalizedTo": "An object property that relates a quantitative result or property to the basis against which it is normalized.",
+}
+
+SCHEMA_COMMENTS: dict[str, str] = {
+    "Agent": "Core H2KG class for responsible actors and provenance-bearing entities.",
+    "Instrument": "Core H2KG class for experimental and processing apparatus.",
+    "Parameter": "Core H2KG class for reusable condition and setting concepts.",
+    "Unit": "Core H2KG class for measurement units used with quantity values.",
+    "Process": "Core H2KG class for activities and operations in the experimental workflow.",
+    "Manufacturing": "Core H2KG class for fabrication, preparation, and assembly processes.",
+    "Data": "Core H2KG class for recorded informational outputs and data artefacts.",
+    "Data Point": "Core H2KG class for individual recorded observations or values.",
+    "Matter": "Core H2KG class for material entities and physical artefacts.",
+    "Metadata": "Core H2KG class for descriptive information about resources and activities.",
+    "Measurement": "Core H2KG class for value-determining experimental activities.",
+    "Property": "Core H2KG class for characteristics that can be observed, measured, or reported.",
+    "Normalization Basis": "Core H2KG class for normalization reference concepts such as area, mass, or active surface area.",
+}
+
 
 def enrich_ontology(
     input_path: str | Path,
@@ -49,7 +100,16 @@ def enrich_ontology(
         elif identifier.startswith(namespace_uri) and kind and kind.kind in {"class", "object_property", "datatype_property"}:
             updated = _enrich_local_schema_term(updated, ontology_iri, kind.kind)
         enriched.append(updated)
-    schema_items = [item for item in enriched if item.get("@id") == ontology_iri or (classifications.get(str(item.get("@id"))) and classifications[str(item.get("@id"))].kind in {"class", "object_property", "datatype_property"})]
+    schema_items = [
+        item
+        for item in enriched
+        if item.get("@id") == ontology_iri
+        or (
+            classifications.get(str(item.get("@id")))
+            and classifications[str(item.get("@id"))].is_local
+            and classifications[str(item.get("@id"))].kind in {"class", "object_property", "datatype_property"}
+        )
+    ]
     dump_turtle_items(output_dir / "schema.ttl", schema_items)
     dump_jsonld_items(output_dir / "schema.jsonld", schema_items)
     write_text(output_dir.parent / "reports" / "metadata_report.md", _metadata_report(schema_items))
@@ -90,6 +150,8 @@ def _enrich_local_schema_term(item: dict[str, Any], ontology_iri: str, kind: str
 
 
 def _definition_for(label: str, kind: str) -> str:
+    if label in SCHEMA_DEFINITIONS:
+        return SCHEMA_DEFINITIONS[label]
     if kind == "class":
         return f"Class representing {label.lower()} in the H2KG PEMFC catalyst-layer application ontology."
     if kind == "object_property":
@@ -98,9 +160,15 @@ def _definition_for(label: str, kind: str) -> str:
 
 
 def _comment_for(label: str, kind: str) -> str:
+    if label in SCHEMA_COMMENTS:
+        return SCHEMA_COMMENTS[label]
+    if kind == "object_property":
+        return f"Core H2KG relation for {label.lower()}."
+    if kind == "datatype_property":
+        return f"Core H2KG datatype relation for {label.lower()}."
     if kind == "class":
-        return f"{label} is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."
-    return f"{label} is a local H2KG relation preserved for backward-compatible release preparation."
+        return f"Core H2KG class for {label.lower()}."
+    return f"Core H2KG schema term for {label.lower()}."
 
 
 def _metadata_report(schema_items: list[dict[str, Any]]) -> str:

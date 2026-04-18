@@ -1,8 +1,8 @@
 # Split Report
 
-- Schema resources: 36
-- Controlled vocabulary resources: 174
-- Example or data-like resources: 3067
+- Schema resources: 33
+- Controlled vocabulary resources: 2118
+- Example or data-like resources: 0
 
 ## Schema Preview
 
@@ -24,36 +24,22 @@
 
 ## Controlled Vocabulary Preview
 
-- ECSA Basis
-- Cathode Stoichiometric Ratio
-- GDL Type
-- Microporous Layer Presence
-- Flow Field Design
-- Dynamic Hydrogen Electrode (H2 Anode in MEA)
-- Membrane Type
-- Precursor Concentration
-- Ionomer Type
-- Ionomer To Carbon Ratio
-- Catalyst Ink Preparation
-- Electrolyte Concentration
-- Solvent Type
-- Electrolyte Type
-- Electrode Substrate
-
-## Example Preview
-
 - Pt Mass
 - Ionomer Mass
 - Catalyst Layer Volume
+- ECSA Basis
 - Limiting Current Density
-- :Limiting Current Density QV
 - Local Oxygen Transport Resistance
-- :Local O2 Res QV
 - Mass Transport Resistance
-- :Mass Trans Res QV
 - Effective Ionic Conductivity
-- :Eff Ionic Cond QV
 - Effective Oxygen Diffusion Coefficient
-- :Eff O2 Diff QV
 - Water Uptake Indicator
-- :Water Uptake QV
+- Gas Humidification Unit
+- Environmental Chamber
+- Through-Plane Transport Cell
+- GDE Fixture
+- Oxygen Gain/Loss Measurement
+
+## Example Preview
+
+- None

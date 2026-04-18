@@ -7,11 +7,12 @@
   <style>
     :root {
       --ink: #10242d;
-      --muted: #4d6370;
-      --line: rgba(16,36,45,0.14);
+      --muted: #52656e;
+      --line: rgba(16,36,45,0.12);
       --accent: #0d7f83;
-      --paper: #ffffff;
-      --shadow: 0 16px 44px rgba(16,36,45,0.12);
+      --accent-2: #c86a2b;
+      --paper: rgba(255,255,255,0.84);
+      --shadow: 0 22px 64px rgba(16,36,45,0.12);
     }
     * { box-sizing: border-box; }
     body {
@@ -19,47 +20,85 @@
       font-family: "Aptos", "Trebuchet MS", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(13,127,131,0.2), transparent 32%),
-        linear-gradient(180deg, #edf8f7 0%, #fbf6ef 100%);
+        radial-gradient(circle at 12% 16%, rgba(13,127,131,0.16), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(200,106,43,0.16), transparent 24%),
+        linear-gradient(180deg, #eef7f6 0%, #f8f1e7 100%);
     }
-    main { max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    main { max-width: 1180px; margin: 0 auto; padding: 2rem 1rem 3.5rem; }
     h1, h2 { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.02em; }
-    h1 { margin: 0 0 0.5rem; font-size: clamp(1.95rem, 4.3vw, 2.8rem); line-height: 1.08; max-width: 16ch; text-wrap: balance; }
+    h1 { margin: 0 0 0.8rem; font-size: clamp(2.3rem, 5vw, 4.6rem); line-height: 0.96; max-width: 11ch; text-wrap: balance; }
     p { color: var(--muted); line-height: 1.55; }
-    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
-    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.1rem; box-shadow: var(--shadow); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: 1.2rem; align-items: end; }
+    .eyebrow { display: inline-block; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(255,255,255,0.72); border: 1px solid var(--line); color: var(--accent); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .brand { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    .brand img { width: 82px; height: auto; display: block; }
+    .hero-card { background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,250,243,0.88)); border: 1px solid var(--line); border-radius: 1.4rem; padding: 1.15rem; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+    .hero-metrics { display: grid; gap: 0.85rem; }
+    .metric { display: grid; gap: 0.2rem; }
+    .metric strong { color: var(--ink); }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 1.7rem; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.4rem; padding: 1.2rem; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
     .links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
     a {
       text-decoration: none;
       color: white;
       background: linear-gradient(135deg, #10242d, var(--accent));
       border-radius: 999px;
-      padding: 0.45rem 0.82rem;
-      font-size: 0.9rem;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(16,36,45,0.15);
+    }
+    .ghost { color: var(--ink); background: rgba(255,255,255,0.72); border: 1px solid var(--line); box-shadow: none; }
+    code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      h1 { max-width: 13ch; }
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>H2KG - Ontology for Hydrogen Electrochemical Systems</h1>
-    <p>Application ontology profiles for PEMFC and PEMWE technologies</p>
+    <section class="hero">
+      <div>
+        <div class="brand">
+          <img src="./pemfc/assets/h2kg-logo.png" alt="H2KG logo">
+          <span class="eyebrow">AIMWORKS ontology release</span>
+        </div>
+        <h1>H2KG for hydrogen electrochemical systems</h1>
+        <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
+        <div class="links">
+          <a href="./pages/reference.html">Open core reference</a>
+          <a href="./pemfc/index.html">Explore PEMFC</a>
+          <a href="./pemwe/index.html">Explore PEMWE</a>
+          <a class="ghost" href="./pages/release.html">Open release overview</a>
+        </div>
+      </div>
+      <aside class="hero-card hero-metrics">
+        <div class="metric"><strong>Shared core</strong><span>Stable H2KG namespace with profile-specific PEMFC and PEMWE views.</span></div>
+        <div class="metric"><strong>Standards-aligned</strong><span>EMMO, HDO, QUDT, ChEBI, PROV-O, and DCTERMS integration through the AIMWORKS release pipeline.</span></div>
+        <div class="metric"><strong>Publication-ready</strong><span>GitHub Pages documentation, downloadable ontology artefacts, mappings, and quality reports.</span></div>
+      </aside>
+    </section>
     <div class="grid">
       <article class="card">
         <h2>PEMFC Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p>Profile documentation for proton exchange membrane fuel cell experiments, materials, processes, measurements, and data assets.</p>
         <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemfc/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemfc/index.html">Open profile home</a>
-          <a href="./pemfc/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pemfc/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pages/reference.html">Shared core</a>
         </div>
       </article>
       <article class="card">
         <h2>PEMWE Profile</h2>
-        <p>Browse profile-specific ontology docs, release outputs, alignments, validation, and query tooling.</p>
+        <p>Profile documentation for proton exchange membrane water electrolysis experiments, materials, processes, measurements, and data assets.</p>
         <p><strong>Ontology IRI:</strong> <code>https://w3id.org/h2kg/pemwe/hydrogen-ontology</code></p>
         <div class="links">
           <a href="./pemwe/index.html">Open profile home</a>
-          <a href="./pemwe/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pemwe/hydrogen-ontology.html">Open reference</a>
+          <a class="ghost" href="./pages/reference.html">Shared core</a>
         </div>
       </article>
     </div>

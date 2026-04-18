@@ -2,48 +2,48 @@
 
 ## Summary
 
-- Reviewed against HDO: 10
-- Aligned to HDO: 130
-- Reused directly from HDO: 130
-- Kept local after HDO review: 3
-- Overlap with PROV-O / DCTERMS / EMMO anchors: 1
+- Reviewed against HDO: 96
+- Aligned to HDO: 0
+- Reused directly from HDO: 0
+- Kept local after HDO review: 96
+- Overlap with PROV-O / DCTERMS / EMMO anchors: 3
 
 ## HDO-Aligned Terms
 
-- `Aggregate Aspect Ratio` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006044`
-- `Aggregate Aspect Ratio` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006028`
-- `Aggregate Aspect Ratio` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00007033`
-- `Annealing Duration` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000025`
-- `Component Molar Ratio` -> `skos:closeMatch` -> `http://purl.obolibrary.org/obo/IAO_0000030`
-- `Concentration Exponent` -> `skos:closeMatch` -> `http://purl.obolibrary.org/obo/BFO_0000004`
-- `Crack Aspect Ratio` -> `skos:closeMatch` -> `http://purl.obolibrary.org/obo/IAO_0000104`
-- `Data` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000009`
-- `Data` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000116`
-- `Data` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000107`
-- `Data` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001037`
-- `Data` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001039`
-- `Data Point` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00002013`
-- `Data Point` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00007008`
-- `Data Point` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000108`
-- `Data Point` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001069`
-- `Data Point` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000007`
-- `Designed Porosity` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000108`
-- `Drying Duration` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000025`
-- `Drying Duration` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006025`
-- `Drying Duration` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00005003`
-- `Dye Concentration` -> `skos:closeMatch` -> `http://purl.obolibrary.org/obo/IAO_0000030`
-- `ECSA Basis` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006037`
-- `Electrode Substrate` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000121`
-- `Electrode Substrate` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006031`
+- No direct HDO-aligned terms were generated in this run.
 
 ## Terms Kept Local
 
+- `hasOutputData`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `hasInputData`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `Oxygen Gain/Loss Measurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `O2–N2 Switching Measurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Through-Plane Gas Transport Measurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Current-Interrupt HFR Measurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `ofProperty`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `fromMeasurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `MEA Polarization`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
 - `hasIdentifier`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
-- `Radius Of Gyration`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
-- `Carbon Black Aggregate Anisotropy Ratio`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Square Wave Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Agent`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `atCurrentDensity`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Electrochemical Impedance Spectroscopy Potentiostatic`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Rotating Ring Disk Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Process`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Electrochemical Impedance Spectroscopy Galvanostatic`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Cyclic Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Experiment Dataset`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `ECSA by Double-Layer Capacitance`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `hasQuantityValue`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Data`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `Data Point`: Kept local pending a more precise HDO term-level match while retaining H2KG experimental granularity.
+- `Linear Sweep Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Metadata`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 
 ## Cross-Standard Overlap Notes
 
+- `Agent` also aligns with `prov-o` via `rdfs:subClassOf`
+- `Process` also aligns with `emmo-core` via `owl:equivalentClass`
 - `hasIdentifier` also aligns with `dcterms` via `rdfs:subPropertyOf`
 
 ## Guidance

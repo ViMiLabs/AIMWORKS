@@ -2,16 +2,16 @@
 
 ## Internal FAIR Signals
 
-- F / Findable: 86 / 100 (good)
-- A / Accessible: 85 / 100 (good)
-- I / Interoperable: 90 / 100 (good)
-- R / Reusable: 65 / 100 (watch)
+- F / Findable: 80 / 100 (watch)
+- A / Accessible: 73 / 100 (watch)
+- I / Interoperable: 100 / 100 (good)
+- R / Reusable: 100 / 100 (good)
 
 ## Transparency Hooks
 
-- OOPS! ontology pitfall scan: service unavailable (watch)
-- FOOPS! FAIR assessment: service unavailable (watch)
+- OOPS! ontology pitfall scan: external service unreachable (unavailable)
+- FOOPS! FAIR assessment: external service unreachable (unavailable)
 
 ## Summary
 
-Internal FAIR signals are local release-readiness indicators. External OOPS! and FOOPS! results are reported separately so service outages do not masquerade as ontology quality.
+FAIR signals on this page follow a public-first policy: local build artefacts improve readiness, but full findability and accessibility require publicly established publication infrastructure. External OOPS! and FOOPS! results are reported separately as observability signals so service outages do not masquerade as ontology quality.

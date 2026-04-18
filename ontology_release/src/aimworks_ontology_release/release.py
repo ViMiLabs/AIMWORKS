@@ -43,7 +43,6 @@ def run_release(
     profile_modules = build_profile_modules(input_path, ontology_dir, project_root / "config")
     drafts = draft_annotations(input_path, review_dir, draft_llm, project_root / "config" / "llm_agent.example.yaml")
     validation = validate_release(input_path, reports_dir, project_root / "config")
-    fair = compute_fair_readiness(input_path, reports_dir, project_root / "config")
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -58,8 +57,10 @@ def run_release(
             project_root / "config",
             collect_only=True,
         )
-    docs = build_docs(input_path, output_root / "docs", project_root / "config", fair)
     w3id = generate_w3id_artifacts(output_root / "w3id", project_root / "config")
+    build_docs(input_path, output_root / "docs", project_root / "config", None)
+    fair = compute_fair_readiness(input_path, reports_dir, project_root / "config")
+    docs = build_docs(input_path, output_root / "docs", project_root / "config", fair)
     bundle = build_release_bundle(project_root)
     summary = {
         "inspection": inspection["counts"],

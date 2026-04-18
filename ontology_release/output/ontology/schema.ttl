@@ -33,22 +33,23 @@
   owl:imports <https://w3id.org/emmo/domain/pemfc>, <http://purl.org/holy/ns#>, <https://w3id.org/emmo>, <https://w3id.org/emmo/domain/manufacturing#>, <https://w3id.org/emmo/domain/coating#>, <https://w3id.org/emmo/domain/equivalent-circuit-model#>, <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>, <https://w3id.org/emmo/domain/microscopy#>, <https://w3id.org/emmo/domain/electrochemistry> ;
   foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
   owl:versionInfo "1.0.0"@en ;
-  dcterms:abstract "Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n"@en ;
+  dcterms:abstract "Application ontology for representing hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n"@en ;
   dcterms:created "2026-03-19" ;
   dcterms:modified "2026-03-19" ;
   owl:versionIRI <https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0> ;
   owl:priorVersion <https://w3id.org/h2kg/hydrogen-ontology> ;
   vann:preferredNamespacePrefix "h2kg" ;
   vann:preferredNamespaceUri <https://w3id.org/h2kg/hydrogen-ontology#> ;
-  rdfs:comment "The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n"@en .
+  rdfs:comment "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, including parameters, properties, measurements, instruments, materials, data, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n"@en .
 
 h2kg:hasParameter
   a owl:ObjectProperty ;
   rdfs:domain h2kg:Process ;
   rdfs:range h2kg:Parameter ;
   rdfs:label "hasParameter"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasParameter is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process or measurement to a parameter that specifies one of its inputs, settings, or operating conditions."@en ;
+  skos:definition "An object property that relates a process, measurement, or resource to a parameter used to characterize its conditions or settings."@en ;
+  rdfs:comment "Core H2KG relation for hasparameter."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasProperty
@@ -56,8 +57,9 @@ h2kg:hasProperty
   rdfs:domain h2kg:Measurement ;
   rdfs:range h2kg:Property ;
   rdfs:label "hasProperty"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasProperty is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."@en ;
+  skos:definition "An object property that relates a resource to a property that it bears, reports, or is described in terms of."@en ;
+  rdfs:comment "Core H2KG relation for hasproperty."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:usesInstrument
@@ -65,8 +67,9 @@ h2kg:usesInstrument
   rdfs:domain h2kg:Process ;
   rdfs:range h2kg:Instrument ;
   rdfs:label "usesInstrument"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "usesInstrument is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process or measurement to an instrument used to carry it out or support it."@en ;
+  skos:definition "An object property that relates a process or measurement to an instrument used in carrying it out."@en ;
+  rdfs:comment "Core H2KG relation for usesinstrument."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasInputMaterial
@@ -75,8 +78,9 @@ h2kg:hasInputMaterial
   rdfs:range h2kg:Matter ;
   rdfs:label "hasInputMaterial"@en ;
   rdfs:subPropertyOf prov:used ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasInputMaterial is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process or measurement to a material entity that serves as an input."@en ;
+  skos:definition "An object property that relates a process to a material that serves as an input to that process."@en ;
+  rdfs:comment "Core H2KG relation for hasinputmaterial."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasOutputMaterial
@@ -85,8 +89,9 @@ h2kg:hasOutputMaterial
   rdfs:range h2kg:Matter ;
   rdfs:label "hasOutputMaterial"@en ;
   owl:inverseOf prov:wasGeneratedBy ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasOutputMaterial is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process to a material entity produced as an output."@en ;
+  skos:definition "An object property that relates a process to a material produced by that process."@en ;
+  rdfs:comment "Core H2KG relation for hasoutputmaterial."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasOutputData
@@ -95,8 +100,9 @@ h2kg:hasOutputData
   rdfs:range h2kg:Data ;
   rdfs:label "hasOutputData"@en ;
   owl:inverseOf prov:wasGeneratedBy ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasOutputData is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a measurement or process to data generated as an output."@en ;
+  skos:definition "An object property that relates a process or measurement to data generated as its output."@en ;
+  rdfs:comment "Core H2KG relation for hasoutputdata."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasInputData
@@ -105,8 +111,9 @@ h2kg:hasInputData
   rdfs:range h2kg:Data ;
   rdfs:label "hasInputData"@en ;
   rdfs:subPropertyOf prov:used ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasInputData is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process or measurement to data used as an input."@en ;
+  skos:definition "An object property that relates a process, analysis, or transformation to data used as its input."@en ;
+  rdfs:comment "Core H2KG relation for hasinputdata."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:measures
@@ -114,8 +121,9 @@ h2kg:measures
   rdfs:domain h2kg:Measurement ;
   rdfs:range h2kg:Property ;
   rdfs:label "measures"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "measures is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a measurement to a property that it determines."@en ;
+  skos:definition "An object property that relates a measurement to the property it determines or quantifies."@en ;
+  rdfs:comment "Core H2KG relation for measures."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:ofProperty
@@ -123,8 +131,9 @@ h2kg:ofProperty
   rdfs:domain h2kg:DataPoint ;
   rdfs:label "ofProperty"@en ;
   rdfs:range h2kg:Property ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "ofProperty is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a data point to the property represented by that data point."@en ;
+  skos:definition "An object property that relates a result, value, or derived statement to the property that it is about."@en ;
+  rdfs:comment "Core H2KG relation for ofproperty."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:fromMeasurement
@@ -132,47 +141,53 @@ h2kg:fromMeasurement
   rdfs:domain h2kg:DataPoint ;
   rdfs:label "fromMeasurement"@en ;
   rdfs:range h2kg:Measurement ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "fromMeasurement is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a data point to the measurement from which it was generated."@en ;
+  skos:definition "An object property that relates data, a result, or a derived statement to the measurement from which it originates."@en ;
+  rdfs:comment "Core H2KG relation for frommeasurement."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:isPartOf
   a owl:ObjectProperty ;
   rdfs:label "isPartOf"@en ;
   owl:inverseOf h2kg:hasPart ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "isPartOf is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating an entity or process to a larger entity or process of which it forms a part."@en ;
+  skos:definition "An object property that relates an entity to a larger entity of which it is a constituent part."@en ;
+  rdfs:comment "Core H2KG relation for ispartof."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasIdentifier
   a owl:DatatypeProperty ;
   rdfs:label "hasIdentifier"@en ;
   rdfs:range rdfs:Literal ;
-  skos:definition "Datatype property used to attach literal metadata or values related to hasidentifier."@en ;
-  rdfs:comment "hasIdentifier is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "A datatype property relating a resource to a literal identifier used to distinguish or reference it."@en ;
+  skos:definition "A datatype property that relates a resource to a literal identifier used to denote or reference it."@en ;
+  rdfs:comment "Core H2KG datatype relation for hasidentifier."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Agent
   a owl:Class ;
   rdfs:subClassOf prov:Agent ;
+  dcterms:description "A class representing an agent that is responsible for carrying out a process, producing data, or contributing to the provenance of a resource in H2KG."@en ;
   rdfs:label "Agent"@en ;
-  skos:definition "Class representing agent in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Agent is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A person, organization, software system, or other actor that bears responsibility for an activity, resource, or assertion in H2KG."@en ;
+  rdfs:comment "Core H2KG class for responsible actors and provenance-bearing entities."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Instrument
   a owl:Class ;
   rdfs:subClassOf prov:Entity ;
+  dcterms:description "A class representing an instrument used to perform, support, or control a measurement or manufacturing process in H2KG."@en ;
   rdfs:label "Instrument"@en ;
-  skos:definition "Class representing instrument in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Instrument is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A device or apparatus used to perform, control, or monitor a measurement, manufacturing step, or experimental operation."@en ;
+  rdfs:comment "Core H2KG class for experimental and processing apparatus."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasSubProcess
   a owl:ObjectProperty ;
   rdfs:label "hasSubProcess"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasSubProcess is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a process to a subprocess that forms part of its overall execution."@en ;
+  skos:definition "An object property that relates a process to a subprocess that forms part of its execution."@en ;
+  rdfs:comment "Core H2KG relation for hassubprocess."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:atCurrentDensity
@@ -180,145 +195,143 @@ h2kg:atCurrentDensity
   rdfs:domain h2kg:DataPoint ;
   rdfs:label "atCurrentDensity"@en ;
   rdfs:range qudt:QuantityValue ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "atCurrentDensity is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a data point to the current-density value at which it is reported."@en ;
+  skos:definition "An object property that relates an observation, result, or condition to the current-density setting at which it applies."@en ;
+  rdfs:comment "Core H2KG relation for atcurrentdensity."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Parameter
   a owl:Class ;
+  dcterms:description "A class representing a parameter specified as an input, setting, or condition for a process or measurement in H2KG."@en ;
   rdfs:label "Parameter"@en ;
-  skos:definition "Class representing parameter in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Parameter is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A condition, setting, or specified variable used to characterize how a process, measurement, or material state is defined."@en ;
+  rdfs:comment "Core H2KG class for reusable condition and setting concepts."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Unit
   a owl:Class ;
+  dcterms:description "A class representing a unit used to express the value of a quantity in H2KG."@en ;
   rdfs:label "Unit"@en ;
-  skos:definition "Class representing unit in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Unit is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A unit of measure used to express the magnitude of a quantity value in H2KG."@en ;
+  rdfs:comment "Core H2KG class for measurement units used with quantity values."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
-
-electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29
-  a owl:Class ;
-  rdfs:label "Reference Electrode"@en .
 
 h2kg:Process
   a owl:Class ;
   rdfs:subClassOf prov:Activity ;
+  dcterms:description "A class representing a process that transforms material, produces data, or changes the state of a system in H2KG."@en ;
   rdfs:label "Process"@en ;
-  skos:definition "Class representing process in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Process is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A temporally extended activity or operation that unfolds through one or more steps and may involve materials, instruments, parameters, and outputs."@en ;
+  rdfs:comment "Core H2KG class for activities and operations in the experimental workflow."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Manufacturing
   a owl:Class ;
   rdfs:subClassOf h2kg:Process ;
+  dcterms:description "A class representing a manufacturing process that prepares, assembles, coats, or otherwise fabricates a material or device in H2KG."@en ;
   rdfs:label "Manufacturing"@en ;
-  skos:definition "Class representing manufacturing in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Manufacturing is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A process that prepares, fabricates, modifies, or assembles a material, component, or device."@en ;
+  rdfs:comment "Core H2KG class for fabrication, preparation, and assembly processes."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasPart
   a owl:ObjectProperty ;
   rdfs:label "hasPart"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasPart is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating an entity or process to a constituent part."@en ;
+  skos:definition "An object property that relates a composite entity to one of its constituent parts."@en ;
+  rdfs:comment "Core H2KG relation for haspart."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:hasQuantityValue
   a owl:ObjectProperty ;
   rdfs:label "hasQuantityValue"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "hasQuantityValue is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a parameter, property, or data point to the quantity value that expresses it."@en ;
+  skos:definition "An object property that relates a parameter, property, or data point to a quantity-value node that carries its numeric value and unit."@en ;
+  rdfs:comment "Core H2KG relation for hasquantityvalue."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:referenceElectrode
   a owl:ObjectProperty ;
   rdfs:label "referenceElectrode"@en ;
   rdfs:range electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29 ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "referenceElectrode is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating an electrochemical measurement setup or process to the reference electrode it uses."@en ;
+  skos:definition "An object property that relates an electrochemical setup or measurement to the reference electrode used in that context."@en ;
+  rdfs:comment "Core H2KG relation for referenceelectrode."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Data
   a owl:Class ;
   rdfs:subClassOf prov:Entity ;
+  dcterms:description "A class representing data produced, used, or referenced by a process or measurement in H2KG."@en ;
   rdfs:label "Data"@en ;
-  skos:definition "Class representing data in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Data is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A recorded informational entity that captures observations, derived results, metadata, or other digitally expressed content."@en ;
+  rdfs:comment "Core H2KG class for recorded informational outputs and data artefacts."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:isSubProcessOf
   a owl:ObjectProperty ;
   rdfs:label "isSubProcessOf"@en ;
   owl:inverseOf h2kg:hasSubProcess ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "isSubProcessOf is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a subprocess to the larger process of which it forms a part."@en ;
+  skos:definition "An object property that relates a subprocess to the larger process of which it forms a part."@en ;
+  rdfs:comment "Core H2KG relation for issubprocessof."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:normalizedTo
   a owl:ObjectProperty ;
   rdfs:label "normalizedTo"@en ;
   rdfs:range h2kg:NormalizationBasis ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "normalizedTo is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  dcterms:description "An object property relating a property or result to the basis used for its normalization."@en ;
+  skos:definition "An object property that relates a quantitative result or property to the basis against which it is normalized."@en ;
+  rdfs:comment "Core H2KG relation for normalizedto."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:DataPoint
   a owl:Class ;
   rdfs:subClassOf prov:Entity ;
+  dcterms:description "A class representing a single data point that links a value to the property and measurement context it belongs to in H2KG."@en ;
   rdfs:label "Data Point"@en ;
-  skos:definition "Class representing data point in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Data Point is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "An individual recorded value or observation within a dataset, measurement series, or derived data collection."@en ;
+  rdfs:comment "Core H2KG class for individual recorded observations or values."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Matter
   a owl:Class ;
+  dcterms:description "A class representing a material entity that participates in a process, measurement, or device configuration in H2KG."@en ;
   rdfs:label "Matter"@en ;
-  skos:definition "Class representing matter in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Matter is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
-  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
-
-h2kg:hasName
-  a owl:DatatypeProperty ;
-  rdfs:label "hasName"@en ;
-  rdfs:range rdfs:Literal ;
-  skos:definition "Datatype property used to attach literal metadata or values related to hasname."@en ;
-  rdfs:comment "hasName is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  skos:definition "A material entity, substance, mixture, component, or physical artefact used, produced, or studied in the domain."@en ;
+  rdfs:comment "Core H2KG class for material entities and physical artefacts."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Metadata
   a owl:Class ;
+  dcterms:description "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG."@en ;
   rdfs:label "Metadata"@en ;
-  skos:definition "Class representing metadata in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Metadata is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
-  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
-
-h2kg:influences
-  a owl:ObjectProperty ;
-  rdfs:label "influences"@en ;
-  skos:definition "Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "influences is a local H2KG relation preserved for backward-compatible release preparation."@en ;
+  skos:definition "Information that describes the provenance, identity, structure, context, or management of another resource."@en ;
+  rdfs:comment "Core H2KG class for descriptive information about resources and activities."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Measurement
   a owl:Class ;
   rdfs:subClassOf h2kg:Process ;
+  dcterms:description "A class representing a measurement process that determines one or more properties of a material, device, or system in H2KG."@en ;
   rdfs:label "Measurement"@en ;
-  skos:definition "Class representing measurement in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Measurement is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A process that determines, estimates, or records the value of a property under specified conditions."@en ;
+  rdfs:comment "Core H2KG class for value-determining experimental activities."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:Property
   a owl:Class ;
+  dcterms:description "A class representing a property that can be measured, computed, or otherwise assigned to a material, process, or system in H2KG."@en ;
   rdfs:label "Property"@en ;
-  skos:definition "Class representing property in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Property is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  skos:definition "A characteristic, attribute, or measurable feature of an entity, material, process, or system."@en ;
+  rdfs:comment "Core H2KG class for characteristics that can be observed, measured, or reported."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:NormalizationBasis
   a owl:Class, h2kg:Parameter ;
   rdfs:label "Normalization Basis"@en ;
-  skos:definition "Class representing normalization basis in the H2KG PEMFC catalyst-layer application ontology."@en ;
-  rdfs:comment "Normalization Basis is a local H2KG concept preserved for PEMFC catalyst-layer domain modelling."@en ;
+  dcterms:description "A parameter specifying normalization basis."@en ;
+  skos:definition "The basis with respect to which a quantitative result or property is normalized."@en ;
+  rdfs:comment "Core H2KG class for normalization reference concepts such as area, mass, or active surface area."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .

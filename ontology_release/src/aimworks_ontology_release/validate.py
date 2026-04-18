@@ -5,6 +5,7 @@ import json
 import re
 import time
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
@@ -47,6 +48,7 @@ def validate_release(
 ) -> dict[str, Any]:
     input_path = Path(input_path)
     output_dir = ensure_dir(Path(output_dir))
+    generated_at = datetime.now(timezone.utc).isoformat()
     release_root = _release_root(output_dir)
     config_root = Path(config_dir or input_path.parent.parent / "config")
     profile = try_load_yaml(config_root / "release_profile.yaml", default_release_profile())
@@ -78,6 +80,7 @@ def validate_release(
     external = _run_external_assessments(candidate_path, profile.get("external_assessment", {}))
 
     report = {
+        "generated_at": generated_at,
         "valid": not errors,
         "errors": errors,
         "warnings": warnings,
@@ -262,9 +265,17 @@ def _mapping_issues(mapping_review_path: Path) -> int:
     with mapping_review_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
+            local_kind = (row.get("local_kind") or "").strip().lower()
             relation = (row.get("relation") or "").strip().lower()
-            confidence = (row.get("confidence") or "").strip().lower()
-            if relation.startswith("owl:equivalent") and confidence in {"low", "review", "weak"}:
+            target_kind = (row.get("target_kind") or "").strip().lower()
+            target_label = ((row.get("target_label") or "") + " " + (row.get("rationale") or "")).lower()
+            if local_kind in {"class", "controlled_vocabulary_term"} and target_kind == "object_property":
+                issues += 1
+            elif local_kind in {"object_property", "datatype_property"} and target_kind == "class":
+                issues += 1
+            elif not relation:
+                issues += 1
+            elif "obsolete" in target_label or "deprecated" in target_label:
                 issues += 1
     return issues
 
