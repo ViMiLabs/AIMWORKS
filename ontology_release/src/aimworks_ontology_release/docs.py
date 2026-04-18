@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import shutil
+from datetime import datetime
 from html import escape
 from pathlib import Path
 from typing import Any
@@ -48,9 +49,9 @@ def build_docs(
         "example_count": len(examples),
         "mapping_count": len(mappings),
     }
-    release = _release_snapshot_for_docs(output_dir, fair_snapshot)
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
+    release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
 
     page_specs: list[tuple[Path, str, str]] = [
         (output_dir / "pages" / "user-guide.html", "User Guide", _user_guide_body()),
@@ -417,6 +418,7 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     odk_artifacts = _odk_artifact_cards(odk, odk_base)
     gates = _render_rows(odk.get("promotion_gates", []))
     parity = odk.get("parity", {})
+    publication = release.get("publication_evidence", {})
     return f"""
     <section class="grid">
       <article class="card">
@@ -435,7 +437,7 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       </article>
       <article class="card">
         <h2>AIMWORKS Artifacts</h2>
-        <ul>{artifacts}</ul>
+        <ul>{artifacts or '<li>Local release artefacts are prepared, but public publication establishment is still pending.</li>'}</ul>
       </article>
     </section>
     <section class="stack">
@@ -448,13 +450,17 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         <h2>Shadow Mode Status</h2>
         <ul class="stats">
           <li><strong>Current authority:</strong> {escape(str(odk.get('authority', 'AIMWORKS pipeline')))}</li>
-          <li><strong>ODK status:</strong> {escape(str(odk.get('mode', 'shadow')))}</li>
+          <li><strong>ODK status:</strong> {escape(str(odk.get('mode', 'shadow')))} (informational)</li>
           <li><strong>Reasoner:</strong> {escape(str(odk.get('reasoner', 'ELK')))}</li>
           <li><strong>ODK version:</strong> {escape(str(odk.get('odk_version', 'shadow scaffold')))}</li>
           <li><strong>Parity:</strong> {escape(str(parity.get('status', 'under review')))}</li>
         </ul>
-        <p>{escape(str(parity.get('message', 'ODK parity has not yet been reviewed.')))}</p>
+        <p>{escape(_shadow_mode_summary(odk))}</p>
         {gates}
+      </article>
+      <article class="card">
+        <h2>Publication Establishment</h2>
+        {_render_rows(_publication_rows(publication))}
       </article>
       <article class="card">
         <h2>ODK and HDO Integration</h2>
@@ -474,6 +480,40 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
 
 def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any]) -> str:
     explanations = release.get("section_explanations", {})
+    freshness = release.get("freshness", {})
+    publication = release.get("publication_evidence", {})
+    current_status_rows = [
+        {
+            "label": "Overall validation",
+            "status": _row_status(release.get("validation_signals", []), "Overall validation status", "watch"),
+            "value": _row_value(release.get("validation_signals", []), "Overall validation status", "not assessed"),
+            "detail": _row_detail(release.get("validation_signals", []), "Overall validation status", ""),
+        },
+        {
+            "label": "SHACL",
+            "status": _row_status(release.get("validation_signals", []), "SHACL conforms", "watch"),
+            "value": _row_value(release.get("validation_signals", []), "SHACL conforms", "not assessed"),
+            "detail": _row_detail(release.get("validation_signals", []), "SHACL conforms", ""),
+        },
+        {
+            "label": "ODK parity",
+            "status": "good" if odk.get("parity", {}).get("status") == "aligned" else "watch",
+            "value": odk.get("parity", {}).get("status", "under review"),
+            "detail": _shadow_mode_summary(odk),
+        },
+        {
+            "label": "Publication establishment",
+            "status": "good" if publication.get("publication_status") == "published" and publication.get("resolver_status") == "established" else "watch",
+            "value": "published" if publication.get("publication_status") == "published" else "pending",
+            "detail": "Public FAIR credit requires explicitly established publication and resolver infrastructure, not just local build artefacts.",
+        },
+        {
+            "label": "Release build freshness",
+            "status": freshness.get("status", "watch"),
+            "value": freshness.get("value", "unknown"),
+            "detail": freshness.get("detail", "Report freshness has not been computed."),
+        },
+    ]
     odk_rows = [
         {
             "label": "ROBOT status",
@@ -525,23 +565,35 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         },
         {
             "label": "H2KG terms still local after HDO review",
-            "status": "watch" if hdo.get("summary", {}).get("stayed_local", 0) > 0 else "good",
+            "status": "optional" if hdo.get("summary", {}).get("stayed_local", 0) > 0 else "good",
             "value": str(hdo.get("summary", {}).get("stayed_local", 0)),
-            "detail": "Reviewed terms intentionally kept local until direct HDO reuse is accepted or a more precise HDO target is loaded.",
+            "detail": "Informational count of reviewed terms intentionally kept local until direct HDO reuse is accepted or a more precise HDO target is loaded.",
         },
     ]
     return f"""
     <section class="prose">
       <p>{escape(str(release.get('summary', 'No quality summary available.')))}</p>
     </section>
+    <section class="grid">
+      <article class="card">
+        <h2>Current Release Status</h2>
+        <p class="muted">This summary shows the current release state using a public-first FAIR interpretation and a conservative shadow-mode interpretation of ODK.</p>
+        {_render_rows(current_status_rows)}
+      </article>
+      <article class="card">
+        <h2>Report Freshness</h2>
+        <p class="muted">These timestamps help confirm that the dashboard is rendering one coherent build rather than mixing older report files.</p>
+        {_render_rows(freshness.get('rows', []))}
+      </article>
+    </section>
     <section class="stack">
       <article class="card">
         <h2>FAIR Signals</h2>
-        <p class="muted">{escape(str(explanations.get('fair_signals', 'Internal FAIR signals estimate release readiness from locally built ontology artifacts.')))}</p>
+        <p class="muted">{escape(str(explanations.get('fair_signals', 'FAIR signals use a public-first release interpretation rather than treating local build artifacts as proof of public publication.')))}</p>
         {_render_rows(release.get('fair_signals', []))}
       </article>
       <article class="card">
-        <h2>Transparency Hooks</h2>
+        <h2>External Service Status</h2>
         <p class="muted">{escape(str(explanations.get('transparency_hooks', 'External assessment hooks report what third-party services returned, or state clearly when they were unavailable.')))}</p>
         {_render_rows(release.get('transparency_hooks', []))}
       </article>
@@ -552,12 +604,12 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       </article>
       <article class="card">
         <h2>FOOPS! Assessment</h2>
-        <p class="muted">FOOPS! is an external FAIR-oriented ontology validator. In file mode it does not run accessibility checks, so the Accessible dimension may appear as not assessed.</p>
+        <p class="muted">FOOPS! is an external FAIR-oriented ontology validator. It is informative when reachable, but not authoritative for release gating. In file mode it does not run accessibility checks.</p>
         {_foops_details(release.get('foops', {}))}
       </article>
       <article class="card">
         <h2>OOPS! Pitfalls</h2>
-        <p class="muted">OOPS! is an external ontology pitfall scanner. Service errors are shown as availability problems rather than as zero pitfalls.</p>
+        <p class="muted">OOPS! is an external ontology pitfall scanner. Service errors are shown as external availability problems rather than as ontology defects or zero pitfalls.</p>
         {_oops_details(release.get('oops', {}))}
       </article>
       <article class="card">
@@ -569,6 +621,11 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         <h2>Publication Assets</h2>
         <p class="muted">{escape(str(explanations.get('publication_assets', 'Publication asset rows show whether files were generated in the current run rather than assuming they exist.')))}</p>
         {_render_rows(release.get('publication_assets', []))}
+      </article>
+      <article class="card">
+        <h2>Publication Establishment</h2>
+        <p class="muted">These rows separate locally prepared publication artifacts from explicitly established public publication infrastructure.</p>
+        {_render_rows(_publication_rows(publication))}
       </article>
     </section>
     """
@@ -676,6 +733,15 @@ def _developer_body(odk: dict[str, Any], hdo: dict[str, Any]) -> str:
           <li><strong>PROV-O / DCTERMS first:</strong> publication provenance and ontology release metadata.</li>
         </ul>
         <p class="muted">Current HDO-aligned terms in this run: {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</p>
+      </article>
+      <article class="card">
+        <h2>Optional Local QC Hooks</h2>
+        <p>Optional local checks are non-blocking and currently not required for release promotion.</p>
+        <ul class="stats">
+          <li><strong>OWL consistency hook:</strong> install <code>owlready2</code> to enable it locally.</li>
+          <li><strong>EMMO checks:</strong> install <code>EMMOntoPy</code> to enable them locally.</li>
+          <li><strong>CI default:</strong> these hooks remain optional unless the project explicitly promotes them into required CI dependencies.</li>
+        </ul>
       </article>
     </section>
     """
@@ -786,10 +852,11 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
     """
 
 
-def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] | None) -> dict[str, Any]:
+def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] | None, odk: dict[str, Any]) -> dict[str, Any]:
     release = dict(
         fair_snapshot
         or {
+            "generated_at": "",
             "findable": 0,
             "accessible": 0,
             "interoperable": 0,
@@ -806,12 +873,13 @@ def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] |
     publication_assets = [dict(item) for item in release.get("publication_assets", [])]
     for asset in publication_assets:
         if asset.get("label") == "HTML reference page":
-            asset["value"] = "ready"
-            asset["status"] = "good"
+            asset["value"] = "published" if release.get("publication_evidence", {}).get("docs_published") else "prepared"
+            asset["status"] = "good" if asset["value"] == "published" else "watch"
         elif asset.get("label") == "Release bundle" and (output_dir.parent / "release_bundle" / "RELEASE_NOTES.md").exists():
-            asset["value"] = "ready"
-            asset["status"] = "good"
+            asset["value"] = "published" if release.get("publication_evidence", {}).get("artifacts_published") else "prepared"
+            asset["status"] = "good" if asset["value"] == "published" else "watch"
     release["publication_assets"] = publication_assets
+    release["freshness"] = _report_freshness(output_dir, release, odk)
     return release
 
 
@@ -825,15 +893,58 @@ def _render_rows(rows: list[dict[str, Any]]) -> str:
     return f"<ul class='metric-list'>{items}</ul>"
 
 
+def _publication_rows(publication: dict[str, Any]) -> list[dict[str, Any]]:
+    publication_status = publication.get("publication_status", "local-build")
+    resolver_status = publication.get("resolver_status", "prepared")
+    docs_status = publication.get("docs_publication_status", "prepared")
+    artifact_status = publication.get("artifact_publication_status", "prepared")
+    return [
+        {
+            "label": "Overall publication status",
+            "status": "good" if publication_status == "published" else "watch",
+            "value": str(publication_status),
+            "detail": "This is the canonical release-state signal for whether the current ontology publication is treated as publicly established.",
+        },
+        {
+            "label": "Resolver status",
+            "status": "good" if resolver_status == "established" else "watch",
+            "value": str(resolver_status),
+            "detail": "Generated w3id redirect templates count as prepared infrastructure, not as an established public resolver.",
+        },
+        {
+            "label": "Documentation publication status",
+            "status": "good" if docs_status == "published" and publication_status == "published" else "watch",
+            "value": str(docs_status),
+            "detail": "Configured docs URLs and local HTML generation count as preparation until public publication is explicitly established.",
+        },
+        {
+            "label": "Machine artefact publication status",
+            "status": "good" if artifact_status == "published" and publication_status == "published" else "watch",
+            "value": str(artifact_status),
+            "detail": "Local ontology serializations and release bundles improve readiness, but they do not count as publicly established artifacts by default.",
+        },
+    ]
+
+
+def _shadow_mode_summary(odk: dict[str, Any]) -> str:
+    parity = odk.get("parity", {})
+    promotion_state = odk.get("promotion_state", "shadow")
+    if parity.get("status") == "aligned" and not parity.get("iri_drift", False):
+        if promotion_state != "promoted":
+            return "ODK shadow artefacts are technically aligned and show no IRI drift, but shadow mode remains the active governance state until promotion is explicitly approved."
+        return "ODK artefacts are technically aligned, show no IRI drift, and have been explicitly promoted out of shadow mode."
+    return str(parity.get("message", "ODK parity has not yet been reviewed."))
+
+
 def _foops_details(assessment: dict[str, Any]) -> str:
     dimensions = assessment.get("dimensions", {})
     rows = [
-        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
-        {"label": "Overall score", "status": "good" if (assessment.get("overall_score") or 0) >= 70 else "watch" if assessment.get("overall_score") is not None else "watch", "value": f"{assessment.get('overall_score')} / 100" if assessment.get("overall_score") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "F / Findable", "status": "good" if dimensions.get("findable") is not None and dimensions.get("findable") >= 70 else "action" if dimensions.get("findable") is not None else "watch", "value": f"{dimensions.get('findable')} / 100" if dimensions.get("findable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "A / Accessible", "status": "good" if dimensions.get("accessible") is not None and dimensions.get("accessible") >= 70 else "watch", "value": f"{dimensions.get('accessible')} / 100" if dimensions.get("accessible") is not None else "not assessed", "detail": "In file mode this dimension is commonly not assessed by FOOPS!."},
-        {"label": "I / Interoperable", "status": "good" if dimensions.get("interoperable") is not None and dimensions.get("interoperable") >= 70 else "action" if dimensions.get("interoperable") is not None else "watch", "value": f"{dimensions.get('interoperable')} / 100" if dimensions.get("interoperable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
-        {"label": "R / Reusable", "status": "good" if dimensions.get("reusable") is not None and dimensions.get("reusable") >= 70 else "action" if dimensions.get("reusable") is not None else "watch", "value": f"{dimensions.get('reusable')} / 100" if dimensions.get("reusable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service."},
+        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "unavailable" if assessment.get("status") == "unavailable" else "optional", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
+        {"label": "Overall score", "status": "good" if (assessment.get("overall_score") or 0) >= 70 else "watch" if assessment.get("overall_score") is not None else "unavailable", "value": f"{assessment.get('overall_score')} / 100" if assessment.get("overall_score") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service when reachable."},
+        {"label": "F / Findable", "status": "good" if dimensions.get("findable") is not None and dimensions.get("findable") >= 70 else "action" if dimensions.get("findable") is not None else "unavailable", "value": f"{dimensions.get('findable')} / 100" if dimensions.get("findable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service when reachable."},
+        {"label": "A / Accessible", "status": "unavailable" if dimensions.get("accessible") is None else "good" if dimensions.get("accessible") >= 70 else "watch", "value": f"{dimensions.get('accessible')} / 100" if dimensions.get("accessible") is not None else "not assessed", "detail": "In file mode this dimension is commonly not assessed by FOOPS! and is not used to penalize the internal Accessible score."},
+        {"label": "I / Interoperable", "status": "good" if dimensions.get("interoperable") is not None and dimensions.get("interoperable") >= 70 else "action" if dimensions.get("interoperable") is not None else "unavailable", "value": f"{dimensions.get('interoperable')} / 100" if dimensions.get("interoperable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service when reachable."},
+        {"label": "R / Reusable", "status": "good" if dimensions.get("reusable") is not None and dimensions.get("reusable") >= 70 else "action" if dimensions.get("reusable") is not None else "unavailable", "value": f"{dimensions.get('reusable')} / 100" if dimensions.get("reusable") is not None else "not assessed", "detail": "Returned directly by the FOOPS! service when reachable."},
     ]
     failed_checks = assessment.get("failed_checks", [])
     if failed_checks:
@@ -851,8 +962,8 @@ def _foops_details(assessment: dict[str, Any]) -> str:
 
 def _oops_details(assessment: dict[str, Any]) -> str:
     rows = [
-        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "watch", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
-        {"label": "Pitfall count", "status": "good" if assessment.get("status") == "assessed" and assessment.get("pitfall_count", 0) == 0 else "watch" if assessment.get("status") == "assessed" else "watch", "value": str(assessment.get("pitfall_count", "not assessed")) if assessment.get("status") == "assessed" else "not assessed", "detail": "Returned directly by the OOPS! service when the scan succeeds."},
+        {"label": "Status", "status": "good" if assessment.get("status") == "assessed" else "unavailable" if assessment.get("status") == "unavailable" else "optional", "value": assessment.get("status", "unknown"), "detail": assessment.get("message", "")},
+        {"label": "Pitfall count", "status": "good" if assessment.get("status") == "assessed" and assessment.get("pitfall_count", 0) == 0 else "watch" if assessment.get("status") == "assessed" else "unavailable", "value": str(assessment.get("pitfall_count", "not assessed")) if assessment.get("status") == "assessed" else "not assessed", "detail": "Returned directly by the OOPS! service when the scan succeeds."},
     ]
     for item in assessment.get("pitfalls", [])[:8]:
         code = item.get("code") or "Pitfall"
@@ -860,6 +971,100 @@ def _oops_details(assessment: dict[str, Any]) -> str:
         detail = item.get("description", "")
         rows.append({"label": code, "status": "action", "value": name, "detail": detail})
     return _render_rows(rows)
+
+
+def _report_freshness(output_dir: Path, release: dict[str, Any], odk: dict[str, Any]) -> dict[str, Any]:
+    fair_report = output_dir.parent / "reports" / "fair_readiness_report.json"
+    validation_report = output_dir.parent / "reports" / "validation_report.json"
+    hdo_report = output_dir.parent / "reports" / "hdo_alignment_report.json"
+    odk_manifest = output_dir.parent / "odk" / "manifest.json"
+    tracked = [
+        ("FAIR snapshot", fair_report),
+        ("Validation snapshot", validation_report),
+        ("HDO snapshot", hdo_report),
+        ("ODK snapshot", odk_manifest),
+    ]
+    rows: list[dict[str, Any]] = []
+    timestamps: list[float] = []
+    missing: list[str] = []
+    for label, path in tracked:
+        if path.exists():
+            ts = path.stat().st_mtime
+            timestamps.append(ts)
+            rows.append(
+                {
+                    "label": label,
+                    "status": "good",
+                    "value": _fmt_timestamp(ts),
+                    "detail": f"Loaded from {path.relative_to(output_dir.parent)}.",
+                }
+            )
+        else:
+            missing.append(label)
+            rows.append(
+                {
+                    "label": label,
+                    "status": "action",
+                    "value": "missing",
+                    "detail": f"Expected file {path.relative_to(output_dir.parent)} was not found during docs generation.",
+                }
+            )
+    if missing:
+        status = "action"
+        value = "missing inputs"
+        detail = f"One or more report inputs are missing: {', '.join(missing)}."
+    elif timestamps and max(timestamps) - min(timestamps) > 300:
+        status = "watch"
+        value = "out of sync"
+        detail = "Report timestamps differ by more than five minutes, so the page may be mixing build generations."
+    else:
+        status = "good"
+        value = "in sync"
+        detail = "FAIR, validation, HDO, and ODK snapshots were generated close enough together to represent one coherent build."
+    if odk.get("last_built"):
+        rows.append(
+            {
+                "label": "ODK artefact build time",
+                "status": "good",
+                "value": str(odk.get("last_built")),
+                "detail": "Reported directly by the ODK manifest.",
+            }
+        )
+    if release.get("generated_at"):
+        rows.append(
+            {
+                "label": "FAIR snapshot build time",
+                "status": "good",
+                "value": str(release.get("generated_at")),
+                "detail": "Reported directly by the FAIR readiness snapshot.",
+            }
+        )
+    return {"status": status, "value": value, "detail": detail, "rows": rows}
+
+
+def _fmt_timestamp(timestamp: float) -> str:
+    return datetime.fromtimestamp(timestamp).astimezone().isoformat(timespec="seconds")
+
+
+def _row_value(rows: list[dict[str, Any]], label: str, default: str) -> str:
+    for item in rows:
+        if item.get("label") == label:
+            return str(item.get("value", default))
+    return default
+
+
+def _row_status(rows: list[dict[str, Any]], label: str, default: str) -> str:
+    for item in rows:
+        if item.get("label") == label:
+            return str(item.get("status", default))
+    return default
+
+
+def _row_detail(rows: list[dict[str, Any]], label: str, default: str) -> str:
+    for item in rows:
+        if item.get("label") == label:
+            return str(item.get("detail", default))
+    return default
 
 
 def _support_block(project: dict[str, Any], asset_base: str) -> str:
@@ -1190,6 +1395,8 @@ h1 {
 .badge.good { background: rgba(44,138,72,0.12); color: #22663a; }
 .badge.watch { background: rgba(198,130,36,0.14); color: #8b5f0a; }
 .badge.action { background: rgba(176,51,51,0.12); color: #8a2323; }
+.badge.optional { background: rgba(54, 102, 173, 0.12); color: #2d568f; }
+.badge.unavailable { background: rgba(96, 104, 116, 0.14); color: #4c5561; }
 .value { font-weight: 700; margin-left: 0.4rem; }
 .muted { color: var(--muted); }
 .iri { font-size: 0.86rem; color: var(--accent); word-break: break-word; }
