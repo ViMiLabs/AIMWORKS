@@ -39,6 +39,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     summary = build_docs(mini_ontology_file, output_dir / "docs", fair_snapshot=fair_snapshot)
     assert summary["schema_count"] >= 2
     assert (output_dir / "docs" / "index.html").exists()
+    assert (output_dir / "docs" / "pages" / "reference.html").exists()
     assert (output_dir / "docs" / "pages" / "class-index.html").exists()
     home_page = (output_dir / "docs" / "index.html").read_text(encoding="utf-8")
     assert "PEMFC Profile" in home_page
@@ -66,6 +67,13 @@ def test_docs_generation(mini_ontology_file, output_dir):
     release_page = (output_dir / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
     assert "ODK Release Artefacts" in release_page
     assert "ODK and HDO Integration" in release_page
+    assert "Publication Establishment" in release_page
+    reference_page = (output_dir / "docs" / "pages" / "reference.html").read_text(encoding="utf-8")
+    assert "Core H2KG Reference" in reference_page
+    assert "Future Resolver Target" in reference_page
+    pemfc_reference_page = (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").read_text(encoding="utf-8")
+    assert "Profile Reference Scope" in pemfc_reference_page
+    assert "Reference Contents" in pemfc_reference_page
     import_page = (output_dir / "docs" / "pages" / "import-guide.html").read_text(encoding="utf-8")
     assert "run.bat make refresh-imports" in import_page
     assert "HDO is the preferred Helmholtz-community source" in import_page
