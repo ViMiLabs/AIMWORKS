@@ -66,7 +66,10 @@
       "description": "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG.",
       "domain": "",
       "range": "",
-      "mappings": []
+      "mappings": [
+        "rdfs:subClassOf https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+        "skos:closeMatch https://purls.helmholtz-metadaten.de/hob/HDO_00001036"
+      ]
     },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
@@ -794,6 +797,19 @@
       "rationale": "Ethanol is an unambiguous chemical entity that should align directly to ChEBI."
     },
     {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "local_label": "FTIR Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "target_label": "FAIR data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.842,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
       "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FormicAcid",
       "local_label": "Formic Acid",
       "local_kind": "controlled_vocabulary_term",
@@ -857,6 +873,58 @@
       "relation": "rdfs:subClassOf",
       "status": "manual_override",
       "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice."
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "target_label": "Metadaten",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.904,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "target_label": "Metadatenschema",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.776,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "local_label": "Microstructure Image Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "target_label": "structured data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.731,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "local_label": "PEMFCCFD Simulation",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "target_label": "simulation data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.786,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
     },
     {
       "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PotassiumHydroxide",
@@ -938,32 +1006,37 @@
     }
   ],
   "mapping_summary": {
-    "accepted_count": 14,
-    "exploratory_count": 135,
+    "accepted_count": 19,
+    "exploratory_count": 1133,
     "accepted_by_relation": {
       "manual_override": 11,
       "exact_match": 8,
-      "subclass_anchor": 4,
+      "subclass_anchor": 6,
       "equivalence_anchor": 2,
-      "close_match": 0
+      "close_match": 3
     },
     "rejected_by_rule": {
-      "generic_electrochemical_measurement": 49,
+      "hdo_scope": 733,
+      "kind_mismatch": 163,
+      "deprecated_target": 67,
+      "generic_electrochemical_measurement": 48,
       "chemical_non_exact": 68,
-      "kind_mismatch": 3,
       "qudt_scaffold": 3,
       "metadata_scope": 2
     },
     "exploratory_by_status": {
-      "rejected_generic_electrochemical_measurement": 49,
+      "rejected_generic_electrochemical_measurement": 48,
+      "rejected_hdo_scope": 733,
+      "rejected_kind_mismatch": 163,
       "rejected_chemical_non_exact": 68,
+      "rejected_deprecated_target": 67,
       "rejected_qudt_scaffold": 3,
-      "rejected_kind_mismatch": 3,
       "rejected_metadata_scope": 2,
-      "exploratory_candidate": 10
+      "exploratory_candidate": 49
     },
     "accepted_by_source": {
       "chebi": 8,
+      "hdo": 5,
       "emmo-core": 2,
       "dcterms": 1,
       "emmo-electrochemistry": 1,
@@ -971,8 +1044,9 @@
       "qudt-schema": 1
     },
     "exploratory_by_source": {
+      "hdo": 999,
       "chebi": 68,
-      "emmo-electrochemistry": 49,
+      "emmo-electrochemistry": 48,
       "emmo-core": 10,
       "qudt-schema": 6,
       "prov-o": 2
@@ -980,13 +1054,13 @@
   },
   "odk": {
     "status": "enabled",
-    "parity": "minor differences under review"
+    "parity": "aligned"
   },
   "hdo": {
     "reviewed_against_hdo": 96,
-    "aligned_to_hdo": 0,
-    "reused_from_hdo": 0,
-    "stayed_local": 96,
+    "aligned_to_hdo": 5,
+    "reused_from_hdo": 5,
+    "stayed_local": 92,
     "overlap_with_other_standards": 3
   }
 }

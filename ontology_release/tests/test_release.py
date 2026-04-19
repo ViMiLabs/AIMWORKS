@@ -13,10 +13,18 @@ def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
     assert summary["mappings"] >= 1
     assert summary["profile_modules"]["core_ontology_iri"] == "https://w3id.org/h2kg/hydrogen-ontology"
     assert (project_root / "output" / "docs" / "index.html").exists()
+    assert (project_root / "output" / "docs" / "hydrogen-ontology.html").exists()
     assert (project_root / "output" / "docs" / "pages" / "quality-dashboard.html").exists()
+    assert (project_root / "output" / "docs" / "pages" / "core-reference.html").exists()
     assert (project_root / "output" / "docs" / "pages" / "import-guide.html").exists()
     assert (project_root / "output" / "ontology" / "pemfc_schema.ttl").exists()
     assert (project_root / "output" / "ontology" / "pemwe_schema.ttl").exists()
+    assert (project_root / "output" / "ontology" / "core_schema.ttl").exists()
     assert (project_root / "output" / "odk" / "manifest.json").exists()
     assert (project_root / "output" / "reports" / "hdo_alignment_report.json").exists()
+    assert (project_root / "output" / "w3id" / "h2kg" / ".htaccess").exists()
+    htaccess = (project_root / "output" / "w3id" / "h2kg" / ".htaccess").read_text(encoding="utf-8")
+    assert "hydrogen-ontology.html" in htaccess
+    assert "core_schema.ttl" in htaccess
+    assert "pemfc_schema.ttl" in htaccess
     assert (project_root / "output" / "release_bundle" / "odk" / "manifest.json").exists()

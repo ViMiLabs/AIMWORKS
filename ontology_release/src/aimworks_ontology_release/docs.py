@@ -64,8 +64,36 @@ def build_docs(
     classes, properties, examples = _term_views(input_path, output_dir.parent / "review", config_dir, items)
     mappings = propose_mappings(input_path, output_dir.parent / "review", config_dir)
     mapping_summary = _load_alignment_summary(output_dir.parent / "reports")
+    namespace_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "core_schema.ttl", items, mappings)
     core_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "schema.ttl", items, mappings)
     pemfc_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemfc_schema.ttl", items, mappings)
+    pemwe_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemwe_schema.ttl", items, mappings)
+    if not namespace_terms:
+        namespace_terms = _reference_terms_from_items(
+            items,
+            mappings,
+            lambda iri, item: iri == H2KG_ONTOLOGY_IRI or iri.startswith(H2KG_NS),
+        )
+    if not core_terms:
+        core_terms = _reference_terms_from_items(
+            items,
+            mappings,
+            lambda iri, item: iri == H2KG_ONTOLOGY_IRI or any(
+                type_iri in {
+                    str(OWL.Class) if OWL is not None else "http://www.w3.org/2002/07/owl#Class",
+                    str(OWL.ObjectProperty) if OWL is not None else "http://www.w3.org/2002/07/owl#ObjectProperty",
+                    str(OWL.DatatypeProperty) if OWL is not None else "http://www.w3.org/2002/07/owl#DatatypeProperty",
+                    str(OWL.AnnotationProperty) if OWL is not None else "http://www.w3.org/2002/07/owl#AnnotationProperty",
+                    str(RDFS.Class) if RDFS is not None else "http://www.w3.org/2000/01/rdf-schema#Class",
+                }
+                for type_iri in (item.get("@type", []) if isinstance(item.get("@type", []), list) else [item.get("@type")])
+                if isinstance(type_iri, str)
+            ),
+        )
+    if not pemfc_terms:
+        pemfc_terms = namespace_terms
+    if not pemwe_terms:
+        pemwe_terms = namespace_terms
     summary = {
         "schema_count": len(classes) + len(properties),
         "vocabulary_count": sum(1 for item in examples if "basis" in item["label"].lower() or "type" in item["label"].lower()),
@@ -77,9 +105,11 @@ def build_docs(
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
 
     page_specs: list[tuple[Path, str, str]] = [
+        (output_dir / "hydrogen-ontology.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "hydrogen-ontology.html", output_dir)),
         (output_dir / "pages" / "user-guide.html", "User Guide", _user_guide_body()),
         (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
-        (output_dir / "pages" / "reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "reference.html", output_dir)),
+        (output_dir / "pages" / "reference.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "pages" / "reference.html", output_dir)),
+        (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
         (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
         (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary)),
@@ -93,7 +123,7 @@ def build_docs(
         (output_dir / "pemfc" / "index.html", "PEMFC Profile", _profile_home_body(project, "pemfc", odk, hdo, output_dir / "pemfc" / "index.html", output_dir)),
         (output_dir / "pemfc" / "hydrogen-ontology.html", "PEMFC Reference", _profile_reference_body(project, "pemfc", pemfc_terms, odk, hdo, output_dir / "pemfc" / "hydrogen-ontology.html", output_dir)),
         (output_dir / "pemwe" / "index.html", "PEMWE Profile", _profile_home_body(project, "pemwe", odk, hdo, output_dir / "pemwe" / "index.html", output_dir)),
-        (output_dir / "pemwe" / "hydrogen-ontology.html", "PEMWE Reference", _reference_body(project, "pemwe", odk, hdo, output_dir / "pemwe" / "hydrogen-ontology.html", output_dir)),
+        (output_dir / "pemwe" / "hydrogen-ontology.html", "PEMWE Reference", _profile_reference_body(project, "pemwe", pemwe_terms, odk, hdo, output_dir / "pemwe" / "hydrogen-ontology.html", output_dir)),
     ]
     for path, title, body in page_specs:
         write_text(path, _page_template(project, title, body, path, output_dir))
@@ -183,7 +213,57 @@ def _reference_terms_from_artifact(
         parents = _parent_links(item)
         records[iri] = {
             "iri": iri,
-            "anchor": _anchor_for_iri(iri),
+            "anchor": _term_anchor_for_iri(iri),
+            "label": best_label(item),
+            "description": best_description(item) or "No description available in the source ontology.",
+            "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL)),
+            "examples": _literal_values(item.get(SKOS_EXAMPLE)),
+            "notes": _literal_values(item.get(RDFS_COMMENT)),
+            "domain": _iri_values(item.get(RDFS_DOMAIN)),
+            "range": _iri_values(item.get(RDFS_RANGE)),
+            "parents": parents,
+            "subclasses": [],
+            "subproperties": [],
+            "mappings": mapping_index.get(iri, []),
+            "type_labels": _type_labels(item),
+            "category": _reference_category(item, iri),
+        }
+    for record in records.values():
+        for parent in record["parents"]:
+            parent_iri = parent["iri"]
+            if parent_iri in records:
+                child = {"iri": record["iri"], "label": record["label"], "anchor": record["anchor"]}
+                if parent["relation"] == "subclassOf":
+                    records[parent_iri]["subclasses"].append(child)
+                elif parent["relation"] == "subPropertyOf":
+                    records[parent_iri]["subproperties"].append(child)
+    return sorted(records.values(), key=lambda item: (_reference_category_order(item["category"]), item["label"].lower()))
+
+
+def _reference_terms_from_items(
+    items: dict[str, dict[str, Any]],
+    mappings: list[dict[str, Any]],
+    include: Any,
+) -> list[dict[str, Any]]:
+    selected = {iri for iri, item in items.items() if include(iri, item)}
+    if not selected:
+        return []
+    mapping_index: dict[str, list[dict[str, str]]] = {}
+    for mapping in mappings:
+        mapping_index.setdefault(mapping["local_iri"], []).append(
+            {
+                "relation": mapping["relation"],
+                "target_iri": mapping["target_iri"],
+                "target_label": mapping.get("target_label", ""),
+            }
+        )
+    records: dict[str, dict[str, Any]] = {}
+    for iri in selected:
+        item = items.get(iri, {"@id": iri})
+        parents = _parent_links(item)
+        records[iri] = {
+            "iri": iri,
+            "anchor": _term_anchor_for_iri(iri),
             "label": best_label(item),
             "description": best_description(item) or "No description available in the source ontology.",
             "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL)),
@@ -247,7 +327,7 @@ def _iri_values(value: Any) -> list[dict[str, str]]:
             candidate = entry.strip()
         if candidate and candidate not in seen_iris:
             seen_iris.add(candidate)
-            seen.append({"iri": candidate, "label": _short_label(candidate), "anchor": _anchor_for_iri(candidate)})
+            seen.append({"iri": candidate, "label": _short_label(candidate), "anchor": _term_anchor_for_iri(candidate)})
     return seen
 
 
@@ -323,16 +403,24 @@ def _reference_category_order(category: str) -> int:
     return order.get(category, 99)
 
 
-def _anchor_for_iri(iri: str) -> str:
-    fragment = iri.rsplit("#", 1)[-1] if "#" in iri else iri.rstrip("/").rsplit("/", 1)[-1]
-    slug = "".join(ch.lower() if ch.isalnum() else "-" for ch in fragment).strip("-")
-    return slug or "term"
+def _fragment_for_iri(iri: str) -> str:
+    return iri.rsplit("#", 1)[-1] if "#" in iri else iri.rstrip("/").rsplit("/", 1)[-1]
+
+
+def _term_anchor_for_iri(iri: str) -> str:
+    fragment = _fragment_for_iri(iri)
+    return fragment or "term"
+
+
+def _section_anchor(text: str) -> str:
+    slug = "".join(ch.lower() if ch.isalnum() else "-" for ch in text).strip("-")
+    return slug or "section"
 
 
 def _short_label(iri: str) -> str:
     if iri == H2KG_ONTOLOGY_IRI:
         return "Hydrogen ontology"
-    fragment = iri.rsplit("#", 1)[-1] if "#" in iri else iri.rstrip("/").rsplit("/", 1)[-1]
+    fragment = _fragment_for_iri(iri)
     return fragment or iri
 
 
@@ -346,7 +434,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
       <a href="{home_link}">Home</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'user-guide.html')}">User Guide</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'ontology-overview.html')}">Overview</a>
-      <a href="{_relative_href(page_path, docs_root / 'pages' / 'reference.html')}">Reference</a>
+      <a href="{_relative_href(page_path, docs_root / 'hydrogen-ontology.html')}">Reference</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'architecture-workflow.html')}">Architecture</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'class-index.html')}">Classes</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'property-index.html')}">Properties</a>
@@ -469,7 +557,7 @@ def _legacy_profile_home() -> str:
         <h1>H2KG for hydrogen electrochemical systems</h1>
         <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
         <div class="links">
-          <a href="./pages/reference.html">Open core reference</a>
+          <a href="./hydrogen-ontology.html">Open full reference</a>
           <a href="./pemfc/index.html">Explore PEMFC</a>
           <a href="./pemwe/index.html">Explore PEMWE</a>
           <a class="ghost" href="./pages/release.html">Open release overview</a>
@@ -489,7 +577,7 @@ def _legacy_profile_home() -> str:
         <div class="links">
           <a href="./pemfc/index.html">Open profile home</a>
           <a class="ghost" href="./pemfc/hydrogen-ontology.html">Open reference</a>
-          <a class="ghost" href="./pages/reference.html">Shared core</a>
+          <a class="ghost" href="./pages/core-reference.html">Shared core schema</a>
         </div>
       </article>
       <article class="card">
@@ -499,7 +587,7 @@ def _legacy_profile_home() -> str:
         <div class="links">
           <a href="./pemwe/index.html">Open profile home</a>
           <a class="ghost" href="./pemwe/hydrogen-ontology.html">Open reference</a>
-          <a class="ghost" href="./pages/reference.html">Shared core</a>
+          <a class="ghost" href="./pages/core-reference.html">Shared core schema</a>
         </div>
       </article>
     </div>
@@ -614,23 +702,57 @@ def _examples_body(examples: list[dict[str, Any]]) -> str:
     return f"<section class='list-grid'>{cards}</section>"
 
 
+def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], page_path: Path, docs_root: Path) -> str:
+    release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
+    core_link = _relative_href(page_path, docs_root / "pages" / "core-reference.html")
+    pemfc_link = _relative_href(page_path, docs_root / "pemfc" / "hydrogen-ontology.html")
+    pemwe_link = _relative_href(page_path, docs_root / "pemwe" / "hydrogen-ontology.html")
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <h2>H2KG Namespace Reference</h2>
+        <p>This page is the canonical human-readable reference for the full H2KG namespace. It is intended to be the future browser landing page for <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code> once the namespace is registered in w3id.</p>
+        <p><strong>Ontology IRI:</strong> <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code></p>
+        <p><strong>Namespace:</strong> <code>{escape(project.get('namespace_uri', H2KG_NS))}</code></p>
+        <p><strong>Rendered terms:</strong> {len(terms)}</p>
+        <div class="button-row">
+          <a class="inline-button" href="{release_link}">Release</a>
+          <a class="inline-button" href="{core_link}">Core schema</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Resolver Readiness</h2>
+        <p>When <code>/h2kg/hydrogen-ontology</code> is registered in w3id, browser requests should resolve to this page, while RDF-aware requests should resolve to the full namespace artefacts rather than the smaller schema-only subset.</p>
+        <p class="muted">Profile-specific namespace views remain available separately for PEMFC and PEMWE.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{pemfc_link}">PEMFC reference</a>
+          <a class="inline-button" href="{pemwe_link}">PEMWE reference</a>
+        </div>
+      </article>
+    </section>
+    {_reference_sections(terms)}
+    """
+
+
 def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], page_path: Path, docs_root: Path) -> str:
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
+    namespace_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
     return f"""
     <section class="grid">
       <article class="card">
         <h2>Core H2KG Reference</h2>
-        <p>This page is the canonical shared-ontology reference for H2KG. It is intended to become the primary human-readable landing page for the shared H2KG namespace in future w3id resolver registration.</p>
+        <p>This page captures the compact shared H2KG schema subset: ontology header, schema classes, and schema properties. It is useful as a concise architectural reference, but it is not the resolver target for the full H2KG namespace.</p>
         <p><strong>Ontology IRI:</strong> <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code></p>
         <p><strong>Namespace:</strong> <code>{escape(project.get('namespace_uri', H2KG_NS))}</code></p>
         <p><strong>Term count:</strong> {len(terms)}</p>
         <div class="button-row">
           <a class="inline-button" href="{release_link}">Release</a>
+          <a class="inline-button" href="{namespace_link}">Full namespace</a>
         </div>
       </article>
       <article class="card">
-        <h2>Future Resolver Target</h2>
-        <p>When the H2KG namespace is registered in w3id, browser requests for the shared ontology should resolve to this page, while RDF-aware requests should resolve to the canonical RDF serializations.</p>
+        <h2>Schema Scope</h2>
+        <p>This page remains valuable for ontology engineering, governance, and lightweight schema browsing. The future resolver target for <code>/h2kg/hydrogen-ontology</code> should instead be the full namespace reference page.</p>
         <p class="muted">Current state: documentation and machine artefacts are prepared locally; public resolver establishment is still pending.</p>
       </article>
     </section>
@@ -643,10 +765,12 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
     profile_cfg = profiles.get(profile_key, {})
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     quality_link = _relative_href(page_path, docs_root / "pages" / "quality-dashboard.html")
+    namespace_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
+    title = escape(str(profile_cfg.get('title', profile_key.upper())))
     return f"""
     <section class="grid">
       <article class="card">
-        <h2>{escape(str(profile_cfg.get('title', profile_key.upper())))}</h2>
+        <h2>{title}</h2>
         <p>{escape(_profile_description(profile_key, profile_cfg))}</p>
         <p><strong>Ontology IRI:</strong> <code>{escape(str(profile_cfg.get('ontology_iri', '')))}</code></p>
         <p><strong>Namespace:</strong> <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
@@ -658,9 +782,12 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
       </article>
       <article class="card">
         <h2>Profile Reference Scope</h2>
-        <p>This page presents the PEMFC profile as a structured reference, grouping all profile-visible terms into navigable sections instead of one flat list. It is the intended future human-readable landing page for the PEMFC profile namespace.</p>
+        <p>This page presents the {title} as a structured reference, grouping all profile-visible terms into navigable sections instead of one flat list. It is the intended future human-readable landing page for the {title} namespace.</p>
         <p class="muted">ODK shadow-mode status: {escape(_shadow_mode_summary(odk))}</p>
         <p class="muted">HDO-reviewed terms in the current run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+        <div class="button-row">
+          <a class="inline-button" href="{namespace_link}">Full H2KG namespace</a>
+        </div>
       </article>
     </section>
     {_reference_sections(terms)}
@@ -672,12 +799,12 @@ def _reference_sections(terms: list[dict[str, Any]]) -> str:
     for term in terms:
         grouped.setdefault(term["category"], []).append(term)
     toc = "".join(
-        f"<li><a href='#{_anchor_for_iri(category)}'>{escape(category)}</a> <span class='muted'>({len(entries)})</span></li>"
+        f"<li><a href='#{_section_anchor(category)}'>{escape(category)}</a> <span class='muted'>({len(entries)})</span></li>"
         for category, entries in sorted(grouped.items(), key=lambda item: _reference_category_order(item[0]))
     )
     sections = "".join(
         f"""
-        <section class="reference-section" id="{_anchor_for_iri(category)}">
+        <section class="reference-section" id="{_section_anchor(category)}">
           <div class="reference-section-head">
             <h2>{escape(category)}</h2>
             <p class="muted">{len(entries)} terms</p>
@@ -713,8 +840,11 @@ def _reference_term_block(term: dict[str, Any]) -> str:
     mapping_rows = "".join(_reference_mapping_item(item) for item in term.get("mappings", []))
     note_block = "".join(f"<p>{escape(note)}</p>" for note in term.get("notes", []))
     example_block = "".join(f"<p>{escape(example)}</p>" for example in term.get("examples", []))
+    legacy_anchor = _section_anchor(term["anchor"])
+    alias_anchor = f"<span id=\"{escape(legacy_anchor)}\" class=\"anchor-alias\" aria-hidden=\"true\"></span>" if legacy_anchor != term["anchor"] else ""
     return f"""
     <article class="reference-term" id="{escape(term['anchor'])}">
+      {alias_anchor}
       <h3>{escape(term['label'])}</h3>
       <dl class="reference-meta">
         {''.join(f'<div><dt>{escape(label)}</dt><dd>{value}</dd></div>' for label, value in meta_rows)}
@@ -744,7 +874,7 @@ def _reference_relation_text(values: list[dict[str, str]]) -> str:
     if not values:
         return ""
     return ", ".join(
-        f"<a href='#{escape(item.get('anchor') or _anchor_for_iri(item['iri']))}'>{escape(item['label'])}</a>"
+        f"<a href='#{escape(item.get('anchor') or _term_anchor_for_iri(item['iri']))}'>{escape(item['label'])}</a>"
         if item.get("iri", "").startswith(H2KG_NS) or item.get("iri") == H2KG_ONTOLOGY_IRI
         else f"<code>{escape(item['iri'])}</code>"
         for item in values
@@ -1779,6 +1909,12 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
   padding: 1.2rem;
   box-shadow: var(--shadow);
   scroll-margin-top: 1rem;
+}
+.anchor-alias {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
 .reference-term h3 { margin: 0 0 0.4rem; font-size: 1.4rem; }
 .reference-definition { margin: 0.9rem 0 0; line-height: 1.7; color: var(--ink); }

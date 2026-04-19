@@ -23,7 +23,7 @@
       <a href="../index.html">Home</a>
       <a href="user-guide.html">User Guide</a>
       <a href="ontology-overview.html">Overview</a>
-      <a href="reference.html">Reference</a>
+      <a href="../hydrogen-ontology.html">Reference</a>
       <a href="architecture-workflow.html">Architecture</a>
       <a href="class-index.html">Classes</a>
       <a href="property-index.html">Properties</a>
@@ -68,21 +68,21 @@
             <article class="term-card">
               <h3>Base ontology</h3>
               <p>Actual ODK base artefact generated from the nested workbench.</p>
-              <p class="muted">Generated: 2026-04-09T15:27:11+00:00 | Size: 29937 bytes</p>
+              <p class="muted">Generated: 2026-04-19T08:21:44+00:00 | Size: 7489261 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/base.owl'>OWL</a><a class='inline-button' href='../odk/artifacts/base.ttl'>TTL</a><a class='inline-button' href='../odk/artifacts/base.json'>JSON-LD</a></div>
             </article>
             
             <article class="term-card">
               <h3>Full ontology</h3>
               <p>Actual ODK full artefact with import closure or broader release surface.</p>
-              <p class="muted">Generated: 2026-04-09T15:27:11+00:00 | Size: 269571 bytes</p>
+              <p class="muted">Generated: 2026-04-19T08:21:44+00:00 | Size: 2348126 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/full.owl'>OWL</a></div>
             </article>
             
             <article class="term-card">
               <h3>Simple ontology</h3>
               <p>Actual ODK simple artefact for tooling that prefers a smaller release view.</p>
-              <p class="muted">Generated: 2026-04-09T15:27:11+00:00 | Size: 22877 bytes</p>
+              <p class="muted">Generated: 2026-04-19T08:21:44+00:00 | Size: 21677 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/simple.owl'>OWL</a></div>
             </article>
             </section>
@@ -93,11 +93,11 @@
           <li><strong>Current authority:</strong> AIMWORKS pipeline</li>
           <li><strong>ODK status:</strong> shadow (informational)</li>
           <li><strong>Reasoner:</strong> ELK</li>
-          <li><strong>ODK version:</strong> ODK Image v1.6.1</li>
-          <li><strong>Parity:</strong> minor differences under review</li>
+          <li><strong>ODK version:</strong> prepared only</li>
+          <li><strong>Parity:</strong> aligned</li>
         </ul>
-        <p>ODK base artefact differs slightly from the current curated release and remains in shadow-mode comparison.</p>
-        <ul class='metric-list'><li><strong>Import stability</strong> <span class='badge watch'>WATCH</span> <span class='value'></span><br><span class='muted'>Required imports are configured and surfaced through the nested ODK workbench.</span></li><li><strong>Parity accepted</strong> <span class='badge watch'>WATCH</span> <span class='value'></span><br><span class='muted'>ODK base artefact differs slightly from the current curated release and remains in shadow-mode comparison.</span></li><li><strong>Reproducible CI build</strong> <span class='badge watch'>WATCH</span> <span class='value'></span><br><span class='muted'>Promote only after CI reproduces ODK base/full/simple outputs consistently.</span></li><li><strong>No IRI drift</strong> <span class='badge action'>ACTION</span> <span class='value'></span><br><span class='muted'>IRI drift is currently detected between the curated release and the ODK base artefact; keep ODK in shadow mode until parity is reviewed.</span></li></ul>
+        <p>ODK shadow artefacts are technically aligned and show no IRI drift, but shadow mode remains the active governance state until promotion is explicitly approved.</p>
+        <ul class='metric-list'><li><strong>Import stability</strong> <span class='badge good'>GOOD</span> <span class='value'>configured</span><br><span class='muted'>Required imports are configured and surfaced through the nested ODK workbench.</span></li><li><strong>Parity accepted</strong> <span class='badge good'>GOOD</span> <span class='value'>aligned</span><br><span class='muted'>ODK base artefact currently matches the curated schema and vocabulary baseline closely enough for shadow-mode review.</span></li><li><strong>Collected base artefact completeness</strong> <span class='badge good'>GOOD</span> <span class='value'>complete</span><br><span class='muted'>The collected ODK base artefact contains the expected local schema terms.</span></li><li><strong>Reproducible CI build</strong> <span class='badge good'>GOOD</span> <span class='value'>good</span><br><span class='muted'>GitHub Actions workflows include the full ODK prepare, build, collect, and release sequence needed to reproduce the shadow build in CI.</span></li><li><strong>No IRI drift</strong> <span class='badge good'>GOOD</span> <span class='value'>none</span><br><span class='muted'>No local H2KG IRI drift was detected between the curated release and the parity comparison target.</span></li><li><strong>Promotion readiness</strong> <span class='badge watch'>WATCH</span> <span class='value'>shadow</span><br><span class='muted'>Shadow mode remains the active governance state. Technical parity can be good while explicit promotion is still pending.</span></li></ul>
       </article>
       <article class="card">
         <h2>Publication Establishment</h2>
@@ -106,11 +106,11 @@
       <article class="card">
         <h2>ODK and HDO Integration</h2>
         <ul class="stats">
-          <li><strong>HDO import status:</strong> placeholder-after-refresh</li>
-          <li><strong>Last refresh:</strong> placeholder refresh output at 1775747720.7553394</li>
+          <li><strong>HDO import status:</strong> configured</li>
+          <li><strong>Last refresh:</strong> actual refresh at 1775985181.559372</li>
           <li><strong>Included in current shadow build:</strong> yes</li>
           <li><strong>HDO-reviewed local terms:</strong> 96</li>
-          <li><strong>Aligned to HDO:</strong> 0</li>
+          <li><strong>Aligned to HDO:</strong> 5</li>
         </ul>
         <p>HDO is the primary shadow-mode alignment source for data, metadata, digital-object, information-profile, identifier, schema, and validation concepts in H2KG.</p>
         <p class="muted">Direct HDO term reuse becomes stronger when a real HDO cache file is available at cache/sources/hdo.ttl.</p>

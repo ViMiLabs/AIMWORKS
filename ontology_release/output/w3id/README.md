@@ -1,11 +1,11 @@
-# w3id Redirect Template
+# Local w3id Review Output
 
-Active recipe: `preserve_hash_namespace`.
+This directory contains locally generated materials for a future `perma-id/w3id.org`
+pull request.
 
-This release preserves the current ontology IRI and hash-style term IRIs by default:
+The actual submission structure should use the nested `h2kg/` directory:
 
-- Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
-- Namespace URI: `https://w3id.org/h2kg/hydrogen-ontology#`
-- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0`
+- `h2kg/.htaccess`
+- `h2kg/README.md`
 
-Use `.htaccess` as the starting point for w3id registration. It prefers HTML for browsers and serves Turtle or JSON-LD for RDF-aware clients.
+The root-level files are kept as local helpers and for FAIR readiness checks.
