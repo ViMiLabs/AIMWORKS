@@ -58,7 +58,6 @@ def normalize_source_document(
 
 def _apply_targeted_repairs(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     repairs: list[dict[str, Any]] = []
-    items_by_iri = {item["@id"]: item for item in items if isinstance(item.get("@id"), str)}
 
     alias_repairs = [
         _replace_iri_reference(items, H2KG_PASSES, H2KG_NUMBER_OF_SPRAY_PASSES, "replaced legacy Passes reference with NumberOfSprayPasses"),
@@ -70,6 +69,8 @@ def _apply_targeted_repairs(items: list[dict[str, Any]]) -> list[dict[str, Any]]
         ),
     ]
     repairs.extend(repair for repair in alias_repairs if repair is not None)
+
+    items_by_iri = {item["@id"]: item for item in items if isinstance(item.get("@id"), str)}
 
     dhe = items_by_iri.get(DYNAMIC_HYDROGEN_ELECTRODE)
     if dhe is not None:
