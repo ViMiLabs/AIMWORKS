@@ -12,6 +12,7 @@ from .hdo import load_hdo_alignment_report
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
+from .normalize_source import normalize_source_document
 from .odk import load_odk_manifest, prepare_odk_shadow
 from .profile_modules import build_profile_modules
 from .split import split_ontology
@@ -24,6 +25,7 @@ def run_release(
     input_path: str | Path,
     project_root: str | Path,
     draft_llm: bool = False,
+    rewrite: bool = False,
 ) -> dict[str, Any]:
     project_root = Path(project_root)
     output_root = ensure_dir(project_root / "output")
@@ -35,6 +37,8 @@ def run_release(
     ensure_dir(output_root / "docs")
     ensure_dir(output_root / "w3id")
     ensure_dir(output_root / "odk")
+    if rewrite:
+        normalize_source_document(input_path, reports_dir, write_in_place=True)
     inspection = inspect_ontology(input_path, reports_dir, project_root / "config")
     split_summary = split_ontology(input_path, ontology_dir, project_root / "config")
     mappings = propose_mappings(input_path, review_dir, project_root / "config")

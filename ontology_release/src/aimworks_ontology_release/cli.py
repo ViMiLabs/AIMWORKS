@@ -95,7 +95,12 @@ def main() -> None:
             execute=getattr(args, "execute", False),
         )
     else:
-        result = run_release(input_path, project_root, draft_llm=getattr(args, "draft_llm", False))
+        result = run_release(
+            input_path,
+            project_root,
+            draft_llm=getattr(args, "draft_llm", False),
+            rewrite=getattr(args, "rewrite", False),
+        )
     print(json.dumps(result, indent=2, ensure_ascii=False, default=str))
 
 

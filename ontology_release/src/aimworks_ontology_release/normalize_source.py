@@ -9,8 +9,15 @@ from .io import iter_document_items, load_json_document, merge_document_items
 from .utils import ensure_dir
 
 DCTERMS_DESCRIPTION = "http://purl.org/dc/terms/description"
+RDFS_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"
 H2KG_INSTRUMENT = "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
 DYNAMIC_HYDROGEN_ELECTRODE = "https://w3id.org/h2kg/hydrogen-ontology#DynamicHydrogenElectrode"
+OWL_ANNOTATION_PROPERTY = "http://www.w3.org/2002/07/owl#AnnotationProperty"
+H2KG_APPLIES_TO_PROFILE = "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile"
+H2KG_NUMBER_OF_SPRAY_PASSES = "https://w3id.org/h2kg/hydrogen-ontology#NumberOfSprayPasses"
+H2KG_PASSES = "https://w3id.org/h2kg/hydrogen-ontology#Passes"
+H2KG_ROTATING_RING_DISK_VOLTAMMETRY = "https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry"
+H2KG_ROTATING_DISK_VOLTAMMETRY = "https://w3id.org/h2kg/hydrogen-ontology#RotatingDiskVoltammetry"
 
 
 def normalize_source_document(
@@ -53,6 +60,17 @@ def _apply_targeted_repairs(items: list[dict[str, Any]]) -> list[dict[str, Any]]
     repairs: list[dict[str, Any]] = []
     items_by_iri = {item["@id"]: item for item in items if isinstance(item.get("@id"), str)}
 
+    alias_repairs = [
+        _replace_iri_reference(items, H2KG_PASSES, H2KG_NUMBER_OF_SPRAY_PASSES, "replaced legacy Passes reference with NumberOfSprayPasses"),
+        _replace_iri_reference(
+            items,
+            H2KG_ROTATING_DISK_VOLTAMMETRY,
+            H2KG_ROTATING_RING_DISK_VOLTAMMETRY,
+            "replaced unresolved RotatingDiskVoltammetry reference with RotatingRingDiskVoltammetry",
+        ),
+    ]
+    repairs.extend(repair for repair in alias_repairs if repair is not None)
+
     dhe = items_by_iri.get(DYNAMIC_HYDROGEN_ELECTRODE)
     if dhe is not None:
         changed = False
@@ -77,7 +95,59 @@ def _apply_targeted_repairs(items: list[dict[str, Any]]) -> list[dict[str, Any]]
                     "actions": ["added local Instrument type", "added ontology-style description"],
                 }
             )
+    applies_to_profile = items_by_iri.get(H2KG_APPLIES_TO_PROFILE)
+    if applies_to_profile is None:
+        items.append(
+            {
+                "@id": H2KG_APPLIES_TO_PROFILE,
+                "@type": [OWL_ANNOTATION_PROPERTY],
+                RDFS_LABEL: [
+                    {
+                        "@language": "en",
+                        "@value": "appliesToProfile",
+                    }
+                ],
+                DCTERMS_DESCRIPTION: [
+                    {
+                        "@language": "en",
+                        "@value": "An annotation property stating which H2KG application profile or profiles explicitly include a term in their published module.",
+                    }
+                ],
+            }
+        )
+        repairs.append(
+            {
+                "iri": H2KG_APPLIES_TO_PROFILE,
+                "actions": ["added annotation property definition for profile-module tagging"],
+            }
+        )
     return repairs
+
+
+def _replace_iri_reference(items: list[dict[str, Any]], source_iri: str, target_iri: str, message: str) -> dict[str, Any] | None:
+    replacement_count = 0
+
+    def rewrite(value: Any) -> Any:
+        nonlocal replacement_count
+        if isinstance(value, dict):
+            updated: dict[str, Any] = {}
+            for key, nested in value.items():
+                if key == "@id" and nested == source_iri:
+                    updated[key] = target_iri
+                    replacement_count += 1
+                else:
+                    updated[key] = rewrite(nested)
+            return updated
+        if isinstance(value, list):
+            return [rewrite(item) for item in value]
+        return value
+
+    for index, item in enumerate(items):
+        items[index] = rewrite(item)
+
+    if replacement_count:
+        return {"iri": source_iri, "replacement_iri": target_iri, "actions": [message], "replacement_count": replacement_count}
+    return None
 
 
 def _as_list(value: Any) -> list[Any]:
