@@ -753,7 +753,7 @@ def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], p
       <article class="card">
         <h2>Schema Scope</h2>
         <p>This page remains valuable for ontology engineering, governance, and lightweight schema browsing. The future resolver target for <code>/h2kg/hydrogen-ontology</code> should instead be the full namespace reference page.</p>
-        <p class="muted">Current state: documentation and machine artefacts are prepared locally; public resolver establishment is still pending.</p>
+        <p class="muted">Current state: documentation, machine artefacts, and resolver infrastructure are publicly established, and the full namespace reference page is the active resolver target.</p>
       </article>
     </section>
     {_reference_sections(terms)}
@@ -906,6 +906,19 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     gates = _render_rows(odk.get("promotion_gates", []))
     parity = odk.get("parity", {})
     publication = release.get("publication_evidence", {})
+    promotion_state = str(odk.get("promotion_state", "shadow"))
+    publication_established = publication.get("publication_status") == "published" and publication.get("resolver_status") == "established"
+    artifacts_fallback = (
+        "<li>Public release artefacts are established and synchronized with the current resolver-backed publication.</li>"
+        if publication_established
+        else "<li>Local release artefacts are prepared, but public publication establishment is still pending.</li>"
+    )
+    odk_intro = (
+        "ODK artefacts are now promoted and serve as the accepted machine release surface for comparison, QC, and downstream tooling."
+        if promotion_state == "promoted"
+        else "ODK remains in shadow mode. These machine artefacts are generated in parallel for comparison, QC, and downstream tooling."
+    )
+    odk_status = "promoted" if promotion_state == "promoted" else f"{escape(str(odk.get('mode', 'shadow')))} (informational)"
     return f"""
     <section class="grid">
       <article class="card">
@@ -924,20 +937,20 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       </article>
       <article class="card">
         <h2>AIMWORKS Artifacts</h2>
-        <ul>{artifacts or '<li>Local release artefacts are prepared, but public publication establishment is still pending.</li>'}</ul>
+        <ul>{artifacts or artifacts_fallback}</ul>
       </article>
     </section>
     <section class="stack">
       <article class="card">
         <h2>ODK Release Artefacts</h2>
-        <p class="muted">ODK remains in shadow mode. These machine artefacts are generated in parallel for comparison, QC, and downstream tooling.</p>
+        <p class="muted">{escape(odk_intro)}</p>
         {odk_artifacts}
       </article>
       <article class="card">
-        <h2>Shadow Mode Status</h2>
+        <h2>ODK Release Status</h2>
         <ul class="stats">
           <li><strong>Current authority:</strong> {escape(str(odk.get('authority', 'AIMWORKS pipeline')))}</li>
-          <li><strong>ODK status:</strong> {escape(str(odk.get('mode', 'shadow')))} (informational)</li>
+          <li><strong>ODK status:</strong> {odk_status}</li>
           <li><strong>Reasoner:</strong> {escape(str(odk.get('reasoner', 'ELK')))}</li>
           <li><strong>ODK version:</strong> {escape(str(odk.get('odk_version', 'shadow scaffold')))}</li>
           <li><strong>Parity:</strong> {escape(str(parity.get('status', 'under review')))}</li>
@@ -954,11 +967,11 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         <ul class="stats">
           <li><strong>HDO import status:</strong> {_hdo_import_status(odk)}</li>
           <li><strong>Last refresh:</strong> {_hdo_import_refresh(odk)}</li>
-          <li><strong>Included in current shadow build:</strong> {_hdo_import_included(odk)}</li>
+          <li><strong>Included in current ODK build:</strong> {_hdo_import_included(odk)}</li>
           <li><strong>HDO-reviewed local terms:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</li>
           <li><strong>Aligned to HDO:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</li>
         </ul>
-        <p>HDO is the primary shadow-mode alignment source for data, metadata, digital-object, information-profile, identifier, schema, and validation concepts in H2KG.</p>
+        <p>HDO is the primary alignment source for data, metadata, digital-object, information-profile, identifier, schema, and validation concepts in H2KG.</p>
         <p class="muted">{escape(str(hdo.get('cache_note', '')))}</p>
       </article>
     </section>
@@ -1064,7 +1077,7 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     <section class="grid">
       <article class="card">
         <h2>Current Release Status</h2>
-        <p class="muted">This summary shows the current release state using a public-first FAIR interpretation and a conservative shadow-mode interpretation of ODK.</p>
+        <p class="muted">This summary shows the current release state using a public-first FAIR interpretation together with the current ODK governance and QC state.</p>
         {_render_rows(current_status_rows)}
       </article>
       <article class="card">
@@ -1396,19 +1409,19 @@ def _publication_rows(publication: dict[str, Any]) -> list[dict[str, Any]]:
             "label": "Resolver status",
             "status": "good" if resolver_status == "established" else "watch",
             "value": str(resolver_status),
-            "detail": "Generated w3id redirect templates count as prepared infrastructure, not as an established public resolver.",
+            "detail": "The public resolver status tracks whether the ontology namespace is established through the configured persistent identifier service.",
         },
         {
             "label": "Documentation publication status",
             "status": "good" if docs_status == "published" and publication_status == "published" else "watch",
             "value": str(docs_status),
-            "detail": "Configured docs URLs and local HTML generation count as preparation until public publication is explicitly established.",
+            "detail": "Documentation publication tracks whether the human-readable HTML documentation is publicly established as part of the current release.",
         },
         {
             "label": "Machine artefact publication status",
             "status": "good" if artifact_status == "published" and publication_status == "published" else "watch",
             "value": str(artifact_status),
-            "detail": "Local ontology serializations and release bundles improve readiness, but they do not count as publicly established artifacts by default.",
+            "detail": "Machine artefact publication tracks whether the ontology serializations and release bundle are treated as publicly established release artifacts.",
         },
     ]
 
