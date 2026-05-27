@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore H2KG | H2KG Application Ontology for Hydrogen Electrochemical Systems</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/explorer.css">
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
+  <script defer src="../assets/explorer.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-head">
+        <div class="hero-copy">
+          <p class="eyebrow">H2KG Ontology</p>
+          <h1>Explore H2KG</h1>
+          <p class="subtitle">EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, measurements, and FAIR metadata</p>
+        </div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+      </div>
+      <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
+      
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="explore.html">Explore</a>
+      <a href="../hydrogen-ontology.html">Reference</a>
+      <a href="architecture-workflow.html">Architecture</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="developer-guide.html">Developer</a>
+      <a href="release.html">Release</a>
+    </nav>
+    
+    </div>
+  </header>
+  <main class="wrap content">
+    
+    <section class="grid">
+      <article class="card">
+        <p class="eyebrow">Explore</p>
+        <h2>Whole-Ontology Search</h2>
+        <p>Search the published H2KG namespace with precise ranked suggestions, confirm whether a term exists, and inspect its directly connected graph context without leaving the release package.</p>
+        <div class="button-row">
+          <a class="inline-button" href="../hydrogen-ontology.html">Open full reference</a>
+          <a class="inline-button" href="release.html">Release context</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Explorer Scope</h2>
+        <ul class="stats">
+          <li><strong>Search scope:</strong> local H2KG terms by default</li>
+          <li><strong>Local terms:</strong> 2152</li>
+          <li><strong>External anchors:</strong> 1141</li>
+          <li><strong>Visible link surface:</strong> 6586</li>
+        </ul>
+        <p class="muted">The graph starts with the selected term and its direct visible neighborhood. Expansion is progressive and reversible.</p>
+      </article>
+    </section>
+    <section class="explorer-shell" data-explorer-root data-explorer-data="../data/explorer.json" data-reference-page="../hydrogen-ontology.html">
+      <aside class="explorer-sidebar">
+        <article class="card explorer-panel">
+          <p class="eyebrow">Find a term</p>
+          <h2>Search</h2>
+          <p class="muted">Results prioritize exact ontology term matches, canonical local names, qnames, and curated descriptions before broader descriptive matches.</p>
+          <div class="explorer-field">
+            <label for="explorer-search-input">Search the ontology</label>
+            <input id="explorer-search-input" type="search" data-explorer-search placeholder="e.g., ionomer, FixedBedReactor, acid base titration measurement">
+          </div>
+          <div class="explorer-note" data-explorer-search-status>Suggested starting points appear here when the search box is empty.</div>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="includeExternalSearch">
+            Include aligned external terms in suggestions
+          </label>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="showExternalNeighbors">
+            Show directly linked external terms in the graph
+          </label>
+          <div class="explorer-results" data-explorer-results>
+            <div class="explorer-empty">Start typing to search the published ontology.</div>
+          </div>
+        </article>
+        <article class="card explorer-panel">
+          <p class="eyebrow">Graph filters</p>
+          <h3>Release modules</h3>
+          <div class="explorer-module-grid">
+        <label class="explorer-module">
+          <input type="checkbox" data-explorer-module value="schema" checked>
+          <span>
+            <strong>Asserted schema</strong>
+            <small>Classes, properties, domains, ranges, and asserted taxonomy links.</small>
+          </span>
+          <span class="explorer-module__meta">34 links</span>
+        </label>
+        
+        <label class="explorer-module">
+          <input type="checkbox" data-explorer-module value="vocabulary" checked>
+          <span>
+            <strong>Controlled vocabulary</strong>
+            <small>Curated local H2KG terms outside the compact core schema layer.</small>
+          </span>
+          <span class="explorer-module__meta">6538 links</span>
+        </label>
+        
+        <label class="explorer-module">
+          <input type="checkbox" data-explorer-module value="alignments" checked>
+          <span>
+            <strong>Reviewed alignments</strong>
+            <small>Reviewed mappings and directly linked external semantic anchors.</small>
+          </span>
+          <span class="explorer-module__meta">14 links</span>
+        </label>
+        </div>
+          <div class="explorer-toolbar">
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
+          </div>
+        </article>
+        <article class="card explorer-panel">
+          <p class="eyebrow">Traversal</p>
+          <h3>History</h3>
+          <div class="explorer-trail" data-explorer-trail>
+            <div class="explorer-empty">The traversal trail appears after you select a term.</div>
+          </div>
+        </article>
+      </aside>
+      <section class="explorer-main">
+        <article class="card explorer-panel">
+          <div class="explorer-panel__head">
+            <div>
+              <p class="eyebrow">Graph</p>
+              <h2>Direct neighborhood</h2>
+            </div>
+            <div class="explorer-kpis">
+              <div><span>Visible nodes</span><strong data-explorer-count="nodes">0</strong></div>
+              <div><span>Visible links</span><strong data-explorer-count="edges">0</strong></div>
+              <div><span>Expanded nodes</span><strong data-explorer-count="expanded">0</strong></div>
+            </div>
+          </div>
+          <p class="explorer-note" data-explorer-graph-note>Select a term to render its graph neighborhood.</p>
+          <div class="explorer-chart" data-explorer-chart></div>
+        </article>
+        <div class="explorer-detail-grid">
+          <article class="card explorer-panel">
+            <p class="eyebrow">Selected term</p>
+            <div data-explorer-inspector>
+              <div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>
+            </div>
+          </article>
+          <article class="card explorer-panel">
+            <p class="eyebrow">Visible relations</p>
+            <div data-explorer-relations>
+              <div class="explorer-empty">Visible relations will appear here after you select a term.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+    
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
+        </div>
+        <div class="acknowledgement-copy">
+          <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
+        </div>
+      </section>
+    
+      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+</body>
+</html>

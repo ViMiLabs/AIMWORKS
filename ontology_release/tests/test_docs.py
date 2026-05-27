@@ -40,6 +40,10 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert summary["schema_count"] >= 2
     assert (output_dir / "docs" / "index.html").exists()
     assert (output_dir / "docs" / "hydrogen-ontology.html").exists()
+    assert (output_dir / "docs" / "data" / "explorer.json").exists()
+    assert (output_dir / "docs" / "assets" / "explorer.css").exists()
+    assert (output_dir / "docs" / "assets" / "explorer.js").exists()
+    assert (output_dir / "docs" / "pages" / "explore.html").exists()
     assert (output_dir / "docs" / "pages" / "reference.html").exists()
     assert (output_dir / "docs" / "pages" / "core-reference.html").exists()
     assert (output_dir / "docs" / "pages" / "class-index.html").exists()
@@ -48,6 +52,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "PEMWE Profile" in home_page
     assert "./pemfc/index.html" in home_page
     assert "./pemwe/index.html" in home_page
+    assert "./pages/explore.html" in home_page
     assert (output_dir / "docs" / "pemfc" / "index.html").exists()
     assert (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").exists()
     assert (output_dir / "docs" / "pemwe" / "index.html").exists()
@@ -73,11 +78,22 @@ def test_docs_generation(mini_ontology_file, output_dir):
     namespace_page = (output_dir / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "H2KG Namespace Reference" in namespace_page
     assert 'id="Parameter"' in namespace_page
+    assert "Open in Explorer" in namespace_page
     reference_page = (output_dir / "docs" / "pages" / "reference.html").read_text(encoding="utf-8")
     assert "H2KG Namespace Reference" in reference_page
     core_reference_page = (output_dir / "docs" / "pages" / "core-reference.html").read_text(encoding="utf-8")
     assert "Core H2KG Reference" in core_reference_page
     assert "Full namespace" in core_reference_page
+    explore_page = (output_dir / "docs" / "pages" / "explore.html").read_text(encoding="utf-8")
+    assert "Whole-Ontology Search" in explore_page
+    assert 'data-explorer-root' in explore_page
+    assert "Search the ontology" in explore_page
+    explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
+    local_nodes = {item["iri"]: item for item in explorer_data["nodes"] if item.get("local")}
+    assert "https://w3id.org/h2kg/hydrogen-ontology#Parameter" in local_nodes
+    assert any(link["predicate"] == "subclassOf" for link in explorer_data["links"])
+    assert any(link["predicate"] == "range" for link in explorer_data["links"])
+    assert any(module["id"] == "schema" for module in explorer_data["modules"])
     pemfc_reference_page = (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Profile Reference Scope" in pemfc_reference_page
     assert "Reference Contents" in pemfc_reference_page

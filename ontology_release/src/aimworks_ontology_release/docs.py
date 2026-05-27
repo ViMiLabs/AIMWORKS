@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import json
 import os
+import re
 import shutil
 from datetime import datetime
 from html import escape
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 try:
     from rdflib import Graph
@@ -23,6 +26,7 @@ from .mapper import propose_mappings
 from .normalize import best_description, best_label
 from .odk import load_odk_manifest
 from .utils import (
+    canonical_qname,
     default_release_profile,
     dump_json,
     ensure_dir,
@@ -55,6 +59,7 @@ def build_docs(
     output_dir = ensure_dir(Path(output_dir))
     ensure_dir(output_dir / "pages")
     ensure_dir(output_dir / "assets")
+    ensure_dir(output_dir / "data")
     ensure_dir(output_dir / "pemfc")
     ensure_dir(output_dir / "pemwe")
     write_text(output_dir / ".nojekyll", "")
@@ -100,6 +105,7 @@ def build_docs(
         "example_count": len(examples),
         "mapping_count": len(mappings),
     }
+    explorer = _build_explorer_dataset(namespace_terms, items)
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
@@ -108,6 +114,7 @@ def build_docs(
         (output_dir / "hydrogen-ontology.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "hydrogen-ontology.html", output_dir)),
         (output_dir / "pages" / "user-guide.html", "User Guide", _user_guide_body()),
         (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
+        (output_dir / "pages" / "explore.html", "Explore H2KG", _explore_body(project, explorer, output_dir / "pages" / "explore.html", output_dir)),
         (output_dir / "pages" / "reference.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "pages" / "reference.html", output_dir)),
         (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
@@ -126,12 +133,23 @@ def build_docs(
         (output_dir / "pemwe" / "hydrogen-ontology.html", "PEMWE Reference", _profile_reference_body(project, "pemwe", pemwe_terms, odk, hdo, output_dir / "pemwe" / "hydrogen-ontology.html", output_dir)),
     ]
     for path, title, body in page_specs:
-        write_text(path, _page_template(project, title, body, path, output_dir))
+        extra_head = ""
+        if path.name == "explore.html":
+            explorer_css = _relative_href(path, output_dir / "assets" / "explorer.css")
+            explorer_js = _relative_href(path, output_dir / "assets" / "explorer.js")
+            extra_head = (
+                f'<link rel="stylesheet" href="{explorer_css}">\n'
+                '  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>\n'
+                f'  <script defer src="{explorer_js}"></script>'
+            )
+        write_text(path, _page_template(project, title, body, path, output_dir, extra_head=extra_head))
 
     write_text(output_dir / "index.html", _legacy_profile_home())
     _copy_site_assets(output_dir, project)
     _copy_odk_artifacts(output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
+    write_text(output_dir / "assets" / "explorer.css", _explorer_css())
+    write_text(output_dir / "assets" / "explorer.js", _explorer_js())
     dump_json(
         output_dir / "search-index.json",
         {
@@ -144,6 +162,7 @@ def build_docs(
             "hdo": hdo.get("summary", {}),
         },
     )
+    dump_json(output_dir / "data" / "explorer.json", explorer)
     return summary
 
 
@@ -424,7 +443,14 @@ def _short_label(iri: str) -> str:
     return fragment or iri
 
 
-def _page_template(project: dict[str, Any], page_title: str, body: str, page_path: Path, docs_root: Path) -> str:
+def _page_template(
+    project: dict[str, Any],
+    page_title: str,
+    body: str,
+    page_path: Path,
+    docs_root: Path,
+    extra_head: str = "",
+) -> str:
     home_link = _relative_href(page_path, docs_root / "index.html")
     css_href = _relative_href(page_path, docs_root / "assets" / "style.css")
     asset_base = _relative_href(page_path, docs_root / "assets")
@@ -434,6 +460,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
       <a href="{home_link}">Home</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'user-guide.html')}">User Guide</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'ontology-overview.html')}">Overview</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'explore.html')}">Explore</a>
       <a href="{_relative_href(page_path, docs_root / 'hydrogen-ontology.html')}">Reference</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'architecture-workflow.html')}">Architecture</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'class-index.html')}">Classes</a>
@@ -456,6 +483,7 @@ def _page_template(project: dict[str, Any], page_title: str, body: str, page_pat
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page_title} | {project['title']}</title>
   <link rel="stylesheet" href="{css_href}">
+  {extra_head}
 </head>
 <body>
   <header class="hero">
@@ -557,6 +585,7 @@ def _legacy_profile_home() -> str:
         <h1>H2KG for hydrogen electrochemical systems</h1>
         <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
         <div class="links">
+          <a href="./pages/explore.html">Explore H2KG</a>
           <a href="./hydrogen-ontology.html">Open full reference</a>
           <a href="./pemfc/index.html">Explore PEMFC</a>
           <a href="./pemwe/index.html">Explore PEMWE</a>
@@ -651,6 +680,347 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
     return f'<section class="prose">{html_paragraphs(paragraphs)}</section>{architecture}'
 
 
+def _explore_term_href(page_path: Path, docs_root: Path, iri: str) -> str:
+    base = _relative_href(page_path, docs_root / "pages" / "explore.html")
+    return f"{base}?iri={quote(iri, safe='')}"
+
+
+def _node_module(record: dict[str, Any]) -> str:
+    category = str(record.get("category", ""))
+    if category in {"Ontology", "Classes", "Object Properties", "Datatype Properties"}:
+        return "schema"
+    return "vocabulary"
+
+
+def _deprecated_status(item: dict[str, Any]) -> str:
+    values = item.get("http://www.w3.org/2002/07/owl#deprecated")
+    for value in _literal_values(values):
+        if value.lower() in {"true", "1", "yes"}:
+            return "Deprecated"
+    return "Active"
+
+
+def _node_search_text(record: dict[str, Any], item: dict[str, Any]) -> str:
+    bits = [
+        record.get("label", ""),
+        record.get("anchor", ""),
+        canonical_qname(record.get("iri", ""), ""),
+        record.get("iri", ""),
+        record.get("description", ""),
+        *record.get("alt_labels", []),
+        *record.get("examples", []),
+        *record.get("notes", []),
+        *record.get("type_labels", []),
+    ]
+    for relation_key in ("parents", "domain", "range"):
+        for relation in record.get(relation_key, []):
+            bits.append(relation.get("label", ""))
+            bits.append(relation.get("iri", ""))
+    for mapping in record.get("mappings", []):
+        bits.append(mapping.get("target_label", ""))
+        bits.append(mapping.get("target_iri", ""))
+        bits.append(mapping.get("relation", ""))
+    values: list[str] = []
+    seen: set[str] = set()
+    for bit in bits:
+        text = str(bit or "").strip()
+        if text and text not in seen:
+            seen.add(text)
+            values.append(text)
+    return " ".join(values)
+
+
+def _external_node_record(iri: str, label: str = "", description: str = "") -> dict[str, Any]:
+    qname = canonical_qname(iri, "")
+    local_name = _fragment_for_iri(iri)
+    resolved_label = label.strip() or (qname if qname and ":" in qname else _short_label(iri))
+    return {
+        "id": iri,
+        "iri": iri,
+        "anchor": _term_anchor_for_iri(iri),
+        "label": resolved_label,
+        "localName": local_name,
+        "qname": qname or iri,
+        "description": description.strip() or "External aligned term linked from the current H2KG release.",
+        "alt_labels": [],
+        "examples": [],
+        "notes": [],
+        "type_labels": ["External"],
+        "category": "External Terms",
+        "display_class": "External",
+        "modules": ["alignments"],
+        "local": False,
+        "deprecated": "Active",
+        "mapping_labels": [],
+        "search_text": " ".join(part for part in [resolved_label, local_name, qname, iri, description] if part),
+    }
+
+
+def _link_record(source: str, target: str, predicate: str, value: str, module: str, edge_family: str) -> dict[str, Any]:
+    return {
+        "source": source,
+        "target": target,
+        "predicate": predicate,
+        "value": value,
+        "module": module,
+        "edgeFamily": edge_family,
+    }
+
+
+def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    local_records = {term["iri"]: term for term in terms}
+    nodes: dict[str, dict[str, Any]] = {}
+    links: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    ignored_type_iris = {
+        "http://www.w3.org/2002/07/owl#Ontology",
+        "http://www.w3.org/2002/07/owl#Class",
+        "http://www.w3.org/2002/07/owl#ObjectProperty",
+        "http://www.w3.org/2002/07/owl#DatatypeProperty",
+        "http://www.w3.org/2002/07/owl#AnnotationProperty",
+        "http://www.w3.org/2000/01/rdf-schema#Class",
+    }
+
+    for iri, record in local_records.items():
+        item = items.get(iri, {"@id": iri})
+        modules = {_node_module(record)}
+        if record.get("mappings"):
+            modules.add("alignments")
+        if any(not relation.get("iri", "").startswith(H2KG_NS) and relation.get("iri") != H2KG_ONTOLOGY_IRI for relation in [*record.get("parents", []), *record.get("domain", []), *record.get("range", [])]):
+            modules.add("alignments")
+        qname = canonical_qname(iri, "")
+        nodes[iri] = {
+            "id": iri,
+            "iri": iri,
+            "anchor": record["anchor"],
+            "label": record["label"],
+            "localName": _fragment_for_iri(iri),
+            "qname": qname or iri,
+            "description": record["description"],
+            "alt_labels": record.get("alt_labels", []),
+            "examples": record.get("examples", []),
+            "notes": record.get("notes", []),
+            "type_labels": record.get("type_labels", []),
+            "category": record["category"],
+            "display_class": record.get("type_labels", [record["category"]])[0] if record.get("type_labels") else record["category"],
+            "modules": sorted(modules),
+            "local": True,
+            "deprecated": _deprecated_status(item),
+            "mapping_labels": [str(mapping.get("target_label", "")).strip() for mapping in record.get("mappings", []) if str(mapping.get("target_label", "")).strip()],
+        }
+        nodes[iri]["search_text"] = _node_search_text(record, item)
+
+    def ensure_external(iri: str, label: str = "", description: str = "") -> None:
+        if not iri or iri in nodes or iri.startswith(H2KG_NS) or iri == H2KG_ONTOLOGY_IRI:
+            return
+        nodes[iri] = _external_node_record(iri, label=label, description=description)
+
+    def add_link(source: str, target: str, predicate: str, value: str, module: str, edge_family: str) -> None:
+        if not source or not target or source == target:
+            return
+        key = (source, target, predicate, module)
+        if key not in links:
+            links[key] = _link_record(source, target, predicate, value, module, edge_family)
+
+    for iri, record in local_records.items():
+        item = items.get(iri, {"@id": iri})
+        for relation in record.get("parents", []):
+            target_iri = relation.get("iri", "")
+            ensure_external(target_iri, relation.get("label", ""))
+            add_link(iri, target_iri, relation.get("relation", ""), relation.get("relation", ""), "schema", relation.get("relation", "schema"))
+        for relation_key, predicate in ((record.get("domain", []), "domain"), (record.get("range", []), "range")):
+            for relation in relation_key:
+                target_iri = relation.get("iri", "")
+                ensure_external(target_iri, relation.get("label", ""))
+                add_link(iri, target_iri, predicate, predicate, "schema", predicate)
+        for mapping in record.get("mappings", []):
+            target_iri = str(mapping.get("target_iri", "")).strip()
+            ensure_external(target_iri, str(mapping.get("target_label", "")).strip(), f"Reviewed {mapping.get('relation', 'mapping')} target.")
+            add_link(iri, target_iri, str(mapping.get("relation", "mapping")), canonical_qname(target_iri, ""), "alignments", "mapping")
+        types = item.get("@type", [])
+        if isinstance(types, str):
+            types = [types]
+        for type_iri in types:
+            if not isinstance(type_iri, str) or type_iri in ignored_type_iris:
+                continue
+            ensure_external(type_iri, _short_label(type_iri))
+            add_link(iri, type_iri, "type", "type", "vocabulary", "type")
+        for predicate, value in item.items():
+            if not isinstance(predicate, str) or not predicate.startswith(H2KG_NS):
+                continue
+            for relation in _iri_values(value):
+                target_iri = relation.get("iri", "")
+                ensure_external(target_iri, relation.get("label", ""))
+                add_link(
+                    iri,
+                    target_iri,
+                    predicate,
+                    canonical_qname(predicate, _fragment_for_iri(predicate)),
+                    "vocabulary",
+                    "object_property",
+                )
+
+    degrees: dict[str, int] = {iri: 0 for iri in nodes}
+    for link in links.values():
+        degrees[link["source"]] = degrees.get(link["source"], 0) + 1
+        degrees[link["target"]] = degrees.get(link["target"], 0) + 1
+    for iri, node in nodes.items():
+        node["degree"] = degrees.get(iri, 0)
+
+    module_map: dict[str, dict[str, Any]] = {
+        "schema": {
+            "id": "schema",
+            "label": "Asserted schema",
+            "description": "Classes, properties, domains, ranges, and asserted taxonomy links.",
+            "nodeCount": sum(1 for node in nodes.values() if "schema" in node.get("modules", [])),
+            "edgeCount": sum(1 for link in links.values() if link["module"] == "schema"),
+        },
+        "vocabulary": {
+            "id": "vocabulary",
+            "label": "Controlled vocabulary",
+            "description": "Curated local H2KG terms outside the compact core schema layer.",
+            "nodeCount": sum(1 for node in nodes.values() if "vocabulary" in node.get("modules", [])),
+            "edgeCount": sum(1 for link in links.values() if link["module"] == "vocabulary"),
+        },
+        "alignments": {
+            "id": "alignments",
+            "label": "Reviewed alignments",
+            "description": "Reviewed mappings and directly linked external semantic anchors.",
+            "nodeCount": sum(1 for node in nodes.values() if "alignments" in node.get("modules", [])),
+            "edgeCount": sum(1 for link in links.values() if link["module"] == "alignments"),
+        },
+    }
+
+    return {
+        "profileLabel": "Whole H2KG namespace",
+        "referencePage": "hydrogen-ontology.html",
+        "overview": {
+            "localNodeCount": sum(1 for node in nodes.values() if node.get("local")),
+            "externalNodeCount": sum(1 for node in nodes.values() if not node.get("local")),
+            "edgeCount": len(links),
+        },
+        "modules": list(module_map.values()),
+        "nodes": sorted(nodes.values(), key=lambda node: (not bool(node.get("local")), str(node.get("label", "")).lower())),
+        "links": sorted(links.values(), key=lambda link: (link["module"], link["source"], link["predicate"], link["target"])),
+    }
+
+
+def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: Path, docs_root: Path) -> str:
+    reference_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
+    release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
+    data_href = _relative_href(page_path, docs_root / "data" / "explorer.json")
+    modules = explorer.get("modules", [])
+    module_html = "".join(
+        f"""
+        <label class="explorer-module">
+          <input type="checkbox" data-explorer-module value="{escape(str(module.get('id', '')))}" checked>
+          <span>
+            <strong>{escape(str(module.get('label', 'module')))}</strong>
+            <small>{escape(str(module.get('description', '')))}</small>
+          </span>
+          <span class="explorer-module__meta">{module.get('edgeCount', 0)} links</span>
+        </label>
+        """
+        for module in modules
+    )
+    overview = explorer.get("overview", {})
+    return f"""
+    <section class="grid">
+      <article class="card">
+        <p class="eyebrow">Explore</p>
+        <h2>Whole-Ontology Search</h2>
+        <p>Search the published H2KG namespace with precise ranked suggestions, confirm whether a term exists, and inspect its directly connected graph context without leaving the release package.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{reference_link}">Open full reference</a>
+          <a class="inline-button" href="{release_link}">Release context</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Explorer Scope</h2>
+        <ul class="stats">
+          <li><strong>Search scope:</strong> local H2KG terms by default</li>
+          <li><strong>Local terms:</strong> {overview.get('localNodeCount', 0)}</li>
+          <li><strong>External anchors:</strong> {overview.get('externalNodeCount', 0)}</li>
+          <li><strong>Visible link surface:</strong> {overview.get('edgeCount', 0)}</li>
+        </ul>
+        <p class="muted">The graph starts with the selected term and its direct visible neighborhood. Expansion is progressive and reversible.</p>
+      </article>
+    </section>
+    <section class="explorer-shell" data-explorer-root data-explorer-data="{data_href}" data-reference-page="{reference_link}">
+      <aside class="explorer-sidebar">
+        <article class="card explorer-panel">
+          <p class="eyebrow">Find a term</p>
+          <h2>Search</h2>
+          <p class="muted">Results prioritize exact ontology term matches, canonical local names, qnames, and curated descriptions before broader descriptive matches.</p>
+          <div class="explorer-field">
+            <label for="explorer-search-input">Search the ontology</label>
+            <input id="explorer-search-input" type="search" data-explorer-search placeholder="e.g., ionomer, FixedBedReactor, acid base titration measurement">
+          </div>
+          <div class="explorer-note" data-explorer-search-status>Suggested starting points appear here when the search box is empty.</div>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="includeExternalSearch">
+            Include aligned external terms in suggestions
+          </label>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="showExternalNeighbors">
+            Show directly linked external terms in the graph
+          </label>
+          <div class="explorer-results" data-explorer-results>
+            <div class="explorer-empty">Start typing to search the published ontology.</div>
+          </div>
+        </article>
+        <article class="card explorer-panel">
+          <p class="eyebrow">Graph filters</p>
+          <h3>Release modules</h3>
+          <div class="explorer-module-grid">{module_html}</div>
+          <div class="explorer-toolbar">
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
+          </div>
+        </article>
+        <article class="card explorer-panel">
+          <p class="eyebrow">Traversal</p>
+          <h3>History</h3>
+          <div class="explorer-trail" data-explorer-trail>
+            <div class="explorer-empty">The traversal trail appears after you select a term.</div>
+          </div>
+        </article>
+      </aside>
+      <section class="explorer-main">
+        <article class="card explorer-panel">
+          <div class="explorer-panel__head">
+            <div>
+              <p class="eyebrow">Graph</p>
+              <h2>Direct neighborhood</h2>
+            </div>
+            <div class="explorer-kpis">
+              <div><span>Visible nodes</span><strong data-explorer-count="nodes">0</strong></div>
+              <div><span>Visible links</span><strong data-explorer-count="edges">0</strong></div>
+              <div><span>Expanded nodes</span><strong data-explorer-count="expanded">0</strong></div>
+            </div>
+          </div>
+          <p class="explorer-note" data-explorer-graph-note>Select a term to render its graph neighborhood.</p>
+          <div class="explorer-chart" data-explorer-chart></div>
+        </article>
+        <div class="explorer-detail-grid">
+          <article class="card explorer-panel">
+            <p class="eyebrow">Selected term</p>
+            <div data-explorer-inspector>
+              <div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>
+            </div>
+          </article>
+          <article class="card explorer-panel">
+            <p class="eyebrow">Visible relations</p>
+            <div data-explorer-relations>
+              <div class="explorer-empty">Visible relations will appear here after you select a term.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+    """
+
+
 def _class_body(classes: list[dict[str, Any]]) -> str:
     cards = "".join(
         f"<article class='term-card'><h2>{item['label']}</h2><p class='iri'>{item['iri']}</p><p>{item['description']}</p><p><strong>Mappings:</strong> {', '.join(item['mappings']) or 'None'}</p></article>"
@@ -707,6 +1077,7 @@ def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any
     core_link = _relative_href(page_path, docs_root / "pages" / "core-reference.html")
     pemfc_link = _relative_href(page_path, docs_root / "pemfc" / "hydrogen-ontology.html")
     pemwe_link = _relative_href(page_path, docs_root / "pemwe" / "hydrogen-ontology.html")
+    explore_link = _relative_href(page_path, docs_root / "pages" / "explore.html")
     return f"""
     <section class="grid">
       <article class="card">
@@ -716,6 +1087,7 @@ def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any
         <p><strong>Namespace:</strong> <code>{escape(project.get('namespace_uri', H2KG_NS))}</code></p>
         <p><strong>Rendered terms:</strong> {len(terms)}</p>
         <div class="button-row">
+          <a class="inline-button" href="{explore_link}">Explore / Search</a>
           <a class="inline-button" href="{release_link}">Release</a>
           <a class="inline-button" href="{core_link}">Core schema</a>
         </div>
@@ -730,13 +1102,14 @@ def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any
         </div>
       </article>
     </section>
-    {_reference_sections(terms)}
+    {_reference_sections(terms, page_path, docs_root)}
     """
 
 
 def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], page_path: Path, docs_root: Path) -> str:
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     namespace_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
+    explore_link = _relative_href(page_path, docs_root / "pages" / "explore.html")
     return f"""
     <section class="grid">
       <article class="card">
@@ -746,6 +1119,7 @@ def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], p
         <p><strong>Namespace:</strong> <code>{escape(project.get('namespace_uri', H2KG_NS))}</code></p>
         <p><strong>Term count:</strong> {len(terms)}</p>
         <div class="button-row">
+          <a class="inline-button" href="{explore_link}">Explore / Search</a>
           <a class="inline-button" href="{release_link}">Release</a>
           <a class="inline-button" href="{namespace_link}">Full namespace</a>
         </div>
@@ -756,7 +1130,7 @@ def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], p
         <p class="muted">Current state: documentation, machine artefacts, and resolver infrastructure are publicly established, and the full namespace reference page is the active resolver target.</p>
       </article>
     </section>
-    {_reference_sections(terms)}
+    {_reference_sections(terms, page_path, docs_root)}
     """
 
 
@@ -766,6 +1140,7 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     quality_link = _relative_href(page_path, docs_root / "pages" / "quality-dashboard.html")
     namespace_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
+    explore_link = _relative_href(page_path, docs_root / "pages" / "explore.html")
     title = escape(str(profile_cfg.get('title', profile_key.upper())))
     return f"""
     <section class="grid">
@@ -776,6 +1151,7 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
         <p><strong>Namespace:</strong> <code>{escape(str(profile_cfg.get('namespace_uri', '')))}</code></p>
         <p><strong>Rendered terms:</strong> {len(terms)}</p>
         <div class="button-row">
+          <a class="inline-button" href="{explore_link}">Explore / Search</a>
           <a class="inline-button" href="{release_link}">Release</a>
           <a class="inline-button" href="{quality_link}">Quality</a>
         </div>
@@ -790,11 +1166,11 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
         </div>
       </article>
     </section>
-    {_reference_sections(terms)}
+    {_reference_sections(terms, page_path, docs_root)}
     """
 
 
-def _reference_sections(terms: list[dict[str, Any]]) -> str:
+def _reference_sections(terms: list[dict[str, Any]], page_path: Path, docs_root: Path) -> str:
     grouped: dict[str, list[dict[str, Any]]] = {}
     for term in terms:
         grouped.setdefault(term["category"], []).append(term)
@@ -809,7 +1185,7 @@ def _reference_sections(terms: list[dict[str, Any]]) -> str:
             <h2>{escape(category)}</h2>
             <p class="muted">{len(entries)} terms</p>
           </div>
-          {''.join(_reference_term_block(term) for term in entries)}
+          {''.join(_reference_term_block(term, _explore_term_href(page_path, docs_root, term["iri"])) for term in entries)}
         </section>
         """
         for category, entries in sorted(grouped.items(), key=lambda item: _reference_category_order(item[0]))
@@ -825,11 +1201,13 @@ def _reference_sections(terms: list[dict[str, Any]]) -> str:
     """
 
 
-def _reference_term_block(term: dict[str, Any]) -> str:
+def _reference_term_block(term: dict[str, Any], explore_href: str = "") -> str:
     meta_rows = [
         ("IRI", f"<code>{escape(term['iri'])}</code>"),
         ("Type", escape(', '.join(term.get("type_labels", [])) or term["category"])),
     ]
+    if explore_href:
+        meta_rows.append(("Explore", f"<a class='inline-button inline-button--small' href='{escape(explore_href)}'>Open in Explorer</a>"))
     if term.get("alt_labels"):
         meta_rows.append(("altLabel", escape("; ".join(term["alt_labels"]))))
     parent_rows = _reference_relation_text(term.get("parents", []))
@@ -1740,6 +2118,849 @@ def _hdo_import_included(odk: dict[str, Any]) -> str:
 
 def _relative_href(page_path: Path, target_path: Path) -> str:
     return Path(os.path.relpath(target_path, page_path.parent)).as_posix()
+
+
+def _explorer_css() -> str:
+    return """
+.inline-button--small { padding: 0.34rem 0.62rem; font-size: 0.82rem; }
+.inline-button--ghost {
+  background: rgba(255,255,255,0.78);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+}
+.explorer-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.explorer-sidebar, .explorer-main, .explorer-detail-grid { display: grid; gap: 1rem; }
+.explorer-panel h2, .explorer-panel h3 { margin: 0; }
+.explorer-panel__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.explorer-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-width: 260px;
+}
+.explorer-kpis div,
+.explorer-result__meta span,
+.explorer-module__meta,
+.explorer-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+}
+.explorer-kpis div { padding: 0.55rem 0.7rem; text-align: center; }
+.explorer-kpis span { display: block; color: var(--muted); font-size: 0.76rem; }
+.explorer-kpis strong { display: block; margin-top: 0.1rem; font-size: 1.05rem; }
+.explorer-field { display: grid; gap: 0.35rem; margin: 0.85rem 0 0.75rem; }
+.explorer-field label { font-weight: 700; }
+.explorer-field input[type="search"] {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  background: rgba(255,255,255,0.78);
+  color: var(--ink);
+}
+.explorer-note {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 0.94rem;
+}
+.explorer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+  color: var(--ink);
+}
+.explorer-results { display: grid; gap: 0.55rem; margin-top: 0.9rem; }
+.explorer-result {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.86);
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.explorer-result:hover,
+.explorer-result.is-highlighted,
+.explorer-trail button:hover,
+.explorer-trail button.is-active {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(17, 29, 36, 0.08);
+  border-color: rgba(15,109,122,0.24);
+}
+.explorer-result.is-active { border-color: rgba(15,109,122,0.32); background: rgba(244, 251, 251, 0.92); }
+.explorer-result strong { display: block; }
+.explorer-result small { color: var(--muted); }
+.explorer-result__meta { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.45rem 0; }
+.explorer-result__meta span,
+.explorer-module__meta,
+.explorer-chip { padding: 0.18rem 0.5rem; font-size: 0.76rem; color: var(--muted); }
+.explorer-empty {
+  border: 1px dashed rgba(19,33,41,0.18);
+  border-radius: 16px;
+  padding: 0.95rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.42);
+}
+.explorer-module-grid { display: grid; gap: 0.65rem; margin-top: 0.85rem; }
+.explorer-module {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-items: start;
+  border: 1px solid rgba(19,33,41,0.08);
+  border-radius: 16px;
+  padding: 0.75rem 0.8rem;
+  background: rgba(255,255,255,0.72);
+}
+.explorer-module strong,
+.explorer-inspector strong,
+.explorer-relations th,
+.explorer-relations td:first-child { color: var(--ink); }
+.explorer-module small { display: block; margin-top: 0.15rem; color: var(--muted); line-height: 1.45; }
+.explorer-toolbar { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+.explorer-toolbar button[disabled] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.explorer-trail { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.explorer-trail button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  padding: 0.48rem 0.75rem;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+.explorer-chart {
+  min-height: 520px;
+  border: 1px solid rgba(19,33,41,0.08);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,244,237,0.72));
+}
+.explorer-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.explorer-inspector { display: grid; gap: 0.8rem; }
+.explorer-inspector__section { padding-top: 0.7rem; border-top: 1px solid rgba(19,33,41,0.08); }
+.explorer-inspector__section:first-child { padding-top: 0; border-top: 0; }
+.explorer-inspector p { margin: 0.3rem 0 0; color: var(--muted); line-height: 1.6; }
+.explorer-chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+.explorer-relations { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.explorer-relations th,
+.explorer-relations td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid rgba(19,33,41,0.08); vertical-align: top; }
+.explorer-relations th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+@media (max-width: 1100px) {
+  .explorer-shell,
+  .explorer-detail-grid { grid-template-columns: 1fr; }
+  .explorer-kpis { min-width: 0; }
+}
+@media (max-width: 760px) {
+  .explorer-panel__head { flex-direction: column; }
+  .explorer-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .explorer-chart { min-height: 420px; }
+}
+"""
+
+
+def _explorer_js() -> str:
+    return r"""
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.querySelector("[data-explorer-root]");
+  if (!root) return;
+
+  const dataPath = root.dataset.explorerData;
+  const referencePage = root.dataset.referencePage || "../hydrogen-ontology.html";
+  const searchInputEl = root.querySelector("[data-explorer-search]");
+  const searchStatusEl = root.querySelector("[data-explorer-search-status]");
+  const resultsEl = root.querySelector("[data-explorer-results]");
+  const trailEl = root.querySelector("[data-explorer-trail]");
+  const graphNoteEl = root.querySelector("[data-explorer-graph-note]");
+  const inspectorEl = root.querySelector("[data-explorer-inspector]");
+  const relationsEl = root.querySelector("[data-explorer-relations]");
+  const chartEl = root.querySelector("[data-explorer-chart]");
+  const countNodesEl = root.querySelector('[data-explorer-count="nodes"]');
+  const countEdgesEl = root.querySelector('[data-explorer-count="edges"]');
+  const countExpandedEl = root.querySelector('[data-explorer-count="expanded"]');
+  const undoButtonEl = root.querySelector('[data-explorer-action="undo"]');
+
+  const STARTER_LABELS = [
+    "measurement",
+    "property",
+    "parameter",
+    "matter",
+    "instrument",
+    "manufacturing",
+    "process",
+    "data",
+    "metadata"
+  ];
+  const MAX_SUGGESTIONS = 14;
+
+  let payload = null;
+  let cy = null;
+  let currentSuggestions = [];
+
+  const state = {
+    selectedId: null,
+    seedId: null,
+    expandedIds: new Set(),
+    trail: [],
+    history: [],
+    highlightedIndex: 0
+  };
+
+  const escapeHtml = (value) => String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+  const normalize = (value) => String(value || "").trim().toLowerCase();
+  const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
+  const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
+  const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
+  const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
+  const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
+
+  function levenshtein(left, right) {
+    if (left === right) return 0;
+    if (!left.length) return right.length;
+    if (!right.length) return left.length;
+    const previous = Array.from({ length: right.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= left.length; i += 1) {
+      let diagonal = previous[0];
+      previous[0] = i;
+      for (let j = 1; j <= right.length; j += 1) {
+        const stored = previous[j];
+        const cost = left[i - 1] === right[j - 1] ? 0 : 1;
+        previous[j] = Math.min(previous[j] + 1, previous[j - 1] + 1, diagonal + cost);
+        diagonal = stored;
+      }
+    }
+    return previous[right.length];
+  }
+
+  function fuzzyBonus(query, candidate) {
+    const q = stripKey(query);
+    const c = stripKey(candidate);
+    if (!q || !c || Math.abs(q.length - c.length) > 3) return 0;
+    const distance = levenshtein(q, c);
+    if (distance === 0) return 28;
+    if (distance === 1) return 16;
+    if (distance === 2) return 8;
+    return 0;
+  }
+
+  function isSearchableNode(node) {
+    const localName = String(node.localName || "");
+    if (node.category === "Ontology" || localName.startsWith("_") || /_QV$/i.test(localName)) return false;
+    return true;
+  }
+
+  function searchCandidates() {
+    const allowExternal = toggleEnabled("includeExternalSearch");
+    return (payload?.nodes || []).filter((node) => {
+      if (!isSearchableNode(node)) return false;
+      if (!allowExternal && !node.local) return false;
+      return true;
+    });
+  }
+
+  function starterSuggestions(view) {
+    const candidates = view.nodes.filter((node) => isSearchableNode(node) && node.local);
+    const starters = [];
+    const seen = new Set();
+    STARTER_LABELS.forEach((target) => {
+      const match = candidates.find((node) => {
+        const label = normalize(node.label);
+        const localName = normalize(node.localName);
+        return label === target || localName === target;
+      });
+      if (match && !seen.has(match.id)) {
+        starters.push(match);
+        seen.add(match.id);
+      }
+    });
+    return starters.length
+      ? starters
+      : candidates.sort((left, right) => (Number(right.degree || 0) - Number(left.degree || 0)) || left.label.localeCompare(right.label)).slice(0, MAX_SUGGESTIONS);
+  }
+
+  function scoreNode(node, query) {
+    const q = normalize(query);
+    if (!q) return 0;
+    const label = normalize(node.label);
+    const localName = normalize(node.localName || "");
+    const qname = normalize(nodeQname(node));
+    const iri = normalize(node.iri || "");
+    const details = normalize(node.search_text || node.description || "");
+    const altLabels = normalize((node.alt_labels || []).join(" "));
+    const examples = normalize((node.examples || []).join(" "));
+    const notes = normalize((node.notes || []).join(" "));
+    const displayClass = normalize(node.display_class || "");
+    const mappingText = normalize((node.mapping_labels || []).join(" "));
+    let score = 0;
+
+    if (label === q || localName === q || qname === q) score += 180;
+    if (label.startsWith(q) || localName.startsWith(q) || qname.startsWith(q)) score += 95;
+    if (label.includes(q) || localName.includes(q) || qname.includes(q)) score += 70;
+    if (details.includes(q)) score += 28;
+    if (altLabels.includes(q)) score += 20;
+    if (displayClass.includes(q)) score += 18;
+    if (examples.includes(q) || notes.includes(q)) score += 12;
+    if (iri.includes(q)) score += 12;
+    if (mappingText.includes(q)) score += 9;
+    if (node.local) score += 18;
+    if ((node.modules || []).includes("vocabulary")) score += 12;
+    if ((node.modules || []).includes("schema")) score += 8;
+    score += Math.max(
+      fuzzyBonus(q, label),
+      fuzzyBonus(q, localName),
+      fuzzyBonus(q, qname),
+      fuzzyBonus(q, displayClass),
+      0
+    );
+    score += Math.min(Number(node.degree || 0), 60) / 25;
+    return score;
+  }
+
+  function searchResults(query) {
+    const q = normalize(query);
+    if (!q) return [];
+    return searchCandidates()
+      .map((node) => ({ node, score: scoreNode(node, q) }))
+      .filter((row) => row.score > 0)
+      .sort((left, right) => {
+        if (right.score !== left.score) return right.score - left.score;
+        if (left.node.local !== right.node.local) return left.node.local ? -1 : 1;
+        return left.node.label.localeCompare(right.node.label);
+      })
+      .slice(0, MAX_SUGGESTIONS)
+      .map((row) => row.node);
+  }
+
+  function updateTrail(nodeId) {
+    if (!nodeId) return;
+    state.trail = state.trail.filter((value) => value !== nodeId);
+    state.trail.push(nodeId);
+    if (state.trail.length > 10) {
+      state.trail = state.trail.slice(state.trail.length - 10);
+    }
+  }
+
+  function captureSnapshot() {
+    return {
+      selectedId: state.selectedId,
+      seedId: state.seedId,
+      expandedIds: Array.from(state.expandedIds),
+      trail: state.trail.slice(),
+      highlightedIndex: state.highlightedIndex,
+      searchValue: searchInputEl.value,
+      activeModules: activeModules(),
+      toggles: Object.fromEntries(Array.from(root.querySelectorAll("[data-explorer-toggle]")).map((input) => [input.dataset.explorerToggle, input.checked]))
+    };
+  }
+
+  function pushHistorySnapshot() {
+    state.history.push(captureSnapshot());
+    if (state.history.length > 30) {
+      state.history = state.history.slice(state.history.length - 30);
+    }
+  }
+
+  function applySnapshot(snapshot) {
+    if (!snapshot) return;
+    searchInputEl.value = snapshot.searchValue || "";
+    const selectedModules = new Set(snapshot.activeModules || []);
+    root.querySelectorAll("[data-explorer-module]").forEach((input) => {
+      input.checked = selectedModules.has(input.value);
+    });
+    root.querySelectorAll("[data-explorer-toggle]").forEach((input) => {
+      input.checked = Boolean(snapshot.toggles?.[input.dataset.explorerToggle]);
+    });
+    state.selectedId = snapshot.selectedId || null;
+    state.seedId = snapshot.seedId || null;
+    state.expandedIds = new Set(snapshot.expandedIds || []);
+    state.trail = Array.isArray(snapshot.trail) ? snapshot.trail.slice(-10) : [];
+    state.highlightedIndex = Number.isInteger(snapshot.highlightedIndex) ? snapshot.highlightedIndex : 0;
+  }
+
+  function runUndoable(action) {
+    pushHistorySnapshot();
+    action();
+    renderAll();
+  }
+
+  function undoLastStep() {
+    if (!state.history.length) return;
+    applySnapshot(state.history.pop());
+    renderAll();
+  }
+
+  function selectNode(nodeId, options = {}) {
+    if (!nodeId) return;
+    const reset = options.reset !== false;
+    state.selectedId = nodeId;
+    state.seedId = state.seedId || nodeId;
+    if (reset) {
+      state.expandedIds = new Set([nodeId]);
+    } else {
+      state.expandedIds.add(nodeId);
+    }
+    updateTrail(nodeId);
+  }
+
+  function buildBaseView() {
+    const selectedModules = new Set(activeModules());
+    const nodes = (payload.nodes || []).filter((node) => (node.modules || []).some((moduleId) => selectedModules.has(moduleId)));
+    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+    const links = (payload.links || []).filter((link) => selectedModules.has(link.module) && nodeMap.has(link.source) && nodeMap.has(link.target));
+    const adjacency = new Map();
+    links.forEach((link) => {
+      if (!adjacency.has(link.source)) adjacency.set(link.source, []);
+      if (!adjacency.has(link.target)) adjacency.set(link.target, []);
+      adjacency.get(link.source).push(link);
+      adjacency.get(link.target).push(link);
+    });
+    return { nodes, nodeMap, links, adjacency };
+  }
+
+  function buildExpandedGraph(view) {
+    const center = view.nodeMap.get(state.selectedId);
+    if (!center) {
+      return { center: null, nodes: [], links: [], nodeMap: new Map(), meta: { expandedCount: 0 } };
+    }
+    const expanded = new Set(Array.from(state.expandedIds).filter((id) => view.nodeMap.has(id)));
+    expanded.add(center.id);
+    const visibleIds = new Set([center.id]);
+    const visibleLinks = new Map();
+    Array.from(expanded).forEach((sourceId) => {
+      (view.adjacency.get(sourceId) || []).forEach((link) => {
+        const neighborId = link.source === sourceId ? link.target : link.source;
+        const neighbor = view.nodeMap.get(neighborId);
+        if (!neighbor) return;
+        if (!toggleEnabled("showExternalNeighbors") && !neighbor.local && neighbor.id !== center.id) return;
+        visibleIds.add(link.source);
+        visibleIds.add(link.target);
+        visibleLinks.set(`${link.source}|${link.target}|${link.predicate}|${link.module}`, link);
+      });
+    });
+    const nodes = Array.from(visibleIds)
+      .map((id) => view.nodeMap.get(id))
+      .filter(Boolean)
+      .sort((left, right) => {
+        if (left.id === center.id) return -1;
+        if (right.id === center.id) return 1;
+        if (left.local !== right.local) return left.local ? -1 : 1;
+        return left.label.localeCompare(right.label);
+      });
+    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+    const links = Array.from(visibleLinks.values()).filter((link) => nodeMap.has(link.source) && nodeMap.has(link.target));
+    return { center, nodes, links, nodeMap, meta: { expandedCount: expanded.size } };
+  }
+
+  function ensureCy() {
+    if (cy) return cy;
+    cy = cytoscape({
+      container: chartEl,
+      elements: [],
+      style: [
+        {
+          selector: "node",
+          style: {
+            "background-color": (ele) => ele.data("isCenter") ? "#c86a2b" : ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f",
+            "label": "data(label)",
+            "font-size": 11,
+            "text-wrap": "wrap",
+            "text-max-width": 120,
+            "color": "#132129",
+            "text-valign": "bottom",
+            "text-margin-y": 8,
+            "width": (ele) => ele.data("isCenter") ? 38 : 28,
+            "height": (ele) => ele.data("isCenter") ? 38 : 28,
+            "border-width": 1.4,
+            "border-color": "rgba(19,33,41,0.18)"
+          }
+        },
+        {
+          selector: "edge",
+          style: {
+            "line-color": "rgba(19,33,41,0.24)",
+            "target-arrow-color": "rgba(19,33,41,0.24)",
+            "target-arrow-shape": "triangle",
+            "curve-style": "bezier",
+            "arrow-scale": 0.9,
+            "width": 1.6,
+            "label": "data(label)",
+            "font-size": 9,
+            "color": "rgba(19,33,41,0.74)",
+            "text-background-color": "rgba(255,255,255,0.92)",
+            "text-background-opacity": 1,
+            "text-background-padding": 2,
+            "text-rotation": "autorotate"
+          }
+        },
+        {
+          selector: ":selected",
+          style: {
+            "overlay-color": "#0f6d7a",
+            "overlay-opacity": 0.08
+          }
+        }
+      ]
+    });
+    cy.on("tap", "node", (event) => {
+      runUndoable(() => {
+        state.seedId = state.seedId || event.target.id();
+        selectNode(event.target.id(), { reset: false });
+      });
+    });
+    return cy;
+  }
+
+  function runLayout(graph) {
+    const instance = ensureCy();
+    if (!graph.nodes.length) return;
+    const dense = graph.nodes.length > 28 || graph.links.length > 34;
+    instance.layout(
+      dense
+        ? { name: "circle", animate: false, fit: true, padding: 55 }
+        : {
+            name: "cose",
+            animate: false,
+            fit: true,
+            padding: 34,
+            nodeRepulsion: 320000,
+            idealEdgeLength: 120,
+            edgeElasticity: 110,
+            gravity: 0.24,
+            numIter: 850,
+            coolingFactor: 0.95
+          }
+    ).run();
+    const centerNode = instance.getElementById(graph.center.id);
+    if (centerNode && centerNode.nonempty()) {
+      instance.center(centerNode);
+    }
+  }
+
+  function buildCyElements(graph) {
+    const nodes = graph.nodes.map((node) => ({
+      data: {
+        id: node.id,
+        label: node.label,
+        isLocal: node.local,
+        isCenter: node.id === graph.center?.id
+      }
+    }));
+    const edges = graph.links.map((link) => ({
+      data: {
+        id: `${link.source}|${link.target}|${link.predicate}|${link.module}`,
+        source: link.source,
+        target: link.target,
+        label: String(link.value || link.predicate || "")
+      }
+    }));
+    return [...nodes, ...edges];
+  }
+
+  function renderSearchStatus(mode, rows, query) {
+    if (mode === "starter") {
+      searchStatusEl.textContent = "Suggested starting points from the published whole-ontology release. Choose one to seed the graph.";
+      return;
+    }
+    const scopeText = toggleEnabled("includeExternalSearch") ? "local and aligned external" : "local";
+    searchStatusEl.textContent = `${rows.length} ${scopeText} suggestion${rows.length === 1 ? "" : "s"} for "${query.trim()}".`;
+  }
+
+  function renderResults(rows, mode) {
+    currentSuggestions = rows;
+    if (!rows.length) {
+      resultsEl.innerHTML = `<div class="explorer-empty">${mode === "starter" ? "No starter terms are available with the current filters." : "No ontology terms match the current query."}</div>`;
+      return;
+    }
+    resultsEl.innerHTML = rows.map((node, index) => `
+      <button class="explorer-result ${node.id === state.seedId ? "is-active" : ""} ${index === state.highlightedIndex ? "is-highlighted" : ""}" type="button" data-explorer-result="${escapeHtml(node.id)}">
+        <strong>${escapeHtml(node.label)}</strong>
+        <small>${escapeHtml(node.display_class || node.category)}</small>
+        <div class="explorer-result__meta">
+          <span>${escapeHtml(node.localName || nodeQname(node) || node.iri)}</span>
+          <span>${escapeHtml((node.modules || []).join(", "))}</span>
+          <span>${node.local ? "Local" : "External"}</span>
+        </div>
+        <small>${escapeHtml(String(node.description || "").slice(0, 170))}</small>
+      </button>
+    `).join("");
+    resultsEl.querySelectorAll("[data-explorer-result]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          state.seedId = button.dataset.explorerResult;
+          selectNode(button.dataset.explorerResult, { reset: true });
+        });
+      });
+    });
+  }
+
+  function renderTrail(view) {
+    const rows = state.trail.map((id) => view.nodeMap.get(id)).filter(Boolean);
+    if (!rows.length) {
+      trailEl.innerHTML = '<div class="explorer-empty">The traversal trail appears after you select a term.</div>';
+      return;
+    }
+    trailEl.innerHTML = rows.map((node) => `
+      <button type="button" class="${node.id === state.selectedId ? "is-active" : ""}" data-explorer-trail="${escapeHtml(node.id)}">${escapeHtml(node.label)}</button>
+    `).join("");
+    trailEl.querySelectorAll("[data-explorer-trail]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          selectNode(button.dataset.explorerTrail, { reset: false });
+        });
+      });
+    });
+  }
+
+  function renderInspector(node, graph) {
+    if (!node) {
+      inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
+      return;
+    }
+    const referenceHref = node.local ? nodeAnchorHref(node) : node.iri;
+    inspectorEl.innerHTML = `
+      <div class="explorer-inspector">
+        <div class="explorer-inspector__section">
+          <strong>${escapeHtml(node.label)}</strong>
+          <div class="explorer-chip-row">
+            <span class="explorer-chip">${node.local ? "Local H2KG" : "External aligned"}</span>
+            <span class="explorer-chip">${escapeHtml(node.display_class || node.category)}</span>
+            <span class="explorer-chip">${escapeHtml(node.deprecated || "Active")}</span>
+          </div>
+        </div>
+        <div class="explorer-inspector__section">
+          <strong>Stable IRI</strong>
+          <p><code>${escapeHtml(node.iri)}</code></p>
+          <div class="button-row">
+            <a class="inline-button inline-button--small" href="${escapeHtml(referenceHref)}">Open reference</a>
+            <button type="button" class="inline-button inline-button--small inline-button--ghost" data-copy-iri="${escapeHtml(node.iri)}">Copy IRI</button>
+          </div>
+        </div>
+        <div class="explorer-inspector__section">
+          <strong>Definition</strong>
+          <p>${escapeHtml(node.description || "No definition recorded.")}</p>
+        </div>
+        <div class="explorer-inspector__section">
+          <strong>Graph role</strong>
+          <p>${escapeHtml(node.id === graph.center?.id ? "Current focus term." : "Visible through the current expanded neighborhood.")} Direct links in the explorer dataset: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml((node.modules || []).join(", "))}.</p>
+        </div>
+      </div>
+    `;
+    inspectorEl.querySelectorAll("[data-copy-iri]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copyIri || "");
+          button.textContent = "Copied";
+          setTimeout(() => { button.textContent = "Copy IRI"; }, 1000);
+        } catch (_error) {
+          button.textContent = "Copy failed";
+        }
+      });
+    });
+  }
+
+  function renderRelations(graph) {
+    if (!graph.center) {
+      relationsEl.innerHTML = '<div class="explorer-empty">Visible relations will appear here after you select a term.</div>';
+      return;
+    }
+    const rows = graph.links
+      .map((link) => ({
+        source: graph.nodeMap.get(link.source)?.label || link.source,
+        predicate: String(link.value || link.predicate || ""),
+        target: graph.nodeMap.get(link.target)?.label || link.target,
+        module: link.module,
+        kind: link.edgeFamily
+      }))
+      .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
+    if (!rows.length) {
+      relationsEl.innerHTML = '<div class="explorer-empty">No visible relations remain with the current graph filters.</div>';
+      return;
+    }
+    relationsEl.innerHTML = `
+      <table class="explorer-relations">
+        <thead>
+          <tr><th>Source</th><th>Predicate</th><th>Target</th><th>Module</th></tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr>
+              <td>${escapeHtml(row.source)}</td>
+              <td><code>${escapeHtml(row.predicate)}</code></td>
+              <td>${escapeHtml(row.target)}</td>
+              <td>${escapeHtml(row.module)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderGraph(graph) {
+    countNodesEl.textContent = String(graph.nodes.length);
+    countEdgesEl.textContent = String(graph.links.length);
+    countExpandedEl.textContent = String(graph.meta.expandedCount || 0);
+    if (!graph.center) {
+      graphNoteEl.textContent = "Search for a term or choose a suggested starting point to render the ontology graph.";
+      if (cy) cy.elements().remove();
+      return;
+    }
+    graphNoteEl.textContent = `Showing the direct visible neighborhood for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
+    const instance = ensureCy();
+    instance.elements().remove();
+    instance.add(buildCyElements(graph));
+    runLayout(graph);
+  }
+
+  function syncSelection(view, suggestions, mode) {
+    if (!view.nodeMap.size) {
+      state.selectedId = null;
+      state.seedId = null;
+      state.expandedIds = new Set();
+      return;
+    }
+    if (state.seedId && !view.nodeMap.has(state.seedId)) state.seedId = null;
+    if (state.selectedId && !view.nodeMap.has(state.selectedId)) {
+      state.selectedId = null;
+      state.expandedIds = new Set();
+    }
+    if (!state.selectedId && mode === "starter") return;
+    if (!state.selectedId && state.seedId && view.nodeMap.has(state.seedId)) {
+      selectNode(state.seedId, { reset: false });
+    }
+    if (!state.seedId && suggestions.length) state.seedId = suggestions[0].id;
+  }
+
+  function currentSuggestionMode(query) {
+    return normalize(query) ? "search" : "starter";
+  }
+
+  function currentSuggestionsForView(view, query) {
+    return currentSuggestionMode(query) === "search" ? searchResults(query) : starterSuggestions(view);
+  }
+
+  function renderAll() {
+    if (!payload) return;
+    const view = buildBaseView();
+    if (undoButtonEl) undoButtonEl.disabled = state.history.length === 0;
+    const query = searchInputEl.value;
+    const mode = currentSuggestionMode(query);
+    const suggestions = currentSuggestionsForView(view, query);
+    syncSelection(view, suggestions, mode);
+    if (state.highlightedIndex >= suggestions.length) {
+      state.highlightedIndex = Math.max(0, suggestions.length - 1);
+    }
+    renderSearchStatus(mode, suggestions, query);
+    renderResults(suggestions, mode);
+    renderTrail(view);
+    const graph = buildExpandedGraph(view);
+    renderGraph(graph);
+    renderInspector(graph.center, graph);
+    renderRelations(graph);
+  }
+
+  function applyDeepLink() {
+    const params = new URLSearchParams(window.location.search);
+    const iri = params.get("iri");
+    if (!iri || !payload) return;
+    const match = (payload.nodes || []).find((node) => node.iri === iri);
+    if (!match) return;
+    state.seedId = match.id;
+    selectNode(match.id, { reset: true });
+  }
+
+  searchInputEl.addEventListener("input", () => {
+    state.highlightedIndex = 0;
+    renderAll();
+  });
+  searchInputEl.addEventListener("keydown", (event) => {
+    if (!currentSuggestions.length) return;
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      state.highlightedIndex = Math.min(state.highlightedIndex + 1, currentSuggestions.length - 1);
+      renderAll();
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      state.highlightedIndex = Math.max(state.highlightedIndex - 1, 0);
+      renderAll();
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const node = currentSuggestions[state.highlightedIndex];
+      if (!node) return;
+      runUndoable(() => {
+        state.seedId = node.id;
+        selectNode(node.id, { reset: true });
+      });
+    }
+  });
+
+  root.querySelectorAll("[data-explorer-module], [data-explorer-toggle]").forEach((input) => {
+    input.addEventListener("change", renderAll);
+  });
+  root.querySelectorAll("[data-explorer-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.explorerAction === "undo") {
+        undoLastStep();
+      }
+      if (button.dataset.explorerAction === "reset") {
+        runUndoable(() => {
+          const seed = state.seedId || state.selectedId;
+          if (!seed) return;
+          state.selectedId = seed;
+          state.expandedIds = new Set([seed]);
+          updateTrail(seed);
+        });
+      }
+      if (button.dataset.explorerAction === "clear") {
+        runUndoable(() => {
+          searchInputEl.value = "";
+          state.selectedId = null;
+          state.seedId = null;
+          state.expandedIds = new Set();
+          state.trail = [];
+          state.highlightedIndex = 0;
+        });
+      }
+    });
+  });
+
+  fetch(dataPath)
+    .then((response) => response.json())
+    .then((data) => {
+      payload = data;
+      applyDeepLink();
+      renderAll();
+    })
+    .catch((error) => {
+      console.error("Failed to load explorer dataset", error);
+      resultsEl.innerHTML = '<div class="explorer-empty">The explorer dataset could not be loaded.</div>';
+      graphNoteEl.textContent = "The ontology graph is unavailable because the explorer dataset could not be loaded.";
+    });
+});
+"""
 
 
 def _style_css() -> str:

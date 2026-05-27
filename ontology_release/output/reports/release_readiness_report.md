@@ -4,10 +4,10 @@ FAIR signals on this page follow a public-first policy: local build artefacts im
 
 ## Publication Assets
 
-- HTML reference page: prepared
-- Machine-readable source: prepared
-- JSON-LD source: prepared
-- Alignment mappings: prepared
-- Examples module: prepared
-- Release bundle: prepared
-- w3id artifacts: prepared
+- HTML reference page: published
+- Machine-readable source: published
+- JSON-LD source: published
+- Alignment mappings: published
+- Examples module: published
+- Release bundle: published
+- w3id artifacts: published

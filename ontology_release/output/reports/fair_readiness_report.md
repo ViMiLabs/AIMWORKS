@@ -2,15 +2,15 @@
 
 ## Internal FAIR Signals
 
-- F / Findable: 80 / 100 (watch)
-- A / Accessible: 73 / 100 (watch)
+- F / Findable: 100 / 100 (good)
+- A / Accessible: 100 / 100 (good)
 - I / Interoperable: 100 / 100 (good)
 - R / Reusable: 100 / 100 (good)
 
 ## Transparency Hooks
 
 - OOPS! ontology pitfall scan: external service unreachable (unavailable)
-- FOOPS! FAIR assessment: external service unreachable (unavailable)
+- FOOPS! FAIR assessment: 75.0 / 100 (good)
 
 ## Summary
 
