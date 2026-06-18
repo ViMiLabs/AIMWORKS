@@ -147,7 +147,9 @@
             </div>
           </div>
           <p class="explorer-note" data-explorer-graph-note>Select a term to render its graph neighborhood.</p>
-          <div class="explorer-chart" data-explorer-chart></div>
+          <div class="explorer-chart-wrap">
+            <div class="explorer-chart" data-explorer-chart></div>
+          </div>
         </article>
         <div class="explorer-detail-grid">
           <article class="card explorer-panel">
@@ -157,7 +159,12 @@
             </div>
           </article>
           <article class="card explorer-panel">
-            <p class="eyebrow">Visible relations</p>
+            <div class="explorer-panel__head explorer-panel__head--compact">
+              <div>
+                <p class="eyebrow">Visible relations</p>
+              </div>
+              <button type="button" class="inline-button inline-button--small inline-button--ghost" data-explorer-download-relations disabled>Download Excel (.xls)</button>
+            </div>
             <div data-explorer-relations>
               <div class="explorer-empty">Visible relations will appear here after you select a term.</div>
             </div>

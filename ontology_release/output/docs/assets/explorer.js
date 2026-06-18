@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inspectorEl = root.querySelector("[data-explorer-inspector]");
   const relationsEl = root.querySelector("[data-explorer-relations]");
   const chartEl = root.querySelector("[data-explorer-chart]");
+  const downloadRelationsEl = root.querySelector("[data-explorer-download-relations]");
   const countNodesEl = root.querySelector('[data-explorer-count="nodes"]');
   const countEdgesEl = root.querySelector('[data-explorer-count="edges"]');
   const countExpandedEl = root.querySelector('[data-explorer-count="expanded"]');
@@ -37,12 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const state = {
     selectedId: null,
-    seedId: null,
-    expandedIds: new Set(),
-    trail: [],
-    history: [],
-    highlightedIndex: 0
-  };
+      seedId: null,
+      expandedIds: new Set(),
+      trail: [],
+      history: [],
+      highlightedIndex: 0,
+      currentGraph: null,
+      currentRelations: [],
+      hoverCardEl: null
+    };
 
   const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -54,10 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
-  const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
-  const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
+    const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
+    const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
+    const slugify = (value) => stripKey(value).slice(0, 64) || "selection";
 
-  function levenshtein(left, right) {
+    function levenshtein(left, right) {
     if (left === right) return 0;
     if (!left.length) return right.length;
     if (!right.length) return left.length;
@@ -350,6 +355,21 @@ document.addEventListener("DOMContentLoaded", () => {
         selectNode(event.target.id(), { reset: false });
       });
     });
+    cy.on("mouseover", "node", (event) => {
+      showHoverCardForNode(event.target.id(), event);
+    });
+    cy.on("mouseover", "edge", (event) => {
+      showHoverCardForEdge(event.target.id(), event);
+    });
+    cy.on("mousemove", "node, edge", (event) => {
+      positionHoverCard(event);
+    });
+    cy.on("mouseout", "node, edge", () => {
+      hideHoverCard();
+    });
+    cy.on("tap", (event) => {
+      if (event.target === cy) hideHoverCard();
+    });
     return cy;
   }
 
@@ -385,7 +405,8 @@ document.addEventListener("DOMContentLoaded", () => {
         id: node.id,
         label: node.label,
         isLocal: node.local,
-        isCenter: node.id === graph.center?.id
+        isCenter: node.id === graph.center?.id,
+        iri: node.iri
       }
     }));
     const edges = graph.links.map((link) => ({
@@ -397,6 +418,147 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }));
     return [...nodes, ...edges];
+  }
+
+  function ensureHoverCard() {
+    if (state.hoverCardEl) return state.hoverCardEl;
+    const container = chartEl.parentElement;
+    if (!container) return null;
+    const card = document.createElement("div");
+    card.className = "explorer-hovercard is-hidden";
+    card.setAttribute("aria-hidden", "true");
+    container.appendChild(card);
+    state.hoverCardEl = card;
+    return card;
+  }
+
+  function positionHoverCard(event) {
+    const card = ensureHoverCard();
+    if (!card || card.classList.contains("is-hidden")) return;
+    const container = chartEl.parentElement;
+    if (!container) return;
+    const point = event.renderedPosition || event.position;
+    if (!point) return;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const cardWidth = Math.min(card.offsetWidth || 360, containerWidth - 16);
+    const cardHeight = Math.min(card.offsetHeight || 220, containerHeight - 16);
+    const desiredLeft = Math.min(Math.max(point.x + 16, 12), Math.max(12, containerWidth - cardWidth - 12));
+    const desiredTop = Math.min(Math.max(point.y + 16, 12), Math.max(12, containerHeight - cardHeight - 12));
+    card.style.left = `${desiredLeft}px`;
+    card.style.top = `${desiredTop}px`;
+  }
+
+  function tripleRowsForNode(nodeId) {
+    const graph = state.currentGraph;
+    if (!graph) return [];
+    return graph.links
+      .filter((link) => link.source === nodeId || link.target === nodeId)
+      .map((link) => ({
+        source: graph.nodeMap.get(link.source)?.label || link.source,
+        predicate: String(link.value || link.predicate || ""),
+        target: graph.nodeMap.get(link.target)?.label || link.target,
+        module: link.module,
+        kind: link.edgeFamily
+      }))
+      .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
+  }
+
+  function renderHoverCard(title, subtitle, rows) {
+    const card = ensureHoverCard();
+    if (!card) return;
+    const preview = rows.slice(0, 12);
+    card.innerHTML = `
+      <div class="explorer-hovercard__head">
+        <strong>${escapeHtml(title)}</strong>
+        <span class="explorer-hovercard__label">${escapeHtml(subtitle)}</span>
+      </div>
+      <div class="explorer-hovercard__body">
+        ${preview.length ? preview.map((row) => `
+          <div class="explorer-hovercard__triple">
+            <div class="explorer-hovercard__spo"><strong>${escapeHtml(row.source)}</strong> <code>${escapeHtml(row.predicate)}</code> <strong>${escapeHtml(row.target)}</strong></div>
+            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}</div>
+          </div>
+        `).join("") : '<div class="explorer-empty">No visible SPO relations for this selection.</div>'}
+        ${rows.length > preview.length ? `<div class="explorer-hovercard__meta">Showing ${preview.length} of ${rows.length} visible relations.</div>` : ""}
+      </div>
+    `;
+    card.classList.remove("is-hidden");
+    card.setAttribute("aria-hidden", "false");
+  }
+
+  function hideHoverCard() {
+    const card = ensureHoverCard();
+    if (!card) return;
+    card.classList.add("is-hidden");
+    card.setAttribute("aria-hidden", "true");
+  }
+
+  function showHoverCardForNode(nodeId, event) {
+    const graph = state.currentGraph;
+    if (!graph) return;
+    const node = graph.nodeMap.get(nodeId);
+    if (!node) return;
+    renderHoverCard(node.label, "Node relations", tripleRowsForNode(nodeId));
+    positionHoverCard(event);
+  }
+
+  function showHoverCardForEdge(edgeId, event) {
+    const graph = state.currentGraph;
+    if (!graph) return;
+    const link = graph.links.find((item) => `${item.source}|${item.target}|${item.predicate}|${item.module}` === edgeId);
+    if (!link) return;
+    const row = {
+      source: graph.nodeMap.get(link.source)?.label || link.source,
+      predicate: String(link.value || link.predicate || ""),
+      target: graph.nodeMap.get(link.target)?.label || link.target,
+      module: link.module,
+      kind: link.edgeFamily
+    };
+    renderHoverCard(row.predicate, "Edge relation", [row]);
+    positionHoverCard(event);
+  }
+
+  function downloadRelationsAsExcel(rows, selectedNode) {
+    if (!rows.length) return;
+    const tableRows = rows.map((row) => `
+      <tr>
+        <td>${escapeHtml(row.source)}</td>
+        <td>${escapeHtml(row.predicate)}</td>
+        <td>${escapeHtml(row.target)}</td>
+        <td>${escapeHtml(row.module)}</td>
+      </tr>
+    `).join("");
+    const html = `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      table { border-collapse: collapse; font-family: Arial, sans-serif; }
+      th, td { border: 1px solid #b8c0c8; padding: 6px 8px; text-align: left; vertical-align: top; }
+      th { background: #eef3f5; font-weight: 700; }
+      h1 { font-family: Arial, sans-serif; font-size: 18px; }
+      p { font-family: Arial, sans-serif; color: #3d4b55; }
+    </style>
+  </head>
+  <body>
+    <h1>H2KG Visible Relations</h1>
+    <p>Selection: ${escapeHtml(selectedNode?.label || "Current graph selection")}</p>
+    <table>
+      <thead><tr><th>Source</th><th>Predicate</th><th>Target</th><th>Module</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table>
+  </body>
+</html>`;
+    const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `h2kg-visible-relations-${slugify(selectedNode?.localName || selectedNode?.label || "selection")}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   }
 
   function renderSearchStatus(mode, rows, query) {
@@ -503,6 +665,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderRelations(graph) {
     if (!graph.center) {
+      state.currentRelations = [];
+      if (downloadRelationsEl) downloadRelationsEl.disabled = true;
       relationsEl.innerHTML = '<div class="explorer-empty">Visible relations will appear here after you select a term.</div>';
       return;
     }
@@ -515,6 +679,8 @@ document.addEventListener("DOMContentLoaded", () => {
         kind: link.edgeFamily
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
+    state.currentRelations = rows;
+    if (downloadRelationsEl) downloadRelationsEl.disabled = rows.length === 0;
     if (!rows.length) {
       relationsEl.innerHTML = '<div class="explorer-empty">No visible relations remain with the current graph filters.</div>';
       return;
@@ -539,10 +705,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderGraph(graph) {
+    state.currentGraph = graph;
+    hideHoverCard();
     countNodesEl.textContent = String(graph.nodes.length);
     countEdgesEl.textContent = String(graph.links.length);
     countExpandedEl.textContent = String(graph.meta.expandedCount || 0);
     if (!graph.center) {
+      hideHoverCard();
       graphNoteEl.textContent = "Search for a term or choose a suggested starting point to render the ontology graph.";
       if (cy) cy.elements().remove();
       return;
@@ -641,8 +810,8 @@ document.addEventListener("DOMContentLoaded", () => {
   root.querySelectorAll("[data-explorer-module], [data-explorer-toggle]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
-  root.querySelectorAll("[data-explorer-action]").forEach((button) => {
-    button.addEventListener("click", () => {
+    root.querySelectorAll("[data-explorer-action]").forEach((button) => {
+      button.addEventListener("click", () => {
       if (button.dataset.explorerAction === "undo") {
         undoLastStep();
       }
@@ -665,10 +834,15 @@ document.addEventListener("DOMContentLoaded", () => {
           state.highlightedIndex = 0;
         });
       }
+      });
     });
-  });
+    if (downloadRelationsEl) {
+      downloadRelationsEl.addEventListener("click", () => {
+        downloadRelationsAsExcel(state.currentRelations || [], state.currentGraph?.center || null);
+      });
+    }
 
-  fetch(dataPath)
+    fetch(dataPath)
     .then((response) => response.json())
     .then((data) => {
       payload = data;

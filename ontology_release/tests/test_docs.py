@@ -88,12 +88,16 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "Whole-Ontology Search" in explore_page
     assert 'data-explorer-root' in explore_page
     assert "Search the ontology" in explore_page
+    assert "Download Excel (.xls)" in explore_page
     explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
     local_nodes = {item["iri"]: item for item in explorer_data["nodes"] if item.get("local")}
     assert "https://w3id.org/h2kg/hydrogen-ontology#Parameter" in local_nodes
     assert any(link["predicate"] == "subclassOf" for link in explorer_data["links"])
     assert any(link["predicate"] == "range" for link in explorer_data["links"])
     assert any(module["id"] == "schema" for module in explorer_data["modules"])
+    explorer_js = (output_dir / "docs" / "assets" / "explorer.js").read_text(encoding="utf-8")
+    assert "downloadRelationsAsExcel" in explorer_js
+    assert "showHoverCardForNode" in explorer_js
     pemfc_reference_page = (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Profile Reference Scope" in pemfc_reference_page
     assert "Reference Contents" in pemfc_reference_page

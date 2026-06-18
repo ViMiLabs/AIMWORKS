@@ -1000,7 +1000,9 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
             </div>
           </div>
           <p class="explorer-note" data-explorer-graph-note>Select a term to render its graph neighborhood.</p>
-          <div class="explorer-chart" data-explorer-chart></div>
+          <div class="explorer-chart-wrap">
+            <div class="explorer-chart" data-explorer-chart></div>
+          </div>
         </article>
         <div class="explorer-detail-grid">
           <article class="card explorer-panel">
@@ -1010,7 +1012,12 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
             </div>
           </article>
           <article class="card explorer-panel">
-            <p class="eyebrow">Visible relations</p>
+            <div class="explorer-panel__head explorer-panel__head--compact">
+              <div>
+                <p class="eyebrow">Visible relations</p>
+              </div>
+              <button type="button" class="inline-button inline-button--small inline-button--ghost" data-explorer-download-relations disabled>Download Excel (.xls)</button>
+            </div>
             <div data-explorer-relations>
               <div class="explorer-empty">Visible relations will appear here after you select a term.</div>
             </div>
@@ -2137,17 +2144,18 @@ def _explorer_css() -> str:
 }
 .explorer-sidebar, .explorer-main, .explorer-detail-grid { display: grid; gap: 1rem; }
 .explorer-panel h2, .explorer-panel h3 { margin: 0; }
-.explorer-panel__head {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.explorer-kpis {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-  min-width: 260px;
+  .explorer-panel__head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .explorer-panel__head--compact { align-items: center; }
+  .explorer-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+    min-width: 260px;
 }
 .explorer-kpis div,
 .explorer-result__meta span,
@@ -2247,33 +2255,101 @@ def _explorer_css() -> str:
   font: inherit;
   color: var(--ink);
 }
-.explorer-chart {
-  min-height: 520px;
-  border: 1px solid rgba(19,33,41,0.08);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,244,237,0.72));
-}
-.explorer-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.explorer-inspector { display: grid; gap: 0.8rem; }
-.explorer-inspector__section { padding-top: 0.7rem; border-top: 1px solid rgba(19,33,41,0.08); }
-.explorer-inspector__section:first-child { padding-top: 0; border-top: 0; }
-.explorer-inspector p { margin: 0.3rem 0 0; color: var(--muted); line-height: 1.6; }
+  .explorer-chart {
+    min-height: 520px;
+    border: 1px solid rgba(19,33,41,0.08);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,244,237,0.72));
+  }
+  .explorer-chart-wrap {
+    position: relative;
+    margin-top: 0.85rem;
+  }
+  .explorer-hovercard {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 4;
+    width: min(460px, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    overflow: auto;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(19,33,41,0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 16px 40px rgba(17, 29, 36, 0.14);
+    backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+  .explorer-hovercard.is-hidden { display: none; }
+  .explorer-hovercard__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .explorer-hovercard__head strong {
+    font-size: 1rem;
+  }
+  .explorer-hovercard__label {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .explorer-hovercard__body {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+  .explorer-hovercard__triple {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(19,33,41,0.08);
+  }
+  .explorer-hovercard__triple:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .explorer-hovercard__spo {
+    line-height: 1.55;
+    color: var(--ink);
+    font-size: 0.96rem;
+  }
+  .explorer-hovercard__spo strong {
+    font-weight: 700;
+  }
+  .explorer-hovercard__meta {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .explorer-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .explorer-inspector { display: grid; gap: 0.8rem; }
+  .explorer-inspector__section { padding-top: 0.7rem; border-top: 1px solid rgba(19,33,41,0.08); }
+  .explorer-inspector__section:first-child { padding-top: 0; border-top: 0; }
+  .explorer-inspector p { margin: 0.3rem 0 0; color: var(--muted); line-height: 1.6; }
 .explorer-chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
 .explorer-relations { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.explorer-relations th,
-.explorer-relations td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid rgba(19,33,41,0.08); vertical-align: top; }
-.explorer-relations th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-@media (max-width: 1100px) {
-  .explorer-shell,
-  .explorer-detail-grid { grid-template-columns: 1fr; }
+  .explorer-relations th,
+  .explorer-relations td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid rgba(19,33,41,0.08); vertical-align: top; }
+  .explorer-relations th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media (max-width: 1100px) {
+    .explorer-shell,
+    .explorer-detail-grid { grid-template-columns: 1fr; }
   .explorer-kpis { min-width: 0; }
 }
 @media (max-width: 760px) {
-  .explorer-panel__head { flex-direction: column; }
-  .explorer-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
-  .explorer-chart { min-height: 420px; }
-}
-"""
+    .explorer-panel__head { flex-direction: column; }
+    .explorer-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+    .explorer-chart { min-height: 420px; }
+    .explorer-hovercard {
+      width: calc(100% - 1.2rem);
+      top: 0.6rem;
+      left: 0.6rem;
+    }
+  }
+  """
 
 
 def _explorer_js() -> str:
@@ -2292,6 +2368,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inspectorEl = root.querySelector("[data-explorer-inspector]");
   const relationsEl = root.querySelector("[data-explorer-relations]");
   const chartEl = root.querySelector("[data-explorer-chart]");
+  const downloadRelationsEl = root.querySelector("[data-explorer-download-relations]");
   const countNodesEl = root.querySelector('[data-explorer-count="nodes"]');
   const countEdgesEl = root.querySelector('[data-explorer-count="edges"]');
   const countExpandedEl = root.querySelector('[data-explorer-count="expanded"]');
@@ -2316,12 +2393,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const state = {
     selectedId: null,
-    seedId: null,
-    expandedIds: new Set(),
-    trail: [],
-    history: [],
-    highlightedIndex: 0
-  };
+      seedId: null,
+      expandedIds: new Set(),
+      trail: [],
+      history: [],
+      highlightedIndex: 0,
+      currentGraph: null,
+      currentRelations: [],
+      hoverCardEl: null
+    };
 
   const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -2333,10 +2413,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
-  const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
-  const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
+    const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
+    const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
+    const slugify = (value) => stripKey(value).slice(0, 64) || "selection";
 
-  function levenshtein(left, right) {
+    function levenshtein(left, right) {
     if (left === right) return 0;
     if (!left.length) return right.length;
     if (!right.length) return left.length;
@@ -2629,6 +2710,21 @@ document.addEventListener("DOMContentLoaded", () => {
         selectNode(event.target.id(), { reset: false });
       });
     });
+    cy.on("mouseover", "node", (event) => {
+      showHoverCardForNode(event.target.id(), event);
+    });
+    cy.on("mouseover", "edge", (event) => {
+      showHoverCardForEdge(event.target.id(), event);
+    });
+    cy.on("mousemove", "node, edge", (event) => {
+      positionHoverCard(event);
+    });
+    cy.on("mouseout", "node, edge", () => {
+      hideHoverCard();
+    });
+    cy.on("tap", (event) => {
+      if (event.target === cy) hideHoverCard();
+    });
     return cy;
   }
 
@@ -2664,7 +2760,8 @@ document.addEventListener("DOMContentLoaded", () => {
         id: node.id,
         label: node.label,
         isLocal: node.local,
-        isCenter: node.id === graph.center?.id
+        isCenter: node.id === graph.center?.id,
+        iri: node.iri
       }
     }));
     const edges = graph.links.map((link) => ({
@@ -2676,6 +2773,147 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }));
     return [...nodes, ...edges];
+  }
+
+  function ensureHoverCard() {
+    if (state.hoverCardEl) return state.hoverCardEl;
+    const container = chartEl.parentElement;
+    if (!container) return null;
+    const card = document.createElement("div");
+    card.className = "explorer-hovercard is-hidden";
+    card.setAttribute("aria-hidden", "true");
+    container.appendChild(card);
+    state.hoverCardEl = card;
+    return card;
+  }
+
+  function positionHoverCard(event) {
+    const card = ensureHoverCard();
+    if (!card || card.classList.contains("is-hidden")) return;
+    const container = chartEl.parentElement;
+    if (!container) return;
+    const point = event.renderedPosition || event.position;
+    if (!point) return;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const cardWidth = Math.min(card.offsetWidth || 360, containerWidth - 16);
+    const cardHeight = Math.min(card.offsetHeight || 220, containerHeight - 16);
+    const desiredLeft = Math.min(Math.max(point.x + 16, 12), Math.max(12, containerWidth - cardWidth - 12));
+    const desiredTop = Math.min(Math.max(point.y + 16, 12), Math.max(12, containerHeight - cardHeight - 12));
+    card.style.left = `${desiredLeft}px`;
+    card.style.top = `${desiredTop}px`;
+  }
+
+  function tripleRowsForNode(nodeId) {
+    const graph = state.currentGraph;
+    if (!graph) return [];
+    return graph.links
+      .filter((link) => link.source === nodeId || link.target === nodeId)
+      .map((link) => ({
+        source: graph.nodeMap.get(link.source)?.label || link.source,
+        predicate: String(link.value || link.predicate || ""),
+        target: graph.nodeMap.get(link.target)?.label || link.target,
+        module: link.module,
+        kind: link.edgeFamily
+      }))
+      .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
+  }
+
+  function renderHoverCard(title, subtitle, rows) {
+    const card = ensureHoverCard();
+    if (!card) return;
+    const preview = rows.slice(0, 12);
+    card.innerHTML = `
+      <div class="explorer-hovercard__head">
+        <strong>${escapeHtml(title)}</strong>
+        <span class="explorer-hovercard__label">${escapeHtml(subtitle)}</span>
+      </div>
+      <div class="explorer-hovercard__body">
+        ${preview.length ? preview.map((row) => `
+          <div class="explorer-hovercard__triple">
+            <div class="explorer-hovercard__spo"><strong>${escapeHtml(row.source)}</strong> <code>${escapeHtml(row.predicate)}</code> <strong>${escapeHtml(row.target)}</strong></div>
+            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}</div>
+          </div>
+        `).join("") : '<div class="explorer-empty">No visible SPO relations for this selection.</div>'}
+        ${rows.length > preview.length ? `<div class="explorer-hovercard__meta">Showing ${preview.length} of ${rows.length} visible relations.</div>` : ""}
+      </div>
+    `;
+    card.classList.remove("is-hidden");
+    card.setAttribute("aria-hidden", "false");
+  }
+
+  function hideHoverCard() {
+    const card = ensureHoverCard();
+    if (!card) return;
+    card.classList.add("is-hidden");
+    card.setAttribute("aria-hidden", "true");
+  }
+
+  function showHoverCardForNode(nodeId, event) {
+    const graph = state.currentGraph;
+    if (!graph) return;
+    const node = graph.nodeMap.get(nodeId);
+    if (!node) return;
+    renderHoverCard(node.label, "Node relations", tripleRowsForNode(nodeId));
+    positionHoverCard(event);
+  }
+
+  function showHoverCardForEdge(edgeId, event) {
+    const graph = state.currentGraph;
+    if (!graph) return;
+    const link = graph.links.find((item) => `${item.source}|${item.target}|${item.predicate}|${item.module}` === edgeId);
+    if (!link) return;
+    const row = {
+      source: graph.nodeMap.get(link.source)?.label || link.source,
+      predicate: String(link.value || link.predicate || ""),
+      target: graph.nodeMap.get(link.target)?.label || link.target,
+      module: link.module,
+      kind: link.edgeFamily
+    };
+    renderHoverCard(row.predicate, "Edge relation", [row]);
+    positionHoverCard(event);
+  }
+
+  function downloadRelationsAsExcel(rows, selectedNode) {
+    if (!rows.length) return;
+    const tableRows = rows.map((row) => `
+      <tr>
+        <td>${escapeHtml(row.source)}</td>
+        <td>${escapeHtml(row.predicate)}</td>
+        <td>${escapeHtml(row.target)}</td>
+        <td>${escapeHtml(row.module)}</td>
+      </tr>
+    `).join("");
+    const html = `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      table { border-collapse: collapse; font-family: Arial, sans-serif; }
+      th, td { border: 1px solid #b8c0c8; padding: 6px 8px; text-align: left; vertical-align: top; }
+      th { background: #eef3f5; font-weight: 700; }
+      h1 { font-family: Arial, sans-serif; font-size: 18px; }
+      p { font-family: Arial, sans-serif; color: #3d4b55; }
+    </style>
+  </head>
+  <body>
+    <h1>H2KG Visible Relations</h1>
+    <p>Selection: ${escapeHtml(selectedNode?.label || "Current graph selection")}</p>
+    <table>
+      <thead><tr><th>Source</th><th>Predicate</th><th>Target</th><th>Module</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table>
+  </body>
+</html>`;
+    const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `h2kg-visible-relations-${slugify(selectedNode?.localName || selectedNode?.label || "selection")}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   }
 
   function renderSearchStatus(mode, rows, query) {
@@ -2782,6 +3020,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderRelations(graph) {
     if (!graph.center) {
+      state.currentRelations = [];
+      if (downloadRelationsEl) downloadRelationsEl.disabled = true;
       relationsEl.innerHTML = '<div class="explorer-empty">Visible relations will appear here after you select a term.</div>';
       return;
     }
@@ -2794,6 +3034,8 @@ document.addEventListener("DOMContentLoaded", () => {
         kind: link.edgeFamily
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
+    state.currentRelations = rows;
+    if (downloadRelationsEl) downloadRelationsEl.disabled = rows.length === 0;
     if (!rows.length) {
       relationsEl.innerHTML = '<div class="explorer-empty">No visible relations remain with the current graph filters.</div>';
       return;
@@ -2818,10 +3060,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderGraph(graph) {
+    state.currentGraph = graph;
+    hideHoverCard();
     countNodesEl.textContent = String(graph.nodes.length);
     countEdgesEl.textContent = String(graph.links.length);
     countExpandedEl.textContent = String(graph.meta.expandedCount || 0);
     if (!graph.center) {
+      hideHoverCard();
       graphNoteEl.textContent = "Search for a term or choose a suggested starting point to render the ontology graph.";
       if (cy) cy.elements().remove();
       return;
@@ -2920,8 +3165,8 @@ document.addEventListener("DOMContentLoaded", () => {
   root.querySelectorAll("[data-explorer-module], [data-explorer-toggle]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
-  root.querySelectorAll("[data-explorer-action]").forEach((button) => {
-    button.addEventListener("click", () => {
+    root.querySelectorAll("[data-explorer-action]").forEach((button) => {
+      button.addEventListener("click", () => {
       if (button.dataset.explorerAction === "undo") {
         undoLastStep();
       }
@@ -2944,10 +3189,15 @@ document.addEventListener("DOMContentLoaded", () => {
           state.highlightedIndex = 0;
         });
       }
+      });
     });
-  });
+    if (downloadRelationsEl) {
+      downloadRelationsEl.addEventListener("click", () => {
+        downloadRelationsAsExcel(state.currentRelations || [], state.currentGraph?.center || null);
+      });
+    }
 
-  fetch(dataPath)
+    fetch(dataPath)
     .then((response) => response.json())
     .then((data) => {
       payload = data;
