@@ -5,11 +5,11 @@
 - SHACL executed: true
 - SHACL details: Validation Report
 Conforms: True
-- Release candidate path: `ontology_release\output\ontology\schema.ttl`
+- Release candidate path: `output\ontology\schema.ttl`
 
 ## Release Candidate Checks
 
-- Local schema terms: 32
+- Local schema terms: 33
 - Missing labels: 0
 - Missing definitions: 0
 - Placeholder-style generated definitions: 0
@@ -38,7 +38,7 @@ Conforms: True
 - Findable: 60.0
 - Accessible: None
 - Interoperable: 100.0
-- Reusable: 91.2
+- Reusable: 91.5
 
 ## FOOPS! Failed Checks
 

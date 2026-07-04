@@ -166,7 +166,9 @@ register the `https://w3id.org/h2kg/` namespace.
 
 - Repository: `{profile['repository_url']}`
 - Docs base: `{profile['docs_url']}`
-- Maintainers: AIMWORKS / ViMiLabs
+- Maintainers:
+  - Marjan Kohandani (`@Marjanknd`) - Theory and Computation of Energy Materials (IET-3), Institute of Energy Technologies, Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
+  - Mohammad J. Eslamibidgoli (`@meslamib3`) - Centre for Advanced Simulation and Analytics (CASA), Simulation and Data Science Lab for Energy Materials (SDL-EM), Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
 
 ## Notes
 

@@ -1,22 +1,22 @@
 # Inspection Report
 
-Generated on 2026-06-18.
+Generated on 2026-07-04.
 
 ## Ontology Summary
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
-- Raw JSON-LD nodes: 3281
-- Merged node count: 3281
-- Local `h2kg` nodes: 2151
+- Raw JSON-LD nodes: 3286
+- Merged node count: 3286
+- Local `h2kg` nodes: 2154
 - Explicit classes: 14
-- Explicit object properties: 18
+- Explicit object properties: 19
 - Explicit datatype properties: 1
-- QUDT quantity value nodes: 1116
+- QUDT quantity value nodes: 1118
 
 ## Schema Annotation Coverage
 
-- Schema terms inspected: 33
-- With labels: 21
+- Schema terms inspected: 34
+- With labels: 22
 - With comments: 0
 - With definitions: 0
 
@@ -34,11 +34,11 @@ Generated on 2026-06-18.
 
 ## Namespace Usage
 
-- `https://w3id.org/h2kg/hydrogen-ontology#`: 4101
-- `http://www.w3.org/2004/02/skos/core#`: 3810
-- `http://purl.org/dc/terms/`: 2170
-- `http://www.w3.org/2000/01/rdf-schema#`: 2058
-- `http://qudt.org/schema/qudt/`: 1482
+- `https://w3id.org/h2kg/hydrogen-ontology#`: 4106
+- `http://www.w3.org/2004/02/skos/core#`: 3814
+- `http://purl.org/dc/terms/`: 2173
+- `http://www.w3.org/2000/01/rdf-schema#`: 2062
+- `http://qudt.org/schema/qudt/`: 1486
 - `http://www.w3.org/2002/07/owl#`: 6
 - `http://www.w3.org/ns/prov#`: 6
 - `http://xmlns.com/foaf/0.1/`: 1
@@ -47,7 +47,7 @@ Generated on 2026-06-18.
 ## Likely Release Blockers
 
 - 12 schema terms are missing rdfs:label annotations.
-- 33 schema terms are missing skos:definition annotations.
+- 34 schema terms are missing skos:definition annotations.
 - The ontology contains many QUDT quantity-value nodes that should remain in an example or data module.
 
 ## Likely FAIR Blockers

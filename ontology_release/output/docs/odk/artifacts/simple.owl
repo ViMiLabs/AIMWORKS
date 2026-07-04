@@ -5,13 +5,14 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dcat="http://www.w3.org/ns/dcat#"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
      xmlns:vann="http://purl.org/vocab/vann/"
      xmlns:terms="http://purl.org/dc/terms/">
     <owl:Ontology rdf:about="http://purl.obolibrary.org/obo/h2kg/h2kg-simple.owl">
-        <owl:versionIRI rdf:resource="http://purl.obolibrary.org/obo/h2kg/releases/2026-04-09/h2kg-simple.owl"/>
+        <owl:versionIRI rdf:resource="http://purl.obolibrary.org/obo/h2kg/releases/2026-04-12/h2kg-simple.owl"/>
         <terms:abstract xml:lang="en">Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.
 </terms:abstract>
         <terms:contributor>Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany</terms:contributor>
@@ -65,7 +66,7 @@
         <rdfs:seeAlso rdf:resource="https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence"/>
         <owl:priorVersion rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <owl:versionInfo xml:lang="en">1.0.0</owl:versionInfo>
-        <owl:versionInfo>2026-04-09</owl:versionInfo>
+        <owl:versionInfo>2026-04-12</owl:versionInfo>
         <foaf:homepage rdf:resource="https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence"/>
     </owl:Ontology>
     
@@ -109,6 +110,18 @@
     <!-- http://purl.org/dc/terms/description -->
 
     <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/format -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/format"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/issued"/>
     
 
 
@@ -184,6 +197,12 @@
     
 
 
+    <!-- http://www.w3.org/ns/dcat#downloadURL -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/dcat#downloadURL"/>
+    
+
+
     <!-- http://xmlns.com/foaf/0.1/homepage -->
 
     <owl:AnnotationProperty rdf:about="http://xmlns.com/foaf/0.1/homepage"/>
@@ -219,10 +238,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#atCurrentDensity -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#atCurrentDensity">
-        <rdfs:comment xml:lang="en">atCurrentDensity is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for atcurrentdensity.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">atCurrentDensity</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates an observation, result, or condition to the current-density setting at which it applies.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -230,10 +249,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement">
-        <rdfs:comment xml:lang="en">fromMeasurement is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for frommeasurement.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">fromMeasurement</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates data, a result, or a derived statement to the measurement from which it originates.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -242,10 +261,10 @@
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasInputData">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used"/>
-        <rdfs:comment xml:lang="en">hasInputData is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasinputdata.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasInputData</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process, analysis, or transformation to data used as its input.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -254,10 +273,10 @@
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used"/>
-        <rdfs:comment xml:lang="en">hasInputMaterial is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasinputmaterial.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasInputMaterial</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process to a material that serves as an input to that process.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -265,10 +284,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#hasOutputData -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasOutputData">
-        <rdfs:comment xml:lang="en">hasOutputData is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasoutputdata.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasOutputData</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process or measurement to data generated as its output.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -276,10 +295,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial">
-        <rdfs:comment xml:lang="en">hasOutputMaterial is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasoutputmaterial.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasOutputMaterial</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process to a material produced by that process.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -287,10 +306,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#hasParameter -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasParameter">
-        <rdfs:comment xml:lang="en">hasParameter is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasparameter.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasParameter</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process, measurement, or resource to a parameter used to characterize its conditions or settings.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -299,10 +318,10 @@
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasPart">
         <owl:inverseOf rdf:resource="https://w3id.org/h2kg/hydrogen-ontology#isPartOf"/>
-        <rdfs:comment xml:lang="en">hasPart is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for haspart.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasPart</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a composite entity to one of its constituent parts.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -310,10 +329,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#hasProperty -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasProperty">
-        <rdfs:comment xml:lang="en">hasProperty is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasproperty.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasProperty</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a resource to a property that it bears, reports, or is described in terms of.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -321,10 +340,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue">
-        <rdfs:comment xml:lang="en">hasQuantityValue is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hasquantityvalue.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasQuantityValue</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a parameter, property, or data point to a quantity-value node that carries its numeric value and unit.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -333,21 +352,10 @@
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess">
         <owl:inverseOf rdf:resource="https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf"/>
-        <rdfs:comment xml:lang="en">hasSubProcess is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for hassubprocess.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">hasSubProcess</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- https://w3id.org/h2kg/hydrogen-ontology#influences -->
-
-    <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#influences">
-        <rdfs:comment xml:lang="en">influences is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
-        <rdfs:label xml:lang="en">influences</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process to a subprocess that forms part of its execution.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -355,10 +363,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#isPartOf -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#isPartOf">
-        <rdfs:comment xml:lang="en">isPartOf is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for ispartof.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">isPartOf</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates an entity to a larger entity of which it is a constituent part.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -366,10 +374,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf">
-        <rdfs:comment xml:lang="en">isSubProcessOf is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for issubprocessof.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">isSubProcessOf</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a subprocess to the larger process of which it forms a part.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -377,10 +385,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#measures -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#measures">
-        <rdfs:comment xml:lang="en">measures is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for measures.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">measures</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a measurement to the property it determines or quantifies.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -388,10 +396,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#normalizedTo -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#normalizedTo">
-        <rdfs:comment xml:lang="en">normalizedTo is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for normalizedto.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">normalizedTo</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a quantitative result or property to the basis against which it is normalized.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -399,10 +407,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#ofProperty -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#ofProperty">
-        <rdfs:comment xml:lang="en">ofProperty is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for ofproperty.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">ofProperty</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a result, value, or derived statement to the property that it is about.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -410,10 +418,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode">
-        <rdfs:comment xml:lang="en">referenceElectrode is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for referenceelectrode.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">referenceElectrode</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates an electrochemical setup or measurement to the reference electrode used in that context.</skos:definition>
     </owl:ObjectProperty>
     
 
@@ -421,10 +429,10 @@
     <!-- https://w3id.org/h2kg/hydrogen-ontology#usesInstrument -->
 
     <owl:ObjectProperty rdf:about="https://w3id.org/h2kg/hydrogen-ontology#usesInstrument">
-        <rdfs:comment xml:lang="en">usesInstrument is a local H2KG relation preserved for backward-compatible release preparation.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Core H2KG relation for usesinstrument.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="https://w3id.org/h2kg/hydrogen-ontology"/>
         <rdfs:label xml:lang="en">usesInstrument</rdfs:label>
-        <skos:definition xml:lang="en">Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology.</skos:definition>
+        <skos:definition xml:lang="en">An object property that relates a process or measurement to an instrument used in carrying it out.</skos:definition>
     </owl:ObjectProperty>
 </rdf:RDF>
 

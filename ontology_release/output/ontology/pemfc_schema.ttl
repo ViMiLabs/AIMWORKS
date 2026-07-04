@@ -79,7 +79,7 @@ h2kg:hasOutputMaterial
 
 h2kg:hasOutputData
   a owl:ObjectProperty ;
-  rdfs:domain h2kg:Measurement ;
+  rdfs:domain h2kg:Process ;
   rdfs:range h2kg:Data ;
   rdfs:label "hasOutputData"@en ;
   owl:inverseOf prov:wasGeneratedBy ;
@@ -94,6 +94,14 @@ h2kg:hasInputData
   rdfs:label "hasInputData"@en ;
   rdfs:subPropertyOf prov:used ;
   dcterms:description "An object property relating a process or measurement to data used as an input."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:hasMetadata
+  a owl:ObjectProperty ;
+  rdfs:range h2kg:Metadata ;
+  rdfs:label "hasMetadata"@en ;
+  dcterms:description "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
@@ -8530,6 +8538,26 @@ h2kg:AcceleratingVoltage
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
+h2kg:Magnification
+  a h2kg:Parameter ;
+  skos:prefLabel "Magnification"@en ;
+  rdfs:label "Magnification"@en ;
+  skos:altLabel "image magnification"@en, "TEM magnification"@en ;
+  dcterms:description "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements."@en ;
+  h2kg:hasQuantityValue <_Magnification_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:WorkingDistance
+  a h2kg:Parameter ;
+  skos:prefLabel "Working Distance"@en ;
+  rdfs:label "Working Distance"@en ;
+  skos:altLabel "objective-to-specimen distance"@en, "pole-piece distance"@en ;
+  dcterms:description "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging."@en ;
+  h2kg:hasQuantityValue <_WorkingDistance_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
 h2kg:CatalystSuspensionConcentration
   a h2kg:Parameter ;
   skos:prefLabel "Catalyst Suspension Concentration"@en ;
@@ -12234,7 +12262,7 @@ h2kg:MicrostructureImageDataset
   a h2kg:Data ;
   skos:prefLabel "Microstructure Image Dataset"@en ;
   rdfs:label "Microstructure Image Dataset"@en ;
-  dcterms:description "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures."@en ;
+  dcterms:description "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 

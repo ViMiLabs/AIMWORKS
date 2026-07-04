@@ -836,22 +836,23 @@ def _command_for_platform(workbench_root: Path, args: list[str]) -> list[str]:
 
 def _collect_actual_odk_outputs(project_root: Path, artifact_dir: Path) -> dict[str, Any]:
     odk_root = project_root / "odk"
+    workbench_root = odk_root / "src" / "ontology"
     artifact_dir.mkdir(parents=True, exist_ok=True)
     mapping = {
         "base": {
-            "owl": [odk_root / "h2kg-base.owl", odk_root / "h2kg.owl"],
-            "ttl": [odk_root / "h2kg-base.ttl", odk_root / "h2kg.ttl"],
-            "json-ld": [odk_root / "h2kg-base.json", odk_root / "h2kg.json"],
+            "owl": [workbench_root / "h2kg-base.owl", odk_root / "h2kg-base.owl", workbench_root / "h2kg.owl", odk_root / "h2kg.owl"],
+            "ttl": [workbench_root / "h2kg-base.ttl", odk_root / "h2kg-base.ttl", workbench_root / "h2kg.ttl", odk_root / "h2kg.ttl"],
+            "json-ld": [workbench_root / "h2kg-base.json", odk_root / "h2kg-base.json", workbench_root / "h2kg.json", odk_root / "h2kg.json"],
             "title": "Base ontology",
             "description": "Actual ODK base artefact generated from the nested workbench.",
         },
         "full": {
-            "owl": [odk_root / "h2kg-full.owl"],
+            "owl": [workbench_root / "h2kg-full.owl", odk_root / "h2kg-full.owl"],
             "title": "Full ontology",
             "description": "Actual ODK full artefact with import closure or broader release surface.",
         },
         "simple": {
-            "owl": [odk_root / "h2kg-simple.owl"],
+            "owl": [workbench_root / "h2kg-simple.owl", odk_root / "h2kg-simple.owl"],
             "title": "Simple ontology",
             "description": "Actual ODK simple artefact for tooling that prefers a smaller release view.",
         },
@@ -863,7 +864,7 @@ def _collect_actual_odk_outputs(project_root: Path, artifact_dir: Path) -> dict[
             if fmt in {"title", "description"}:
                 continue
             candidate_list = candidates if isinstance(candidates, list) else [candidates]
-            source = next((path for path in candidate_list if path.exists()), None)
+            source = _pick_newest_existing(candidate_list)
             if not source:
                 continue
             output_path = artifact_dir / f"{name}{_extension_for_format(fmt)}"
@@ -884,6 +885,13 @@ def _collect_actual_odk_outputs(project_root: Path, artifact_dir: Path) -> dict[
     report_candidates = list((odk_root / "src" / "ontology").rglob("*.tsv")) + list(odk_root.rglob("*.tsv"))
     robot_report_source = next((path for path in report_candidates if "report" in path.name.lower() or "qc" in path.name.lower()), None)
     return {"artifacts": artifacts, "robot_report_source": str(robot_report_source) if robot_report_source else ""}
+
+
+def _pick_newest_existing(candidates: list[Path]) -> Path | None:
+    existing = [path for path in candidates if path.exists()]
+    if not existing:
+        return None
+    return max(existing, key=lambda path: path.stat().st_mtime)
 
 
 def _extract_odk_version(command_results: list[dict[str, Any]]) -> str:

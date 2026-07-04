@@ -1,9 +1,9 @@
 {
   "summary": {
-    "reviewed_against_hdo": 96,
-    "aligned_to_hdo": 0,
-    "reused_from_hdo": 0,
-    "stayed_local": 96,
+    "reviewed_against_hdo": 97,
+    "aligned_to_hdo": 7,
+    "reused_from_hdo": 7,
+    "stayed_local": 92,
     "overlap_with_other_standards": 3
   },
   "reviewed_terms": [
@@ -33,6 +33,18 @@
         "http://www.w3.org/2000/01/rdf-schema#label",
         "http://www.w3.org/2000/01/rdf-schema#range",
         "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
+      ]
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "label": "hasMetadata",
+      "description": "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information.",
+      "kind": "object_property",
+      "is_local": true,
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2000/01/rdf-schema#range"
       ]
     },
     {
@@ -1038,7 +1050,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
       "label": "Microstructure Image Dataset",
-      "description": "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures.",
+      "description": "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen.",
       "kind": "controlled_vocabulary_term",
       "is_local": true,
       "predicates": [
@@ -1123,22 +1135,101 @@
         "http://www.w3.org/2004/02/skos/core#prefLabel",
         "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
       ]
-    },
-    {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea_2",
-      "label": "Geometric Area",
-      "description": "Metadata corresponding to geometric area and used to describe the provenance, identity, or context of another resource.",
-      "kind": "controlled_vocabulary_term",
-      "is_local": true,
-      "predicates": [
-        "http://purl.org/dc/terms/description",
-        "http://www.w3.org/2000/01/rdf-schema#label",
-        "http://www.w3.org/2004/02/skos/core#prefLabel",
-        "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue"
-      ]
     }
   ],
-  "aligned_terms": [],
+  "aligned_terms": [
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "local_label": "FTIR Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "target_label": "FAIR data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.842,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "target_label": "Metadaten",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.904,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "target_label": "Metadatenschema",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.776,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "local_label": "Microstructure Image Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "target_label": "structured data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.731,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "local_label": "PEMFCCFD Simulation",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "target_label": "simulation data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.786,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "local_label": "hasMetadata",
+      "local_kind": "object_property",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "target_label": "has metadata",
+      "target_kind": "object_property",
+      "source": "hdo",
+      "score": 0.995,
+      "relation": "owl:equivalentProperty",
+      "rationale": "High lexical similarity and compatible kind support a strong equivalence proposal.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "local_label": "hasMetadata",
+      "local_kind": "object_property",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "target_label": "Is metadata for",
+      "target_kind": "object_property",
+      "source": "hdo",
+      "score": 0.772,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    }
+  ],
   "stayed_local_terms": [
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
@@ -1285,12 +1376,6 @@
       "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "label": "Metadata",
-      "kind": "class",
-      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
-    },
-    {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#CathodicStrippingVoltammetry",
       "label": "Cathodic Stripping Voltammetry",
       "kind": "controlled_vocabulary_term",
@@ -1353,12 +1438,6 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#MembraneThicknessMeasurement",
       "label": "Membrane Thickness Measurement",
-      "kind": "controlled_vocabulary_term",
-      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
-    },
-    {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
-      "label": "PEMFCCFD Simulation",
       "kind": "controlled_vocabulary_term",
       "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
     },
@@ -1555,12 +1634,6 @@
       "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
     },
     {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
-      "label": "FTIR Dataset",
-      "kind": "controlled_vocabulary_term",
-      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
-    },
-    {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#ThermalAnalysisDataset",
       "label": "Thermal Analysis Dataset",
       "kind": "controlled_vocabulary_term",
@@ -1569,12 +1642,6 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset",
       "label": "XRD Pattern Dataset",
-      "kind": "controlled_vocabulary_term",
-      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
-    },
-    {
-      "iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
-      "label": "Microstructure Image Dataset",
       "kind": "controlled_vocabulary_term",
       "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
     },
@@ -1619,6 +1686,30 @@
       "label": "Geometric Area",
       "kind": "controlled_vocabulary_term",
       "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#PtMass_2",
+      "label": "Pt Mass",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#VoltageSensor",
+      "label": "Voltage Sensor",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#DataAcquisitionComputer",
+      "label": "Data Acquisition Computer",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
+    },
+    {
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#FuelCellAgingDataset",
+      "label": "Fuel Cell Aging Dataset",
+      "kind": "controlled_vocabulary_term",
+      "reason": "Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted."
     }
   ],
   "overlap_notes": [

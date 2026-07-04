@@ -1,7 +1,7 @@
 # Split Report
 
-- Schema resources: 34
-- Controlled vocabulary resources: 2118
+- Schema resources: 35
+- Controlled vocabulary resources: 2120
 - Example or data-like resources: 0
 
 ## Schema Preview
@@ -14,13 +14,13 @@
 - hasOutputMaterial
 - hasOutputData
 - hasInputData
+- hasMetadata
 - measures
 - ofProperty
 - fromMeasurement
 - isPartOf
 - hasIdentifier
 - Agent
-- Instrument
 
 ## Controlled Vocabulary Preview
 

@@ -96,7 +96,7 @@ h2kg:hasOutputMaterial
 
 h2kg:hasOutputData
   a owl:ObjectProperty ;
-  rdfs:domain h2kg:Measurement ;
+  rdfs:domain h2kg:Process ;
   rdfs:range h2kg:Data ;
   rdfs:label "hasOutputData"@en ;
   owl:inverseOf prov:wasGeneratedBy ;
@@ -114,6 +114,15 @@ h2kg:hasInputData
   dcterms:description "An object property relating a process or measurement to data used as an input."@en ;
   skos:definition "An object property that relates a process, analysis, or transformation to data used as its input."@en ;
   rdfs:comment "Core H2KG relation for hasinputdata."@en ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:hasMetadata
+  a owl:ObjectProperty ;
+  rdfs:range h2kg:Metadata ;
+  rdfs:label "hasMetadata"@en ;
+  dcterms:description "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."@en ;
+  skos:definition "An object property that relates a resource to metadata describing its identity, provenance, structure, or contextual information."@en ;
+  rdfs:comment "Core H2KG relation for hasmetadata."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
 h2kg:measures

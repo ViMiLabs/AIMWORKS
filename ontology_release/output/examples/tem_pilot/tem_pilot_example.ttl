@@ -1,0 +1,343 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/tem#source-record>
+  a h2kg:Metadata ;
+  rdfs:label "TEM pilot source record"@en ;
+  dcterms:title "Multi-technique characterization of electrodes with different carbons and Pt wt loadings"@en ;
+  dcterms:date "2024-10-15"^^xsd:date ;
+  h2kg:hasIdentifier "3", "Run derived DOI" ;
+  rdfs:comment "Topic: Catalysis; device: PEMFC; component: Catalyst layer; subcomponent: Catalyst; granularity: Nanostructure."@en, "Country: USA; source link: link; pixel-per-metric: 8.1."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> ;
+  dcterms:contributor <https://w3id.org/h2kg/examples/tem#institution-uconn>, <https://w3id.org/h2kg/examples/tem#funding-gcmac> ;
+  dcterms:source "link" .
+
+<https://w3id.org/h2kg/examples/tem#publication-record>
+  a h2kg:Metadata ;
+  rdfs:label "TEM pilot publication metadata"@en ;
+  dcterms:title "Automatic Characterization of Energy Materials"@en ;
+  dcterms:identifier "https://doi.org/10.3390/catal11030655465465" ;
+  dcterms:issued "2023-11-12"^^xsd:date ;
+  rdfs:comment "Journal: ACS Nanoscale Au; volume: 51; issue: 78; pages: 82-89."@en, "Published flag from source sheet: 1."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> .
+
+<https://w3id.org/h2kg/examples/tem#author-mariah-batool>
+  a prov:Agent ;
+  rdfs:label "Mariah Batool"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-mariah-batool-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#author-andre-colliard>
+  a prov:Agent ;
+  rdfs:label "Andre Colliard"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-andre-colliard-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#author-jasna-jankovic>
+  a prov:Agent ;
+  rdfs:label "Jasna Jankovic"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#author-mariah-batool-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 123-465-5478", "Email: mari.ba@uconn.us" .
+
+<https://w3id.org/h2kg/examples/tem#author-andre-colliard-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 321-321-3211", "Email: andyhuebsch@gmail.mx" .
+
+<https://w3id.org/h2kg/examples/tem#author-jasna-jankovic-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 987-987-4566", "Email: jas.jan@uconn.us" .
+
+<https://w3id.org/h2kg/examples/tem#institution-uconn>
+  a prov:Agent ;
+  rdfs:label "UCONN"@en .
+
+<https://w3id.org/h2kg/examples/tem#funding-gcmac>
+  a prov:Agent ;
+  rdfs:label "GCMAC"@en .
+
+<https://w3id.org/h2kg/examples/tem#pdc-material>
+  a h2kg:Matter ;
+  rdfs:label "Pd/C precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#pdc-material-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#pdc-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sheet value: Pd/C; amount: 30 wt%."@en, "Manufacturer: Tanaka Kikinzoku Kogyo K.K., Japan; lot number: TEC10E30E; CAS: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/tem#tem-grid>
+  a h2kg:Matter ;
+  rdfs:label "Carbon coated copper TEM grid"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-grid-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#tem-grid-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 3 mm."@en, "Manufacturer: SigmaAldrich; lot number: 205680; CAS: 7440-05-4."@en .
+
+<https://w3id.org/h2kg/examples/tem#liquid-mixture>
+  a h2kg:Matter ;
+  rdfs:label "Liquid mixture"@en .
+
+<https://w3id.org/h2kg/examples/tem#spint1>
+  a h2kg:Matter ;
+  rdfs:label "SPInt1 mixture intermediate"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#spint1-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#spint1-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Target amount from sheet: 5 mL."@en .
+
+<https://w3id.org/h2kg/examples/tem#spint2>
+  a h2kg:Matter ;
+  rdfs:label "SPInt2 sonicated dispersion intermediate"@en .
+
+<https://w3id.org/h2kg/examples/tem#spint3>
+  a h2kg:Matter ;
+  rdfs:label "SPInt3 deposited dispersion intermediate"@en .
+
+<https://w3id.org/h2kg/examples/tem#tem-sample>
+  a h2kg:Matter ;
+  rdfs:label "TEM pilot powder sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#tem-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Specimen metadata from sheet: homogeneous powder."@en .
+
+<https://w3id.org/h2kg/examples/tem#procure-pdc>
+  a h2kg:Process ;
+  rdfs:label "Procure Pd/C precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#pdc-material> .
+
+<https://w3id.org/h2kg/examples/tem#procure-tem-grid>
+  a h2kg:Process ;
+  rdfs:label "Procure carbon coated copper TEM grid"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#tem-grid> .
+
+<https://w3id.org/h2kg/examples/tem#mix-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Mix Pd/C with liquid mixture"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#pdc-material>, <https://w3id.org/h2kg/examples/tem#liquid-mixture> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#spint1> .
+
+<https://w3id.org/h2kg/examples/tem#sonication-step>
+  a h2kg:Manufacturing, h2kg:Sonication ;
+  rdfs:label "Sonication of SPInt1"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#spint1> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#spint2> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/tem#sonication-time-setting>, <https://w3id.org/h2kg/examples/tem#acoustic-frequency-setting> ;
+  h2kg:usesInstrument h2kg:Ultrasonicator .
+
+<https://w3id.org/h2kg/examples/tem#dispersion-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dispersion onto carbon coated copper TEM grid"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#spint2>, <https://w3id.org/h2kg/examples/tem#tem-grid> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#spint3> .
+
+<https://w3id.org/h2kg/examples/tem#dry-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry dispersed TEM sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#spint3> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/tem#tem-sample> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/tem#drying-time-setting> .
+
+<https://w3id.org/h2kg/examples/tem#tem-measurement-001>
+  a h2kg:Measurement, h2kg:TransmissionElectronMicroscopyImaging ;
+  rdfs:label "TEM pilot measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#tem-sample> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/tem#tem-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/tem#tem-raw-image-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/tem#accelerating-voltage-setting>, <https://w3id.org/h2kg/examples/tem#magnification-setting>, <https://w3id.org/h2kg/examples/tem#working-distance-setting>, <https://w3id.org/h2kg/examples/tem#temperature-setting>, <https://w3id.org/h2kg/examples/tem#relative-humidity-setting>, <https://w3id.org/h2kg/examples/tem#vacuum-pressure-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-acquisition-metadata>, <https://w3id.org/h2kg/examples/tem#source-record>, <https://w3id.org/h2kg/examples/tem#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> ;
+  dcterms:source <https://w3id.org/h2kg/examples/tem#publication-record> .
+
+<https://w3id.org/h2kg/examples/tem#tem-instrument-001>
+  a h2kg:Instrument, h2kg:TEMInstrument ;
+  rdfs:label "TEM instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#tem-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Microscope brand: Zeiss Gemini Ultra plus; cathode: LaB6; probe: Electron beam."@en, "Detector: CCD Camera; imaging technique: Brightfield; signal: Transmitted electrons; time lapse: 30 s."@en .
+
+<https://w3id.org/h2kg/examples/tem#tem-raw-image-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "TEM raw image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-raw-image-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#tem-raw-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "1 MB", "1024 x 1024 x 0 pixels" ;
+  rdfs:comment "Filename: Pt_wt3.zip."@en, "Raw-data description from sheet: electron images."@en .
+
+<https://w3id.org/h2kg/examples/tem#format-conversion-step>
+  a h2kg:Process ;
+  rdfs:label "Format conversion"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/tem#tem-raw-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/tem#tem-processed-image-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#format-conversion-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#format-conversion-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  rdfs:comment "Preprocessing note from sheet: raw data converted to post-processed TIFF image."@en .
+
+<https://w3id.org/h2kg/examples/tem#tem-processed-image-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "TEM processed image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-processed-image-metadata> .
+
+<https://w3id.org/h2kg/examples/tem#tem-processed-image-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Mask present: yes."@en, "Mask link: github-com/StarPlatin."@en .
+
+<https://w3id.org/h2kg/examples/tem#manual-particle-measurement-step>
+  a h2kg:Process ;
+  rdfs:label "Manual particle measurement"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/tem#tem-processed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/tem#tem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/tem#tem-analysis-summary-dataset>
+  a h2kg:Data ;
+  rdfs:label "TEM manual particle measurement summary dataset"@en ;
+  h2kg:hasPart <https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-datapoint> .
+
+<https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "TEM-derived Pd nanoparticle diameter datapoint"@en ;
+  h2kg:ofProperty h2kg:PdNanoparticleDiameter ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/tem#tem-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/tem#manual-particle-measurement-step> ;
+  dcterms:source <https://w3id.org/h2kg/examples/tem#publication-record> .
+
+<https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "5"^^xsd:decimal ;
+  qudt:unit unit:NanoM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/tem#accelerating-voltage-setting>
+  a h2kg:Parameter, h2kg:AcceleratingVoltage ;
+  rdfs:label "TEM accelerating voltage setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#accelerating-voltage-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#accelerating-voltage-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "100"^^xsd:decimal ;
+  qudt:unit unit:KiloV ;
+  qudt:quantityKind quantitykind:ElectricPotential .
+
+<https://w3id.org/h2kg/examples/tem#magnification-setting>
+  a h2kg:Parameter, h2kg:Magnification ;
+  rdfs:label "TEM magnification setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#magnification-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "140000"^^xsd:integer ;
+  qudt:unit unit:UNITLESS ;
+  qudt:quantityKind quantitykind:Dimensionless .
+
+<https://w3id.org/h2kg/examples/tem#working-distance-setting>
+  a h2kg:Parameter, h2kg:WorkingDistance ;
+  rdfs:label "TEM working-distance setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#working-distance-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#working-distance-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "8.5"^^xsd:decimal ;
+  qudt:unit unit:MilliM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/tem#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "TEM acquisition temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "25"^^xsd:decimal ;
+  qudt:unit unit:DEG_C ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature .
+
+<https://w3id.org/h2kg/examples/tem#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "TEM acquisition relative-humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "0"^^xsd:decimal ;
+  qudt:unit unit:PERCENT ;
+  qudt:quantityKind quantitykind:RelativeHumidity .
+
+<https://w3id.org/h2kg/examples/tem#vacuum-pressure-setting>
+  a h2kg:Parameter, h2kg:VacuumChamberPressure ;
+  rdfs:label "TEM vacuum-chamber pressure setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#vacuum-pressure-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#vacuum-pressure-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.0e-5"^^xsd:double ;
+  qudt:unit unit:ATM ;
+  qudt:quantityKind quantitykind:Pressure .
+
+<https://w3id.org/h2kg/examples/tem#sonication-time-setting>
+  a h2kg:Parameter, h2kg:SonicationTime ;
+  rdfs:label "Sonication time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#sonication-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#sonication-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "10"^^xsd:decimal ;
+  qudt:unit unit:MIN ;
+  qudt:quantityKind quantitykind:Time .
+
+<https://w3id.org/h2kg/examples/tem#acoustic-frequency-setting>
+  a h2kg:Parameter, h2kg:AcousticFrequency ;
+  rdfs:label "Acoustic-frequency setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#acoustic-frequency-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#acoustic-frequency-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "80"^^xsd:decimal ;
+  qudt:unit unit:HZ ;
+  qudt:quantityKind quantitykind:Frequency .
+
+<https://w3id.org/h2kg/examples/tem#drying-time-setting>
+  a h2kg:Parameter, h2kg:DryingTime ;
+  rdfs:label "Drying-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/tem#drying-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/tem#drying-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "24"^^xsd:decimal ;
+  qudt:unit unit:HR ;
+  qudt:quantityKind quantitykind:Time .
+
+<https://w3id.org/h2kg/examples/tem#tem-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: ex-situ; specimen: homogeneous powder; atmosphere: vacuum."@en, "Calibration notes: adjusting lenses and apertures; adjusting the voltage."@en .

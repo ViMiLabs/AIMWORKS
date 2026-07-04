@@ -2,15 +2,21 @@
 
 ## Summary
 
-- Reviewed against HDO: 96
-- Aligned to HDO: 0
-- Reused directly from HDO: 0
-- Kept local after HDO review: 96
+- Reviewed against HDO: 97
+- Aligned to HDO: 7
+- Reused directly from HDO: 7
+- Kept local after HDO review: 92
 - Overlap with PROV-O / DCTERMS / EMMO anchors: 3
 
 ## HDO-Aligned Terms
 
-- No direct HDO-aligned terms were generated in this run.
+- `FTIR Dataset` -> `rdfs:subClassOf` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00002013`
+- `Metadata` -> `rdfs:subClassOf` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000029`
+- `Metadata` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001036`
+- `Microstructure Image Dataset` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000005`
+- `PEMFCCFD Simulation` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001069`
+- `hasMetadata` -> `owl:equivalentProperty` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006069`
+- `hasMetadata` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006070`
 
 ## Terms Kept Local
 
@@ -38,7 +44,7 @@
 - `Data`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `Data Point`: Kept local pending a more precise HDO term-level match while retaining H2KG experimental granularity.
 - `Linear Sweep Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
-- `Metadata`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `Cathodic Stripping Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
 
 ## Cross-Standard Overlap Notes
 

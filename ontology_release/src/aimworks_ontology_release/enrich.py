@@ -42,6 +42,7 @@ SCHEMA_DEFINITIONS: dict[str, str] = {
     "hasOutputMaterial": "An object property that relates a process to a material produced by that process.",
     "hasOutputData": "An object property that relates a process or measurement to data generated as its output.",
     "hasInputData": "An object property that relates a process, analysis, or transformation to data used as its input.",
+    "hasMetadata": "An object property that relates a resource to metadata describing its identity, provenance, structure, or contextual information.",
     "measures": "An object property that relates a measurement to the property it determines or quantifies.",
     "ofProperty": "An object property that relates a result, value, or derived statement to the property that it is about.",
     "fromMeasurement": "An object property that relates data, a result, or a derived statement to the measurement from which it originates.",

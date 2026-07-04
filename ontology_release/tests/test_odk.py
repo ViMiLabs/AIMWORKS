@@ -5,6 +5,7 @@ import csv
 from rdflib import Graph, Literal, Namespace, RDF, RDFS, OWL, URIRef
 
 from aimworks_ontology_release.odk import (
+    _collect_actual_odk_outputs,
     _build_ci_reproducibility_report,
     _build_actual_imports_report,
     _build_parity_report,
@@ -267,6 +268,26 @@ def test_build_actual_imports_report_marks_optional_unseeded_import_unused(tmp_p
     item = report["imports"][0]
     assert item["status"] == "optional-unused-after-refresh"
     assert item["included_in_release"] is False
+
+
+def test_collect_actual_odk_outputs_prefers_fresh_workbench_artifacts(tmp_path):
+    project_root = tmp_path / "ontology_release"
+    artifact_dir = project_root / "output" / "odk" / "artifacts"
+    stale_release_root = project_root / "odk"
+    fresh_workbench_root = project_root / "odk" / "src" / "ontology"
+    stale_release_root.mkdir(parents=True)
+    fresh_workbench_root.mkdir(parents=True)
+
+    (stale_release_root / "h2kg-base.ttl").write_text("stale base ttl\n", encoding="utf-8", newline="\n")
+    (fresh_workbench_root / "h2kg-base.ttl").write_text("fresh base ttl with hasMetadata\n", encoding="utf-8", newline="\n")
+    (stale_release_root / "h2kg-base.owl").write_text("<rdf:RDF/>", encoding="utf-8", newline="\n")
+    (fresh_workbench_root / "h2kg-base.owl").write_text("<rdf:RDF><owl:ObjectProperty rdf:about=\"https://w3id.org/h2kg/hydrogen-ontology#hasMetadata\"/></rdf:RDF>", encoding="utf-8", newline="\n")
+
+    outputs = _collect_actual_odk_outputs(project_root, artifact_dir)
+
+    assert outputs["artifacts"]
+    copied_ttl = (artifact_dir / "base.ttl").read_text(encoding="utf-8")
+    assert copied_ttl == "fresh base ttl with hasMetadata\n"
 
 
 def test_build_ci_reproducibility_report_detects_complete_workflow_sequence(tmp_path):

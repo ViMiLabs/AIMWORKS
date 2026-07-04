@@ -26,6 +26,7 @@ LOCAL_RELATIONS = {
     "hasOutputMaterial": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
     "hasInputData": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
     "hasOutputData": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+    "hasMetadata": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
     "hasQuantityValue": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
     "normalizedTo": "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
     "ofProperty": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
@@ -123,6 +124,9 @@ MANUAL_DESCRIPTION_OVERRIDES = {
     ),
     "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": (
         "An object property relating a process or measurement to data used as an input."
+    ),
+    "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": (
+        "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."
     ),
     "https://w3id.org/h2kg/hydrogen-ontology#measures": (
         "An object property relating a measurement to a property that it determines."

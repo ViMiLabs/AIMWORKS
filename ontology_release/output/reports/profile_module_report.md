@@ -3,12 +3,12 @@
 - Shared core ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - PEMFC profile ontology IRI: `https://w3id.org/h2kg/pemfc/hydrogen-ontology`
 - PEMWE profile ontology IRI: `https://w3id.org/h2kg/pemwe/hydrogen-ontology`
-- Shared local schema terms: 1978
+- Shared local schema terms: 1981
 - PEMFC-only local schema terms: 169
 - PEMWE-only local schema terms: 4
-- Core module term count: 2151
-- PEMFC module term count: 2147
-- PEMWE module term count: 1982
+- Core module term count: 2154
+- PEMFC module term count: 2150
+- PEMWE module term count: 1985
 
 ## Assignment Sample
 
@@ -19,6 +19,7 @@
 - hasOutputMaterial (`https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial`) -> pemfc, pemwe
 - hasOutputData (`https://w3id.org/h2kg/hydrogen-ontology#hasOutputData`) -> pemfc, pemwe
 - hasInputData (`https://w3id.org/h2kg/hydrogen-ontology#hasInputData`) -> pemfc, pemwe
+- hasMetadata (`https://w3id.org/h2kg/hydrogen-ontology#hasMetadata`) -> pemfc, pemwe
 - measures (`https://w3id.org/h2kg/hydrogen-ontology#measures`) -> pemfc, pemwe
 - Pt Mass (`https://w3id.org/h2kg/hydrogen-ontology#PtMass`) -> pemfc, pemwe
 - Ionomer Mass (`https://w3id.org/h2kg/hydrogen-ontology#IonomerMass`) -> pemfc, pemwe
@@ -41,4 +42,3 @@
 - Gas Composition (`https://w3id.org/h2kg/hydrogen-ontology#GasComposition`) -> pemfc, pemwe
 - Cathode Stoichiometric Ratio (`https://w3id.org/h2kg/hydrogen-ontology#CathodeStoichiometricRatio`) -> pemfc
 - Catalyst Layer Thickness (`https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness`) -> pemfc
-- Catalyst Layer Porosity (`https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerPorosity`) -> pemfc

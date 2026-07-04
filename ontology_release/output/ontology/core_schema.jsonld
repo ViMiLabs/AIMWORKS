@@ -284,7 +284,7 @@
       ],
       "http://www.w3.org/2000/01/rdf-schema#domain": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Process"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#range": [
@@ -352,6 +352,42 @@
       "http://purl.org/dc/terms/description": [
         {
           "@value": "An object property relating a process or measurement to data used as an input.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "@type": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "hasMetadata"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information.",
           "@language": "en"
         }
       ],
@@ -49716,6 +49752,110 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "Magnification"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Magnification"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "image magnification"
+        },
+        {
+          "@language": "en",
+          "@value": "TEM magnification"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_Magnification_QV"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "Working Distance"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Working Distance"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "objective-to-specimen distance"
+        },
+        {
+          "@language": "en",
+          "@value": "pole-piece distance"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_WorkingDistance_QV"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystSuspensionConcentration",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
@@ -69573,7 +69713,7 @@
       "http://purl.org/dc/terms/description": [
         {
           "@language": "en",
-          "@value": "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures."
+          "@value": "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen."
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [

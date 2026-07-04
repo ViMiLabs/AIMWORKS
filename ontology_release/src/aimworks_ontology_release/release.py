@@ -16,6 +16,7 @@ from .normalize_source import normalize_source_document
 from .odk import load_odk_manifest, prepare_odk_shadow
 from .profile_modules import build_profile_modules
 from .split import split_ontology
+from .tem_pilot import build_tem_pilot_package
 from .utils import ensure_dir, write_text
 from .validate import validate_release
 from .w3id import generate_w3id_artifacts
@@ -47,6 +48,7 @@ def run_release(
     profile_modules = build_profile_modules(input_path, ontology_dir, project_root / "config")
     drafts = draft_annotations(input_path, review_dir, draft_llm, project_root / "config" / "llm_agent.example.yaml")
     validation = validate_release(input_path, reports_dir, project_root / "config")
+    tem_pilot = build_tem_pilot_package(input_path, output_root)
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -74,6 +76,7 @@ def run_release(
         "profile_modules": profile_modules,
         "annotation_drafts": len(drafts),
         "validation": validation,
+        "tem_pilot": tem_pilot,
         "fair": fair,
         "odk": odk,
         "docs": docs,

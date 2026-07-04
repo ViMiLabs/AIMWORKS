@@ -2,31 +2,31 @@
   "profileLabel": "Whole H2KG namespace",
   "referencePage": "hydrogen-ontology.html",
   "overview": {
-    "localNodeCount": 2152,
-    "externalNodeCount": 1141,
-    "edgeCount": 6586
+    "localNodeCount": 2155,
+    "externalNodeCount": 1150,
+    "edgeCount": 6598
   },
   "modules": [
     {
       "id": "schema",
       "label": "Asserted schema",
       "description": "Classes, properties, domains, ranges, and asserted taxonomy links.",
-      "nodeCount": 33,
-      "edgeCount": 34
+      "nodeCount": 34,
+      "edgeCount": 35
     },
     {
       "id": "vocabulary",
       "label": "Controlled vocabulary",
       "description": "Curated local H2KG terms outside the compact core schema layer.",
-      "nodeCount": 2119,
-      "edgeCount": 6538
+      "nodeCount": 2121,
+      "edgeCount": 6542
     },
     {
       "id": "alignments",
       "label": "Reviewed alignments",
       "description": "Reviewed mappings and directly linked external semantic anchors.",
-      "nodeCount": 1162,
-      "edgeCount": 14
+      "nodeCount": 1176,
+      "edgeCount": 21
     }
   ],
   "nodes": [
@@ -18755,13 +18755,16 @@
       "category": "Data / Metadata",
       "display_class": "Data",
       "modules": [
+        "alignments",
         "vocabulary"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "FTIR Dataset FTIRDataset h2kg:FTIRDataset https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset Dataset of FTIR spectra versus UV exposure time and versus pyrolysis temperature. FTIR spectra Data",
-      "degree": 2
+      "mapping_labels": [
+        "FAIR data"
+      ],
+      "search_text": "FTIR Dataset FTIRDataset h2kg:FTIRDataset https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset Dataset of FTIR spectra versus UV exposure time and versus pyrolysis temperature. FTIR spectra Data FAIR data https://purls.helmholtz-metadaten.de/hob/HDO_00002013 rdfs:subClassOf",
+      "degree": 3
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#FTIRInstrument",
@@ -21634,6 +21637,35 @@
       "degree": 3
     },
     {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "anchor": "hasMetadata",
+      "label": "hasMetadata",
+      "localName": "hasMetadata",
+      "qname": "h2kg:hasMetadata",
+      "description": "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "ObjectProperty"
+      ],
+      "category": "Object Properties",
+      "display_class": "ObjectProperty",
+      "modules": [
+        "alignments",
+        "schema"
+      ],
+      "local": true,
+      "deprecated": "Active",
+      "mapping_labels": [
+        "has metadata",
+        "Is metadata for"
+      ],
+      "search_text": "hasMetadata h2kg:hasMetadata https://w3id.org/h2kg/hydrogen-ontology#hasMetadata An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information. ObjectProperty Metadata https://w3id.org/h2kg/hydrogen-ontology#Metadata has metadata https://purls.helmholtz-metadaten.de/hob/HDO_00006069 owl:equivalentProperty Is metadata for https://purls.helmholtz-metadaten.de/hob/HDO_00006070 skos:closeMatch",
+      "degree": 3
+    },
+    {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
       "anchor": "hasOutputData",
@@ -21655,7 +21687,7 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "hasOutputData h2kg:hasOutputData https://w3id.org/h2kg/hydrogen-ontology#hasOutputData An object property relating a measurement or process to data generated as an output. ObjectProperty Measurement https://w3id.org/h2kg/hydrogen-ontology#Measurement Data https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "search_text": "hasOutputData h2kg:hasOutputData https://w3id.org/h2kg/hydrogen-ontology#hasOutputData An object property relating a measurement or process to data generated as an output. ObjectProperty Process https://w3id.org/h2kg/hydrogen-ontology#Process Data https://w3id.org/h2kg/hydrogen-ontology#Data",
       "degree": 2
     },
     {
@@ -29689,6 +29721,34 @@
       "degree": 2
     },
     {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "anchor": "Magnification",
+      "label": "Magnification",
+      "localName": "Magnification",
+      "qname": "h2kg:Magnification",
+      "description": "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements.",
+      "alt_labels": [
+        "image magnification",
+        "TEM magnification"
+      ],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "Parameter"
+      ],
+      "category": "Parameters",
+      "display_class": "Parameter",
+      "modules": [
+        "vocabulary"
+      ],
+      "local": true,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Magnification h2kg:Magnification https://w3id.org/h2kg/hydrogen-ontology#Magnification A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements. image magnification TEM magnification Parameter",
+      "degree": 2
+    },
+    {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
       "anchor": "ManganeseDioxideCatalyst",
@@ -30640,7 +30700,7 @@
         "Electrochemical measurement"
       ],
       "search_text": "Measurement h2kg:Measurement https://w3id.org/h2kg/hydrogen-ontology#Measurement A class representing a measurement process that determines one or more properties of a material, device, or system in H2KG. Class Process https://w3id.org/h2kg/hydrogen-ontology#Process Electrochemical measurement https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29 rdfs:subClassOf",
-      "degree": 203
+      "degree": 202
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#MeasurementGap",
@@ -31365,13 +31425,17 @@
       "category": "Classes",
       "display_class": "Class",
       "modules": [
+        "alignments",
         "schema"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "Metadata h2kg:Metadata https://w3id.org/h2kg/hydrogen-ontology#Metadata A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG. Class",
-      "degree": 4
+      "mapping_labels": [
+        "Metadaten",
+        "Metadatenschema"
+      ],
+      "search_text": "Metadata h2kg:Metadata https://w3id.org/h2kg/hydrogen-ontology#Metadata A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG. Class Metadaten https://purls.helmholtz-metadaten.de/hob/HDO_00000029 rdfs:subClassOf Metadatenschema https://purls.helmholtz-metadaten.de/hob/HDO_00001036 skos:closeMatch",
+      "degree": 7
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#Metakaolin",
@@ -32645,7 +32709,7 @@
       "label": "Microstructure Image Dataset",
       "localName": "MicrostructureImageDataset",
       "qname": "h2kg:MicrostructureImageDataset",
-      "description": "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures.",
+      "description": "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen.",
       "alt_labels": [],
       "examples": [],
       "notes": [],
@@ -32655,13 +32719,16 @@
       "category": "Data / Metadata",
       "display_class": "Data",
       "modules": [
+        "alignments",
         "vocabulary"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "Microstructure Image Dataset MicrostructureImageDataset h2kg:MicrostructureImageDataset https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset Dataset of microscopy images before/after pyrolysis and at various sintering temperatures. Data",
-      "degree": 5
+      "mapping_labels": [
+        "structured data"
+      ],
+      "search_text": "Microstructure Image Dataset MicrostructureImageDataset h2kg:MicrostructureImageDataset https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen. Data structured data https://purls.helmholtz-metadaten.de/hob/HDO_00000005 skos:closeMatch",
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#MilliOhmmeter",
@@ -36990,7 +37057,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Parameter h2kg:Parameter https://w3id.org/h2kg/hydrogen-ontology#Parameter A class representing a parameter specified as an input, setting, or condition for a process or measurement in H2KG. Class",
-      "degree": 554
+      "degree": 556
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ParticleDensity",
@@ -37824,13 +37891,16 @@
       "category": "Measurements",
       "display_class": "Measurement",
       "modules": [
+        "alignments",
         "vocabulary"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "PEMFCCFD Simulation PEMFCCFDSimulation h2kg:PEMFCCFDSimulation https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation A measurement process that uses PEMFCCFD simulation to determine Oxygen Concentration, Current Density Per Pt Surface Area, and Low Activity Pt Particle Fraction using Ansys Fluent Fuel Cell Module and Comsol Multiphysics and generating Polarization Curve Dataset. CFD simulation Ansys simulation Direct numerical simulations (DNS) in Comsol Measurement",
-      "degree": 35
+      "mapping_labels": [
+        "simulation data"
+      ],
+      "search_text": "PEMFCCFD Simulation PEMFCCFDSimulation h2kg:PEMFCCFDSimulation https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation A measurement process that uses PEMFCCFD simulation to determine Oxygen Concentration, Current Density Per Pt Surface Area, and Low Activity Pt Particle Fraction using Ansys Fluent Fuel Cell Module and Comsol Multiphysics and generating Polarization Curve Dataset. CFD simulation Ansys simulation Direct numerical simulations (DNS) in Comsol Measurement simulation data https://purls.helmholtz-metadaten.de/hob/HDO_00001069 skos:closeMatch",
+      "degree": 36
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#PemionHNN8",
@@ -42772,7 +42842,7 @@
         "Process"
       ],
       "search_text": "Process h2kg:Process https://w3id.org/h2kg/hydrogen-ontology#Process A class representing a process that transforms material, produces data, or changes the state of a system in H2KG. Class Activity http://www.w3.org/ns/prov#Activity https://w3id.org/emmo#EMMO_process owl:equivalentClass",
-      "degree": 9
+      "degree": 10
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ProfilometerSamplingStep",
@@ -57712,6 +57782,34 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Wetting Solvent To Water Volume Ratio WettingSolventToWaterVolumeRatio h2kg:WettingSolventToWaterVolumeRatio https://w3id.org/h2kg/hydrogen-ontology#WettingSolventToWaterVolumeRatio A parameter specifying volume ratio used for pre-wetting coated electrode prior to CV (~1:9 ethanol:water v/v). Parameter",
+      "degree": 2
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "iri": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "anchor": "WorkingDistance",
+      "label": "Working Distance",
+      "localName": "WorkingDistance",
+      "qname": "h2kg:WorkingDistance",
+      "description": "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging.",
+      "alt_labels": [
+        "objective-to-specimen distance",
+        "pole-piece distance"
+      ],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "Parameter"
+      ],
+      "category": "Parameters",
+      "display_class": "Parameter",
+      "modules": [
+        "vocabulary"
+      ],
+      "local": true,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Working Distance WorkingDistance h2kg:WorkingDistance https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging. objective-to-specimen distance pole-piece distance Parameter",
       "degree": 2
     },
     {
@@ -73799,6 +73897,31 @@
       "degree": 1
     },
     {
+      "id": "_Magnification_QV",
+      "iri": "_Magnification_QV",
+      "anchor": "_Magnification_QV",
+      "label": "_Magnification_QV",
+      "localName": "_Magnification_QV",
+      "qname": "_Magnification_QV",
+      "description": "External aligned term linked from the current H2KG release.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "_Magnification_QV _Magnification_QV _Magnification_QV _Magnification_QV",
+      "degree": 1
+    },
+    {
       "id": "_ManufacturingThroughputIncreaseFactor_QV",
       "iri": "_ManufacturingThroughputIncreaseFactor_QV",
       "anchor": "_ManufacturingThroughputIncreaseFactor_QV",
@@ -86149,6 +86272,31 @@
       "degree": 1
     },
     {
+      "id": "_WorkingDistance_QV",
+      "iri": "_WorkingDistance_QV",
+      "anchor": "_WorkingDistance_QV",
+      "label": "_WorkingDistance_QV",
+      "localName": "_WorkingDistance_QV",
+      "qname": "_WorkingDistance_QV",
+      "description": "External aligned term linked from the current H2KG release.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "_WorkingDistance_QV _WorkingDistance_QV _WorkingDistance_QV _WorkingDistance_QV",
+      "degree": 1
+    },
+    {
       "id": "_WorkingTimeDeformation_QV",
       "iri": "_WorkingTimeDeformation_QV",
       "anchor": "_WorkingTimeDeformation_QV",
@@ -86874,6 +87022,31 @@
       "degree": 1
     },
     {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "anchor": "HDO_00002013",
+      "label": "FAIR data",
+      "localName": "HDO_00002013",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "description": "Reviewed rdfs:subClassOf target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "FAIR data HDO_00002013 https://purls.helmholtz-metadaten.de/hob/HDO_00002013 https://purls.helmholtz-metadaten.de/hob/HDO_00002013 Reviewed rdfs:subClassOf target.",
+      "degree": 1
+    },
+    {
       "id": "http://purl.obolibrary.org/obo/CHEBI_30751",
       "iri": "http://purl.obolibrary.org/obo/CHEBI_30751",
       "anchor": "CHEBI_30751",
@@ -86921,6 +87094,31 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Gasket Gasket holy:Gasket http://purl.org/holy/ns#Gasket",
+      "degree": 1
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "anchor": "HDO_00006069",
+      "label": "has metadata",
+      "localName": "HDO_00006069",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "description": "Reviewed owl:equivalentProperty target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "has metadata HDO_00006069 https://purls.helmholtz-metadaten.de/hob/HDO_00006069 https://purls.helmholtz-metadaten.de/hob/HDO_00006069 Reviewed owl:equivalentProperty target.",
       "degree": 1
     },
     {
@@ -87024,6 +87222,31 @@
       "degree": 1
     },
     {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "anchor": "HDO_00006070",
+      "label": "Is metadata for",
+      "localName": "HDO_00006070",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "description": "Reviewed skos:closeMatch target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Is metadata for HDO_00006070 https://purls.helmholtz-metadaten.de/hob/HDO_00006070 https://purls.helmholtz-metadaten.de/hob/HDO_00006070 Reviewed skos:closeMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "iri": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "anchor": "Literal",
@@ -87072,6 +87295,56 @@
       "mapping_labels": [],
       "search_text": "Membrane Membrane holy:Membrane http://purl.org/holy/ns#Membrane",
       "degree": 17
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "anchor": "HDO_00000029",
+      "label": "Metadaten",
+      "localName": "HDO_00000029",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "description": "Reviewed rdfs:subClassOf target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Metadaten HDO_00000029 https://purls.helmholtz-metadaten.de/hob/HDO_00000029 https://purls.helmholtz-metadaten.de/hob/HDO_00000029 Reviewed rdfs:subClassOf target.",
+      "degree": 1
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "anchor": "HDO_00001036",
+      "label": "Metadatenschema",
+      "localName": "HDO_00001036",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "description": "Reviewed skos:closeMatch target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Metadatenschema HDO_00001036 https://purls.helmholtz-metadaten.de/hob/HDO_00001036 https://purls.helmholtz-metadaten.de/hob/HDO_00001036 Reviewed skos:closeMatch target.",
+      "degree": 1
     },
     {
       "id": "http://purl.obolibrary.org/obo/CHEBI_32035",
@@ -87199,6 +87472,56 @@
       "degree": 1
     },
     {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "anchor": "HDO_00001069",
+      "label": "simulation data",
+      "localName": "HDO_00001069",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "description": "Reviewed skos:closeMatch target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "simulation data HDO_00001069 https://purls.helmholtz-metadaten.de/hob/HDO_00001069 https://purls.helmholtz-metadaten.de/hob/HDO_00001069 Reviewed skos:closeMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "anchor": "HDO_00000005",
+      "label": "structured data",
+      "localName": "HDO_00000005",
+      "qname": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "description": "Reviewed skos:closeMatch target.",
+      "alt_labels": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "structured data HDO_00000005 https://purls.helmholtz-metadaten.de/hob/HDO_00000005 https://purls.helmholtz-metadaten.de/hob/HDO_00000005 Reviewed skos:closeMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://www.w3.org/ns/prov#used",
       "iri": "http://www.w3.org/ns/prov#used",
       "anchor": "used",
@@ -87275,6 +87598,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "predicate": "rdfs:subClassOf",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#FormicAcid",
       "target": "http://purl.obolibrary.org/obo/CHEBI_30751",
       "predicate": "skos:exactMatch",
@@ -87315,6 +87646,38 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "predicate": "rdfs:subClassOf",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "predicate": "skos:closeMatch",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "predicate": "skos:closeMatch",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "predicate": "skos:closeMatch",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#PotassiumHydroxide",
       "target": "http://purl.obolibrary.org/obo/CHEBI_32035",
       "predicate": "skos:exactMatch",
@@ -87351,6 +87714,22 @@
       "target": "http://purl.org/dc/terms/identifier",
       "predicate": "rdfs:subPropertyOf",
       "value": "dcterms:identifier",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "predicate": "owl:equivalentProperty",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "target": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "predicate": "skos:closeMatch",
+      "value": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -87507,8 +87886,16 @@
       "edgeFamily": "subPropertyOf"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "predicate": "range",
+      "value": "range",
+      "module": "schema",
+      "edgeFamily": "range"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "predicate": "domain",
       "value": "domain",
       "module": "schema",
@@ -116627,6 +117014,22 @@
       "edgeFamily": "type"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "target": "_Magnification_QV",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "value": "h2kg:hasQuantityValue",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "predicate": "type",
+      "value": "type",
+      "module": "vocabulary",
+      "edgeFamily": "type"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "predicate": "type",
@@ -138412,6 +138815,22 @@
     },
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#WettingSolventToWaterVolumeRatio",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "predicate": "type",
+      "value": "type",
+      "module": "vocabulary",
+      "edgeFamily": "type"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "target": "_WorkingDistance_QV",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "value": "h2kg:hasQuantityValue",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
       "predicate": "type",
       "value": "type",
