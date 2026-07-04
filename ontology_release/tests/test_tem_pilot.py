@@ -101,6 +101,35 @@ def test_current_source_contains_tem_schema_updates():
     assert "https://w3id.org/h2kg/hydrogen-ontology#Magnification" in by_id
     assert "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance" in by_id
 
+    tem_measurement = by_id["https://w3id.org/h2kg/hydrogen-ontology#TransmissionElectronMicroscopyImaging"]
+    tem_parameters = {
+        entry["@id"] for entry in tem_measurement["https://w3id.org/h2kg/hydrogen-ontology#hasParameter"]
+    }
+    assert {
+        "https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage",
+        "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+        "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+        "https://w3id.org/h2kg/hydrogen-ontology#Temperature",
+        "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity",
+        "https://w3id.org/h2kg/hydrogen-ontology#VacuumChamberPressure",
+    }.issubset(tem_parameters)
+
+    accelerating_voltage = by_id["https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage"]
+    accelerating_description = accelerating_voltage["http://purl.org/dc/terms/description"][0]["@value"]
+    assert "Transmission Electron Microscopy Imaging" in accelerating_description
+
+    magnification = by_id["https://w3id.org/h2kg/hydrogen-ontology#Magnification"]
+    magnification_description = magnification["http://purl.org/dc/terms/description"][0]["@value"]
+    assert "Transmission Electron Microscopy Imaging" in magnification_description
+
+    working_distance = by_id["https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance"]
+    working_distance_description = working_distance["http://purl.org/dc/terms/description"][0]["@value"]
+    assert "Transmission Electron Microscopy Imaging" in working_distance_description
+
+    vacuum_pressure = by_id["https://w3id.org/h2kg/hydrogen-ontology#VacuumChamberPressure"]
+    vacuum_description = vacuum_pressure["http://purl.org/dc/terms/description"][0]["@value"]
+    assert "Transmission Electron Microscopy Imaging" in vacuum_description
+
     microstructure_dataset = by_id["https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"]
     description = microstructure_dataset["http://purl.org/dc/terms/description"][0]["@value"]
     assert "raw or processed microscopy images" in description

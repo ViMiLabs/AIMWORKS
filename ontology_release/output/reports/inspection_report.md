@@ -34,7 +34,7 @@ Generated on 2026-07-04.
 
 ## Namespace Usage
 
-- `https://w3id.org/h2kg/hydrogen-ontology#`: 4106
+- `https://w3id.org/h2kg/hydrogen-ontology#`: 4107
 - `http://www.w3.org/2004/02/skos/core#`: 3814
 - `http://purl.org/dc/terms/`: 2173
 - `http://www.w3.org/2000/01/rdf-schema#`: 2062

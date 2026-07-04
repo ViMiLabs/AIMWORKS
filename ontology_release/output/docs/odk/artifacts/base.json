@@ -1,13 +1,13 @@
 {
   "graphs" : [ {
-    "id" : "http://purl.obolibrary.org/obo/h2kg/h2kg-base.json",
+    "id" : "http://purl.obolibrary.org/obo/h2kg.json",
     "meta" : {
       "basicPropertyValues" : [ {
         "pred" : "http://purl.org/dc/elements/1.1/type",
         "val" : "http://purl.obolibrary.org/obo/IAO_8000001"
       }, {
         "pred" : "http://purl.org/dc/terms/abstract",
-        "val" : "Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n"
+        "val" : "Application ontology for representing hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.\n"
       }, {
         "pred" : "http://purl.org/dc/terms/contributor",
         "val" : "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany"
@@ -73,7 +73,7 @@
         "val" : "https://w3id.org/h2kg/hydrogen-ontology#"
       }, {
         "pred" : "http://www.w3.org/2000/01/rdf-schema#comment",
-        "val" : "The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n"
+        "val" : "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, including parameters, properties, measurements, instruments, materials, data, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.\n"
       }, {
         "pred" : "http://www.w3.org/2000/01/rdf-schema#seeAlso",
         "val" : "http://purl.org/holy/ns#BipolarPlate"
@@ -160,12 +160,12 @@
         "val" : "1.0.0"
       }, {
         "pred" : "http://www.w3.org/2002/07/owl#versionInfo",
-        "val" : "2026-04-12"
+        "val" : "2026-07-04"
       }, {
         "pred" : "http://xmlns.com/foaf/0.1/homepage",
         "val" : "https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence"
       } ],
-      "version" : "http://purl.obolibrary.org/obo/h2kg/releases/2026-04-12/h2kg-base.json"
+      "version" : "http://purl.obolibrary.org/obo/h2kg/releases/2026-07-04/h2kg.json"
     },
     "nodes" : [ {
       "id" : "http://qudt.org/schema/qudt/QuantityValue",
@@ -192,6 +192,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for responsible actors and provenance-bearing entities." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing an agent that is responsible for carrying out a process, producing data, or contributing to the provenance of a resource in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -206,6 +209,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for recorded informational outputs and data artefacts." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing data produced, used, or referenced by a process or measurement in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -220,6 +226,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for individual recorded observations or values." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a single data point that links a value to the property and measurement context it belongs to in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -234,6 +243,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for experimental and processing apparatus." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing an instrument used to perform, support, or control a measurement or manufacturing process in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -248,6 +260,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for fabrication, preparation, and assembly processes." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a manufacturing process that prepares, assembles, coats, or otherwise fabricates a material or device in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -262,6 +277,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for material entities and physical artefacts." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a material entity that participates in a process, measurement, or device configuration in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -276,6 +294,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for value-determining experimental activities." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a measurement process that determines one or more properties of a material, device, or system in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -290,6 +311,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for descriptive information about resources and activities." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -321,6 +345,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for reusable condition and setting concepts." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a parameter specified as an input, setting, or condition for a process or measurement in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -335,6 +362,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for activities and operations in the experimental workflow." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a process that transforms material, produces data, or changes the state of a system in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -349,6 +379,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for characteristics that can be observed, measured, or reported." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a property that can be measured, computed, or otherwise assigned to a material, process, or system in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -363,6 +396,9 @@
       "meta" : {
         "comments" : [ "Core H2KG class for measurement units used with quantity values." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A class representing a unit used to express the value of a quantity in H2KG."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -386,6 +422,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for atcurrentdensity." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a data point to the current-density value at which it is reported."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -401,6 +440,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for frommeasurement." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a data point to the measurement from which it was generated."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -416,6 +458,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasinputdata." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process or measurement to data used as an input."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -431,11 +476,32 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasinputmaterial." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process or measurement to a material entity that serves as an input."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
           "pred" : "http://www.w3.org/2004/02/skos/core#definition",
           "val" : "An object property that relates a process to a material that serves as an input to that process."
+        } ]
+      }
+    }, {
+      "id" : "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "lbl" : "hasMetadata",
+      "type" : "PROPERTY",
+      "propertyType" : "OBJECT",
+      "meta" : {
+        "comments" : [ "Core H2KG relation for hasmetadata." ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."
+        }, {
+          "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
+          "val" : "https://w3id.org/h2kg/hydrogen-ontology"
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#definition",
+          "val" : "An object property that relates a resource to metadata describing its identity, provenance, structure, or contextual information."
         } ]
       }
     }, {
@@ -446,6 +512,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasoutputdata." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a measurement or process to data generated as an output."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -461,6 +530,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasoutputmaterial." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process to a material entity produced as an output."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -476,6 +548,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasparameter." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process or measurement to a parameter that specifies one of its inputs, settings, or operating conditions."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -491,6 +566,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for haspart." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating an entity or process to a constituent part."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -506,6 +584,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasproperty." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -521,6 +602,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hasquantityvalue." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a parameter, property, or data point to the quantity value that expresses it."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -536,6 +620,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for hassubprocess." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process to a subprocess that forms part of its overall execution."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -551,6 +638,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for ispartof." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating an entity or process to a larger entity or process of which it forms a part."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -566,6 +656,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for issubprocessof." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a subprocess to the larger process of which it forms a part."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -581,6 +674,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for measures." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a measurement to a property that it determines."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -596,6 +692,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for normalizedto." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a property or result to the basis used for its normalization."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -611,6 +710,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for ofproperty." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a data point to the property represented by that data point."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -626,6 +728,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for referenceelectrode." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating an electrochemical measurement setup or process to the reference electrode it uses."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -641,6 +746,9 @@
       "meta" : {
         "comments" : [ "Core H2KG relation for usesinstrument." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "An object property relating a process or measurement to an instrument used to carry it out or support it."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -656,6 +764,9 @@
       "meta" : {
         "comments" : [ "Core H2KG datatype relation for hasidentifier." ],
         "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A datatype property relating a resource to a literal identifier used to distinguish or reference it."
+        }, {
           "pred" : "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
           "val" : "https://w3id.org/h2kg/hydrogen-ontology"
         }, {
@@ -2260,6 +2371,9 @@
       "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_MagneticFieldStrength_QV",
       "type" : "INDIVIDUAL"
     }, {
+      "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_Magnification_QV",
+      "type" : "INDIVIDUAL"
+    }, {
       "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_ManufacturingThroughputIncreaseFactor_QV",
       "type" : "INDIVIDUAL"
     }, {
@@ -3728,6 +3842,9 @@
       "type" : "INDIVIDUAL"
     }, {
       "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WettingSolventToWaterVolumeRatio_QV",
+      "type" : "INDIVIDUAL"
+    }, {
+      "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingDistance_QV",
       "type" : "INDIVIDUAL"
     }, {
       "id" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingTimeDeformation_QV",
@@ -22722,6 +22839,25 @@
         } ]
       }
     }, {
+      "id" : "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "lbl" : "Magnification",
+      "type" : "INDIVIDUAL",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements."
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#altLabel",
+          "val" : "TEM magnification"
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#altLabel",
+          "val" : "image magnification"
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#prefLabel",
+          "val" : "Magnification"
+        } ]
+      }
+    }, {
       "id" : "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
       "lbl" : "Manganese Dioxide Catalyst",
       "type" : "INDIVIDUAL",
@@ -24402,7 +24538,7 @@
       "meta" : {
         "basicPropertyValues" : [ {
           "pred" : "http://purl.org/dc/terms/description",
-          "val" : "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures."
+          "val" : "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen."
         }, {
           "pred" : "http://www.w3.org/2004/02/skos/core#prefLabel",
           "val" : "Microstructure Image Dataset"
@@ -27659,9 +27795,6 @@
           "val" : "Particles Per Agglomerate"
         } ]
       }
-    }, {
-      "id" : "https://w3id.org/h2kg/hydrogen-ontology#Passes",
-      "type" : "INDIVIDUAL"
     }, {
       "id" : "https://w3id.org/h2kg/hydrogen-ontology#PatternSurfaceCoverage",
       "lbl" : "Pattern Surface Coverage",
@@ -33760,9 +33893,6 @@
           "val" : "Rotating Disk Electrode System"
         } ]
       }
-    }, {
-      "id" : "https://w3id.org/h2kg/hydrogen-ontology#RotatingDiskVoltammetry",
-      "type" : "INDIVIDUAL"
     }, {
       "id" : "https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry",
       "type" : "INDIVIDUAL",
@@ -40142,6 +40272,25 @@
         } ]
       }
     }, {
+      "id" : "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "lbl" : "Working Distance",
+      "type" : "INDIVIDUAL",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/terms/description",
+          "val" : "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging."
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#altLabel",
+          "val" : "objective-to-specimen distance"
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#altLabel",
+          "val" : "pole-piece distance"
+        }, {
+          "pred" : "http://www.w3.org/2004/02/skos/core#prefLabel",
+          "val" : "Working Distance"
+        } ]
+      }
+    }, {
       "id" : "https://w3id.org/h2kg/hydrogen-ontology#WorkingTimeDeformation",
       "lbl" : "Working Time Deformation",
       "type" : "INDIVIDUAL",
@@ -45297,6 +45446,10 @@
       "pred" : "type",
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
     }, {
+      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "pred" : "type",
+      "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
       "pred" : "type",
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Matter"
@@ -49310,6 +49463,10 @@
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#WettingSolventToWaterVolumeRatio",
+      "pred" : "type",
+      "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    }, {
+      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
       "pred" : "type",
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
     }, {
@@ -55479,10 +55636,6 @@
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset",
       "pred" : "http://www.w3.org/ns/prov#wasGeneratedBy",
-      "obj" : "https://w3id.org/h2kg/hydrogen-ontology#RotatingDiskVoltammetry"
-    }, {
-      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset",
-      "pred" : "http://www.w3.org/ns/prov#wasGeneratedBy",
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry"
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset",
@@ -59748,6 +59901,10 @@
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#MagneticFieldStrength",
       "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
       "obj" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_MagneticFieldStrength_QV"
+    }, {
+      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "obj" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_Magnification_QV"
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#ManufacturingThroughputIncreaseFactor",
       "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
@@ -64887,10 +65044,6 @@
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#SprayCoating",
       "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "obj" : "https://w3id.org/h2kg/hydrogen-ontology#Passes"
-    }, {
-      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#SprayCoating",
-      "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "obj" : "https://w3id.org/h2kg/hydrogen-ontology#PtLoading"
     }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#SprayCoating",
@@ -66641,6 +66794,10 @@
       "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
       "obj" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WettingSolventToWaterVolumeRatio_QV"
     }, {
+      "sub" : "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "obj" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingDistance_QV"
+    }, {
       "sub" : "https://w3id.org/h2kg/hydrogen-ontology#WorkingTimeDeformation",
       "pred" : "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
       "obj" : "file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingTimeDeformation_QV"
@@ -67267,7 +67424,7 @@
       "rangeClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Matter" ]
     }, {
       "predicateId" : "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "domainClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Measurement" ],
+      "domainClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Process" ],
       "rangeClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Data" ]
     }, {
       "predicateId" : "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
@@ -67293,6 +67450,9 @@
       "predicateId" : "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
       "domainClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Process" ],
       "rangeClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Instrument" ]
+    }, {
+      "predicateId" : "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "rangeClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#Metadata" ]
     }, {
       "predicateId" : "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo",
       "rangeClassIds" : [ "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis" ]

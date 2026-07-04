@@ -1,4 +1,4 @@
-@prefix : <http://purl.obolibrary.org/obo/h2kg/h2kg-base.ttl#> .
+@prefix : <http://purl.obolibrary.org/obo/h2kg.ttl#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -12,66 +12,66 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@base <http://purl.obolibrary.org/obo/h2kg/h2kg-base.ttl> .
+@base <http://purl.obolibrary.org/obo/h2kg.ttl> .
 
-<http://purl.obolibrary.org/obo/h2kg/h2kg-base.ttl> rdf:type owl:Ontology ;
-                                                     owl:versionIRI <http://purl.obolibrary.org/obo/h2kg/releases/2026-04-12/h2kg-base.ttl> ;
-                                                     dc:type <http://purl.obolibrary.org/obo/IAO_8000001> ;
-                                                     dcterms:abstract """Application ontology for representing low-Pt PEMFC cathode catalyst layer experiments, materials, manufacturing conditions, measurements, quantities, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.
+<http://purl.obolibrary.org/obo/h2kg.ttl> rdf:type owl:Ontology ;
+                                           owl:versionIRI <http://purl.obolibrary.org/obo/h2kg/releases/2026-07-04/h2kg.ttl> ;
+                                           dc:type <http://purl.obolibrary.org/obo/IAO_8000001> ;
+                                           dcterms:abstract """Application ontology for representing hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, and release metadata with conservative alignment to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.
 """@en ;
-                                                     dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany" ;
-                                                     dcterms:created "2026-03-19" ;
-                                                     dcterms:creator "Electrochemistry Research Group" ;
-                                                     dcterms:description "Canonical schema module for the H2KG PEMFC catalyst-layer application ontology."@en ,
-                                                                         "Ontology for representing proton exchange membrane fuel cell materials, components, devices, processes, measurements, and experiments." ;
-                                                     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                     dcterms:modified "2026-03-19" ;
-                                                     dcterms:publisher "Forschungszentrum Juelich GmbH" ;
-                                                     dcterms:references <http://purl.org/holy/ns#> ,
-                                                                        <https://w3id.org/emmo> ,
-                                                                        <https://w3id.org/emmo/domain/electrochemistry> ,
-                                                                        <https://w3id.org/emmo/domain/pemfc> ,
-                                                                        <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> ,
-                                                                        <https://w3id.org/emmo/domain/coating#> ,
-                                                                        <https://w3id.org/emmo/domain/equivalent-circuit-model#> ,
-                                                                        <https://w3id.org/emmo/domain/manufacturing#> ,
-                                                                        <https://w3id.org/emmo/domain/microscopy#> ;
-                                                     dcterms:title "H2KG PEMFC Catalyst Layer Application Ontology"@en ,
-                                                                   "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments" ;
-                                                     vann:preferredNamespacePrefix "h2kg" ;
-                                                     vann:preferredNamespaceUri h2kg: ;
-                                                     rdfs:comment """The ontology captures PEMFC catalyst-layer experimental concepts, parameters, properties, measurements, instruments, materials, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.
+                                           dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany" ;
+                                           dcterms:created "2026-03-19" ;
+                                           dcterms:creator "Electrochemistry Research Group" ;
+                                           dcterms:description "Canonical schema module for the H2KG PEMFC catalyst-layer application ontology."@en ,
+                                                               "Ontology for representing proton exchange membrane fuel cell materials, components, devices, processes, measurements, and experiments." ;
+                                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                           dcterms:modified "2026-03-19" ;
+                                           dcterms:publisher "Forschungszentrum Juelich GmbH" ;
+                                           dcterms:references <http://purl.org/holy/ns#> ,
+                                                              <https://w3id.org/emmo> ,
+                                                              <https://w3id.org/emmo/domain/electrochemistry> ,
+                                                              <https://w3id.org/emmo/domain/pemfc> ,
+                                                              <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> ,
+                                                              <https://w3id.org/emmo/domain/coating#> ,
+                                                              <https://w3id.org/emmo/domain/equivalent-circuit-model#> ,
+                                                              <https://w3id.org/emmo/domain/manufacturing#> ,
+                                                              <https://w3id.org/emmo/domain/microscopy#> ;
+                                           dcterms:title "H2KG PEMFC Catalyst Layer Application Ontology"@en ,
+                                                         "H2KG: Ontology for Proton Exchange Membrane Fuel Cell Materials, Components, and Experiments" ;
+                                           vann:preferredNamespacePrefix "h2kg" ;
+                                           vann:preferredNamespaceUri h2kg: ;
+                                           rdfs:comment """The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, including parameters, properties, measurements, instruments, materials, data, and related FAIR provenance. It preserves the historic h2kg namespace while improving metadata quality, release readiness, and public documentation.
 """@en ;
-                                                     rdfs:seeAlso <http://purl.org/holy/ns#BipolarPlate> ,
-                                                                  <http://purl.org/holy/ns#CatalystLayer> ,
-                                                                  <http://purl.org/holy/ns#FuelCellStack> ,
-                                                                  <http://purl.org/holy/ns#GasDiffusionLayer> ,
-                                                                  <http://purl.org/holy/ns#Gasket> ,
-                                                                  <http://purl.org/holy/ns#Membrane> ,
-                                                                  <http://purl.org/holy/ns#MembraneElectrodeAssembly> ,
-                                                                  <http://purl.org/holy/ns#PolymerElectrolyteMembraneFuelCell> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2> ,
-                                                                  <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_abe17c61_6a3d_4ec6_b4db_450b5654dbc6> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_b24401b7_35e4_40be_8c8b_36ee8869cc1a> ,
-                                                                  <https://w3id.org/emmo/domain/pemfc#EMMO_e072436a_2656_4e03_b600_a7f41c486339> ,
-                                                                  <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
-                                                     owl:priorVersion <https://w3id.org/h2kg/hydrogen-ontology> ;
-                                                     owl:versionInfo "1.0.0"@en ,
-                                                                     "2026-04-12" ;
-                                                     foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
+                                           rdfs:seeAlso <http://purl.org/holy/ns#BipolarPlate> ,
+                                                        <http://purl.org/holy/ns#CatalystLayer> ,
+                                                        <http://purl.org/holy/ns#FuelCellStack> ,
+                                                        <http://purl.org/holy/ns#GasDiffusionLayer> ,
+                                                        <http://purl.org/holy/ns#Gasket> ,
+                                                        <http://purl.org/holy/ns#Membrane> ,
+                                                        <http://purl.org/holy/ns#MembraneElectrodeAssembly> ,
+                                                        <http://purl.org/holy/ns#PolymerElectrolyteMembraneFuelCell> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_03a0ccc9_21fe_46a1_a143_50147fbe3200> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_4edc0d47_1f7e_4cb2_b710_7f76b76742bc> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_c6605d77_6b8c_42ce_9f7d_befeddb5d5f2> ,
+                                                        <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_f3345489_17f2_4a8e_a74b_6e81f19180a7> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_01f7c538_3de2_4028_92c1_8cc93832dd76> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_099d5163_117a_4176_ba48_af54a61c4c8d> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_2ffda0a1_a5fc_4a55_aad8_d91d7cbb101d> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_6da0e770_9dcf_43ff_865f_21121a53ca67> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_9d51634d_db42_4697_8dda_58e74a8df826> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_abe17c61_6a3d_4ec6_b4db_450b5654dbc6> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_b24401b7_35e4_40be_8c8b_36ee8869cc1a> ,
+                                                        <https://w3id.org/emmo/domain/pemfc#EMMO_e072436a_2656_4e03_b600_a7f41c486339> ,
+                                                        <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
+                                           owl:priorVersion <https://w3id.org/h2kg/hydrogen-ontology> ;
+                                           owl:versionInfo "1.0.0"@en ,
+                                                           "2026-07-04" ;
+                                           foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
 
 #################################################################
 #    Annotation properties
@@ -189,6 +189,7 @@ prov:wasGeneratedBy rdf:type owl:ObjectProperty .
 h2kg:atCurrentDensity rdf:type owl:ObjectProperty ;
                       rdfs:domain h2kg:DataPoint ;
                       rdfs:range <http://qudt.org/schema/qudt/QuantityValue> ;
+                      dcterms:description "An object property relating a data point to the current-density value at which it is reported."@en ;
                       rdfs:comment "Core H2KG relation for atcurrentdensity."@en ;
                       rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                       rdfs:label "atCurrentDensity"@en ;
@@ -199,6 +200,7 @@ h2kg:atCurrentDensity rdf:type owl:ObjectProperty ;
 h2kg:fromMeasurement rdf:type owl:ObjectProperty ;
                      rdfs:domain h2kg:DataPoint ;
                      rdfs:range h2kg:Measurement ;
+                     dcterms:description "An object property relating a data point to the measurement from which it was generated."@en ;
                      rdfs:comment "Core H2KG relation for frommeasurement."@en ;
                      rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                      rdfs:label "fromMeasurement"@en ;
@@ -210,6 +212,7 @@ h2kg:hasInputData rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf prov:used ;
                   rdfs:domain h2kg:Process ;
                   rdfs:range h2kg:Data ;
+                  dcterms:description "An object property relating a process or measurement to data used as an input."@en ;
                   rdfs:comment "Core H2KG relation for hasinputdata."@en ;
                   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                   rdfs:label "hasInputData"@en ;
@@ -221,16 +224,28 @@ h2kg:hasInputMaterial rdf:type owl:ObjectProperty ;
                       rdfs:subPropertyOf prov:used ;
                       rdfs:domain h2kg:Process ;
                       rdfs:range h2kg:Matter ;
+                      dcterms:description "An object property relating a process or measurement to a material entity that serves as an input."@en ;
                       rdfs:comment "Core H2KG relation for hasinputmaterial."@en ;
                       rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                       rdfs:label "hasInputMaterial"@en ;
                       skos:definition "An object property that relates a process to a material that serves as an input to that process."@en .
 
 
+###  https://w3id.org/h2kg/hydrogen-ontology#hasMetadata
+h2kg:hasMetadata rdf:type owl:ObjectProperty ;
+                 rdfs:range h2kg:Metadata ;
+                 dcterms:description "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."@en ;
+                 rdfs:comment "Core H2KG relation for hasmetadata."@en ;
+                 rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
+                 rdfs:label "hasMetadata"@en ;
+                 skos:definition "An object property that relates a resource to metadata describing its identity, provenance, structure, or contextual information."@en .
+
+
 ###  https://w3id.org/h2kg/hydrogen-ontology#hasOutputData
 h2kg:hasOutputData rdf:type owl:ObjectProperty ;
-                   rdfs:domain h2kg:Measurement ;
+                   rdfs:domain h2kg:Process ;
                    rdfs:range h2kg:Data ;
+                   dcterms:description "An object property relating a measurement or process to data generated as an output."@en ;
                    rdfs:comment "Core H2KG relation for hasoutputdata."@en ;
                    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                    rdfs:label "hasOutputData"@en ;
@@ -241,6 +256,7 @@ h2kg:hasOutputData rdf:type owl:ObjectProperty ;
 h2kg:hasOutputMaterial rdf:type owl:ObjectProperty ;
                        rdfs:domain h2kg:Process ;
                        rdfs:range h2kg:Matter ;
+                       dcterms:description "An object property relating a process to a material entity produced as an output."@en ;
                        rdfs:comment "Core H2KG relation for hasoutputmaterial."@en ;
                        rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                        rdfs:label "hasOutputMaterial"@en ;
@@ -251,6 +267,7 @@ h2kg:hasOutputMaterial rdf:type owl:ObjectProperty ;
 h2kg:hasParameter rdf:type owl:ObjectProperty ;
                   rdfs:domain h2kg:Process ;
                   rdfs:range h2kg:Parameter ;
+                  dcterms:description "An object property relating a process or measurement to a parameter that specifies one of its inputs, settings, or operating conditions."@en ;
                   rdfs:comment "Core H2KG relation for hasparameter."@en ;
                   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                   rdfs:label "hasParameter"@en ;
@@ -260,6 +277,7 @@ h2kg:hasParameter rdf:type owl:ObjectProperty ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#hasPart
 h2kg:hasPart rdf:type owl:ObjectProperty ;
              owl:inverseOf h2kg:isPartOf ;
+             dcterms:description "An object property relating an entity or process to a constituent part."@en ;
              rdfs:comment "Core H2KG relation for haspart."@en ;
              rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
              rdfs:label "hasPart"@en ;
@@ -270,6 +288,7 @@ h2kg:hasPart rdf:type owl:ObjectProperty ;
 h2kg:hasProperty rdf:type owl:ObjectProperty ;
                  rdfs:domain h2kg:Measurement ;
                  rdfs:range h2kg:Property ;
+                 dcterms:description "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."@en ;
                  rdfs:comment "Core H2KG relation for hasproperty."@en ;
                  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                  rdfs:label "hasProperty"@en ;
@@ -278,6 +297,7 @@ h2kg:hasProperty rdf:type owl:ObjectProperty ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue
 h2kg:hasQuantityValue rdf:type owl:ObjectProperty ;
+                      dcterms:description "An object property relating a parameter, property, or data point to the quantity value that expresses it."@en ;
                       rdfs:comment "Core H2KG relation for hasquantityvalue."@en ;
                       rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                       rdfs:label "hasQuantityValue"@en ;
@@ -287,6 +307,7 @@ h2kg:hasQuantityValue rdf:type owl:ObjectProperty ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess
 h2kg:hasSubProcess rdf:type owl:ObjectProperty ;
                    owl:inverseOf h2kg:isSubProcessOf ;
+                   dcterms:description "An object property relating a process to a subprocess that forms part of its overall execution."@en ;
                    rdfs:comment "Core H2KG relation for hassubprocess."@en ;
                    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                    rdfs:label "hasSubProcess"@en ;
@@ -295,6 +316,7 @@ h2kg:hasSubProcess rdf:type owl:ObjectProperty ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#isPartOf
 h2kg:isPartOf rdf:type owl:ObjectProperty ;
+              dcterms:description "An object property relating an entity or process to a larger entity or process of which it forms a part."@en ;
               rdfs:comment "Core H2KG relation for ispartof."@en ;
               rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
               rdfs:label "isPartOf"@en ;
@@ -303,6 +325,7 @@ h2kg:isPartOf rdf:type owl:ObjectProperty ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf
 h2kg:isSubProcessOf rdf:type owl:ObjectProperty ;
+                    dcterms:description "An object property relating a subprocess to the larger process of which it forms a part."@en ;
                     rdfs:comment "Core H2KG relation for issubprocessof."@en ;
                     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                     rdfs:label "isSubProcessOf"@en ;
@@ -313,6 +336,7 @@ h2kg:isSubProcessOf rdf:type owl:ObjectProperty ;
 h2kg:measures rdf:type owl:ObjectProperty ;
               rdfs:domain h2kg:Measurement ;
               rdfs:range h2kg:Property ;
+              dcterms:description "An object property relating a measurement to a property that it determines."@en ;
               rdfs:comment "Core H2KG relation for measures."@en ;
               rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
               rdfs:label "measures"@en ;
@@ -322,6 +346,7 @@ h2kg:measures rdf:type owl:ObjectProperty ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#normalizedTo
 h2kg:normalizedTo rdf:type owl:ObjectProperty ;
                   rdfs:range h2kg:NormalizationBasis ;
+                  dcterms:description "An object property relating a property or result to the basis used for its normalization."@en ;
                   rdfs:comment "Core H2KG relation for normalizedto."@en ;
                   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                   rdfs:label "normalizedTo"@en ;
@@ -332,6 +357,7 @@ h2kg:normalizedTo rdf:type owl:ObjectProperty ;
 h2kg:ofProperty rdf:type owl:ObjectProperty ;
                 rdfs:domain h2kg:DataPoint ;
                 rdfs:range h2kg:Property ;
+                dcterms:description "An object property relating a data point to the property represented by that data point."@en ;
                 rdfs:comment "Core H2KG relation for ofproperty."@en ;
                 rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                 rdfs:label "ofProperty"@en ;
@@ -341,6 +367,7 @@ h2kg:ofProperty rdf:type owl:ObjectProperty ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#referenceElectrode
 h2kg:referenceElectrode rdf:type owl:ObjectProperty ;
                         rdfs:range <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> ;
+                        dcterms:description "An object property relating an electrochemical measurement setup or process to the reference electrode it uses."@en ;
                         rdfs:comment "Core H2KG relation for referenceelectrode."@en ;
                         rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                         rdfs:label "referenceElectrode"@en ;
@@ -351,6 +378,7 @@ h2kg:referenceElectrode rdf:type owl:ObjectProperty ;
 h2kg:usesInstrument rdf:type owl:ObjectProperty ;
                     rdfs:domain h2kg:Process ;
                     rdfs:range h2kg:Instrument ;
+                    dcterms:description "An object property relating a process or measurement to an instrument used to carry it out or support it."@en ;
                     rdfs:comment "Core H2KG relation for usesinstrument."@en ;
                     rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                     rdfs:label "usesInstrument"@en ;
@@ -364,6 +392,7 @@ h2kg:usesInstrument rdf:type owl:ObjectProperty ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier
 h2kg:hasIdentifier rdf:type owl:DatatypeProperty ;
                    rdfs:range rdfs:Literal ;
+                   dcterms:description "A datatype property relating a resource to a literal identifier used to distinguish or reference it."@en ;
                    rdfs:comment "Core H2KG datatype relation for hasidentifier."@en ;
                    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                    rdfs:label "hasIdentifier"@en ;
@@ -401,6 +430,7 @@ prov:Entity rdf:type owl:Class .
 ###  https://w3id.org/h2kg/hydrogen-ontology#Agent
 h2kg:Agent rdf:type owl:Class ;
            rdfs:subClassOf prov:Agent ;
+           dcterms:description "A class representing an agent that is responsible for carrying out a process, producing data, or contributing to the provenance of a resource in H2KG."@en ;
            rdfs:comment "Core H2KG class for responsible actors and provenance-bearing entities."@en ;
            rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
            rdfs:label "Agent"@en ;
@@ -410,6 +440,7 @@ h2kg:Agent rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#Data
 h2kg:Data rdf:type owl:Class ;
           rdfs:subClassOf prov:Entity ;
+          dcterms:description "A class representing data produced, used, or referenced by a process or measurement in H2KG."@en ;
           rdfs:comment "Core H2KG class for recorded informational outputs and data artefacts."@en ;
           rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
           rdfs:label "Data"@en ;
@@ -419,6 +450,7 @@ h2kg:Data rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#DataPoint
 h2kg:DataPoint rdf:type owl:Class ;
                rdfs:subClassOf prov:Entity ;
+               dcterms:description "A class representing a single data point that links a value to the property and measurement context it belongs to in H2KG."@en ;
                rdfs:comment "Core H2KG class for individual recorded observations or values."@en ;
                rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                rdfs:label "Data Point"@en ;
@@ -428,6 +460,7 @@ h2kg:DataPoint rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#Instrument
 h2kg:Instrument rdf:type owl:Class ;
                 rdfs:subClassOf prov:Entity ;
+                dcterms:description "A class representing an instrument used to perform, support, or control a measurement or manufacturing process in H2KG."@en ;
                 rdfs:comment "Core H2KG class for experimental and processing apparatus."@en ;
                 rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                 rdfs:label "Instrument"@en ;
@@ -437,6 +470,7 @@ h2kg:Instrument rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
 h2kg:Manufacturing rdf:type owl:Class ;
                    rdfs:subClassOf h2kg:Process ;
+                   dcterms:description "A class representing a manufacturing process that prepares, assembles, coats, or otherwise fabricates a material or device in H2KG."@en ;
                    rdfs:comment "Core H2KG class for fabrication, preparation, and assembly processes."@en ;
                    rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                    rdfs:label "Manufacturing"@en ;
@@ -445,6 +479,7 @@ h2kg:Manufacturing rdf:type owl:Class ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#Matter
 h2kg:Matter rdf:type owl:Class ;
+            dcterms:description "A class representing a material entity that participates in a process, measurement, or device configuration in H2KG."@en ;
             rdfs:comment "Core H2KG class for material entities and physical artefacts."@en ;
             rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
             rdfs:label "Matter"@en ;
@@ -454,6 +489,7 @@ h2kg:Matter rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#Measurement
 h2kg:Measurement rdf:type owl:Class ;
                  rdfs:subClassOf h2kg:Process ;
+                 dcterms:description "A class representing a measurement process that determines one or more properties of a material, device, or system in H2KG."@en ;
                  rdfs:comment "Core H2KG class for value-determining experimental activities."@en ;
                  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                  rdfs:label "Measurement"@en ;
@@ -462,6 +498,7 @@ h2kg:Measurement rdf:type owl:Class ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#Metadata
 h2kg:Metadata rdf:type owl:Class ;
+              dcterms:description "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG."@en ;
               rdfs:comment "Core H2KG class for descriptive information about resources and activities."@en ;
               rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
               rdfs:label "Metadata"@en ;
@@ -474,6 +511,7 @@ h2kg:NormalizationBasis rdf:type owl:Class .
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#Parameter
 h2kg:Parameter rdf:type owl:Class ;
+               dcterms:description "A class representing a parameter specified as an input, setting, or condition for a process or measurement in H2KG."@en ;
                rdfs:comment "Core H2KG class for reusable condition and setting concepts."@en ;
                rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
                rdfs:label "Parameter"@en ;
@@ -483,6 +521,7 @@ h2kg:Parameter rdf:type owl:Class ;
 ###  https://w3id.org/h2kg/hydrogen-ontology#Process
 h2kg:Process rdf:type owl:Class ;
              rdfs:subClassOf prov:Activity ;
+             dcterms:description "A class representing a process that transforms material, produces data, or changes the state of a system in H2KG."@en ;
              rdfs:comment "Core H2KG class for activities and operations in the experimental workflow."@en ;
              rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
              rdfs:label "Process"@en ;
@@ -491,6 +530,7 @@ h2kg:Process rdf:type owl:Class ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#Property
 h2kg:Property rdf:type owl:Class ;
+              dcterms:description "A class representing a property that can be measured, computed, or otherwise assigned to a material, process, or system in H2KG."@en ;
               rdfs:comment "Core H2KG class for characteristics that can be observed, measured, or reported."@en ;
               rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
               rdfs:label "Property"@en ;
@@ -499,6 +539,7 @@ h2kg:Property rdf:type owl:Class ;
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#Unit
 h2kg:Unit rdf:type owl:Class ;
+          dcterms:description "A class representing a unit used to express the value of a quantity in H2KG."@en ;
           rdfs:comment "Core H2KG class for measurement units used with quantity values."@en ;
           rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> ;
           rdfs:label "Unit"@en ;
@@ -2637,6 +2678,10 @@ h2kg:Unit rdf:type owl:Class ;
 <file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_MagneticFieldStrength_QV> rdf:type owl:NamedIndividual .
 
 
+###  file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_Magnification_QV
+<file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_Magnification_QV> rdf:type owl:NamedIndividual .
+
+
 ###  file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_ManufacturingThroughputIncreaseFactor_QV
 <file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_ManufacturingThroughputIncreaseFactor_QV> rdf:type owl:NamedIndividual .
 
@@ -4595,6 +4640,10 @@ h2kg:Unit rdf:type owl:Class ;
 
 ###  file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WettingSolventToWaterVolumeRatio_QV
 <file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WettingSolventToWaterVolumeRatio_QV> rdf:type owl:NamedIndividual .
+
+
+###  file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingDistance_QV
+<file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingDistance_QV> rdf:type owl:NamedIndividual .
 
 
 ###  file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingTimeDeformation_QV
@@ -11956,7 +12005,6 @@ h2kg:ExperimentDataset rdf:type owl:NamedIndividual ,
                                            h2kg:ElectrochemicalImpedanceSpectroscopyPotentiostatic ,
                                            h2kg:LinearSweepVoltammetry ,
                                            h2kg:MEAPolarization ,
-                                           h2kg:RotatingDiskVoltammetry ,
                                            h2kg:RotatingRingDiskVoltammetry ,
                                            h2kg:SquareWaveVoltammetry ;
                        dcterms:creator "Electrochemistry Research Group" ;
@@ -17468,6 +17516,17 @@ h2kg:MagneticStirrer rdf:type owl:NamedIndividual ,
                      skos:prefLabel "Magnetic Stirrer"@en .
 
 
+###  https://w3id.org/h2kg/hydrogen-ontology#Magnification
+h2kg:Magnification rdf:type owl:NamedIndividual ,
+                            h2kg:Parameter ;
+                   h2kg:hasQuantityValue <file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_Magnification_QV> ;
+                   dcterms:description "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements."@en ;
+                   rdfs:label "Magnification"@en ;
+                   skos:altLabel "TEM magnification"@en ,
+                                 "image magnification"@en ;
+                   skos:prefLabel "Magnification"@en .
+
+
 ###  https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst
 h2kg:ManganeseDioxideCatalyst rdf:type owl:NamedIndividual ,
                                        h2kg:Matter ;
@@ -18559,7 +18618,7 @@ h2kg:MicrostructureGraphiticOrderTable1 rdf:type owl:NamedIndividual ,
 ###  https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset
 h2kg:MicrostructureImageDataset rdf:type owl:NamedIndividual ,
                                          h2kg:Data ;
-                                dcterms:description "Dataset of microscopy images before/after pyrolysis and at various sintering temperatures."@en ;
+                                dcterms:description "A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen."@en ;
                                 rdfs:label "Microstructure Image Dataset"@en ;
                                 skos:prefLabel "Microstructure Image Dataset"@en .
 
@@ -20540,10 +20599,6 @@ h2kg:ParticlesPerAgglomerate rdf:type owl:NamedIndividual ,
                              rdfs:label "Particles Per Agglomerate"@en ;
                              skos:altLabel "# particles /agglomerate"@en ;
                              skos:prefLabel "Particles Per Agglomerate"@en .
-
-
-###  https://w3id.org/h2kg/hydrogen-ontology#Passes
-h2kg:Passes rdf:type owl:NamedIndividual .
 
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#PatternSurfaceCoverage
@@ -24350,10 +24405,6 @@ h2kg:RotatingDiskElectrodeSystem rdf:type owl:NamedIndividual ,
                                  skos:prefLabel "Rotating Disk Electrode System"@en .
 
 
-###  https://w3id.org/h2kg/hydrogen-ontology#RotatingDiskVoltammetry
-h2kg:RotatingDiskVoltammetry rdf:type owl:NamedIndividual .
-
-
 ###  https://w3id.org/h2kg/hydrogen-ontology#RotatingRingDiskVoltammetry
 h2kg:RotatingRingDiskVoltammetry rdf:type owl:NamedIndividual ,
                                           h2kg:Measurement ;
@@ -26068,7 +26119,6 @@ h2kg:SprayCoating rdf:type owl:NamedIndividual ,
                                     h2kg:NozzleDiameter ,
                                     h2kg:NozzleToSubstrateDistance ,
                                     h2kg:NumberOfSprayPasses ,
-                                    h2kg:Passes ,
                                     h2kg:PtLoading ,
                                     h2kg:ShearRate ,
                                     h2kg:SprayAirPressure ,
@@ -28645,6 +28695,17 @@ h2kg:WettingSolventToWaterVolumeRatio rdf:type owl:NamedIndividual ,
                                       dcterms:description "A parameter specifying volume ratio used for pre-wetting coated electrode prior to CV (~1:9 ethanol:water v/v)."@en ;
                                       rdfs:label "Wetting Solvent To Water Volume Ratio"@en ;
                                       skos:prefLabel "Wetting Solvent To Water Volume Ratio"@en .
+
+
+###  https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance
+h2kg:WorkingDistance rdf:type owl:NamedIndividual ,
+                              h2kg:Parameter ;
+                     h2kg:hasQuantityValue <file:///C:/Users/mehrt/Desktop/h2kg/AIMWORKS/ontology_release/output/ontology/_WorkingDistance_QV> ;
+                     dcterms:description "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging."@en ;
+                     rdfs:label "Working Distance"@en ;
+                     skos:altLabel "objective-to-specimen distance"@en ,
+                                   "pole-piece distance"@en ;
+                     skos:prefLabel "Working Distance"@en .
 
 
 ###  https://w3id.org/h2kg/hydrogen-ontology#WorkingTimeDeformation

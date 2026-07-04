@@ -1046,7 +1046,7 @@ h2kg:Temperature
   skos:prefLabel "Temperature"@en ;
   h2kg:hasQuantityValue <_:N2c696c6203fc4a48b7ce00bcb29824f5>, <_Temperature_QV> ;
   skos:altLabel "cell temperature"@en, "operating temperature"@en, "room temperature"@en ;
-  dcterms:description "A parameter specifying temperature used to characterize MEAPolarization, Square Wave Voltammetry, and Electrochemical Impedance Spectroscopy Potentiostatic."@en ;
+  dcterms:description "A parameter specifying temperature used to characterize Transmission Electron Microscopy Imaging, Electron Microscopy Imaging, MEAPolarization, Square Wave Voltammetry, and Electrochemical Impedance Spectroscopy Potentiostatic."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
@@ -8533,7 +8533,7 @@ h2kg:AcceleratingVoltage
   skos:prefLabel "Accelerating Voltage"@en ;
   rdfs:label "Accelerating Voltage"@en ;
   skos:altLabel "SEM operating voltage"@en, "TEM accelerating voltage"@en, "acceleration voltage"@en ;
-  dcterms:description "A parameter specifying accelerating voltage used to characterize Electron Microscopy Imaging, SEM Imaging Measurement, and X Ray Computed Tomography Measurement."@en ;
+  dcterms:description "A parameter specifying accelerating voltage used to characterize Transmission Electron Microscopy Imaging, Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, and X Ray Computed Tomography Measurement."@en ;
   h2kg:hasQuantityValue <_AcceleratingVoltage_QV>, <_AcceleratingVoltage_QV_2> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
@@ -8543,7 +8543,7 @@ h2kg:Magnification
   skos:prefLabel "Magnification"@en ;
   rdfs:label "Magnification"@en ;
   skos:altLabel "image magnification"@en, "TEM magnification"@en ;
-  dcterms:description "A parameter specifying microscope magnification used to characterize transmission electron microscopy imaging and related microscopy measurements."@en ;
+  dcterms:description "A parameter specifying microscope magnification used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements."@en ;
   h2kg:hasQuantityValue <_Magnification_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
@@ -8553,7 +8553,7 @@ h2kg:WorkingDistance
   skos:prefLabel "Working Distance"@en ;
   rdfs:label "Working Distance"@en ;
   skos:altLabel "objective-to-specimen distance"@en, "pole-piece distance"@en ;
-  dcterms:description "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize electron microscopy imaging."@en ;
+  dcterms:description "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements."@en ;
   h2kg:hasQuantityValue <_WorkingDistance_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
@@ -11557,7 +11557,7 @@ h2kg:VacuumChamberPressure
   skos:prefLabel "Vacuum Chamber Pressure"@en ;
   rdfs:label "Vacuum Chamber Pressure"@en ;
   skos:altLabel "vacuum pressure"@en ;
-  dcterms:description "A parameter specifying vacuum chamber pressure used to characterize Vacuum Drying."@en ;
+  dcterms:description "A parameter specifying vacuum chamber pressure used to characterize Transmission Electron Microscopy Imaging and Vacuum Drying."@en ;
   h2kg:hasQuantityValue <_VacuumChamberPressure_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
@@ -18426,6 +18426,7 @@ h2kg:TransmissionElectronMicroscopyImaging
   h2kg:usesInstrument h2kg:TEMInstrument ;
   h2kg:measures h2kg:InterplanarSpacing, h2kg:MeanParticleSize, h2kg:CarbonNanotubeOuterDiameter, h2kg:PtParticleSize, h2kg:PdNanoparticleDiameter, h2kg:InterplanarLatticeSpacing, h2kg:IonomerFilmThickness, h2kg:CarbonPrimaryParticleDiameter, h2kg:CarbonShellThickness ;
   h2kg:hasOutputData h2kg:MicrostructureImageDataset ;
+  h2kg:hasParameter h2kg:AcceleratingVoltage, h2kg:Magnification, h2kg:WorkingDistance, h2kg:Temperature, h2kg:RelativeHumidity, h2kg:VacuumChamberPressure ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 

@@ -5,7 +5,7 @@
 - SHACL executed: true
 - SHACL details: Validation Report
 Conforms: True
-- Release candidate path: `output\ontology\schema.ttl`
+- Release candidate path: `C:\Users\mehrt\Desktop\h2kg\AIMWORKS\ontology_release\output\ontology\schema.ttl`
 
 ## Release Candidate Checks
 
