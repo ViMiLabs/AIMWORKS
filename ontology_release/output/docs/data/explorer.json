@@ -4,7 +4,7 @@
   "overview": {
     "localNodeCount": 2155,
     "externalNodeCount": 1150,
-    "edgeCount": 6604
+    "edgeCount": 6633
   },
   "modules": [
     {
@@ -19,7 +19,7 @@
       "label": "Controlled vocabulary",
       "description": "Curated local H2KG terms outside the compact core schema layer.",
       "nodeCount": 2121,
-      "edgeCount": 6548
+      "edgeCount": 6577
     },
     {
       "id": "alignments",
@@ -163,7 +163,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Accelerating Voltage AcceleratingVoltage h2kg:AcceleratingVoltage https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage A parameter specifying accelerating voltage used to characterize Transmission Electron Microscopy Imaging, Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, and X Ray Computed Tomography Measurement. SEM operating voltage TEM accelerating voltage acceleration voltage Parameter",
-      "degree": 7
+      "degree": 9
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AceticAcidSolution",
@@ -6318,7 +6318,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Catalyst Layer Morphology CatalystLayerMorphology h2kg:CatalystLayerMorphology https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerMorphology A property denoting qualitative morphology of sprayed catalyst layer surface (e.g., cracked mudflat vs loose particle deposits) inferred from SEM. cracked mudflat morphology mud-crack morphology surface morphology Property",
-      "degree": 4
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerPorosity",
@@ -6376,7 +6376,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Catalyst Layer Thickness CatalystLayerThickness h2kg:CatalystLayerThickness https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness A parameter specifying catalyst layer thickness used to characterize Electrochemical Impedance Spectroscopy Galvanostatic, Transmission Line Model Analysis, and PEMFCCFD Simulation. cathode CL thickness δC δ_CL Parameter",
-      "degree": 22
+      "degree": 23
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness_2",
@@ -6712,7 +6712,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Catalyst Particle Diameter CatalystParticleDiameter h2kg:CatalystParticleDiameter https://w3id.org/h2kg/hydrogen-ontology#CatalystParticleDiameter A property denoting catalyst particle diameter and determined in Scanning Electron Microscopy Imaging. diameter of catalyst particle Property",
-      "degree": 3
+      "degree": 5
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystParticleSurfaceArea",
@@ -29727,10 +29727,11 @@
       "label": "Magnification",
       "localName": "Magnification",
       "qname": "h2kg:Magnification",
-      "description": "A parameter specifying microscope magnification used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements.",
+      "description": "A parameter specifying microscope magnification used to characterize Transmission Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and related electron microscopy measurements.",
       "alt_labels": [
         "image magnification",
-        "TEM magnification"
+        "TEM magnification",
+        "SEM magnification"
       ],
       "examples": [],
       "notes": [],
@@ -29745,8 +29746,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "Magnification h2kg:Magnification https://w3id.org/h2kg/hydrogen-ontology#Magnification A parameter specifying microscope magnification used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements. image magnification TEM magnification Parameter",
-      "degree": 3
+      "search_text": "Magnification h2kg:Magnification https://w3id.org/h2kg/hydrogen-ontology#Magnification A parameter specifying microscope magnification used to characterize Transmission Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and related electron microscopy measurements. image magnification TEM magnification SEM magnification Parameter",
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ManganeseDioxideCatalyst",
@@ -32728,7 +32729,7 @@
         "structured data"
       ],
       "search_text": "Microstructure Image Dataset MicrostructureImageDataset h2kg:MicrostructureImageDataset https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset A dataset containing raw or processed microscopy images used to document microstructure, morphology, or nanoscale features of a specimen. Data structured data https://purls.helmholtz-metadaten.de/hob/HDO_00000005 skos:closeMatch",
-      "degree": 6
+      "degree": 8
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#MilliOhmmeter",
@@ -46558,7 +46559,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Relative Humidity RelativeHumidity h2kg:RelativeHumidity https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity A parameter specifying relative humidity used to characterize Oxygen Gain/Loss Measurement, O2–N2 Switching Measurement, and Through-Plane Gas Transport Measurement. RH humidification Relative humidity A/C Parameter",
-      "degree": 29
+      "degree": 32
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidityAST",
@@ -48091,9 +48092,10 @@
       "label": "Scanning Electron Microscopy Imaging",
       "localName": "ScanningElectronMicroscopyImaging",
       "qname": "h2kg:ScanningElectronMicroscopyImaging",
-      "description": "Electron microscopy imaging/analysis used in this review to report membrane/CL morphology and thickness.",
+      "description": "A measurement process that uses scanning electron microscopy imaging to determine catalyst particle diameter, catalyst-layer morphology, catalyst-layer thickness, grain size, and carbon nanotube forest height using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset.",
       "alt_labels": [
         "SEM",
+        "scanning electron microscopy",
         "SEM images",
         "SEM imaging"
       ],
@@ -48110,8 +48112,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "Scanning Electron Microscopy Imaging ScanningElectronMicroscopyImaging h2kg:ScanningElectronMicroscopyImaging https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging Electron microscopy imaging/analysis used in this review to report membrane/CL morphology and thickness. SEM SEM images SEM imaging Measurement",
-      "degree": 5
+      "search_text": "Scanning Electron Microscopy Imaging ScanningElectronMicroscopyImaging h2kg:ScanningElectronMicroscopyImaging https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging A measurement process that uses scanning electron microscopy imaging to determine catalyst particle diameter, catalyst-layer morphology, catalyst-layer thickness, grain size, and carbon nanotube forest height using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset. SEM scanning electron microscopy SEM images SEM imaging Measurement",
+      "degree": 17
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ScatteringAngle",
@@ -48478,7 +48480,7 @@
       "label": "SEM Image Dataset",
       "localName": "SEMImageDataset",
       "qname": "h2kg:SEMImageDataset",
-      "description": "A dataset containing SEM image data generated by SEM Imaging Measurement and Energy Dispersive X Ray Spectroscopy.",
+      "description": "A dataset containing SEM image data generated by Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and Energy Dispersive X Ray Spectroscopy.",
       "alt_labels": [
         "SEM images",
         "SEM surface images",
@@ -48497,8 +48499,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "SEM Image Dataset SEMImageDataset h2kg:SEMImageDataset https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset A dataset containing SEM image data generated by SEM Imaging Measurement and Energy Dispersive X Ray Spectroscopy. SEM images SEM surface images FIB-SEM images Data",
-      "degree": 3
+      "search_text": "SEM Image Dataset SEMImageDataset h2kg:SEMImageDataset https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset A dataset containing SEM image data generated by Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and Energy Dispersive X Ray Spectroscopy. SEM images SEM surface images FIB-SEM images Data",
+      "degree": 5
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
@@ -48507,7 +48509,7 @@
       "label": "SEM Imaging",
       "localName": "SEMImaging",
       "qname": "h2kg:SEMImaging",
-      "description": "Used to confirm film/pattern thickness and morphology.",
+      "description": "A measurement process that uses SEM imaging to confirm film or pattern thickness, morphology, pore-size features, and catalyst particle features using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset.",
       "alt_labels": [
         "SEM"
       ],
@@ -48524,8 +48526,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "SEM Imaging SEMImaging h2kg:SEMImaging https://w3id.org/h2kg/hydrogen-ontology#SEMImaging Used to confirm film/pattern thickness and morphology. SEM Measurement",
-      "degree": 9
+      "search_text": "SEM Imaging SEMImaging h2kg:SEMImaging https://w3id.org/h2kg/hydrogen-ontology#SEMImaging A measurement process that uses SEM imaging to confirm film or pattern thickness, morphology, pore-size features, and catalyst particle features using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset. SEM Measurement",
+      "degree": 21
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
@@ -48534,7 +48536,7 @@
       "label": "SEM Imaging Measurement",
       "localName": "SEMImagingMeasurement",
       "qname": "h2kg:SEMImagingMeasurement",
-      "description": "SEM images used to compare catalyst-layer surface microstructure (void distribution described qualitatively).",
+      "description": "A measurement process that uses SEM imaging to compare catalyst-layer surface microstructure, thickness, morphology, and particle-size features using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset.",
       "alt_labels": [
         "SEM imaging",
         "SEM",
@@ -48553,8 +48555,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "SEM Imaging Measurement SEMImagingMeasurement h2kg:SEMImagingMeasurement https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement SEM images used to compare catalyst-layer surface microstructure (void distribution described qualitatively). SEM imaging SEM FE-SEM imaging Measurement",
-      "degree": 31
+      "search_text": "SEM Imaging Measurement SEMImagingMeasurement h2kg:SEMImagingMeasurement https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement A measurement process that uses SEM imaging to compare catalyst-layer surface microstructure, thickness, morphology, and particle-size features using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset. SEM imaging SEM FE-SEM imaging Measurement",
+      "degree": 36
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SEMInstrument",
@@ -48592,7 +48594,7 @@
       "label": "SEM Micrograph Dataset",
       "localName": "SEMMicrographDataset",
       "qname": "h2kg:SEMMicrographDataset",
-      "description": "A dataset containing SEM micrograph data generated by SEM Imaging Measurement.",
+      "description": "A dataset containing SEM micrograph data generated by Scanning Electron Microscopy Imaging, SEM Imaging, and SEM Imaging Measurement.",
       "alt_labels": [
         "SEM micrographs"
       ],
@@ -48609,8 +48611,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "SEM Micrograph Dataset SEMMicrographDataset h2kg:SEMMicrographDataset https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset A dataset containing SEM micrograph data generated by SEM Imaging Measurement. SEM micrographs Data",
-      "degree": 2
+      "search_text": "SEM Micrograph Dataset SEMMicrographDataset h2kg:SEMMicrographDataset https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset A dataset containing SEM micrograph data generated by Scanning Electron Microscopy Imaging, SEM Imaging, and SEM Imaging Measurement. SEM micrographs Data",
+      "degree": 4
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SemiEmpiricalParameterA",
@@ -51678,7 +51680,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Sputter Coating Current SputterCoatingCurrent h2kg:SputterCoatingCurrent https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingCurrent A parameter specifying current used during sputter coating (mA). mA current Parameter",
-      "degree": 3
+      "degree": 5
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingTime",
@@ -51703,7 +51705,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Sputter Coating Time SputterCoatingTime h2kg:SputterCoatingTime https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingTime A parameter specifying duration of gold sputter coating prior to SEM (s). Parameter",
-      "degree": 3
+      "degree": 5
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SquareWaveAmplitude",
@@ -53603,7 +53605,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Temperature h2kg:Temperature https://w3id.org/h2kg/hydrogen-ontology#Temperature A parameter specifying temperature used to characterize Transmission Electron Microscopy Imaging, Electron Microscopy Imaging, MEAPolarization, Square Wave Voltammetry, and Electrochemical Impedance Spectroscopy Potentiostatic. cell temperature operating temperature room temperature Parameter",
-      "degree": 57
+      "degree": 60
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#TemplateRemovalDuration",
@@ -57791,10 +57793,11 @@
       "label": "Working Distance",
       "localName": "WorkingDistance",
       "qname": "h2kg:WorkingDistance",
-      "description": "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements.",
+      "description": "A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize Transmission Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and related electron microscopy measurements.",
       "alt_labels": [
         "objective-to-specimen distance",
-        "pole-piece distance"
+        "pole-piece distance",
+        "SEM working distance"
       ],
       "examples": [],
       "notes": [],
@@ -57809,8 +57812,8 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [],
-      "search_text": "Working Distance WorkingDistance h2kg:WorkingDistance https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize Transmission Electron Microscopy Imaging and related electron microscopy measurements. objective-to-specimen distance pole-piece distance Parameter",
-      "degree": 3
+      "search_text": "Working Distance WorkingDistance h2kg:WorkingDistance https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance A parameter specifying working distance between the specimen and the objective lens or pole piece used to characterize Transmission Electron Microscopy Imaging, Scanning Electron Microscopy Imaging, SEM Imaging, SEM Imaging Measurement, and related electron microscopy measurements. objective-to-specimen distance pole-piece distance SEM working distance Parameter",
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#WorkingTimeDeformation",
@@ -129759,7 +129762,103 @@
     },
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingCurrent",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingTime",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Temperature",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerMorphology",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "value": "h2kg:measures",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "value": "h2kg:measures",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystParticleDiameter",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "value": "h2kg:measures",
       "module": "vocabulary",
@@ -129959,6 +130058,22 @@
     },
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingCurrent",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "value": "h2kg:hasParameter",
@@ -129975,6 +130090,22 @@
     },
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Temperature",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerMorphology",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "value": "h2kg:measures",
@@ -129984,6 +130115,14 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "value": "h2kg:measures",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SEMImagingMeasurement",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystParticleDiameter",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "value": "h2kg:measures",
       "module": "vocabulary",
@@ -130375,7 +130514,103 @@
     },
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "value": "h2kg:hasOutputData",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Magnification",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingCurrent",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SputterCoatingTime",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Temperature",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#WorkingDistance",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "value": "h2kg:hasParameter",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonNanotubeForestHeight",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "value": "h2kg:measures",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerMorphology",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "value": "h2kg:measures",
+      "module": "vocabulary",
+      "edgeFamily": "object_property"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "value": "h2kg:measures",
       "module": "vocabulary",

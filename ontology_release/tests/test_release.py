@@ -15,6 +15,7 @@ def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
     assert summary["mappings"] >= 1
     assert summary["profile_modules"]["core_ontology_iri"] == "https://w3id.org/h2kg/hydrogen-ontology"
     assert summary["tem_pilot"]["status"] == "skipped_missing_terms"
+    assert summary["sem_pilot"]["status"] == "skipped_missing_terms"
     assert (project_root / "output" / "docs" / "index.html").exists()
     assert (project_root / "output" / "docs" / "hydrogen-ontology.html").exists()
     assert (project_root / "output" / "docs" / "pages" / "quality-dashboard.html").exists()

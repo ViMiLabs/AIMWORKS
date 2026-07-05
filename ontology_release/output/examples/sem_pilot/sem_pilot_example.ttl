@@ -1,0 +1,308 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/sem#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Elucidating the Influence of the d-Band Center on the Synthesis of Isobutanol"@en ;
+  dcterms:date "2022-10-11"^^xsd:date ;
+  h2kg:hasIdentifier "1", "Run derived DOI" ;
+  rdfs:comment "Topic: Catalysis; subcomponent: Catalyst; granularity level: Nanostructure."@en, "Country: Germany; publication status: 1."@en .
+
+<https://w3id.org/h2kg/examples/sem#publication-record>
+  a h2kg:Metadata ;
+  dcterms:title "Interseting study about myself"@en ;
+  dcterms:identifier "https://doi.org/10.3390/catal11030406" ;
+  dcterms:issued "2012-11-12"^^xsd:date ;
+  rdfs:comment "Journal: RSC Nanoscale; volume 1; issue 25; pages 456-654."@en .
+
+<https://w3id.org/h2kg/examples/sem#institution-fzj-iek14>
+  a prov:Agent ;
+  rdfs:label "FZJ IEK-14"@en .
+
+<https://w3id.org/h2kg/examples/sem#funding-hip>
+  a prov:Agent ;
+  rdfs:label "HIP"@en .
+
+<https://w3id.org/h2kg/examples/sem#author-joachim-pasel>
+  a prov:Agent ;
+  rdfs:label "Joachim Pasel"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#author-joachim-pasel-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#author-joachim-pasel-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "ORCID: 123-465-4789."@en, "Email: andyhuebsch@gmail.mx."@en .
+
+<https://w3id.org/h2kg/examples/sem#pdc-material>
+  a h2kg:Matter ;
+  rdfs:label "Pd/C precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#pdc-material-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#pdc-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 5 wt%."@en, "Manufacturer: SigmaAldrich; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/sem#sieved-pdc-material>
+  a h2kg:Matter ;
+  rdfs:label "Sieved Pd/C catalyst material"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sieved-pdc-material-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sieved-pdc-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sieve size: 75 um."@en .
+
+<https://w3id.org/h2kg/examples/sem#dried-catalyst-material>
+  a h2kg:Matter ;
+  rdfs:label "Dried catalyst material for SEM sample preparation"@en .
+
+<https://w3id.org/h2kg/examples/sem#sample-holder>
+  a h2kg:Matter ;
+  rdfs:label "Sample holder (Plano GmbH)"@en .
+
+<https://w3id.org/h2kg/examples/sem#mounting-tape>
+  a h2kg:Matter ;
+  rdfs:label "Tape (Plano GmbH)"@en .
+
+<https://w3id.org/h2kg/examples/sem#gold-coating-material>
+  a h2kg:Matter ;
+  rdfs:label "Au coating material"@en .
+
+<https://w3id.org/h2kg/examples/sem#mounted-sem-intermediate>
+  a h2kg:Matter ;
+  rdfs:label "Mounted SEM sample intermediate"@en .
+
+<https://w3id.org/h2kg/examples/sem#sem-sample>
+  a h2kg:Matter ;
+  rdfs:label "SEM pilot sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sem-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sem-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Specimen metadata from sheet: homogeneous powder."@en, "Sample context assembled through fixing and Au deposition steps."@en .
+
+<https://w3id.org/h2kg/examples/sem#procure-pdc>
+  a h2kg:Process ;
+  rdfs:label "Procure Pd/C precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/sem#pdc-material> .
+
+<https://w3id.org/h2kg/examples/sem#sieving-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Sieve Pd/C precursor"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/sem#pdc-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/sem#sieved-pdc-material> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sieving-step-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sieving-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Technique label from source: Sieve; sieve size = 75 um."@en .
+
+<https://w3id.org/h2kg/examples/sem#drying-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry catalyst material"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/sem#sieved-pdc-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/sem#dried-catalyst-material> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/sem#drying-temperature-setting>, <https://w3id.org/h2kg/examples/sem#drying-time-setting> .
+
+<https://w3id.org/h2kg/examples/sem#mounting-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Fix sample on holder and tape"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/sem#dried-catalyst-material>, <https://w3id.org/h2kg/examples/sem#sample-holder>, <https://w3id.org/h2kg/examples/sem#mounting-tape> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/sem#mounted-sem-intermediate> .
+
+<https://w3id.org/h2kg/examples/sem#gold-deposition-step>
+  a h2kg:Manufacturing, h2kg:SputterCoating ;
+  rdfs:label "Au conductive coating deposition"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/sem#mounted-sem-intermediate>, <https://w3id.org/h2kg/examples/sem#gold-coating-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/sem#sem-sample> .
+
+<https://w3id.org/h2kg/examples/sem#sem-measurement-001>
+  a h2kg:Measurement, h2kg:ScanningElectronMicroscopyImaging ;
+  rdfs:label "SEM pilot measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/sem#sem-sample> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/sem#sem-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/sem#sem-raw-image-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting>, <https://w3id.org/h2kg/examples/sem#magnification-setting>, <https://w3id.org/h2kg/examples/sem#working-distance-setting>, <https://w3id.org/h2kg/examples/sem#temperature-setting>, <https://w3id.org/h2kg/examples/sem#relative-humidity-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sem-acquisition-metadata>, <https://w3id.org/h2kg/examples/sem#source-record>, <https://w3id.org/h2kg/examples/sem#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/sem#author-joachim-pasel>, <https://w3id.org/h2kg/examples/sem#institution-fzj-iek14>, <https://w3id.org/h2kg/examples/sem#funding-hip> ;
+  dcterms:source <https://w3id.org/h2kg/examples/sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/sem#sem-instrument-001>
+  a h2kg:Instrument, h2kg:SEMInstrument ;
+  rdfs:label "SEM instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sem-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sem-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Microscope brand: Zeiss Gemini Ultra plus; cathode: LaB6; probe: Electron beam."@en, "Detector: InLens; imaging technique: Brightfield; signal: Secondary electrons; time lapse: 30 s."@en, "Raw-data descriptor from sheet: electron images."@en .
+
+<https://w3id.org/h2kg/examples/sem#sem-raw-image-dataset>
+  a h2kg:Data, h2kg:SEMImageDataset ;
+  rdfs:label "SEM raw image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sem-raw-image-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sem-raw-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "1 MB", "1024 x 1024 x 600 pixels" ;
+  dcterms:source "link" ;
+  rdfs:comment "Filename: Test.tif."@en, "PixelPerMetric: 8.1."@en .
+
+<https://w3id.org/h2kg/examples/sem#contrast-adjustment-step>
+  a h2kg:Process ;
+  rdfs:label "Contrast adjustment"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/sem#sem-raw-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/sem#sem-contrast-adjusted-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#contrast-adjustment-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#contrast-adjustment-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Contrast factor: 1."@en .
+
+<https://w3id.org/h2kg/examples/sem#sem-contrast-adjusted-dataset>
+  a h2kg:Data, h2kg:SEMImageDataset ;
+  rdfs:label "SEM contrast-adjusted image dataset"@en .
+
+<https://w3id.org/h2kg/examples/sem#brightness-adjustment-step>
+  a h2kg:Process ;
+  rdfs:label "Brightness adjustment"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/sem#sem-contrast-adjusted-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/sem#sem-processed-image-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#brightness-adjustment-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#brightness-adjustment-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Brightness factor: 1."@en .
+
+<https://w3id.org/h2kg/examples/sem#sem-processed-image-dataset>
+  a h2kg:Data, h2kg:SEMMicrographDataset, h2kg:MicrostructureImageDataset ;
+  rdfs:label "SEM processed micrograph dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#sem-processed-image-metadata> .
+
+<https://w3id.org/h2kg/examples/sem#sem-processed-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:source "link" ;
+  rdfs:comment "Mask present: yes."@en, "Mask link: link."@en .
+
+<https://w3id.org/h2kg/examples/sem#manual-particle-measurement-step>
+  a h2kg:Process ;
+  rdfs:label "Manual particle measurement"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/sem#sem-processed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/sem#sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/sem#sem-analysis-summary-dataset>
+  a h2kg:Data ;
+  rdfs:label "SEM manual particle measurement summary dataset"@en ;
+  h2kg:hasPart <https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint> .
+
+<https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "SEM-derived catalyst particle diameter datapoint"@en ;
+  h2kg:ofProperty h2kg:CatalystParticleDiameter ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/sem#sem-measurement-001> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/sem#manual-particle-measurement-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint-metadata> ;
+  dcterms:source <https://w3id.org/h2kg/examples/sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet target label: Average size."@en, "No numeric amount target value was provided in the SEM source sheet."@en .
+
+<https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting>
+  a h2kg:Parameter, h2kg:AcceleratingVoltage ;
+  rdfs:label "SEM accelerating-voltage setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:unit unit:KiloV ;
+  qudt:quantityKind quantitykind:ElectricPotential .
+
+<https://w3id.org/h2kg/examples/sem#magnification-setting>
+  a h2kg:Parameter, h2kg:Magnification ;
+  rdfs:label "SEM magnification setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#magnification-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "250"^^xsd:integer ;
+  qudt:unit unit:UNITLESS ;
+  qudt:quantityKind quantitykind:Dimensionless .
+
+<https://w3id.org/h2kg/examples/sem#working-distance-setting>
+  a h2kg:Parameter, h2kg:WorkingDistance ;
+  rdfs:label "SEM working-distance setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#working-distance-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#working-distance-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "8.5"^^xsd:decimal ;
+  qudt:unit unit:MilliM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/sem#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "SEM acquisition temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "23"^^xsd:decimal ;
+  qudt:unit unit:DEG_C ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature .
+
+<https://w3id.org/h2kg/examples/sem#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "SEM acquisition relative-humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "50"^^xsd:decimal ;
+  qudt:unit unit:PERCENT ;
+  qudt:quantityKind quantitykind:RelativeHumidity .
+
+<https://w3id.org/h2kg/examples/sem#drying-temperature-setting>
+  a h2kg:Parameter, h2kg:DryingTemperature ;
+  rdfs:label "Drying temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#drying-temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "100"^^xsd:decimal ;
+  qudt:unit unit:DEG_C ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature .
+
+<https://w3id.org/h2kg/examples/sem#drying-time-setting>
+  a h2kg:Parameter, h2kg:DryingTime ;
+  rdfs:label "Drying time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#drying-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "10"^^xsd:decimal ;
+  qudt:unit unit:HR ;
+  qudt:quantityKind quantitykind:Time .
+
+<https://w3id.org/h2kg/examples/sem#sem-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: ex-situ; specimen: homogeneous powder; atmosphere: air."@en, "Pressure metadata: 1 atm; calibration notes: adjusting lenses and apertures / adjusting the voltage."@en .
