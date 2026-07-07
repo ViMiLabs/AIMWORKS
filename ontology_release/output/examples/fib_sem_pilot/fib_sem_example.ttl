@@ -1,0 +1,686 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/fib-sem#source-record>
+  a h2kg:Metadata ;
+  rdfs:label "FIB-SEM pilot source record"@en ;
+  dcterms:title "FIB tomography of NMC111 electrode"@en ;
+  dcterms:date "2021-12-15"^^xsd:date ;
+  h2kg:hasIdentifier "7", "Run derived DOI" ;
+  rdfs:comment "Topic: Battery; device: Lithium-ion battery; component: Electrode; granularity: Nanostructure."@en, "Country: Germany; source link: link; pixel-per-metric: 14."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg>, <https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard> ;
+  dcterms:contributor <https://w3id.org/h2kg/examples/fib-sem#institution-hzb>, <https://w3id.org/h2kg/examples/fib-sem#funding-hi> ;
+  dcterms:source "link" .
+
+<https://w3id.org/h2kg/examples/fib-sem#publication-record>
+  a h2kg:Metadata ;
+  rdfs:label "FIB-SEM pilot publication metadata"@en ;
+  dcterms:title "FIB tomography of NMC111 electrode"@en ;
+  dcterms:identifier "https://doi.org/10.3390/1077778" ;
+  dcterms:issued "2021-09-17"^^xsd:date ;
+  rdfs:comment "Journal: Nature Communications; volume: 12; issue: 4; pages: 123-321."@en, "Published flag from source sheet: TRUE."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg>, <https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard> .
+
+<https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg>
+  a prov:Agent ;
+  rdfs:label "Markus Osenberg"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard>
+  a prov:Agent ;
+  rdfs:label "Andre Colliard"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 123-465-7123", "Email: mark.osen@hzb.de" .
+
+<https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 321-321-3211", "Email: andyhuebsch@gmail.mx" .
+
+<https://w3id.org/h2kg/examples/fib-sem#institution-hzb>
+  a prov:Agent ;
+  rdfs:label "HZB"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#funding-hi>
+  a prov:Agent ;
+  rdfs:label "Helmholtz Imaging (HI)"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#ptma-material>
+  a h2kg:Matter ;
+  rdfs:label "PTMA precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#ptma-material-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#ptma-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Manufacturer: SigmaAldrich; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#superp-material>
+  a h2kg:Matter ;
+  rdfs:label "SuperP precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#superp-material-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#superp-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Manufacturer: SigmaAldrich; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#pvdf-material>
+  a h2kg:Matter ;
+  rdfs:label "PVdF binder precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#pvdf-material-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#pvdf-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Manufacturer: SigmaAldrich; lot number: 205680; CAS-number: 7440-05-3."@en, "Raw sheet target label after procurement: Nafion ionomer."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#nmp-solvent>
+  a h2kg:Matter ;
+  rdfs:label "NMP solvent"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#nmp-solvent-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#nmp-solvent-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Input amount from sheet: 25 mL."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#aluminum-current-collector>
+  a h2kg:Matter ;
+  rdfs:label "Aluminum current collector"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#slurry-intermediate>
+  a h2kg:Matter ;
+  rdfs:label "Electrode slurry intermediate"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#slurry-intermediate-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#slurry-intermediate-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Raw source references SInt3 and SInt4 inconsistently across dissolve and doctor-blade rows."@en, "Normalized example treats them as one coherent slurry intermediate."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#wet-coated-electrode>
+  a h2kg:Matter ;
+  rdfs:label "Wet doctor-bladed electrode intermediate"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#cathode-electrode>
+  a h2kg:Matter ;
+  rdfs:label "Cathode electrode"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#electrode-coupon>
+  a h2kg:Matter ;
+  rdfs:label "Cut cathode electrode coupon"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#aluminum-pin-stub>
+  a h2kg:Matter ;
+  rdfs:label "Aluminum pin stub"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#aluminum-pin-stub-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#aluminum-pin-stub-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Source amount: 12.5 mm."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#conductive-silver>
+  a h2kg:Matter ;
+  rdfs:label "Conductive silver"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#mounted-sample>
+  a h2kg:Matter ;
+  rdfs:label "Mounted FIB-SEM sample intermediate"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#pt-protective-material>
+  a h2kg:Matter ;
+  rdfs:label "Pt protective coating material"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#pt-protected-sample>
+  a h2kg:Matter ;
+  rdfs:label "Pt-protected sample intermediate"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-polished-sample>
+  a h2kg:Matter ;
+  rdfs:label "Electron-beam-polished sample intermediate"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-sample>
+  a h2kg:Matter ;
+  rdfs:label "FIB-SEM pilot sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fib-sem-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Specimen metadata from sheet: highly porous bulk material."@en, "Normalized preparation chain reconciles source identifiers SInt3, SInt4, and SInt5 into one coherent sample path."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#procure-ptma>
+  a h2kg:Process ;
+  rdfs:label "Procure PTMA precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#ptma-material> .
+
+<https://w3id.org/h2kg/examples/fib-sem#procure-superp>
+  a h2kg:Process ;
+  rdfs:label "Procure SuperP precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#superp-material> .
+
+<https://w3id.org/h2kg/examples/fib-sem#procure-pvdf>
+  a h2kg:Process ;
+  rdfs:label "Procure PVdF binder precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#pvdf-material> .
+
+<https://w3id.org/h2kg/examples/fib-sem#dissolve-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dissolve PTMA, SuperP, PVdF, and NMP"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#ptma-material>, <https://w3id.org/h2kg/examples/fib-sem#superp-material>, <https://w3id.org/h2kg/examples/fib-sem#pvdf-material>, <https://w3id.org/h2kg/examples/fib-sem#nmp-solvent> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#slurry-intermediate> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#dissolve-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#dissolve-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Ratio = 70:20:10; viscosity = 80 Pas."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#doctor-blade-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Doctor blade coat slurry on aluminum current collector"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#slurry-intermediate>, <https://w3id.org/h2kg/examples/fib-sem#aluminum-current-collector> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#wet-coated-electrode> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#doctor-blade-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#doctor-blade-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Velocity = 1 cm/s; instrument = MICOS Blading; thickness = 1 mm."@en, "Raw source target identifier reported as SInt3."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#dry-electrode-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry doctor-bladed electrode"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#wet-coated-electrode> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#cathode-electrode> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#dry-electrode-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#dry-electrode-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Temperature = 80 deg C; time = 16 h."@en, "Raw source precursor identifier before drying reported as SInt5."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#cut-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Cut cathode electrode coupon"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#cathode-electrode> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#electrode-coupon> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#cut-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#cut-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Size = 3 mm2."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#fix-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Fix electrode coupon on pin stub with conductive silver"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#electrode-coupon>, <https://w3id.org/h2kg/examples/fib-sem#aluminum-pin-stub>, <https://w3id.org/h2kg/examples/fib-sem#conductive-silver> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#mounted-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fix-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fix-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Time = 8 h."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#deposit-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Deposit Pt protective layer"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#mounted-sample>, <https://w3id.org/h2kg/examples/fib-sem#pt-protective-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#pt-protected-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#deposit-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#deposit-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Thickness = 0.5 um; area = 15 um2."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-step>
+  a h2kg:Process ;
+  rdfs:label "Electron beam polishing"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#pt-protected-sample> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#electron-beam-polished-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#electron-beam-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Temperature = 50 deg C; time = 10 min; current = 250 pA; energy = 5 keV."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#gallium-current-step>
+  a h2kg:Process ;
+  rdfs:label "Gallium current milling"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#electron-beam-polished-sample> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/fib-sem#fib-sem-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#gallium-current-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#gallium-current-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Temperature = 50 deg C; time = 30 min; current = 300 pA; energy = 30 keV."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001>
+  a h2kg:Measurement, h2kg:FIBSEMTomographyMeasurement ;
+  rdfs:label "FIB-SEM pilot tomography measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/fib-sem#fib-sem-sample> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/fib-sem#fib-sem-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-raw-image-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/fib-sem#temperature-setting>, <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting>, <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting>, <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting>, <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting>, <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting>, <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting>, <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting>, <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting>, <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting>, <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting>, <https://w3id.org/h2kg/examples/fib-sem#magnification-setting>, <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting>, <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting>, <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting>, <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fib-sem-acquisition-metadata>, <https://w3id.org/h2kg/examples/fib-sem#source-record>, <https://w3id.org/h2kg/examples/fib-sem#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/fib-sem#author-markus-osenberg>, <https://w3id.org/h2kg/examples/fib-sem#author-andre-colliard> ;
+  dcterms:source <https://w3id.org/h2kg/examples/fib-sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-instrument-001>
+  a h2kg:Instrument, h2kg:FIBSEMInstrument ;
+  rdfs:label "FIB-SEM instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fib-sem-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "FIB equipment: ZEISS Crossbeam 340; optics: GEMINI; injected element: Pt."@en, "Injection system: multi channel gas injection system GIS; ion beam type: Ga; detector: InLens, SE2."@en, "Plane spacing = 10; tilt compensation = 36; dynamic focus = -3; drift compensation = False; brightness = 1; contrast = 1."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-raw-image-dataset>
+  a h2kg:Data, h2kg:SEMImageDataset ;
+  rdfs:label "FIB-SEM raw image stack dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fib-sem-raw-image-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-raw-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "1250 MB", "1024 x 1024 x 1000 pixels" ;
+  dcterms:source "link" ;
+  rdfs:comment "Filename: batNMC111.zip."@en, "PixelPerMetric: 14."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#drift-correction-step>
+  a h2kg:Process ;
+  rdfs:label "DriftCorrect"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-raw-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#drift-corrected-image-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#drift-correction-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#drift-correction-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Software = SIFT."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#drift-corrected-image-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM drift-corrected image stack"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#reconstruct-step>
+  a h2kg:Process ;
+  rdfs:label "3D Reconstruct"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#drift-corrected-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#reconstructed-volume-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#reconstruct-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#reconstruct-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Software = Astra toolbox."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#reconstructed-volume-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM reconstructed volume dataset"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#artefact-remove-step>
+  a h2kg:Process ;
+  rdfs:label "Artefact remove"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#reconstructed-volume-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#artefact-cleaned-volume-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#artefact-remove-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#artefact-remove-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Software = In-house 3D Unet."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#artefact-cleaned-volume-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM artefact-cleaned volume dataset"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#clean-step>
+  a h2kg:Process ;
+  rdfs:label "Clean"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#artefact-cleaned-volume-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#cleaned-volume-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/fib-sem#cleaned-volume-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM cleaned volume dataset"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#threshold-step>
+  a h2kg:Process ;
+  rdfs:label "Threshold"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#cleaned-volume-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#segmented-volume-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#threshold-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#threshold-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Algorithm = Watershed."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#segmented-volume-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM segmented volume dataset"@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#visualize-step>
+  a h2kg:Process ;
+  rdfs:label "Visualize"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#segmented-volume-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#visualize-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#visualize-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Software = Blender3D."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "FIB-SEM post-processed image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:source "github-com/FIB-SEM_NMC" ;
+  rdfs:comment "Mask present: yes."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#volume-fraction-step>
+  a h2kg:Process ;
+  rdfs:label "Volume fraction calculation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#volume-fraction-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#volume-fraction-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Mapped to legacy anchor h2kg:PoreVolumeFraction."@en, "Raw source amount target retained as metadata: 80 nm."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#surface-calculation-step>
+  a h2kg:Process ;
+  rdfs:label "Surface calculation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/fib-sem#direction-calculation-step>
+  a h2kg:Process ;
+  rdfs:label "Direction calculation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#direction-calculation-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#direction-calculation-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred output retained as metadata: Direction = 6 deg."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#network-relation-analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Network relation analysis"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#network-relation-analysis-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#network-relation-analysis-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred output retained as metadata: Network relation = 7 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#constrictivity-step>
+  a h2kg:Process ;
+  rdfs:label "Constrictivity calculation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#constrictivity-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#constrictivity-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Description = Constrictivity is defined by beta = rmin^2 / rmax^2."@en, "Raw source amount target retained as metadata: 8 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-step>
+  a h2kg:Process ;
+  rdfs:label "Mean geodesic tortuosity calculation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/fib-sem#postprocessed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-step-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Description = Quantifying bottleneck effects and shortest transportation paths, respectively."@en, "Raw source amount target retained as metadata: 9 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-dataset>
+  a h2kg:Data, h2kg:PoreSizeDistributionDataset ;
+  rdfs:label "FIB-SEM derived pore-analysis summary dataset"@en ;
+  h2kg:hasPart <https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint>, <https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint>, <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-metadata> .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-analysis-summary-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Volume fraction output mapped to legacy anchor h2kg:PoreVolumeFraction and retained as metadata because the current anchor is parameter-valued."@en, "Direction and network relation outputs remain metadata-only in this pilot round."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "FIB-SEM derived total porosity datapoint"@en ;
+  h2kg:ofProperty h2kg:TotalPorosity ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#surface-calculation-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint-metadata> ;
+  dcterms:source <https://w3id.org/h2kg/examples/fib-sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet amount target retained as source metadata: 10 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "FIB-SEM derived constrictivity datapoint"@en ;
+  h2kg:ofProperty h2kg:Constrictivity ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#constrictivity-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint-metadata> ;
+  dcterms:source <https://w3id.org/h2kg/examples/fib-sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet amount target retained as source metadata: 8 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "FIB-SEM derived geodesic tortuosity datapoint"@en ;
+  h2kg:ofProperty h2kg:GeodesicTortuosity ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint-metadata> ;
+  dcterms:source <https://w3id.org/h2kg/examples/fib-sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet amount target retained as source metadata: 9 pu."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "FIB-SEM acquisition temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "23"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature ;
+  qudt:unit unit:DEG_C .
+
+<https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "FIB-SEM acquisition relative-humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "0"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:RelativeHumidity ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting>
+  a h2kg:Parameter, h2kg:VacuumChamberPressure ;
+  rdfs:label "FIB-SEM vacuum pressure setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.0e-5"^^xsd:double ;
+  qudt:quantityKind quantitykind:Pressure ;
+  qudt:unit unit:ATM .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting>
+  a h2kg:Parameter, h2kg:IonBeamCurrent ;
+  rdfs:label "FIB ion-beam current setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "700"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricCurrent ;
+  qudt:unit unit:PicoA .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting>
+  a h2kg:Parameter, h2kg:IonBeamEnergy ;
+  rdfs:label "FIB ion-beam energy setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "30"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Energy ;
+  qudt:unit unit:KiloEV .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-current-setting>
+  a h2kg:Parameter, h2kg:ElectronCurrent ;
+  rdfs:label "SEM electron-current setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "250"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricCurrent ;
+  qudt:unit unit:PicoA .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting>
+  a h2kg:Parameter, h2kg:ElectronBeamEnergy ;
+  rdfs:label "SEM electron-beam energy setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.5"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Energy ;
+  qudt:unit unit:KiloEV .
+
+<https://w3id.org/h2kg/examples/fib-sem#measured-area-setting>
+  a h2kg:Parameter, h2kg:MicroscopyMeasuredArea ;
+  rdfs:label "FIB-SEM measured-area setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Area ;
+  qudt:unit unit:MicroM2 .
+
+<https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting>
+  a h2kg:Parameter, h2kg:CutThickness ;
+  rdfs:label "FIB-SEM cut-thickness setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "150"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/fib-sem#slice-number-setting>
+  a h2kg:Parameter, h2kg:SliceNumber ;
+  rdfs:label "FIB-SEM slice-number setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1300"^^xsd:integer ;
+  qudt:quantityKind quantitykind:Count .
+
+<https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting>
+  a h2kg:Parameter, h2kg:DwellTime ;
+  rdfs:label "FIB-SEM dwell-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "3"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/fib-sem#magnification-setting>
+  a h2kg:Parameter, h2kg:Magnification ;
+  rdfs:label "FIB-SEM magnification setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#magnification-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "10"^^xsd:integer ;
+  qudt:quantityKind quantitykind:Dimensionless ;
+  qudt:unit unit:UNITLESS .
+
+<https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting>
+  a h2kg:Parameter, h2kg:StageTilt ;
+  rdfs:label "FIB-SEM stage-tilt setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "54"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:PlaneAngle ;
+  qudt:unit unit:DEG .
+
+<https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting>
+  a h2kg:Parameter, h2kg:ExposureTime ;
+  rdfs:label "FIB-SEM image-acquisition time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "60"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:SEC .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting>
+  a h2kg:Parameter, h2kg:TotalAcquisitionTime ;
+  rdfs:label "FIB-SEM total-acquisition-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "12"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting>
+  a h2kg:Parameter, h2kg:VoxelSize ;
+  rdfs:label "FIB-SEM voxel-size setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/fib-sem#fib-sem-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: ex-situ; specimen: highly porous bulk material; atmosphere: vacuum."@en, "Calibration notes: adjusting lenses and apertures; adjusting the voltage."@en .
