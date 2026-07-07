@@ -29983,12 +29983,16 @@
         {
           "@language": "en",
           "@value": "atomic force microscopy"
+        },
+        {
+          "@language": "en",
+          "@value": "AFM imaging"
         }
       ],
       "http://purl.org/dc/terms/description": [
         {
           "@language": "en",
-          "@value": "In-situ atomic force microscopy imaging of PFSI adsorbed structures on Pt(111) in various water/n-propanol mixtures."
+          "@value": "A measurement process that uses atomic force microscopy for in-situ or ex-situ surface-topography and microstructure characterization, including catalyst-layer and membrane-electrode-assembly imaging as well as adsorbed-ionomer structure analysis."
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
@@ -30010,6 +30014,12 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystCoatedMembrane"
         },
         {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayer"
+        },
+        {
           "@id": "http://purl.org/holy/ns#CatalystLayer"
         }
       ],
@@ -30028,6 +30038,21 @@
         },
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#DwellTime"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MicroscopyMeasuredArea"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#AFMTipNominalRadius"
         },
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#CantileverSpringConstant"
@@ -30068,12 +30093,18 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerFilmThickness"
         },
         {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MeanParticleSize"
+        },
+        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerThinFilmThickness"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTopographyDataset"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
@@ -30194,40 +30225,93 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/hydrogen-ontology#AFMInstrument",
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2004/02/skos/core#prefLabel": [
         {
           "@language": "en",
-          "@value": "AFM Instrument"
+          "@value": "AFM Scan Speed"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         {
           "@language": "en",
-          "@value": "AFM Instrument"
+          "@value": "AFM Scan Speed"
         }
       ],
       "http://www.w3.org/2004/02/skos/core#altLabel": [
         {
           "@language": "en",
-          "@value": "Agilent 5500 AFM microscope"
+          "@value": "scan speed"
         },
         {
           "@language": "en",
-          "@value": "Multimode 8 AFM (Bruker)"
-        },
-        {
-          "@language": "en",
-          "@value": "AFM (NanoMan VS"
+          "@value": "AFM line scan rate"
         }
       ],
       "http://purl.org/dc/terms/description": [
         {
           "@language": "en",
-          "@value": "AFM microscope used for in-situ liquid AFM imaging (Agilent 5500)."
+          "@value": "A parameter denoting the scan speed or line-scan rate used during atomic force microscopy acquisition."
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_AFMScanSpeed_QV"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#AFMTipNominalRadius",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "AFM Tip Nominal Radius"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "AFM Tip Nominal Radius"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "tip radius"
+        },
+        {
+          "@language": "en",
+          "@value": "AFM tip radius"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@language": "en",
+          "@value": "A parameter denoting the nominal probe-tip radius used during atomic force microscopy acquisition."
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_AFMTipNominalRadius_QV"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
@@ -41963,7 +42047,7 @@
       ],
       "http://purl.org/dc/terms/description": [
         {
-          "@value": "A property denoting mean particle size of carbon xerogel powder after grinding, from laser diffraction.",
+          "@value": "A property denoting mean particle size or aggregate size determined by particle-sizing and microscopy workflows, including laser diffraction and atomic force microscopy.",
           "@language": "en"
         }
       ],

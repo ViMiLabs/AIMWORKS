@@ -5,13 +5,13 @@ Generated on 2026-07-07.
 ## Ontology Summary
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
-- Raw JSON-LD nodes: 3313
-- Merged node count: 3313
-- Local `h2kg` nodes: 2169
+- Raw JSON-LD nodes: 3317
+- Merged node count: 3317
+- Local `h2kg` nodes: 2171
 - Explicit classes: 14
 - Explicit object properties: 19
 - Explicit datatype properties: 1
-- QUDT quantity value nodes: 1130
+- QUDT quantity value nodes: 1132
 
 ## Schema Annotation Coverage
 
@@ -34,11 +34,11 @@ Generated on 2026-07-07.
 
 ## Namespace Usage
 
-- `https://w3id.org/h2kg/hydrogen-ontology#`: 4145
-- `http://www.w3.org/2004/02/skos/core#`: 3844
-- `http://purl.org/dc/terms/`: 2188
-- `http://www.w3.org/2000/01/rdf-schema#`: 2077
-- `http://qudt.org/schema/qudt/`: 1500
+- `https://w3id.org/h2kg/hydrogen-ontology#`: 4149
+- `http://www.w3.org/2004/02/skos/core#`: 3848
+- `http://purl.org/dc/terms/`: 2190
+- `http://www.w3.org/2000/01/rdf-schema#`: 2079
+- `http://qudt.org/schema/qudt/`: 1504
 - `http://www.w3.org/2002/07/owl#`: 6
 - `http://www.w3.org/ns/prov#`: 6
 - `http://xmlns.com/foaf/0.1/`: 1

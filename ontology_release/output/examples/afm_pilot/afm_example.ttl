@@ -1,0 +1,369 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/afm#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Quantitative in Situ Analysis of Ionomer Structure in Fuel Cell catalytic layer"@en ;
+  dcterms:date "2023-10-11"^^xsd:date ;
+  h2kg:hasIdentifier "5", "Run derived DOI" ;
+  rdfs:comment "Topic: Fuel cell; device: PEMFC; component: MEA; subcomponent: Catalyst layer."@en, "Granularity level: Microstructure."@en .
+
+<https://w3id.org/h2kg/examples/afm#publication-record>
+  a h2kg:Metadata ;
+  dcterms:title "Quantitative in Situ Analysis of Ionomer Structure in Fuel Cell catalytic layer"@en ;
+  dcterms:identifier "https://doi.org/10.3390/afm38383" ;
+  dcterms:issued "2012-11-28"^^xsd:date ;
+  rdfs:comment "Journal: PCCP; volume: 8; issue: 78; pages: 789-987."@en, "Publication-status flag from worksheet: 1."@en .
+
+<https://w3id.org/h2kg/examples/afm#institution-dlr>
+  a prov:Agent ;
+  rdfs:label "DLR"@en .
+
+<https://w3id.org/h2kg/examples/afm#funding-hip>
+  a prov:Agent ;
+  rdfs:label "HIP"@en .
+
+<https://w3id.org/h2kg/examples/afm#author-tobias-morawitz>
+  a prov:Agent ;
+  rdfs:label "Tobias Morawitz"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#author-tobias-morawitz-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#author-tobias-morawitz-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "ORCID: 123-465-7777."@en, "Email: tobi.mora@dlr.de."@en .
+
+<https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero>
+  a prov:Agent ;
+  rdfs:label "Andre Colliard Granero"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "ORCID: 321-321-3211."@en, "Email: andyhuebsch@gmail.mx."@en .
+
+<https://w3id.org/h2kg/examples/afm#pdc-material>
+  a h2kg:Matter ;
+  rdfs:label "Pd/C precursor material"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#pdc-material-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#pdc-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Pd/C amount metadata: 5 wt%."@en, "Manufacturer: SigmaAldrich; lot number: 205680; CAS number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/afm#sieved-pdc-material>
+  a h2kg:Matter ;
+  rdfs:label "Sieved Pd/C material"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#sieved-pdc-material-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#sieved-pdc-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sieve size: 75 um."@en .
+
+<https://w3id.org/h2kg/examples/afm#mea-assembly-material>
+  a h2kg:Matter, h2kg:MEAAssembly ;
+  rdfs:label "MEA sample material for AFM preparation"@en .
+
+<https://w3id.org/h2kg/examples/afm#cut-mea-sample>
+  a h2kg:Matter ;
+  rdfs:label "Cut MEA sample"@en .
+
+<https://w3id.org/h2kg/examples/afm#embedding-resin>
+  a h2kg:Matter ;
+  rdfs:label "Embedding resin (Terosion Teromix PU6700)"@en .
+
+<https://w3id.org/h2kg/examples/afm#embedded-sample>
+  a h2kg:Matter ;
+  rdfs:label "Embedded AFM sample"@en .
+
+<https://w3id.org/h2kg/examples/afm#cured-embedded-sample>
+  a h2kg:Matter ;
+  rdfs:label "Cured embedded AFM sample"@en .
+
+<https://w3id.org/h2kg/examples/afm#microtomed-sample>
+  a h2kg:Matter ;
+  rdfs:label "Microtomed AFM sample"@en .
+
+<https://w3id.org/h2kg/examples/afm#adhesive-tape>
+  a h2kg:Matter ;
+  rdfs:label "Double sided adhesive tape"@en .
+
+<https://w3id.org/h2kg/examples/afm#afm-sample-disc>
+  a h2kg:Matter ;
+  rdfs:label "AFM sample disc"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-sample-disc-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#afm-sample-disc-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Disc size: 12 mm; disc brand: Plano."@en .
+
+<https://w3id.org/h2kg/examples/afm#afm-sample>
+  a h2kg:Matter ;
+  rdfs:label "AFM pilot sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#afm-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Specimen metadata from sheet: homogeneous powder."@en, "Sample context assembled through cutting, embedding, curing, microtome sectioning, and mounting on an AFM sample disc."@en .
+
+<https://w3id.org/h2kg/examples/afm#procure-pdc-step>
+  a h2kg:Process ;
+  rdfs:label "Procure Pd/C precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#pdc-material> .
+
+<https://w3id.org/h2kg/examples/afm#sieving-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Sieve Pd/C precursor"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#pdc-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#sieved-pdc-material> .
+
+<https://w3id.org/h2kg/examples/afm#drying-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry catalyst material for AFM preparation"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#sieved-pdc-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#mea-assembly-material> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/afm#drying-temperature-setting>, <https://w3id.org/h2kg/examples/afm#drying-time-setting> .
+
+<https://w3id.org/h2kg/examples/afm#cut-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Cut MEA sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#mea-assembly-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#cut-mea-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#cut-step-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#cut-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Cut size: 25 cm2."@en .
+
+<https://w3id.org/h2kg/examples/afm#embedding-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Embed cut MEA sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#cut-mea-sample>, <https://w3id.org/h2kg/examples/afm#embedding-resin> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#embedded-sample> .
+
+<https://w3id.org/h2kg/examples/afm#curing-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Cure embedded sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#embedded-sample> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#cured-embedded-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#curing-step-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#curing-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Curing metadata: temperature 25 deg C; time 24 h."@en .
+
+<https://w3id.org/h2kg/examples/afm#microtome-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Microtome section the cured sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#cured-embedded-sample> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#microtomed-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#microtome-step-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#microtome-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Microtome: Leitz; thickness: 2 mm."@en .
+
+<https://w3id.org/h2kg/examples/afm#mounting-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Fix sample on AFM sample disc"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#microtomed-sample>, <https://w3id.org/h2kg/examples/afm#adhesive-tape>, <https://w3id.org/h2kg/examples/afm#afm-sample-disc> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/afm#afm-sample> .
+
+<https://w3id.org/h2kg/examples/afm#afm-measurement-001>
+  a h2kg:Measurement, h2kg:AtomicForceMicroscopyMeasurement ;
+  rdfs:label "AFM pilot measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/afm#afm-sample> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/afm#afm-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/afm#temperature-setting>, <https://w3id.org/h2kg/examples/afm#relative-humidity-setting>, <https://w3id.org/h2kg/examples/afm#measured-area-setting>, <https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting>, <https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-acquisition-metadata>, <https://w3id.org/h2kg/examples/afm#source-record>, <https://w3id.org/h2kg/examples/afm#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/afm#author-tobias-morawitz>, <https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero>, <https://w3id.org/h2kg/examples/afm#institution-dlr>, <https://w3id.org/h2kg/examples/afm#funding-hip> ;
+  dcterms:source <https://w3id.org/h2kg/examples/afm#publication-record> .
+
+<https://w3id.org/h2kg/examples/afm#afm-instrument-001>
+  a h2kg:Instrument, h2kg:AFMInstrument ;
+  rdfs:label "AFM instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#afm-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Instrument worksheet label: Bruker multimode 8 AFM; mode: Conductive tapping."@en, "Tip metadata: DLC SHR150, Nanosensors; lock-in amplifier: PF-TUNA module, Bruker."@en, "Sensitivity: 1 fA; resolution: 0.5 mm; data acquisition rate: 1024 px."@en .
+
+<https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "AFM raw image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-raw-image-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#afm-raw-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "258 MB", "256 x 256 x 0 pixels" ;
+  dcterms:source "link" ;
+  rdfs:comment "Filename: afm_rawdata.tif."@en, "PixelPerMetric: 8.1."@en, "Worksheet raw-data descriptor: electron images."@en .
+
+<https://w3id.org/h2kg/examples/afm#contrast-adjustment-step>
+  a h2kg:Process ;
+  rdfs:label "Contrast adjustment"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#contrast-adjustment-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#contrast-adjustment-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Contrast factor: 1."@en .
+
+<https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset>
+  a h2kg:Data, h2kg:MicrostructureImageDataset ;
+  rdfs:label "AFM contrast-adjusted image dataset"@en .
+
+<https://w3id.org/h2kg/examples/afm#brightness-adjustment-step>
+  a h2kg:Process ;
+  rdfs:label "Brightness adjustment"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#brightness-adjustment-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#brightness-adjustment-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Brightness factor: 1."@en .
+
+<https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset>
+  a h2kg:Data, h2kg:SurfaceTopographyDataset, h2kg:MicrostructureImageDataset ;
+  rdfs:label "AFM processed topography dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#afm-processed-topography-metadata> .
+
+<https://w3id.org/h2kg/examples/afm#afm-processed-topography-metadata>
+  a h2kg:Metadata ;
+  dcterms:source "link" ;
+  rdfs:comment "Mask present: yes."@en, "Mask link: link."@en, "Target label from worksheet: Post-processed image."@en .
+
+<https://w3id.org/h2kg/examples/afm#manual-particle-measurement-step>
+  a h2kg:Process ;
+  rdfs:label "Manual particle measurement"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/afm#afm-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/afm#afm-analysis-summary-dataset>
+  a h2kg:Data ;
+  rdfs:label "AFM analysis summary dataset"@en ;
+  h2kg:hasPart <https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint> .
+
+<https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "AFM-derived mean particle size datapoint"@en ;
+  h2kg:ofProperty h2kg:MeanParticleSize ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/afm#afm-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/afm#manual-particle-measurement-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-metadata> ;
+  dcterms:source <https://w3id.org/h2kg/examples/afm#publication-record> .
+
+<https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet target label: Average size."@en .
+
+<https://w3id.org/h2kg/examples/afm#drying-temperature-setting>
+  a h2kg:Parameter, h2kg:DryingTemperature ;
+  rdfs:label "Drying temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#drying-temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#drying-time-setting>
+  a h2kg:Parameter, h2kg:DryingTime ;
+  rdfs:label "Drying time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#drying-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "AFM acquisition temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "AFM acquisition relative-humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#measured-area-setting>
+  a h2kg:Parameter, h2kg:MicroscopyMeasuredArea ;
+  rdfs:label "AFM measured-area setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#measured-area-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting>
+  a h2kg:Parameter, h2kg:AFMScanSpeed ;
+  rdfs:label "AFM scan-speed setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting>
+  a h2kg:Parameter, h2kg:AFMTipNominalRadius ;
+  rdfs:label "AFM tip nominal-radius setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting-qv> .
+
+<https://w3id.org/h2kg/examples/afm#drying-temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "100"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature ;
+  qudt:unit unit:DEG_C .
+
+<https://w3id.org/h2kg/examples/afm#drying-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "10"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/afm#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "23"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature ;
+  qudt:unit unit:DEG_C .
+
+<https://w3id.org/h2kg/examples/afm#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "80"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:RelativeHumidity ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/afm#measured-area-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Area ;
+  qudt:unit unit:MicroM2 .
+
+<https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "0.488"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Frequency ;
+  qudt:unit unit:HZ .
+
+<https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "110"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:MicroM .
+
+<https://w3id.org/h2kg/examples/afm#afm-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: ex-situ; specimen: homogeneous powder; atmosphere: air."@en, "Pressure metadata: 1 atm; calibration notes: adjusting lenses and apertures / adjusting the voltage."@en .

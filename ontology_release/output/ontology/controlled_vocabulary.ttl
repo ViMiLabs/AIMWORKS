@@ -4296,13 +4296,13 @@ h2kg:AtomicForceMicroscopyMeasurement
   a h2kg:Measurement ;
   skos:prefLabel "Atomic Force Microscopy Measurement"@en ;
   rdfs:label "Atomic Force Microscopy Measurement"@en ;
-  skos:altLabel "AFM"@en, "atomic force microscopy"@en ;
-  dcterms:description "In-situ atomic force microscopy imaging of PFSI adsorbed structures on Pt(111) in various water/n-propanol mixtures."@en ;
+  skos:altLabel "AFM"@en, "atomic force microscopy"@en, "AFM imaging"@en ;
+  dcterms:description "A measurement process that uses atomic force microscopy for in-situ or ex-situ surface-topography and microstructure characterization, including catalyst-layer and membrane-electrode-assembly imaging as well as adsorbed-ionomer structure analysis."@en ;
   h2kg:usesInstrument h2kg:AFMInstrument ;
-  h2kg:hasInputMaterial h2kg:Pt111Surface, h2kg:PFSAIonomer, h2kg:SolventMixture, h2kg:CatalystCoatedMembrane, holy:CatalystLayer ;
-  h2kg:hasParameter h2kg:IonomerMassFraction, h2kg:WaterMassFractionInSolventMixture, h2kg:AlcoholMassFractionInSolventMixture, h2kg:SolventType, h2kg:DwellTime, h2kg:CantileverSpringConstant, h2kg:CantileverResonanceFrequency ;
-  h2kg:measures h2kg:AdsorbedAggregateLateralSize, h2kg:CatalystLayerMorphology, h2kg:FilmThickness, h2kg:GrapheneFlakeThickness, h2kg:GrapheneLayerStepHeight, h2kg:SurfaceRoughnessRq, h2kg:PatternSurfaceCoverage, h2kg:IonomerPatchSurfaceCoverage, h2kg:SurfaceRoughnessRa, h2kg:IonomerFilmThickness, h2kg:IonomerThinFilmThickness ;
-  h2kg:hasOutputData h2kg:SurfaceTopographyDataset .
+  h2kg:hasInputMaterial h2kg:Pt111Surface, h2kg:PFSAIonomer, h2kg:SolventMixture, h2kg:CatalystCoatedMembrane, h2kg:MEAAssembly, h2kg:CathodeCatalystLayer, holy:CatalystLayer ;
+  h2kg:hasParameter h2kg:IonomerMassFraction, h2kg:WaterMassFractionInSolventMixture, h2kg:AlcoholMassFractionInSolventMixture, h2kg:SolventType, h2kg:DwellTime, h2kg:Temperature, h2kg:RelativeHumidity, h2kg:MicroscopyMeasuredArea, h2kg:AFMScanSpeed, h2kg:AFMTipNominalRadius, h2kg:CantileverSpringConstant, h2kg:CantileverResonanceFrequency ;
+  h2kg:measures h2kg:AdsorbedAggregateLateralSize, h2kg:CatalystLayerMorphology, h2kg:FilmThickness, h2kg:GrapheneFlakeThickness, h2kg:GrapheneLayerStepHeight, h2kg:SurfaceRoughnessRq, h2kg:PatternSurfaceCoverage, h2kg:IonomerPatchSurfaceCoverage, h2kg:SurfaceRoughnessRa, h2kg:IonomerFilmThickness, h2kg:MeanParticleSize, h2kg:IonomerThinFilmThickness ;
+  h2kg:hasOutputData h2kg:SurfaceTopographyDataset, h2kg:MicrostructureImageDataset .
 
 h2kg:SolutionCompositionMeasurement
   a h2kg:Measurement ;
@@ -4318,8 +4318,24 @@ h2kg:AFMInstrument
   a h2kg:Instrument ;
   skos:prefLabel "AFM Instrument"@en ;
   rdfs:label "AFM Instrument"@en ;
-  skos:altLabel "Agilent 5500 AFM microscope"@en, "Multimode 8 AFM (Bruker)"@en, "AFM (NanoMan VS"@en ;
-  dcterms:description "AFM microscope used for in-situ liquid AFM imaging (Agilent 5500)."@en .
+  skos:altLabel "Agilent 5500 AFM microscope"@en, "Multimode 8 AFM (Bruker)"@en, "AFM (NanoMan VS"@en, "atomic force microscope"@en ;
+  dcterms:description "An atomic force microscopy instrument used for in-situ or ex-situ topography and microstructure imaging of catalyst layers, membranes, and related electrochemical materials."@en .
+
+h2kg:AFMScanSpeed
+  a h2kg:Parameter ;
+  skos:prefLabel "AFM Scan Speed"@en ;
+  rdfs:label "AFM Scan Speed"@en ;
+  skos:altLabel "scan speed"@en, "AFM line scan rate"@en ;
+  dcterms:description "A parameter denoting the scan speed or line-scan rate used during atomic force microscopy acquisition."@en ;
+  h2kg:hasQuantityValue <_AFMScanSpeed_QV> .
+
+h2kg:AFMTipNominalRadius
+  a h2kg:Parameter ;
+  skos:prefLabel "AFM Tip Nominal Radius"@en ;
+  rdfs:label "AFM Tip Nominal Radius"@en ;
+  skos:altLabel "tip radius"@en, "AFM tip radius"@en ;
+  dcterms:description "A parameter denoting the nominal probe-tip radius used during atomic force microscopy acquisition."@en ;
+  h2kg:hasQuantityValue <_AFMTipNominalRadius_QV> .
 
 h2kg:AdsorbedAggregateLateralSize
   a h2kg:Property ;
@@ -6220,7 +6236,7 @@ h2kg:MeanParticleSize
   skos:prefLabel "Mean Particle Size"@en ;
   rdfs:label "Mean Particle Size"@en ;
   skos:altLabel "particle size"@en, "average particle size"@en, "aggregate size"@en ;
-  dcterms:description "A property denoting mean particle size of carbon xerogel powder after grinding, from laser diffraction."@en ;
+  dcterms:description "A property denoting mean particle size or aggregate size determined by particle-sizing and microscopy workflows, including laser diffraction and atomic force microscopy."@en ;
   h2kg:hasQuantityValue <_MeanParticleSize_QV> .
 
 h2kg:AveragePoreSize
