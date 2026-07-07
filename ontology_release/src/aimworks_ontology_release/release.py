@@ -10,6 +10,7 @@ from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .fib_sem_pilot import build_fib_sem_pilot_package
 from .hdo import load_hdo_alignment_report
+from .ic_sem_pilot import build_ic_sem_pilot_package
 from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
@@ -53,6 +54,7 @@ def run_release(
     tem_pilot = build_tem_pilot_package(input_path, output_root)
     sem_pilot = build_sem_pilot_package(input_path, output_root)
     fib_sem_pilot = build_fib_sem_pilot_package(input_path, output_root)
+    ic_sem_pilot = build_ic_sem_pilot_package(input_path, output_root)
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -83,6 +85,7 @@ def run_release(
         "tem_pilot": tem_pilot,
         "sem_pilot": sem_pilot,
         "fib_sem_pilot": fib_sem_pilot,
+        "ic_sem_pilot": ic_sem_pilot,
         "fair": fair,
         "odk": odk,
         "docs": docs,

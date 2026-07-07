@@ -1,0 +1,557 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/ic-sem#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Ion-cut SEM of a doctor bladed MEA"@en ;
+  dcterms:date "2021-10-15"^^xsd:date ;
+  h2kg:hasIdentifier "4", "Run derived DOI" ;
+  rdfs:comment "Topic: Fuel Cell; device: PEMFC; component: MEA; subcomponent: Gas diffusion layer."@en, "Granularity level: Nanostructure; country: Germany; source link: link."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz>, <https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard> ;
+  dcterms:contributor <https://w3id.org/h2kg/examples/ic-sem#institution-dlr>, <https://w3id.org/h2kg/examples/ic-sem#funding-hi> ;
+  dcterms:source "link" .
+
+<https://w3id.org/h2kg/examples/ic-sem#publication-record>
+  a h2kg:Metadata ;
+  dcterms:title "Automatic Characterization of Ion-cut SEM of a doctor bladed MEA"@en ;
+  dcterms:identifier "https://doi.org/10.3390/catal11077778" ;
+  dcterms:issued "2021-10-18"^^xsd:date ;
+  rdfs:comment "Journal: Nature; volume: 89; issue: 5; pages: 7778-9998."@en, "Published flag from source sheet: 1."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz>, <https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard> .
+
+<https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz>
+  a prov:Agent ;
+  rdfs:label "Tobias Morawietz"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard>
+  a prov:Agent ;
+  rdfs:label "Andre Colliard"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 123-465-7777", "Email: tobi.mora@dlr.de" .
+
+<https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 321-321-3211", "Email: andyhuebsch@gmail.mx" .
+
+<https://w3id.org/h2kg/examples/ic-sem#institution-dlr>
+  a prov:Agent ;
+  rdfs:label "DLR"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#funding-hi>
+  a prov:Agent ;
+  rdfs:label "Helmholtz Imaging (HI)"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material>
+  a h2kg:Matter ;
+  rdfs:label "HiSPEC 4000 catalyst precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 40 wt%."@en, "Manufacturer: Johnson Matthey; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane>
+  a h2kg:Matter ;
+  rdfs:label "Nafion XL membrane precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 28 um."@en, "Manufacturer: DuPont; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material>
+  a h2kg:Matter ;
+  rdfs:label "Nafion ionomer precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 5 wt.%."@en, "Manufacturer: DuPont; lot number: 205680; CAS-number: 7440-05-3."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#gdl-support-material>
+  a h2kg:Matter ;
+  rdfs:label "Gas diffusion layer support precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#gdl-support-material-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#gdl-support-material-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Manufacturer: SGL Carbon; ID: 25BC Sigracet."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate>
+  a h2kg:Matter ;
+  rdfs:label "Dissolved catalyst-membrane intermediate"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Ratio = 70:30; viscosity = 80 Pas."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#aluminum-current-collector>
+  a h2kg:Matter ;
+  rdfs:label "Aluminum current collector"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea>
+  a h2kg:Matter ;
+  rdfs:label "Wet doctor-bladed MEA intermediate"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea>
+  a h2kg:Matter, h2kg:MEAAssembly ;
+  rdfs:label "Doctor-bladed MEA sample"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#mea-coupon>
+  a h2kg:Matter ;
+  rdfs:label "Cut MEA coupon"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#si-wafer>
+  a h2kg:Matter ;
+  rdfs:label "Si-wafer support"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#mounted-coupon>
+  a h2kg:Matter ;
+  rdfs:label "Mounted IC-SEM intermediate"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#carbon-coated-copper-grid>
+  a h2kg:Matter ;
+  rdfs:label "Carbon coated copper grid"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon>
+  a h2kg:Matter ;
+  rdfs:label "Dispersed IC-SEM intermediate"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample>
+  a h2kg:Matter ;
+  rdfs:label "IC-SEM pilot sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Specimen metadata from sheet: highly porous bulk material."@en, "Local source context emphasizes an MEA sample with gas-diffusion-layer-focused interpretation."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#procure-hispec-4000>
+  a h2kg:Process ;
+  rdfs:label "Procure HiSPEC 4000 precursor"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material> .
+
+<https://w3id.org/h2kg/examples/ic-sem#procure-nafion-xl-membrane>
+  a h2kg:Process ;
+  rdfs:label "Procure Nafion XL membrane"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane> .
+
+<https://w3id.org/h2kg/examples/ic-sem#procure-nafion-ionomer>
+  a h2kg:Process ;
+  rdfs:label "Procure Nafion ionomer"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material> .
+
+<https://w3id.org/h2kg/examples/ic-sem#procure-gdl-support>
+  a h2kg:Process ;
+  rdfs:label "Procure gas diffusion layer support"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#gdl-support-material> .
+
+<https://w3id.org/h2kg/examples/ic-sem#dissolve-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dissolve catalyst, membrane, and ionomer precursor mixture"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material>, <https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane>, <https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#dissolve-step-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#dissolve-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet technique label: Dissolved."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-step>
+  a h2kg:Manufacturing, h2kg:DoctorBladeCoating ;
+  rdfs:label "Doctor blade coat dissolved intermediate on aluminum current collector"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate>, <https://w3id.org/h2kg/examples/ic-sem#aluminum-current-collector> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Velocity = 1 cm/s; instrument = MICOS Blading; thickness = 1 mm."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#dry-doctor-bladed-mea-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry doctor-bladed MEA"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting>, <https://w3id.org/h2kg/examples/ic-sem#drying-time-setting> .
+
+<https://w3id.org/h2kg/examples/ic-sem#cut-mea-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Cut MEA coupon"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#mea-coupon> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#cut-mea-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#cut-mea-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Size = 5 mm2."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#fix-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Fix MEA coupon on Si-wafer support"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#mea-coupon>, <https://w3id.org/h2kg/examples/ic-sem#si-wafer> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#mounted-coupon> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#fix-step-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#fix-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "SampleHolder = Standard CSP."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#dispersion-step>
+  a h2kg:Process ;
+  rdfs:label "Disperse mounted coupon with carbon coated copper grid"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#mounted-coupon>, <https://w3id.org/h2kg/examples/ic-sem#carbon-coated-copper-grid> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon> .
+
+<https://w3id.org/h2kg/examples/ic-sem#dry-sample-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Dry dispersed IC-SEM sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001>
+  a h2kg:Measurement, h2kg:ICSEMImagingMeasurement ;
+  rdfs:label "IC-SEM pilot measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/ic-sem#temperature-setting>, <https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting>, <https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting>, <https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting>, <https://w3id.org/h2kg/examples/ic-sem#magnification-setting>, <https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting>, <https://w3id.org/h2kg/examples/ic-sem#measured-area-setting>, <https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting>, <https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting>, <https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting>, <https://w3id.org/h2kg/examples/ic-sem#electron-current-setting>, <https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting>, <https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting>, <https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#ic-sem-acquisition-metadata>, <https://w3id.org/h2kg/examples/ic-sem#source-record>, <https://w3id.org/h2kg/examples/ic-sem#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz>, <https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard>, <https://w3id.org/h2kg/examples/ic-sem#institution-dlr>, <https://w3id.org/h2kg/examples/ic-sem#funding-hi> ;
+  dcterms:source <https://w3id.org/h2kg/examples/ic-sem#publication-record> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-001>
+  a h2kg:Instrument, h2kg:ICSEMInstrument ;
+  rdfs:label "IC-SEM instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Instrument stack: FIB-SEM; FIB equipment: Jeol IB-19530CP Cross Section Polisher; SEM equipment: Jeol JSM-7200F SEM."@en, "Optics: GEMINI; injection system: multi channel gas injection system GIS; ion beam type: Ar."@en, "Detector: InLens, SE2; brightness: 1; contrast: 1."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: ex-situ."@en, "Specimen: highly porous bulk material; atmosphere: vacuum."@en, "Calibration: adjusting lenses and apertures; adjusting the voltage."@en, "Plane spacing reported in sheet: 10."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset>
+  a h2kg:Data, h2kg:SEMImageDataset ;
+  rdfs:label "IC-SEM raw image dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "50 MB", "512 x 512 x 0 pixels" ;
+  dcterms:source "link" ;
+  rdfs:comment "Filename: ICSEM.zip."@en, "PixelPerMetric: 20."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#thresholding-step>
+  a h2kg:Process ;
+  rdfs:label "Thresholding with Watershed"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#thresholding-step-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#thresholding-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Software = ImageJ; algorithm = Watershed."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset>
+  a h2kg:Data, h2kg:SEMImageDataset ;
+  rdfs:label "IC-SEM thresholded image dataset"@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#scale-set-step>
+  a h2kg:Process ;
+  rdfs:label "Scale set preprocessing"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset>
+  a h2kg:Data, h2kg:SEMMicrographDataset, h2kg:MicrostructureImageDataset ;
+  rdfs:label "IC-SEM processed micrograph dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-metadata>
+  a h2kg:Metadata ;
+  dcterms:source "github-com/ICSEM" ;
+  rdfs:comment "Mask present: yes."@en, "Processed target label: Post-processed image."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Layer thickness analysis"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/ic-sem#porosity-analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Porosity analysis"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset> ;
+  h2kg:usesInstrument h2kg:FijiImageJSoftware .
+
+<https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset>
+  a h2kg:Data ;
+  rdfs:label "IC-SEM analysis summary dataset"@en ;
+  h2kg:hasPart <https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint>, <https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint>, <https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint> .
+
+<https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "IC-SEM-derived MEA thickness datapoint"@en ;
+  h2kg:ofProperty h2kg:MembraneElectrodeAssemblyThickness ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step> .
+
+<https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "IC-SEM-derived gas diffusion layer thickness datapoint"@en ;
+  h2kg:ofProperty h2kg:GasDiffusionLayerThickness ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step> .
+
+<https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "IC-SEM-derived total porosity datapoint"@en ;
+  h2kg:ofProperty h2kg:TotalPorosity ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/ic-sem#porosity-analysis-step> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-metadata> .
+
+<https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Raw worksheet amount target reported as 6 pu; normalized here as a percent-style porosity datapoint."@en .
+
+<https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting>
+  a h2kg:Parameter, h2kg:DryingTemperature ;
+  rdfs:label "Drying temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#drying-time-setting>
+  a h2kg:Parameter, h2kg:DryingTime ;
+  rdfs:label "Drying time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#drying-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting>
+  a h2kg:Parameter, h2kg:DryingTime ;
+  rdfs:label "Sample drying time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "IC-SEM temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "IC-SEM relative humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting>
+  a h2kg:Parameter, h2kg:VacuumChamberPressure ;
+  rdfs:label "IC-SEM vacuum-chamber pressure setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting>
+  a h2kg:Parameter, h2kg:DwellTime ;
+  rdfs:label "IC-SEM dwell-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#magnification-setting>
+  a h2kg:Parameter, h2kg:Magnification ;
+  rdfs:label "IC-SEM magnification setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting>
+  a h2kg:Parameter, h2kg:PixelSize ;
+  rdfs:label "IC-SEM pixel-size setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#measured-area-setting>
+  a h2kg:Parameter, h2kg:MicroscopyMeasuredArea ;
+  rdfs:label "IC-SEM measured-area setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#measured-area-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting>
+  a h2kg:Parameter, h2kg:ExposureTime ;
+  rdfs:label "IC-SEM exposure-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting>
+  a h2kg:Parameter, h2kg:IonBeamCurrent ;
+  rdfs:label "IC-SEM ion-beam current setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting>
+  a h2kg:Parameter, h2kg:IonBeamEnergy ;
+  rdfs:label "IC-SEM ion-beam energy setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#electron-current-setting>
+  a h2kg:Parameter, h2kg:ElectronCurrent ;
+  rdfs:label "IC-SEM electron current setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#electron-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting>
+  a h2kg:Parameter, h2kg:ElectronBeamEnergy ;
+  rdfs:label "IC-SEM electron-beam energy setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting>
+  a h2kg:Parameter, h2kg:CutThickness ;
+  rdfs:label "IC-SEM cut-thickness setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting>
+  a h2kg:Parameter, h2kg:TotalAcquisitionTime ;
+  rdfs:label "IC-SEM total acquisition time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "80"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature ;
+  qudt:unit unit:DEG_C .
+
+<https://w3id.org/h2kg/examples/ic-sem#drying-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "16"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "24"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/ic-sem#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "25"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature ;
+  qudt:unit unit:DEG_C .
+
+<https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "0"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:RelativeHumidity ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.0e-6"^^xsd:double ;
+  qudt:quantityKind quantitykind:Pressure ;
+  qudt:unit unit:ATM .
+
+<https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "12"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/ic-sem#magnification-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "10"^^xsd:integer ;
+  qudt:quantityKind quantitykind:Dimensionless ;
+  qudt:unit unit:UNITLESS .
+
+<https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/ic-sem#measured-area-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Area ;
+  qudt:unit unit:MicroM2 .
+
+<https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "60"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:SEC .
+
+<https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "700"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricCurrent ;
+  qudt:unit unit:PicoA .
+
+<https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "6"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricPotential ;
+  qudt:unit unit:KiloV .
+
+<https://w3id.org/h2kg/examples/ic-sem#electron-current-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "250"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricCurrent ;
+  qudt:unit unit:PicoA .
+
+<https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.5"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:ElectricPotential ;
+  qudt:unit unit:KiloV .
+
+<https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "150"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "12"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Time ;
+  qudt:unit unit:HR .
+
+<https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "80"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "160"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Length ;
+  qudt:unit unit:NanoM .
+
+<https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "6"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:PorosityPercent ;
+  qudt:unit unit:PERCENT .

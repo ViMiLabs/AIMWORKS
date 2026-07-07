@@ -20829,6 +20829,49 @@ h2kg:GeodesicTortuosity
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
+h2kg:ICSEMImagingMeasurement
+  a h2kg:Measurement ;
+  skos:prefLabel "IC-SEM Imaging Measurement"@en ;
+  rdfs:label "IC-SEM Imaging Measurement"@en ;
+  skos:altLabel "IC-SEM"@en, "ion-cut SEM"@en, "ion-cut scanning electron microscopy"@en ;
+  dcterms:description "A measurement process that uses ion-cut scanning electron microscopy to characterize membrane-electrode-assembly cross sections and determine membrane-electrode-assembly thickness, gas diffusion layer thickness, and total porosity while generating SEM image and microstructure datasets."@en ;
+  h2kg:usesInstrument h2kg:ICSEMInstrument ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
+  h2kg:hasOutputData h2kg:SEMImageDataset, h2kg:SEMMicrographDataset, h2kg:MicrostructureImageDataset ;
+  h2kg:hasParameter h2kg:Temperature, h2kg:RelativeHumidity, h2kg:VacuumChamberPressure, h2kg:DwellTime, h2kg:Magnification, h2kg:PixelSize, h2kg:MicroscopyMeasuredArea, h2kg:ExposureTime, h2kg:IonBeamCurrent, h2kg:IonBeamEnergy, h2kg:ElectronCurrent, h2kg:ElectronBeamEnergy, h2kg:CutThickness, h2kg:TotalAcquisitionTime ;
+  h2kg:measures h2kg:MembraneElectrodeAssemblyThickness, h2kg:GasDiffusionLayerThickness, h2kg:TotalPorosity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:ICSEMInstrument
+  a h2kg:Instrument ;
+  skos:prefLabel "IC-SEM Instrument"@en ;
+  rdfs:label "IC-SEM Instrument"@en ;
+  skos:altLabel "ion-cut SEM instrument"@en, "cross-section polisher SEM setup"@en ;
+  dcterms:description "An instrument configuration for ion-cut scanning electron microscopy that combines ion-beam cross-section preparation with SEM imaging for membrane-electrode-assembly and porous electrode characterization."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:MembraneElectrodeAssemblyThickness
+  a h2kg:Property ;
+  skos:prefLabel "Membrane Electrode Assembly Thickness"@en ;
+  rdfs:label "Membrane Electrode Assembly Thickness"@en ;
+  skos:altLabel "MEA thickness"@en ;
+  dcterms:description "A property denoting membrane-electrode-assembly thickness measured from cross-sectional microscopy, including ion-cut SEM and related electron microscopy workflows."@en ;
+  h2kg:hasQuantityValue <_MembraneElectrodeAssemblyThickness_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:PixelSize
+  a h2kg:Parameter ;
+  skos:prefLabel "Pixel Size"@en ;
+  rdfs:label "Pixel Size"@en ;
+  skos:altLabel "image pixel size"@en, "nm per pixel"@en ;
+  dcterms:description "A parameter specifying the linear size represented by one image pixel in two-dimensional microscopy datasets, including IC-SEM and related electron microscopy measurements."@en ;
+  h2kg:hasQuantityValue <_PixelSize_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
 h2kg:appliesToProfile
   a owl:AnnotationProperty ;
   rdfs:label "appliesToProfile"@en ;

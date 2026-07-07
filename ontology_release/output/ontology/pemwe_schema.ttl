@@ -19238,6 +19238,35 @@ h2kg:GeodesicTortuosity
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
+h2kg:ICSEMInstrument
+  a h2kg:Instrument ;
+  skos:prefLabel "IC-SEM Instrument"@en ;
+  rdfs:label "IC-SEM Instrument"@en ;
+  skos:altLabel "ion-cut SEM instrument"@en, "cross-section polisher SEM setup"@en ;
+  dcterms:description "An instrument configuration for ion-cut scanning electron microscopy that combines ion-beam cross-section preparation with SEM imaging for membrane-electrode-assembly and porous electrode characterization."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:MembraneElectrodeAssemblyThickness
+  a h2kg:Property ;
+  skos:prefLabel "Membrane Electrode Assembly Thickness"@en ;
+  rdfs:label "Membrane Electrode Assembly Thickness"@en ;
+  skos:altLabel "MEA thickness"@en ;
+  dcterms:description "A property denoting membrane-electrode-assembly thickness measured from cross-sectional microscopy, including ion-cut SEM and related electron microscopy workflows."@en ;
+  h2kg:hasQuantityValue <_MembraneElectrodeAssemblyThickness_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:PixelSize
+  a h2kg:Parameter ;
+  skos:prefLabel "Pixel Size"@en ;
+  rdfs:label "Pixel Size"@en ;
+  skos:altLabel "image pixel size"@en, "nm per pixel"@en ;
+  dcterms:description "A parameter specifying the linear size represented by one image pixel in two-dimensional microscopy datasets, including IC-SEM and related electron microscopy measurements."@en ;
+  h2kg:hasQuantityValue <_PixelSize_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
 h2kg:appliesToProfile
   a owl:AnnotationProperty ;
   rdfs:label "appliesToProfile"@en ;

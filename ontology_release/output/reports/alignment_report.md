@@ -3,7 +3,7 @@
 ## Summary
 
 - Accepted review-ready mappings: 14
-- Exploratory mappings: 135
+- Exploratory mappings: 136
 - Manual overrides: 11
 - Accepted exact matches: 8
 - Accepted subclass or subproperty anchors: 4
@@ -12,7 +12,7 @@
 
 ## Rejected Candidate Counts
 
-- `generic_electrochemical_measurement`: 49
+- `generic_electrochemical_measurement`: 50
 - `chemical_non_exact`: 68
 - `kind_mismatch`: 3
 - `qudt_scaffold`: 3
