@@ -101671,5 +101671,539 @@
         "@value": "A property denoting the thickness of a cathode catalyst layer."
       }
     ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyMeasurement",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Neutron Tomography Measurement"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Neutron Tomography Measurement"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "HR Neutron CT"
+      },
+      {
+        "@language": "en",
+        "@value": "operando neutron tomography"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A measurement process that uses neutron tomography to characterize membrane-electrode assemblies and operando fuel-cell water dynamics while generating tomographic projection and reconstruction datasets and determining tortuosity and water-droplet descriptors."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyInstrument"
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly"
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#TomographicProjectionDataset"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#TomographicReconstructionDataset"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset"
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#PixelSize"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#ExposureTime"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#ProjectionNumber"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#NeutronFlux"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#SpatialResolution"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#SampleDetectorDistance"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity"
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#TortuosityFactor"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#AverageWaterDropletArea"
+      },
+      {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology#AverageWaterDropletCount"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyInstrument",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Neutron Tomography Instrument"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Neutron Tomography Instrument"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "neutron tomography setup"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "An instrument configuration for neutron tomography that combines neutron imaging, projection acquisition, and tomographic reconstruction workflows for operando fuel-cell characterization."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#TomographicProjectionDataset",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Data"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Tomographic Projection Dataset"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Tomographic Projection Dataset"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "projection dataset"
+      },
+      {
+        "@language": "en",
+        "@value": "raw tomography projections"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A dataset containing raw tomographic projection images generated during neutron tomography and related tomography measurements before reconstruction and segmentation."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#TomographicReconstructionDataset",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Data"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Tomographic Reconstruction Dataset"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Tomographic Reconstruction Dataset"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "reconstructed tomograph"
+      },
+      {
+        "@language": "en",
+        "@value": "3D tomographic reconstruction"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A dataset containing reconstructed tomographic volumes produced from raw projection data and used for segmentation, droplet analysis, tortuosity analysis, and related post-processing."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#ProjectionNumber",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Projection Number"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Projection Number"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "projection count"
+      },
+      {
+        "@language": "en",
+        "@value": "number of projections"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A parameter specifying the number of projection images collected during a tomography measurement."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_ProjectionNumber_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_ProjectionNumber_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Count"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#NeutronFlux",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Neutron Flux"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Neutron Flux"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "incident neutron flux"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A parameter specifying the incident neutron flux used during neutron tomography acquisition."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_NeutronFlux_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_NeutronFlux_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#SpatialResolution",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Spatial Resolution"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Spatial Resolution"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "tomography spatial resolution"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A parameter specifying the resolved spatial scale of a tomography acquisition."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_SpatialResolution_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_SpatialResolution_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Length"
+      }
+    ],
+    "http://qudt.org/schema/qudt/unit": [
+      {
+        "@id": "http://qudt.org/vocab/unit/MicroM"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#SampleDetectorDistance",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Sample Detector Distance"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Sample Detector Distance"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "sample-to-detector distance"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A parameter specifying the distance between the specimen and detector during a tomography measurement."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_SampleDetectorDistance_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_SampleDetectorDistance_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Length"
+      }
+    ],
+    "http://qudt.org/schema/qudt/unit": [
+      {
+        "@id": "http://qudt.org/vocab/unit/MilliM"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#TortuosityFactor",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Property"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Tortuosity Factor"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Tortuosity Factor"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "TauFactor tortuosity"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A property denoting a tortuosity factor derived from tomography-based transport analysis of reconstructed porous fuel-cell microstructures."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_TortuosityFactor_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_TortuosityFactor_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Dimensionless"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#AverageWaterDropletArea",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Property"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Average Water Droplet Area"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Average Water Droplet Area"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "average droplet area"
+      },
+      {
+        "@language": "en",
+        "@value": "AverageArea"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A property denoting the average projected area of water droplets derived from tomography-based droplet analysis in fuel-cell water-dynamics studies."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_AverageWaterDropletArea_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_AverageWaterDropletArea_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Area"
+      }
+    ],
+    "http://qudt.org/schema/qudt/unit": [
+      {
+        "@id": "http://qudt.org/vocab/unit/CentiM2"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/h2kg/hydrogen-ontology#AverageWaterDropletCount",
+    "@type": [
+      "https://w3id.org/h2kg/hydrogen-ontology#Property"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Average Water Droplet Count"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Average Water Droplet Count"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#altLabel": [
+      {
+        "@language": "en",
+        "@value": "average droplet count"
+      },
+      {
+        "@language": "en",
+        "@value": "AverageNumber"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A property denoting the average number of detected water droplets derived from tomography-based droplet analysis in fuel-cell water-dynamics studies."
+      }
+    ],
+    "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+      {
+        "@id": "_AverageWaterDropletCount_QV"
+      }
+    ]
+  },
+  {
+    "@id": "_AverageWaterDropletCount_QV",
+    "@type": [
+      "http://qudt.org/schema/qudt/QuantityValue"
+    ],
+    "http://qudt.org/schema/qudt/quantityKind": [
+      {
+        "@id": "http://qudt.org/vocab/quantitykind/Count"
+      }
+    ]
   }
 ]

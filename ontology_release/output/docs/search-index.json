@@ -66,7 +66,10 @@
       "description": "A class representing metadata used to describe the provenance, identity, structure, or context of another resource in H2KG.",
       "domain": "",
       "range": "",
-      "mappings": []
+      "mappings": [
+        "rdfs:subClassOf https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+        "skos:closeMatch https://purls.helmholtz-metadaten.de/hob/HDO_00001036"
+      ]
     },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#NormalizationBasis",
@@ -162,7 +165,10 @@
       "description": "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information.",
       "domain": "",
       "range": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
-      "mappings": []
+      "mappings": [
+        "owl:equivalentProperty https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+        "skos:closeMatch https://purls.helmholtz-metadaten.de/hob/HDO_00006070"
+      ]
     },
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
@@ -315,7 +321,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
       "label": "Catalyst Layer Thickness",
-      "description": "A parameter specifying catalyst layer thickness used to characterize Electrochemical Impedance Spectroscopy Galvanostatic, Transmission Line Model Analysis, and PEMFCCFD Simulation.",
+      "description": "A thickness value characterizing a catalyst layer, used either as a design/specification parameter or as a measured property in catalyst-layer characterization.",
       "domain": "",
       "range": "",
       "mappings": []
@@ -363,7 +369,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentInterruptHFRMeasurement",
       "label": "Current-Interrupt HFR Measurement",
-      "description": "A measurement process that uses Current-Interrupt HFR measurement to determine Ohmic Resistance and High Frequency Resistance using Fuel Cell Test Station and Milli Ohmmeter and generating Experiment Dataset.",
+      "description": "A current-interrupt high-frequency-resistance measurement performed under defined gas-side, thermal, humidity, pressure, and operating-current conditions to determine ohmic response of the fuel-cell system.",
       "domain": "",
       "range": "",
       "mappings": []
@@ -515,7 +521,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#MEAPolarization",
       "label": "MEA Polarization",
-      "description": "A measurement process that records membrane electrode assembly polarization behavior to determine current density, power density, mass activity, and related electrochemical performance properties under controlled oper...",
+      "description": "Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement.",
       "domain": "",
       "range": "",
       "mappings": []
@@ -555,7 +561,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#O2N2SwitchingMeasurement",
       "label": "O2–N2 Switching Measurement",
-      "description": "A measurement process that uses O2–N2 switching measurement to determine Local Oxygen Transport Resistance using Fuel Cell Test Station and Gas Humidification Unit and generating Experiment Dataset.",
+      "description": "A measurement process that switches between oxygen and nitrogen gas-side conditions under defined operating settings to quantify oxygen-transport-related response in the fuel-cell system.",
       "domain": "",
       "range": "",
       "mappings": []
@@ -603,7 +609,7 @@
     {
       "iri": "https://w3id.org/h2kg/hydrogen-ontology#OxygenGainLossMeasurement",
       "label": "Oxygen Gain/Loss Measurement",
-      "description": "A measurement process that uses oxygen Gain/Loss measurement to determine Local Oxygen Transport Resistance, Limiting Current Density, and Local Gas Transport Resistance using Fuel Cell Test Station and Gas Humidifica...",
+      "description": "A measurement process that compares oxygen-side operating states under defined gas-side, thermal, humidity, and pressure conditions to quantify oxygen-transport-related performance differences.",
       "domain": "",
       "range": "",
       "mappings": []
@@ -802,6 +808,19 @@
       "rationale": "Ethanol is an unambiguous chemical entity that should align directly to ChEBI."
     },
     {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FTIRDataset",
+      "local_label": "FTIR Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00002013",
+      "target_label": "FAIR data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.842,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
       "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#FormicAcid",
       "local_label": "Formic Acid",
       "local_kind": "controlled_vocabulary_term",
@@ -865,6 +884,58 @@
       "relation": "rdfs:subClassOf",
       "status": "manual_override",
       "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice."
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000029",
+      "target_label": "Metadaten",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.904,
+      "relation": "rdfs:subClassOf",
+      "rationale": "Conservative HDO anchoring favors specialization only for true data-governance and metadata-management concepts.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "local_label": "Metadata",
+      "local_kind": "class",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001036",
+      "target_label": "Metadatenschema",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.776,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset",
+      "local_label": "Microstructure Image Dataset",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00000005",
+      "target_label": "structured data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.731,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PEMFCCFDSimulation",
+      "local_label": "PEMFCCFD Simulation",
+      "local_kind": "controlled_vocabulary_term",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00001069",
+      "target_label": "simulation data",
+      "target_kind": "class",
+      "source": "hdo",
+      "score": 0.786,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
     },
     {
       "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#PotassiumHydroxide",
@@ -932,6 +1003,32 @@
       "status": "accepted"
     },
     {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "local_label": "hasMetadata",
+      "local_kind": "object_property",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
+      "target_label": "has metadata",
+      "target_kind": "object_property",
+      "source": "hdo",
+      "score": 0.995,
+      "relation": "owl:equivalentProperty",
+      "rationale": "High lexical similarity and compatible kind support a strong equivalence proposal.",
+      "status": "accepted"
+    },
+    {
+      "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "local_label": "hasMetadata",
+      "local_kind": "object_property",
+      "target_iri": "https://purls.helmholtz-metadaten.de/hob/HDO_00006070",
+      "target_label": "Is metadata for",
+      "target_kind": "object_property",
+      "source": "hdo",
+      "score": 0.772,
+      "relation": "skos:closeMatch",
+      "rationale": "Filtered HDO lexical similarity suggests a review-worthy soft alignment for a true data or metadata concept.",
+      "status": "accepted"
+    },
+    {
       "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
       "local_label": "hasQuantityValue",
       "local_kind": "object_property",
@@ -946,32 +1043,37 @@
     }
   ],
   "mapping_summary": {
-    "accepted_count": 14,
-    "exploratory_count": 136,
+    "accepted_count": 21,
+    "exploratory_count": 1169,
     "accepted_by_relation": {
       "manual_override": 11,
       "exact_match": 8,
-      "subclass_anchor": 4,
-      "equivalence_anchor": 2,
-      "close_match": 0
+      "subclass_anchor": 6,
+      "equivalence_anchor": 3,
+      "close_match": 4
     },
     "rejected_by_rule": {
-      "generic_electrochemical_measurement": 50,
+      "hdo_scope": 754,
+      "kind_mismatch": 170,
+      "deprecated_target": 70,
+      "generic_electrochemical_measurement": 49,
       "chemical_non_exact": 68,
-      "kind_mismatch": 3,
       "qudt_scaffold": 3,
       "metadata_scope": 2
     },
     "exploratory_by_status": {
-      "rejected_generic_electrochemical_measurement": 50,
+      "rejected_kind_mismatch": 170,
+      "rejected_deprecated_target": 70,
+      "rejected_generic_electrochemical_measurement": 49,
+      "rejected_hdo_scope": 754,
       "rejected_chemical_non_exact": 68,
       "rejected_qudt_scaffold": 3,
-      "rejected_kind_mismatch": 3,
       "rejected_metadata_scope": 2,
-      "exploratory_candidate": 10
+      "exploratory_candidate": 53
     },
     "accepted_by_source": {
       "chebi": 8,
+      "hdo": 7,
       "emmo-core": 2,
       "dcterms": 1,
       "emmo-electrochemistry": 1,
@@ -979,8 +1081,9 @@
       "qudt-schema": 1
     },
     "exploratory_by_source": {
+      "hdo": 1034,
       "chebi": 68,
-      "emmo-electrochemistry": 50,
+      "emmo-electrochemistry": 49,
       "emmo-core": 10,
       "qudt-schema": 6,
       "prov-o": 2
@@ -991,10 +1094,10 @@
     "parity": "aligned"
   },
   "hdo": {
-    "reviewed_against_hdo": 102,
-    "aligned_to_hdo": 0,
-    "reused_from_hdo": 0,
-    "stayed_local": 102,
+    "reviewed_against_hdo": 106,
+    "aligned_to_hdo": 7,
+    "reused_from_hdo": 7,
+    "stayed_local": 101,
     "overlap_with_other_standards": 3
   }
 }

@@ -205,6 +205,7 @@ h2kg:GasHumidificationUnit
   skos:prefLabel "Gas Humidification Unit"@en ;
   skos:altLabel "gas humidification"@en, "humidification unit"@en, "humidified gases"@en ;
   dcterms:description "An instrument corresponding to a gas humidification unit and used in Oxygen Gain/Loss Measurement, O2–N2 Switching Measurement, and MEAPolarization."@en ;
+  h2kg:isPartOf h2kg:FuelCellTestStation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -234,11 +235,13 @@ h2kg:OxygenGainLossMeasurement
   a h2kg:Measurement ;
   skos:prefLabel "Oxygen Gain/Loss Measurement"@en ;
   h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:LocalOxygenTransportResistanceDataset ;
-  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidity, h2kg:GasComposition, h2kg:CellPressure, h2kg:CatalystLoading, h2kg:IonomerMassFraction, h2kg:IonomerToCarbonRatio, h2kg:RelativeHumidityOperation, h2kg:SolventType ;
+  h2kg:hasParameter h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:CellPressure, h2kg:OperatingTemperature, h2kg:RelativeHumidityOperation ;
   h2kg:measures h2kg:LocalOxygenTransportResistance, h2kg:LimitingCurrentDensity, h2kg:LocalGasTransportResistance ;
-  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:GasHumidificationUnit ;
+  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:GasHumidificationUnit, h2kg:FuelCellTestCell ;
   skos:altLabel "oxygen gain/loss"@en ;
-  dcterms:description "A measurement process that uses oxygen Gain/Loss measurement to determine Local Oxygen Transport Resistance, Limiting Current Density, and Local Gas Transport Resistance using Fuel Cell Test Station and Gas Humidification Unit and generating Experiment Dataset and Local Oxygen Transport Resistance Dataset."@en ;
+  dcterms:description "A measurement process that compares oxygen-side operating states under defined gas-side, thermal, humidity, and pressure conditions to quantify oxygen-transport-related performance differences."@en ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
+  prov:used h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -246,11 +249,13 @@ h2kg:O2N2SwitchingMeasurement
   a h2kg:Measurement ;
   skos:prefLabel "O2–N2 Switching Measurement"@en ;
   h2kg:hasOutputData h2kg:ExperimentDataset ;
-  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidity, h2kg:GasComposition, h2kg:CellPressure, h2kg:CatalystLoading, h2kg:IonomerMassFraction, h2kg:IonomerToCarbonRatio, h2kg:RelativeHumidityOperation, h2kg:SolventType ;
+  h2kg:hasParameter h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:CellPressure, h2kg:OperatingTemperature, h2kg:RelativeHumidityOperation ;
   h2kg:measures h2kg:LocalOxygenTransportResistance ;
-  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:GasHumidificationUnit ;
+  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:GasHumidificationUnit, h2kg:FuelCellTestCell ;
   skos:altLabel "O2–N2 switching"@en ;
-  dcterms:description "A measurement process that uses O2–N2 switching measurement to determine Local Oxygen Transport Resistance using Fuel Cell Test Station and Gas Humidification Unit and generating Experiment Dataset."@en ;
+  dcterms:description "A measurement process that switches between oxygen and nitrogen gas-side conditions under defined operating settings to quantify oxygen-transport-related response in the fuel-cell system."@en ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
+  prov:used h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -270,12 +275,13 @@ h2kg:CurrentInterruptHFRMeasurement
   a h2kg:Measurement ;
   skos:prefLabel "Current-Interrupt HFR Measurement"@en ;
   h2kg:hasOutputData h2kg:ExperimentDataset ;
-  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidity, h2kg:CellPressure, h2kg:CurrentDensity, h2kg:CatalystLoading, h2kg:IonomerMassFraction, h2kg:IonomerToCarbonRatio, h2kg:RelativeHumidityOperation, h2kg:SolventType, h2kg:Frequency, h2kg:FrequencyRange ;
+  h2kg:hasParameter h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:CellPressure, h2kg:CurrentDensity, h2kg:Frequency, h2kg:FrequencyRange, h2kg:OperatingTemperature, h2kg:RelativeHumidityOperation ;
   h2kg:measures h2kg:OhmicResistance, h2kg:HighFrequencyResistance ;
-  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:MilliOhmmeter ;
+  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:MilliOhmmeter, h2kg:FuelCellTestCell ;
   skos:altLabel "current interrupt"@en, "HFR measurement"@en, "high frequency resistance (HFR) measurement"@en ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CathodeCatalystLayer ;
-  dcterms:description "A measurement process that uses Current-Interrupt HFR measurement to determine Ohmic Resistance and High Frequency Resistance using Fuel Cell Test Station and Milli Ohmmeter and generating Experiment Dataset."@en ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
+  dcterms:description "A current-interrupt high-frequency-resistance measurement performed under defined gas-side, thermal, humidity, pressure, and operating-current conditions to determine ohmic response of the fuel-cell system."@en ;
+  prov:used h2kg:MEAAssembly ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -455,24 +461,12 @@ h2kg:isPartOf
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
-h2kg:MEAPolarization
-  a h2kg:Measurement ;
-  skos:prefLabel "MEA Polarization"@en ;
-  h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:PolarizationCurveDataset, h2kg:FuelCellPolarizationDataset ;
-  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidity, h2kg:CellPressure, h2kg:CatalystLoading, h2kg:Temperature, h2kg:RelativeHumidityOperation, h2kg:CarrierGasFlow, h2kg:IonomerMassFraction, h2kg:IonomerToCarbonRatio, h2kg:SolventType, h2kg:CathodeStoichiometricRatio, h2kg:AnodeStoichiometricRatio, h2kg:BinderMassFraction, h2kg:BinderType, h2kg:GasComposition, h2kg:MassFlowRate, h2kg:ElectrolyteConcentration, h2kg:MethanolConcentration, h2kg:LiquidFlowRate, h2kg:ConditioningTime, h2kg:CellActiveArea, h2kg:AlcoholMassFractionInSolventMixture, h2kg:WaterMassFractionInSolventMixture, h2kg:CellVoltage, h2kg:CurrentDensity, h2kg:SolutionConductivity, h2kg:GlucoseConcentration, h2kg:KOHConcentration, h2kg:PolarizationPointDuration, h2kg:AnodeCatalystLoading, h2kg:CathodeCatalystLoading, h2kg:HumidifierTemperature, h2kg:OxygenPartialPressure, h2kg:GasFlowRate, h2kg:PtLoading, h2kg:GDLType ;
-  h2kg:measures h2kg:CurrentDensity, h2kg:PowerDensity, h2kg:MassActivity, h2kg:TafelSlope, h2kg:CellVoltage, h2kg:SpecificAreaActivityAt0p9V, h2kg:OpenCircuitVoltage, h2kg:PeakPowerDensity, h2kg:PowerDensityIncreasePercent, h2kg:MaximumCurrentDensity, h2kg:OhmicResistance, h2kg:PtUtilization, h2kg:PtMassSpecificCurrent, h2kg:PtMassSpecificPeakPowerDensity, h2kg:SemiEmpiricalParameterA, h2kg:TotalInternalResistance, h2kg:Overpotential, h2kg:FuelCellPolarizationDataset, h2kg:MassTransportResistance ;
-  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:ElectricLoad, electrochemistry:electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6, h2kg:FuelCellTestCell, h2kg:GasHumidificationUnit, h2kg:MassFlowController, h2kg:ElectrochemicalWorkstation, h2kg:DigitalMultimeter ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CathodeCatalystLayer, pemfc:EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1, h2kg:AnionExchangeMembrane, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
-  h2kg:referenceElectrode electrochemistry:electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24 ;
-  dcterms:description "A measurement process that records membrane electrode assembly polarization behavior to determine current density, power density, mass activity, and related electrochemical performance properties under controlled operating conditions."@en ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
-  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
-
 h2kg:MassFlowController
   a h2kg:Instrument ;
   skos:prefLabel "Mass Flow Controller"@en ;
   skos:altLabel "MFC"@en, "flow controller"@en, "gas flow controllers"@en ;
   dcterms:description "An instrument corresponding to a mass flow controller and used in MEAPolarization, Spray Coating, and Fuel Cell Test Station."@en ;
+  h2kg:isPartOf h2kg:FuelCellTestStation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -731,13 +725,14 @@ h2kg:ElectrochemicalImpedanceSpectroscopyPotentiostatic
   a h2kg:Measurement ;
   skos:prefLabel "Electrochemical Impedance Spectroscopy Potentiostatic"@en ;
   h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:ImpedanceDataset, h2kg:EISNyquistDataset ;
-  h2kg:hasParameter h2kg:FrequencyRange, h2kg:ACAmplitude, h2kg:BiasPotential, h2kg:ReferenceScale, h2kg:ElectrolyteType, h2kg:ElectrolyteConcentration, h2kg:Temperature, h2kg:RelativeHumidityOperation, h2kg:CatalystLoading, h2kg:IonomerMassFraction, h2kg:IonomerToCarbonRatio, h2kg:OperatingTemperature, h2kg:SolventType, h2kg:EISFrequencyRange, h2kg:EISPerturbationAmplitude, h2kg:Frequency, h2kg:GasComposition, h2kg:CellVoltage, h2kg:ConditioningTime, h2kg:EISMinFrequency, h2kg:EISMaxFrequency, h2kg:CurrentDensity, h2kg:RelativeHumidity, h2kg:CellPressure, h2kg:OperatingVoltage, h2kg:CarrierGasFlow, h2kg:KOHConcentration, h2kg:GeometricArea, h2kg:GasFlowRate, h2kg:MembraneThickness, h2kg:RotationRate, h2kg:TestDuration ;
+  h2kg:hasParameter h2kg:ACAmplitude, h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio, h2kg:BiasPotential, h2kg:CellPressure, h2kg:EISFrequencyRange, h2kg:EISMaxFrequency, h2kg:EISMinFrequency, h2kg:EISPerturbationAmplitude, h2kg:OperatingTemperature, h2kg:OperatingVoltage, h2kg:RelativeHumidityOperation, h2kg:TestDuration ;
   h2kg:measures h2kg:ChargeTransferResistance, h2kg:DoubleLayerCapacitance, h2kg:OhmicResistance, h2kg:WarburgCoefficient, h2kg:ProtonicCatalystLayerResistance, h2kg:ProtonicCatalystLayerResistivity, h2kg:CPEAdmittanceY0, h2kg:CPEExponentN, h2kg:IntermediateRelaxationResistanceR0, h2kg:InductanceL, h2kg:AnodeReactionResistance, h2kg:CoverageRelaxationRateConstant, h2kg:ImpedanceModulusSlopeK, h2kg:WarburgImpedance, h2kg:PolarizationResistance, h2kg:IonicResistance, h2kg:RiOverCdSqrt, h2kg:PseudoDoubleLayerCapacitance, h2kg:ChargeTransferPlusMassTransportResistance, h2kg:EffectiveIonicConductivity, h2kg:SurfaceFilmResistance, h2kg:MembraneBulkResistance, h2kg:TotalInternalResistance, h2kg:HighFrequencyResistance, h2kg:IonomerPatchSurfaceCoverage, h2kg:MassTransportResistance ;
   h2kg:usesInstrument h2kg:ElectrochemicalWorkstation, electrochemistry:electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6, h2kg:SegmentedCellSystem, h2kg:FuelCellTestStation, h2kg:Solartron1260ImpedanceAnalyzer, h2kg:RotatingDiskElectrodeSystem ;
   skos:altLabel "EIS"@en, "impedance spectroscopy"@en, "electrochemical impedance spectroscopy"@en ;
   h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CathodeCatalystLayer, h2kg:PotassiumChlorideElectrolyte, h2kg:PlatinumCoatedGlassSlide, h2kg:PDLAgNWCompositeInk ;
   h2kg:referenceElectrode h2kg:DynamicHydrogenElectrode, h2kg:AgAgCl, electrochemistry:electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24, h2kg:ReferenceElectrodeMercuryMercuryOxide ;
-  dcterms:description "A measurement process that uses electrochemical impedance spectroscopy potentiostatic to determine Charge Transfer Resistance, Double Layer Capacitance, and Ohmic Resistance using Electrochemical Workstation, Potentiostat, and Segmented Cell System and generating Experiment Dataset, Impedance Dataset, and EIS Nyquist Dataset."@en ;
+  dcterms:description "A potentiostatic electrochemical impedance spectroscopy measurement performed under defined gas-side, thermal, humidity, pressure, and potential-control conditions to generate impedance datasets for subsequent analysis."@en ;
+  h2kg:hasSubProcess h2kg:EquivalentCircuitFitting ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -751,8 +746,8 @@ h2kg:FuelCellTestStation
   a h2kg:Instrument ;
   skos:prefLabel "Fuel Cell Test Station"@en ;
   skos:altLabel "single-cell test station"@en, "Scribner 850e Fuel Cell Test System"@en, "single-cell test system"@en ;
-  h2kg:usesInstrument h2kg:GasHumidificationUnit, h2kg:MassFlowController, h2kg:Cryostat ;
-  dcterms:description "An instrument corresponding to a fuel cell test station and used in Oxygen Gain/Loss Measurement, O2–N2 Switching Measurement, and Current-Interrupt HFR Measurement."@en ;
+  dcterms:description "An integrated fuel-cell test station that contains or coordinates the test cell, gas humidification, flow control, thermal control, and electrical load during single-cell operation."@en ;
+  h2kg:hasPart h2kg:FuelCellTestCell, h2kg:GasHumidificationUnit, h2kg:MassFlowController, h2kg:Cryostat, h2kg:ElectricLoad ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -917,27 +912,30 @@ h2kg:ElectrochemicalImpedanceSpectroscopyGalvanostatic
   a h2kg:Measurement ;
   skos:prefLabel "Electrochemical Impedance Spectroscopy Galvanostatic"@en ;
   h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:ImpedanceDataset, h2kg:EISNyquistDataset ;
-  h2kg:hasParameter h2kg:FrequencyRange, h2kg:ACAmplitude, h2kg:BiasCurrent, h2kg:ReferenceScale, h2kg:ElectrolyteType, h2kg:ElectrolyteConcentration, h2kg:Temperature, h2kg:CatalystLoading, h2kg:CatalystLayerThickness, h2kg:GasDiffusionLayerThickness, h2kg:IonomerFilmThickness, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio, h2kg:RelativeHumidity, h2kg:CellPressure, h2kg:OperatingTemperature, h2kg:SegmentCount, h2kg:SegmentActiveArea, h2kg:EISPerturbationAmplitude, h2kg:EISFrequencyRange, h2kg:CurrentDensity, h2kg:ReferenceCurrentDensity, h2kg:EISMinFrequency, h2kg:EISMaxFrequency, h2kg:Frequency, h2kg:GasComposition, h2kg:BiasPotential, h2kg:MethanolConcentration, h2kg:LiquidFlowRate, h2kg:GasVolumetricFlowRate, h2kg:ReactionAreaPositionInCatalystLayer, h2kg:RelativeHumidityOperation, h2kg:HumidifierTemperature ;
+  h2kg:hasParameter h2kg:ACAmplitude, h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio, h2kg:BiasCurrent, h2kg:BiasPotential, h2kg:CellPressure, h2kg:EISFrequencyRange, h2kg:EISMaxFrequency, h2kg:EISMinFrequency, h2kg:EISPerturbationAmplitude, h2kg:HumidifierTemperature, h2kg:OperatingTemperature, h2kg:ReferenceCurrentDensity, h2kg:RelativeHumidityOperation, h2kg:SegmentActiveArea, h2kg:SegmentCount ;
   h2kg:measures h2kg:ChargeTransferResistance, h2kg:DoubleLayerCapacitance, h2kg:OhmicResistance, h2kg:WarburgCoefficient, h2kg:MassTransportResistance, h2kg:CPEAdmittanceY0, h2kg:ProtonicCatalystLayerResistance, h2kg:IonicResistance, h2kg:CPEExponentN, h2kg:HighFrequencyResistance ;
   h2kg:usesInstrument h2kg:ElectrochemicalWorkstation, electrochemistry:electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6, h2kg:FuelCellTestStation, h2kg:SegmentedCellSystem ;
   skos:altLabel "impedance spectra"@en, "EIS"@en, "galvanostatic impedance spectroscopy"@en ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CathodeCatalystLayer, h2kg:MEAAssembly ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
   h2kg:referenceElectrode h2kg:DynamicHydrogenElectrode ;
-  dcterms:description "A measurement process that uses electrochemical impedance spectroscopy galvanostatic to determine Charge Transfer Resistance, Double Layer Capacitance, and Ohmic Resistance using Electrochemical Workstation, Potentiostat, and Fuel Cell Test Station and generating Experiment Dataset, Impedance Dataset, and EIS Nyquist Dataset."@en ;
+  dcterms:description "A galvanostatic electrochemical impedance spectroscopy measurement performed under defined gas-side, thermal, humidity, and pressure operating conditions to generate impedance datasets for subsequent equivalent-circuit or transport analysis."@en ;
+  prov:used h2kg:MEAAssembly ;
+  h2kg:hasSubProcess h2kg:EquivalentCircuitFitting ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
 h2kg:CyclicVoltammetry
   a h2kg:Measurement ;
   skos:prefLabel "Cyclic Voltammetry"@en ;
-  h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:ECSADataset, h2kg:CyclicVoltammogramDataset, h2kg:PolarizationCurveDataset ;
-  h2kg:hasParameter h2kg:ScanRate, h2kg:PotentialWindow, h2kg:ReferenceScale, h2kg:ElectrolyteType, h2kg:ElectrolyteConcentration, h2kg:Temperature, h2kg:LowerPotentialLimit, h2kg:UpperPotentialLimit, h2kg:RelativeHumidityOperation, h2kg:CarrierGasFlow, h2kg:OperatingTemperature, h2kg:CVScanRateMeasurement, h2kg:PtHydrogenAdsorptionSpecificCharge, h2kg:NumberOfCycles, h2kg:CellPressure, h2kg:GasComposition, h2kg:CellVoltage, h2kg:RelativeHumidity, h2kg:CatalystLoading, h2kg:CVPotentialWindow, h2kg:MassFlowRate, h2kg:KOHConcentration, h2kg:DwellTime, h2kg:EthanolToWaterVolumeRatio, h2kg:PtLoading, h2kg:GasVolumetricFlowRate, h2kg:ReactionAreaPositionInCatalystLayer, h2kg:GasFlowRate, h2kg:MethanolConcentration, h2kg:RotationRate, h2kg:HydrogenVolumetricFlowRate, h2kg:NitrogenVolumetricFlowRate, h2kg:CVCycleCount, h2kg:CVScanRateCleaning, h2kg:ConditioningTime ;
+  h2kg:hasOutputData h2kg:ExperimentDataset, h2kg:CyclicVoltammogramDataset ;
+  h2kg:hasParameter h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:CellPressure, h2kg:ConditioningTime, h2kg:CVCycleCount, h2kg:CVPotentialWindow, h2kg:CVScanRateCleaning, h2kg:CVScanRateMeasurement, h2kg:DwellTime, h2kg:ElectrolyteConcentration, h2kg:ElectrolyteType, h2kg:LowerPotentialLimit, h2kg:NumberOfCycles, h2kg:OperatingTemperature, h2kg:ReferenceScale, h2kg:RelativeHumidityOperation, h2kg:RotationRate, h2kg:UpperPotentialLimit ;
   h2kg:measures h2kg:DoubleLayerCapacitance, h2kg:ElectrochemicallyActiveSurfaceArea, h2kg:OnsetPotential, h2kg:PtUtilization, h2kg:DoubleLayerCapacitiveCurrentDensity, h2kg:RoughnessFactor, h2kg:GravimetricSpecificCapacitance, h2kg:ChargeStorageCapacity, h2kg:H2DesorptionPeakIntegralCurrentDensity, h2kg:ReductionPotential, h2kg:CurrentDensity, h2kg:SurfaceConcentration, h2kg:DoubleLayerCapacitanceRatio, h2kg:ReductionPeakCurrent, h2kg:ReductionPeakPotential, h2kg:PeakPotential, h2kg:PeakToPeakSeparation ;
   h2kg:usesInstrument h2kg:ElectrochemicalWorkstation, electrochemistry:electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6, h2kg:FuelCellTestStation, h2kg:FuelCellTestCell, h2kg:GlassyCarbonDiskElectrode, h2kg:GDEHalfCellSetup, h2kg:GraphiteRodCounterElectrode, h2kg:MercurySulfateReferenceElectrode, h2kg:PlatinumWireCounterElectrode, h2kg:RotatingDiskElectrodeSystem, h2kg:SCE ;
   skos:altLabel "CV"@en, "cyclic voltammograms"@en, "cyclic voltammogram"@en ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, electrochemistry:electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56, h2kg:SulfuricAcid, h2kg:CathodeGDE, h2kg:Pt111Surface, h2kg:PotassiumChlorideElectrolyte, h2kg:PlatinumCoatedGlassSlide, h2kg:PDLAgNWCompositeInk, h2kg:Anthraquinone2SulfonicAcid, h2kg:DihydroxybenzeneDisulfonicAcid, h2kg:PrintedGoldElectrode, h2kg:LaNiO3PerovskiteOxide, h2kg:PotassiumHydroxide, holy:CatalystLayer, h2kg:Hydrogen, h2kg:Nitrogen, h2kg:CathodeCatalystLayer ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
   h2kg:referenceElectrode h2kg:DynamicHydrogenElectrode, h2kg:SCE, h2kg:ReferenceElectrodeMercurousSulfate, electrochemistry:electrochemistry_80263f65_7f6c_477a_8818_a85080f74c24, h2kg:AgAgCl, h2kg:MercuryMercuryOxideReferenceElectrode, h2kg:ReferenceElectrodeMercuryMercuryOxide, h2kg:SHE ;
-  dcterms:description "A measurement process that uses cyclic voltammetry to determine Double Layer Capacitance, Electrochemically Active Surface Area, and Onset Potential using Electrochemical Workstation, Potentiostat, and Fuel Cell Test Station and generating Experiment Dataset, ECSA Dataset, and Cyclic Voltammogram Dataset."@en ;
+  dcterms:description "A measurement process that uses cyclic voltammetry under defined electrochemical, thermal, humidity, pressure, and gas-side operating conditions to generate raw voltammogram data and derive electrochemical response properties."@en ;
+  prov:used h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air, h2kg:Nitrogen ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1006,7 +1004,6 @@ h2kg:CatalystInk
   a h2kg:Matter ;
   skos:prefLabel "Catalyst Ink"@en ;
   skos:altLabel "HC catalyst ink"@en, "PFSA reference ink"@en, "catalyst solution"@en ;
-  h2kg:hasParameter h2kg:WaterMassFractionInSolventMixture, h2kg:AlcoholMassFractionInSolventMixture ;
   dcterms:description "Catalyst-layer ink/slurry composed of carbon + PFSA dispersion + solvents, prior to coating."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
@@ -1127,9 +1124,9 @@ h2kg:MEAAssembly
   a h2kg:Matter ;
   skos:prefLabel "MEA Assembly"@en ;
   skos:altLabel "MEA"@en ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, pemfc:EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1 ;
-  h2kg:hasOutputMaterial h2kg:AqueousOrganicFlowBattery ;
   dcterms:description "A material entity corresponding to a membrane electrode assembly and used as an input in electrochemical impedance spectroscopy, fuel-cell polarization measurement, and related electrochemical testing."@en ;
+  h2kg:hasPart h2kg:CatalystCoatedMembrane, h2kg:GasDiffusionLayer ;
+  h2kg:isPartOf h2kg:FuelCellTestCell ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1275,7 +1272,6 @@ h2kg:HotPress
   a h2kg:Instrument ;
   skos:prefLabel "Hot Press"@en ;
   skos:altLabel "flat-press"@en, "flat hot-press"@en, "hot-press machine"@en ;
-  h2kg:hasParameter h2kg:HotPressPressure, h2kg:HotPressTemperature, h2kg:HotPressTime ;
   dcterms:description "An instrument corresponding to a hot press and used in MEAAssembly Process, Hot Pressing, and Decal Transfer."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
@@ -1475,37 +1471,43 @@ h2kg:LimitingCurrentMeasurement
   skos:prefLabel "Limiting Current Measurement"@en ;
   rdfs:label "Limiting Current Measurement"@en ;
   skos:altLabel "limiting current measurements"@en, "limiting current"@en, "oxygen limiting current"@en ;
-  dcterms:description "Limiting current protocol using diluted O2 and voltage sweeps to derive O2 transport resistances."@en ;
+  dcterms:description "A limiting-current measurement performed under defined gas-side, thermal, humidity, pressure, and oxygen-transport operating conditions to quantify reactant transport constraints in the fuel-cell system."@en ;
   h2kg:measures h2kg:LimitingCurrentDensity, h2kg:LocalOxygenTransportResistance, h2kg:MassTransportResistance, h2kg:LocalGasTransportResistance, h2kg:KnudsenOxygenTransportResistanceComponent, h2kg:IonomerOxygenTransportResistanceComponent, h2kg:TotalGasDiffusionResistance, h2kg:PressureDependentGasDiffusionResistance, h2kg:PressureIndependentGasDiffusionResistance ;
-  h2kg:hasParameter h2kg:OxygenVolumePercent, h2kg:CellPressure, h2kg:Temperature, h2kg:RelativeHumidityOperation, h2kg:CarrierGasFlow, h2kg:LowerPotentialLimit, h2kg:UpperPotentialLimit, h2kg:GasComposition, h2kg:RelativeHumidity, h2kg:OperatingTemperature, h2kg:BiasPotential, h2kg:CatalystLoading, h2kg:IonomerToCarbonRatio, h2kg:IonomerVolumeFraction, h2kg:IonExchangeCapacity, h2kg:IonomerMassFraction, h2kg:SolventType, h2kg:OxygenVolumeFraction, h2kg:ScanRate, h2kg:PotentialWindow, h2kg:AlcoholMassFractionInSolventMixture, h2kg:WaterMassFractionInSolventMixture, h2kg:IonomerFilmThickness, h2kg:ElectrolyteConcentration, h2kg:CellVoltage, h2kg:CellActiveArea, h2kg:OxygenPartialPressure, h2kg:GasFlowRate ;
+  h2kg:hasParameter h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:BiasPotential, h2kg:CellActiveArea, h2kg:CellPressure, h2kg:LowerPotentialLimit, h2kg:OperatingTemperature, h2kg:OxygenPartialPressure, h2kg:OxygenVolumeFraction, h2kg:OxygenVolumePercent, h2kg:PotentialWindow, h2kg:RelativeHumidityOperation, h2kg:ScanRate, h2kg:UpperPotentialLimit ;
   h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:ElectricLoad, electrochemistry:electrochemistry_a9fc3f77_e48e_4bce_b118_044d608722f6, h2kg:FuelCellTestCell, h2kg:GasHumidificationUnit, h2kg:InterdigitatedElectrodeArray, h2kg:MassFlowController, h2kg:ElectrochemicalWorkstation ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CathodeCatalystLayer, pemfc:EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1, holy:CatalystLayer ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air ;
   h2kg:hasOutputData h2kg:LimitingCurrentDataset, h2kg:LocalOxygenTransportResistanceDataset ;
   h2kg:referenceElectrode h2kg:DynamicHydrogenElectrode ;
+  prov:used h2kg:MEAAssembly, h2kg:Hydrogen, h2kg:Oxygen, h2kg:Air ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
 h2kg:AcceleratedStressTestVoltageCycling
-  a h2kg:Manufacturing ;
+  a h2kg:Process, h2kg:Measurement ;
   skos:prefLabel "Accelerated Stress Test Voltage Cycling"@en ;
   rdfs:label "Accelerated Stress Test Voltage Cycling"@en ;
   skos:altLabel "AST"@en, "voltage cycling"@en, "accelerated stress testing"@en ;
-  dcterms:description "Accelerated stress test: voltage cycling between 0.6–0.95 V for 30,000 cycles at controlled RH_AST."@en ;
-  h2kg:hasParameter h2kg:Temperature, h2kg:RelativeHumidityAST, h2kg:LowerPotentialLimit, h2kg:UpperPotentialLimit, h2kg:DwellTime, h2kg:NumberOfCycles, h2kg:OperatingTemperature, h2kg:ScanRate, h2kg:PotentialWindow, h2kg:PotentialRampTime, h2kg:RelativeHumidity ;
-  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:FuelCellTestCell ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d ;
+  dcterms:description "Operational accelerated stress test process that cycles cell voltage between defined limits in order to assess fuel-cell durability under controlled operating conditions."@en ;
+  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidityAST, h2kg:LowerPotentialLimit, h2kg:UpperPotentialLimit, h2kg:DwellTime, h2kg:NumberOfCycles, h2kg:ScanRate, h2kg:PotentialWindow, h2kg:PotentialRampTime, h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio, h2kg:CellPressure, h2kg:CompressionPressure ;
+  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:FuelCellTestCell, h2kg:ElectricLoad ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
   h2kg:measures h2kg:HalfWavePotentialShiftRelativeToNafion ;
+  prov:used h2kg:MEAAssembly ;
+  h2kg:hasOutputData h2kg:ASTDataset ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
 h2kg:BreakInProcedure
-  a h2kg:Manufacturing ;
+  a h2kg:Process ;
   skos:prefLabel "Break In Procedure"@en ;
   rdfs:label "Break In Procedure"@en ;
   skos:altLabel "break-in"@en, "activation procedure"@en, "conditioning procedure"@en ;
-  dcterms:description "MEA break-in/conditioning procedure prior to characterization (current hold + voltage steps)."@en ;
-  h2kg:hasParameter h2kg:Temperature, h2kg:RelativeHumidityOperation, h2kg:CurrentDensity, h2kg:NumberOfCycles, h2kg:ConditioningTime, h2kg:CellVoltage, h2kg:GasVolumetricFlowRate, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio ;
-  h2kg:hasInputMaterial pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d, h2kg:CatalystCoatedMembrane ;
+  dcterms:description "Operational conditioning process used to activate and stabilize a membrane electrode assembly before formal electrochemical characterization."@en ;
+  h2kg:hasParameter h2kg:OperatingTemperature, h2kg:RelativeHumidityOperation, h2kg:SetCurrentDensity, h2kg:OperatingVoltage, h2kg:NumberOfCycles, h2kg:ConditioningTime, h2kg:AnodeGasComposition, h2kg:CathodeGasComposition, h2kg:AnodeGasVolumetricFlowRate, h2kg:CathodeGasVolumetricFlowRate, h2kg:AnodeStoichiometricRatio, h2kg:CathodeStoichiometricRatio, h2kg:CellPressure, h2kg:CompressionPressure ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
+  prov:used h2kg:MEAAssembly ;
+  h2kg:usesInstrument h2kg:FuelCellTestStation, h2kg:FuelCellTestCell, h2kg:ElectricLoad ;
+  h2kg:hasOutputData h2kg:BreakInDataset ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1576,6 +1578,16 @@ h2kg:CellActiveArea
   skos:altLabel "active area"@en, "geometric area"@en, "MEA active area"@en ;
   dcterms:description "A parameter specifying cell active area used to characterize MEAPolarization, MEAAssembly Process, and Limiting Current Measurement."@en ;
   h2kg:hasQuantityValue <_CellActiveArea_QV>, <_CellActiveArea_QV_2> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:MembraneThickness
+  a h2kg:Parameter, h2kg:Property ;
+  skos:prefLabel "Membrane Thickness"@en ;
+  rdfs:label "Membrane Thickness"@en ;
+  skos:altLabel "nominal thickness"@en, "membrane height"@en, "state-of-the-art membrane"@en ;
+  dcterms:description "A thickness value characterizing a proton exchange membrane, used either as a design/specification parameter or as a measured property in membrane and layer-thickness characterization."@en ;
+  h2kg:hasQuantityValue <_MembraneThickness_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1673,7 +1685,6 @@ h2kg:SolventMixture
   rdfs:label "Solvent Mixture"@en ;
   skos:altLabel "organic solvent mixture"@en, "water/isopropyl alcohol mixture"@en, "mixed solvent"@en ;
   dcterms:description "Solvent mixture used in catalyst ink preparation."@en ;
-  h2kg:hasParameter h2kg:WaterMassFractionInSolventMixture, h2kg:AlcoholMassFractionInSolventMixture ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1683,6 +1694,7 @@ h2kg:ElectricLoad
   rdfs:label "Electric Load"@en ;
   skos:altLabel "PLI1206ZVSV5 electric load"@en, "Höcherl and Hackl PLI1206ZVSV5 electric load"@en, "electronic load"@en ;
   dcterms:description "Electronic load used to control current during fuel cell tests."@en ;
+  h2kg:isPartOf h2kg:FuelCellTestStation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1692,6 +1704,7 @@ h2kg:Cryostat
   rdfs:label "Cryostat"@en ;
   skos:altLabel "Lauda Eco Silver RE1050 cryostat"@en ;
   dcterms:description "Cryostat/temperature control unit for fuel cell test station."@en ;
+  h2kg:isPartOf h2kg:FuelCellTestStation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1700,7 +1713,9 @@ h2kg:FuelCellTestCell
   skos:prefLabel "Fuel Cell Test Cell"@en ;
   rdfs:label "Fuel Cell Test Cell"@en ;
   skos:altLabel "Baltic ISE qCf Liquid Cooling high amp zero gradient test cell"@en, "Baltic FuelCells quickConnect® test cell 'high amp'"@en, "Baltic ISE qCf test cell"@en ;
-  dcterms:description "Single-cell hardware used for MEA tests."@en ;
+  dcterms:description "Single-cell hardware that houses a membrane electrode assembly together with sealing and flow-distribution components during electrochemical testing."@en ;
+  h2kg:hasPart h2kg:MEAAssembly, h2kg:Gasket, h2kg:GraphiteBipolarPlate, h2kg:FlowField ;
+  h2kg:isPartOf h2kg:FuelCellTestStation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -1737,19 +1752,6 @@ h2kg:PolarizationCurveDataset
   rdfs:label "Polarization Curve Dataset"@en ;
   skos:altLabel "I-V curve dataset"@en, "polarization curve data"@en, "IV curve data"@en ;
   dcterms:description "Polarization curves (U-I / I-V) measured at different RH and degradation states."@en ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
-  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
-
-h2kg:ScreenPrinting
-  a h2kg:Manufacturing ;
-  skos:prefLabel "Screen Printing"@en ;
-  rdfs:label "Screen Printing"@en ;
-  skos:altLabel "screen print"@en, "sieve printing"@en, "screen printing coating"@en ;
-  dcterms:description "Manufacturing step: screen printing catalyst ink onto decal substrate."@en ;
-  h2kg:hasInputMaterial h2kg:CatalystInk, pemfc:EMMO_143d21b5_d044_4af3_a9f9_22928f2516c1 ;
-  h2kg:hasOutputMaterial h2kg:CathodeCatalystLayer, electrochemistry:electrochemistry_31f4498b_aeb1_47b9_8bb8_8b0f55ed6a56, h2kg:CatalystCoatedMembrane, holy:CatalystLayer, h2kg:TitaniumOxideLayer ;
-  h2kg:hasParameter h2kg:CatalystLoading, h2kg:PrintSpeed, h2kg:PrintPressure ;
-  h2kg:usesInstrument h2kg:ScreenPrintingMachine ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -3055,6 +3057,20 @@ h2kg:GasAdsorptionAnalyzer
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
+h2kg:DecalTransfer
+  a h2kg:Manufacturing ;
+  skos:prefLabel "Decal Transfer"@en ;
+  rdfs:label "Decal Transfer"@en ;
+  skos:altLabel "decal transfer method"@en, "transfer via hot-pressing"@en, "transfer through hot press"@en ;
+  dcterms:description "Manufacturing step that transfers a preformed catalyst-layer decal from a temporary substrate onto a membrane to form a catalyst-coated membrane."@en ;
+  h2kg:usesInstrument h2kg:HotPress, h2kg:RollPressMachine ;
+  h2kg:hasParameter h2kg:HotPressTemperature, h2kg:HotPressPressure, h2kg:HotPressTime, h2kg:RollingSpeed, h2kg:AnnealingTemperature, h2kg:SolventEvaporationRate ;
+  h2kg:hasOutputMaterial h2kg:CatalystCoatedMembrane ;
+  h2kg:hasInputMaterial h2kg:CathodeCatalystLayer, h2kg:AnodeCatalystLayer, h2kg:ProtonExchangeMembrane, h2kg:Nafion211Membrane, h2kg:Nafion212Membrane, holy:CatalystLayer, h2kg:PTFEPolymer ;
+  prov:used h2kg:CathodeCatalystLayer, h2kg:AnodeCatalystLayer, h2kg:ProtonExchangeMembrane, h2kg:Nafion211Membrane, h2kg:Nafion212Membrane, holy:CatalystLayer, h2kg:PTFEPolymer ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
 h2kg:NPropanol
   a h2kg:Matter ;
   skos:prefLabel "N Propanol"@en ;
@@ -3773,8 +3789,6 @@ h2kg:MercuryPorosimeter
   rdfs:label "Mercury Porosimeter"@en ;
   skos:altLabel "Quantachrome mercury porosimeter"@en, "mercury intrusion porosimeter"@en, "Pascal 240 porosimeter (Thermo Electron – Porotec)"@en ;
   dcterms:description "Instrument for mercury intrusion porosimetry"@en ;
-  h2kg:measures h2kg:PoreSizeDistributionPeakDiameter ;
-  h2kg:usesInstrument h2kg:MercuryIntrusionPorosimetryMeasurement3 ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -8509,7 +8523,6 @@ h2kg:ArealWaterStorageSpace
   skos:altLabel "water storage space"@en, "water storage capacity"@en ;
   dcterms:description "A property denoting areal water storage space and determined in Water Storage Space Calculation."@en ;
   h2kg:hasQuantityValue <_ArealWaterStorageSpace_QV> ;
-  h2kg:hasParameter h2kg:MembraneThickness, h2kg:FixedChargeConcentrationInDryIonomer, h2kg:SaturatedIonomerWaterContentLambda, h2kg:InitialMembraneWaterContentLambda, h2kg:CatalystLayerThickness, h2kg:CatalystLayerPorosity, h2kg:IonomerVolumeFraction, h2kg:MicroporousLayerThickness, h2kg:MicroporousLayerPorosity ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -9157,7 +9170,7 @@ h2kg:OperatingVoltage
   skos:prefLabel "Operating Voltage"@en ;
   rdfs:label "Operating Voltage"@en ;
   skos:altLabel "operating at 4.0 voltages (V)"@en, "measurement voltage"@en, "OV"@en ;
-  dcterms:description "A parameter specifying device operating voltage during optical measurement."@en ;
+  dcterms:description "A parameter specifying the set or controlled operating voltage applied during an electrochemical procedure or operational step."@en ;
   h2kg:hasQuantityValue <_OperatingVoltage_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
@@ -9784,9 +9797,11 @@ h2kg:CoatingWeightMeasurement
   skos:prefLabel "Coating Weight Measurement"@en ;
   rdfs:label "Coating Weight Measurement"@en ;
   skos:altLabel "catalyst coating weight"@en, "coating weight"@en ;
-  dcterms:description "Gravimetric measurement of catalyst coating mass/weight on CCM."@en ;
-  h2kg:measures h2kg:SampleMass ;
+  dcterms:description "Gravimetric measurement process that records coating mass data on a catalyst-coated membrane for downstream Pt-loading and specific-layer-weight calculations."@en ;
+  h2kg:measures h2kg:PtLoading, h2kg:SpecificLayerWeight ;
   h2kg:hasInputMaterial h2kg:CatalystCoatedMembrane ;
+  h2kg:usesInstrument h2kg:AnalyticalBalance ;
+  h2kg:hasSubProcess h2kg:CoatingWeightCalculation ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -12199,11 +12214,11 @@ h2kg:PorousAluminaCeramicCarrier
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
 h2kg:RheologyMeasurement2
-  a h2kg:Property ;
+  a h2kg:Measurement ;
   skos:prefLabel "Rheology Measurement 2"@en ;
   rdfs:label "Rheology Measurement 2"@en ;
-  skos:altLabel "Viscosity"@en ;
-  dcterms:description "A property denoting rheology measurement 2 and determined in Rheology Measurement."@en ;
+  skos:altLabel "secondary rheology run"@en ;
+  dcterms:description "A rheology measurement process used to determine viscosity under a defined shear-rate sweep and instrument configuration."@en ;
   h2kg:hasQuantityValue <_RheologyMeasurement2_QV> ;
   h2kg:measures h2kg:Viscosity ;
   h2kg:hasParameter h2kg:ShearRateSweepMin, h2kg:ShearRateSweepMax, h2kg:Temperature, h2kg:MeasurementGap, h2kg:PlateDiameter, h2kg:ShearMixingRestTime ;
@@ -15113,7 +15128,6 @@ h2kg:LigninGrapheneOxideInk
   rdfs:label "Lignin Graphene Oxide Ink"@en ;
   skos:altLabel "GO-lignin ink"@en, "lignin-GO ink"@en, "lignin-graphene oxide solution"@en ;
   dcterms:description "A material entity corresponding to a lignin graphene oxide ink and used as an input in Rheology Measurement and Direct Ink Writing."@en ;
-  h2kg:hasParameter h2kg:GrapheneOxideToLigninMassRatio, h2kg:SolidContentFraction ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -18798,6 +18812,7 @@ h2kg:GraphiteBipolarPlate
   skos:altLabel "graphite plates"@en, "flow field plates"@en ;
   dcterms:description "Graphite plates with flow fields forming single cell hardware."@en ;
   skos:broadMatch pemfc:EMMO_9d51634d_db42_4697_8dda_58e74a8df826, holy:BipolarPlate ;
+  h2kg:isPartOf h2kg:FuelCellTestCell ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
 
@@ -19282,5 +19297,264 @@ h2kg:appliesToProfile
   a owl:AnnotationProperty ;
   rdfs:label "appliesToProfile"@en ;
   dcterms:description "An annotation property stating which H2KG application profile or profiles explicitly include a term in their published module."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ProtonExchangeMembrane
+  a h2kg:Matter ;
+  skos:prefLabel "Proton Exchange Membrane"@en ;
+  rdfs:label "Proton Exchange Membrane"@en ;
+  dcterms:description "A material entity corresponding to a proton exchange membrane used in catalyst-coated membranes, membrane electrode assemblies, and single-cell fuel-cell testing."@en ;
+  skos:altLabel "PEM"@en ;
+  h2kg:isPartOf h2kg:CatalystCoatedMembrane ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:Gasket
+  a h2kg:Matter ;
+  skos:prefLabel "Gasket"@en ;
+  rdfs:label "Gasket"@en ;
+  dcterms:description "A material entity corresponding to a gasket used to seal and compress single-cell fuel-cell hardware during membrane electrode assembly testing."@en ;
+  skos:altLabel "sealing gasket"@en ;
+  h2kg:isPartOf h2kg:FuelCellTestCell ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:FlowField
+  a h2kg:Matter ;
+  skos:prefLabel "Flow Field"@en ;
+  rdfs:label "Flow Field"@en ;
+  dcterms:description "A material entity corresponding to a flow-field component that distributes reactant gases within single-cell fuel-cell hardware."@en ;
+  skos:altLabel "flow channel field"@en ;
+  h2kg:isPartOf h2kg:FuelCellTestCell ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:SetCurrentDensity
+  a h2kg:Parameter ;
+  skos:prefLabel "Set Current Density"@en ;
+  rdfs:label "Set Current Density"@en ;
+  dcterms:description "A parameter specifying the target or set current density imposed during an operational or conditioning procedure."@en ;
+  skos:altLabel "target current density"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:BreakInDataset
+  a h2kg:Data ;
+  skos:prefLabel "Break In Dataset"@en ;
+  rdfs:label "Break In Dataset"@en ;
+  dcterms:description "A dataset containing operational data generated during a fuel-cell break-in or conditioning procedure."@en ;
+  skos:altLabel "conditioning dataset"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ASTDataset
+  a h2kg:Data ;
+  skos:prefLabel "AST Dataset"@en ;
+  rdfs:label "AST Dataset"@en ;
+  dcterms:description "A dataset containing operational data generated during an accelerated stress test protocol."@en ;
+  skos:altLabel "accelerated stress test dataset"@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ScreenMeshCount
+  a h2kg:Parameter ;
+  skos:prefLabel "Screen Mesh Count"@en ;
+  rdfs:label "Screen Mesh Count"@en ;
+  dcterms:description "A parameter specifying the mesh count of a screen used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ScreenMeshThickness
+  a h2kg:Parameter ;
+  skos:prefLabel "Screen Mesh Thickness"@en ;
+  rdfs:label "Screen Mesh Thickness"@en ;
+  dcterms:description "A parameter specifying the mesh thickness of a screen used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ScreenTension
+  a h2kg:Parameter ;
+  skos:prefLabel "Screen Tension"@en ;
+  rdfs:label "Screen Tension"@en ;
+  dcterms:description "A parameter specifying the tension of a screen used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ScreenWireDiameter
+  a h2kg:Parameter ;
+  skos:prefLabel "Screen Wire Diameter"@en ;
+  rdfs:label "Screen Wire Diameter"@en ;
+  dcterms:description "A parameter specifying the wire diameter of a screen used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:SnapOffDistance
+  a h2kg:Parameter ;
+  skos:prefLabel "Snap Off Distance"@en ;
+  rdfs:label "Snap Off Distance"@en ;
+  dcterms:description "A parameter specifying the snap-off distance used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:SqueegeePressure
+  a h2kg:Parameter ;
+  skos:prefLabel "Squeegee Pressure"@en ;
+  rdfs:label "Squeegee Pressure"@en ;
+  dcterms:description "A parameter specifying the squeegee pressure used in screen printing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:EquivalentCircuitFitting
+  a h2kg:Process ;
+  skos:prefLabel "Equivalent Circuit Fitting"@en ;
+  rdfs:label "Equivalent Circuit Fitting"@en ;
+  dcterms:description "A post-processing analysis process that fits impedance data to an equivalent circuit model in order to extract derived electrochemical parameters."@en ;
+  skos:altLabel "equivalent circuit analysis"@en ;
+  h2kg:hasInputData h2kg:ImpedanceDataset ;
+  h2kg:isSubProcessOf h2kg:ElectrochemicalImpedanceSpectroscopyGalvanostatic, h2kg:ElectrochemicalImpedanceSpectroscopyPotentiostatic ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:PolarizationCurveAnalysis
+  a h2kg:Process ;
+  skos:prefLabel "Polarization Curve Analysis"@en ;
+  rdfs:label "Polarization Curve Analysis"@en ;
+  dcterms:description "A post-processing analysis process that analyzes raw polarization-curve data to derive summarized fuel-cell performance outputs."@en ;
+  skos:altLabel "fuel-cell polarization analysis"@en ;
+  h2kg:hasInputData h2kg:PolarizationCurveDataset ;
+  h2kg:hasOutputData h2kg:FuelCellPolarizationDataset ;
+  h2kg:isSubProcessOf h2kg:FuelCellPolarizationMeasurement ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:LayerThicknessAnalysis
+  a h2kg:Process ;
+  skos:prefLabel "Layer Thickness Analysis"@en ;
+  rdfs:label "Layer Thickness Analysis"@en ;
+  dcterms:description "A post-processing analysis process that derives membrane or catalyst-layer thickness values from raw thickness-characterization outputs."@en ;
+  skos:altLabel "thickness extraction"@en ;
+  h2kg:isSubProcessOf h2kg:CatalystLayerThicknessMeasurement ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:CoatingWeightCalculation
+  a h2kg:Process ;
+  skos:prefLabel "Coating Weight Calculation"@en ;
+  rdfs:label "Coating Weight Calculation"@en ;
+  dcterms:description "A post-processing analysis process that converts gravimetric coating measurements into derived coating-weight and Pt-loading results."@en ;
+  skos:altLabel "gravimetric coating analysis"@en ;
+  h2kg:isSubProcessOf h2kg:CoatingWeightMeasurement ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:NeutronTomographyMeasurement
+  a h2kg:Measurement ;
+  skos:prefLabel "Neutron Tomography Measurement"@en ;
+  rdfs:label "Neutron Tomography Measurement"@en ;
+  skos:altLabel "HR Neutron CT"@en, "operando neutron tomography"@en ;
+  dcterms:description "A measurement process that uses neutron tomography to characterize membrane-electrode assemblies and operando fuel-cell water dynamics while generating tomographic projection and reconstruction datasets and determining tortuosity and water-droplet descriptors."@en ;
+  h2kg:usesInstrument h2kg:NeutronTomographyInstrument ;
+  h2kg:hasInputMaterial h2kg:MEAAssembly ;
+  h2kg:hasOutputData h2kg:TomographicProjectionDataset, h2kg:TomographicReconstructionDataset, h2kg:ExperimentDataset ;
+  h2kg:hasParameter h2kg:PixelSize, h2kg:ExposureTime, h2kg:ProjectionNumber, h2kg:NeutronFlux, h2kg:SpatialResolution, h2kg:SampleDetectorDistance, h2kg:Temperature, h2kg:RelativeHumidity ;
+  h2kg:measures h2kg:TortuosityFactor, h2kg:AverageWaterDropletArea, h2kg:AverageWaterDropletCount ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:NeutronTomographyInstrument
+  a h2kg:Instrument ;
+  skos:prefLabel "Neutron Tomography Instrument"@en ;
+  rdfs:label "Neutron Tomography Instrument"@en ;
+  skos:altLabel "neutron tomography setup"@en ;
+  dcterms:description "An instrument configuration for neutron tomography that combines neutron imaging, projection acquisition, and tomographic reconstruction workflows for operando fuel-cell characterization."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:TomographicProjectionDataset
+  a h2kg:Data ;
+  skos:prefLabel "Tomographic Projection Dataset"@en ;
+  rdfs:label "Tomographic Projection Dataset"@en ;
+  skos:altLabel "projection dataset"@en, "raw tomography projections"@en ;
+  dcterms:description "A dataset containing raw tomographic projection images generated during neutron tomography and related tomography measurements before reconstruction and segmentation."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:TomographicReconstructionDataset
+  a h2kg:Data ;
+  skos:prefLabel "Tomographic Reconstruction Dataset"@en ;
+  rdfs:label "Tomographic Reconstruction Dataset"@en ;
+  skos:altLabel "reconstructed tomograph"@en, "3D tomographic reconstruction"@en ;
+  dcterms:description "A dataset containing reconstructed tomographic volumes produced from raw projection data and used for segmentation, droplet analysis, tortuosity analysis, and related post-processing."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:ProjectionNumber
+  a h2kg:Parameter ;
+  skos:prefLabel "Projection Number"@en ;
+  rdfs:label "Projection Number"@en ;
+  skos:altLabel "projection count"@en, "number of projections"@en ;
+  dcterms:description "A parameter specifying the number of projection images collected during a tomography measurement."@en ;
+  h2kg:hasQuantityValue <_ProjectionNumber_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:NeutronFlux
+  a h2kg:Parameter ;
+  skos:prefLabel "Neutron Flux"@en ;
+  rdfs:label "Neutron Flux"@en ;
+  skos:altLabel "incident neutron flux"@en ;
+  dcterms:description "A parameter specifying the incident neutron flux used during neutron tomography acquisition."@en ;
+  h2kg:hasQuantityValue <_NeutronFlux_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:SpatialResolution
+  a h2kg:Parameter ;
+  skos:prefLabel "Spatial Resolution"@en ;
+  rdfs:label "Spatial Resolution"@en ;
+  skos:altLabel "tomography spatial resolution"@en ;
+  dcterms:description "A parameter specifying the resolved spatial scale of a tomography acquisition."@en ;
+  h2kg:hasQuantityValue <_SpatialResolution_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:SampleDetectorDistance
+  a h2kg:Parameter ;
+  skos:prefLabel "Sample Detector Distance"@en ;
+  rdfs:label "Sample Detector Distance"@en ;
+  skos:altLabel "sample-to-detector distance"@en ;
+  dcterms:description "A parameter specifying the distance between the specimen and detector during a tomography measurement."@en ;
+  h2kg:hasQuantityValue <_SampleDetectorDistance_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:TortuosityFactor
+  a h2kg:Property ;
+  skos:prefLabel "Tortuosity Factor"@en ;
+  rdfs:label "Tortuosity Factor"@en ;
+  skos:altLabel "TauFactor tortuosity"@en ;
+  dcterms:description "A property denoting a tortuosity factor derived from tomography-based transport analysis of reconstructed porous fuel-cell microstructures."@en ;
+  h2kg:hasQuantityValue <_TortuosityFactor_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:AverageWaterDropletArea
+  a h2kg:Property ;
+  skos:prefLabel "Average Water Droplet Area"@en ;
+  rdfs:label "Average Water Droplet Area"@en ;
+  skos:altLabel "average droplet area"@en, "AverageArea"@en ;
+  dcterms:description "A property denoting the average projected area of water droplets derived from tomography-based droplet analysis in fuel-cell water-dynamics studies."@en ;
+  h2kg:hasQuantityValue <_AverageWaterDropletArea_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
+
+h2kg:AverageWaterDropletCount
+  a h2kg:Property ;
+  skos:prefLabel "Average Water Droplet Count"@en ;
+  rdfs:label "Average Water Droplet Count"@en ;
+  skos:altLabel "average droplet count"@en, "AverageNumber"@en ;
+  dcterms:description "A property denoting the average number of detected water droplets derived from tomography-based droplet analysis in fuel-cell water-dynamics studies."@en ;
+  h2kg:hasQuantityValue <_AverageWaterDropletCount_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemwe/hydrogen-ontology> .
