@@ -2178,7 +2178,7 @@ h2kg:XRayCTInstrument
   skos:prefLabel "X Ray CT Instrument"@en ;
   rdfs:label "X Ray CT Instrument"@en ;
   skos:altLabel "X-ray CT"@en, "X-ray computed tomography"@en ;
-  dcterms:description "Instrument for 3D imaging of catalyst layer pore structure."@en ;
+  dcterms:description "An instrument configuration for synchrotron and related X-ray computed tomography workflows that acquires tomographic projections and supports reconstructed-volume analysis for porous electrochemical and related material systems."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -10596,12 +10596,10 @@ h2kg:XRayComputedTomographyMeasurement
   skos:prefLabel "X Ray Computed Tomography Measurement"@en ;
   rdfs:label "X Ray Computed Tomography Measurement"@en ;
   skos:altLabel "x-ray computed tomography"@en, "X-ray tomography"@en, "X-ray CT"@en ;
-  dcterms:description "X-ray computed tomography imaging used to quantify fiber orientation angles and internal defects."@en ;
-  h2kg:usesInstrument h2kg:XRayCTInstrument, h2kg:XRayMicroscope ;
-  h2kg:measures h2kg:MeanFiberOrientationAngle, h2kg:FiberOrientationAngleStdDev, h2kg:TotalPorosity, h2kg:LinearShrinkage, h2kg:MicrofilamentDiameter, h2kg:NanoscalePoreSizeMax, h2kg:CatalystLayerThickness, h2kg:CrackWidthD50_CWD, h2kg:CrackWidthMax, h2kg:PoreAreaFraction, h2kg:PhosphoricAcidSaturationInCracks ;
-  h2kg:hasParameter h2kg:SinteringTemperature, h2kg:DwellTime, h2kg:HeatingRate, h2kg:XRayBeamEnergy, h2kg:VoxelSize, h2kg:ExposureTime, h2kg:AcceleratingVoltage, h2kg:XTMScanTime ;
-  h2kg:hasInputMaterial h2kg:SmartElastomericCellularFoam, pemfc:EMMO_099d5163_117a_4176_ba48_af54a61c4c8d ;
-  h2kg:hasOutputData h2kg:ExperimentDataset ;
+  dcterms:description "A measurement process that uses X-ray computed tomography to acquire tomographic projections and reconstructed volumes for porous electrochemical and related material systems."@en ;
+  h2kg:usesInstrument h2kg:XRayCTInstrument ;
+  h2kg:hasParameter h2kg:XRayBeamEnergy, h2kg:ExposureTime, h2kg:PixelSize, h2kg:ProjectionNumber, h2kg:SpatialResolution, h2kg:SampleDetectorDistance, h2kg:Temperature, h2kg:RelativeHumidity, h2kg:Magnification ;
+  h2kg:hasOutputData h2kg:TomographicProjectionDataset, h2kg:TomographicReconstructionDataset, h2kg:ExperimentDataset ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -20946,7 +20944,7 @@ h2kg:PixelSize
   skos:prefLabel "Pixel Size"@en ;
   rdfs:label "Pixel Size"@en ;
   skos:altLabel "image pixel size"@en, "nm per pixel"@en ;
-  dcterms:description "A parameter specifying the linear size represented by one image pixel in two-dimensional microscopy datasets, including IC-SEM and related electron microscopy measurements."@en ;
+  dcterms:description "A parameter specifying the linear size represented by one detector or image pixel in two-dimensional microscopy or tomography-projection datasets."@en ;
   h2kg:hasQuantityValue <_PixelSize_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
@@ -21205,7 +21203,7 @@ h2kg:TomographicProjectionDataset
   skos:prefLabel "Tomographic Projection Dataset"@en ;
   rdfs:label "Tomographic Projection Dataset"@en ;
   skos:altLabel "projection dataset"@en, "raw tomography projections"@en ;
-  dcterms:description "A dataset containing raw tomographic projection images generated during neutron tomography and related tomography measurements before reconstruction and segmentation."@en ;
+  dcterms:description "A dataset containing raw tomographic projection images generated during neutron tomography, synchrotron X-ray tomography, X-ray computed tomography, and related tomography measurements before correction, reconstruction, or segmentation."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -21214,7 +21212,7 @@ h2kg:TomographicReconstructionDataset
   skos:prefLabel "Tomographic Reconstruction Dataset"@en ;
   rdfs:label "Tomographic Reconstruction Dataset"@en ;
   skos:altLabel "reconstructed tomograph"@en, "3D tomographic reconstruction"@en ;
-  dcterms:description "A dataset containing reconstructed tomographic volumes produced from raw projection data and used for segmentation, droplet analysis, tortuosity analysis, and related post-processing."@en ;
+  dcterms:description "A dataset containing reconstructed tomographic volumes produced from raw projection data in neutron tomography, synchrotron X-ray tomography, X-ray computed tomography, and related tomography measurements, and used for segmentation, quantitative analysis, and related post-processing."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 

@@ -1,0 +1,5 @@
+# Synchrotron X-Ray Tomography Case Summary
+
+H2KG captures the remaining workbook tomography family by reusing the existing public CT anchor `h2kg:XRayComputedTomographyMeasurement` and cleaning it into a coherent generic tomography neighborhood. The public TBox connects the measurement to `h2kg:XRayCTInstrument`, `h2kg:TomographicProjectionDataset`, `h2kg:TomographicReconstructionDataset`, `h2kg:ExperimentDataset`, and the main acquisition parameters `h2kg:XRayBeamEnergy`, `h2kg:ExposureTime`, `h2kg:PixelSize`, `h2kg:ProjectionNumber`, `h2kg:SpatialResolution`, `h2kg:SampleDetectorDistance`, `h2kg:Temperature`, `h2kg:RelativeHumidity`, and `h2kg:Magnification`.
+
+The canonical example uses `SynchrotronTomo` as the source sheet while treating `SynchrotronRadio` as a duplicate-structure validation sheet. Out-of-scope study context such as VRFB and dry-electrode labels remains metadata only. Preprocessing and analysis steps are represented conservatively as labeled `h2kg:Process` instances, and the reported analysis outputs are retained as `h2kg:DataPoint` instances with metadata-attached semantic notes rather than promoted public property terms.

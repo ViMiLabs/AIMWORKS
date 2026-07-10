@@ -1,0 +1,945 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "sxrt": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#source-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Synchrotron x-ray tomography of dry electrode",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "ExperimentID: 2"
+        },
+        {
+          "@value": "Measurement-ID: Run derived DOI"
+        }
+      ],
+      "http://purl.org/dc/terms/date": [
+        {
+          "@value": "44845"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Canonical source sheet: SynchrotronTomo.",
+          "@language": "en"
+        },
+        {
+          "@value": "SynchrotronRadio was validated as a duplicate-structure sheet with metadata-only deviations.",
+          "@language": "en"
+        },
+        {
+          "@value": "Out-of-scope labels retained only as source metadata: Topic = VRFB; Device = VRFB.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#publication-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Synchrotron x-ray tomography of dry electrode",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "https://doi.org/10.3390/35654654654"
+        }
+      ],
+      "http://purl.org/dc/terms/issued": [
+        {
+          "@value": "41215"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Journal: Nature; volume: 41; issue: 5; pages: 6456-6541.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Carbon felt electrode precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Workbook context retained as metadata only: Manufacturer = SGL Carbon; Type = Sigracell GFA 6 EA.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Conditioned tomography sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Workbook context retained as metadata only: dry-electrode / VRFB study context.",
+          "@language": "en"
+        },
+        {
+          "@value": "Sample geometry from sheet: XYZ = 7.4, 0.8, 0.6 cm.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sample conditioning and cutting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Worksheet steps represented conservatively as labeled process content: Buy, Dissolve, Bubble, Heat, Cool, Cut.",
+          "@language": "en"
+        },
+        {
+          "@value": "Representative condition values: Heat temperature = 400 deg C; time = 25 h; Cool temperature = 25 deg C.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayComputedTomographyMeasurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Synchrotron x-ray tomography pilot measurement",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-metadata"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#publication-record"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#source-record"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "MeasurementType = ex-situ; Specimen = bulk material; Atmosphere = air; Pressure = 1 atm.",
+          "@language": "en"
+        },
+        {
+          "@value": "Calibration note from workbook: adjusting lenses and apertures; adjusting the voltage.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayCTInstrument"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Synchrotron x-ray CT instrument configuration",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Facility = Canadian Light Source Inc.; Beamline = BMIT-ID 05ID-2.",
+          "@language": "en"
+        },
+        {
+          "@value": "Monochromator = double layer monochromator; Detector = Orca Flash V2 sCMOS; Scintillator = YAG.",
+          "@language": "en"
+        },
+        {
+          "@value": "Additional instrument metadata retained only as metadata: field of view, detector raw pixels, sample elevation, source-sample distance, probe, signal, time lapse, acquisition rate.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#TomographicProjectionDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Raw synchrotron tomographic projection dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/format": [
+        {
+          "@value": "tiff"
+        }
+      ],
+      "http://purl.org/dc/terms/extent": [
+        {
+          "@value": "541 MB"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "link"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Filename = TestTomography.tif.",
+          "@language": "en"
+        },
+        {
+          "@value": "Dimensions = 1024 x 1024 x 600; PixelPerMetric = 8.1.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Synchrotron x-ray tomography experiment dataset record",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Source sheet bundle for the combined SynchrotronTomo / SynchrotronRadio controlled integration round.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Correction, reconstruction, and segmentation",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Worksheet preprocessing labels retained as process metadata: Convert, DarkFieldCorrect, FlatFieldCorrect, BackgroundCorrect, 3DReconstruct, ManualSegment.",
+          "@language": "en"
+        },
+        {
+          "@value": "Workbook software notes retained as metadata: XXXX; Avizo.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#TomographicReconstructionDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Reconstructed synchrotron tomograph dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Mask exists = no; mask link = link.",
+          "@language": "en"
+        },
+        {
+          "@value": "Segmentation semantics retained as metadata only: carbon felt, electrolyte, and air.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Tomography analysis of deferred outputs",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Worksheet analysis labels retained as process metadata: DecayFactorCalculation, BeamPathDistanceMeasurement, ElectrolyteSaturationMeasurement, ElectrodeSegmentRatioCalculation.",
+          "@language": "en"
+        },
+        {
+          "@value": "Workbook software notes retained as metadata: ImageJ.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Deferred decay-factor datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint-metadata"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Deferred semantic target only: Decay factor; reported workbook value = 51 ms.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Deferred beam-path-distance datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint-metadata"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Deferred semantic target only: Real distance in beam path; reported workbook value = 99 cm.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Deferred electrolyte-saturation datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint-metadata"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Deferred semantic target only: Electrolyte saturation; reported workbook value = 47 mol/l.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Deferred carbonfelt/electrolyte/air-ratio datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint-metadata"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Deferred semantic target only: carbonfelt/electrolyte/air ratio; reported workbook value = 0.12640046296296295.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayBeamEnergy"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Synchrotron x-ray beam-energy setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 30 keV.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#ExposureTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Projection exposure-time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 50 ms.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#PixelSize"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Projection pixel-size setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 13 um.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#ProjectionNumber"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Projection-number setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 2000.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#SpatialResolution"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Spatial-resolution setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 1 um.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#SampleDetectorDistance"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sample-detector-distance setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 40 cm.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sample temperature setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 23 deg C.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Relative-humidity setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 50 %.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Magnification"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Tomography magnification setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Reported workbook value = 10.",
+          "@language": "en"
+        }
+      ]
+    }
+  ]
+}
