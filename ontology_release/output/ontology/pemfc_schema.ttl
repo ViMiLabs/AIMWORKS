@@ -2572,13 +2572,13 @@ h2kg:XRayDiffractionMeasurement
   skos:prefLabel "X Ray Diffraction Measurement"@en ;
   rdfs:label "X Ray Diffraction Measurement"@en ;
   skos:altLabel "XRD"@en, "X-ray diffraction"@en, "XRD measurement"@en ;
-  dcterms:description "XRD used to estimate Pt crystallite size (Scherrer) and theoretical surface area."@en ;
-  h2kg:measures h2kg:PtCrystalliteSize, h2kg:LatticeParameter, h2kg:TheoreticalMetalSurfaceArea, h2kg:CatalystPlatinumMassFraction, h2kg:CatalystRutheniumMassFraction, h2kg:DiffractionPeakPosition2Theta, h2kg:GrainSize, h2kg:MaximumReductionConversionRate, h2kg:ReductionOnsetTemperature, h2kg:ReductionCompletionTemperature, h2kg:DiffractionPeakPosition2Theta, h2kg:InterlayerSpacing, h2kg:GraphiticCrystalliteStackingSizeLc, h2kg:GraphiticPlanesPerCrystallite, h2kg:GraphiticPlaneOrientationOrderParameter, h2kg:PtAtomicPercent, h2kg:PtParticleSize, h2kg:XRDPeakPosition2Theta, h2kg:XRDPeakFWHM ;
-  h2kg:usesInstrument h2kg:XRayDiffractometer, h2kg:MythenIIArrayDetector, h2kg:HotBlower ;
-  h2kg:hasInputMaterial h2kg:FeNCCatalyst, h2kg:PorousAluminaCeramicCarrier, h2kg:PtOnCarbonCatalyst, h2kg:Carbonized3DPrintedCarbonMaterial, h2kg:TitaniumSubstrate, holy:CatalystLayer ;
-  h2kg:hasParameter h2kg:XRayWavelength, h2kg:HeatingRate, h2kg:GasComposition, h2kg:XRayBeamEnergy, h2kg:ExposureTime, h2kg:XRDStepSize, h2kg:XRDTwoThetaStart, h2kg:XRDTwoThetaEnd ;
-  h2kg:hasOutputData h2kg:XRDPatternDataset ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  dcterms:description "X-ray diffraction measurement used to characterize PEMFC-relevant catalyst powders and related electrode materials by recording diffraction patterns and deriving peak positions, peak widths, Pt crystallite size, and theoretical metal surface area."@en ;
+  h2kg:measures h2kg:PtCrystalliteSize, h2kg:TheoreticalMetalSurfaceArea, h2kg:DiffractionPeakPosition2Theta, h2kg:XRDPeakFWHM ;
+  h2kg:usesInstrument h2kg:XRayDiffractometer ;
+  h2kg:hasInputMaterial h2kg:CatalystPowder, h2kg:PtOnCarbonCatalyst ;
+  h2kg:hasParameter h2kg:XRayWavelength, h2kg:XRDStepSize, h2kg:XRDTwoThetaStart, h2kg:XRDTwoThetaEnd ;
+  h2kg:hasOutputData h2kg:XRDPatternDataset, h2kg:ExperimentDataset ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
 h2kg:NitrogenPhysisorptionMeasurement
@@ -5647,7 +5647,7 @@ h2kg:XRayDiffractometer
   skos:prefLabel "X Ray Diffractometer"@en ;
   rdfs:label "X Ray Diffractometer"@en ;
   skos:altLabel "Philips PW1830 diffractometer"@en, "X'Pert PRO diffractometer"@en, "Panalytical Empyrean diffractometer"@en ;
-  dcterms:description "X-ray diffractometer used for XRD measurement (Philips PW1830 with Co X-ray source)."@en ;
+  dcterms:description "X-ray diffractometer used to acquire diffraction patterns during catalyst and electrode material characterization."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
@@ -12293,7 +12293,7 @@ h2kg:XRDPatternDataset
   skos:prefLabel "XRD Pattern Dataset"@en ;
   rdfs:label "XRD Pattern Dataset"@en ;
   skos:altLabel "XRD patterns"@en, "XRD pattern"@en ;
-  dcterms:description "Dataset of XRD diffractograms versus sintering temperature."@en ;
+  dcterms:description "Dataset of X-ray diffraction patterns or diffractograms generated during catalyst and electrode material characterization."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 

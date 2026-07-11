@@ -2,26 +2,21 @@
 
 ## Summary
 
-- Reviewed against HDO: 106
-- Aligned to HDO: 7
-- Reused directly from HDO: 7
-- Kept local after HDO review: 101
+- Reviewed against HDO: 107
+- Aligned to HDO: 0
+- Reused directly from HDO: 0
+- Kept local after HDO review: 107
 - Overlap with PROV-O / DCTERMS / EMMO anchors: 3
 
 ## HDO-Aligned Terms
 
-- `FTIR Dataset` -> `rdfs:subClassOf` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00002013`
-- `Metadata` -> `rdfs:subClassOf` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000029`
-- `Metadata` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001036`
-- `Microstructure Image Dataset` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00000005`
-- `PEMFCCFD Simulation` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00001069`
-- `hasMetadata` -> `owl:equivalentProperty` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006069`
-- `hasMetadata` -> `skos:closeMatch` -> `https://purls.helmholtz-metadaten.de/hob/HDO_00006070`
+- No direct HDO-aligned terms were generated in this run.
 
 ## Terms Kept Local
 
 - `hasOutputData`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `hasInputData`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
+- `hasMetadata`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `Through-Plane Gas Transport Measurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
 - `ofProperty`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
 - `fromMeasurement`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
@@ -40,11 +35,10 @@
 - `Data`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `Data Point`: Kept local pending a more precise HDO term-level match while retaining H2KG experimental granularity.
 - `Linear Sweep Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
+- `Metadata`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `Cathodic Stripping Voltammetry`: Remains local because the current H2KG term carries profile-specific semantics beyond the generic HDO anchor.
 - `ECSA Dataset`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 - `Impedance Dataset`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
-- `Limiting Current Dataset`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
-- `Polarization Curve Dataset`: Candidate for future direct HDO reuse; currently kept local until the HDO cache and parity review are accepted.
 
 ## Cross-Standard Overlap Notes
 

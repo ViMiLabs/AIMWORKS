@@ -1,0 +1,19 @@
+case_element,example_value,classification,h2kg_anchor,note
+Pt/C catalyst powder sample,Carbon-supported Pt catalyst powder,reuse existing term,h2kg:CatalystPowder + h2kg:PtOnCarbonCatalyst,The canonical XRD sample is a Pt/C catalyst powder instance typed by both public matter anchors.
+Sample conditioning,Dry powder loading / holder preparation,normalized existing term,h2kg:Manufacturing,Kept conservative as a labeled manufacturing step without promoting XRD-specific prep vocabulary.
+XRD acquisition,Powder XRD scan for PEMFC catalyst characterization,normalized existing term,h2kg:XRayDiffractionMeasurement,The public XRD measurement anchor was cleaned to expose a PEMFC-focused direct Explore neighborhood.
+XRD instrument,Laboratory X-ray diffractometer,normalized existing term,h2kg:XRayDiffractometer,The public instrument anchor was generalized to a reusable catalyst/electrode characterization instrument.
+X-ray wavelength,0.15418 nm,reuse existing term,h2kg:XRayWavelength,Captured through the standard quantity-value pattern on a parameter-setting instance.
+XRD step size,0.02 deg,reuse existing term,h2kg:XRDStepSize,Direct public acquisition parameter on the XRD method node.
+XRD 2 theta range start,10 deg,reuse existing term,h2kg:XRDTwoThetaStart,Direct public acquisition parameter on the XRD method node.
+XRD 2 theta range end,90 deg,reuse existing term,h2kg:XRDTwoThetaEnd,Direct public acquisition parameter on the XRD method node.
+Raw diffraction pattern dataset,Diffractogram series,normalized existing term,h2kg:XRDPatternDataset,Retained as the canonical raw XRD output dataset anchor.
+Acquisition record dataset,Scan log / acquisition record,reuse existing term,h2kg:ExperimentDataset,Used for generic acquisition record context without promoting XRD-specific log classes.
+Analysis process,Scherrer-style peak analysis,reuse existing term,h2kg:Process,Analysis remains conservatively modeled through the generic Process class.
+Peak position output,Pt(111) peak position,reuse existing term,h2kg:DiffractionPeakPosition2Theta,Kept as a direct XRD measured-property anchor.
+Peak FWHM output,Pt(111) FWHM,reuse existing term,h2kg:XRDPeakFWHM,Kept as a direct XRD measured-property anchor.
+Pt crystallite size output,Scherrer Pt crystallite size,reuse existing term,h2kg:PtCrystalliteSize,Primary PEMFC catalyst outcome for the canonical XRD case.
+Theoretical metal surface area output,Surface area derived from crystallite size,reuse existing term,h2kg:TheoreticalMetalSurfaceArea,Primary derived Pt/C surface-area outcome for the canonical XRD case.
+Supplier and holder details,"Vendor, lot number, holder notes",metadata only,h2kg:hasMetadata,Contextual sample and setup details remain metadata rather than public standalone ontology nodes.
+Peak-selection / Scherrer assumptions,Pt(111); shape factor and density assumptions,metadata only,h2kg:hasMetadata,The pilot records these as analysis metadata rather than promoting a new public analysis vocabulary in this round.
+Advanced XRD analysis vocabulary,Phase identification / Rietveld refinement,deferred,-,Deferred to a later cross-method characterization round after XPS and Raman stabilization.

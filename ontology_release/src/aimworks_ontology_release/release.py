@@ -23,6 +23,7 @@ from .sem_pilot import build_sem_pilot_package
 from .split import split_ontology
 from .synchrotron_xray_tomo_pilot import build_synchrotron_xray_tomo_pilot_package
 from .tem_pilot import build_tem_pilot_package
+from .xrd_pilot import build_xrd_pilot_package
 from .utils import ensure_dir, write_text
 from .validate import validate_release
 from .w3id import generate_w3id_artifacts
@@ -61,6 +62,7 @@ def run_release(
     afm_pilot = build_afm_pilot_package(input_path, output_root)
     neutron_tomo_pilot = build_neutron_tomo_pilot_package(input_path, output_root)
     synchrotron_xray_tomo_pilot = build_synchrotron_xray_tomo_pilot_package(input_path, output_root)
+    xrd_pilot = build_xrd_pilot_package(input_path, output_root)
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -95,6 +97,7 @@ def run_release(
         "afm_pilot": afm_pilot,
         "neutron_tomo_pilot": neutron_tomo_pilot,
         "synchrotron_xray_tomo_pilot": synchrotron_xray_tomo_pilot,
+        "xrd_pilot": xrd_pilot,
         "fair": fair,
         "odk": odk,
         "docs": docs,
