@@ -30722,40 +30722,40 @@
       "http://purl.org/dc/terms/description": [
         {
           "@language": "en",
-          "@value": "Surface chemical analysis measurement used to quantify elemental composition and chemical speciation of inks/catalysts."
+          "@value": "Surface chemical analysis measurement used to characterize PEMFC-relevant catalyst powders, catalyst inks, ionomers, and related surface chemistries by acquiring XPS spectra and quantifying elemental composition and chemical-state information."
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectrometer"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectrometer"
-        },
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSInstrument"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
         {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#PtOnCarbonCatalyst"
+        },
+        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Pt111Surface"
-        },
-        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#PFSAIonomer"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#VulcanXC72RCarbonBlack"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSDataset"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#BindingEnergy"
+        },
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#C1sAtomicPercent"
         },
@@ -30769,96 +30769,178 @@
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#N1sAtomicPercent"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Co2pAtomicPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CoToNRatio"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#BindingEnergy"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#OxygenAtomicPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonNitrogenDefectFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonOxideFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GraphiticCarbonFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GraphiticNitrogenFractionPercent"
-        },
-        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#MetalAtomicPercent"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MetalCoordinatedNitrogenFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MetalNxFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MetalOxideFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MetallicMetalFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#PyridinicNitrogenFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#PyrrolicNitrogenFractionPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ResidualIronContent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ResidualChlorideContent"
-        },
-        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonToOxygenAtomRatio"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#C1sPeakFraction_CC_CH"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#C1sPeakFraction_C_O"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#C1sPeakFraction_CeqO"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#C1sPeakFraction_O_CeqO"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#SulfurAtomicPercent"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Ni3Ni2Ratio"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#Co2Co3Ratio"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FeN4SiteDensity"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystToNafionWeightRatio"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSPassEnergy"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CoolingRate"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSTakeOffAngle"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#InkStorageTime"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSAnalysisArea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSPassEnergy",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "XPS Pass Energy"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "XPS Pass Energy"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "analyzer pass energy"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#DwellTime"
+          "@language": "en",
+          "@value": "pass energy"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying XPS analyzer pass energy used during surface-chemical spectral acquisition.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_XPSPassEnergy_QV"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSTakeOffAngle",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "XPS Take Off Angle"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "XPS Take Off Angle"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "take-off angle"
+        },
+        {
+          "@language": "en",
+          "@value": "photoelectron take-off angle"
+        },
+        {
+          "@language": "en",
+          "@value": "emission angle"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying XPS photoelectron take-off angle used during spectral acquisition.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_XPSTakeOffAngle_QV"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology#XPSAnalysisArea",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "XPS Analysis Area"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "XPS Analysis Area"
+        }
+      ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "analysis area"
+        },
+        {
+          "@language": "en",
+          "@value": "analysis spot area"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@value": "A parameter specifying the surface area analyzed during XPS acquisition.",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "_XPSAnalysisArea_QV"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
@@ -30908,7 +30990,7 @@
       ],
       "http://purl.org/dc/terms/description": [
         {
-          "@value": "An instrument corresponding to a X ray photoelectron spectrometer and used in X Ray Photoelectron Spectroscopy Measurement.",
+          "@value": "Legacy synonym anchor for an X ray photoelectron spectrometer; the canonical public instrument anchor for the normalized XPS measurement neighborhood is XPS Instrument.",
           "@language": "en"
         }
       ],
@@ -30959,16 +31041,13 @@
       ],
       "http://purl.org/dc/terms/description": [
         {
-          "@value": "A dataset containing XPS data generated by X Ray Photoelectron Spectroscopy Measurement.",
+          "@value": "A dataset containing XPS spectra and related quantification outputs generated by X Ray Photoelectron Spectroscopy Measurement for PEMFC-relevant surface-chemistry characterization.",
           "@language": "en"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
         {
           "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -34124,7 +34203,7 @@
       ],
       "http://purl.org/dc/terms/description": [
         {
-          "@value": "A property denoting binding energy position of XPS peaks (eV) used to evidence fluorocarbon species on Pt(111).",
+          "@value": "A property denoting XPS peak binding energy position used to characterize elemental and chemical-state signatures in PEMFC-relevant surface-chemistry measurements.",
           "@language": "en"
         }
       ],
@@ -34136,9 +34215,6 @@
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
         {
           "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -94924,18 +95000,29 @@
           "@value": "XPS Instrument"
         }
       ],
+      "http://www.w3.org/2004/02/skos/core#altLabel": [
+        {
+          "@language": "en",
+          "@value": "X-ray photoelectron spectrometer"
+        },
+        {
+          "@language": "en",
+          "@value": "photoelectron spectrometer"
+        },
+        {
+          "@language": "en",
+          "@value": "XPS spectrometer"
+        }
+      ],
       "http://purl.org/dc/terms/description": [
         {
           "@language": "en",
-          "@value": "Instrument for X-ray photoelectron spectroscopy."
+          "@value": "Instrument for X-ray photoelectron spectroscopy used to acquire XPS spectra and quantification data for PEMFC-relevant surface-chemistry characterization."
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile": [
         {
           "@id": "https://w3id.org/h2kg/pemfc/hydrogen-ontology"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/pemwe/hydrogen-ontology"
         }
       ],
       "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [

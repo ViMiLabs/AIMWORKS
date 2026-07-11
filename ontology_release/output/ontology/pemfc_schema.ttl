@@ -5153,12 +5153,42 @@ h2kg:XRayPhotoelectronSpectroscopyMeasurement
   skos:prefLabel "X Ray Photoelectron Spectroscopy Measurement"@en ;
   rdfs:label "X Ray Photoelectron Spectroscopy Measurement"@en ;
   skos:altLabel "X-ray photoelectron spectroscopy"@en ;
-  dcterms:description "Surface chemical analysis measurement used to quantify elemental composition and chemical speciation of inks/catalysts."@en ;
-  h2kg:usesInstrument h2kg:XRayPhotoelectronSpectrometer, h2kg:XRayPhotoelectronSpectrometer, h2kg:XPSInstrument ;
-  h2kg:hasInputMaterial h2kg:CatalystInk, h2kg:Pt111Surface, h2kg:PFSAIonomer, h2kg:VulcanXC72RCarbonBlack ;
-  h2kg:hasOutputData h2kg:XPSDataset ;
-  h2kg:measures h2kg:C1sAtomicPercent, h2kg:O1sAtomicPercent, h2kg:F1sAtomicPercent, h2kg:N1sAtomicPercent, h2kg:Co2pAtomicPercent, h2kg:CoToNRatio, h2kg:BindingEnergy, h2kg:OxygenAtomicPercent, h2kg:CarbonNitrogenDefectFractionPercent, h2kg:CarbonOxideFractionPercent, h2kg:GraphiticCarbonFractionPercent, h2kg:GraphiticNitrogenFractionPercent, h2kg:MetalAtomicPercent, h2kg:MetalCoordinatedNitrogenFractionPercent, h2kg:MetalNxFractionPercent, h2kg:MetalOxideFractionPercent, h2kg:MetallicMetalFractionPercent, h2kg:PyridinicNitrogenFractionPercent, h2kg:PyrrolicNitrogenFractionPercent, h2kg:ResidualIronContent, h2kg:ResidualChlorideContent, h2kg:CarbonToOxygenAtomRatio, h2kg:C1sPeakFraction_CC_CH, h2kg:C1sPeakFraction_C_O, h2kg:C1sPeakFraction_CeqO, h2kg:C1sPeakFraction_O_CeqO, h2kg:SulfurAtomicPercent, h2kg:Ni3Ni2Ratio, h2kg:Co2Co3Ratio, h2kg:FeN4SiteDensity ;
-  h2kg:hasParameter h2kg:CatalystToNafionWeightRatio, h2kg:CoolingRate, h2kg:InkStorageTime, h2kg:DwellTime ;
+  dcterms:description "Surface chemical analysis measurement used to characterize PEMFC-relevant catalyst powders, catalyst inks, ionomers, and related surface chemistries by acquiring XPS spectra and quantifying elemental composition and chemical-state information."@en ;
+  h2kg:usesInstrument h2kg:XPSInstrument ;
+  h2kg:hasInputMaterial h2kg:CatalystPowder, h2kg:PtOnCarbonCatalyst, h2kg:CatalystInk, h2kg:PFSAIonomer ;
+  h2kg:hasOutputData h2kg:XPSDataset, h2kg:ExperimentDataset ;
+  h2kg:measures h2kg:BindingEnergy, h2kg:C1sAtomicPercent, h2kg:O1sAtomicPercent, h2kg:F1sAtomicPercent, h2kg:N1sAtomicPercent, h2kg:MetalAtomicPercent, h2kg:CarbonToOxygenAtomRatio ;
+  h2kg:hasParameter h2kg:XPSPassEnergy, h2kg:XPSTakeOffAngle, h2kg:XPSAnalysisArea ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:XPSPassEnergy
+  a h2kg:Parameter ;
+  skos:prefLabel "XPS Pass Energy"@en ;
+  rdfs:label "XPS Pass Energy"@en ;
+  skos:altLabel "analyzer pass energy"@en, "pass energy"@en ;
+  dcterms:description "A parameter specifying XPS analyzer pass energy used during surface-chemical spectral acquisition."@en ;
+  h2kg:hasQuantityValue <_XPSPassEnergy_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:XPSTakeOffAngle
+  a h2kg:Parameter ;
+  skos:prefLabel "XPS Take Off Angle"@en ;
+  rdfs:label "XPS Take Off Angle"@en ;
+  skos:altLabel "take-off angle"@en, "photoelectron take-off angle"@en, "emission angle"@en ;
+  dcterms:description "A parameter specifying XPS photoelectron take-off angle used during spectral acquisition."@en ;
+  h2kg:hasQuantityValue <_XPSTakeOffAngle_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
+
+h2kg:XPSAnalysisArea
+  a h2kg:Parameter ;
+  skos:prefLabel "XPS Analysis Area"@en ;
+  rdfs:label "XPS Analysis Area"@en ;
+  skos:altLabel "analysis area"@en, "analysis spot area"@en ;
+  dcterms:description "A parameter specifying the surface area analyzed during XPS acquisition."@en ;
+  h2kg:hasQuantityValue <_XPSAnalysisArea_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
@@ -5167,7 +5197,7 @@ h2kg:XRayPhotoelectronSpectrometer
   skos:prefLabel "X Ray Photoelectron Spectrometer"@en ;
   rdfs:label "X Ray Photoelectron Spectrometer"@en ;
   skos:altLabel "photoelectron spectrometer"@en, "XPS spectrometer"@en, "Multilab 2000 spectrometer"@en ;
-  dcterms:description "An instrument corresponding to a X ray photoelectron spectrometer and used in X Ray Photoelectron Spectroscopy Measurement."@en ;
+  dcterms:description "Legacy synonym anchor for an X ray photoelectron spectrometer; the canonical public instrument anchor for the normalized XPS measurement neighborhood is XPS Instrument."@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
@@ -5176,8 +5206,8 @@ h2kg:XPSDataset
   skos:prefLabel "XPS Dataset"@en ;
   rdfs:label "XPS Dataset"@en ;
   skos:altLabel "XPS spectra"@en, "XPS elemental composition tables"@en, "XPS elemental composition"@en ;
-  dcterms:description "A dataset containing XPS data generated by X Ray Photoelectron Spectroscopy Measurement."@en ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  dcterms:description "A dataset containing XPS spectra and related quantification outputs generated by X Ray Photoelectron Spectroscopy Measurement for PEMFC-relevant surface-chemistry characterization."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
 h2kg:C1sAtomicPercent
@@ -5730,9 +5760,9 @@ h2kg:BindingEnergy
   skos:prefLabel "Binding Energy"@en ;
   rdfs:label "Binding Energy"@en ;
   skos:altLabel "XPS peak binding energy"@en, "XPS binding energy"@en ;
-  dcterms:description "A property denoting binding energy position of XPS peaks (eV) used to evidence fluorocarbon species on Pt(111)."@en ;
+  dcterms:description "A property denoting XPS peak binding energy position used to characterize elemental and chemical-state signatures in PEMFC-relevant surface-chemistry measurements."@en ;
   h2kg:hasQuantityValue <_BindingEnergy_QV> ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
 h2kg:AnnealingTemperature
@@ -17441,8 +17471,9 @@ h2kg:XPSInstrument
   a h2kg:Instrument ;
   skos:prefLabel "XPS Instrument"@en ;
   rdfs:label "XPS Instrument"@en ;
-  dcterms:description "Instrument for X-ray photoelectron spectroscopy."@en ;
-  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  skos:altLabel "X-ray photoelectron spectrometer"@en, "photoelectron spectrometer"@en, "XPS spectrometer"@en ;
+  dcterms:description "Instrument for X-ray photoelectron spectroscopy used to acquire XPS spectra and quantification data for PEMFC-relevant surface-chemistry characterization."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/pemfc/hydrogen-ontology> .
 
 h2kg:SolarSimulatorIVTester

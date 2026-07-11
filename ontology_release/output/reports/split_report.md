@@ -1,7 +1,7 @@
 # Split Report
 
 - Schema resources: 35
-- Controlled vocabulary resources: 2172
+- Controlled vocabulary resources: 2175
 - Example or data-like resources: 0
 
 ## Schema Preview

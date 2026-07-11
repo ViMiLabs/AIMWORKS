@@ -3,12 +3,12 @@
 - Shared core ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - PEMFC profile ontology IRI: `https://w3id.org/h2kg/pemfc/hydrogen-ontology`
 - PEMWE profile ontology IRI: `https://w3id.org/h2kg/pemwe/hydrogen-ontology`
-- Shared local schema terms: 2023
-- PEMFC-only local schema terms: 179
+- Shared local schema terms: 2022
+- PEMFC-only local schema terms: 183
 - PEMWE-only local schema terms: 4
-- Core module term count: 2206
-- PEMFC module term count: 2202
-- PEMWE module term count: 2027
+- Core module term count: 2209
+- PEMFC module term count: 2205
+- PEMWE module term count: 2026
 
 ## Assignment Sample
 
