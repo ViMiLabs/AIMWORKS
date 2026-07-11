@@ -43,6 +43,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "data" / "explorer.json").exists()
     assert (output_dir / "docs" / "assets" / "explorer.css").exists()
     assert (output_dir / "docs" / "assets" / "explorer.js").exists()
+    assert (output_dir / "docs" / "source" / "h2kg-asserted-source.jsonld").exists()
     assert (output_dir / "docs" / "pages" / "explore.html").exists()
     assert (output_dir / "docs" / "pages" / "reference.html").exists()
     assert (output_dir / "docs" / "pages" / "core-reference.html").exists()
@@ -73,6 +74,9 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "not built in docs-only run" in quality_page
     release_page = (output_dir / "docs" / "pages" / "release.html").read_text(encoding="utf-8")
     assert "ODK Release Artefacts" in release_page
+    assert "Asserted Source" in release_page
+    assert "h2kg-asserted-source.jsonld" in release_page
+    assert "download='h2kg-asserted-source.jsonld'" in release_page
     assert "ODK and HDO Integration" in release_page
     assert "Publication Establishment" in release_page
     namespace_page = (output_dir / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")

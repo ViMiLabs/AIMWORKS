@@ -56,6 +56,7 @@ def build_docs(
     config_dir: str | Path | None = None,
     fair_snapshot: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    input_path = Path(input_path)
     output_dir = ensure_dir(Path(output_dir))
     ensure_dir(output_dir / "pages")
     ensure_dir(output_dir / "assets")
@@ -147,6 +148,7 @@ def build_docs(
     write_text(output_dir / "index.html", _legacy_profile_home())
     _copy_site_assets(output_dir, project)
     _copy_odk_artifacts(output_dir)
+    _copy_asserted_source_jsonld(input_path, output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
     write_text(output_dir / "assets" / "explorer.css", _explorer_css())
     write_text(output_dir / "assets" / "explorer.js", _explorer_js())
@@ -1288,6 +1290,7 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     artifacts = "".join(f"<li>{escape(str(item))}</li>" for item in release.get("artifacts", []))
     odk_base = _relative_href(page_path, docs_root / "odk")
     odk_artifacts = _odk_artifact_cards(odk, odk_base)
+    asserted_source_href = _relative_href(page_path, docs_root / "source" / "h2kg-asserted-source.jsonld")
     gates = _render_rows(odk.get("promotion_gates", []))
     parity = odk.get("parity", {})
     publication = release.get("publication_evidence", {})
@@ -1321,7 +1324,7 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         </ul>
       </article>
       <article class="card">
-        <h2>AIMWORKS Artifacts</h2>
+        <h2>Release Artifacts</h2>
         <ul>{artifacts or artifacts_fallback}</ul>
       </article>
     </section>
@@ -1332,9 +1335,16 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
         {odk_artifacts}
       </article>
       <article class="card">
+        <h2>Asserted Source</h2>
+        <p class="muted">Supplementary machine-readable JSON-LD serialization of the asserted H2KG source, published for inspection and downstream reuse. This download complements the ODK release artefacts.</p>
+        <div class="button-row">
+          <a class='inline-button' href='{asserted_source_href}' download='h2kg-asserted-source.jsonld'>JSON-LD</a>
+        </div>
+      </article>
+      <article class="card">
         <h2>ODK Release Status</h2>
         <ul class="stats">
-          <li><strong>Current authority:</strong> {escape(str(odk.get('authority', 'AIMWORKS pipeline')))}</li>
+          <li><strong>Current authority:</strong> {escape(str(odk.get('authority', 'ontology release pipeline')))}</li>
           <li><strong>ODK status:</strong> {odk_status}</li>
           <li><strong>Reasoner:</strong> {escape(str(odk.get('reasoner', 'ELK')))}</li>
           <li><strong>ODK version:</strong> {escape(str(odk.get('odk_version', 'shadow scaffold')))}</li>
@@ -2061,6 +2071,11 @@ def _copy_odk_artifacts(output_dir: Path) -> None:
             shutil.copyfile(artifact, target_dir / artifact.name)
 
 
+def _copy_asserted_source_jsonld(input_path: Path, output_dir: Path) -> None:
+    target_dir = ensure_dir(output_dir / "source")
+    shutil.copyfile(input_path, target_dir / "h2kg-asserted-source.jsonld")
+
+
 def _odk_artifact_cards(odk: dict[str, Any], odk_base: str) -> str:
     if not odk.get("artifacts"):
         return "<p>No ODK artefacts available.</p>"
@@ -2071,7 +2086,7 @@ def _odk_artifact_cards(odk: dict[str, Any], odk_base: str) -> str:
             filename = fmt.get("filename", "")
             href = f"{odk_base}/artifacts/{escape(str(filename))}"
             label = escape(str(fmt.get("format", ""))).upper()
-            links.append(f"<a class='inline-button' href='{href}'>{label}</a>")
+            links.append(f"<a class='inline-button' href='{href}' download='{escape(str(filename))}'>{label}</a>")
         cards.append(
             f"""
             <article class="term-card">
