@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .docs import build_docs
-from .decode_workflows import build_decode_workflow_release, ingest_decode_graphml_directory
+from .decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
 from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
@@ -18,6 +18,7 @@ from .profile_modules import build_profile_modules
 from .prefix_repair import repair_doc_prefixes
 from .release import run_release
 from .split import split_ontology
+from .tib_benchmark import build_tib_benchmark_package
 from .validate import validate_release
 
 
@@ -25,14 +26,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "decode-build"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
         if command == "odk":
             sub.add_argument("--prepare-only", action="store_true")
             sub.add_argument("--collect-only", action="store_true")
             sub.add_argument("--execute", action="store_true")
-        if command == "decode-build":
+        if command == "tib-benchmark":
+            sub.add_argument("--snapshot", default="input/tib_terminology_snapshot.json")
+            sub.add_argument("--refresh", action="store_true", help="Query TIB and replace the dated catalogue snapshot and candidate cache.")
+        if command in {"decode-build", "decode-apply-aliases"}:
             sub.add_argument("--snapshot", default="input/decode_workflows_source.json")
             sub.add_argument("--mapping-config", default="config/decode_workflow_mappings.yaml")
     decode_ingest = subparsers.add_parser("decode-ingest")
@@ -101,6 +105,11 @@ def main() -> None:
             collect_only=getattr(args, "collect_only", False),
             execute=getattr(args, "execute", False),
         )
+    elif args.command == "tib-benchmark":
+        snapshot = Path(args.snapshot)
+        if not snapshot.is_absolute():
+            snapshot = project_root / snapshot
+        result = build_tib_benchmark_package(input_path, output, snapshot, refresh=args.refresh)
     elif args.command == "decode-ingest":
         snapshot = Path(args.snapshot)
         if not snapshot.is_absolute():
@@ -113,7 +122,12 @@ def main() -> None:
             snapshot = project_root / snapshot
         if not mapping_config.is_absolute():
             mapping_config = project_root / mapping_config
-        result = build_decode_workflow_release(snapshot, output, mapping_config)
+        result = build_decode_workflow_release(snapshot, output, mapping_config, input_path)
+    elif args.command == "decode-apply-aliases":
+        mapping_config = Path(args.mapping_config)
+        if not mapping_config.is_absolute():
+            mapping_config = project_root / mapping_config
+        result = apply_decode_alias_curation(input_path, mapping_config)
     else:
         result = run_release(
             input_path,

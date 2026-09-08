@@ -1,5 +1,17 @@
 # Explicit DECODE-to-H2KG curation decisions.  This file is the only authority
 # for cross-workflow anchors: label similarity outside this file creates no link.
+default_alignment:
+  enabled: true
+  role_by_visual_category:
+    material: https://w3id.org/h2kg/hydrogen-ontology#Matter
+    component: https://w3id.org/h2kg/hydrogen-ontology#Matter
+    data: https://w3id.org/h2kg/hydrogen-ontology#Data
+    device: https://w3id.org/h2kg/hydrogen-ontology#Instrument
+    process: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+    method: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+    model: https://w3id.org/h2kg/hydrogen-ontology#Process
+    other: https://w3id.org/h2kg/hydrogen-ontology#Metadata
+
 mappings:
   - source_label: CCM
     native_category: component
@@ -72,6 +84,172 @@ mappings:
     anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition
     anchor_label: Electrolyte Composition
     evidence: Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.
+  - source_label: ECSA
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea
+    anchor_label: Electrochemically Active Surface Area
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+    semantic_role: Property
+    confidence: high
+    evidence: Reviewed standard abbreviation for electrochemically active surface area.
+  - source_label: I/C-ratio
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio
+    anchor_label: Ionomer To Carbon Ratio
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed abbreviation for the ionomer-to-carbon ratio.
+  - source_label: CCL thickness
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness
+    anchor_label: Cathode Catalyst Layer Thickness
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+    semantic_role: Property
+    confidence: high
+    evidence: Reviewed abbreviation for cathode catalyst-layer thickness.
+  - source_label: GDL thickness
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness
+    anchor_label: Gas Diffusion Layer Thickness
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed abbreviation for gas-diffusion-layer thickness.
+  - source_label: GDL porosity
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity
+    anchor_label: Gas Diffusion Layer Porosity
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed abbreviation for gas-diffusion-layer porosity.
+  - source_label: MPL thickness
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerThickness
+    anchor_label: Microporous Layer Thickness
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+    semantic_role: Property
+    confidence: high
+    evidence: Reviewed abbreviation for microporous-layer thickness.
+  - source_label: MPL porosity
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPorosity
+    anchor_label: Microporous Layer Porosity
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed abbreviation for microporous-layer porosity.
+  - source_label: MPL permeability
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability
+    anchor_label: Microporous Layer Permeability
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed abbreviation for microporous-layer permeability.
+  - source_label: MPL ink
+    native_category: material
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerInk
+    anchor_label: Microporous Layer Ink
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+    semantic_role: Matter
+    confidence: high
+    evidence: Reviewed abbreviation for microporous-layer ink.
+  - source_label: Ionomer film thickness
+    native_category: LRE
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#IonomerFilmThickness
+    anchor_label: Ionomer Film Thickness
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+    semantic_role: Property
+    confidence: high
+    evidence: Reviewed equivalent label for ionomer-film thickness.
+  - source_label: Catalyst loading
+    native_category: component
+    state: approved_h2kg
+    decision: existing_h2kg_mapping
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading
+    anchor_label: Catalyst Loading
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+    confidence: high
+    evidence: Reviewed exact mapping to the established catalyst-loading term.
+  - source_label: Cell current density
+    native_category: device
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity
+    anchor_label: Current Density
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+    semantic_role: Property
+    confidence: high
+    evidence: Reviewed cell-level naming variant for current density.
+  - source_label: XRD pattern
+    native_category: component
+    state: approved_h2kg
+    decision: strict_alt_label
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset
+    anchor_label: XRD Pattern Dataset
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+    semantic_role: Data
+    confidence: high
+    evidence: Reviewed raw-diffraction data naming variant.
+  - source_label: Electrolyte
+    native_category: material
+    state: approved_h2kg
+    decision: new_h2kg_term
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#Electrolyte
+    anchor_label: Electrolyte
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+    semantic_role: Matter
+    confidence: high
+    evidence: Reusable electrochemical material category promoted after DECODE recurrence review.
+
+alias_curation:
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea
+    aliases: [ECSA]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio
+    aliases: [I/C-ratio]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness
+    aliases: [CCL thickness]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness
+    aliases: [GDL thickness]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity
+    aliases: [GDL porosity]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerThickness
+    aliases: [MPL thickness]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPorosity
+    aliases: [MPL porosity]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability
+    aliases: [MPL permeability]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerInk
+    aliases: [MPL ink]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#IonomerFilmThickness
+    aliases: [Ionomer film thickness]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity
+    aliases: [Cell current density]
+  - target_iri: https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset
+    aliases: [XRD pattern]
 
 # No source dependency is reinterpreted as an H2KG semantic property unless a
 # reviewed entry is added here with exact workflow and original node IDs.

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from aimworks_ontology_release.decode_workflows import build_decode_workflow_release, ingest_decode_graphml_directory
+from aimworks_ontology_release.decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
 
 
 def _graphml(nodes: list[tuple[str, str]], edges: list[tuple[str, str]]) -> str:
@@ -75,3 +75,95 @@ semantic_projections: []
     assert "recommended_state" in candidates
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.jsonld").exists()
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.ttl").exists()
+
+
+def test_reviewed_semantic_projections_must_trace_a_source_dependency(tmp_path: Path) -> None:
+    snapshot = tmp_path / "decode.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "workflows": [
+                    {
+                        "id": "workflow", "iri": "https://example.org/workflow", "title": "Workflow", "source_filename": "workflow.graphml", "source_sha256": "workflow", "method_family": "other",
+                        "nodes": [
+                            {"id": "workflow::n0", "source_id": "n0", "iri": "https://example.org/workflow/n0", "label": "Material", "native_category": "material", "description": "", "shape": "ellipse"},
+                            {"id": "workflow::n1", "source_id": "n1", "iri": "https://example.org/workflow/n1", "label": "Measurement", "native_category": "method", "description": "", "shape": "rectangle"},
+                        ],
+                        "edges": [{"id": "workflow::e0", "source_id": "n0", "target_id": "n1", "source": "workflow::n0", "target": "workflow::n1", "description": ""}],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    config = tmp_path / "mappings.yaml"
+    config.write_text(
+        """mappings: []
+semantic_projections:
+  - workflow_id: workflow
+    source_node_id: n0
+    target_node_id: n1
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial
+""",
+        encoding="utf-8",
+    )
+    build_decode_workflow_release(snapshot, tmp_path / "output", config)
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    assert graph["semantic_edges"][0]["source_dependency_id"] == "workflow::e0"
+    validation = json.loads((tmp_path / "output" / "decode" / "decode_validation_report.json").read_text(encoding="utf-8"))
+    assert validation["untraceable_semantic_edge_ids"] == []
+
+
+def test_decode_registry_resolves_unmapped_concepts_to_reviewed_anchors(tmp_path: Path) -> None:
+    snapshot = tmp_path / "decode.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "workflows": [
+                    {
+                        "id": "one", "iri": "https://example.org/one", "title": "One", "source_filename": "one.graphml", "source_sha256": "one", "method_family": "other",
+                        "nodes": [{"id": "one::n0", "source_id": "n0", "iri": "https://example.org/one/n0", "label": "Custom electrolyte", "native_category": "material", "description": "", "shape": "ellipse"}], "edges": [],
+                    },
+                    {
+                        "id": "two", "iri": "https://example.org/two", "title": "Two", "source_filename": "two.graphml", "source_sha256": "two", "method_family": "other",
+                        "nodes": [{"id": "two::n0", "source_id": "n0", "iri": "https://example.org/two/n0", "label": "Custom electrolyte", "native_category": "material", "description": "", "shape": "ellipse"}], "edges": [],
+                    },
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    config = tmp_path / "mappings.yaml"
+    config.write_text(
+        """default_alignment:
+  enabled: true
+  role_by_visual_category:
+    material: https://w3id.org/h2kg/hydrogen-ontology#Matter
+mappings: []
+semantic_projections: []
+""",
+        encoding="utf-8",
+    )
+    build_decode_workflow_release(snapshot, tmp_path / "output", config)
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    assert {node["decision"] for node in graph["nodes"]} == {"reviewed_decode_anchor"}
+    assert graph["nodes"][0]["canonical_role_iri"].endswith("#Matter")
+    registry = json.loads((tmp_path / "output" / "decode" / "decode_concept_registry.json").read_text(encoding="utf-8"))
+    assert registry["counts"]["concept_count"] == 1
+    assert registry["concepts"][0]["occurrence_count"] == 2
+
+
+def test_decode_alias_curation_updates_only_explicit_target(tmp_path: Path) -> None:
+    target = "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+    ontology = tmp_path / "ontology.jsonld"
+    ontology.write_text(
+        json.dumps([{"@id": target, "http://www.w3.org/2004/02/skos/core#altLabel": [{"@value": "existing"}]}]),
+        encoding="utf-8",
+    )
+    config = tmp_path / "mappings.yaml"
+    config.write_text(f"alias_curation:\n  - target_iri: {target}\n    aliases: [ECSA]\n", encoding="utf-8")
+    result = apply_decode_alias_curation(ontology, config)
+    assert result["count"] == 1
+    content = json.loads(ontology.read_text(encoding="utf-8"))
+    aliases = content[0]["http://www.w3.org/2004/02/skos/core#altLabel"]
+    assert {item["@value"] for item in aliases} == {"existing", "ECSA"}

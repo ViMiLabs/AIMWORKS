@@ -10,6 +10,7 @@ only explicit mappings from the reviewed configuration file.
 import csv
 import hashlib
 import io
+import json
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
@@ -17,7 +18,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from .utils import COMMON_CONTEXT, dump_json, ensure_dir, load_json, try_load_yaml, write_text
+from .scorer import lexical_score
+from .utils import COMMON_CONTEXT, SKOS_ALT_LABEL, SKOS_PREF_LABEL, dump_json, ensure_dir, load_json, try_load_yaml, write_text
 
 
 DECODE_NS = "https://w3id.org/h2kg/decode/workflow/"
@@ -63,6 +65,7 @@ def build_decode_workflow_release(
     snapshot_path: str | Path,
     output_root: str | Path,
     mapping_config_path: str | Path,
+    ontology_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """Build static DECODE workflow artefacts from the immutable normalized snapshot."""
     snapshot_path = Path(snapshot_path)
@@ -70,14 +73,23 @@ def build_decode_workflow_release(
     if not snapshot_path.exists():
         return {"status": "skipped_missing_snapshot", "snapshot": str(snapshot_path)}
     snapshot = load_json(snapshot_path)
-    mapping_config = try_load_yaml(Path(mapping_config_path), {"mappings": [], "semantic_projections": []})
+    mapping_config = try_load_yaml(
+        Path(mapping_config_path),
+        {"mappings": [], "semantic_projections": [], "default_alignment": {}, "alias_curation": []},
+    )
     mappings = _index_mappings(mapping_config.get("mappings", []))
     semantic_projections = _index_semantic_projections(mapping_config.get("semantic_projections", []))
     target = ensure_dir(output_root / "decode")
     workflows_dir = ensure_dir(target / "workflows")
-    graph, matrix_rows = _federate(snapshot, mappings, semantic_projections)
+    graph, matrix_rows = _federate(
+        snapshot,
+        mappings,
+        semantic_projections,
+        mapping_config.get("default_alignment", {}),
+    )
     validation = _validate_federated_graph(snapshot, graph)
     anchor_candidates = _anchor_candidates(snapshot, mappings)
+    registry = _concept_registry(snapshot, graph, ontology_path)
 
     generated: list[Path] = [
         dump_json(target / "decode_federated_graph.json", graph),
@@ -86,6 +98,8 @@ def build_decode_workflow_release(
         _write_mapping_matrix(target / "decode_mapping_matrix.csv", matrix_rows),
         _write_mapping_matrix_markdown(target / "decode_mapping_matrix.md", matrix_rows),
         _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
+        dump_json(target / "decode_concept_registry.json", registry),
+        _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
     for workflow in graph["workflows"]:
@@ -112,9 +126,43 @@ def build_decode_workflow_release(
         "mapped_occurrence_count": len(graph["anchor_edges"]),
         "approved_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "approved_h2kg"),
         "reviewed_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "reviewed_decode"),
+        "concept_registry_count": registry["counts"]["concept_count"],
         "validation_status": validation["status"],
         "generated_files": [str(path) for path in generated],
     }
+
+
+def apply_decode_alias_curation(
+    ontology_path: str | Path,
+    mapping_config_path: str | Path,
+) -> dict[str, Any]:
+    """Apply only explicitly curated DECODE aliases to the H2KG source document."""
+    ontology_path = Path(ontology_path)
+    items = load_json(ontology_path)
+    if not isinstance(items, list):
+        raise ValueError(f"Expected a JSON-LD array in {ontology_path}")
+    config = try_load_yaml(Path(mapping_config_path), {"alias_curation": []})
+    by_iri = {str(item.get("@id", "")): item for item in items if isinstance(item, dict)}
+    added: list[dict[str, str]] = []
+    for entry in config.get("alias_curation", []):
+        if not isinstance(entry, dict):
+            continue
+        target = str(entry.get("target_iri", ""))
+        item = by_iri.get(target)
+        if item is None:
+            raise ValueError(f"Alias target is not present in H2KG source: {target}")
+        existing = {value.lower() for value in _literal_values(item.get(SKOS_ALT_LABEL, []))}
+        aliases = entry.get("aliases", [])
+        if not isinstance(aliases, list):
+            aliases = [aliases]
+        for alias in aliases:
+            alias = str(alias).strip()
+            if alias and alias.lower() not in existing:
+                item.setdefault(SKOS_ALT_LABEL, []).append({"@language": "en", "@value": alias})
+                existing.add(alias.lower())
+                added.append({"target_iri": target, "alias": alias})
+    dump_json(ontology_path, items)
+    return {"status": "updated", "ontology": str(ontology_path), "added_aliases": added, "count": len(added)}
 
 
 def _parse_graphml(path: Path) -> dict[str, Any]:
@@ -174,6 +222,7 @@ def _federate(
     snapshot: dict[str, Any],
     mappings: dict[tuple[str, str], dict[str, Any]],
     semantic_projections: dict[tuple[str, str, str], dict[str, Any]],
+    default_alignment: dict[str, Any],
 ) -> tuple[dict[str, Any], list[dict[str, str]]]:
     nodes: list[dict[str, Any]] = []
     source_edges: list[dict[str, Any]] = []
@@ -190,8 +239,11 @@ def _federate(
             mapping = mappings.get((_normal(source_node["label"]), _normal(source_node.get("native_category", ""))))
             if mapping is None:
                 mapping = mappings.get((_normal(source_node["label"]), ""))
+            if mapping is None:
+                mapping = _default_decode_mapping(source_node, default_alignment)
             mapping_state = mapping.get("state", "unresolved") if mapping else "unresolved"
             anchor_id = mapping.get("anchor_iri") if mapping else None
+            decision = mapping.get("decision", _default_decision(mapping_state)) if mapping else "unresolved"
             node = {
                 **source_node,
                 "kind": "occurrence",
@@ -199,6 +251,10 @@ def _federate(
                 "visual_category": _visual_category(source_node),
                 "mapping_state": mapping_state,
                 "anchor_id": anchor_id,
+                "decision": decision,
+                "canonical_role_iri": mapping.get("canonical_role_iri", "") if mapping else "",
+                "semantic_role": mapping.get("semantic_role", "") if mapping else "",
+                "confidence": mapping.get("confidence", "unreviewed") if mapping else "unreviewed",
                 "mapping_evidence": mapping.get("evidence", "No reviewed mapping decision.") if mapping else "No reviewed mapping decision.",
             }
             nodes.append(node)
@@ -210,8 +266,12 @@ def _federate(
                     "source_label": source_node["label"],
                     "native_category": source_node.get("native_category", ""),
                     "mapping_state": mapping_state,
+                    "decision": decision,
                     "anchor_iri": anchor_id or "",
                     "anchor_label": mapping.get("anchor_label", "") if mapping else "",
+                    "canonical_role_iri": node["canonical_role_iri"],
+                    "semantic_role": node["semantic_role"],
+                    "confidence": node["confidence"],
                     "evidence": node["mapping_evidence"],
                 }
             )
@@ -224,6 +284,10 @@ def _federate(
                         "kind": "anchor",
                         "label": mapping.get("anchor_label") or _last_segment(anchor_id),
                         "state": mapping_state,
+                        "decision": decision,
+                        "canonical_role_iri": node["canonical_role_iri"],
+                        "semantic_role": node["semantic_role"],
+                        "confidence": node["confidence"],
                         "evidence": mapping.get("evidence", ""),
                         "occurrence_ids": [],
                     },
@@ -238,11 +302,22 @@ def _federate(
                         "type": "occurrence_anchor_mapping",
                     }
                 )
-        source_edges.extend({**edge, "workflow_id": workflow_id, "type": "source_dependency"} for edge in source_workflow.get("edges", []))
+        workflow_source_edges = source_workflow.get("edges", [])
+        source_dependency_ids = {
+            (edge["source_id"], edge["target_id"]): edge["id"]
+            for edge in workflow_source_edges
+        }
+        source_edges.extend({**edge, "workflow_id": workflow_id, "type": "source_dependency"} for edge in workflow_source_edges)
         for projection_key, projection in semantic_projections.items():
             projection_workflow, source_node_id, target_node_id = projection_key
             if projection_workflow != workflow_id:
                 continue
+            source_dependency_id = source_dependency_ids.get((source_node_id, target_node_id))
+            if source_dependency_id is None:
+                raise ValueError(
+                    "A reviewed semantic projection must cite a preserved directed "
+                    f"DECODE dependency: {workflow_id}::{source_node_id} -> {target_node_id}."
+                )
             semantic_edges.append(
                 {
                     "id": f"semantic::{workflow_id}::{source_node_id}::{target_node_id}",
@@ -252,6 +327,7 @@ def _federate(
                     "predicate": projection["predicate"],
                     "label": projection.get("label") or _last_segment(projection["predicate"]),
                     "type": "approved_semantic_projection",
+                    "source_dependency_id": source_dependency_id,
                     "evidence": projection.get("evidence", "Explicit reviewed semantic projection."),
                 }
             )
@@ -310,12 +386,18 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
     node_ids = {node["id"] for node in graph["nodes"]}
     invalid_edges = [edge["id"] for edge in graph["source_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
     invalid_semantic_edges = [edge["id"] for edge in graph["semantic_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
+    source_dependency_ids = {edge["id"] for edge in graph["source_edges"]}
+    untraceable_semantic_edges = [
+        edge["id"]
+        for edge in graph["semantic_edges"]
+        if edge.get("source_dependency_id") not in source_dependency_ids
+    ]
     unexpected_cross_links = [
         edge["id"]
         for edge in graph["source_edges"]
         if edge["source"].split("::", 1)[0] != edge["target"].split("::", 1)[0]
     ]
-    status = "passed" if source_pairs == preserved_pairs and not invalid_edges and not invalid_semantic_edges and not unexpected_cross_links else "failed"
+    status = "passed" if source_pairs == preserved_pairs and not invalid_edges and not invalid_semantic_edges and not untraceable_semantic_edges and not unexpected_cross_links else "failed"
     return {
         "status": status,
         "source_workflow_count": len(snapshot.get("workflows", [])),
@@ -326,9 +408,135 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         "unexpected_source_pairs": sorted(preserved_pairs - source_pairs),
         "invalid_source_edge_ids": invalid_edges,
         "invalid_semantic_edge_ids": invalid_semantic_edges,
+        "untraceable_semantic_edge_ids": untraceable_semantic_edges,
         "unexpected_cross_workflow_source_edge_ids": unexpected_cross_links,
         "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or reviewed_decode anchor mappings.",
     }
+
+
+def _default_decision(mapping_state: str) -> str:
+    if mapping_state == "approved_h2kg":
+        return "existing_h2kg_mapping"
+    if mapping_state == "reviewed_decode":
+        return "reviewed_decode_anchor"
+    return "unresolved"
+
+
+def _default_decode_mapping(source_node: dict[str, Any], policy: dict[str, Any]) -> dict[str, Any] | None:
+    """Return a stable DECODE anchor only when the explicit fallback policy permits it."""
+    if not policy.get("enabled", False):
+        return None
+    visual_category = _visual_category(source_node)
+    role_by_category = policy.get("role_by_visual_category", {})
+    role = str(role_by_category.get(visual_category, "")).strip()
+    category = _normal(source_node.get("native_category", "")) or visual_category
+    anchor_key = f"{_slug(source_node['label'])}-{_slug(category)}"
+    return {
+        "state": "reviewed_decode",
+        "decision": "reviewed_decode_anchor",
+        "anchor_iri": f"{DECODE_NS}anchor/{anchor_key}",
+        "anchor_label": source_node["label"],
+        "canonical_role_iri": role,
+        "semantic_role": _last_segment(role) if role else "contextual DECODE concept",
+        "confidence": "reviewed_structural",
+        "evidence": (
+            "DECODE-specific concept retained as a stable reviewed anchor. "
+            "Its source topology is preserved; no H2KG synonym or new public term was asserted."
+        ),
+    }
+
+
+def _concept_registry(
+    snapshot: dict[str, Any],
+    graph: dict[str, Any],
+    ontology_path: str | Path | None,
+) -> dict[str, Any]:
+    """Create an auditable, concept-level register from occurrence-level decisions."""
+    nodes_by_id = {node["id"]: node for node in graph["nodes"]}
+    neighbors: dict[str, set[str]] = defaultdict(set)
+    for edge in graph["source_edges"]:
+        source = nodes_by_id.get(edge["source"])
+        target = nodes_by_id.get(edge["target"])
+        if source and target:
+            neighbors[source["id"]].add(target["label"])
+            neighbors[target["id"]].add(source["label"])
+
+    h2kg_terms = _load_h2kg_terms(ontology_path)
+    groups: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for node in graph["nodes"]:
+        groups[(_normal(node["label"]), _normal(node.get("native_category", "")))].append(node)
+
+    concepts: list[dict[str, Any]] = []
+    for key, occurrences in sorted(groups.items(), key=lambda item: (item[1][0]["label"].lower(), item[0][1])):
+        representative = occurrences[0]
+        decisions = {node["decision"] for node in occurrences}
+        if len(decisions) != 1:
+            raise ValueError(f"Inconsistent DECODE decisions for {representative['label']!r}: {sorted(decisions)}")
+        candidates = _h2kg_candidates(representative["label"], h2kg_terms)
+        concepts.append(
+            {
+                "concept_id": f"{DECODE_NS}concept/{_slug(representative['label'])}-{_slug(key[1] or representative['visual_category'])}",
+                "source_label": representative["label"],
+                "native_category": representative.get("native_category", ""),
+                "visual_category": representative["visual_category"],
+                "occurrence_count": len(occurrences),
+                "workflow_ids": sorted({node["workflow_id"] for node in occurrences}),
+                "source_descriptions": sorted({node.get("description", "") for node in occurrences if node.get("description", "")}),
+                "neighbor_context": sorted({label for node in occurrences for label in neighbors[node["id"]]})[:20],
+                "decision": representative["decision"],
+                "mapping_state": representative["mapping_state"],
+                "anchor_iri": representative.get("anchor_id", ""),
+                "canonical_role_iri": representative.get("canonical_role_iri", ""),
+                "semantic_role": representative.get("semantic_role", ""),
+                "confidence": representative.get("confidence", "unreviewed"),
+                "rationale": representative.get("mapping_evidence", ""),
+                "candidate_h2kg_terms": candidates,
+            }
+        )
+    counts = Counter(concept["decision"] for concept in concepts)
+    return {
+        "schema_version": "1.0",
+        "generated_on": date.today().isoformat(),
+        "description": "Concept-level DECODE-to-H2KG curation register. Candidate matches are not accepted mappings.",
+        "counts": {"concept_count": len(concepts), "outcomes": dict(sorted(counts.items()))},
+        "concepts": concepts,
+    }
+
+
+def _load_h2kg_terms(ontology_path: str | Path | None) -> list[dict[str, Any]]:
+    if ontology_path is None or not Path(ontology_path).exists():
+        return []
+    items = load_json(Path(ontology_path))
+    if not isinstance(items, list):
+        return []
+    terms: list[dict[str, Any]] = []
+    for item in items:
+        iri = str(item.get("@id", ""))
+        if not iri.startswith(H2KG):
+            continue
+        labels = _literal_values(item.get(RDFS_LABEL, [])) + _literal_values(item.get(SKOS_PREF_LABEL, []))
+        label = next((value for value in labels if value), "")
+        if label:
+            terms.append({"iri": iri, "label": label, "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL, []))})
+    return terms
+
+
+def _literal_values(values: Any) -> list[str]:
+    values = values if isinstance(values, list) else [values]
+    return [str(value.get("@value", "")).strip() for value in values if isinstance(value, dict) and value.get("@value")]
+
+
+def _h2kg_candidates(label: str, terms: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    scored: list[tuple[float, dict[str, Any]]] = []
+    for term in terms:
+        names = [term["label"], *term["alt_labels"]]
+        score = max((lexical_score(label, name) for name in names), default=0.0)
+        if score >= 0.55:
+            scored.append((score, term))
+    return [
+        {"iri": term["iri"], "label": term["label"], "score": round(score, 3)}
+        for score, term in sorted(scored, key=lambda item: (-item[0], item[1]["label"]))[:3]
+    ]
 
 
 def _index_mappings(entries: list[dict[str, Any]]) -> dict[tuple[str, str], dict[str, Any]]:
@@ -467,7 +675,11 @@ def _short_hash(value: str) -> str:
 
 
 def _write_mapping_matrix(path: Path, rows: list[dict[str, str]]) -> Path:
-    fields = ["workflow_id", "source_filename", "source_node_id", "source_label", "native_category", "mapping_state", "anchor_iri", "anchor_label", "evidence"]
+    fields = [
+        "workflow_id", "source_filename", "source_node_id", "source_label", "native_category",
+        "mapping_state", "decision", "anchor_iri", "anchor_label", "canonical_role_iri",
+        "semantic_role", "confidence", "evidence",
+    ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
     writer.writeheader()
@@ -500,6 +712,25 @@ def _write_anchor_candidates(path: Path, rows: list[dict[str, str]]) -> Path:
     writer = csv.DictWriter(buffer, fieldnames=fields)
     writer.writeheader()
     writer.writerows(rows)
+    return write_text(path, buffer.getvalue())
+
+
+def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
+    fields = [
+        "concept_id", "source_label", "native_category", "visual_category", "occurrence_count",
+        "workflow_ids", "source_descriptions", "neighbor_context", "decision", "mapping_state",
+        "anchor_iri", "canonical_role_iri", "semantic_role", "confidence", "rationale",
+        "candidate_h2kg_terms",
+    ]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for row in rows:
+        flattened = dict(row)
+        for key in ("workflow_ids", "source_descriptions", "neighbor_context"):
+            flattened[key] = "; ".join(str(value) for value in row[key])
+        flattened["candidate_h2kg_terms"] = json.dumps(row["candidate_h2kg_terms"], ensure_ascii=False)
+        writer.writerow(flattened)
     return write_text(path, buffer.getvalue())
 
 

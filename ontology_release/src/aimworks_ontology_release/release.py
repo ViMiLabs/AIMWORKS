@@ -24,6 +24,7 @@ from .sem_pilot import build_sem_pilot_package
 from .split import split_ontology
 from .synchrotron_xray_tomo_pilot import build_synchrotron_xray_tomo_pilot_package
 from .tem_pilot import build_tem_pilot_package
+from .tib_benchmark import build_tib_benchmark_package
 from .xps_pilot import build_xps_pilot_package
 from .xrd_pilot import build_xrd_pilot_package
 from .utils import ensure_dir, write_text
@@ -70,6 +71,12 @@ def run_release(
         project_root / "input" / "decode_workflows_source.json",
         output_root,
         project_root / "config" / "decode_workflow_mappings.yaml",
+        input_path,
+    )
+    tib_benchmark = build_tib_benchmark_package(
+        input_path,
+        output_root,
+        project_root / "input" / "tib_terminology_snapshot.json",
     )
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
@@ -108,6 +115,7 @@ def run_release(
         "xrd_pilot": xrd_pilot,
         "xps_pilot": xps_pilot,
         "decode_workflows": decode_workflows,
+        "tib_benchmark": tib_benchmark,
         "fair": fair,
         "odk": odk,
         "docs": docs,
