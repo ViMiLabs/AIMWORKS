@@ -1,0 +1,84 @@
+# Explicit DECODE-to-H2KG curation decisions.  This file is the only authority
+# for cross-workflow anchors: label similarity outside this file creates no link.
+mappings:
+  - source_label: CCM
+    native_category: component
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CatalystCoatedMembrane
+    anchor_label: Catalyst Coated Membrane
+    evidence: Reviewed abbreviation mapping to the established H2KG CCM anchor.
+  - source_label: GDL
+    native_category: component
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer
+    anchor_label: Gas Diffusion Layer
+    evidence: Reviewed abbreviation mapping to the established H2KG GDL anchor.
+  - source_label: MEA
+    native_category: component
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly
+    anchor_label: MEA Assembly
+    evidence: Reviewed abbreviation mapping to the established H2KG MEA assembly anchor.
+  - source_label: Membrane
+    native_category: component
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane
+    anchor_label: Proton Exchange Membrane
+    evidence: Reviewed material-category mapping to the public H2KG membrane anchor.
+  - source_label: Catalyst ink
+    native_category: material
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CatalystInk
+    anchor_label: Catalyst Ink
+    evidence: Reviewed exact domain concept mapping to the public H2KG catalyst-ink anchor.
+  - source_label: Catalyst powder
+    native_category: material
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder
+    anchor_label: Catalyst Powder
+    evidence: Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor.
+  - source_label: FIB-SEM on CL material
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#FIBSEMTomographyMeasurement
+    anchor_label: FIB SEM Tomography Measurement
+    evidence: Reviewed method mapping to the public H2KG FIB-SEM tomography measurement anchor.
+
+# No source dependency is reinterpreted as an H2KG semantic property unless a
+# reviewed entry is added here with exact workflow and original node IDs.
+semantic_projections:
+  - workflow_id: fib-sem-on-cl-material
+    source_node_id: n0
+    target_node_id: n3
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial
+    label: hasInputMaterial
+    evidence: "Reviewed FIB-SEM workflow projection: CCM is the material input to the FIB-SEM occurrence."
+  - workflow_id: fib-sem-on-cl-material
+    source_node_id: n3
+    target_node_id: n2
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasOutputData
+    label: hasOutputData
+    evidence: "Reviewed FIB-SEM workflow projection: the measurement occurrence produces raw voxel data."
+  - workflow_id: fib-sem-on-cl-material
+    source_node_id: n2
+    target_node_id: n8
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasInputData
+    label: hasInputData
+    evidence: "Reviewed workflow projection: FIB tomography classification consumes raw voxel data."
+  - workflow_id: blade-coating-and-decal-transfer-for-ref-pefc-ccm
+    source_node_id: n0
+    target_node_id: n4
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial
+    label: hasInputMaterial
+    evidence: "Reviewed workflow projection: catalyst ink is an input to the coating and transfer occurrence."
+  - workflow_id: blade-coating-and-decal-transfer-for-ref-pefc-ccm
+    source_node_id: n2
+    target_node_id: n4
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial
+    label: hasInputMaterial
+    evidence: "Reviewed workflow projection: membrane is an input to the coating and transfer occurrence."
+  - workflow_id: blade-coating-and-decal-transfer-for-ref-pefc-ccm
+    source_node_id: n4
+    target_node_id: n3
+    predicate: https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial
+    label: hasOutputMaterial
+    evidence: "Reviewed workflow projection: coating and transfer produces the CCM occurrence."

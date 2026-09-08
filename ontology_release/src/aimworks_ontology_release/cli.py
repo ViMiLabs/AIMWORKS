@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from .docs import build_docs
+from .decode_workflows import build_decode_workflow_release, ingest_decode_graphml_directory
 from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
@@ -24,13 +25,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "decode-build"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
         if command == "odk":
             sub.add_argument("--prepare-only", action="store_true")
             sub.add_argument("--collect-only", action="store_true")
             sub.add_argument("--execute", action="store_true")
+        if command == "decode-build":
+            sub.add_argument("--snapshot", default="input/decode_workflows_source.json")
+            sub.add_argument("--mapping-config", default="config/decode_workflow_mappings.yaml")
+    decode_ingest = subparsers.add_parser("decode-ingest")
+    decode_ingest.add_argument("--source-dir", required=True)
+    decode_ingest.add_argument("--snapshot", default="input/decode_workflows_source.json")
     annotate = subparsers.add_parser("annotate")
     annotate.add_argument("--input", required=True)
     annotate.add_argument("--draft-llm", action="store_true")
@@ -94,6 +101,19 @@ def main() -> None:
             collect_only=getattr(args, "collect_only", False),
             execute=getattr(args, "execute", False),
         )
+    elif args.command == "decode-ingest":
+        snapshot = Path(args.snapshot)
+        if not snapshot.is_absolute():
+            snapshot = project_root / snapshot
+        result = ingest_decode_graphml_directory(args.source_dir, snapshot)
+    elif args.command == "decode-build":
+        snapshot = Path(args.snapshot)
+        mapping_config = Path(args.mapping_config)
+        if not snapshot.is_absolute():
+            snapshot = project_root / snapshot
+        if not mapping_config.is_absolute():
+            mapping_config = project_root / mapping_config
+        result = build_decode_workflow_release(snapshot, output, mapping_config)
     else:
         result = run_release(
             input_path,

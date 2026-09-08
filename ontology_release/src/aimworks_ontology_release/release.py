@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .docs import build_docs
+from .decode_workflows import build_decode_workflow_release
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .afm_pilot import build_afm_pilot_package
@@ -65,6 +66,11 @@ def run_release(
     synchrotron_xray_tomo_pilot = build_synchrotron_xray_tomo_pilot_package(input_path, output_root)
     xrd_pilot = build_xrd_pilot_package(input_path, output_root)
     xps_pilot = build_xps_pilot_package(input_path, output_root)
+    decode_workflows = build_decode_workflow_release(
+        project_root / "input" / "decode_workflows_source.json",
+        output_root,
+        project_root / "config" / "decode_workflow_mappings.yaml",
+    )
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -101,6 +107,7 @@ def run_release(
         "synchrotron_xray_tomo_pilot": synchrotron_xray_tomo_pilot,
         "xrd_pilot": xrd_pilot,
         "xps_pilot": xps_pilot,
+        "decode_workflows": decode_workflows,
         "fair": fair,
         "odk": odk,
         "docs": docs,
@@ -114,7 +121,7 @@ def run_release(
 def build_release_bundle(project_root: str | Path) -> Path:
     project_root = Path(project_root)
     bundle_dir = ensure_dir(project_root / "output" / "release_bundle")
-    for folder in ["ontology", "mappings", "reports", "review", "examples", "docs", "w3id", "odk"]:
+    for folder in ["ontology", "mappings", "reports", "review", "examples", "benchmarks", "decode", "docs", "w3id", "odk"]:
         source = project_root / "output" / folder
         target = bundle_dir / folder
         if target.exists():

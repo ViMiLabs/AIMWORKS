@@ -107,6 +107,8 @@ def build_docs(
         "mapping_count": len(mappings),
     }
     explorer = _build_explorer_dataset(namespace_terms, items)
+    decode_path = output_dir.parent / "decode" / "decode_federated_graph.json"
+    decode = load_json(decode_path) if decode_path.exists() else None
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
@@ -116,6 +118,7 @@ def build_docs(
         (output_dir / "pages" / "user-guide.html", "User Guide", _user_guide_body()),
         (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
         (output_dir / "pages" / "explore.html", "Explore H2KG", _explore_body(project, explorer, output_dir / "pages" / "explore.html", output_dir)),
+        (output_dir / "pages" / "decode-workflows.html", "Explore DECODE Workflows", _decode_workflows_body(decode, output_dir / "pages" / "decode-workflows.html", output_dir)),
         (output_dir / "pages" / "reference.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "pages" / "reference.html", output_dir)),
         (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
@@ -143,15 +146,28 @@ def build_docs(
                 '  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>\n'
                 f'  <script defer src="{explorer_js}"></script>'
             )
+        if path.name == "decode-workflows.html":
+            decode_css = _relative_href(path, output_dir / "assets" / "decode-workflows.css")
+            decode_js = _relative_href(path, output_dir / "assets" / "decode-workflows.js")
+            extra_head = (
+                f'<link rel="stylesheet" href="{decode_css}">\n'
+                '  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>\n'
+                f'  <script defer src="{decode_js}"></script>'
+            )
         write_text(path, _page_template(project, title, body, path, output_dir, extra_head=extra_head))
 
     write_text(output_dir / "index.html", _legacy_profile_home())
     _copy_site_assets(output_dir, project)
+    if decode is not None:
+        # Publish normalized projections and reports, never the supplied raw GraphML files.
+        shutil.copytree(output_dir.parent / "decode", output_dir / "decode", dirs_exist_ok=True)
     _copy_odk_artifacts(output_dir)
     _copy_asserted_source_jsonld(input_path, output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
     write_text(output_dir / "assets" / "explorer.css", _explorer_css())
     write_text(output_dir / "assets" / "explorer.js", _explorer_js())
+    write_text(output_dir / "assets" / "decode-workflows.css", _decode_workflows_css())
+    write_text(output_dir / "assets" / "decode-workflows.js", _decode_workflows_js())
     dump_json(
         output_dir / "search-index.json",
         {
@@ -165,6 +181,8 @@ def build_docs(
         },
     )
     dump_json(output_dir / "data" / "explorer.json", explorer)
+    if decode is not None:
+        dump_json(output_dir / "data" / "decode_workflows.json", decode)
     return summary
 
 
@@ -445,6 +463,212 @@ def _short_label(iri: str) -> str:
     return fragment or iri
 
 
+def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_root: Path) -> str:
+    if decode is None:
+        return """
+<section class="notice"><h2>DECODE workflow bundle not built</h2><p>The DECODE Explorer is generated only after a reviewed GraphML snapshot has been ingested. The H2KG ontology and its TBox-only Explore page remain available independently.</p></section>
+"""
+    data_href = _relative_href(page_path, docs_root / "data" / "decode_workflows.json")
+    h2kg_explore = _relative_href(page_path, docs_root / "pages" / "explore.html")
+    counts = decode.get("counts", {})
+    return f"""
+<section class="decode-intro">
+  <p class="eyebrow">Separate aligned workflow layer</p>
+  <h2>Federated DECODE workflow graph</h2>
+  <p>Original GraphML occurrences and directed dependencies are preserved. Cross-workflow expansion is available only through explicit reviewed anchors; the H2KG TBox and its Explore page are unchanged.</p>
+  <div class="decode-metrics">
+    <span><strong>{counts.get('workflow_count', 0)}</strong> workflows</span>
+    <span><strong>{counts.get('source_node_count', 0)}</strong> source occurrences</span>
+    <span><strong>{counts.get('source_edge_count', 0)}</strong> preserved dependencies</span>
+    <span><strong>{counts.get('anchor_count', 0)}</strong> reviewed shared anchors</span>
+  </div>
+</section>
+<section id="decode-root" class="decode-root" data-decode-data="{escape(data_href)}" data-h2kg-explore="{escape(h2kg_explore)}">
+  <aside class="decode-catalogue">
+    <label for="decode-search">Search workflows and terms</label>
+    <input id="decode-search" type="search" placeholder="label, workflow, category, H2KG IRI">
+    <label for="decode-family">Method family</label>
+    <select id="decode-family"><option value="">All method families</option></select>
+    <p id="decode-catalogue-status" class="muted"></p>
+    <div id="decode-workflow-list" class="decode-workflow-list"></div>
+  </aside>
+  <div class="decode-workspace">
+    <div class="decode-controls">
+      <label><input id="decode-show-source" type="checkbox" checked> Source dependencies</label>
+      <label><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
+      <label><input id="decode-show-semantic" type="checkbox" checked> Approved semantic projections</label>
+      <button id="decode-reset" type="button">Reset graph</button>
+      <button id="decode-more" type="button" hidden>Show more connected workflows</button>
+    </div>
+    <div id="decode-graph" aria-label="Interactive DECODE workflow graph"></div>
+    <p class="decode-legend"><span class="legend-source">solid arrow</span> original directed GraphML dependency <span class="legend-anchor">dashed link</span> reviewed occurrence-to-anchor mapping <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection</p>
+  </div>
+  <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow, then double-click an occurrence or shared anchor to traverse reviewed cross-workflow connections.</p></aside>
+</section>
+"""
+
+
+def _decode_workflows_css() -> str:
+    return """
+.decode-intro { margin: 1.2rem 0; padding: 1.2rem; border: 1px solid #c9d9dd; border-radius: 16px; background: linear-gradient(135deg, #eff8f7, #fbf5ea); }
+.decode-intro h2 { margin: .15rem 0 .5rem; }
+.decode-metrics { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+.decode-metrics span { padding: .38rem .65rem; background: #fff; border: 1px solid #d7e1e2; border-radius: 999px; color: #40545c; }
+.decode-metrics strong { color: #0d7077; }
+.decode-root { display: grid; grid-template-columns: 260px minmax(430px, 1fr) 300px; min-height: 690px; border: 1px solid #cad9dd; border-radius: 16px; overflow: hidden; background: #fff; }
+.decode-catalogue, .decode-details { padding: 1rem; background: #f8fbfb; overflow: auto; }
+.decode-catalogue { border-right: 1px solid #d8e3e5; }
+.decode-details { border-left: 1px solid #d8e3e5; }
+.decode-catalogue label { display: block; margin: .35rem 0; font-size: .82rem; font-weight: 700; color: #34515a; }
+.decode-catalogue input, .decode-catalogue select { width: 100%; margin-bottom: .45rem; padding: .5rem; border: 1px solid #b8cbd0; border-radius: 7px; }
+.decode-workflow-list { display: grid; gap: .5rem; }
+.decode-workflow-card { width: 100%; text-align: left; border: 1px solid #d0dddf; padding: .65rem; border-radius: 9px; color: #20373f; background: #fff; cursor: pointer; }
+.decode-workflow-card:hover, .decode-workflow-card.active { border-color: #0d7f83; background: #e8f5f4; }
+.decode-workflow-card strong, .decode-workflow-card small { display: block; }
+.decode-workflow-card small { margin-top: .2rem; color: #5c6d73; line-height: 1.35; }
+.decode-workspace { min-width: 0; display: flex; flex-direction: column; background: #fff; }
+.decode-controls { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; padding: .75rem; border-bottom: 1px solid #d8e3e5; font-size: .86rem; }
+.decode-controls button { border: 1px solid #0d7f83; background: #fff; color: #0d666c; padding: .35rem .6rem; border-radius: 6px; cursor: pointer; font-weight: 700; }
+#decode-graph { flex: 1; min-height: 560px; background: radial-gradient(circle at 20% 14%, rgba(13,127,131,.08), transparent 26%), #fff; }
+.decode-legend { margin: 0; padding: .6rem .8rem; border-top: 1px solid #d8e3e5; color: #52656e; font-size: .78rem; }
+.decode-legend span { margin-left: .35rem; font-weight: 700; }
+.legend-source { color: #45555d; }.legend-anchor { color: #a25b00; }.legend-semantic { color: #087f71; }
+.decode-details h2 { margin-top: 0; }.decode-details h3 { margin: 1rem 0 .35rem; font-size: .98rem; }.decode-details p, .decode-details li { font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }.decode-details ul { padding-left: 1.1rem; }.decode-details a { color: #087279; }.decode-details code { font-size: .76rem; }
+.decode-status { display: inline-block; padding: .18rem .4rem; border-radius: 999px; background: #e8f5f4; color: #075e63; font-size: .73rem; font-weight: 700; }.decode-status.unresolved { background: #f5ece5; color: #86521c; }.decode-downloads { display: grid; gap: .35rem; margin-top: .8rem; }
+@media (max-width: 1080px) { .decode-root { grid-template-columns: 240px 1fr; }.decode-details { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #d8e3e5; }.decode-details { max-height: 280px; } }
+@media (max-width: 700px) { .decode-root { display: block; }.decode-catalogue { border-right: 0; border-bottom: 1px solid #d8e3e5; max-height: 300px; }.decode-workspace { min-height: 560px; } }
+"""
+
+
+def _decode_workflows_js() -> str:
+    return r"""
+(() => {
+  const root = document.getElementById('decode-root');
+  if (!root || !window.cytoscape) return;
+  const byId = (items) => Object.fromEntries(items.map((item) => [item.id, item]));
+  const text = (value) => String(value || '').toLowerCase();
+  const escapeHtml = (value) => String(value || '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+  const query = (selector) => document.querySelector(selector);
+  const graphElement = query('#decode-graph');
+  const details = query('#decode-details');
+  const showSource = query('#decode-show-source');
+  const showAnchors = query('#decode-show-anchors');
+  const showSemantic = query('#decode-show-semantic');
+  const moreButton = query('#decode-more');
+  let data, cy, selectedWorkflow, selectedAnchor, expansion = 12, shown = new Set();
+
+  fetch(root.dataset.decodeData).then((response) => response.json()).then((loaded) => { data = loaded; initialize(); }).catch((error) => { details.innerHTML = `<h2>Workflow data unavailable</h2><p>${escapeHtml(error.message)}</p>`; });
+
+  function initialize() {
+    data.nodeById = byId(data.nodes);
+    data.anchorById = byId(data.anchors);
+    data.workflowById = byId(data.workflows);
+    data.edgesByNode = {};
+    data.source_edges.forEach((edge) => { (data.edgesByNode[edge.source] ||= []).push(edge); (data.edgesByNode[edge.target] ||= []).push(edge); });
+    const families = [...new Set(data.workflows.map((workflow) => workflow.method_family))].sort();
+    const family = query('#decode-family');
+    families.forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(name)}">${escapeHtml(name.replaceAll('_', ' '))}</option>`));
+    query('#decode-search').addEventListener('input', renderCatalogue);
+    family.addEventListener('change', renderCatalogue);
+    [showSource, showAnchors, showSemantic].forEach((input) => input.addEventListener('change', renderGraph));
+    query('#decode-reset').addEventListener('click', () => selectWorkflow(selectedWorkflow));
+    moreButton.addEventListener('click', () => { expansion += 12; expandAnchor(selectedAnchor); });
+    renderCatalogue();
+    selectWorkflow(data.workflows[0]?.id);
+  }
+
+  function renderCatalogue() {
+    const needle = text(query('#decode-search').value);
+    const family = query('#decode-family').value;
+    const matches = data.workflows.filter((workflow) => {
+      const haystack = [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri].join(' ').toLowerCase();
+      return (!needle || haystack.includes(needle)) && (!family || workflow.method_family === family);
+    });
+    query('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
+    query('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${escapeHtml(workflow.id)}"><strong>${escapeHtml(workflow.title)}</strong><small>${escapeHtml(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} reviewed mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
+    document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
+  }
+
+  function selectWorkflow(workflowId) {
+    if (!workflowId || !data.workflowById[workflowId]) return;
+    selectedWorkflow = workflowId; selectedAnchor = null; expansion = 12;
+    shown = new Set(data.nodes.filter((node) => node.workflow_id === workflowId).map((node) => node.id));
+    renderCatalogue(); renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+  }
+
+  function elementSet() {
+    const visible = new Set(shown);
+    const elements = [];
+    [...visible].forEach((id) => { const node = data.nodeById[id]; if (node) elements.push({ group:'nodes', data:{ id:node.id, label:node.label, kind:'occurrence', state:node.mapping_state, workflow:node.workflow_id } }); });
+    if (showAnchors.checked) {
+      const anchorIds = new Set([...visible].map((id) => data.nodeById[id]?.anchor_id).filter(Boolean));
+      anchorIds.forEach((id) => { const anchor = data.anchorById[id]; if (anchor) elements.push({ group:'nodes', data:{ id:anchor.id, label:anchor.label, kind:'anchor', state:anchor.state } }); });
+      data.anchor_edges.filter((edge) => visible.has(edge.source) && anchorIds.has(edge.target)).forEach((edge) => elements.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'anchor' } }));
+    }
+    if (showSource.checked) data.source_edges.filter((edge) => visible.has(edge.source) && visible.has(edge.target)).forEach((edge) => elements.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source' } }));
+    if (showSemantic.checked) data.semantic_edges.filter((edge) => visible.has(edge.source) && visible.has(edge.target)).forEach((edge) => elements.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, label:edge.label, kind:'semantic' } }));
+    return elements;
+  }
+
+  function renderGraph() {
+    if (cy) cy.destroy();
+    cy = cytoscape({ container:graphElement, elements:elementSet(), style:[
+      { selector:'node', style:{ 'label':'data(label)', 'font-size':10, 'text-wrap':'wrap', 'text-max-width':120, 'color':'#1d3138', 'text-valign':'center', 'text-halign':'center', 'border-width':2, 'background-color':'#d9e7e8', 'border-color':'#4f6a70', 'width':62, 'height':62 } },
+      { selector:'node[kind = "anchor"]', style:{ 'shape':'round-rectangle', 'background-color':'#fff1d8', 'border-color':'#a96200', 'width':110, 'height':46, 'font-weight':700 } },
+      { selector:'node[state = "unresolved"]', style:{ 'background-color':'#f2e9e2', 'border-color':'#936a41' } },
+      { selector:'edge[kind = "source"]', style:{ 'width':2, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
+      { selector:'edge[kind = "anchor"]', style:{ 'width':1.5, 'line-style':'dashed', 'line-color':'#b87918', 'target-arrow-shape':'none', 'curve-style':'bezier' } },
+      { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } }
+    ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:100, nodeRepulsion:500000 } });
+    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'anchor') expandAnchor(item.id); else expandOccurrence(item.id); });
+    cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'anchor') showAnchorDetails(item.id); else showOccurrenceDetails(item.id); });
+  }
+
+  function expandOccurrence(id) {
+    const occurrence = data.nodeById[id];
+    if (!occurrence?.anchor_id) { showOccurrenceDetails(id); return; }
+    expansion = 12; expandAnchor(occurrence.anchor_id);
+  }
+
+  function expandAnchor(anchorId) {
+    const occurrences = data.anchor_index[anchorId] || [];
+    selectedAnchor = anchorId;
+    occurrences.slice(0, expansion).forEach((id) => {
+      shown.add(id);
+      (data.edgesByNode[id] || []).forEach((edge) => { shown.add(edge.source); shown.add(edge.target); });
+    });
+    moreButton.hidden = occurrences.length <= expansion;
+    moreButton.textContent = `Show more connected workflows (${Math.max(0, occurrences.length - expansion)} remaining)`;
+    renderGraph(); showAnchorDetails(anchorId);
+  }
+
+  function downloadLinks(workflow) {
+    return `<div class="decode-downloads"><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_validation_report.json" download>Download validation report</a></div>`;
+  }
+
+  function showWorkflowDetails(workflow) {
+    details.innerHTML = `<h2>${escapeHtml(workflow.title)}</h2><p><span class="decode-status ${escapeHtml(workflow.mapping_status)}">${escapeHtml(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${escapeHtml(workflow.source_filename)}<br><strong>Method family:</strong> ${escapeHtml(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>${workflow.mapped_anchor_count} occurrence mappings and ${workflow.cross_workflow_connection_count} reviewed cross-workflow connections are available. Raw GraphML is not redistributed.</p>${downloadLinks(workflow)}`;
+  }
+
+  function showOccurrenceDetails(id) {
+    const node = data.nodeById[id]; if (!node) return;
+    const workflow = data.workflowById[node.workflow_id];
+    const anchorLink = node.anchor_id ? `<p><strong>Shared anchor:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.anchor_id)}">${escapeHtml(data.anchorById[node.anchor_id]?.label || node.anchor_id)}</a></p>` : '<p><strong>Shared anchor:</strong> none. This occurrence remains isolated until reviewed.</p>';
+    details.innerHTML = `<h2>${escapeHtml(node.label)}</h2><p><span class="decode-status ${escapeHtml(node.mapping_state)}">${escapeHtml(node.mapping_state)}</span></p><p><strong>Original GraphML ID:</strong> <code>${escapeHtml(node.source_id)}</code><br><strong>Workflow:</strong> ${escapeHtml(workflow.title)}<br><strong>Native category:</strong> ${escapeHtml(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${escapeHtml(node.description || 'not supplied')}</p>${anchorLink}<p><strong>Mapping evidence:</strong> ${escapeHtml(node.mapping_evidence)}</p>${downloadLinks(workflow)}`;
+  }
+
+  function showAnchorDetails(anchorId) {
+    const anchor = data.anchorById[anchorId]; if (!anchor) return;
+    const occurrences = (data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]).filter(Boolean);
+    const byFamily = occurrences.reduce((groups, node) => { const workflow = data.workflowById[node.workflow_id]; (groups[workflow.method_family] ||= []).push(node); return groups; }, {});
+    const groups = Object.entries(byFamily).sort(([left], [right]) => left.localeCompare(right)).map(([family, nodes]) => { const workflows = [...new Set(nodes.map((node) => node.workflow_id))].map((workflowId) => data.workflowById[workflowId]); return `<li><strong>${escapeHtml(family.replaceAll('_', ' '))}</strong> (${nodes.length} occurrence${nodes.length === 1 ? '' : 's'} across ${workflows.length} workflows)<ul>${workflows.slice(0, 8).map((workflow) => `<li>${escapeHtml(workflow.title)} <span class="decode-status ${escapeHtml(workflow.mapping_status)}">${escapeHtml(workflow.mapping_status)}</span></li>`).join('')}</ul></li>`; }).join('');
+    const h2kgLink = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : '';
+    details.innerHTML = `<h2>${escapeHtml(anchor.label)}</h2><p><span class="decode-status">${escapeHtml(anchor.state)}</span></p><p><code>${escapeHtml(anchor.id)}</code></p><p>${escapeHtml(anchor.evidence)}</p>${h2kgLink}<h3>Connected workflow occurrences (${occurrences.length})</h3><ul>${groups}</ul><p>Double-clicked expansion is bounded to keep the graph readable; use “show more connected workflows” to reveal additional reviewed occurrences.</p>`;
+  }
+})();
+"""
+
+
 def _page_template(
     project: dict[str, Any],
     page_title: str,
@@ -463,6 +687,7 @@ def _page_template(
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'user-guide.html')}">User Guide</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'ontology-overview.html')}">Overview</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'explore.html')}">Explore</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'decode-workflows.html')}">DECODE Workflows</a>
       <a href="{_relative_href(page_path, docs_root / 'hydrogen-ontology.html')}">Reference</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'architecture-workflow.html')}">Architecture</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'class-index.html')}">Classes</a>

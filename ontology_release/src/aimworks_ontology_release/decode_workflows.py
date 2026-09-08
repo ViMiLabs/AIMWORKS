@@ -1,0 +1,502 @@
+from __future__ import annotations
+
+"""Preserve and publish DECODE GraphML workflows as an H2KG-aligned data layer.
+
+This module deliberately does not alter the H2KG TBox.  It assigns stable DECODE
+occurrence IRIs to source GraphML nodes, preserves every source edge, and applies
+only explicit mappings from the reviewed configuration file.
+"""
+
+import csv
+import hashlib
+import io
+import re
+import xml.etree.ElementTree as ET
+from collections import Counter, defaultdict
+from datetime import date
+from pathlib import Path
+from typing import Any
+
+from .utils import COMMON_CONTEXT, dump_json, ensure_dir, load_json, try_load_yaml, write_text
+
+
+DECODE_NS = "https://w3id.org/h2kg/decode/workflow/"
+H2KG = COMMON_CONTEXT["h2kg"]
+RDF_TYPE = COMMON_CONTEXT["rdf"] + "type"
+RDFS_LABEL = COMMON_CONTEXT["rdfs"] + "label"
+PROV = COMMON_CONTEXT["prov"]
+DECODE_MAPPING = DECODE_NS + "mappedToAnchor"
+DECODE_SOURCE_DEPENDENCY = DECODE_NS + "sourceDependency"
+GRAPHML_NS = "{http://graphml.graphdrawing.org/xmlns}"
+YED_NS = "{http://www.yworks.com/xml/graphml}"
+
+
+def ingest_decode_graphml_directory(
+    source_dir: str | Path,
+    snapshot_path: str | Path,
+) -> dict[str, Any]:
+    """Create a frozen, normalized structural snapshot from a GraphML directory."""
+    source_dir = Path(source_dir)
+    snapshot_path = Path(snapshot_path)
+    graphml_paths = sorted(source_dir.glob("*.graphml"), key=lambda path: path.name.lower())
+    if not graphml_paths:
+        raise FileNotFoundError(f"No GraphML files found in {source_dir}")
+
+    workflows = [_parse_graphml(path) for path in graphml_paths]
+    snapshot = {
+        "schema_version": "1.0",
+        "generated_on": date.today().isoformat(),
+        "source_directory_name": source_dir.name,
+        "raw_graphml_redistributed": False,
+        "workflows": workflows,
+        "counts": {
+            "workflow_count": len(workflows),
+            "node_count": sum(len(workflow["nodes"]) for workflow in workflows),
+            "edge_count": sum(len(workflow["edges"]) for workflow in workflows),
+        },
+    }
+    dump_json(snapshot_path, snapshot)
+    return {"status": "ingested", "snapshot": str(snapshot_path), **snapshot["counts"]}
+
+
+def build_decode_workflow_release(
+    snapshot_path: str | Path,
+    output_root: str | Path,
+    mapping_config_path: str | Path,
+) -> dict[str, Any]:
+    """Build static DECODE workflow artefacts from the immutable normalized snapshot."""
+    snapshot_path = Path(snapshot_path)
+    output_root = Path(output_root)
+    if not snapshot_path.exists():
+        return {"status": "skipped_missing_snapshot", "snapshot": str(snapshot_path)}
+    snapshot = load_json(snapshot_path)
+    mapping_config = try_load_yaml(Path(mapping_config_path), {"mappings": [], "semantic_projections": []})
+    mappings = _index_mappings(mapping_config.get("mappings", []))
+    semantic_projections = _index_semantic_projections(mapping_config.get("semantic_projections", []))
+    target = ensure_dir(output_root / "decode")
+    workflows_dir = ensure_dir(target / "workflows")
+    graph, matrix_rows = _federate(snapshot, mappings, semantic_projections)
+    validation = _validate_federated_graph(snapshot, graph)
+
+    generated: list[Path] = [
+        dump_json(target / "decode_federated_graph.json", graph),
+        dump_json(target / "decode_workflow_catalog.json", graph["workflows"]),
+        dump_json(target / "decode_validation_report.json", validation),
+        _write_mapping_matrix(target / "decode_mapping_matrix.csv", matrix_rows),
+        _write_mapping_matrix_markdown(target / "decode_mapping_matrix.md", matrix_rows),
+        write_text(target / "README.md", _readme(graph, validation)),
+    ]
+    for workflow in graph["workflows"]:
+        workflow_id = workflow["id"]
+        structural = {
+            "schema_version": graph["schema_version"],
+            "workflow": workflow,
+            "nodes": [node for node in graph["nodes"] if node.get("workflow_id") == workflow_id],
+            "source_edges": [edge for edge in graph["source_edges"] if edge["workflow_id"] == workflow_id],
+            "anchor_edges": [edge for edge in graph["anchor_edges"] if edge["workflow_id"] == workflow_id],
+            "semantic_edges": [edge for edge in graph["semantic_edges"] if edge["workflow_id"] == workflow_id],
+            "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection.",
+        }
+        json_path = dump_json(workflows_dir / f"{workflow_id}.json", structural)
+        jsonld_path = dump_json(workflows_dir / f"{workflow_id}.jsonld", _workflow_jsonld(structural))
+        ttl_path = write_text(workflows_dir / f"{workflow_id}.ttl", _workflow_turtle(structural))
+        generated.extend([json_path, jsonld_path, ttl_path])
+    return {
+        "status": "generated",
+        "output_dir": str(target),
+        "workflow_count": len(graph["workflows"]),
+        "source_node_count": len(graph["nodes"]),
+        "source_edge_count": len(graph["source_edges"]),
+        "mapped_occurrence_count": len(graph["anchor_edges"]),
+        "approved_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "approved_h2kg"),
+        "reviewed_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "reviewed_decode"),
+        "validation_status": validation["status"],
+        "generated_files": [str(path) for path in generated],
+    }
+
+
+def _parse_graphml(path: Path) -> dict[str, Any]:
+    raw = path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    root = ET.fromstring(raw)
+    graph = root.find(f"{GRAPHML_NS}graph")
+    if graph is None:
+        raise ValueError(f"GraphML graph element missing: {path}")
+    workflow_id = _slug(path.stem)
+    workflow_iri = f"{DECODE_NS}{workflow_id}"
+    nodes = []
+    for element in graph.findall(f"{GRAPHML_NS}node"):
+        source_id = element.attrib["id"]
+        description = _data_text(element, "d4")
+        label, native_category = _source_label_and_category(description, element)
+        nodes.append(
+            {
+                "id": f"{workflow_id}::{source_id}",
+                "iri": f"{workflow_iri}/node/{source_id}",
+                "source_id": source_id,
+                "label": label,
+                "native_category": native_category,
+                "description": description,
+                "shape": _node_shape(element),
+            }
+        )
+    edges = []
+    for index, element in enumerate(graph.findall(f"{GRAPHML_NS}edge")):
+        source = element.attrib["source"]
+        target = element.attrib["target"]
+        edge_id = element.attrib.get("id", f"edge-{index}")
+        edges.append(
+            {
+                "id": f"{workflow_id}::{edge_id}",
+                "source_id": source,
+                "target_id": target,
+                "source": f"{workflow_id}::{source}",
+                "target": f"{workflow_id}::{target}",
+                "description": _data_text(element, "d8"),
+            }
+        )
+    return {
+        "id": workflow_id,
+        "iri": workflow_iri,
+        "title": _humanize_filename(path.stem),
+        "source_filename": path.name,
+        "source_sha256": digest,
+        "method_family": _method_family(path.stem),
+        "directed": graph.attrib.get("edgedefault", "directed") == "directed",
+        "nodes": nodes,
+        "edges": edges,
+    }
+
+
+def _federate(
+    snapshot: dict[str, Any],
+    mappings: dict[tuple[str, str], dict[str, Any]],
+    semantic_projections: dict[tuple[str, str, str], dict[str, Any]],
+) -> tuple[dict[str, Any], list[dict[str, str]]]:
+    nodes: list[dict[str, Any]] = []
+    source_edges: list[dict[str, Any]] = []
+    anchor_edges: list[dict[str, Any]] = []
+    semantic_edges: list[dict[str, Any]] = []
+    anchors: dict[str, dict[str, Any]] = {}
+    matrix_rows: list[dict[str, str]] = []
+    workflows: list[dict[str, Any]] = []
+    for source_workflow in snapshot.get("workflows", []):
+        workflow_id = source_workflow["id"]
+        workflow_nodes = source_workflow.get("nodes", [])
+        mapped_count = 0
+        for source_node in workflow_nodes:
+            mapping = mappings.get((_normal(source_node["label"]), _normal(source_node.get("native_category", ""))))
+            if mapping is None:
+                mapping = mappings.get((_normal(source_node["label"]), ""))
+            mapping_state = mapping.get("state", "unresolved") if mapping else "unresolved"
+            anchor_id = mapping.get("anchor_iri") if mapping else None
+            node = {
+                **source_node,
+                "kind": "occurrence",
+                "workflow_id": workflow_id,
+                "mapping_state": mapping_state,
+                "anchor_id": anchor_id,
+                "mapping_evidence": mapping.get("evidence", "No reviewed mapping decision.") if mapping else "No reviewed mapping decision.",
+            }
+            nodes.append(node)
+            matrix_rows.append(
+                {
+                    "workflow_id": workflow_id,
+                    "source_filename": source_workflow["source_filename"],
+                    "source_node_id": source_node["source_id"],
+                    "source_label": source_node["label"],
+                    "native_category": source_node.get("native_category", ""),
+                    "mapping_state": mapping_state,
+                    "anchor_iri": anchor_id or "",
+                    "anchor_label": mapping.get("anchor_label", "") if mapping else "",
+                    "evidence": node["mapping_evidence"],
+                }
+            )
+            if anchor_id:
+                mapped_count += 1
+                anchor = anchors.setdefault(
+                    anchor_id,
+                    {
+                        "id": anchor_id,
+                        "kind": "anchor",
+                        "label": mapping.get("anchor_label") or _last_segment(anchor_id),
+                        "state": mapping_state,
+                        "evidence": mapping.get("evidence", ""),
+                        "occurrence_ids": [],
+                    },
+                )
+                anchor["occurrence_ids"].append(source_node["id"])
+                anchor_edges.append(
+                    {
+                        "id": f"anchor::{source_node['id']}::{_short_hash(anchor_id)}",
+                        "workflow_id": workflow_id,
+                        "source": source_node["id"],
+                        "target": anchor_id,
+                        "type": "occurrence_anchor_mapping",
+                    }
+                )
+        source_edges.extend({**edge, "workflow_id": workflow_id, "type": "source_dependency"} for edge in source_workflow.get("edges", []))
+        for projection_key, projection in semantic_projections.items():
+            projection_workflow, source_node_id, target_node_id = projection_key
+            if projection_workflow != workflow_id:
+                continue
+            semantic_edges.append(
+                {
+                    "id": f"semantic::{workflow_id}::{source_node_id}::{target_node_id}",
+                    "workflow_id": workflow_id,
+                    "source": f"{workflow_id}::{source_node_id}",
+                    "target": f"{workflow_id}::{target_node_id}",
+                    "predicate": projection["predicate"],
+                    "label": projection.get("label") or _last_segment(projection["predicate"]),
+                    "type": "approved_semantic_projection",
+                    "evidence": projection.get("evidence", "Explicit reviewed semantic projection."),
+                }
+            )
+        workflows.append(
+            {
+                "id": workflow_id,
+                "iri": source_workflow["iri"],
+                "title": source_workflow["title"],
+                "source_filename": source_workflow["source_filename"],
+                "source_sha256": source_workflow["source_sha256"],
+                "method_family": source_workflow["method_family"],
+                "source_status": "preserved",
+                "mapping_status": "mapped" if mapped_count else "unresolved",
+                "source_node_count": len(workflow_nodes),
+                "source_edge_count": len(source_workflow.get("edges", [])),
+                "mapped_anchor_count": mapped_count,
+                "cross_workflow_connection_count": 0,
+            }
+        )
+    for workflow in workflows:
+        workflow["cross_workflow_connection_count"] = sum(
+            max(0, len(anchors[anchor_id]["occurrence_ids"]) - 1)
+            for anchor_id in {node.get("anchor_id") for node in nodes if node.get("workflow_id") == workflow["id"] and node.get("anchor_id")}
+        )
+    graph = {
+        "schema_version": "1.0",
+        "generated_on": date.today().isoformat(),
+        "description": "Federated DECODE workflow occurrence graph. Source GraphML dependencies are preserved; mappings are explicit reviewed decisions.",
+        "raw_graphml_redistributed": False,
+        "workflows": workflows,
+        "nodes": nodes,
+        "anchors": sorted(anchors.values(), key=lambda item: (item["label"].lower(), item["id"])),
+        "source_edges": source_edges,
+        "anchor_edges": anchor_edges,
+        "semantic_edges": semantic_edges,
+        "anchor_index": {anchor_id: anchor["occurrence_ids"] for anchor_id, anchor in anchors.items()},
+        "counts": {
+            "workflow_count": len(workflows),
+            "source_node_count": len(nodes),
+            "source_edge_count": len(source_edges),
+            "mapped_occurrence_count": len(anchor_edges),
+            "anchor_count": len(anchors),
+            "semantic_projection_count": len(semantic_edges),
+        },
+    }
+    return graph, matrix_rows
+
+
+def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -> dict[str, Any]:
+    source_pairs = {
+        (workflow["id"], edge["source"], edge["target"])
+        for workflow in snapshot.get("workflows", [])
+        for edge in workflow.get("edges", [])
+    }
+    preserved_pairs = {(edge["workflow_id"], edge["source"], edge["target"]) for edge in graph["source_edges"]}
+    node_ids = {node["id"] for node in graph["nodes"]}
+    invalid_edges = [edge["id"] for edge in graph["source_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
+    invalid_semantic_edges = [edge["id"] for edge in graph["semantic_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
+    unexpected_cross_links = [
+        edge["id"]
+        for edge in graph["source_edges"]
+        if edge["source"].split("::", 1)[0] != edge["target"].split("::", 1)[0]
+    ]
+    status = "passed" if source_pairs == preserved_pairs and not invalid_edges and not invalid_semantic_edges and not unexpected_cross_links else "failed"
+    return {
+        "status": status,
+        "source_workflow_count": len(snapshot.get("workflows", [])),
+        "source_node_count": sum(len(workflow.get("nodes", [])) for workflow in snapshot.get("workflows", [])),
+        "source_edge_count": len(source_pairs),
+        "preserved_source_edge_count": len(preserved_pairs),
+        "missing_source_pairs": sorted(source_pairs - preserved_pairs),
+        "unexpected_source_pairs": sorted(preserved_pairs - source_pairs),
+        "invalid_source_edge_ids": invalid_edges,
+        "invalid_semantic_edge_ids": invalid_semantic_edges,
+        "unexpected_cross_workflow_source_edge_ids": unexpected_cross_links,
+        "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or reviewed_decode anchor mappings.",
+    }
+
+
+def _index_mappings(entries: list[dict[str, Any]]) -> dict[tuple[str, str], dict[str, Any]]:
+    result: dict[tuple[str, str], dict[str, Any]] = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or not entry.get("source_label") or not entry.get("anchor_iri"):
+            continue
+        state = entry.get("state", "unresolved")
+        if state not in {"approved_h2kg", "reviewed_decode"}:
+            continue
+        result[(_normal(str(entry["source_label"])), _normal(str(entry.get("native_category", ""))))] = entry
+    return result
+
+
+def _index_semantic_projections(entries: list[dict[str, Any]]) -> dict[tuple[str, str, str], dict[str, Any]]:
+    result: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        if all(isinstance(entry.get(key), str) and entry[key] for key in ("workflow_id", "source_node_id", "target_node_id", "predicate")):
+            result[(entry["workflow_id"], entry["source_node_id"], entry["target_node_id"])] = entry
+    return result
+
+
+def _data_text(element: ET.Element, key: str) -> str:
+    data = next((item for item in element.findall(f"{GRAPHML_NS}data") if item.attrib.get("key") == key), None)
+    return "".join(data.itertext()).strip() if data is not None else ""
+
+
+def _node_shape(element: ET.Element) -> str:
+    shape = element.find(f".//{YED_NS}Shape")
+    return shape.attrib.get("type", "") if shape is not None else ""
+
+
+def _source_label_and_category(description: str, element: ET.Element) -> tuple[str, str]:
+    lines = [line.strip() for line in description.splitlines() if line.strip()]
+    label = lines[0] if lines else "".join(element.itertext()).strip() or element.attrib["id"]
+    internal = next((line for line in lines if line.lower().startswith("internal key:")), "")
+    payload = internal.split(":", 1)[1].strip() if ":" in internal else ""
+    category = ""
+    if ":" in payload and not payload.endswith("0"):
+        _, category = payload.rsplit(":", 1)
+    return label, category.strip()
+
+
+def _method_family(name: str) -> str:
+    text = _normal(name)
+    family_keywords = (
+        ("tomography", ("tomography", "tomogram", "x ray ct", "neutron", "fib sem")),
+        ("microscopy", ("sem", "tem", "afm", "microscopy", "clsm", "fib")),
+        ("spectroscopy_scattering", ("xps", "xas", "saxs", "sans", "ftir", "raman", "waxs", "spectroscopy")),
+        ("electrochemical_testing", ("eis", "polarization", "cyclic", "voltamm", "rde", "rrde", "electrochemical", "ast")),
+        ("manufacturing_assembly", ("ink", "coating", "decal", "assembly", "ccm", "gde", "printing", "manufactur")),
+        ("simulation_modelling", ("model", "simulation", "fitting", "prediction", "digital twin", "dft")),
+    )
+    for family, keywords in family_keywords:
+        if any(keyword in text for keyword in keywords):
+            return family
+    return "other"
+
+
+def _slug(value: str) -> str:
+    normalized = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return normalized or "workflow"
+
+
+def _normal(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", value.lower()).strip()
+
+
+def _humanize_filename(value: str) -> str:
+    return re.sub(r"\s+", " ", value.replace("_", " ")).strip()
+
+
+def _last_segment(iri: str) -> str:
+    return iri.rsplit("#", 1)[-1].rsplit("/", 1)[-1]
+
+
+def _short_hash(value: str) -> str:
+    return hashlib.sha1(value.encode("utf-8")).hexdigest()[:10]
+
+
+def _write_mapping_matrix(path: Path, rows: list[dict[str, str]]) -> Path:
+    fields = ["workflow_id", "source_filename", "source_node_id", "source_label", "native_category", "mapping_state", "anchor_iri", "anchor_label", "evidence"]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    writer.writerows(rows)
+    return write_text(path, buffer.getvalue())
+
+
+def _write_mapping_matrix_markdown(path: Path, rows: list[dict[str, str]]) -> Path:
+    counts = Counter(row["mapping_state"] for row in rows)
+    lines = [
+        "# DECODE Mapping Matrix",
+        "",
+        "This matrix records explicit curation decisions. Unreviewed lexical similarity is not a mapping and does not create a cross-workflow connection.",
+        "",
+        "| State | Occurrences |",
+        "| --- | ---: |",
+        *[f"| {state} | {count} |" for state, count in sorted(counts.items())],
+        "",
+        "| Workflow | Source node | Label | Native category | State | Shared anchor | Evidence |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for row in rows:
+        lines.append("| {workflow_id} | {source_node_id} | {source_label} | {native_category} | {mapping_state} | {anchor_iri} | {evidence} |".format(**{key: value.replace("|", "\\|") for key, value in row.items()}))
+    return write_text(path, "\n".join(lines) + "\n")
+
+
+def _workflow_jsonld(structural: dict[str, Any]) -> dict[str, Any]:
+    workflow = structural["workflow"]
+    items: list[dict[str, Any]] = [{"@id": workflow["iri"], "@type": [PROV + "Bundle"], RDFS_LABEL: [workflow["title"]]}]
+    for node in structural["nodes"]:
+        item = {
+            "@id": node["iri"],
+            "@type": [PROV + "Entity"],
+            RDFS_LABEL: [node["label"]],
+            DECODE_SOURCE_DEPENDENCY: [],
+            "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [node["source_id"]],
+        }
+        if node.get("anchor_id"):
+            item[DECODE_MAPPING] = [{"@id": node["anchor_id"]}]
+        items.append(item)
+    for edge in structural["source_edges"]:
+        source_iri = next(node["iri"] for node in structural["nodes"] if node["id"] == edge["source"])
+        target_iri = next(node["iri"] for node in structural["nodes"] if node["id"] == edge["target"])
+        next(item for item in items if item["@id"] == source_iri)[DECODE_SOURCE_DEPENDENCY].append({"@id": target_iri})
+    return {"@context": {**COMMON_CONTEXT, "decode": DECODE_NS}, "@graph": items}
+
+
+def _workflow_turtle(structural: dict[str, Any]) -> str:
+    lines = [
+        "@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .",
+        "@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .",
+        "@prefix prov: <http://www.w3.org/ns/prov#> .",
+        "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .",
+        "",
+    ]
+    for node in structural["nodes"]:
+        lines.append(f"<{node['iri']}> a prov:Entity ; rdfs:label {_ttl_literal(node['label'])} .")
+        if node.get("anchor_id"):
+            lines.append(f"<{node['iri']}> decode:mappedToAnchor <{node['anchor_id']}> .")
+    for edge in structural["source_edges"]:
+        source = next(node["iri"] for node in structural["nodes"] if node["id"] == edge["source"])
+        target = next(node["iri"] for node in structural["nodes"] if node["id"] == edge["target"])
+        lines.append(f"<{source}> decode:sourceDependency <{target}> .")
+    return "\n".join(lines) + "\n"
+
+
+def _ttl_literal(value: str) -> str:
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ") + '"'
+
+
+def _readme(graph: dict[str, Any], validation: dict[str, Any]) -> str:
+    return f"""# DECODE Federated Workflow Layer
+
+This release contains a normalized structural projection of DECODE GraphML workflows. It is a separate data layer aligned to H2KG; it does not change the H2KG ontology TBox or the TBox-only H2KG Explore page.
+
+- Source workflows: {graph['counts']['workflow_count']}
+- Preserved source occurrences: {graph['counts']['source_node_count']}
+- Preserved directed source dependencies: {graph['counts']['source_edge_count']}
+- Explicitly mapped occurrences: {graph['counts']['mapped_occurrence_count']}
+- Shared reviewed anchors: {graph['counts']['anchor_count']}
+- Structural validation: {validation['status']}
+
+## Mapping states
+
+- `approved_h2kg`: an explicit reviewed mapping to an existing H2KG IRI.
+- `reviewed_decode`: a reviewed DECODE anchor pending a future H2KG vocabulary decision.
+- `unresolved`: retained without cross-workflow merging.
+
+Raw GraphML files are not redistributed in this package. The normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+"""
