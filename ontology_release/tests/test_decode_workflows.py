@@ -67,7 +67,11 @@ semantic_projections: []
     assert graph["anchor_index"][anchor["id"]] == anchor["occurrence_ids"]
     unresolved = next(node for node in graph["nodes"] if node["id"] == "unreviewed::n0")
     assert unresolved["mapping_state"] == "unresolved"
+    assert unresolved["visual_category"] == "material"
+    ccm_occurrence = next(node for node in graph["nodes"] if node["id"] == "prep::n1")
+    assert ccm_occurrence["visual_category"] == "component"
     assert not graph["semantic_edges"]
+    candidates = (tmp_path / "output" / "decode" / "decode_anchor_candidates.csv").read_text(encoding="utf-8")
+    assert "recommended_state" in candidates
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.jsonld").exists()
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.ttl").exists()
-

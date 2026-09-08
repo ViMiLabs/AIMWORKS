@@ -25,3 +25,8 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert (output_dir / "docs" / "assets" / "decode-workflows.css").exists()
     assert (output_dir / "docs" / "data" / "decode_workflows.json").exists()
     assert "decode/workflow/" not in explorer
+    script = (output_dir / "docs" / "assets" / "decode-workflows.js").read_text(encoding="utf-8")
+    assert "shownWorkflows" in script
+    assert "rankedConnectedWorkflows" in script
+    assert "Add full workflow" in script
+    assert "showHover" in script

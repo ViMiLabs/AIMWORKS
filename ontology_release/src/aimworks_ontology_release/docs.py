@@ -498,12 +498,13 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
       <label><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
       <label><input id="decode-show-semantic" type="checkbox" checked> Approved semantic projections</label>
       <button id="decode-reset" type="button">Reset graph</button>
-      <button id="decode-more" type="button" hidden>Show more connected workflows</button>
+      <button id="decode-more" type="button" hidden>Add next connected workflow</button>
     </div>
     <div id="decode-graph" aria-label="Interactive DECODE workflow graph"></div>
-    <p class="decode-legend"><span class="legend-source">solid arrow</span> original directed GraphML dependency <span class="legend-anchor">dashed link</span> reviewed occurrence-to-anchor mapping <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection</p>
+    <p class="decode-legend"><span class="legend-material">material</span><span class="legend-component">component</span><span class="legend-data">data</span><span class="legend-device">device</span><span class="legend-process">process / method</span><span class="legend-h2kg">H2KG anchor</span><span class="legend-decode">reviewed DECODE anchor</span><br><span class="legend-source">solid arrow</span> original directed GraphML dependency <span class="legend-anchor">dashed link</span> reviewed occurrence-to-anchor mapping <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection</p>
   </div>
   <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow, then double-click an occurrence or shared anchor to traverse reviewed cross-workflow connections.</p></aside>
+  <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
 </section>
 """
 
@@ -530,17 +531,20 @@ def _decode_workflows_css() -> str:
 .decode-controls { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; padding: .75rem; border-bottom: 1px solid #d8e3e5; font-size: .86rem; }
 .decode-controls button { border: 1px solid #0d7f83; background: #fff; color: #0d666c; padding: .35rem .6rem; border-radius: 6px; cursor: pointer; font-weight: 700; }
 #decode-graph { flex: 1; min-height: 560px; background: radial-gradient(circle at 20% 14%, rgba(13,127,131,.08), transparent 26%), #fff; }
-.decode-legend { margin: 0; padding: .6rem .8rem; border-top: 1px solid #d8e3e5; color: #52656e; font-size: .78rem; }
-.decode-legend span { margin-left: .35rem; font-weight: 700; }
+.decode-legend { margin: 0; padding: .6rem .8rem; border-top: 1px solid #d8e3e5; color: #52656e; font-size: .78rem; line-height: 1.9; }
+.decode-legend span { display: inline-block; margin: 0 .4rem 0 0; font-weight: 700; }
+.decode-legend .legend-material::before, .decode-legend .legend-component::before, .decode-legend .legend-data::before, .decode-legend .legend-device::before, .decode-legend .legend-process::before, .decode-legend .legend-h2kg::before, .decode-legend .legend-decode::before { content: ''; display: inline-block; width: .72rem; height: .72rem; margin-right: .22rem; border-radius: 50%; vertical-align: -.08rem; border: 1px solid rgba(18,39,47,.35); }
+.decode-legend .legend-material::before { background: #0f6d7a; }.decode-legend .legend-component::before { background: #487eb0; }.decode-legend .legend-data::before { background: #5ca9c9; }.decode-legend .legend-device::before { background: #72808b; }.decode-legend .legend-process::before { background: #c86a2b; }.decode-legend .legend-h2kg::before { background: #0d7f83; }.decode-legend .legend-decode::before { background: #bd8529; }
 .legend-source { color: #45555d; }.legend-anchor { color: #a25b00; }.legend-semantic { color: #087f71; }
 .decode-details h2 { margin-top: 0; }.decode-details h3 { margin: 1rem 0 .35rem; font-size: .98rem; }.decode-details p, .decode-details li { font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }.decode-details ul { padding-left: 1.1rem; }.decode-details a { color: #087279; }.decode-details code { font-size: .76rem; }
 .decode-status { display: inline-block; padding: .18rem .4rem; border-radius: 999px; background: #e8f5f4; color: #075e63; font-size: .73rem; font-weight: 700; }.decode-status.unresolved { background: #f5ece5; color: #86521c; }.decode-downloads { display: grid; gap: .35rem; margin-top: .8rem; }
+.decode-hovercard { position: fixed; z-index: 30; width: min(380px, calc(100vw - 24px)); max-height: min(440px, calc(100vh - 24px)); overflow: auto; padding: .85rem 1rem; border: 1px solid #b5c7cb; border-radius: 13px; background: rgba(255,255,255,.98); box-shadow: 0 16px 40px rgba(16,36,45,.23); color: #20373f; pointer-events: none; }.decode-hovercard.is-hidden { display: none; }.decode-hovercard h3 { margin: 0 0 .35rem; font-size: 1rem; }.decode-hovercard p { margin: .3rem 0; font-size: .8rem; line-height: 1.35; }.decode-hovercard code { font-size: .72rem; overflow-wrap: anywhere; }.decode-hovercard .decode-status { margin-right: .35rem; }.decode-add-workflow { display: block; width: 100%; margin: .4rem 0; padding: .45rem .55rem; border: 1px solid #a7b9bd; border-radius: 7px; background: #f8fbfb; color: #183139; text-align: left; cursor: pointer; }.decode-add-workflow:hover { border-color: #0d7f83; background: #eaf6f6; }
 @media (max-width: 1080px) { .decode-root { grid-template-columns: 240px 1fr; }.decode-details { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #d8e3e5; }.decode-details { max-height: 280px; } }
 @media (max-width: 700px) { .decode-root { display: block; }.decode-catalogue { border-right: 0; border-bottom: 1px solid #d8e3e5; max-height: 300px; }.decode-workspace { min-height: 560px; } }
 """
 
 
-def _decode_workflows_js() -> str:
+def _decode_workflows_js_legacy() -> str:
     return r"""
 (() => {
   const root = document.getElementById('decode-root');
@@ -665,6 +669,108 @@ def _decode_workflows_js() -> str:
     const h2kgLink = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : '';
     details.innerHTML = `<h2>${escapeHtml(anchor.label)}</h2><p><span class="decode-status">${escapeHtml(anchor.state)}</span></p><p><code>${escapeHtml(anchor.id)}</code></p><p>${escapeHtml(anchor.evidence)}</p>${h2kgLink}<h3>Connected workflow occurrences (${occurrences.length})</h3><ul>${groups}</ul><p>Double-clicked expansion is bounded to keep the graph readable; use “show more connected workflows” to reveal additional reviewed occurrences.</p>`;
   }
+})();
+"""
+
+
+def _decode_workflows_js() -> str:
+    """Interactive, federated DECODE workflow graph viewer."""
+    return r"""
+(() => {
+  const root = document.getElementById('decode-root');
+  if (!root || !window.cytoscape) return;
+  const $ = (selector) => document.querySelector(selector);
+  const esc = (value) => String(value || '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const lower = (value) => String(value || '').toLowerCase();
+  const graph = $('#decode-graph'), details = $('#decode-details'), hover = $('#decode-hovercard');
+  const sourceToggle = $('#decode-show-source'), anchorToggle = $('#decode-show-anchors'), semanticToggle = $('#decode-show-semantic'), more = $('#decode-more');
+  let data, cy, selectedWorkflow, selectedAnchor, shownWorkflows = new Set();
+
+  fetch(root.dataset.decodeData).then((response) => response.json()).then((loaded) => { data = loaded; initialize(); }).catch((error) => { details.innerHTML = `<h2>Workflow data unavailable</h2><p>${esc(error.message)}</p>`; });
+
+  function index(items) { return Object.fromEntries(items.map((item) => [item.id, item])); }
+  function initialize() {
+    data.nodeById = index(data.nodes); data.anchorById = index(data.anchors); data.workflowById = index(data.workflows);
+    data.nodesByWorkflow = {}; data.nodes.forEach((node) => (data.nodesByWorkflow[node.workflow_id] ||= []).push(node.id));
+    const family = $('#decode-family');
+    [...new Set(data.workflows.map((workflow) => workflow.method_family))].sort().forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${esc(name)}">${esc(name.replaceAll('_', ' '))}</option>`));
+    $('#decode-search').addEventListener('input', renderCatalogue); family.addEventListener('change', renderCatalogue);
+    [sourceToggle, anchorToggle, semanticToggle].forEach((input) => input.addEventListener('change', renderGraph));
+    $('#decode-reset').addEventListener('click', () => selectWorkflow(selectedWorkflow));
+    more.addEventListener('click', () => addNextConnectedWorkflow(selectedAnchor));
+    renderCatalogue(); selectWorkflow(data.workflows[0]?.id);
+  }
+
+  function renderCatalogue() {
+    const needle = lower($('#decode-search').value), family = $('#decode-family').value;
+    const matches = data.workflows.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
+    $('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
+    $('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} reviewed mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
+    document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
+  }
+
+  function selectWorkflow(workflowId) {
+    if (!data.workflowById[workflowId]) return;
+    selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true;
+    renderCatalogue(); renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+  }
+  function visibleNodeIds() { return new Set([...shownWorkflows].flatMap((workflowId) => data.nodesByWorkflow[workflowId] || [])); }
+  function visibleAnchorIds(nodes) { return new Set([...nodes].map((id) => data.nodeById[id]?.anchor_id).filter(Boolean)); }
+
+  function elements() {
+    const nodes = visibleNodeIds(), anchors = visibleAnchorIds(nodes), output = [];
+    [...nodes].forEach((id) => { const node = data.nodeById[id]; output.push({ group:'nodes', data:{ id, label:node.label, kind:'occurrence', state:node.mapping_state, visual:node.visual_category || 'other', workflow:node.workflow_id } }); });
+    if (anchorToggle.checked) {
+      [...anchors].forEach((id) => { const anchor = data.anchorById[id]; if (anchor) output.push({ group:'nodes', data:{ id, label:anchor.label, kind:'anchor', state:anchor.state } }); });
+      data.anchor_edges.filter((edge) => nodes.has(edge.source) && anchors.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'anchor', label:'maps to' } }));
+    }
+    if (sourceToggle.checked) data.source_edges.filter((edge) => nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:edge.label || 'source dependency' } }));
+    if (semanticToggle.checked) data.semantic_edges.filter((edge) => nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'semantic', label:edge.label } }));
+    return output;
+  }
+
+  function renderGraph() {
+    if (cy) cy.destroy();
+    cy = cytoscape({ container:graph, elements:elements(), style:[
+      { selector:'node', style:{ 'label':'data(label)', 'font-size':10, 'text-wrap':'wrap', 'text-max-width':118, 'color':'#183139', 'text-valign':'center', 'text-halign':'center', 'border-width':2, 'background-color':'#a9bcc0', 'border-color':'#50676d', 'width':60, 'height':60 } },
+      { selector:'node[visual = "material"], node[visual = "component"]', style:{ 'background-color':'#0f6d7a', 'border-color':'#084f59', 'color':'#fff' } },
+      { selector:'node[visual = "data"]', style:{ 'background-color':'#5ca9c9', 'border-color':'#2e7795' } },
+      { selector:'node[visual = "device"]', style:{ 'background-color':'#72808b', 'border-color':'#4d5a64', 'color':'#fff' } },
+      { selector:'node[visual = "process"], node[visual = "method"]', style:{ 'background-color':'#c86a2b', 'border-color':'#93430d', 'color':'#fff' } },
+      { selector:'node[visual = "model"]', style:{ 'background-color':'#6d9c63', 'border-color':'#477442', 'color':'#fff' } },
+      { selector:'node[kind = "anchor"][state = "approved_h2kg"]', style:{ 'shape':'round-rectangle', 'background-color':'#0d7f83', 'border-color':'#07575a', 'color':'#fff', 'width':116, 'height':48, 'font-weight':700 } },
+      { selector:'node[kind = "anchor"][state = "reviewed_decode"]', style:{ 'shape':'round-rectangle', 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff', 'width':116, 'height':48, 'font-weight':700 } },
+      { selector:'node[state = "unresolved"]', style:{ 'background-opacity':.55, 'border-style':'dashed' } },
+      { selector:'node.hovered', style:{ 'border-color':'#f59e0b', 'border-width':5, 'z-index':999 } },
+      { selector:'edge[kind = "source"]', style:{ 'width':2, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
+      { selector:'edge[kind = "anchor"]', style:{ 'width':1.5, 'line-style':'dashed', 'line-color':'#bd8529', 'curve-style':'bezier' } },
+      { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } }
+    ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:105, nodeRepulsion:520000 } });
+    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); const anchorId = item.kind === 'anchor' ? item.id : data.nodeById[item.id]?.anchor_id; if (anchorId) expandAnchor(anchorId); else showOccurrenceDetails(item.id); });
+    cy.on('tap', 'node', (event) => event.target.data().kind === 'anchor' ? showAnchorDetails(event.target.id()) : showOccurrenceDetails(event.target.id()));
+    cy.on('mouseover', 'node, edge', (event) => { event.target.addClass('hovered'); showHover(event.target, event.originalEvent); });
+    cy.on('mousemove', 'node, edge', (event) => moveHover(event.originalEvent));
+    cy.on('mouseout', 'node, edge', (event) => { event.target.removeClass('hovered'); hideHover(); });
+  }
+
+  function rankedConnectedWorkflows(anchorId) {
+    const visibleAnchors = visibleAnchorIds(visibleNodeIds());
+    const candidates = new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter((id) => id && !shownWorkflows.has(id)));
+    return [...candidates].sort((left, right) => { const leftAnchors = new Set((data.nodesByWorkflow[left] || []).map((id) => data.nodeById[id]?.anchor_id).filter(Boolean)); const rightAnchors = new Set((data.nodesByWorkflow[right] || []).map((id) => data.nodeById[id]?.anchor_id).filter(Boolean)); const leftScore = [...leftAnchors].filter((id) => visibleAnchors.has(id)).length, rightScore = [...rightAnchors].filter((id) => visibleAnchors.has(id)).length; return rightScore - leftScore || data.workflowById[left].title.localeCompare(data.workflowById[right].title); });
+  }
+  function expandAnchor(anchorId) { selectedAnchor = anchorId; const next = rankedConnectedWorkflows(anchorId)[0]; if (next) shownWorkflows.add(next); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); }
+  function addNextConnectedWorkflow(anchorId) { if (anchorId) expandAnchor(anchorId); }
+  function updateMoreButton() { const remaining = selectedAnchor ? rankedConnectedWorkflows(selectedAnchor).length : 0; more.hidden = !remaining; more.textContent = `Add next connected workflow (${remaining} remaining)`; }
+
+  function downloads(workflow) { return `<div class="decode-downloads"><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_validation_report.json" download>Download validation report</a></div>`; }
+  function showWorkflowDetails(workflow) { details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>The complete source workflow is visible. Double-click a reviewed occurrence or anchor to add one complete linked workflow.</p>${downloads(workflow)}`; }
+  function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Original GraphML ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; }
+  function showAnchorDetails(anchorId) { const anchor = data.anchorById[anchorId]; if (!anchor) return; const workflows = [...new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))].map((id) => data.workflowById[id]); const candidates = rankedConnectedWorkflows(anchorId); const h2kg = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const cards = candidates.slice(0,8).map((workflow) => `<button class="decode-add-workflow" data-add-workflow="${esc(workflow.id)}">Add full workflow: ${esc(workflow.title)}</button>`).join(''); details.innerHTML = `<h2>${esc(anchor.label)}</h2><p><span class="decode-status ${esc(anchor.state)}">${esc(anchor.state)}</span></p><p><code>${esc(anchor.id)}</code></p><p>${esc(anchor.evidence)}</p>${h2kg}<h3>Linked workflows (${workflows.length})</h3><ul>${workflows.map((workflow) => `<li>${esc(workflow.title)}</li>`).join('')}</ul>${cards ? `<h3>Expand a connected workflow</h3>${cards}` : '<p>All linked workflows are visible.</p>'}`; document.querySelectorAll('[data-add-workflow]').forEach((button) => button.addEventListener('click', () => { shownWorkflows.add(button.dataset.addWorkflow); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); })); }
+
+  function visibleRelations(id) { return [...cy.$id(id).connectedEdges()].map((edge) => `${edge.data('kind')}: ${edge.data('label') || 'relation'}`).join('; ') || 'none'; }
+  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>`; } else if (item.kind === 'anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(anchor.state)}</span></p><p><code>${esc(anchor.id)}</code></p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else { const node = data.nodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span> ${esc(node.visual_category || 'other')}</p><p><strong>GraphML ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Workflow:</strong> ${esc(data.workflowById[node.workflow_id].title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
+  function moveHover(event) { if (!event || hover.classList.contains('is-hidden')) return; hover.style.left = `${Math.min((event.clientX || 0) + 14, window.innerWidth - hover.offsetWidth - 10)}px`; hover.style.top = `${Math.min((event.clientY || 0) + 14, window.innerHeight - hover.offsetHeight - 10)}px`; }
+  function hideHover() { hover.classList.add('is-hidden'); }
 })();
 """
 

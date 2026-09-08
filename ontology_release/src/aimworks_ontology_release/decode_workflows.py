@@ -77,6 +77,7 @@ def build_decode_workflow_release(
     workflows_dir = ensure_dir(target / "workflows")
     graph, matrix_rows = _federate(snapshot, mappings, semantic_projections)
     validation = _validate_federated_graph(snapshot, graph)
+    anchor_candidates = _anchor_candidates(snapshot, mappings)
 
     generated: list[Path] = [
         dump_json(target / "decode_federated_graph.json", graph),
@@ -84,6 +85,7 @@ def build_decode_workflow_release(
         dump_json(target / "decode_validation_report.json", validation),
         _write_mapping_matrix(target / "decode_mapping_matrix.csv", matrix_rows),
         _write_mapping_matrix_markdown(target / "decode_mapping_matrix.md", matrix_rows),
+        _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
     for workflow in graph["workflows"]:
@@ -194,6 +196,7 @@ def _federate(
                 **source_node,
                 "kind": "occurrence",
                 "workflow_id": workflow_id,
+                "visual_category": _visual_category(source_node),
                 "mapping_state": mapping_state,
                 "anchor_id": anchor_id,
                 "mapping_evidence": mapping.get("evidence", "No reviewed mapping decision.") if mapping else "No reviewed mapping decision.",
@@ -350,6 +353,43 @@ def _index_semantic_projections(entries: list[dict[str, Any]]) -> dict[tuple[str
     return result
 
 
+def _anchor_candidates(
+    snapshot: dict[str, Any],
+    mappings: dict[tuple[str, str], dict[str, Any]],
+) -> list[dict[str, str]]:
+    occurrences: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
+    for workflow in snapshot.get("workflows", []):
+        for node in workflow.get("nodes", []):
+            key = (_normal(node["label"]), _normal(node.get("native_category", "")))
+            if key in mappings or (key[0], "") in mappings:
+                continue
+            occurrences[key].append((workflow["id"], node["source_id"]))
+    candidates: list[dict[str, str]] = []
+    for (normalized_label, normalized_category), nodes in occurrences.items():
+        workflow_ids = sorted({workflow_id for workflow_id, _ in nodes})
+        if len(workflow_ids) < 2:
+            continue
+        representative = next(
+            node
+            for workflow in snapshot.get("workflows", [])
+            for node in workflow.get("nodes", [])
+            if _normal(node["label"]) == normalized_label and _normal(node.get("native_category", "")) == normalized_category
+        )
+        candidates.append(
+            {
+                "source_label": representative["label"],
+                "native_category": representative.get("native_category", ""),
+                "visual_category": _visual_category(representative),
+                "occurrence_count": str(len(nodes)),
+                "workflow_count": str(len(workflow_ids)),
+                "workflow_ids": "; ".join(workflow_ids),
+                "recommended_state": "review_required",
+                "note": "Candidate only. It does not create a cross-workflow link until an explicit mapping entry is reviewed and added.",
+            }
+        )
+    return sorted(candidates, key=lambda item: (-int(item["workflow_count"]), item["source_label"].lower()))
+
+
 def _data_text(element: ET.Element, key: str) -> str:
     data = next((item for item in element.findall(f"{GRAPHML_NS}data") if item.attrib.get("key") == key), None)
     return "".join(data.itertext()).strip() if data is not None else ""
@@ -384,6 +424,24 @@ def _method_family(name: str) -> str:
     for family, keywords in family_keywords:
         if any(keyword in text for keyword in keywords):
             return family
+    return "other"
+
+
+def _visual_category(node: dict[str, Any]) -> str:
+    category = _normal(str(node.get("native_category", "")))
+    label = _normal(str(node.get("label", "")))
+    if category in {"material", "component"}:
+        return "material" if category == "material" else "component"
+    if category == "meso" or any(token in label for token in ("voxel data", "image data", "dataset", "tomography data")):
+        return "data"
+    if category in {"device", "lre"}:
+        return "device"
+    if any(token in label for token in ("model", "simulation", "fitting", "theory", "digital twin", "calculation")):
+        return "model"
+    if any(token in label for token in ("coating", "deposition", "preparation", "assembly", "manufacturing", "printing", "mixing")):
+        return "process"
+    if node.get("shape") == "hexagon":
+        return "method"
     return "other"
 
 
@@ -434,6 +492,15 @@ def _write_mapping_matrix_markdown(path: Path, rows: list[dict[str, str]]) -> Pa
     for row in rows:
         lines.append("| {workflow_id} | {source_node_id} | {source_label} | {native_category} | {mapping_state} | {anchor_iri} | {evidence} |".format(**{key: value.replace("|", "\\|") for key, value in row.items()}))
     return write_text(path, "\n".join(lines) + "\n")
+
+
+def _write_anchor_candidates(path: Path, rows: list[dict[str, str]]) -> Path:
+    fields = ["source_label", "native_category", "visual_category", "occurrence_count", "workflow_count", "workflow_ids", "recommended_state", "note"]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    writer.writerows(rows)
+    return write_text(path, buffer.getvalue())
 
 
 def _workflow_jsonld(structural: dict[str, Any]) -> dict[str, Any]:
