@@ -167,3 +167,40 @@ def test_decode_alias_curation_updates_only_explicit_target(tmp_path: Path) -> N
     content = json.loads(ontology.read_text(encoding="utf-8"))
     aliases = content[0]["http://www.w3.org/2004/02/skos/core#altLabel"]
     assert {item["@value"] for item in aliases} == {"existing", "ECSA"}
+
+
+def test_semantic_overview_collapses_gde_occurrences_without_changing_source_graph(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    build_decode_workflow_release(
+        root / "input" / "decode_workflows_source.json",
+        tmp_path / "output",
+        root / "config" / "decode_workflow_mappings.yaml",
+        root / "input" / "current_ontology.jsonld",
+    )
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    overview = graph["semantic_overview"]
+    assert graph["counts"]["source_node_count"] == 2951
+    assert graph["counts"]["source_edge_count"] == 3986
+    assert graph["counts"]["duplicate_occurrence_group_count"] == 293
+    assert graph["counts"]["workflows_with_duplicate_occurrences"] == 84
+
+    gde = next(
+        row
+        for row in graph["duplicate_occurrence_audit"]
+        if row["workflow_id"] == "gde-cell-for-electrochemical-studies"
+        and row["source_label"] == "GDE cell for electrochemical studies"
+    )
+    assert gde["occurrence_count"] == 3
+    assert {value.rsplit("::", 1)[-1] for value in gde["occurrence_ids"]} == {"n10", "n11", "n12"}
+    assert gde["collapse_eligible"] is True
+    assert gde["context_classification"] == "distinct_branch_context"
+
+    semantic_node = next(node for node in overview["nodes"] if node["id"] == gde["anchor_ids"][0])
+    assert set(gde["occurrence_ids"]).issubset(set(semantic_node["occurrence_ids"]))
+    overview_edge_ids = [
+        edge_id
+        for edge in overview["source_edges"]
+        for edge_id in edge["source_dependency_ids"]
+    ]
+    assert len(overview_edge_ids) == 3986
+    assert len(set(overview_edge_ids)) == 3986

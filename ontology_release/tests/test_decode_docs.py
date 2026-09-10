@@ -30,3 +30,7 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "rankedConnectedWorkflows" in script
     assert "Add full workflow" in script
     assert "showHover" in script
+    assert "Semantic overview" in page
+    assert "Preserved source occurrences" in page
+    assert "semantic_overview" in script
+    assert "decode_duplicate_occurrence_audit.csv" in script

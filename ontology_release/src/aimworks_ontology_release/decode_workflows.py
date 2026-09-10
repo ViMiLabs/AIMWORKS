@@ -87,6 +87,18 @@ def build_decode_workflow_release(
         semantic_projections,
         mapping_config.get("default_alignment", {}),
     )
+    semantic_overview = _build_semantic_overview(graph)
+    duplicate_audit = _duplicate_occurrence_audit(graph)
+    graph["semantic_overview"] = semantic_overview
+    graph["duplicate_occurrence_audit"] = duplicate_audit
+    graph["counts"].update(
+        {
+            "semantic_overview_node_count": len(semantic_overview["nodes"]),
+            "semantic_overview_source_edge_count": len(semantic_overview["source_edges"]),
+            "duplicate_occurrence_group_count": len(duplicate_audit),
+            "workflows_with_duplicate_occurrences": len({row["workflow_id"] for row in duplicate_audit}),
+        }
+    )
     validation = _validate_federated_graph(snapshot, graph)
     anchor_candidates = _anchor_candidates(snapshot, mappings)
     registry = _concept_registry(snapshot, graph, ontology_path)
@@ -100,6 +112,8 @@ def build_decode_workflow_release(
         _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
         dump_json(target / "decode_concept_registry.json", registry),
         _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
+        dump_json(target / "decode_duplicate_occurrence_audit.json", duplicate_audit),
+        _write_duplicate_occurrence_audit(target / "decode_duplicate_occurrence_audit.csv", duplicate_audit),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
     for workflow in graph["workflows"]:
@@ -397,7 +411,34 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         for edge in graph["source_edges"]
         if edge["source"].split("::", 1)[0] != edge["target"].split("::", 1)[0]
     ]
-    status = "passed" if source_pairs == preserved_pairs and not invalid_edges and not invalid_semantic_edges and not untraceable_semantic_edges and not unexpected_cross_links else "failed"
+    overview = graph.get("semantic_overview", {})
+    overview_occurrence_ids = {
+        occurrence_id
+        for node in overview.get("nodes", [])
+        for occurrence_id in node.get("occurrence_ids", [])
+    }
+    overview_source_edge_ids = [
+        source_edge_id
+        for edge in overview.get("source_edges", [])
+        for source_edge_id in edge.get("source_dependency_ids", [])
+    ]
+    missing_overview_occurrence_ids = sorted(node_ids - overview_occurrence_ids)
+    unexpected_overview_occurrence_ids = sorted(overview_occurrence_ids - node_ids)
+    missing_overview_source_edge_ids = sorted(source_dependency_ids - set(overview_source_edge_ids))
+    duplicated_overview_source_edge_ids = sorted(
+        edge_id for edge_id, count in Counter(overview_source_edge_ids).items() if count != 1
+    )
+    status = "passed" if (
+        source_pairs == preserved_pairs
+        and not invalid_edges
+        and not invalid_semantic_edges
+        and not untraceable_semantic_edges
+        and not unexpected_cross_links
+        and not missing_overview_occurrence_ids
+        and not unexpected_overview_occurrence_ids
+        and not missing_overview_source_edge_ids
+        and not duplicated_overview_source_edge_ids
+    ) else "failed"
     return {
         "status": status,
         "source_workflow_count": len(snapshot.get("workflows", [])),
@@ -410,8 +451,163 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         "invalid_semantic_edge_ids": invalid_semantic_edges,
         "untraceable_semantic_edge_ids": untraceable_semantic_edges,
         "unexpected_cross_workflow_source_edge_ids": unexpected_cross_links,
+        "missing_semantic_overview_occurrence_ids": missing_overview_occurrence_ids,
+        "unexpected_semantic_overview_occurrence_ids": unexpected_overview_occurrence_ids,
+        "missing_semantic_overview_source_edge_ids": missing_overview_source_edge_ids,
+        "duplicated_semantic_overview_source_edge_ids": duplicated_overview_source_edge_ids,
         "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or reviewed_decode anchor mappings.",
     }
+
+
+def _build_semantic_overview(graph: dict[str, Any]) -> dict[str, Any]:
+    """Create a derived, provenance-preserving view over shared semantic anchors."""
+    nodes_by_id = {node["id"]: node for node in graph["nodes"]}
+    anchors_by_id = {anchor["id"]: anchor for anchor in graph["anchors"]}
+    overview_nodes: dict[str, dict[str, Any]] = {}
+
+    def overview_id(node: dict[str, Any]) -> str:
+        return str(node.get("anchor_id") or f"unresolved::{node['id']}")
+
+    for occurrence in graph["nodes"]:
+        node_id = overview_id(occurrence)
+        anchor = anchors_by_id.get(node_id)
+        overview = overview_nodes.setdefault(
+            node_id,
+            {
+                "id": node_id,
+                "kind": "semantic_anchor" if anchor else "unresolved_occurrence",
+                "label": anchor["label"] if anchor else occurrence["label"],
+                "state": anchor["state"] if anchor else occurrence["mapping_state"],
+                "decision": anchor["decision"] if anchor else occurrence["decision"],
+                "canonical_role_iri": anchor.get("canonical_role_iri", "") if anchor else occurrence.get("canonical_role_iri", ""),
+                "semantic_role": anchor.get("semantic_role", "") if anchor else occurrence.get("semantic_role", ""),
+                "confidence": anchor.get("confidence", "unreviewed") if anchor else occurrence.get("confidence", "unreviewed"),
+                "evidence": anchor.get("evidence", "") if anchor else occurrence.get("mapping_evidence", ""),
+                "occurrence_ids": [],
+                "workflow_ids": [],
+                "visual_categories": [],
+            },
+        )
+        overview["occurrence_ids"].append(occurrence["id"])
+        overview["workflow_ids"].append(occurrence["workflow_id"])
+        overview["visual_categories"].append(occurrence["visual_category"])
+
+    for node in overview_nodes.values():
+        node["occurrence_ids"].sort()
+        node["workflow_ids"] = sorted(set(node["workflow_ids"]))
+        node["visual_categories"] = sorted(set(node["visual_categories"]))
+        node["occurrence_count"] = len(node["occurrence_ids"])
+
+    source_edges: dict[tuple[str, str], dict[str, Any]] = {}
+    for edge in graph["source_edges"]:
+        source = overview_id(nodes_by_id[edge["source"]])
+        target = overview_id(nodes_by_id[edge["target"]])
+        record = source_edges.setdefault(
+            (source, target),
+            {
+                "id": f"semantic-overview::source::{_short_hash(source + '|' + target)}",
+                "source": source,
+                "target": target,
+                "type": "aggregated_source_dependency",
+                "source_dependency_ids": [],
+                "occurrence_pairs": [],
+                "workflow_ids": [],
+            },
+        )
+        record["source_dependency_ids"].append(edge["id"])
+        record["occurrence_pairs"].append(
+            {
+                "source_occurrence_id": edge["source"],
+                "target_occurrence_id": edge["target"],
+                "source_dependency_id": edge["id"],
+                "workflow_id": edge["workflow_id"],
+            }
+        )
+        record["workflow_ids"].append(edge["workflow_id"])
+
+    semantic_edges: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for edge in graph["semantic_edges"]:
+        source = overview_id(nodes_by_id[edge["source"]])
+        target = overview_id(nodes_by_id[edge["target"]])
+        predicate = edge["predicate"]
+        record = semantic_edges.setdefault(
+            (source, target, predicate),
+            {
+                "id": f"semantic-overview::projection::{_short_hash(source + '|' + target + '|' + predicate)}",
+                "source": source,
+                "target": target,
+                "predicate": predicate,
+                "label": edge["label"],
+                "type": "approved_semantic_projection",
+                "semantic_projection_ids": [],
+                "source_dependency_ids": [],
+                "workflow_ids": [],
+            },
+        )
+        record["semantic_projection_ids"].append(edge["id"])
+        record["source_dependency_ids"].append(edge["source_dependency_id"])
+        record["workflow_ids"].append(edge["workflow_id"])
+
+    for edge in [*source_edges.values(), *semantic_edges.values()]:
+        edge["workflow_ids"] = sorted(set(edge["workflow_ids"]))
+        edge["occurrence_count"] = len(edge.get("source_dependency_ids", []))
+
+    return {
+        "description": "Derived semantic overview. Every node and edge retains occurrence- and source-dependency provenance.",
+        "nodes": sorted(overview_nodes.values(), key=lambda node: (node["label"].lower(), node["id"])),
+        "source_edges": sorted(source_edges.values(), key=lambda edge: edge["id"]),
+        "semantic_edges": sorted(semantic_edges.values(), key=lambda edge: edge["id"]),
+    }
+
+
+def _duplicate_occurrence_audit(graph: dict[str, Any]) -> list[dict[str, Any]]:
+    """Record repeated source labels within a workflow without treating them as duplicates in source data."""
+    nodes_by_id = {node["id"]: node for node in graph["nodes"]}
+    edges_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for edge in graph["source_edges"]:
+        edges_by_node[edge["source"]].append(edge)
+        edges_by_node[edge["target"]].append(edge)
+
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for node in graph["nodes"]:
+        groups[(node["workflow_id"], _normal(node["label"]), _normal(node.get("native_category", "")))].append(node)
+
+    audit: list[dict[str, Any]] = []
+    for (workflow_id, _, _), occurrences in groups.items():
+        if len(occurrences) < 2:
+            continue
+        contexts: set[tuple[tuple[str, ...], tuple[str, ...]]] = set()
+        for occurrence in occurrences:
+            incoming = sorted(
+                nodes_by_id[edge["source"]]["label"]
+                for edge in edges_by_node[occurrence["id"]]
+                if edge["target"] == occurrence["id"]
+            )
+            outgoing = sorted(
+                nodes_by_id[edge["target"]]["label"]
+                for edge in edges_by_node[occurrence["id"]]
+                if edge["source"] == occurrence["id"]
+            )
+            contexts.add((tuple(incoming), tuple(outgoing)))
+        anchor_ids = sorted({occurrence.get("anchor_id", "") for occurrence in occurrences if occurrence.get("anchor_id")})
+        audit.append(
+            {
+                "id": f"duplicate-occurrence::{workflow_id}::{_short_hash(occurrences[0]['label'] + '|' + occurrences[0].get('native_category', ''))}",
+                "workflow_id": workflow_id,
+                "source_label": occurrences[0]["label"],
+                "native_category": occurrences[0].get("native_category", ""),
+                "occurrence_ids": sorted(occurrence["id"] for occurrence in occurrences),
+                "occurrence_count": len(occurrences),
+                "anchor_ids": anchor_ids,
+                "collapse_eligible": len(anchor_ids) == 1,
+                "context_classification": "same_direct_label_context" if len(contexts) == 1 else "distinct_branch_context",
+                "direct_context_patterns": [
+                    {"incoming_labels": list(incoming), "outgoing_labels": list(outgoing)}
+                    for incoming, outgoing in sorted(contexts)
+                ],
+            }
+        )
+    return sorted(audit, key=lambda row: (row["workflow_id"], row["source_label"].lower(), row["native_category"]))
 
 
 def _default_decision(mapping_state: str) -> str:
@@ -734,6 +930,24 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
     return write_text(path, buffer.getvalue())
 
 
+def _write_duplicate_occurrence_audit(path: Path, rows: list[dict[str, Any]]) -> Path:
+    fields = [
+        "id", "workflow_id", "source_label", "native_category", "occurrence_ids",
+        "occurrence_count", "anchor_ids", "collapse_eligible", "context_classification",
+        "direct_context_patterns",
+    ]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for row in rows:
+        flattened = dict(row)
+        for key in ("occurrence_ids", "anchor_ids"):
+            flattened[key] = "; ".join(str(value) for value in row[key])
+        flattened["direct_context_patterns"] = json.dumps(row["direct_context_patterns"], ensure_ascii=False)
+        writer.writerow(flattened)
+    return write_text(path, buffer.getvalue())
+
+
 def _workflow_jsonld(structural: dict[str, Any]) -> dict[str, Any]:
     workflow = structural["workflow"]
     items: list[dict[str, Any]] = [{"@id": workflow["iri"], "@type": [PROV + "Bundle"], RDFS_LABEL: [workflow["title"]]}]
@@ -788,6 +1002,8 @@ This release contains a normalized structural projection of DECODE GraphML workf
 - Preserved directed source dependencies: {graph['counts']['source_edge_count']}
 - Explicitly mapped occurrences: {graph['counts']['mapped_occurrence_count']}
 - Shared reviewed anchors: {graph['counts']['anchor_count']}
+- Semantic-overview nodes: {graph['counts']['semantic_overview_node_count']}
+- Repeated source-concept groups: {graph['counts']['duplicate_occurrence_group_count']}
 - Structural validation: {validation['status']}
 
 ## Mapping states
@@ -797,4 +1013,6 @@ This release contains a normalized structural projection of DECODE GraphML workf
 - `unresolved`: retained without cross-workflow merging.
 
 Raw GraphML files are not redistributed in this package. The normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+
+`decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 """
