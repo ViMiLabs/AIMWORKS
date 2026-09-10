@@ -183,6 +183,8 @@ def test_semantic_overview_collapses_gde_occurrences_without_changing_source_gra
     assert graph["counts"]["source_edge_count"] == 3986
     assert graph["counts"]["duplicate_occurrence_group_count"] == 293
     assert graph["counts"]["workflows_with_duplicate_occurrences"] == 84
+    assert graph["counts"]["semantic_role_conflict_count"] == 0
+    assert graph["semantic_role_conflicts"] == []
 
     gde = next(
         row
@@ -204,3 +206,55 @@ def test_semantic_overview_collapses_gde_occurrences_without_changing_source_gra
     ]
     assert len(overview_edge_ids) == 3986
     assert len(set(overview_edge_ids)) == 3986
+
+
+def test_semantic_role_conflicts_are_audited_and_fail_validation(tmp_path: Path) -> None:
+    snapshot = tmp_path / "decode.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "workflows": [
+                    {
+                        "id": "fixture", "iri": "https://example.org/fixture", "title": "Fixture", "source_filename": "fixture.graphml", "source_sha256": "fixture", "method_family": "other",
+                        "nodes": [
+                            {"id": "fixture::n0", "source_id": "n0", "iri": "https://example.org/fixture/n0", "label": "Shared material", "native_category": "material", "description": "", "shape": "ellipse"},
+                            {"id": "fixture::n1", "source_id": "n1", "iri": "https://example.org/fixture/n1", "label": "Shared method", "native_category": "", "description": "", "shape": "hexagon"},
+                        ],
+                        "edges": [],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    config = tmp_path / "mappings.yaml"
+    config.write_text(
+        """mappings:
+  - source_label: Shared material
+    state: reviewed_decode
+    anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/conflict
+    anchor_label: Deliberate conflict fixture
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+    semantic_role: Matter
+  - source_label: Shared method
+    state: reviewed_decode
+    anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/conflict
+    anchor_label: Deliberate conflict fixture
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+    semantic_role: Measurement
+semantic_projections: []
+""",
+        encoding="utf-8",
+    )
+    result = build_decode_workflow_release(snapshot, tmp_path / "output", config)
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    assert result["validation_status"] == "failed"
+    assert graph["counts"]["semantic_role_conflict_count"] == 1
+    node = graph["semantic_overview"]["nodes"][0]
+    assert node["role_conflict"] is True
+    assert node["semantic_role"] == "Mixed role"
+    assert set(node["conflicting_canonical_role_iris"]) == {
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+    }
+    assert (tmp_path / "output" / "decode" / "decode_semantic_role_conflicts.csv").exists()

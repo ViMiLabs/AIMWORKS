@@ -34,3 +34,9 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "Preserved source occurrences" in page
     assert "semantic_overview" in script
     assert "decode_duplicate_occurrence_audit.csv" in script
+    assert 'value="source" type="radio" checked' in page
+    assert "viewMode = 'source'" in script
+    assert "function semanticRoleKey" in script
+    assert "function updateLegend" in script
+    assert 'role = "measurement"' in script
+    assert "Mixed role" in script

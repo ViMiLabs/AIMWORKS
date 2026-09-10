@@ -88,13 +88,16 @@ def build_decode_workflow_release(
         mapping_config.get("default_alignment", {}),
     )
     semantic_overview = _build_semantic_overview(graph)
-    duplicate_audit = _duplicate_occurrence_audit(graph)
+    role_conflicts = semantic_overview["role_conflicts"]
+    duplicate_audit = _duplicate_occurrence_audit(graph, role_conflicts)
     graph["semantic_overview"] = semantic_overview
     graph["duplicate_occurrence_audit"] = duplicate_audit
+    graph["semantic_role_conflicts"] = role_conflicts
     graph["counts"].update(
         {
             "semantic_overview_node_count": len(semantic_overview["nodes"]),
             "semantic_overview_source_edge_count": len(semantic_overview["source_edges"]),
+            "semantic_role_conflict_count": len(role_conflicts),
             "duplicate_occurrence_group_count": len(duplicate_audit),
             "workflows_with_duplicate_occurrences": len({row["workflow_id"] for row in duplicate_audit}),
         }
@@ -114,6 +117,8 @@ def build_decode_workflow_release(
         _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
         dump_json(target / "decode_duplicate_occurrence_audit.json", duplicate_audit),
         _write_duplicate_occurrence_audit(target / "decode_duplicate_occurrence_audit.csv", duplicate_audit),
+        dump_json(target / "decode_semantic_role_conflicts.json", role_conflicts),
+        _write_semantic_role_conflict_audit(target / "decode_semantic_role_conflicts.csv", role_conflicts),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
     for workflow in graph["workflows"]:
@@ -140,6 +145,7 @@ def build_decode_workflow_release(
         "mapped_occurrence_count": len(graph["anchor_edges"]),
         "approved_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "approved_h2kg"),
         "reviewed_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "reviewed_decode"),
+        "semantic_role_conflict_count": len(role_conflicts),
         "concept_registry_count": registry["counts"]["concept_count"],
         "validation_status": validation["status"],
         "generated_files": [str(path) for path in generated],
@@ -255,6 +261,8 @@ def _federate(
                 mapping = mappings.get((_normal(source_node["label"]), ""))
             if mapping is None:
                 mapping = _default_decode_mapping(source_node, default_alignment)
+            if mapping is not None:
+                mapping = _with_semantic_role(mapping, source_node, default_alignment)
             mapping_state = mapping.get("state", "unresolved") if mapping else "unresolved"
             anchor_id = mapping.get("anchor_iri") if mapping else None
             decision = mapping.get("decision", _default_decision(mapping_state)) if mapping else "unresolved"
@@ -428,6 +436,7 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
     duplicated_overview_source_edge_ids = sorted(
         edge_id for edge_id, count in Counter(overview_source_edge_ids).items() if count != 1
     )
+    semantic_role_conflicts = graph.get("semantic_role_conflicts", [])
     status = "passed" if (
         source_pairs == preserved_pairs
         and not invalid_edges
@@ -438,6 +447,7 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         and not unexpected_overview_occurrence_ids
         and not missing_overview_source_edge_ids
         and not duplicated_overview_source_edge_ids
+        and not semantic_role_conflicts
     ) else "failed"
     return {
         "status": status,
@@ -455,6 +465,7 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         "unexpected_semantic_overview_occurrence_ids": unexpected_overview_occurrence_ids,
         "missing_semantic_overview_source_edge_ids": missing_overview_source_edge_ids,
         "duplicated_semantic_overview_source_edge_ids": duplicated_overview_source_edge_ids,
+        "semantic_role_conflicts": semantic_role_conflicts,
         "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or reviewed_decode anchor mappings.",
     }
 
@@ -486,16 +497,29 @@ def _build_semantic_overview(graph: dict[str, Any]) -> dict[str, Any]:
                 "occurrence_ids": [],
                 "workflow_ids": [],
                 "visual_categories": [],
+                "semantic_roles": [],
+                "canonical_role_iris": [],
             },
         )
         overview["occurrence_ids"].append(occurrence["id"])
         overview["workflow_ids"].append(occurrence["workflow_id"])
         overview["visual_categories"].append(occurrence["visual_category"])
+        if occurrence.get("semantic_role"):
+            overview["semantic_roles"].append(occurrence["semantic_role"])
+        if occurrence.get("canonical_role_iri"):
+            overview["canonical_role_iris"].append(occurrence["canonical_role_iri"])
 
     for node in overview_nodes.values():
         node["occurrence_ids"].sort()
         node["workflow_ids"] = sorted(set(node["workflow_ids"]))
         node["visual_categories"] = sorted(set(node["visual_categories"]))
+        node["semantic_roles"] = sorted(set(node["semantic_roles"]))
+        node["canonical_role_iris"] = sorted(set(node["canonical_role_iris"]))
+        node["role_conflict"] = len(node["canonical_role_iris"]) > 1
+        node["conflicting_canonical_role_iris"] = list(node["canonical_role_iris"]) if node["role_conflict"] else []
+        if node["role_conflict"]:
+            node["semantic_role"] = "Mixed role"
+            node["canonical_role_iri"] = ""
         node["occurrence_count"] = len(node["occurrence_ids"])
 
     source_edges: dict[tuple[str, str], dict[str, Any]] = {}
@@ -552,17 +576,34 @@ def _build_semantic_overview(graph: dict[str, Any]) -> dict[str, Any]:
         edge["workflow_ids"] = sorted(set(edge["workflow_ids"]))
         edge["occurrence_count"] = len(edge.get("source_dependency_ids", []))
 
+    role_conflicts = [
+        {
+            "anchor_id": node["id"],
+            "label": node["label"],
+            "state": node["state"],
+            "semantic_roles": node["semantic_roles"],
+            "canonical_role_iris": node["conflicting_canonical_role_iris"],
+            "occurrence_ids": node["occurrence_ids"],
+        }
+        for node in overview_nodes.values()
+        if node["role_conflict"]
+    ]
     return {
         "description": "Derived semantic overview. Every node and edge retains occurrence- and source-dependency provenance.",
         "nodes": sorted(overview_nodes.values(), key=lambda node: (node["label"].lower(), node["id"])),
         "source_edges": sorted(source_edges.values(), key=lambda edge: edge["id"]),
         "semantic_edges": sorted(semantic_edges.values(), key=lambda edge: edge["id"]),
+        "role_conflicts": sorted(role_conflicts, key=lambda row: row["anchor_id"]),
     }
 
 
-def _duplicate_occurrence_audit(graph: dict[str, Any]) -> list[dict[str, Any]]:
+def _duplicate_occurrence_audit(
+    graph: dict[str, Any],
+    role_conflicts: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     """Record repeated source labels within a workflow without treating them as duplicates in source data."""
     nodes_by_id = {node["id"]: node for node in graph["nodes"]}
+    conflicting_anchor_ids = {row["anchor_id"] for row in role_conflicts}
     edges_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for edge in graph["source_edges"]:
         edges_by_node[edge["source"]].append(edge)
@@ -600,6 +641,7 @@ def _duplicate_occurrence_audit(graph: dict[str, Any]) -> list[dict[str, Any]]:
                 "occurrence_count": len(occurrences),
                 "anchor_ids": anchor_ids,
                 "collapse_eligible": len(anchor_ids) == 1,
+                "semantic_role_conflict": any(anchor_id in conflicting_anchor_ids for anchor_id in anchor_ids),
                 "context_classification": "same_direct_label_context" if len(contexts) == 1 else "distinct_branch_context",
                 "direct_context_patterns": [
                     {"incoming_labels": list(incoming), "outgoing_labels": list(outgoing)}
@@ -640,6 +682,23 @@ def _default_decode_mapping(source_node: dict[str, Any], policy: dict[str, Any])
             "Its source topology is preserved; no H2KG synonym or new public term was asserted."
         ),
     }
+
+
+def _with_semantic_role(
+    mapping: dict[str, Any],
+    source_node: dict[str, Any],
+    policy: dict[str, Any],
+) -> dict[str, Any]:
+    """Complete display-role metadata without changing a reviewed anchor decision."""
+    result = dict(mapping)
+    role = str(result.get("canonical_role_iri", "")).strip()
+    if not role:
+        role = str(policy.get("role_by_visual_category", {}).get(_visual_category(source_node), "")).strip()
+        if role:
+            result["canonical_role_iri"] = role
+    if role and not str(result.get("semantic_role", "")).strip():
+        result["semantic_role"] = _last_segment(role)
+    return result
 
 
 def _concept_registry(
@@ -934,7 +993,7 @@ def _write_duplicate_occurrence_audit(path: Path, rows: list[dict[str, Any]]) ->
     fields = [
         "id", "workflow_id", "source_label", "native_category", "occurrence_ids",
         "occurrence_count", "anchor_ids", "collapse_eligible", "context_classification",
-        "direct_context_patterns",
+        "semantic_role_conflict", "direct_context_patterns",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -944,6 +1003,19 @@ def _write_duplicate_occurrence_audit(path: Path, rows: list[dict[str, Any]]) ->
         for key in ("occurrence_ids", "anchor_ids"):
             flattened[key] = "; ".join(str(value) for value in row[key])
         flattened["direct_context_patterns"] = json.dumps(row["direct_context_patterns"], ensure_ascii=False)
+        writer.writerow(flattened)
+    return write_text(path, buffer.getvalue())
+
+
+def _write_semantic_role_conflict_audit(path: Path, rows: list[dict[str, Any]]) -> Path:
+    fields = ["anchor_id", "label", "state", "semantic_roles", "canonical_role_iris", "occurrence_ids"]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for row in rows:
+        flattened = dict(row)
+        for key in ("semantic_roles", "canonical_role_iris", "occurrence_ids"):
+            flattened[key] = "; ".join(str(value) for value in row[key])
         writer.writerow(flattened)
     return write_text(path, buffer.getvalue())
 
@@ -1004,6 +1076,7 @@ This release contains a normalized structural projection of DECODE GraphML workf
 - Shared reviewed anchors: {graph['counts']['anchor_count']}
 - Semantic-overview nodes: {graph['counts']['semantic_overview_node_count']}
 - Repeated source-concept groups: {graph['counts']['duplicate_occurrence_group_count']}
+- Semantic role conflicts: {graph['counts']['semantic_role_conflict_count']}
 - Structural validation: {validation['status']}
 
 ## Mapping states
@@ -1014,5 +1087,5 @@ This release contains a normalized structural projection of DECODE GraphML workf
 
 Raw GraphML files are not redistributed in this package. The normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
 
-`decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
+`decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 """
