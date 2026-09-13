@@ -72,6 +72,7 @@ def run_release(
         output_root,
         project_root / "config" / "decode_workflow_mappings.yaml",
         input_path,
+        include_multiscale_interface=True,
     )
     tib_benchmark = build_tib_benchmark_package(
         input_path,

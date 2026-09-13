@@ -1,0 +1,227 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Data extraction from existing PEWE measurements U-i-t"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n0",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Time series of cell voltage"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/time-series-of-cell-voltage-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Time series of current density"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/time-series-of-current-density-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell high-frequency resistance"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n7"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n3",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell Tafel slope"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-tafel-slope-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n4",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Degradation rates of cell high-frequency resistance"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/degradation-rates-of-cell-high-frequency-resistance-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n5",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Degradation rates of cell Tafel slope"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/degradation-rates-of-cell-tafel-slope-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n6",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Data extraction from existing PEWE measurements (U-i-t)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n4"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/data-extraction-from-existing-pewe-measurements-u-i-t-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n7",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET 1D Performance model for MEA (fitting)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-model"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/data-extraction-from-existing-pewe-measurements-u-i-t/node/n8",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Fitting of the Europium model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model"
+        }
+      ]
+    }
+  ]
+}

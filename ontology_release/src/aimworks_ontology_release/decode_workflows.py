@@ -20,6 +20,7 @@ from typing import Any
 
 from .scorer import lexical_score
 from .utils import COMMON_CONTEXT, SKOS_ALT_LABEL, SKOS_PREF_LABEL, dump_json, ensure_dir, load_json, try_load_yaml, write_text
+from .decode_multiscale_interface import append_multiscale_interface, build_decode_multiscale_model_interface
 
 
 DECODE_NS = "https://w3id.org/h2kg/decode/workflow/"
@@ -66,6 +67,7 @@ def build_decode_workflow_release(
     output_root: str | Path,
     mapping_config_path: str | Path,
     ontology_path: str | Path | None = None,
+    include_multiscale_interface: bool = False,
 ) -> dict[str, Any]:
     """Build static DECODE workflow artefacts from the immutable normalized snapshot."""
     snapshot_path = Path(snapshot_path)
@@ -87,6 +89,14 @@ def build_decode_workflow_release(
         semantic_projections,
         mapping_config.get("default_alignment", {}),
     )
+    interface: dict[str, Any] = {"status": "not_requested"}
+    if include_multiscale_interface:
+        interface = build_decode_multiscale_model_interface(
+            snapshot_path.parent / "decode_multiscale_model_interface.json",
+            snapshot_path,
+            output_root,
+        )
+        append_multiscale_interface(graph, interface)
     semantic_overview = _build_semantic_overview(graph)
     role_conflicts = semantic_overview["role_conflicts"]
     duplicate_audit = _duplicate_occurrence_audit(graph, role_conflicts)
@@ -103,6 +113,8 @@ def build_decode_workflow_release(
         }
     )
     validation = _validate_federated_graph(snapshot, graph)
+    if interface.get("status") == "generated":
+        validation["multiscale_interface"] = interface["validation"]
     anchor_candidates = _anchor_candidates(snapshot, mappings)
     registry = _concept_registry(snapshot, graph, ontology_path)
 
@@ -148,6 +160,7 @@ def build_decode_workflow_release(
         "semantic_role_conflict_count": len(role_conflicts),
         "concept_registry_count": registry["counts"]["concept_count"],
         "validation_status": validation["status"],
+        "multiscale_interface": interface,
         "generated_files": [str(path) for path in generated],
     }
 
@@ -329,7 +342,7 @@ def _federate(
             (edge["source_id"], edge["target_id"]): edge["id"]
             for edge in workflow_source_edges
         }
-        source_edges.extend({**edge, "workflow_id": workflow_id, "type": "source_dependency"} for edge in workflow_source_edges)
+        source_edges.extend({**edge, "workflow_id": workflow_id, "type": "source_dependency", "source_kind": "source_graphml"} for edge in workflow_source_edges)
         for projection_key, projection in semantic_projections.items():
             projection_workflow, source_node_id, target_node_id = projection_key
             if projection_workflow != workflow_id:
@@ -404,7 +417,11 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         for workflow in snapshot.get("workflows", [])
         for edge in workflow.get("edges", [])
     }
-    preserved_pairs = {(edge["workflow_id"], edge["source"], edge["target"]) for edge in graph["source_edges"]}
+    preserved_pairs = {
+        (edge["workflow_id"], edge["source"], edge["target"])
+        for edge in graph["source_edges"]
+        if edge.get("source_kind", "source_graphml") == "source_graphml"
+    }
     node_ids = {node["id"] for node in graph["nodes"]}
     invalid_edges = [edge["id"] for edge in graph["source_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
     invalid_semantic_edges = [edge["id"] for edge in graph["semantic_edges"] if edge["source"] not in node_ids or edge["target"] not in node_ids]
@@ -707,7 +724,8 @@ def _concept_registry(
     ontology_path: str | Path | None,
 ) -> dict[str, Any]:
     """Create an auditable, concept-level register from occurrence-level decisions."""
-    nodes_by_id = {node["id"]: node for node in graph["nodes"]}
+    registry_nodes = [node for node in graph["nodes"] if not node.get("is_derived_interface", False)]
+    nodes_by_id = {node["id"]: node for node in registry_nodes}
     neighbors: dict[str, set[str]] = defaultdict(set)
     for edge in graph["source_edges"]:
         source = nodes_by_id.get(edge["source"])
@@ -718,7 +736,7 @@ def _concept_registry(
 
     h2kg_terms = _load_h2kg_terms(ontology_path)
     groups: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    for node in graph["nodes"]:
+    for node in registry_nodes:
         groups[(_normal(node["label"]), _normal(node.get("native_category", "")))].append(node)
 
     concepts: list[dict[str, Any]] = []

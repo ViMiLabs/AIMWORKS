@@ -202,6 +202,10 @@ def test_semantic_overview_collapses_gde_occurrences_without_changing_source_gra
     overview_edge_ids = [
         edge_id
         for edge in overview["source_edges"]
+        if all(
+            pair["workflow_id"] != "iet-multiscale-model-interface"
+            for pair in edge.get("occurrence_pairs", [])
+        )
         for edge_id in edge["source_dependency_ids"]
     ]
     assert len(overview_edge_ids) == 3986

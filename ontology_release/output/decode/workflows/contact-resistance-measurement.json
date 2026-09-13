@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "workflow": {
+    "id": "contact-resistance-measurement",
+    "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement",
+    "title": "Contact resistance measurement",
+    "source_filename": "Contact_resistance_measurement.graphml",
+    "source_sha256": "fb9c18b8029c096a89ee6be516e07ab53d14d28cb0f91e2d60272a2c998701c1",
+    "method_family": "other",
+    "source_status": "preserved",
+    "mapping_status": "mapped",
+    "source_node_count": 3,
+    "source_edge_count": 2,
+    "mapped_anchor_count": 3,
+    "cross_workflow_connection_count": 0
+  },
+  "nodes": [
+    {
+      "id": "contact-resistance-measurement::n0",
+      "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement/node/n0",
+      "source_id": "n0",
+      "label": "PTL",
+      "native_category": "component",
+      "description": "PTL\ninternal key: PTL: component",
+      "shape": "ellipse",
+      "kind": "occurrence",
+      "workflow_id": "contact-resistance-measurement",
+      "visual_category": "component",
+      "mapping_state": "reviewed_decode",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    },
+    {
+      "id": "contact-resistance-measurement::n1",
+      "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement/node/n1",
+      "source_id": "n1",
+      "label": "PTL contact resistance",
+      "native_category": "component",
+      "description": "PTL contact resistance\ninternal key: PTL contact resistance: component",
+      "shape": "ellipse",
+      "kind": "occurrence",
+      "workflow_id": "contact-resistance-measurement",
+      "visual_category": "component",
+      "mapping_state": "reviewed_decode",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    },
+    {
+      "id": "contact-resistance-measurement::n2",
+      "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement/node/n2",
+      "source_id": "n2",
+      "label": "Contact resistance measurement",
+      "native_category": "",
+      "description": "Contact resistance measurement\nOwner: FZJ-IET-4:Andreas Glsen\nTask: T2.1\nMaturity: established method\nDocumentation: described in PhD thesis in preparation\nRange of validity or processability: \naverage value of the probe size is measured\ninternal key: Contact resistance measurement0",
+      "shape": "hexagon",
+      "kind": "occurrence",
+      "workflow_id": "contact-resistance-measurement",
+      "visual_category": "method",
+      "mapping_state": "reviewed_decode",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "confidence": "reviewed_structural",
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    }
+  ],
+  "source_edges": [
+    {
+      "id": "contact-resistance-measurement::e0",
+      "source_id": "n0",
+      "target_id": "n2",
+      "source": "contact-resistance-measurement::n0",
+      "target": "contact-resistance-measurement::n2",
+      "description": "",
+      "workflow_id": "contact-resistance-measurement",
+      "type": "source_dependency",
+      "source_kind": "source_graphml"
+    },
+    {
+      "id": "contact-resistance-measurement::e1",
+      "source_id": "n2",
+      "target_id": "n1",
+      "source": "contact-resistance-measurement::n2",
+      "target": "contact-resistance-measurement::n1",
+      "description": "",
+      "workflow_id": "contact-resistance-measurement",
+      "type": "source_dependency",
+      "source_kind": "source_graphml"
+    }
+  ],
+  "anchor_edges": [
+    {
+      "id": "anchor::contact-resistance-measurement::n0::56a65d33b3",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "contact-resistance-measurement::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "type": "occurrence_anchor_mapping"
+    },
+    {
+      "id": "anchor::contact-resistance-measurement::n1::4518bcc6af",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "contact-resistance-measurement::n1",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "type": "occurrence_anchor_mapping"
+    },
+    {
+      "id": "anchor::contact-resistance-measurement::n2::3039234717",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "contact-resistance-measurement::n2",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "type": "occurrence_anchor_mapping"
+    }
+  ],
+  "semantic_edges": [],
+  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+}

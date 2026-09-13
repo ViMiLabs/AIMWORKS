@@ -1,0 +1,392 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Hg porosimetry GDL"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n0",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL pore size distribution"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-pore-size-distribution-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL porosity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n9"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n3",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n4",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate pore size distribution"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-pore-size-distribution-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n5",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate average pore radius"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n13"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n14"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-average-pore-radius-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n6",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate porosity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n12"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n10"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n13"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n14"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n15"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-porosity-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n7",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Hg porosimetry GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/hg-porosimetry-gdl-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n8",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Hg porosimetry GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n4"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n5"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/hg-porosimetry-gdl-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n9",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET 1D Performance model for MEA (prediction)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-prediction-model"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n10",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "MPL parameter estimation from GDL and substrate data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-parameter-estimation-from-gdl-and-substrate-data-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n11",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Impregnation by immersion and blade coating"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n11"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-process"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n12",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Diffusivities from tortuosities"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/diffusivities-from-tortuosities-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n13",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CEA MEA model (Europium 2D)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n13"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cea-mea-model-europium-2d-model"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n14",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Fitting of the Europium model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n14"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n15",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Current modulated hydrogen flow-rate spectroscopy (CH2S)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "n15"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method"
+        }
+      ]
+    }
+  ]
+}

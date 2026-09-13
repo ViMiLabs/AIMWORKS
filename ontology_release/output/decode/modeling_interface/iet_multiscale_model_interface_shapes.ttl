@@ -1,0 +1,16 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
+
+decode:ModelInputParameterShape a sh:NodeShape ;
+  sh:targetClass h2kg:Parameter ;
+  sh:property [ sh:path decode:expectedValueShape ; sh:minCount 1 ] ;
+  sh:property [ sh:path decode:reportedUnit ; sh:minCount 1 ] .
+
+decode:ModelOutputDataShape a sh:NodeShape ;
+  sh:targetClass h2kg:Data ;
+  sh:property [ sh:path decode:expectedValueShape ; sh:minCount 1 ] .
+
+decode:ModelOutputDataPointShape a sh:NodeShape ;
+  sh:targetClass h2kg:DataPoint ;
+  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ] .

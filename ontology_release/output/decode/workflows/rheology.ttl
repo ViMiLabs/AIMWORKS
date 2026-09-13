@@ -1,0 +1,22 @@
+@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n0> a prov:Entity ; rdfs:label "Catalyst ink" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n0> decode:mappedToAnchor <https://w3id.org/h2kg/hydrogen-ontology#CatalystInk> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n1> a prov:Entity ; rdfs:label "Catalyst ink rheologic properties" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n1> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-rheologic-properties-material> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n2> a prov:Entity ; rdfs:label "Catalyst ink stability" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n2> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-material> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> a prov:Entity ; rdfs:label "Rheology" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/rheology-method> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> a prov:Entity ; rdfs:label "Roller mixer and zirconia beads for ref PEFC inks" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> a prov:Entity ; rdfs:label "Ink preparation for deposition of catalytic layers" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/ink-preparation-for-deposition-of-catalytic-layers-process> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n0> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n1> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n2> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .

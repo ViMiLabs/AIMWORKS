@@ -1,0 +1,25 @@
+@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n0> a prov:Entity ; rdfs:label "Metal sheet with PTL-like surface" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n0> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/metal-sheet-with-ptl-like-surface-component> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n1> a prov:Entity ; rdfs:label "Electrolyte" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n1> decode:mappedToAnchor <https://w3id.org/h2kg/hydrogen-ontology#Electrolyte> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n2> a prov:Entity ; rdfs:label "Electrolyte pH" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n2> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-ph-material> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n3> a prov:Entity ; rdfs:label "Corrosion potential" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n3> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/corrosion-potential-component> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n4> a prov:Entity ; rdfs:label "Corrosion current" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n4> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/corrosion-current-component> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n5> a prov:Entity ; rdfs:label "Corrosion potential of zero current" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n5> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/corrosion-potential-of-zero-current-component> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> a prov:Entity ; rdfs:label "PTL corrosion measurement" .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/ptl-corrosion-measurement-method> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n0> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n1> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n2> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n3> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n4> .
+<https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n6> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/ptl-corrosion-measurement/node/n5> .

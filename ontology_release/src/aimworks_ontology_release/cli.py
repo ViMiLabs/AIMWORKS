@@ -122,7 +122,7 @@ def main() -> None:
             snapshot = project_root / snapshot
         if not mapping_config.is_absolute():
             mapping_config = project_root / mapping_config
-        result = build_decode_workflow_release(snapshot, output, mapping_config, input_path)
+        result = build_decode_workflow_release(snapshot, output, mapping_config, input_path, include_multiscale_interface=True)
     elif args.command == "decode-apply-aliases":
         mapping_config = Path(args.mapping_config)
         if not mapping_config.is_absolute():

@@ -1,0 +1,4152 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET multiscale model interface (PDF-derived schema)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET ink to composition model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveIonomerCoverage"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLIonomerEffectiveFilmThickness"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_Apores"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_deltaDA"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaPtC"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaIon"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_ContactAngleRange"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "itc"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET composition to property model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "ctp"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET 1D Performance model for MEA (prediction)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveVoltage"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveExchangeCurrentDensity"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionCCL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionGDL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionMPL"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionMPL"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "ptp"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CatalystSupportRatio",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst-support ratio mPtC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CatalystSupportRatio"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CatalystSupportRatio"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ICRatio",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "I/C-ratio mIC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ICRatio"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ICRatio"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDispersionParameter",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer-catalyst dispersion parameter kA"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_IonomerCatalystDispersionParameter"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_IonomerCatalystDispersionParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TotalPoreVolume",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Total pore volume Vpores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_TotalPoreVolume"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_TotalPoreVolume"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of primary pores inside CCL phi1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_phi1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi1"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of secondary pores inside CCL phi2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_phi2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Mean pore radius for CCL primary pores rMu1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_rMu1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu1"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Mean pore radius for CCL secondary pores rMu2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_rMu2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Standard deviation for CCL primary pores sigmaR1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_sigmaR1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR1"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Standard deviation for CCL primary pores sigmaR2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystPoreSizeDistribution_sigmaR2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer-catalyst degree of alignment deltaDAC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer-catalyst degree of alignment deltaDAPt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer-catalyst degree of alignment deltaDAinf"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystSupportContactAngle",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst support contact angle thetaC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystSupportContactAngle"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystSupportContactAngle"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleContactAngle",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle contact angle thetaPt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystActiveParticleContactAngle"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystActiveParticleContactAngle"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer contact angle of HI pores thetaHI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_IonomerContactAngles_thetaHI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_IonomerContactAngles_thetaHI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer contact angles of HO pores thetaHO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_IonomerContactAngles_thetaHO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_IonomerContactAngles_thetaHO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerInitialFilmThickness",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer initial film thickness t0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_IonomerInitialFilmThickness"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_IonomerInitialFilmThickness"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MeanPoreRadiusInsideTheIonomer",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Mean pore radius inside the ionomer rIon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MeanPoreRadiusInsideTheIonomer"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MeanPoreRadiusInsideTheIonomer"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDiameter",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter rPt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystActiveParticleDiameter"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystActiveParticleDiameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT353k",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Surface tension of water at T = 353K gamma"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_SurfaceTensionOfWaterAtT353k"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_SurfaceTensionOfWaterAtT353k"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerDensityDry",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer density (dry) rhoIon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_IonomerDensityDry"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_IonomerDensityDry"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDensity",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle density rhoPt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_MAT_CatalystActiveParticleDensity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_MAT_CatalystActiveParticleDensity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DensityOfCarbon",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Density of carbon rhoC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_DensityOfCarbon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_DensityOfCarbon"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Capillary pressure range for WRC pc"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_CapillaryPressureRange"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_CapillaryPressureRange"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL water saturation for WRC Sr"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLWaterRetentionCurve"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLWaterRetentionCurve"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL fraction of hydrophilic pores X1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLFractionHydrophilicPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLFractionHydrophilicPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL fraction of hydrophobic pores X2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLFractionHydrophobicPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLFractionHydrophobicPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveIonomerCoverage",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective ionomer coverage aIon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveIonomerCoverage"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveIonomerCoverage"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLIonomerEffectiveFilmThickness",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL ionomer effective film thickness t"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLIonomerEffectiveFilmThickness"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLIonomerEffectiveFilmThickness"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A1",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL pore area of primary pores A1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_A1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_A1"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL pore area of secondary pores A2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_A2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_A2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_Apores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL total pore area Apores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_Apores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_Apores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_deltaDA",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL degree of alignment of ionomer film deltaDA"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_deltaDA"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_deltaDA"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaPtC",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL contact angle of PtC pore wall thetaPtC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_ThetaPtC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_ThetaPtC"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaIon",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL contact angle of ionomer pore wall thetaIon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_ThetaIon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_ThetaIon"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL mean contact angle thetaCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_thetaCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_thetaCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL mean contact angle of HI pores thetaCCLHI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_thetaCCLHI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL mean contact angle of HO pores thetaCCLHO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLStructuralParameters_thetaCCLHO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL fraction of hydrophobic pores X_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLFractionHydrophobicPores_XHO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Pore size for PSD r"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_PoreSizeRange"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_PoreSizeRange"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL refined pore size distribution PSD"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_ContactAngleRange",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Contact angles for CAD cosTheta"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_ContactAngleRange"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_ContactAngleRange"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL contact angle distribution CAD"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PercolationThreshold",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Percolation threshold X_c"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_PercolationThreshold"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_PercolationThreshold"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfElectrolyte",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of electrolyte X_el"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfElectrolyte"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfElectrolyte"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSolidPhasePtC",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of solid phase (Pt + C) X_PtC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfSolidPhasePtC"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfSolidPhasePtC"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLPorosity",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of pores in CCL X_p_CCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLPorosity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLPorosity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfTotalHIPoresInCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of total HI pores in CCL X_p_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfTotalHIPoresInCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfTotalHIPoresInCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of HI primary pores in CCL X_p_HI_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHISecondaryPoresInCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of HI secondary pores in CCL X_p_HI_M"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfHISecondaryPoresInCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfHISecondaryPoresInCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfHiPrimaryToSecondaryPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ratio of HI primary to secondary pores chi_CCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_RatioOfHiPrimaryToSecondaryPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_RatioOfHiPrimaryToSecondaryPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHOPoresInCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of HO pores in CCL X_p_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfHOPoresInCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfHOPoresInCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MPLPorosity",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of pores in MPL X_p_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MPLPorosity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MPLPorosity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of primary pores in MPL X_p_MPL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfPrimaryPoresInMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of secondary pores in MPL X_p_MPL_M"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfSecondaryPoresInMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfMPLPoresToCracks",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ratio of MPL pores to cracks chi_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_RatioOfMPLPoresToCracks"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_RatioOfMPLPoresToCracks"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of primary pores in GDL X_p_GDL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfPrimaryPoresInGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Volume fraction of secondary pores in GDL X_p_GDL_M"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VolumeFractionOfSecondaryPoresInGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RelativeWaterVolumeFractionInIonomer",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Relative water volume fraction in ionomer epsilon_el"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_RelativeWaterVolumeFractionInIonomer"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_RelativeWaterVolumeFractionInIonomer"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Critical radius of bottleneck pores in CCL r_crit"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CriticalRadiusOfBottleneckPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryHiPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of primary HI pores r_mu_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfPrimaryHiPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryHiPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryHiPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of secondary HI pores r_M_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfSecondaryHiPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryHiPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfHoPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of HO pores in CCL r_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfHoPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfHoPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfWaterFilledPoresInIonomer",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Radius of water-filled pores in ionomer r_el"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_RadiusOfWaterFilledPoresInIonomer"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_RadiusOfWaterFilledPoresInIonomer"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Minimal pore radius in CCL r_min"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MinimalPoreRadiusInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MinimalPoreRadiusInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Maximal pore radius in CCL r_max"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MaximalPoreRadiusInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MaximalPoreRadiusInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ReferenceCapillaryRadiusInCclHoPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Reference capillary radius in CCL HO pores r_c_ref"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ReferenceCapillaryRadiusInCclHoPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ReferenceCapillaryRadiusInCclHoPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPoresInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of pores in MPL r_MPL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfPoresInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfPoresInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Radius of pores corresponding to cracks in MPL r_MPL_M"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Minimal pore radius in MPL r_MPL_min"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MinimalPoreRadiusInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MinimalPoreRadiusInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Maximal pore radius in MPL r_MPL_max"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MaximalPoreRadiusInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MaximalPoreRadiusInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Critical radius of bottleneck pores in MPL r_crit_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CriticalRadiusOfBottleneckPoresInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of primary pores in GDL r_GDL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Characteristic radius of secondary pores in GDL r_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Minimal pore radius in GDL r_GDL_min"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MinimalPoreRadiusInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MinimalPoreRadiusInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Maximal pore radius in GDL r_GDL_max"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MaximalPoreRadiusInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MaximalPoreRadiusInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Critical radius of bottleneck pores in GDL r_crit_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CriticalRadiusOfBottleneckPoresInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of PSD of primary HI pores in CCL s_mu_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of PSD of secondary HI pores in CCL s_M_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfHoPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of PSD of HO pores in CCL s_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPsdOfHoPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPsdOfHoPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPoresInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of PSD of pores in MPL s_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPsdOfPoresInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPsdOfPoresInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of primary pores in MPL s_MPL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPrimaryPoresInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPrimaryPoresInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of pores corresponding to cracks in MPL s_MPL_M"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of primary pores in GDL s_GDL_mu"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfPrimaryPoresInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfPrimaryPoresInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfSecondaryPoresInGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Std-dev of secondary pores in GDL s_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_StdDevOfSecondaryPoresInGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_StdDevOfSecondaryPoresInGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TortuosityOfPores",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Tortuosity of pores tau"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_TortuosityOfPores"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_TortuosityOfPores"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedCl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Residual diffusivity (flooded CL) D_res_CCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ResidualDiffusivityFloodedCl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ResidualDiffusivityFloodedCl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedDm",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Residual diffusivity (flooded DM) D_res_DM"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ResidualDiffusivityFloodedDm"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ResidualDiffusivityFloodedDm"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualPermeabilityFloodedClDm",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Residual permeability (flooded CL & DM) K_res"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ResidualPermeabilityFloodedClDm"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ResidualPermeabilityFloodedClDm"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VaporizationRateConstant",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Vaporization rate constant kappa"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_VaporizationRateConstant"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_VaporizationRateConstant"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ExchangeCurrentDensity",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Exchange current density j0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ExchangeCurrentDensity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ExchangeCurrentDensity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHiPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Contact angle of HI pores in CCL theta_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ContactAngleOfHiPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ContactAngleOfHiPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHoPoresInCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Contact angle of HO pores in CCL theta_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ContactAngleOfHoPoresInCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ContactAngleOfHoPoresInCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfGdlForTheBaseCase",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Contact angle of GDL for the base case theta_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ContactAngleOfGdlForTheBaseCase"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ContactAngleOfGdlForTheBaseCase"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Contact angle of MPL theta_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ContactAngleOfMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ContactAngleOfMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DynViscosityOfLiquidWaterT80C",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Dyn. viscosity of liquid water (@ T=80 degC) mu_H2O"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_DynViscosityOfLiquidWaterT80C"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_DynViscosityOfLiquidWaterT80C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolarVolumeOfLiquidWater",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Molar volume of liquid water V_m"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MolarVolumeOfLiquidWater"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MolarVolumeOfLiquidWater"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ActivationEnergyForEvaporation",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Activation energy for evaporation E_a"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ActivationEnergyForEvaporation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ActivationEnergyForEvaporation"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PreExpFactorForPVSatCalculation",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Pre-exp. factor for p_v_sat calculation q0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_PreExpFactorForPVSatCalculation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_PreExpFactorForPVSatCalculation"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_BoltzmannConstant",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Boltzmann constant k_B"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_BoltzmannConstant"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_BoltzmannConstant"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorCclTasleem2018",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Constrictivity factor CCL [Tasleem 2018] delta"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ConstrictivityFactorCclTasleem2018"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ConstrictivityFactorCclTasleem2018"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorGdlTasleem2018",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Constrictivity factor GDL [Tasleem 2018] delta_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ConstrictivityFactorGdlTasleem2018"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ConstrictivityFactorGdlTasleem2018"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorMplTasleem2018",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Constrictivity factor MPL [Tasleem 2018] delta_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ConstrictivityFactorMplTasleem2018"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ConstrictivityFactorMplTasleem2018"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalSaturationValueInsideGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Minimal saturation value inside GDL Sr_GDL_min"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MinimalSaturationValueInsideGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MinimalSaturationValueInsideGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellTemperature",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Absolute temperature T"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellTemperature"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellTemperature"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletHumidification",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Relative humidity RH"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellInletHumidification"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellInletHumidification"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PlatinumLoading",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Platinum loading m_Pt"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_PlatinumLoading"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_PlatinumLoading"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SatVaporPressureForPlanarLiqInterface",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Sat. vapor pressure for planar liq. Interface p_v_s_inf"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_SatVaporPressureForPlanarLiqInterface"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_SatVaporPressureForPlanarLiqInterface"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletPressure",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Pressure of inlet gas p_g_in"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellInletPressure"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellInletPressure"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PressureOfVaporInlet",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Pressure of vapor inlet p_v_in"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_PressureOfVaporInlet"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_PressureOfVaporInlet"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletO2MoleFractionDry",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Oxygen concentration (0.21 = Air) cO2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellInletO2MoleFractionDry"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellInletO2MoleFractionDry"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_UniversalGasConstant",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Universal gas constant R"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_UniversalGasConstant"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_UniversalGasConstant"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_FaradayConstant",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Faraday constant F"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_FaradayConstant"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_FaradayConstant"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_AvogardoConstant",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Avogardo constant NA"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_AvogardoConstant"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_AvogardoConstant"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ElementaryCharge",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Elementary charge e_0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ElementaryCharge"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ElementaryCharge"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfOxygen",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Molecular weight of oxygen M_O2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MolecularWeightOfOxygen"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MolecularWeightOfOxygen"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfWaterVapor",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Molecular weight of water vapor M_v"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_MolecularWeightOfWaterVapor"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_MolecularWeightOfWaterVapor"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT80C",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Surface tension of water at T = 80 degC gamma"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_SurfaceTensionOfWaterAtT80C"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_SurfaceTensionOfWaterAtT80C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ChargeTransferSymmetryCoefficient",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Charge transfer (symmetry coefficient) alpha"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ChargeTransferSymmetryCoefficient"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ChargeTransferSymmetryCoefficient"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfCcl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Thickness of CCL L_CCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ThicknessOfCcl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ThicknessOfCcl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfMpl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Thickness of MPL L_MPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ThicknessOfMpl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ThicknessOfMpl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfGdl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Thickness of GDL L_GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_ThicknessOfGdl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_ThicknessOfGdl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL spatial grid points N1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_SpatialGridPointsCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_SpatialGridPointsCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL spatial grid points N2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_SpatialGridPointsMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_SpatialGridPointsMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL spatial grid points N3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_SIM_SpatialGridPointsGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_SIM_SpatialGridPointsGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL liquid water saturation associated with HI pores Sr_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLWaterRetentionCurve_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLWaterRetentionCurve_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL liquid water saturation associated with HO pores Sr_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLWaterRetentionCurve_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLWaterRetentionCurve_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective O2 diffusivity HI D_O2_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveO2Diffusivity_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective O2 diffusivity HO D_O2_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveO2Diffusivity_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective vapor diffusivity HI D_v_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveVaporDiffusivity_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective vapor diffusivity HO D_v_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveVaporDiffusivity_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective water permeability HI K_l_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveWaterPermeability_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL effective water permeability HO K_l_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveWaterPermeability_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL saturation vapor pressure HI p_v_s_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveSaturationVaporPressure_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL saturation vapor pressure HO p_v_s_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLEffectiveSaturationVaporPressure_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL vaporization interfacial area factor HI xi_lv_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLVaporizationInterfacialAreaFactor_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL vaporization interfacial area factor HO xi_lv_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLVaporizationInterfacialAreaFactor_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL ORR effective exchange current density HI j0_CCL_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL ORR effective exchange current density HO j0_CCL_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_PotentialSweep",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Voltage array for potential sweep eta"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_PotentialSweep"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_PotentialSweep"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveVoltage",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell polarization curve voltage U"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellPolarizationCurveVoltage"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellPolarizationCurveVoltage"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveExchangeCurrentDensity",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell polarization curve current density j"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_CellPolarizationCurveExchangeCurrentDensity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_CellPolarizationCurveExchangeCurrentDensity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial grid vector in CCL CCL.x"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SpatialGridCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SpatialGridCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen pressure in CCL CCL.po2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenPressureDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenPressureDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor pressure in CCL CCL.pv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporPressureDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporPressureDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid pressure in CCL CCL.pl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidPressureDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidPressureDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of gas pressure in CCL CCL.pg"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_GasPressureDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_GasPressureDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen flux in CCL CCL.JO2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenFluxDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenFluxDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor flux in CCL CCL.Jv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporFluxDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporFluxDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid flux in CCL CCL.Jl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidFluxDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidFluxDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionCCL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of CCL saturation CCL.Sr"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SaturationDistributionCCL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SaturationDistributionCCL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial grid vector in GDL GDL.x"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SpatialGridGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SpatialGridGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen pressure in GDL GDL.po2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenPressureDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenPressureDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor pressure in GDL GDL.pv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporPressureDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporPressureDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid pressure in GDL GDL.pl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidPressureDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidPressureDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of gas pressure in GDL GDL.pg"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_GasPressureDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_GasPressureDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen flux in GDL GDL.JO2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenFluxDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenFluxDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor flux in GDL GDL.Jv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporFluxDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporFluxDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid flux in GDL GDL.Jl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidFluxDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidFluxDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionGDL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of GDL saturation GDL.Sr"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SaturationDistributionGDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SaturationDistributionGDL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial grid vector in MPL MPL.x"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SpatialGridMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SpatialGridMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen pressure in MPL MPL.po2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenPressureDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenPressureDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor pressure in MPL MPL.pv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporPressureDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporPressureDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid pressure in MPL MPL.pl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidPressureDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidPressureDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of gas pressure in MPL MPL.pg"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_GasPressureDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_GasPressureDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of oxygen flux in MPL MPL.JO2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_OxygenFluxDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_OxygenFluxDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of vapor flux in MPL MPL.Jv"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_VaporFluxDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_VaporFluxDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of liquid flux in MPL MPL.Jl"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_LiquidFluxDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_LiquidFluxDistributionMPL"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionMPL",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Spatial distribution of MPL saturation MPL.Sr"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "IO_DEV_SaturationDistributionMPL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/variable/IO_DEV_SaturationDistributionMPL"
+        }
+      ]
+    }
+  ]
+}

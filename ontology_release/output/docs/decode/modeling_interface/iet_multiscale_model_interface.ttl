@@ -1,0 +1,1234 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface> a prov:Bundle ;
+  rdfs:label "IET multiscale model interface (PDF-derived schema)" ;
+  dcterms:description "Value-free DECODE extraction schema; it does not assert the PDF baseline values." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> a h2kg:Process, prov:Activity ;
+  rdfs:label "IET ink to composition model" ;
+  h2kg:hasParameter <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CatalystSupportRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ICRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDispersionParameter>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TotalPoreVolume>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi1>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi2>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu1>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu2>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR1>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR2>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystSupportContactAngle>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleContactAngle>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerInitialFilmThickness>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MeanPoreRadiusInsideTheIonomer>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDiameter>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT353k>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerDensityDry>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DensityOfCarbon> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveIonomerCoverage>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLIonomerEffectiveFilmThickness>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A1>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A2>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_Apores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_deltaDA>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaPtC>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaIon>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_ContactAngleRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> a h2kg:Process, prov:Activity ;
+  rdfs:label "IET composition to property model" ;
+  h2kg:hasParameter <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DensityOfCarbon>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CatalystSupportRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ICRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TotalPoreVolume>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PercolationThreshold>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfElectrolyte>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSolidPhasePtC>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLPorosity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfTotalHIPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHISecondaryPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfHiPrimaryToSecondaryPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHOPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MPLPorosity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfMPLPoresToCracks>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RelativeWaterVolumeFractionInIonomer>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryHiPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryHiPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfWaterFilledPoresInIonomer>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ReferenceCapillaryRadiusInCclHoPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfSecondaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TortuosityOfPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedCl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedDm>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualPermeabilityFloodedClDm>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VaporizationRateConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ExchangeCurrentDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfGdlForTheBaseCase>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DynViscosityOfLiquidWaterT80C>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolarVolumeOfLiquidWater>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ActivationEnergyForEvaporation>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PreExpFactorForPVSatCalculation>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_BoltzmannConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorCclTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorGdlTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorMplTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalSaturationValueInsideGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellTemperature>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletHumidification>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PlatinumLoading>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SatVaporPressureForPlanarLiqInterface>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletPressure>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PressureOfVaporInlet>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletO2MoleFractionDry>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_UniversalGasConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_FaradayConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_AvogardoConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ElementaryCharge>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfOxygen>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfWaterVapor>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT80C>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ChargeTransferSymmetryCoefficient>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsGDL> ;
+  h2kg:hasInputData <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> a h2kg:Process, prov:Activity ;
+  rdfs:label "IET 1D Performance model for MEA (prediction)" ;
+  h2kg:hasParameter <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DensityOfCarbon>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CatalystSupportRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ICRatio>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TotalPoreVolume>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PercolationThreshold>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfElectrolyte>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSolidPhasePtC>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLPorosity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfTotalHIPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHISecondaryPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfHiPrimaryToSecondaryPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHOPoresInCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MPLPorosity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfMPLPoresToCracks>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RelativeWaterVolumeFractionInIonomer>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryHiPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryHiPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfWaterFilledPoresInIonomer>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ReferenceCapillaryRadiusInCclHoPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfSecondaryPoresInGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TortuosityOfPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedCl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedDm>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualPermeabilityFloodedClDm>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VaporizationRateConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ExchangeCurrentDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHiPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHoPoresInCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfGdlForTheBaseCase>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DynViscosityOfLiquidWaterT80C>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolarVolumeOfLiquidWater>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ActivationEnergyForEvaporation>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PreExpFactorForPVSatCalculation>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_BoltzmannConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorCclTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorGdlTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorMplTasleem2018>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalSaturationValueInsideGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellTemperature>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletHumidification>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PlatinumLoading>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SatVaporPressureForPlanarLiqInterface>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletPressure>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PressureOfVaporInlet>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletO2MoleFractionDry>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_UniversalGasConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_FaradayConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_AvogardoConstant>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ElementaryCharge>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfOxygen>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfWaterVapor>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT80C>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ChargeTransferSymmetryCoefficient>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfCcl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfMpl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfGdl>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsGDL> ;
+  h2kg:hasInputData <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_PotentialSweep> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveVoltage>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveExchangeCurrentDensity>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionCCL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionGDL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionMPL>, <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionMPL> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CatalystSupportRatio> a h2kg:Parameter ;
+  rdfs:label "Catalyst-support ratio mPtC" ;
+  dcterms:identifier "IO_CMP_CatalystSupportRatio" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ICRatio> a h2kg:Parameter ;
+  rdfs:label "I/C-ratio mIC" ;
+  dcterms:identifier "IO_CMP_ICRatio" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDispersionParameter> a h2kg:Parameter ;
+  rdfs:label "Ionomer-catalyst dispersion parameter kA" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDispersionParameter" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TotalPoreVolume> a h2kg:Parameter ;
+  rdfs:label "Total pore volume Vpores" ;
+  dcterms:identifier "IO_CMP_TotalPoreVolume" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^3/gC]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi1> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of primary pores inside CCL phi1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi1" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_phi2> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of secondary pores inside CCL phi2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi2" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu1> a h2kg:Parameter ;
+  rdfs:label "Mean pore radius for CCL primary pores rMu1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu1" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_rMu2> a h2kg:Parameter ;
+  rdfs:label "Mean pore radius for CCL secondary pores rMu2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu2" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR1> a h2kg:Parameter ;
+  rdfs:label "Standard deviation for CCL primary pores sigmaR1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR1" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystPoreSizeDistribution_sigmaR2> a h2kg:Parameter ;
+  rdfs:label "Standard deviation for CCL primary pores sigmaR2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR2" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC> a h2kg:Parameter ;
+  rdfs:label "Ionomer-catalyst degree of alignment deltaDAC" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt> a h2kg:Parameter ;
+  rdfs:label "Ionomer-catalyst degree of alignment deltaDAPt" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf> a h2kg:Parameter ;
+  rdfs:label "Ionomer-catalyst degree of alignment deltaDAinf" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystSupportContactAngle> a h2kg:Parameter ;
+  rdfs:label "Catalyst support contact angle thetaC" ;
+  dcterms:identifier "IO_MAT_CatalystSupportContactAngle" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleContactAngle> a h2kg:Parameter ;
+  rdfs:label "Catalyst active particle contact angle thetaPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleContactAngle" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHI> a h2kg:Parameter ;
+  rdfs:label "Ionomer contact angle of HI pores thetaHI" ;
+  dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHI" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerContactAngles_thetaHO> a h2kg:Parameter ;
+  rdfs:label "Ionomer contact angles of HO pores thetaHO" ;
+  dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHO" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerInitialFilmThickness> a h2kg:Parameter ;
+  rdfs:label "Ionomer initial film thickness t0" ;
+  dcterms:identifier "IO_MAT_IonomerInitialFilmThickness" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MeanPoreRadiusInsideTheIonomer> a h2kg:Parameter ;
+  rdfs:label "Mean pore radius inside the ionomer rIon" ;
+  dcterms:identifier "IO_CMP_MeanPoreRadiusInsideTheIonomer" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDiameter> a h2kg:Parameter ;
+  rdfs:label "Catalyst active particle diameter rPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDiameter" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT353k> a h2kg:Parameter ;
+  rdfs:label "Surface tension of water at T = 353K gamma" ;
+  dcterms:identifier "IO_CMP_SurfaceTensionOfWaterAtT353k" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[J/m^2]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_IonomerDensityDry> a h2kg:Parameter ;
+  rdfs:label "Ionomer density (dry) rhoIon" ;
+  dcterms:identifier "IO_MAT_IonomerDensityDry" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[g/m^3]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_MAT_CatalystActiveParticleDensity> a h2kg:Parameter ;
+  rdfs:label "Catalyst active particle density rhoPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDensity" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[g/m^3]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DensityOfCarbon> a h2kg:Parameter ;
+  rdfs:label "Density of carbon rhoC" ;
+  dcterms:identifier "IO_CMP_DensityOfCarbon" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[g/m^3]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_CapillaryPressureRange> a h2kg:Data ;
+  rdfs:label "Capillary pressure range for WRC pc" ;
+  dcterms:identifier "IO_SIM_CapillaryPressureRange" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve> a h2kg:Data ;
+  rdfs:label "CCL water saturation for WRC Sr" ;
+  dcterms:identifier "IO_CMP_CCLWaterRetentionCurve" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophilicPores> a h2kg:DataPoint ;
+  rdfs:label "CCL fraction of hydrophilic pores X1" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophilicPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophilicPores> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophilicPores> a h2kg:Property ;
+  rdfs:label "CCL fraction of hydrophilic pores X1" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLFractionHydrophilicPores." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores> a h2kg:DataPoint ;
+  rdfs:label "CCL fraction of hydrophobic pores X2" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophobicPores> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophobicPores> a h2kg:Property ;
+  rdfs:label "CCL fraction of hydrophobic pores X2" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLFractionHydrophobicPores." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveIonomerCoverage> a h2kg:DataPoint ;
+  rdfs:label "CCL effective ionomer coverage aIon" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveIonomerCoverage" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLEffectiveIonomerCoverage> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLEffectiveIonomerCoverage> a h2kg:Property ;
+  rdfs:label "CCL effective ionomer coverage aIon" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLEffectiveIonomerCoverage." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLIonomerEffectiveFilmThickness> a h2kg:DataPoint ;
+  rdfs:label "CCL ionomer effective film thickness t" ;
+  dcterms:identifier "IO_CMP_CCLIonomerEffectiveFilmThickness" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLIonomerEffectiveFilmThickness> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLIonomerEffectiveFilmThickness> a h2kg:Property ;
+  rdfs:label "CCL ionomer effective film thickness t" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLIonomerEffectiveFilmThickness." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A1> a h2kg:DataPoint ;
+  rdfs:label "CCL pore area of primary pores A1" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A1" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2/gC]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_A1> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_A1> a h2kg:Property ;
+  rdfs:label "CCL pore area of primary pores A1" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_A1." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_A2> a h2kg:DataPoint ;
+  rdfs:label "CCL pore area of secondary pores A2" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A2" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2/gC]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_A2> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_A2> a h2kg:Property ;
+  rdfs:label "CCL pore area of secondary pores A2" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_A2." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_Apores> a h2kg:DataPoint ;
+  rdfs:label "CCL total pore area Apores" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_Apores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2/gC]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_Apores> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_Apores> a h2kg:Property ;
+  rdfs:label "CCL total pore area Apores" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_Apores." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_deltaDA> a h2kg:DataPoint ;
+  rdfs:label "CCL degree of alignment of ionomer film deltaDA" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_deltaDA" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_deltaDA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_deltaDA> a h2kg:Property ;
+  rdfs:label "CCL degree of alignment of ionomer film deltaDA" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_deltaDA." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaPtC> a h2kg:DataPoint ;
+  rdfs:label "CCL contact angle of PtC pore wall thetaPtC" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaPtC" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_ThetaPtC> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_ThetaPtC> a h2kg:Property ;
+  rdfs:label "CCL contact angle of PtC pore wall thetaPtC" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_ThetaPtC." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_ThetaIon> a h2kg:DataPoint ;
+  rdfs:label "CCL contact angle of ionomer pore wall thetaIon" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaIon" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_ThetaIon> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_ThetaIon> a h2kg:Property ;
+  rdfs:label "CCL contact angle of ionomer pore wall thetaIon" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_ThetaIon." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCL> a h2kg:DataPoint ;
+  rdfs:label "CCL mean contact angle thetaCCL" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCL> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCL> a h2kg:Property ;
+  rdfs:label "CCL mean contact angle thetaCCL" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_thetaCCL." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHI> a h2kg:DataPoint ;
+  rdfs:label "CCL mean contact angle of HI pores thetaCCLHI" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHI" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCLHI> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCLHI> a h2kg:Property ;
+  rdfs:label "CCL mean contact angle of HI pores thetaCCLHI" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_thetaCCLHI." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLStructuralParameters_thetaCCLHO> a h2kg:DataPoint ;
+  rdfs:label "CCL mean contact angle of HO pores thetaCCLHO" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHO" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCLHO> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLStructuralParameters_thetaCCLHO> a h2kg:Property ;
+  rdfs:label "CCL mean contact angle of HO pores thetaCCLHO" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLStructuralParameters_thetaCCLHO." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLFractionHydrophobicPores_XHO> a h2kg:DataPoint ;
+  rdfs:label "CCL fraction of hydrophobic pores X_HO" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores_XHO" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" ;
+  h2kg:ofProperty <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophobicPores_XHO> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/property/IO_CMP_CCLFractionHydrophobicPores_XHO> a h2kg:Property ;
+  rdfs:label "CCL fraction of hydrophobic pores X_HO" ;
+  skos:definition "Property described by PDF interface variable IO_CMP_CCLFractionHydrophobicPores_XHO." .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_PoreSizeRange> a h2kg:Data ;
+  rdfs:label "Pore size for PSD r" ;
+  dcterms:identifier "IO_SIM_PoreSizeRange" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD> a h2kg:Data ;
+  rdfs:label "CCL refined pore size distribution PSD" ;
+  dcterms:identifier "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_ContactAngleRange> a h2kg:Data ;
+  rdfs:label "Contact angles for CAD cosTheta" ;
+  dcterms:identifier "IO_SIM_ContactAngleRange" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD> a h2kg:Data ;
+  rdfs:label "CCL contact angle distribution CAD" ;
+  dcterms:identifier "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/itc> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PercolationThreshold> a h2kg:Parameter ;
+  rdfs:label "Percolation threshold X_c" ;
+  dcterms:identifier "IO_CMP_PercolationThreshold" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfElectrolyte> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of electrolyte X_el" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfElectrolyte" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSolidPhasePtC> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of solid phase (Pt + C) X_PtC" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfSolidPhasePtC" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLPorosity> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of pores in CCL X_p_CCL" ;
+  dcterms:identifier "IO_CMP_CCLPorosity" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfTotalHIPoresInCCL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of total HI pores in CCL X_p_HI" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfTotalHIPoresInCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of HI primary pores in CCL X_p_HI_mu" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfHIPrimaryPoresInCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHISecondaryPoresInCCL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of HI secondary pores in CCL X_p_HI_M" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfHISecondaryPoresInCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfHiPrimaryToSecondaryPores> a h2kg:Parameter ;
+  rdfs:label "Ratio of HI primary to secondary pores chi_CCL" ;
+  dcterms:identifier "IO_CMP_RatioOfHiPrimaryToSecondaryPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfHOPoresInCCL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of HO pores in CCL X_p_HO" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfHOPoresInCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MPLPorosity> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of pores in MPL X_p_MPL" ;
+  dcterms:identifier "IO_CMP_MPLPorosity" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInMPL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of primary pores in MPL X_p_MPL_mu" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfPrimaryPoresInMPL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInMPL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of secondary pores in MPL X_p_MPL_M" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfSecondaryPoresInMPL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RatioOfMPLPoresToCracks> a h2kg:Parameter ;
+  rdfs:label "Ratio of MPL pores to cracks chi_MPL" ;
+  dcterms:identifier "IO_CMP_RatioOfMPLPoresToCracks" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfPrimaryPoresInGDL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of primary pores in GDL X_p_GDL_mu" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfPrimaryPoresInGDL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VolumeFractionOfSecondaryPoresInGDL> a h2kg:Parameter ;
+  rdfs:label "Volume fraction of secondary pores in GDL X_p_GDL_M" ;
+  dcterms:identifier "IO_CMP_VolumeFractionOfSecondaryPoresInGDL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RelativeWaterVolumeFractionInIonomer> a h2kg:Parameter ;
+  rdfs:label "Relative water volume fraction in ionomer epsilon_el" ;
+  dcterms:identifier "IO_CMP_RelativeWaterVolumeFractionInIonomer" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Critical radius of bottleneck pores in CCL r_crit" ;
+  dcterms:identifier "IO_CMP_CriticalRadiusOfBottleneckPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryHiPores> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of primary HI pores r_mu_HI" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfPrimaryHiPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryHiPores> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of secondary HI pores r_M_HI" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfSecondaryHiPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfHoPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of HO pores in CCL r_HO" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfHoPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfWaterFilledPoresInIonomer> a h2kg:Parameter ;
+  rdfs:label "Radius of water-filled pores in ionomer r_el" ;
+  dcterms:identifier "IO_CMP_RadiusOfWaterFilledPoresInIonomer" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInCcl> a h2kg:Parameter ;
+  rdfs:label "Minimal pore radius in CCL r_min" ;
+  dcterms:identifier "IO_CMP_MinimalPoreRadiusInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInCcl> a h2kg:Parameter ;
+  rdfs:label "Maximal pore radius in CCL r_max" ;
+  dcterms:identifier "IO_CMP_MaximalPoreRadiusInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ReferenceCapillaryRadiusInCclHoPores> a h2kg:Parameter ;
+  rdfs:label "Reference capillary radius in CCL HO pores r_c_ref" ;
+  dcterms:identifier "IO_CMP_ReferenceCapillaryRadiusInCclHoPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPoresInMpl> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of pores in MPL r_MPL_mu" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfPoresInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl> a h2kg:Parameter ;
+  rdfs:label "Radius of pores corresponding to cracks in MPL r_MPL_M" ;
+  dcterms:identifier "IO_CMP_RadiusOfPoresCorrespondingToCracksInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInMpl> a h2kg:Parameter ;
+  rdfs:label "Minimal pore radius in MPL r_MPL_min" ;
+  dcterms:identifier "IO_CMP_MinimalPoreRadiusInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInMpl> a h2kg:Parameter ;
+  rdfs:label "Maximal pore radius in MPL r_MPL_max" ;
+  dcterms:identifier "IO_CMP_MaximalPoreRadiusInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInMpl> a h2kg:Parameter ;
+  rdfs:label "Critical radius of bottleneck pores in MPL r_crit_MPL" ;
+  dcterms:identifier "IO_CMP_CriticalRadiusOfBottleneckPoresInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of primary pores in GDL r_GDL_mu" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfPrimaryPoresInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl> a h2kg:Parameter ;
+  rdfs:label "Characteristic radius of secondary pores in GDL r_GDL" ;
+  dcterms:identifier "IO_CMP_CharacteristicRadiusOfSecondaryPoresInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalPoreRadiusInGdl> a h2kg:Parameter ;
+  rdfs:label "Minimal pore radius in GDL r_GDL_min" ;
+  dcterms:identifier "IO_CMP_MinimalPoreRadiusInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MaximalPoreRadiusInGdl> a h2kg:Parameter ;
+  rdfs:label "Maximal pore radius in GDL r_GDL_max" ;
+  dcterms:identifier "IO_CMP_MaximalPoreRadiusInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CriticalRadiusOfBottleneckPoresInGdl> a h2kg:Parameter ;
+  rdfs:label "Critical radius of bottleneck pores in GDL r_crit_GDL" ;
+  dcterms:identifier "IO_CMP_CriticalRadiusOfBottleneckPoresInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of PSD of primary HI pores in CCL s_mu_HI" ;
+  dcterms:identifier "IO_CMP_StdDevOfPsdOfPrimaryHiPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of PSD of secondary HI pores in CCL s_M_HI" ;
+  dcterms:identifier "IO_CMP_StdDevOfPsdOfSecondaryHiPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfHoPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of PSD of HO pores in CCL s_HO" ;
+  dcterms:identifier "IO_CMP_StdDevOfPsdOfHoPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPsdOfPoresInMpl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of PSD of pores in MPL s_MPL" ;
+  dcterms:identifier "IO_CMP_StdDevOfPsdOfPoresInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInMpl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of primary pores in MPL s_MPL_mu" ;
+  dcterms:identifier "IO_CMP_StdDevOfPrimaryPoresInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of pores corresponding to cracks in MPL s_MPL_M" ;
+  dcterms:identifier "IO_CMP_StdDevOfPoresCorrespondingToCracksInMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfPrimaryPoresInGdl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of primary pores in GDL s_GDL_mu" ;
+  dcterms:identifier "IO_CMP_StdDevOfPrimaryPoresInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_StdDevOfSecondaryPoresInGdl> a h2kg:Parameter ;
+  rdfs:label "Std-dev of secondary pores in GDL s_GDL" ;
+  dcterms:identifier "IO_CMP_StdDevOfSecondaryPoresInGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_TortuosityOfPores> a h2kg:Parameter ;
+  rdfs:label "Tortuosity of pores tau" ;
+  dcterms:identifier "IO_CMP_TortuosityOfPores" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedCl> a h2kg:Parameter ;
+  rdfs:label "Residual diffusivity (flooded CL) D_res_CCL" ;
+  dcterms:identifier "IO_CMP_ResidualDiffusivityFloodedCl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2/s]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualDiffusivityFloodedDm> a h2kg:Parameter ;
+  rdfs:label "Residual diffusivity (flooded DM) D_res_DM" ;
+  dcterms:identifier "IO_CMP_ResidualDiffusivityFloodedDm" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2/s]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ResidualPermeabilityFloodedClDm> a h2kg:Parameter ;
+  rdfs:label "Residual permeability (flooded CL & DM) K_res" ;
+  dcterms:identifier "IO_CMP_ResidualPermeabilityFloodedClDm" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^2]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_VaporizationRateConstant> a h2kg:Parameter ;
+  rdfs:label "Vaporization rate constant kappa" ;
+  dcterms:identifier "IO_CMP_VaporizationRateConstant" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa^-1 m^-2 s^-1]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ExchangeCurrentDensity> a h2kg:Parameter ;
+  rdfs:label "Exchange current density j0" ;
+  dcterms:identifier "IO_CMP_ExchangeCurrentDensity" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[A/m^2]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHiPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Contact angle of HI pores in CCL theta_CCL_HI" ;
+  dcterms:identifier "IO_CMP_ContactAngleOfHiPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfHoPoresInCcl> a h2kg:Parameter ;
+  rdfs:label "Contact angle of HO pores in CCL theta_CCL_HO" ;
+  dcterms:identifier "IO_CMP_ContactAngleOfHoPoresInCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfGdlForTheBaseCase> a h2kg:Parameter ;
+  rdfs:label "Contact angle of GDL for the base case theta_GDL" ;
+  dcterms:identifier "IO_CMP_ContactAngleOfGdlForTheBaseCase" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ContactAngleOfMpl> a h2kg:Parameter ;
+  rdfs:label "Contact angle of MPL theta_MPL" ;
+  dcterms:identifier "IO_CMP_ContactAngleOfMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[deg]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_DynViscosityOfLiquidWaterT80C> a h2kg:Parameter ;
+  rdfs:label "Dyn. viscosity of liquid water (@ T=80 degC) mu_H2O" ;
+  dcterms:identifier "IO_CMP_DynViscosityOfLiquidWaterT80C" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa*s]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolarVolumeOfLiquidWater> a h2kg:Parameter ;
+  rdfs:label "Molar volume of liquid water V_m" ;
+  dcterms:identifier "IO_CMP_MolarVolumeOfLiquidWater" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m^3/mol]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ActivationEnergyForEvaporation> a h2kg:Parameter ;
+  rdfs:label "Activation energy for evaporation E_a" ;
+  dcterms:identifier "IO_CMP_ActivationEnergyForEvaporation" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[J]" ;
+  qudt:unit <http://qudt.org/vocab/unit/J> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PreExpFactorForPVSatCalculation> a h2kg:Parameter ;
+  rdfs:label "Pre-exp. factor for p_v_sat calculation q0" ;
+  dcterms:identifier "IO_CMP_PreExpFactorForPVSatCalculation" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_BoltzmannConstant> a h2kg:Parameter ;
+  rdfs:label "Boltzmann constant k_B" ;
+  dcterms:identifier "IO_CMP_BoltzmannConstant" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[J/K]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorCclTasleem2018> a h2kg:Parameter ;
+  rdfs:label "Constrictivity factor CCL [Tasleem 2018] delta" ;
+  dcterms:identifier "IO_CMP_ConstrictivityFactorCclTasleem2018" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorGdlTasleem2018> a h2kg:Parameter ;
+  rdfs:label "Constrictivity factor GDL [Tasleem 2018] delta_GDL" ;
+  dcterms:identifier "IO_CMP_ConstrictivityFactorGdlTasleem2018" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ConstrictivityFactorMplTasleem2018> a h2kg:Parameter ;
+  rdfs:label "Constrictivity factor MPL [Tasleem 2018] delta_MPL" ;
+  dcterms:identifier "IO_CMP_ConstrictivityFactorMplTasleem2018" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MinimalSaturationValueInsideGdl> a h2kg:Parameter ;
+  rdfs:label "Minimal saturation value inside GDL Sr_GDL_min" ;
+  dcterms:identifier "IO_CMP_MinimalSaturationValueInsideGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellTemperature> a h2kg:Parameter ;
+  rdfs:label "Absolute temperature T" ;
+  dcterms:identifier "IO_DEV_CellTemperature" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[K]" ;
+  qudt:unit <http://qudt.org/vocab/unit/K> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletHumidification> a h2kg:Parameter ;
+  rdfs:label "Relative humidity RH" ;
+  dcterms:identifier "IO_DEV_CellInletHumidification" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PlatinumLoading> a h2kg:Parameter ;
+  rdfs:label "Platinum loading m_Pt" ;
+  dcterms:identifier "IO_CMP_PlatinumLoading" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[kg/m^2]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SatVaporPressureForPlanarLiqInterface> a h2kg:Parameter ;
+  rdfs:label "Sat. vapor pressure for planar liq. Interface p_v_s_inf" ;
+  dcterms:identifier "IO_CMP_SatVaporPressureForPlanarLiqInterface" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletPressure> a h2kg:Parameter ;
+  rdfs:label "Pressure of inlet gas p_g_in" ;
+  dcterms:identifier "IO_DEV_CellInletPressure" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_PressureOfVaporInlet> a h2kg:Parameter ;
+  rdfs:label "Pressure of vapor inlet p_v_in" ;
+  dcterms:identifier "IO_CMP_PressureOfVaporInlet" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellInletO2MoleFractionDry> a h2kg:Parameter ;
+  rdfs:label "Oxygen concentration (0.21 = Air) cO2" ;
+  dcterms:identifier "IO_DEV_CellInletO2MoleFractionDry" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_UniversalGasConstant> a h2kg:Parameter ;
+  rdfs:label "Universal gas constant R" ;
+  dcterms:identifier "IO_CMP_UniversalGasConstant" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[J mol^-1 K^-1]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_FaradayConstant> a h2kg:Parameter ;
+  rdfs:label "Faraday constant F" ;
+  dcterms:identifier "IO_CMP_FaradayConstant" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[C mol^-1]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_AvogardoConstant> a h2kg:Parameter ;
+  rdfs:label "Avogardo constant NA" ;
+  dcterms:identifier "IO_CMP_AvogardoConstant" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[mol^-1]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ElementaryCharge> a h2kg:Parameter ;
+  rdfs:label "Elementary charge e_0" ;
+  dcterms:identifier "IO_CMP_ElementaryCharge" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[C]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfOxygen> a h2kg:Parameter ;
+  rdfs:label "Molecular weight of oxygen M_O2" ;
+  dcterms:identifier "IO_CMP_MolecularWeightOfOxygen" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[kg/mol]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_MolecularWeightOfWaterVapor> a h2kg:Parameter ;
+  rdfs:label "Molecular weight of water vapor M_v" ;
+  dcterms:identifier "IO_CMP_MolecularWeightOfWaterVapor" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[kg/mol]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_SurfaceTensionOfWaterAtT80C> a h2kg:Parameter ;
+  rdfs:label "Surface tension of water at T = 80 degC gamma" ;
+  dcterms:identifier "IO_CMP_SurfaceTensionOfWaterAtT80C" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[N/m]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ChargeTransferSymmetryCoefficient> a h2kg:Parameter ;
+  rdfs:label "Charge transfer (symmetry coefficient) alpha" ;
+  dcterms:identifier "IO_CMP_ChargeTransferSymmetryCoefficient" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfCcl> a h2kg:Parameter ;
+  rdfs:label "Thickness of CCL L_CCL" ;
+  dcterms:identifier "IO_CMP_ThicknessOfCcl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfMpl> a h2kg:Parameter ;
+  rdfs:label "Thickness of MPL L_MPL" ;
+  dcterms:identifier "IO_CMP_ThicknessOfMpl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_ThicknessOfGdl> a h2kg:Parameter ;
+  rdfs:label "Thickness of GDL L_GDL" ;
+  dcterms:identifier "IO_CMP_ThicknessOfGdl" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsCCL> a h2kg:Parameter ;
+  rdfs:label "CCL spatial grid points N1" ;
+  dcterms:identifier "IO_SIM_SpatialGridPointsCCL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsMPL> a h2kg:Parameter ;
+  rdfs:label "CCL spatial grid points N2" ;
+  dcterms:identifier "IO_SIM_SpatialGridPointsMPL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_SIM_SpatialGridPointsGDL> a h2kg:Parameter ;
+  rdfs:label "CCL spatial grid points N3" ;
+  dcterms:identifier "IO_SIM_SpatialGridPointsGDL" ;
+  decode:expectedValueShape "scalar" ;
+  decode:reportedUnit "[-]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HI> a h2kg:Data ;
+  rdfs:label "CCL liquid water saturation associated with HI pores Sr_HI" ;
+  dcterms:identifier "IO_CMP_CCLWaterRetentionCurve_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLWaterRetentionCurve_HO> a h2kg:Data ;
+  rdfs:label "CCL liquid water saturation associated with HO pores Sr_HO" ;
+  dcterms:identifier "IO_CMP_CCLWaterRetentionCurve_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HI> a h2kg:Data ;
+  rdfs:label "CCL effective O2 diffusivity HI D_O2_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveO2Diffusivity_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveO2Diffusivity_HO> a h2kg:Data ;
+  rdfs:label "CCL effective O2 diffusivity HO D_O2_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveO2Diffusivity_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HI> a h2kg:Data ;
+  rdfs:label "CCL effective vapor diffusivity HI D_v_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveVaporDiffusivity_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveVaporDiffusivity_HO> a h2kg:Data ;
+  rdfs:label "CCL effective vapor diffusivity HO D_v_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveVaporDiffusivity_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HI> a h2kg:Data ;
+  rdfs:label "CCL effective water permeability HI K_l_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveWaterPermeability_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveWaterPermeability_HO> a h2kg:Data ;
+  rdfs:label "CCL effective water permeability HO K_l_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveWaterPermeability_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m^2]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HI> a h2kg:Data ;
+  rdfs:label "CCL saturation vapor pressure HI p_v_s_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveSaturationVaporPressure_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLEffectiveSaturationVaporPressure_HO> a h2kg:Data ;
+  rdfs:label "CCL saturation vapor pressure HO p_v_s_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveSaturationVaporPressure_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HI> a h2kg:Data ;
+  rdfs:label "CCL vaporization interfacial area factor HI xi_lv_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLVaporizationInterfacialAreaFactor_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLVaporizationInterfacialAreaFactor_HO> a h2kg:Data ;
+  rdfs:label "CCL vaporization interfacial area factor HO xi_lv_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLVaporizationInterfacialAreaFactor_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI> a h2kg:Data ;
+  rdfs:label "CCL ORR effective exchange current density HI j0_CCL_HI" ;
+  dcterms:identifier "IO_CMP_CCLORREffectiveExchangeCurrentDensity_HI" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[A/m^2]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO> a h2kg:Data ;
+  rdfs:label "CCL ORR effective exchange current density HO j0_CCL_HO" ;
+  dcterms:identifier "IO_CMP_CCLORREffectiveExchangeCurrentDensity_HO" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[A/m^2]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ctp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_PotentialSweep> a h2kg:Data ;
+  rdfs:label "Voltage array for potential sweep eta" ;
+  dcterms:identifier "IO_DEV_PotentialSweep" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[V]" .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveVoltage> a h2kg:Data ;
+  rdfs:label "Cell polarization curve voltage U" ;
+  dcterms:identifier "IO_DEV_CellPolarizationCurveVoltage" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_CellPolarizationCurveExchangeCurrentDensity> a h2kg:Data ;
+  rdfs:label "Cell polarization curve current density j" ;
+  dcterms:identifier "IO_DEV_CellPolarizationCurveExchangeCurrentDensity" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[A/cm^2]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridCCL> a h2kg:Data ;
+  rdfs:label "Spatial grid vector in CCL CCL.x" ;
+  dcterms:identifier "IO_DEV_SpatialGridCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen pressure in CCL CCL.po2" ;
+  dcterms:identifier "IO_DEV_OxygenPressureDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor pressure in CCL CCL.pv" ;
+  dcterms:identifier "IO_DEV_VaporPressureDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid pressure in CCL CCL.pl" ;
+  dcterms:identifier "IO_DEV_LiquidPressureDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of gas pressure in CCL CCL.pg" ;
+  dcterms:identifier "IO_DEV_GasPressureDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen flux in CCL CCL.JO2" ;
+  dcterms:identifier "IO_DEV_OxygenFluxDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor flux in CCL CCL.Jv" ;
+  dcterms:identifier "IO_DEV_VaporFluxDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid flux in CCL CCL.Jl" ;
+  dcterms:identifier "IO_DEV_LiquidFluxDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionCCL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of CCL saturation CCL.Sr" ;
+  dcterms:identifier "IO_DEV_SaturationDistributionCCL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridGDL> a h2kg:Data ;
+  rdfs:label "Spatial grid vector in GDL GDL.x" ;
+  dcterms:identifier "IO_DEV_SpatialGridGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen pressure in GDL GDL.po2" ;
+  dcterms:identifier "IO_DEV_OxygenPressureDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor pressure in GDL GDL.pv" ;
+  dcterms:identifier "IO_DEV_VaporPressureDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid pressure in GDL GDL.pl" ;
+  dcterms:identifier "IO_DEV_LiquidPressureDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of gas pressure in GDL GDL.pg" ;
+  dcterms:identifier "IO_DEV_GasPressureDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen flux in GDL GDL.JO2" ;
+  dcterms:identifier "IO_DEV_OxygenFluxDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor flux in GDL GDL.Jv" ;
+  dcterms:identifier "IO_DEV_VaporFluxDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid flux in GDL GDL.Jl" ;
+  dcterms:identifier "IO_DEV_LiquidFluxDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionGDL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of GDL saturation GDL.Sr" ;
+  dcterms:identifier "IO_DEV_SaturationDistributionGDL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SpatialGridMPL> a h2kg:Data ;
+  rdfs:label "Spatial grid vector in MPL MPL.x" ;
+  dcterms:identifier "IO_DEV_SpatialGridMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[m]" ;
+  qudt:unit <http://qudt.org/vocab/unit/M> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenPressureDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen pressure in MPL MPL.po2" ;
+  dcterms:identifier "IO_DEV_OxygenPressureDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporPressureDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor pressure in MPL MPL.pv" ;
+  dcterms:identifier "IO_DEV_VaporPressureDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidPressureDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid pressure in MPL MPL.pl" ;
+  dcterms:identifier "IO_DEV_LiquidPressureDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_GasPressureDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of gas pressure in MPL MPL.pg" ;
+  dcterms:identifier "IO_DEV_GasPressureDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[Pa]" ;
+  qudt:unit <http://qudt.org/vocab/unit/PA> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_OxygenFluxDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of oxygen flux in MPL MPL.JO2" ;
+  dcterms:identifier "IO_DEV_OxygenFluxDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_VaporFluxDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of vapor flux in MPL MPL.Jv" ;
+  dcterms:identifier "IO_DEV_VaporFluxDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_LiquidFluxDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of liquid flux in MPL MPL.Jl" ;
+  dcterms:identifier "IO_DEV_LiquidFluxDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[mol/m^2/s]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
+
+<https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/variable/IO_DEV_SaturationDistributionMPL> a h2kg:Data ;
+  rdfs:label "Spatial distribution of MPL saturation MPL.Sr" ;
+  dcterms:identifier "IO_DEV_SaturationDistributionMPL" ;
+  decode:expectedValueShape "array" ;
+  decode:reportedUnit "[-]" ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/decode/workflow/iet-multiscale-model-interface/model/ptp> .
