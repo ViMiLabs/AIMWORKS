@@ -127,6 +127,7 @@ def build_decode_workflow_release(
         _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
         dump_json(target / "decode_concept_registry.json", registry),
         _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
+        _write_semantic_role_audit(target / "decode_semantic_role_audit.csv", registry["concepts"]),
         dump_json(target / "decode_duplicate_occurrence_audit.json", duplicate_audit),
         _write_duplicate_occurrence_audit(target / "decode_duplicate_occurrence_audit.csv", duplicate_audit),
         dump_json(target / "decode_semantic_role_conflicts.json", role_conflicts),
@@ -289,6 +290,7 @@ def _federate(
                 "decision": decision,
                 "canonical_role_iri": mapping.get("canonical_role_iri", "") if mapping else "",
                 "semantic_role": mapping.get("semantic_role", "") if mapping else "",
+                "role_assignment": mapping.get("role_assignment", "") if mapping else "",
                 "confidence": mapping.get("confidence", "unreviewed") if mapping else "unreviewed",
                 "mapping_evidence": mapping.get("evidence", "No reviewed mapping decision.") if mapping else "No reviewed mapping decision.",
             }
@@ -306,6 +308,7 @@ def _federate(
                     "anchor_label": mapping.get("anchor_label", "") if mapping else "",
                     "canonical_role_iri": node["canonical_role_iri"],
                     "semantic_role": node["semantic_role"],
+                    "role_assignment": node["role_assignment"],
                     "confidence": node["confidence"],
                     "evidence": node["mapping_evidence"],
                 }
@@ -683,7 +686,6 @@ def _default_decode_mapping(source_node: dict[str, Any], policy: dict[str, Any])
         return None
     visual_category = _visual_category(source_node)
     role_by_category = policy.get("role_by_visual_category", {})
-    role = str(role_by_category.get(visual_category, "")).strip()
     category = _normal(source_node.get("native_category", "")) or visual_category
     anchor_key = f"{_slug(source_node['label'])}-{_slug(category)}"
     return {
@@ -691,8 +693,10 @@ def _default_decode_mapping(source_node: dict[str, Any], policy: dict[str, Any])
         "decision": "reviewed_decode_anchor",
         "anchor_iri": f"{DECODE_NS}anchor/{anchor_key}",
         "anchor_label": source_node["label"],
-        "canonical_role_iri": role,
-        "semantic_role": _last_segment(role) if role else "contextual DECODE concept",
+        # The role is assigned after label-aware curation.  The GraphML visual
+        # category remains source metadata and is only a final fallback.
+        "canonical_role_iri": "",
+        "semantic_role": "",
         "confidence": "reviewed_structural",
         "evidence": (
             "DECODE-specific concept retained as a stable reviewed anchor. "
@@ -709,13 +713,65 @@ def _with_semantic_role(
     """Complete display-role metadata without changing a reviewed anchor decision."""
     result = dict(mapping)
     role = str(result.get("canonical_role_iri", "")).strip()
-    if not role:
-        role = str(policy.get("role_by_visual_category", {}).get(_visual_category(source_node), "")).strip()
+    if role:
+        result.setdefault("role_assignment", "explicit_mapping")
+    else:
+        curation = policy.get("semantic_role_curation", {})
+        override = _role_override(source_node, curation.get("overrides", []))
+        if override:
+            role = str(override.get("canonical_role_iri", "")).strip()
+            result["role_assignment"] = str(override.get("id", "curated_override"))
+        if not role:
+            rule = _role_rule(source_node, curation.get("rules", []))
+            if rule:
+                role = str(rule.get("canonical_role_iri", "")).strip()
+                result["role_assignment"] = str(rule.get("id", "curated_rule"))
+        if not role:
+            role = str(policy.get("role_by_visual_category", {}).get(_visual_category(source_node), "")).strip()
+            result["role_assignment"] = "visual_category_fallback"
         if role:
             result["canonical_role_iri"] = role
     if role and not str(result.get("semantic_role", "")).strip():
         result["semantic_role"] = _last_segment(role)
     return result
+
+
+def _role_override(source_node: dict[str, Any], overrides: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Return the most specific explicit semantic-role decision for a source concept."""
+    label = _normal(source_node.get("label", ""))
+    native_category = _normal(source_node.get("native_category", ""))
+    for override in overrides:
+        if not isinstance(override, dict):
+            continue
+        if _normal(str(override.get("source_label", ""))) != label:
+            continue
+        expected_category = _normal(str(override.get("native_category", "")))
+        if expected_category and expected_category != native_category:
+            continue
+        return override
+    return None
+
+
+def _role_rule(source_node: dict[str, Any], rules: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Apply ordered, reviewable role rules without changing source topology."""
+    label = str(source_node.get("label", ""))
+    native_category = _normal(source_node.get("native_category", ""))
+    visual_category = _visual_category(source_node)
+    for rule in rules:
+        if not isinstance(rule, dict):
+            continue
+        native_categories = {_normal(str(value)) for value in rule.get("native_categories", [])}
+        visual_categories = {_normal(str(value)) for value in rule.get("visual_categories", [])}
+        if native_categories and native_category not in native_categories:
+            continue
+        if visual_categories and _normal(visual_category) not in visual_categories:
+            continue
+        pattern = str(rule.get("pattern", "")).strip()
+        if pattern and not re.search(pattern, label, flags=re.IGNORECASE):
+            continue
+        if str(rule.get("canonical_role_iri", "")).strip():
+            return rule
+    return None
 
 
 def _concept_registry(
@@ -761,6 +817,7 @@ def _concept_registry(
                 "anchor_iri": representative.get("anchor_id", ""),
                 "canonical_role_iri": representative.get("canonical_role_iri", ""),
                 "semantic_role": representative.get("semantic_role", ""),
+                "role_assignment": representative.get("role_assignment", ""),
                 "confidence": representative.get("confidence", "unreviewed"),
                 "rationale": representative.get("mapping_evidence", ""),
                 "candidate_h2kg_terms": candidates,
@@ -951,7 +1008,7 @@ def _write_mapping_matrix(path: Path, rows: list[dict[str, str]]) -> Path:
     fields = [
         "workflow_id", "source_filename", "source_node_id", "source_label", "native_category",
         "mapping_state", "decision", "anchor_iri", "anchor_label", "canonical_role_iri",
-        "semantic_role", "confidence", "evidence",
+        "semantic_role", "role_assignment", "confidence", "evidence",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -979,6 +1036,23 @@ def _write_mapping_matrix_markdown(path: Path, rows: list[dict[str, str]]) -> Pa
     return write_text(path, "\n".join(lines) + "\n")
 
 
+def _write_semantic_role_audit(path: Path, concepts: list[dict[str, Any]]) -> Path:
+    """Export all role decisions independently from mapping equivalence decisions."""
+    fields = [
+        "source_label", "native_category", "visual_category", "occurrence_count", "workflow_ids",
+        "semantic_role", "canonical_role_iri", "role_assignment", "decision", "mapping_state",
+        "anchor_iri", "confidence", "rationale",
+    ]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for concept in concepts:
+        row = dict(concept)
+        row["workflow_ids"] = "; ".join(concept.get("workflow_ids", []))
+        writer.writerow({field: row.get(field, "") for field in fields})
+    return write_text(path, buffer.getvalue())
+
+
 def _write_anchor_candidates(path: Path, rows: list[dict[str, str]]) -> Path:
     fields = ["source_label", "native_category", "visual_category", "occurrence_count", "workflow_count", "workflow_ids", "recommended_state", "note"]
     buffer = io.StringIO()
@@ -992,7 +1066,7 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
     fields = [
         "concept_id", "source_label", "native_category", "visual_category", "occurrence_count",
         "workflow_ids", "source_descriptions", "neighbor_context", "decision", "mapping_state",
-        "anchor_iri", "canonical_role_iri", "semantic_role", "confidence", "rationale",
+        "anchor_iri", "canonical_role_iri", "semantic_role", "role_assignment", "confidence", "rationale",
         "candidate_h2kg_terms",
     ]
     buffer = io.StringIO()

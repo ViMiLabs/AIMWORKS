@@ -11,6 +11,254 @@ default_alignment:
     method: https://w3id.org/h2kg/hydrogen-ontology#Measurement
     model: https://w3id.org/h2kg/hydrogen-ontology#Process
     other: https://w3id.org/h2kg/hydrogen-ontology#Metadata
+  # These curation rules assign H2KG roles independently from yEd display
+  # categories. They are ordered from specific semantic products to broad
+  # source-category defaults and are recorded in the generated role audit.
+  semantic_role_curation:
+    overrides:
+      - id: lre_ph_distribution_is_data
+        source_label: LRE pH distribution
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: lre_ph_distribution_idealized_is_data
+        source_label: LRE pH distribution (idealized)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: rrde_ph_distribution_is_data
+        source_label: RRDE near-electrode (ca. 1mm) pH distribution
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: clsm_temperature_is_parameter
+        source_label: CLSM temperature
+        native_category: component
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: lre_active_phase_is_matter
+        source_label: Active phase
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: lre_adsorbate_types_are_matter
+        source_label: Adsorbate types on electrode (idealized)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: lre_adsorbate_types_nanostructured_are_matter
+        source_label: Adsorbate types on electrode (nanostructured)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: lre_adsorbate_conformation_is_data
+        source_label: Adsorbate conformation on electrode (idealized)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: lre_local_electronic_structure_is_data
+        source_label: Local electronic structure
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: lre_reaction_mechanism_is_process
+        source_label: Reaction mechanisms (ORR)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: lre_rate_law_is_process
+        source_label: LRE effective ORR rate law (idealized)
+        native_category: LRE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: operating_pewe_cell_is_instrument
+        source_label: Operating PEWE cell
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Instrument
+      - id: process_water_sample_is_matter
+        source_label: Process water samples taken during operation
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: corrosion_information_is_metadata
+        source_label: Information on corrosion
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Metadata
+      - id: cathode_eis_is_data
+        source_label: Cathode EIS
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: cell_eis_is_data
+        source_label: Cell EIS
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: cell_tafel_slope_is_property
+        source_label: Cell Tafel slope
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: rrde_disk_ph_is_property
+        source_label: RRDE average disk pH
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: rrde_ring_ph_is_property
+        source_label: RRDE average ring pH
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: rrde_collection_efficiency_is_property
+        source_label: RRDE collection efficiency
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: electrode_chemistry_is_property
+        source_label: Electrode chemistry
+        native_category: material
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: electrode_physics_is_property
+        source_label: Electrode physics
+        native_category: material
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: rde_kinetic_parameters_are_property
+        source_label: RDE electrode kinetic parameters
+        native_category: material
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: local_mechanical_strength_is_property
+        source_label: CCM local mechanical strength
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: local_youngs_modulus_is_property
+        source_label: CCM local Youngs modulus
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: cl_local_mechanical_strength_is_property
+        source_label: CL local mechanical strength
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: cl_local_youngs_modulus_is_property
+        source_label: CL local Youngs modulus
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: gdl_local_mechanical_strength_is_property
+        source_label: GDL local mechanical strength
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: gdl_local_youngs_modulus_is_property
+        source_label: GDL local Youngs modulus
+        native_category: macrohomogeneous local
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: electrospray_dc_voltage_is_parameter
+        source_label: Electrospray DC voltage
+        native_category: process
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: hydrophobization_parameters_are_parameters
+        source_label: Hydrophobization process parameters
+        native_category: process
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: mixing_speed_is_parameter
+        source_label: Mixing speed
+        native_category: process
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: aimd_is_process
+        source_label: Ab-initio molecular dynamics (AIMD) of the solid-liquid interface at a Pt electrode
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: differential_cell_testing_is_measurement
+        source_label: Differential Cell Testing
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+      - id: eis_on_pewe_is_measurement
+        source_label: EIS on PEWE cells
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+      - id: three_electrode_assessment_is_measurement
+        source_label: Three electrode cell assesement of CL by XAS, XANES, EXAFS, XRD
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+      - id: transparent_electrodes_workflow_is_process
+        source_label: Transparent Electrodes for CLSM applications
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: dft_is_process
+        source_label: DFT onto idealized surfaces
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: diffusivity_derivation_is_process
+        source_label: Diffusivities from tortuosities
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: cl_for_rde_is_manufacturing
+        source_label: CL for RDE
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: dropcasted_ink_is_manufacturing
+        source_label: Dropcasted Ink on GC Tips
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: roller_mixing_is_manufacturing
+        source_label: Roller mixer and zirconia beads for ref PEFC inks
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: catalyst_redeposition_rate_is_property
+        source_label: Catalyst re-deposition rate constant
+        native_category: component
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: ccl_coating_parameters_are_parameters
+        source_label: CCL coating process parameters
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: mpl_coating_parameters_are_parameters
+        source_label: MPL coating process parameters
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: electrodeposition_precursors_are_matter
+        source_label: Electrodeposition precursors
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: prism_chemicals_are_matter
+        source_label: Chemicals for prism preparation
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: mixing_and_deposition_instruments_are_instruments
+        source_label: Instruments for mixing and deposition
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Instrument
+      - id: molecular_dynamics_metal_walls_is_process
+        source_label: Molecular Dynamics for the Electrode | Electrolyte Interface - MetalWalls
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: molecular_dynamics_ionomer_is_process
+        source_label: Molecular Dynamics for the Electrode | Electrolyte Interface in presence of ionomer
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: zero_gap_cell_development_is_manufacturing
+        source_label: Development of a zero gap cell for GDE based spectrocopy measurement
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: rde_electrode_geometry_is_parameter
+        source_label: RRDE electrode geometries
+        native_category: device
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: rde_monopoly_measurement_is_measurement
+        source_label: RDE on mono- or polycrystalline electrodes
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+    rules:
+      - id: data_product
+        native_categories: [component, device, LRE, meso, data]
+        pattern: '(data|dataset|image|micrograph|spectr|pattern|curve|distribution|profile|time series|response|voltammogram|\beis\b|\bcv\b)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: physical_manufacturing_workflow
+        pattern: '(blade coating|decal transfer|electrospray deposition|ultrasonic spray|ink preparation|catalytic layer preparation|mea assembly|prism preparation|impregnation|hydrophobic treatment|mpl coating)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: workflow_or_analysis
+        pattern: '(protocol|fitting|simulation|model|analysis|extraction|reconstruction|classification|mechanism|rate law|calculation)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: operating_or_geometric_parameter
+        pattern: '(temperature|pressure|flow|humidification|mole fraction|stoichiometr|rotation rate|clamping|geometry|\barea\b|\bvolume\b|\bmass\b|loading|ratio|fraction|concentration|frequency|amplitude|scan rate|duration)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+      - id: physical_or_derived_property
+        pattern: '(thickness|porosity|permeability|conductivity|resistance|diffusivity|tortuosity|saturation|density|surface tension|contact angle|activity|utilization|capacitance|potential|current|rate|energy|coefficient|coverage|radius|pore size|morphology|structure|sorption|mobility|alignment|dispersion|corrosion|diffusion|oxidation state|coordination number|bond distance|interaction strength|tafel slope|\bph\b|collection efficiency|youngs modulus|mechanical strength|kinetic parameters)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: apparatus_or_electrode
+        pattern: '(cell|electrode|microscope|diffractometer|spectrometer|test station|reactor)'
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Instrument
+      - id: material_category_default
+        native_categories: [material]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: component_category_default
+        native_categories: [component]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
+      - id: lre_category_default
+        native_categories: [LRE]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Property
+      - id: device_category_default
+        native_categories: [device]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Instrument
+      - id: meso_category_default
+        native_categories: [meso]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: method_visual_default
+        visual_categories: [method]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
+      - id: model_visual_default
+        visual_categories: [model]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+      - id: process_visual_default
+        visual_categories: [process]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Manufacturing
+      - id: data_visual_default
+        visual_categories: [data]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Data
+      - id: contextual_metadata_default
+        visual_categories: [other]
+        canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Metadata
 
 mappings:
   - source_label: CCM

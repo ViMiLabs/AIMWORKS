@@ -212,6 +212,26 @@ def test_semantic_overview_collapses_gde_occurrences_without_changing_source_gra
     assert len(set(overview_edge_ids)) == 3986
 
 
+def test_role_curation_overrides_graphml_visual_categories(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    build_decode_workflow_release(
+        root / "input" / "decode_workflows_source.json",
+        tmp_path / "output",
+        root / "config" / "decode_workflow_mappings.yaml",
+        root / "input" / "current_ontology.jsonld",
+    )
+    registry = json.loads((tmp_path / "output" / "decode" / "decode_concept_registry.json").read_text(encoding="utf-8"))
+    concepts = {concept["source_label"]: concept for concept in registry["concepts"]}
+
+    assert concepts["LRE pH distribution"]["semantic_role"] == "Data"
+    assert concepts["LRE pH distribution"]["role_assignment"] == "lre_ph_distribution_is_data"
+    assert concepts["CLSM temperature"]["semantic_role"] == "Parameter"
+    assert concepts["CLSM temperature"]["role_assignment"] == "clsm_temperature_is_parameter"
+    assert concepts["Cell EIS"]["semantic_role"] == "Data"
+    assert concepts["Cell Tafel slope"]["semantic_role"] == "Property"
+    assert all(concept["role_assignment"] != "visual_category_fallback" for concept in registry["concepts"])
+
+
 def test_semantic_role_conflicts_are_audited_and_fail_validation(tmp_path: Path) -> None:
     snapshot = tmp_path / "decode.json"
     snapshot.write_text(
