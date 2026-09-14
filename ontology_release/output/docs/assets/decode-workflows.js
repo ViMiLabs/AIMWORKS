@@ -36,7 +36,7 @@
   function updateLegend() {
     const legend = $('#decode-legend');
     if (viewMode === 'source') {
-      legend.innerHTML = '<span class="legend-material">material</span><span class="legend-component">component</span><span class="legend-data">data</span><span class="legend-device">device</span><span class="legend-process">process / method</span><span class="legend-h2kg">H2KG anchor</span><span class="legend-decode">reviewed DECODE anchor</span><br><span class="legend-source">solid arrow</span> preserved source dependency <span class="legend-anchor">dashed link</span> occurrence-to-anchor mapping <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection';
+      legend.innerHTML = '<strong>Semantic role (node fill):</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status (border):</strong> <span class="legend-approved">H2KG</span><span class="legend-reviewed">reviewed DECODE</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> preserved source dependency <span class="legend-anchor">dashed link</span> occurrence-to-anchor mapping <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection';
       return;
     }
     legend.innerHTML = '<strong>Semantic role:</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status:</strong> <span class="legend-approved">H2KG</span><span class="legend-reviewed">reviewed DECODE</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> provenance-preserving aggregate <span class="legend-semantic">colored arrow</span> approved H2KG semantic projection';
@@ -67,9 +67,9 @@
 
   function sourceElements() {
     const nodes = visibleNodeIds(), anchors = visibleAnchorIds(nodes), output = [];
-    [...nodes].forEach((id) => { const node = data.nodeById[id]; output.push({ group:'nodes', data:{ id, label:node.label, kind:'occurrence', state:node.mapping_state, visual:node.visual_category || 'other', workflow:node.workflow_id } }); });
+    [...nodes].forEach((id) => { const node = data.nodeById[id]; output.push({ group:'nodes', data:{ id, label:node.label, kind:'occurrence', state:node.mapping_state, visual:node.visual_category || 'other', role:semanticRoleKey(node), workflow:node.workflow_id } }); });
     if (anchorToggle.checked) {
-      [...anchors].forEach((id) => { const anchor = data.anchorById[id]; if (anchor) output.push({ group:'nodes', data:{ id, label:anchor.label, kind:'source-anchor', state:anchor.state, anchorId:id } }); });
+      [...anchors].forEach((id) => { const anchor = data.anchorById[id]; if (anchor) output.push({ group:'nodes', data:{ id, label:anchor.label, kind:'source-anchor', state:anchor.state, role:semanticRoleKey(anchor), anchorId:id } }); });
       data.anchor_edges.filter((edge) => nodes.has(edge.source) && anchors.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'anchor', label:'maps to' } }));
     }
     if (sourceToggle.checked) data.source_edges.filter((edge) => nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:edge.label || 'source dependency', sourceEdgeIds:[edge.id] } }));
@@ -95,14 +95,22 @@
     if (cy) cy.destroy();
     cy = cytoscape({ container:graph, elements:elements(), style:[
       { selector:'node', style:{ 'label':'data(label)', 'font-size':10, 'text-wrap':'wrap', 'text-max-width':118, 'color':'#183139', 'text-valign':'center', 'text-halign':'center', 'border-width':2, 'background-color':'#a9bcc0', 'border-color':'#50676d', 'width':60, 'height':60 } },
-      { selector:'node[kind = "occurrence"][visual = "material"], node[kind = "occurrence"][visual = "component"]', style:{ 'background-color':'#0f6d7a', 'border-color':'#084f59', 'color':'#fff' } },
-      { selector:'node[kind = "occurrence"][visual = "data"]', style:{ 'background-color':'#5ca9c9', 'border-color':'#2e7795' } },
-      { selector:'node[kind = "occurrence"][visual = "device"]', style:{ 'background-color':'#72808b', 'border-color':'#4d5a64', 'color':'#fff' } },
-      { selector:'node[kind = "occurrence"][visual = "process"], node[kind = "occurrence"][visual = "method"]', style:{ 'background-color':'#c86a2b', 'border-color':'#93430d', 'color':'#fff' } },
-      { selector:'node[kind = "occurrence"][visual = "model"]', style:{ 'background-color':'#6d9c63', 'border-color':'#477442', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "matter"]', style:{ 'background-color':'#0f6d7a', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "manufacturing"]', style:{ 'background-color':'#b45309', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "process"]', style:{ 'background-color':'#d49118', 'color':'#183139' } },
+      { selector:'node[kind = "occurrence"][role = "measurement"]', style:{ 'background-color':'#376caa', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "instrument"]', style:{ 'background-color':'#5d6b76', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "parameter"]', style:{ 'background-color':'#5d66a6', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "data"]', style:{ 'background-color':'#64b4d5', 'color':'#183139' } },
+      { selector:'node[kind = "occurrence"][role = "property"]', style:{ 'background-color':'#9d5549', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][role = "metadata"]', style:{ 'background-color':'#98a3aa', 'color':'#183139' } },
+      { selector:'node[kind = "occurrence"][role = "mixed"], node[kind = "occurrence"][role = "unknown"]', style:{ 'background-color':'#adb8bd', 'color':'#183139' } },
       { selector:'node[kind = "source-anchor"], node[kind = "semantic-anchor"]', style:{ 'shape':'round-rectangle', 'width':124, 'height':50, 'font-weight':700 } },
       { selector:'node[kind = "source-anchor"][state = "approved_h2kg"]', style:{ 'background-color':'#0d7f83', 'border-color':'#07575a', 'color':'#fff' } },
       { selector:'node[kind = "source-anchor"][state = "reviewed_decode"]', style:{ 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff' } },
+      { selector:'node[kind = "occurrence"][state = "approved_h2kg"]', style:{ 'border-color':'#006f73', 'border-width':4 } },
+      { selector:'node[kind = "occurrence"][state = "reviewed_decode"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
+      { selector:'node[kind = "occurrence"][state = "unresolved"]', style:{ 'border-color':'#a63030', 'border-style':'dashed', 'border-width':3 } },
       { selector:'node[kind = "semantic-anchor"][role = "matter"]', style:{ 'background-color':'#0f6d7a', 'color':'#fff' } },
       { selector:'node[kind = "semantic-anchor"][role = "manufacturing"]', style:{ 'background-color':'#b45309', 'color':'#fff' } },
       { selector:'node[kind = "semantic-anchor"][role = "process"]', style:{ 'background-color':'#d49118', 'color':'#183139' } },

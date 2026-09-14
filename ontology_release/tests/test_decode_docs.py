@@ -39,4 +39,7 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "function semanticRoleKey" in script
     assert "function updateLegend" in script
     assert 'role = "measurement"' in script
+    assert 'node[kind = "occurrence"][role = "parameter"]' in script
+    assert 'node[kind = "occurrence"][role = "data"]' in script
+    assert "Semantic role (node fill)" in script
     assert "Mixed role" in script
