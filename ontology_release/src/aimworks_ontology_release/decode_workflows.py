@@ -131,6 +131,7 @@ def build_decode_workflow_release(
         validation["multiscale_interface"] = interface["validation"]
     anchor_candidates = _anchor_candidates(snapshot, mappings)
     registry = _concept_registry(snapshot, graph, ontology_path)
+    definition_drafts = _definition_drafts(registry)
 
     generated: list[Path] = [
         dump_json(target / "decode_federated_graph.json", graph),
@@ -141,6 +142,9 @@ def build_decode_workflow_release(
         _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
         dump_json(target / "decode_concept_registry.json", registry),
         _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
+        dump_json(target / "decode_definition_drafts.json", definition_drafts),
+        _write_definition_drafts(target / "decode_definition_drafts.csv", definition_drafts["definitions"]),
+        _write_definition_drafts_markdown(target / "decode_definition_drafts.md", definition_drafts),
         _write_semantic_role_audit(target / "decode_semantic_role_audit.csv", registry["concepts"]),
         dump_json(target / "decode_edge_registry.json", graph["edge_registry"]),
         _write_edge_registry(target / "decode_edge_registry.csv", graph["edge_registry"]),
@@ -185,6 +189,7 @@ def build_decode_workflow_release(
         "semantic_projection_count": len(graph["semantic_edges"]),
         "edge_classification_count": len(graph["edge_registry"]),
         "concept_registry_count": registry["counts"]["concept_count"],
+        "definition_draft_count": definition_drafts["counts"]["concept_count"],
         "validation_status": validation["status"],
         "multiscale_interface": interface,
         "generated_files": [str(path) for path in generated],
@@ -1151,6 +1156,99 @@ def _concept_registry(
     }
 
 
+def _definition_drafts(registry: dict[str, Any]) -> dict[str, Any]:
+    """Create review-only, domain-aware definition drafts for DECODE concepts."""
+    definitions: list[dict[str, Any]] = []
+    for concept in registry["concepts"]:
+        state = str(concept.get("mapping_state", ""))
+        decision = str(concept.get("decision", ""))
+        role = str(concept.get("semantic_role", "Metadata"))
+        source_excerpt = _definition_source_excerpt(
+            str(concept.get("source_label", "")), concept.get("source_descriptions", [])
+        )
+        definitions.append(
+            {
+                "concept_id": concept["concept_id"],
+                "source_label": concept["source_label"],
+                "native_category": concept.get("native_category", ""),
+                "semantic_role": role,
+                "canonical_role_iri": concept.get("canonical_role_iri", ""),
+                "occurrence_count": concept.get("occurrence_count", 0),
+                "workflow_ids": concept.get("workflow_ids", []),
+                "mapping_state": state,
+                "current_decision": decision,
+                "current_anchor_iri": concept.get("anchor_iri", ""),
+                "proposed_definition": _draft_definition(concept["source_label"], role, source_excerpt),
+                "source_evidence_excerpt": source_excerpt,
+                "definition_basis": (
+                    "Reviewed DECODE semantic role, source label, source workflow context, "
+                    "and direct-neighbor context. This is a draft for expert review, not an authoritative ontology definition."
+                ),
+                "recommended_review_action": (
+                    "Verify against the canonical H2KG definition and retain only a true synonym."
+                    if state == "approved_h2kg"
+                    else "Decide: strict H2KG alias, existing H2KG mapping, new reusable H2KG term, or retain reviewed DECODE anchor."
+                ),
+                "definition_status": "needs_human_review",
+                "reviewer_definition": "",
+                "reviewer_decision": "",
+                "review_notes": "",
+                "candidate_h2kg_terms": concept.get("candidate_h2kg_terms", []),
+                "neighbor_context": concept.get("neighbor_context", []),
+            }
+        )
+    return {
+        "schema_version": "1.0",
+        "generated_on": date.today().isoformat(),
+        "description": (
+            "Domain-aware DECODE concept-definition drafts for human review. "
+            "They do not assert H2KG definitions or approve ontology additions."
+        ),
+        "counts": {"concept_count": len(definitions), "needs_human_review": len(definitions)},
+        "definitions": definitions,
+    }
+
+
+def _definition_source_excerpt(label: str, descriptions: Any) -> str:
+    """Keep scientific context while excluding yEd administration metadata."""
+    ignored_prefixes = (
+        "owner:", "task:", "maturity:", "documentation:",
+        "range of validity", "internal key:", "source:",
+    )
+    excerpts: list[str] = []
+    for description in descriptions if isinstance(descriptions, list) else []:
+        for line in str(description).splitlines():
+            cleaned = re.sub(r"\\s+", " ", line).strip()
+            if not cleaned or _normal(cleaned) == _normal(label):
+                continue
+            if cleaned.lower().startswith(ignored_prefixes):
+                continue
+            excerpts.append(cleaned)
+            if len(excerpts) == 2:
+                return " ".join(excerpts)[:500]
+    return " ".join(excerpts)[:500]
+
+
+def _draft_definition(label: str, role: str, source_excerpt: str) -> str:
+    """Write a conservative definition that names the role without inventing values."""
+    role_frames = {
+        "Matter": "A material, component, chemical species, phase, specimen, or assembly",
+        "Manufacturing": "A fabrication, preparation, deposition, assembly, or conditioning operation",
+        "Measurement": "A characterization or measurement procedure",
+        "Process": "A computational, analytical, transformation, or generic workflow process",
+        "Instrument": "An apparatus, device, or experimental platform",
+        "Parameter": "A specified, controlled, reported, or model-input condition or quantity",
+        "Data": "A recorded, calculated, image-based, or otherwise structured data artifact",
+        "Property": "A measurable, calculated, or derived scientific characteristic",
+        "Metadata": "Contextual, descriptive, or provenance information",
+    }
+    frame = role_frames.get(role, "A DECODE workflow concept")
+    definition = f'{frame} denoted "{label}" in DECODE hydrogen-electrochemistry workflows.'
+    if source_excerpt:
+        definition += f" Source context: {source_excerpt}"
+    return definition
+
+
 def _load_h2kg_terms(ontology_path: str | Path | None) -> list[dict[str, Any]]:
     if ontology_path is None or not Path(ontology_path).exists():
         return []
@@ -1399,6 +1497,54 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
     return write_text(path, buffer.getvalue())
 
 
+def _write_definition_drafts(path: Path, rows: list[dict[str, Any]]) -> Path:
+    """Export editable definition drafts with explicit human-review fields."""
+    fields = [
+        "concept_id", "source_label", "native_category", "semantic_role", "canonical_role_iri",
+        "occurrence_count", "workflow_ids", "mapping_state", "current_decision", "current_anchor_iri",
+        "proposed_definition", "source_evidence_excerpt", "definition_basis", "recommended_review_action",
+        "definition_status", "reviewer_definition", "reviewer_decision", "review_notes",
+        "candidate_h2kg_terms", "neighbor_context",
+    ]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for row in rows:
+        flattened = dict(row)
+        for key in ("workflow_ids", "neighbor_context"):
+            flattened[key] = "; ".join(str(value) for value in row.get(key, []))
+        flattened["candidate_h2kg_terms"] = json.dumps(row.get("candidate_h2kg_terms", []), ensure_ascii=False)
+        writer.writerow({field: flattened.get(field, "") for field in fields})
+    return write_text(path, buffer.getvalue())
+
+
+def _write_definition_drafts_markdown(path: Path, register: dict[str, Any]) -> Path:
+    """Publish a readable definition register without implying review approval."""
+    lines = [
+        "# DECODE Concept Definition Drafts",
+        "",
+        "This register contains domain-aware *draft* definitions for every distinct DECODE source concept. "
+        "They are starting points for expert review, not authoritative H2KG definitions and not approved ontology additions.",
+        "",
+        f"- Concepts: {register['counts']['concept_count']}",
+        "- Review status: all entries require human review.",
+        "- Decision rule: a reviewer must choose strict alias, existing H2KG mapping, new reusable H2KG term, or retained DECODE anchor.",
+        "",
+        "| Label | Role | Proposed definition | Current decision | Review action |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for row in register["definitions"]:
+        values = [
+            str(row["source_label"]),
+            str(row["semantic_role"]),
+            str(row["proposed_definition"]),
+            str(row["current_decision"]),
+            str(row["recommended_review_action"]),
+        ]
+        lines.append("| " + " | ".join(value.replace("|", "\\|").replace("\n", " ") for value in values) + " |")
+    return write_text(path, "\n".join(lines) + "\n")
+
+
 def _write_duplicate_occurrence_audit(path: Path, rows: list[dict[str, Any]]) -> Path:
     fields = [
         "id", "workflow_id", "source_label", "native_category", "occurrence_ids",
@@ -1584,4 +1730,6 @@ Raw GraphML files are not redistributed in this package. The normalized JSON, JS
 `decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 
 `decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.
+
+`decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
 """

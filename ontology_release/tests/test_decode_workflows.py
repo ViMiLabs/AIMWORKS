@@ -151,6 +151,14 @@ semantic_projections: []
     registry = json.loads((tmp_path / "output" / "decode" / "decode_concept_registry.json").read_text(encoding="utf-8"))
     assert registry["counts"]["concept_count"] == 1
     assert registry["concepts"][0]["occurrence_count"] == 2
+    definitions = json.loads((tmp_path / "output" / "decode" / "decode_definition_drafts.json").read_text(encoding="utf-8"))
+    assert definitions["counts"] == {"concept_count": 1, "needs_human_review": 1}
+    draft = definitions["definitions"][0]
+    assert draft["proposed_definition"].startswith('A material, component')
+    assert draft["definition_status"] == "needs_human_review"
+    assert "retain reviewed DECODE anchor" in draft["recommended_review_action"]
+    assert (tmp_path / "output" / "decode" / "decode_definition_drafts.csv").exists()
+    assert (tmp_path / "output" / "decode" / "decode_definition_drafts.md").exists()
 
 
 def test_decode_alias_curation_updates_only_explicit_target(tmp_path: Path) -> None:

@@ -27,7 +27,4 @@ Raw GraphML files are not redistributed in this package. The normalized JSON, JS
 
 `decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.
 
-`EDGE_ALIGNMENT_RULES.md` is the complete reproducibility specification for
-role assignment, relation-direction normalization, property-value reification,
-PROV-O derivation, explicit overrides, structural-only decisions, and release
-validation.
+`decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
