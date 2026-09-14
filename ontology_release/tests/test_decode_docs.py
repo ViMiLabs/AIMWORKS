@@ -32,6 +32,7 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "showHover" in script
     assert "Semantic overview" in page
     assert "Preserved source occurrences" in page
+    assert "Projection outcome" in page
     assert "semantic_overview" in script
     assert "decode_duplicate_occurrence_audit.csv" in script
     assert 'value="source" type="radio" checked' in page
@@ -43,3 +44,6 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert 'node[kind = "occurrence"][role = "data"]' in script
     assert "Semantic role (node fill)" in script
     assert "Mixed role" in script
+    assert "decode-semantic-filter" in script
+    assert "edgeDecisionHtml" in script
+    assert "decode_edge_registry.csv" in script

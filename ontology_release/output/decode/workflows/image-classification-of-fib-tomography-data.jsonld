@@ -36,7 +36,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL 3D voxel data raw"
@@ -58,7 +59,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL 3D voxel data classified"
@@ -101,7 +103,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "MPL 3D voxel data raw"
@@ -123,7 +126,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "MPL 3D voxel data classified"
@@ -169,7 +173,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n4",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification of FIB tomography data"
@@ -186,12 +191,23 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-fib-tomography-data-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n5",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification of FIB tomography data"
@@ -208,12 +224,23 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-fib-tomography-data-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n6",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Ionomer reconstruction in CCL 3D images"
@@ -226,12 +253,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-reconstruction-in-ccl-3d-images-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n7",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB-SEM on CL material"
@@ -248,12 +281,18 @@
         {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#FIBSEMTomographyMeasurement"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n8",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -270,12 +309,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n9",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -292,12 +337,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n10",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -314,12 +365,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n11",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -339,12 +396,21 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n12",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -361,12 +427,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n13",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "AI-based generation of structural digital twins of multi-scale tomographies"
@@ -384,7 +456,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n14",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image FIB tomography dataparameter extraction 3D"
@@ -397,12 +470,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n15",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Effective Diffusivity simulation"
@@ -415,12 +494,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-effective-diffusivity-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n16",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Permability simulation"
@@ -433,12 +518,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-permability-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n17",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Electric conductiviy simulation"
@@ -451,12 +542,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-electric-conductiviy-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n18",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Thermal conductivity simulation"
@@ -469,12 +566,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-thermal-conductivity-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n19",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Water retention curve simulation"
@@ -487,12 +590,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/water-retention-curve-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n20",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "LAB-CT measurements on GDL/MPL materials"
@@ -509,12 +618,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lab-ct-measurements-on-gdl-mpl-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n21",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Synch-CT measurements on GDL/MPL materials."
@@ -531,12 +646,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/synch-ct-measurements-on-gdl-mpl-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n22",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "FIB measurements on GDL/MPL and catalyst materials."
@@ -553,12 +674,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n23",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "AI-based generation of structural digital twins of multi-scale tomographies"
@@ -576,7 +703,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n24",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image FIB tomography dataparameter extraction 3D"
@@ -589,12 +717,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n25",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Effective Diffusivity simulation"
@@ -607,12 +741,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-effective-diffusivity-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n26",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Permability simulation"
@@ -625,12 +765,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-permability-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n27",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Electric conductiviy simulation"
@@ -643,12 +789,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-electric-conductiviy-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n28",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Voxel based 3D Thermal conductivity simulation"
@@ -661,12 +813,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-thermal-conductivity-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n29",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Water retention curve simulation"
@@ -679,12 +837,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/water-retention-curve-simulation-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n30",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Simulation of single phase 3D apparent properties"
@@ -697,12 +861,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/simulation-of-single-phase-3d-apparent-properties-model"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n31",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Simulation of two phase 3D apparent properties"
@@ -714,6 +884,1043 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/simulation-of-two-phase-3d-apparent-properties-model"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "AI-based generation of structural digital twins of multi-scale tomographies"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-3d-voxel-data-classified",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL 3D Voxel Data Classified"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-3d-voxel-data-raw-meso",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCL 3D voxel data raw"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "FIB measurements on GDL/MPL and catalyst materials."
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-fib-tomography-data-data",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Image classification of FIB tomography data"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Image FIB tomography dataparameter extraction 3D"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-reconstruction-in-ccl-3d-images-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer reconstruction in CCL 3D images"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lab-ct-measurements-on-gdl-mpl-materials-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LAB-CT measurements on GDL/MPL materials"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-3d-voxel-data-classified",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "MPL 3D Voxel Data Classified"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-3d-voxel-data-raw-meso",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "MPL 3D voxel data raw"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/simulation-of-single-phase-3d-apparent-properties-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Simulation of single phase 3D apparent properties"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/simulation-of-two-phase-3d-apparent-properties-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Simulation of two phase 3D apparent properties"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/synch-ct-measurements-on-gdl-mpl-materials-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Synch-CT measurements on GDL/MPL materials."
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-effective-diffusivity-simulation-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Voxel based 3D Effective Diffusivity simulation"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-electric-conductiviy-simulation-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Voxel based 3D Electric conductiviy simulation"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-permability-simulation-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Voxel based 3D Permability simulation"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/voxel-based-3d-thermal-conductivity-simulation-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Voxel based 3D Thermal conductivity simulation"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/water-retention-curve-simulation-model",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Water retention curve simulation"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/c8ad8fa1ee",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b409d4aa3a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/ba887045d4",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/e9fc60a8d0",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/30b36e23e6",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/f18fe68b06",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n9"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/53327a1cf0",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/7e6dfd873c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n11"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b52cfd69ca",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n12"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b17652f9bc",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n14"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/9ed501b066",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e11"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n15"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b9f4742ac6",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n16"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/487d095e71",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e13"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n17"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/c53135af35",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e14"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n18"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/62e94468a9",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e15"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n19"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/8e4af3521f",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e16"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/c5d2c0a176",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e17"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b10df6286e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e18"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n20"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/936b159aad",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e19"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n21"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/7d5ed89c46",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e20"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n22"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/1b8d287eae",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e21"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n11"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b57e64ed4c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e23"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n24"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/4be60ab695",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e24"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n25"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/f450a2c5ed",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e25"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n26"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/9a93b00256",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e26"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n27"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/b9532bf1d8",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e27"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n28"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/83e7a63446",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e28"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n29"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/5de0520ef4",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e29"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n30"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/projection/46e9266aa4",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-classification-of-fib-tomography-data::e30"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n31"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-classification-of-fib-tomography-data/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     }

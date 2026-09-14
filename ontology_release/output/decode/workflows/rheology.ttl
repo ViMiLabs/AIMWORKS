@@ -3,20 +3,35 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n0> a prov:Entity ; rdfs:label "Catalyst ink" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n0> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "Catalyst ink" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> decode:mappedToAnchor <https://w3id.org/h2kg/hydrogen-ontology#CatalystInk> .
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n1> a prov:Entity ; rdfs:label "Catalyst ink rheologic properties" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n1> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "Catalyst ink rheologic properties" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n1> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-rheologic-properties-material> .
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n2> a prov:Entity ; rdfs:label "Catalyst ink stability" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n2> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "Catalyst ink stability" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n2> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-material> .
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> a prov:Entity ; rdfs:label "Rheology" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Measurement> ; rdfs:label "Rheology" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/rheology-method> .
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> a prov:Entity ; rdfs:label "Roller mixer and zirconia beads for ref PEFC inks" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Manufacturing> ; rdfs:label "Roller mixer and zirconia beads for ref PEFC inks" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n4> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method> .
-<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> a prov:Entity ; rdfs:label "Ink preparation for deposition of catalytic layers" .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Manufacturing> ; rdfs:label "Ink preparation for deposition of catalytic layers" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n5> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/ink-preparation-for-deposition-of-catalytic-layers-process> .
+<https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-rheologic-properties-material> a <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "Catalyst ink rheologic properties" .
+<https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-material> a <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "Catalyst ink stability" .
+<https://w3id.org/h2kg/decode/workflow/anchor/ink-preparation-for-deposition-of-catalytic-layers-process> a <https://w3id.org/h2kg/hydrogen-ontology#Manufacturing> ; rdfs:label "Ink preparation for deposition of catalytic layers" .
+<https://w3id.org/h2kg/decode/workflow/anchor/rheology-method> a <https://w3id.org/h2kg/hydrogen-ontology#Measurement> ; rdfs:label "Rheology" .
+<https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method> a <https://w3id.org/h2kg/hydrogen-ontology#Manufacturing> ; rdfs:label "Roller mixer and zirconia beads for ref PEFC inks" .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n1> .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n2> .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n4> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
 <https://w3id.org/h2kg/decode/workflow/rheology/node/n5> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> <https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial> <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
+<https://w3id.org/h2kg/decode/workflow/rheology/projection/a494cb1528> a decode:SemanticProjection ; decode:sourceDependencyId "rheology::e0" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_input_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> <https://w3id.org/h2kg/decode/workflow/rheology/node/n1> .
+<https://w3id.org/h2kg/decode/workflow/rheology/projection/ca3d04cf8e> a decode:SemanticProjection ; decode:sourceDependencyId "rheology::e1" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_output_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/rheology/node/n1> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n3> <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> <https://w3id.org/h2kg/decode/workflow/rheology/node/n2> .
+<https://w3id.org/h2kg/decode/workflow/rheology/projection/7319c8ab7d> a decode:SemanticProjection ; decode:sourceDependencyId "rheology::e2" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_output_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/rheology/node/n3> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/rheology/node/n2> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n4> <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
+<https://w3id.org/h2kg/decode/workflow/rheology/projection/e5dfdde9db> a decode:SemanticProjection ; decode:sourceDependencyId "rheology::e3" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_output_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/rheology/node/n4> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> .
+<https://w3id.org/h2kg/decode/workflow/rheology/node/n5> <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> .
+<https://w3id.org/h2kg/decode/workflow/rheology/projection/775a16c545> a decode:SemanticProjection ; decode:sourceDependencyId "rheology::e4" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_output_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/rheology/node/n5> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/rheology/node/n0> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial> .

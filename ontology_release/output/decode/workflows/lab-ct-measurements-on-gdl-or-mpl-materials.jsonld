@@ -36,7 +36,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n0",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL"
@@ -58,7 +59,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate 3D voxel data raw"
@@ -80,7 +82,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "MPL 3D voxel data raw"
@@ -105,7 +108,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n3",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate"
@@ -127,7 +131,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n4",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate breakthrough pressure"
@@ -145,7 +150,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n5",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate 3D voxel data wet raw"
@@ -167,7 +173,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n6",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "LAB-CT measurements on GDL/MPL materials"
@@ -187,12 +194,26 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lab-ct-measurements-on-gdl-mpl-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n7",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "LAB-CT measurements on GDL/MPL materials"
@@ -215,12 +236,31 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lab-ct-measurements-on-gdl-mpl-materials-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n4"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n8",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification of X-ray tomography data"
@@ -233,12 +273,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-x-ray-tomography-data-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n9",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification on nm scale"
@@ -251,12 +297,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-on-nm-scale-method"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n10",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification of FIB tomography data"
@@ -269,12 +321,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-fib-tomography-data-data"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n11",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Impregnation by immersion and blade coating"
@@ -291,12 +349,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-process"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n0"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n12",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Image classification of X-ray tomography data"
@@ -308,6 +372,461 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-x-ray-tomography-data-data"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n5"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-3d-voxel-data-raw-meso",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate 3D voxel data raw"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-3d-voxel-data-wet-raw-meso",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate 3D voxel data wet raw"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-breakthrough-pressure-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate breakthrough pressure"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-fib-tomography-data-data",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Image classification of FIB tomography data"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-of-x-ray-tomography-data-data",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Image classification of X-ray tomography data"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-classification-on-nm-scale-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Image classification on nm scale"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-process",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Impregnation by immersion and blade coating"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lab-ct-measurements-on-gdl-mpl-materials-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LAB-CT measurements on GDL/MPL materials"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-3d-voxel-data-raw-meso",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "MPL 3D voxel data raw"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/fdbcfab886",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/9ea7cdd8c2",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/14c37952e7",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/fc87c24469",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/cc4c9c6b05",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n9"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/3af35166b1",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/e4f635d9ec",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n11"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/e708a40568",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property_reversed"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/a85a01f457",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/e36df9d6ad",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_parameter"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/9eff2a89bc",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/projection/97d405fbb5",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e11"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n12"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/lab-ct-measurements-on-gdl-or-mpl-materials/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore DECODE Workflows | H2KG Application Ontology for Hydrogen Electrochemical Systems</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/decode-workflows.css">
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
+  <script defer src="../assets/decode-workflows.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-head">
+        <div class="hero-copy">
+          <p class="eyebrow">H2KG Ontology</p>
+          <h1>Explore DECODE Workflows</h1>
+          <p class="subtitle">EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, measurements, and FAIR metadata</p>
+        </div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+      </div>
+      <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
+      
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="explore.html">Explore</a>
+      <a href="decode-workflows.html">DECODE Workflows</a>
+      <a href="../hydrogen-ontology.html">Reference</a>
+      <a href="architecture-workflow.html">Architecture</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="developer-guide.html">Developer</a>
+      <a href="release.html">Release</a>
+    </nav>
+    
+    </div>
+  </header>
+  <main class="wrap content">
+    
+<section class="decode-intro">
+  <p class="eyebrow">Separate aligned workflow layer</p>
+  <h2>Federated DECODE workflow graph</h2>
+  <p>Original GraphML occurrences and directed dependencies are preserved. Cross-workflow expansion is available only through explicit reviewed anchors; the H2KG TBox and its Explore page are unchanged.</p>
+  <div class="decode-metrics">
+    <span><strong>120</strong> preserved source workflows</span>
+    <span><strong>1</strong> PDF-derived interface schemas</span>
+    <span><strong>2951</strong> source occurrences</span>
+    <span><strong>3986</strong> preserved dependencies</span>
+    <span><strong>4276</strong> classified dependencies</span>
+    <span><strong>522</strong> reviewed shared anchors</span>
+  </div>
+</section>
+<section id="decode-root" class="decode-root" data-decode-data="../data/decode_workflows.json" data-h2kg-explore="explore.html">
+  <aside class="decode-catalogue">
+    <label for="decode-search">Search workflows and terms</label>
+    <input id="decode-search" type="search" placeholder="label, workflow, category, H2KG IRI">
+    <label for="decode-family">Method family</label>
+    <select id="decode-family"><option value="">All method families</option></select>
+    <p id="decode-catalogue-status" class="muted"></p>
+    <div id="decode-workflow-list" class="decode-workflow-list"></div>
+  </aside>
+  <div class="decode-workspace">
+    <div class="decode-controls">
+      <fieldset class="decode-view-switch"><legend>Graph view</legend><label><input name="decode-view" value="source" type="radio" checked> Preserved source occurrences</label><label><input name="decode-view" value="semantic" type="radio"> Semantic overview</label></fieldset>
+      <label id="decode-source-control"><input id="decode-show-source" type="checkbox" checked> <span id="decode-source-label">Source dependencies</span></label>
+      <label id="decode-anchor-control"><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
+      <label><input id="decode-show-semantic" type="checkbox" checked> Semantic projections</label>
+      <label for="decode-semantic-filter">Projection outcome</label>
+      <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H2KG direct</option><option value="h2kg_reified">H2KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
+      <button id="decode-reset" type="button">Reset graph</button>
+      <button id="decode-more" type="button" hidden>Add next connected workflow</button>
+    </div>
+    <div id="decode-graph" aria-label="Interactive DECODE workflow graph"></div>
+    <p id="decode-legend" class="decode-legend"></p>
+  </div>
+  <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow, then double-click an occurrence or shared anchor to traverse reviewed cross-workflow connections.</p></aside>
+  <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
+</section>
+
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
+        </div>
+        <div class="acknowledgement-copy">
+          <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
+        </div>
+      </section>
+    
+      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+</body>
+</html>

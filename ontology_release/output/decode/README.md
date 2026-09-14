@@ -10,6 +10,9 @@ This release contains a normalized structural projection of DECODE GraphML workf
 - Semantic-overview nodes: 695
 - Repeated source-concept groups: 293
 - Semantic role conflicts: 0
+- Classified source dependencies: 4276
+- H2KG/PROV semantic projection triples: 5631
+- Derived property-value DataPoint proxies: 551
 - Structural validation: passed
 
 ## Mapping states
@@ -21,3 +24,5 @@ This release contains a normalized structural projection of DECODE GraphML workf
 Raw GraphML files are not redistributed in this package. The normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
 
 `decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
+
+`decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.

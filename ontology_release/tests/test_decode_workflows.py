@@ -229,7 +229,45 @@ def test_role_curation_overrides_graphml_visual_categories(tmp_path: Path) -> No
     assert concepts["CLSM temperature"]["role_assignment"] == "clsm_temperature_is_parameter"
     assert concepts["Cell EIS"]["semantic_role"] == "Data"
     assert concepts["Cell Tafel slope"]["semantic_role"] == "Property"
-    assert all(concept["role_assignment"] != "visual_category_fallback" for concept in registry["concepts"])
+
+
+def test_all_decode_edges_receive_traceable_semantic_classification(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    build_decode_workflow_release(
+        root / "input" / "decode_workflows_source.json",
+        tmp_path / "output",
+        root / "config" / "decode_workflow_mappings.yaml",
+        root / "input" / "current_ontology.jsonld",
+        include_multiscale_interface=True,
+    )
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    validation = json.loads((tmp_path / "output" / "decode" / "decode_validation_report.json").read_text(encoding="utf-8"))
+    registry = graph["edge_registry"]
+
+    assert len(graph["source_edges"]) == 4276
+    assert len(registry) == 4276
+    assert {row["source_dependency_id"] for row in registry} == {edge["id"] for edge in graph["source_edges"]}
+    assert {row["projection_outcome"] for row in registry} <= {
+        "h2kg_direct", "h2kg_reified", "prov_derivation", "decode_structural_only"
+    }
+    assert validation["status"] == "passed"
+    assert validation["missing_edge_classifications"] == []
+    assert validation["duplicated_edge_classifications"] == []
+
+    fib_input = next(edge for edge in graph["semantic_edges"] if edge["source_dependency_id"] == "fib-sem-on-cl-material::e0")
+    assert fib_input["predicate"].endswith("#hasInputMaterial")
+    assert fib_input["source"] == "fib-sem-on-cl-material::n3"
+    assert fib_input["target"] == "fib-sem-on-cl-material::n0"
+
+    inert = next(node for node in graph["nodes"] if node["label"] == "Inert substrate")
+    assert inert["semantic_role"] == "Matter"
+
+    fib_turtle = (tmp_path / "output" / "decode" / "workflows" / "fib-sem-on-cl-material.ttl").read_text(encoding="utf-8")
+    assert "#hasInputMaterial" in fib_turtle
+    assert "#Measurement>" in fib_turtle
+    assert "decode:SemanticProjection" in fib_turtle
+    concepts = json.loads((tmp_path / "output" / "decode" / "decode_concept_registry.json").read_text(encoding="utf-8"))
+    assert all(concept["role_assignment"] != "visual_category_fallback" for concept in concepts["concepts"])
 
 
 def test_semantic_role_conflicts_are_audited_and_fail_validation(tmp_path: Path) -> None:

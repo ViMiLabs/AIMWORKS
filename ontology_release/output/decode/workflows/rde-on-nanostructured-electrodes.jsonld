@@ -36,7 +36,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n0",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte"
@@ -58,7 +59,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE electrode (nanostructured)"
@@ -80,7 +82,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n2",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE electrochemical protocol"
@@ -97,12 +100,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component"
         }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n3",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE rotation rate"
@@ -124,7 +133,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n4",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE temperature"
@@ -146,7 +156,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n5",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE electrochemical response (nanostructured)"
@@ -159,12 +170,18 @@
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-response-nanostructured-component"
         }
+      ],
+      "http://www.w3.org/ns/prov#wasDerivedFrom": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE on nanostructured electrodes"
@@ -186,7 +203,8 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n7",
       "@type": [
-        "http://www.w3.org/ns/prov#Entity"
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Dropcasted Ink on GC Tips"
@@ -202,6 +220,404 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/dropcasted-ink-on-gc-tips-method"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE electrode (nanostructured) value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE on nanostructured electrodes value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasDerivedFrom": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/dropcasted-ink-on-gc-tips-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Dropcasted Ink on GC Tips"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE electrochemical protocol"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-response-nanostructured-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE electrochemical response (nanostructured)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE electrode (nanostructured)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE on nanostructured electrodes"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-rotation-rate-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE rotation rate"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-temperature-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE temperature"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/12bdd713c8",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/cfee0a7368",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/7da0927921",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/0f2799993c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_output"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/26da898c37",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/77a0c355bb",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_to_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/365e2570a0",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n6/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/d0c207e824",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_output"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/projection/c112992ad7",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "rde-on-nanostructured-electrodes::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/rde-on-nanostructured-electrodes/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     }
