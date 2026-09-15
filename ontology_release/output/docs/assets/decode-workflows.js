@@ -78,7 +78,7 @@
       [...anchorNodeIds].forEach((id) => { const anchor = data.anchorById[id]; if (anchor) output.push({ group:'nodes', data:{ id, label:anchor.label, kind:'source-anchor', state:anchor.state, role:semanticRoleKey(anchor), anchorId:id } }); });
       if (anchorToggle.checked) data.anchor_edges.filter((edge) => nodes.has(edge.source) && anchorNodeIds.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'anchor', label:'maps to' } }));
     }
-    if (sourceToggle.checked) data.source_edges.filter((edge) => nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:edge.label || 'source dependency', sourceDependencyId:edge.id, sourceEdgeIds:[edge.id] } }));
+    if (sourceToggle.checked) data.source_edges.filter((edge) => nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:'', sourceDependencyId:edge.id, sourceEdgeIds:[edge.id] } }));
     const visible = new Set(output.filter((item) => item.group === 'nodes').map((item) => item.data.id));
     semantic.filter((edge) => visible.has(edge.source) && visible.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'semantic', label:edge.label, sourceDependencyId:edge.source_dependency_id, sourceEdgeIds:[edge.source_dependency_id], projectionOutcome:edge.projection_outcome, projectionPattern:edge.projection_pattern } }));
     return output;
@@ -88,7 +88,7 @@
     [...semanticIds].forEach((id) => { const node = data.overviewNodeById[id]; if (node) output.push({ group:'nodes', data:{ id, label:node.label, kind:node.kind, state:node.state, role:semanticRoleKey(node), occurrenceCount:node.occurrence_count, anchorId:data.anchorById[id] ? id : '' } }); });
     if (sourceToggle.checked) data.semantic_overview.source_edges.forEach((edge) => {
       const pairs = (edge.occurrence_pairs || []).filter((pair) => visible.has(pair.source_occurrence_id) && visible.has(pair.target_occurrence_id));
-      if (pairs.length && semanticIds.has(edge.source) && semanticIds.has(edge.target)) output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:`source dependency (${pairs.length})`, sourceEdgeIds:pairs.map((pair) => pair.source_dependency_id), occurrenceCount:pairs.length } });
+      if (pairs.length && semanticIds.has(edge.source) && semanticIds.has(edge.target)) output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'source', label:'', sourceEdgeIds:pairs.map((pair) => pair.source_dependency_id), occurrenceCount:pairs.length } });
     });
     if (semanticToggle.checked) data.semantic_overview.semantic_edges.filter(projectionVisible).forEach((edge) => {
       const visibleCount = (edge.workflow_ids || []).filter((workflowId) => shownWorkflows.has(workflowId)).length;
@@ -133,7 +133,7 @@
       { selector:'node[kind = "semantic-anchor"][state = "reviewed_decode"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
       { selector:'node[kind = "semantic-anchor"][role = "mixed"], node[kind = "semantic-anchor"][state = "unresolved"], node[kind = "semantic-unresolved"]', style:{ 'border-color':'#a63030', 'border-style':'dashed', 'border-width':3 } },
       { selector:'node.hovered, node.focused', style:{ 'border-color':'#f59e0b', 'border-width':5, 'z-index':999 } },
-      { selector:'edge[kind = "source"]', style:{ 'width':2, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } },
+      { selector:'edge[kind = "source"]', style:{ 'width':1.25, 'opacity':.45, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
       { selector:'edge[kind = "anchor"]', style:{ 'width':1.5, 'line-style':'dashed', 'line-color':'#bd8529', 'curve-style':'bezier' } },
       { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } }
     ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:105, nodeRepulsion:520000 } });
