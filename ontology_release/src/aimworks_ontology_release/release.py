@@ -17,6 +17,7 @@ from .inspect import inspect_ontology
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
 from .neutron_tomo_pilot import build_neutron_tomo_pilot_package
+from .method_data_profiles import build_method_data_profiles
 from .normalize_source import normalize_source_document
 from .odk import load_odk_manifest, prepare_odk_shadow
 from .profile_modules import build_profile_modules
@@ -67,6 +68,7 @@ def run_release(
     synchrotron_xray_tomo_pilot = build_synchrotron_xray_tomo_pilot_package(input_path, output_root)
     xrd_pilot = build_xrd_pilot_package(input_path, output_root)
     xps_pilot = build_xps_pilot_package(input_path, output_root)
+    method_data_profiles = build_method_data_profiles(input_path, output_root)
     decode_workflows = build_decode_workflow_release(
         project_root / "input" / "decode_workflows_source.json",
         output_root,
@@ -115,6 +117,7 @@ def run_release(
         "synchrotron_xray_tomo_pilot": synchrotron_xray_tomo_pilot,
         "xrd_pilot": xrd_pilot,
         "xps_pilot": xps_pilot,
+        "method_data_profiles": method_data_profiles,
         "decode_workflows": decode_workflows,
         "tib_benchmark": tib_benchmark,
         "fair": fair,
@@ -130,7 +133,7 @@ def run_release(
 def build_release_bundle(project_root: str | Path) -> Path:
     project_root = Path(project_root)
     bundle_dir = ensure_dir(project_root / "output" / "release_bundle")
-    for folder in ["ontology", "mappings", "reports", "review", "examples", "benchmarks", "decode", "docs", "w3id", "odk"]:
+    for folder in ["ontology", "mappings", "reports", "review", "examples", "method_profiles", "benchmarks", "decode", "docs", "w3id", "odk"]:
         source = project_root / "output" / folder
         target = bundle_dir / folder
         if target.exists():

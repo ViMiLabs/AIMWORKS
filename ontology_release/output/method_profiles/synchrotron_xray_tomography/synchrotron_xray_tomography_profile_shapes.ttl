@@ -1,0 +1,32 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/MeasurementShape> a sh:NodeShape ;
+  sh:targetClass h2kg:XRayComputedTomographyMeasurement ;
+  sh:class h2kg:Measurement ;
+  sh:property [ sh:path h2kg:hasInputMaterial ; sh:minCount 1 ; sh:class h2kg:Matter ] ;
+  sh:property [ sh:path h2kg:usesInstrument ; sh:minCount 1 ; sh:class h2kg:Instrument ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;.
+
+<https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/DataPointShape> a sh:NodeShape ;
+  sh:targetSubjectsOf h2kg:fromMeasurement ;
+  sh:property [ sh:path h2kg:fromMeasurement ; sh:node [ sh:class h2kg:XRayComputedTomographyMeasurement ] ] ;
+  sh:property [ sh:path h2kg:ofProperty ; sh:in ( h2kg:Property ) ] ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class h2kg:Process ] ;
+  sh:or (
+    [ sh:property [ sh:path h2kg:hasQuantityValue ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path h2kg:hasMetadata ; sh:minCount 1 ] ]
+  ) .
+
+<https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/QuantityValueShape> a sh:NodeShape ;
+  sh:targetObjectsOf h2kg:hasQuantityValue ;
+  sh:class qudt:QuantityValue ;
+  sh:property [ sh:path qudt:numericValue ; sh:minCount 1 ] ;
+  sh:or (
+    [ sh:property [ sh:path qudt:unit ; sh:minCount 1 ] ; sh:property [ sh:path qudt:quantityKind ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path qudt:quantityKind ; sh:hasValue quantitykind:Count ] ]
+    [ sh:property [ sh:path qudt:quantityKind ; sh:hasValue quantitykind:Dimensionless ] ]
+  ) .

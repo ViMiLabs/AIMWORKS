@@ -1,0 +1,707 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "xrdcase": "https://w3id.org/h2kg/examples/xrd#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#source-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Illustrative PEMFC Pt/C catalyst powder XRD case",
+          "@language": "en"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Ontology-native XRD pilot case used to demonstrate the normalized H2KG XRD pattern.",
+          "@language": "en"
+        },
+        {
+          "@value": "This package is not derived from a workbook sheet; values are illustrative and remain non-public example instances.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#pdc-catalyst-powder",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
+        "https://w3id.org/h2kg/hydrogen-ontology#PtOnCarbonCatalyst"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Pt/C catalyst powder sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#pdc-catalyst-powder-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#pdc-catalyst-powder-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Example only: commercial carbon-supported Pt catalyst powder.",
+          "@language": "en"
+        },
+        {
+          "@value": "Supplier, lot, and Pt wt.% stay as metadata in the pilot.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#conditioned-pdc-catalyst-powder",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
+        "https://w3id.org/h2kg/hydrogen-ontology#PtOnCarbonCatalyst"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Conditioned Pt/C catalyst powder for XRD",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#conditioned-pdc-catalyst-powder-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#conditioned-pdc-catalyst-powder-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Example conditioning note: dry powder loaded on an XRD sample holder.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#sample-conditioning-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Prepare Pt/C powder for XRD acquisition",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#pdc-catalyst-powder"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#conditioned-pdc-catalyst-powder"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayDiffractionMeasurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Pt/C catalyst powder XRD acquisition",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#conditioned-pdc-catalyst-powder"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-instrument-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xray-wavelength-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-step-size-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-start-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-end-setting"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-pattern-dataset"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-acquisition-record"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Illustrative powder XRD scan for PEMFC catalyst characterization.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-instrument-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayDiffractometer"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD instrument instance",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-instrument-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-instrument-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Example only: laboratory diffractometer model and holder details remain metadata.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-pattern-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRDPatternDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Raw XRD pattern dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-pattern-dataset-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-pattern-dataset-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Example only: diffraction pattern exported as a raw diffractogram file.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-acquisition-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#ExperimentDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD acquisition record dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-acquisition-record-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-acquisition-record-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Scan notes, run identifier, and acquisition-log details remain metadata.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Scherrer-style peak analysis",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-pattern-dataset"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-acquisition-record"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Illustrative analysis note: Pt(111) peak used for peak-position, FWHM, and Scherrer-derived size calculations.",
+          "@language": "en"
+        },
+        {
+          "@value": "Shape-factor and density assumptions remain analysis metadata in this round.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#diffraction-peak-position-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Diffraction peak position data point",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#DiffractionPeakPosition2Theta"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#diffraction-peak-position-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-peak-fwhm-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD peak FWHM data point",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#XRDPeakFWHM"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-peak-fwhm-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#pt-crystallite-size-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Pt crystallite size data point",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#PtCrystalliteSize"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#pt-crystallite-size-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#theoretical-metal-surface-area-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Theoretical metal surface area data point",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#TheoreticalMetalSurfaceArea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#theoretical-metal-surface-area-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#peak-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xray-wavelength-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRayWavelength"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "X-ray wavelength setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xray-wavelength-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-step-size-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRDStepSize"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD step size setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-step-size-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-start-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRDTwoThetaStart"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD two theta start setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-start-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-end-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#XRDTwoThetaEnd"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "XRD two theta end setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-end-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xray-wavelength-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "0.15418",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Wavelength"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-step-size-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "0.02",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PlaneAngle"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-start-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "10",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PlaneAngle"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-two-theta-end-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "90",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PlaneAngle"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#diffraction-peak-position-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "39.8",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PlaneAngle"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#xrd-peak-fwhm-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "0.9",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PlaneAngle"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#pt-crystallite-size-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "3.1",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/xrd#theoretical-metal-surface-area-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "100",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/AreaPerMass"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/M2-PER-GM"
+        }
+      ]
+    }
+  ]
+}

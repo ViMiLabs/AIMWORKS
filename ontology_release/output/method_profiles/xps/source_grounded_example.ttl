@@ -1,0 +1,239 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/xps#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Illustrative PEMFC-related XPS surface-chemistry case"@en ;
+  rdfs:comment "Ontology-native XPS pilot case used to demonstrate the normalized H2KG XPS pattern."@en, "This package is not derived from a workbook sheet; values are illustrative and remain non-public example instances."@en .
+
+<https://w3id.org/h2kg/examples/xps#ptc-catalyst-powder>
+  a h2kg:Matter, h2kg:CatalystPowder, h2kg:PtOnCarbonCatalyst ;
+  rdfs:label "Pt/C catalyst powder sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#ptc-catalyst-powder-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#ptc-catalyst-powder-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Example only: carbon-supported Pt catalyst powder for PEMFC catalyst-layer formulation."@en .
+
+<https://w3id.org/h2kg/examples/xps#pfsa-ionomer-material>
+  a h2kg:Matter, h2kg:PFSAIonomer ;
+  rdfs:label "PFSA ionomer material"@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-ready-catalyst-ink-film>
+  a h2kg:Matter, h2kg:CatalystInk ;
+  rdfs:label "XPS-ready catalyst-ink film"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-ready-catalyst-ink-film-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-ready-catalyst-ink-film-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Illustrative dried Pt/C + PFSA catalyst-ink film prepared for XPS surface analysis."@en .
+
+<https://w3id.org/h2kg/examples/xps#sample-conditioning-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Prepare XPS-ready catalyst-ink film"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/xps#ptc-catalyst-powder>, <https://w3id.org/h2kg/examples/xps#pfsa-ionomer-material> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/xps#xps-ready-catalyst-ink-film> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#sample-conditioning-step-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#sample-conditioning-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Film-casting, drying, and mounting details remain metadata in this round."@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-measurement-001>
+  a h2kg:Measurement, h2kg:XRayPhotoelectronSpectroscopyMeasurement ;
+  rdfs:label "PEMFC catalyst-related XPS acquisition"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/xps#xps-ready-catalyst-ink-film> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/xps#xps-instrument-001> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/xps#xps-pass-energy-setting>, <https://w3id.org/h2kg/examples/xps#xps-take-off-angle-setting>, <https://w3id.org/h2kg/examples/xps#xps-analysis-area-setting> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/xps#xps-dataset>, <https://w3id.org/h2kg/examples/xps#xps-acquisition-record> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-measurement-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-measurement-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Example metadata only: Al Kα source, survey/high-resolution scan settings, charge neutralization, and calibration reference."@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-instrument-001>
+  a h2kg:Instrument, h2kg:XPSInstrument ;
+  rdfs:label "XPS instrument instance"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Example only: laboratory XPS spectrometer model remains metadata."@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-dataset>
+  a h2kg:Data, h2kg:XPSDataset ;
+  rdfs:label "Raw XPS dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-dataset-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Survey and high-resolution spectra plus exported quantification tables remain bundled as XPS dataset content."@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-acquisition-record>
+  a h2kg:Data, h2kg:ExperimentDataset ;
+  rdfs:label "XPS acquisition record dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-acquisition-record-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-acquisition-record-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Acquisition identifier, export bundle, and operator notes remain metadata."@en .
+
+<https://w3id.org/h2kg/examples/xps#xps-analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Peak fitting and quantification"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/xps#xps-dataset>, <https://w3id.org/h2kg/examples/xps#xps-acquisition-record> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/xps#xps-analysis-step-metadata> .
+
+<https://w3id.org/h2kg/examples/xps#xps-analysis-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Peak fitting, background handling, and quantification assumptions remain metadata in this round."@en .
+
+<https://w3id.org/h2kg/examples/xps#binding-energy-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Binding energy data point"@en ;
+  h2kg:ofProperty h2kg:BindingEnergy ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#binding-energy-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#c1s-atomic-percent-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "C 1s atomic percent data point"@en ;
+  h2kg:ofProperty h2kg:C1sAtomicPercent ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#c1s-atomic-percent-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#o1s-atomic-percent-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "O 1s atomic percent data point"@en ;
+  h2kg:ofProperty h2kg:O1sAtomicPercent ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#o1s-atomic-percent-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#f1s-atomic-percent-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "F 1s atomic percent data point"@en ;
+  h2kg:ofProperty h2kg:F1sAtomicPercent ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#f1s-atomic-percent-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#n1s-atomic-percent-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "N 1s atomic percent data point"@en ;
+  h2kg:ofProperty h2kg:N1sAtomicPercent ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#n1s-atomic-percent-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#carbon-to-oxygen-ratio-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Carbon-to-oxygen atom ratio data point"@en ;
+  h2kg:ofProperty h2kg:CarbonToOxygenAtomRatio ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#carbon-to-oxygen-ratio-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#metal-atomic-percent-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Metal atomic percent data point"@en ;
+  h2kg:ofProperty h2kg:MetalAtomicPercent ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/xps#xps-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#metal-atomic-percent-datapoint-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/xps#xps-analysis-step> .
+
+<https://w3id.org/h2kg/examples/xps#xps-pass-energy-setting>
+  a h2kg:Parameter, h2kg:XPSPassEnergy ;
+  rdfs:label "XPS pass energy setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#xps-pass-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/xps#xps-take-off-angle-setting>
+  a h2kg:Parameter, h2kg:XPSTakeOffAngle ;
+  rdfs:label "XPS take-off angle setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#xps-take-off-angle-setting-qv> .
+
+<https://w3id.org/h2kg/examples/xps#xps-analysis-area-setting>
+  a h2kg:Parameter, h2kg:XPSAnalysisArea ;
+  rdfs:label "XPS analysis area setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/xps#xps-analysis-area-setting-qv> .
+
+<https://w3id.org/h2kg/examples/xps#xps-pass-energy-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "20"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Energy ;
+  qudt:unit unit:EV .
+
+<https://w3id.org/h2kg/examples/xps#xps-take-off-angle-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "45"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:PlaneAngle ;
+  qudt:unit unit:DEG .
+
+<https://w3id.org/h2kg/examples/xps#xps-analysis-area-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "400"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Area ;
+  qudt:unit unit:MicroM2 .
+
+<https://w3id.org/h2kg/examples/xps#binding-energy-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "284.8"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Energy ;
+  qudt:unit unit:EV .
+
+<https://w3id.org/h2kg/examples/xps#c1s-atomic-percent-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "72"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:AtomPercent, quantitykind:AtomicPercent, quantitykind:Dimensionless ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/xps#o1s-atomic-percent-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "15"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:AtomPercent, quantitykind:AtomicPercent, quantitykind:Dimensionless ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/xps#f1s-atomic-percent-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "8"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:AtomPercent, quantitykind:AtomicPercent, quantitykind:Dimensionless ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/xps#n1s-atomic-percent-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "3"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:AtomPercent, quantitykind:AtomicPercent, quantitykind:Dimensionless ;
+  qudt:unit unit:PERCENT .
+
+<https://w3id.org/h2kg/examples/xps#carbon-to-oxygen-ratio-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "4.8"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Ratio, quantitykind:Dimensionless .
+
+<https://w3id.org/h2kg/examples/xps#metal-atomic-percent-datapoint-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "2"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:AtomPercent, quantitykind:AtomicPercent, quantitykind:Dimensionless ;
+  qudt:unit unit:PERCENT .

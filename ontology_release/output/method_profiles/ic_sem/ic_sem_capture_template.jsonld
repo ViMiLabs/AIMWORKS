@@ -1,0 +1,276 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/measurement",
+      "@type": [
+        "h2kg:Measurement",
+        "h2kg:ICSEMImagingMeasurement"
+      ],
+      "h2kg:hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/sample"
+        }
+      ],
+      "h2kg:usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/instrument"
+        }
+      ],
+      "h2kg:hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/raw-data"
+        }
+      ],
+      "h2kg:hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/measurement-metadata"
+        }
+      ],
+      "h2kg:hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-4"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-5"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-6"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-7"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-8"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-9"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-10"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-11"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-12"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-13"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-14"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/sample",
+      "@type": [
+        "h2kg:Matter"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/instrument",
+      "@type": [
+        "h2kg:Instrument",
+        "h2kg:ICSEMInstrument"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/raw-data",
+      "@type": [
+        "h2kg:Data",
+        "h2kg:SEMImageDataset"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/measurement-metadata",
+      "@type": [
+        "h2kg:Metadata"
+      ],
+      "rdfs:comment": "Record source evidence, file details, and method-specific context here."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-1",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:IonBeamEnergy"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-2",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:IonBeamCurrent"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-3",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:ElectronBeamEnergy"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-4",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:ElectronCurrent"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-5",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:PixelSize"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-6",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:CutThickness"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-7",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:DwellTime"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-8",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:ExposureTime"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-9",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:Magnification"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-10",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:MicroscopyMeasuredArea"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-11",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:Temperature"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-12",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:RelativeHumidity"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-13",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:VacuumChamberPressure"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/parameter-14",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:TotalAcquisitionTime"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/analysis",
+      "@type": [
+        "h2kg:Process"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/result",
+      "@type": [
+        "h2kg:DataPoint"
+      ],
+      "h2kg:fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/measurement"
+        }
+      ],
+      "h2kg:ofProperty": [
+        {
+          "@id": "h2kg:MembraneElectrodeAssemblyThickness"
+        }
+      ],
+      "prov:wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/analysis"
+        }
+      ],
+      "h2kg:hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/result-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/ic_sem/result-metadata",
+      "@type": [
+        "h2kg:Metadata"
+      ],
+      "rdfs:comment": "Use this explicit statement when no numeric value was reported; otherwise add h2kg:hasQuantityValue with QUDT numericValue, unit, and quantity kind."
+    }
+  ]
+}

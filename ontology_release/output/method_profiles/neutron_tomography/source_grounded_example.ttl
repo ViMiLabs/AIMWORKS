@@ -1,0 +1,368 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Understanding water dynamics in operating fuel cells by operando neutron tomography: investigation of different flow field designs"@en ;
+  dcterms:date "2024-02-11"^^xsd:date ;
+  h2kg:hasIdentifier "8", "Run derived DOI" ;
+  rdfs:comment "Source-sheet contradictions retained as metadata only: Topic = Battery; Device = Lithium Battery."@en, "Country: Germany; granularity level: Macrostructure; source link: link."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche>, <https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero> ;
+  dcterms:contributor <https://w3id.org/h2kg/examples/neutron-tomo#institution-hzb>, <https://w3id.org/h2kg/examples/neutron-tomo#funding-helmholtz-ai> ;
+  dcterms:source "link" .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#publication-record>
+  a h2kg:Metadata ;
+  dcterms:title "Understanding water dynamics in operating fuel cells by operando neutron tomography: investigation of different flow field designs"@en ;
+  dcterms:identifier "https://doi.org/10.1088/2515-7655/ad3984" ;
+  dcterms:issued "2012-11-28"^^xsd:date ;
+  rdfs:comment "Journal: Materials Today; volume: 1; issue: 8; pages: 23-45."@en, "Published flag from source sheet: 1."@en ;
+  dcterms:creator <https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche>, <https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche>
+  a prov:Agent ;
+  rdfs:label "Ralf Ziesche"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero>
+  a prov:Agent ;
+  rdfs:label "André Colliard Granero"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 123-465-7765", "Email: ralf.ziesche@yahoo.ru" .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero-metadata>
+  a h2kg:Metadata ;
+  dcterms:identifier "ORCID: 321-321-3211", "Email: andyhuebsch@gmail.mx" .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#institution-hzb>
+  a prov:Agent ;
+  rdfs:label "HZB"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#funding-helmholtz-ai>
+  a prov:Agent ;
+  rdfs:label "Helmholtz AI"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#gas-diffusion-electrode>
+  a h2kg:Matter ;
+  rdfs:label "Gas diffusion electrode precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#gas-diffusion-electrode-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#gas-diffusion-electrode-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Amount: 2."@en, "Manufacturer: HyPlat, South Africa; Pt loading = 0.4 mg/cm2."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#membrane-precursor>
+  a h2kg:Matter ;
+  rdfs:label "Membrane precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#membrane-precursor-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#membrane-precursor-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Manufacturer = Gore, USA; type = GORE Select-M8."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#laser-cut-membrane>
+  a h2kg:Matter ;
+  rdfs:label "Laser-cut membrane intermediate"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#operando-holder>
+  a h2kg:Matter ;
+  rdfs:label "Custom-built holder"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#slip-ring>
+  a h2kg:Matter ;
+  rdfs:label "Slip ring"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#slip-ring-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#slip-ring-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sheet amount: 2."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#mounted-holder-intermediate>
+  a h2kg:Matter ;
+  rdfs:label "Mounted MEA/holder intermediate"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#operando-neutron-sample>
+  a h2kg:Matter ;
+  rdfs:label "Operando neutron tomography sample context"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#operando-neutron-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#operando-neutron-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sheet target label: Sample; holder integration and slip-ring context retained as metadata."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#mea-assembly>
+  a h2kg:Matter, h2kg:MEAAssembly ;
+  rdfs:label "MEA assembly used for operando neutron tomography"@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#procure-gde>
+  a h2kg:Process ;
+  rdfs:label "Procure gas diffusion electrode"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#gas-diffusion-electrode> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#procure-membrane>
+  a h2kg:Process ;
+  rdfs:label "Procure membrane"@en ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#membrane-precursor> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#laser-cut-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Laser-cut membrane"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#membrane-precursor> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#laser-cut-membrane> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#hot-press-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Hot-press gas diffusion electrode and laser-cut membrane into MEA assembly"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#gas-diffusion-electrode>, <https://w3id.org/h2kg/examples/neutron-tomo#laser-cut-membrane> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#mea-assembly> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#hot-press-step-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#hot-press-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Temperature = 150 °C; time = 3 min; pressure = 400 psi."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#mount-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Mount MEA on custom-built holder"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#mea-assembly>, <https://w3id.org/h2kg/examples/neutron-tomo#operando-holder> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#mounted-holder-intermediate> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#integrate-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Integrate mounted assembly with slip rings into operando neutron sample"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#mounted-holder-intermediate>, <https://w3id.org/h2kg/examples/neutron-tomo#slip-ring> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#operando-neutron-sample> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001>
+  a h2kg:Measurement, h2kg:NeutronTomographyMeasurement ;
+  rdfs:label "Operando neutron tomography pilot measurement"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/neutron-tomo#mea-assembly> ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/neutron-tomo#neutron-instrument-001> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/neutron-tomo#raw-projection-dataset>, <https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset>, <https://w3id.org/h2kg/examples/neutron-tomo#neutron-experiment-dataset> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting>, <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-acquisition-metadata>, <https://w3id.org/h2kg/examples/neutron-tomo#source-record>, <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> ;
+  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/neutron-tomo#author-ralf-ziesche>, <https://w3id.org/h2kg/examples/neutron-tomo#author-andre-colliard-granero> ;
+  dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-instrument-001>
+  a h2kg:Instrument, h2kg:NeutronTomographyInstrument ;
+  rdfs:label "Neutron tomography instrument used in the pilot case"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Facility: Institut Laue–Langevin (ILL); beamline: NeXT Beamline; beam type: polychromatic cold neutron."@en, "Detector: CCD camera (DW436N-BC, Oxford Instruments Andor, UK); lens: Nikkon photo lens 20 mm; scintillator: GADOX."@en, "Binning = 4; field of view = 26 mm2; collimator diameter = 30 mm; pinhole size = 30 mm; pinhole-sample distance = 20 um; image frequency = 40 Hz."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#raw-projection-dataset>
+  a h2kg:Data, h2kg:TomographicProjectionDataset ;
+  rdfs:label "Raw neutron tomographic projection dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#raw-projection-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#raw-projection-dataset-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "png" ;
+  dcterms:extent "200 MB", "1024 x 1024 x 1300 voxels" ;
+  rdfs:comment "Filename: TestNeutronTomography.tif."@en, "Mask exists: no; mask link: link."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#preprocessing-step>
+  a h2kg:Process ;
+  rdfs:label "Reconstruction, dark-field correction, and thresholding"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/neutron-tomo#raw-projection-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#preprocessing-step-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#preprocessing-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet steps retained as labeled process metadata: Reconstruct, DarkFieldCorrect, 3DReconstruct, Threshold."@en, "Software metadata: Astra Toolbox; Avizo; unresolved placeholder software values XXXX."@en, "3D reconstruction metadata: axis = rotation axis."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset>
+  a h2kg:Data, h2kg:TomographicReconstructionDataset ;
+  rdfs:label "Post-processed tomographic reconstruction dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sheet target label: Post-processed tomograph."@en, "Used as the input dataset for tortuosity and droplet analysis."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-experiment-dataset>
+  a h2kg:Data, h2kg:ExperimentDataset ;
+  rdfs:label "Neutron-tomography experiment summary dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-experiment-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-experiment-dataset-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Aggregates raw projections, reconstructed tomograph, and derived water-dynamics results for the pilot case."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Tortuosity and droplet analysis"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/neutron-tomo#reconstructed-tomograph-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/neutron-tomo#neutron-experiment-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step-metadata>, <https://w3id.org/h2kg/examples/neutron-tomo#average-barycenter-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#analysis-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "TortuosityMeasurement software: MATLAB TauFactor."@en, "DropletAnalysis software: LabelAnalysis, Avizo."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-barycenter-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred round-1 field: AverageBaryCenter = 5."@en, "The workbook does not provide stable axis/unit semantics, so barycenter remains metadata rather than a public H2KG property term."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Tortuosity-factor datapoint"@en ;
+  h2kg:ofProperty h2kg:TortuosityFactor ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
+  dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1.5"^^xsd:decimal ;
+  qudt:quantityKind quantitykind:Dimensionless .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Average water droplet area datapoint"@en ;
+  h2kg:ofProperty h2kg:AverageWaterDropletArea ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
+  dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "45"^^xsd:decimal ;
+  qudt:unit unit:CentiM2 ;
+  qudt:quantityKind quantitykind:Area .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Average water droplet count datapoint"@en ;
+  h2kg:ofProperty h2kg:AverageWaterDropletCount ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-qv> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
+  dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "45"^^xsd:integer ;
+  qudt:quantityKind quantitykind:Count .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting>
+  a h2kg:Parameter, h2kg:PixelSize ;
+  rdfs:label "Neutron tomography pixel-size setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "63.6"^^xsd:decimal ;
+  qudt:unit unit:MicroM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting>
+  a h2kg:Parameter, h2kg:ExposureTime ;
+  rdfs:label "Neutron tomography exposure-time setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "9"^^xsd:decimal ;
+  qudt:unit unit:SEC ;
+  qudt:quantityKind quantitykind:Time .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting>
+  a h2kg:Parameter, h2kg:ProjectionNumber ;
+  rdfs:label "Neutron tomography projection-number setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "1440"^^xsd:integer ;
+  qudt:quantityKind quantitykind:Count .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting>
+  a h2kg:Parameter, h2kg:NeutronFlux ;
+  rdfs:label "Neutron flux setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "2700000"^^xsd:decimal .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Sheet unit retained as metadata in round 1: n/cm2s. Exact QUDT specialization is deferred."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting>
+  a h2kg:Parameter, h2kg:SpatialResolution ;
+  rdfs:label "Neutron tomography spatial-resolution setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "300"^^xsd:decimal ;
+  qudt:unit unit:MicroM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting>
+  a h2kg:Parameter, h2kg:SampleDetectorDistance ;
+  rdfs:label "Sample-detector-distance setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "50"^^xsd:decimal ;
+  qudt:unit unit:MilliM ;
+  qudt:quantityKind quantitykind:Length .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "Neutron tomography acquisition temperature setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "23"^^xsd:decimal ;
+  qudt:unit unit:DEG_C ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "Neutron tomography acquisition relative-humidity setting"@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-qv>
+  a qudt:QuantityValue ;
+  qudt:numericValue "50"^^xsd:decimal ;
+  qudt:unit unit:PERCENT ;
+  qudt:quantityKind quantitykind:RelativeHumidity .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-acquisition-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Measurement type: operando; specimen: bulk material."@en, "Atmosphere: air; pressure: 1 atm."@en, "Calibration note: adjusting lenses and apertures; adjusting the voltage."@en, "Additional sheet metadata retained locally: beam size = 30 cm2; L/D value = 500; field of view = 26 mm2; data acquisition rate = 36 s."@en .

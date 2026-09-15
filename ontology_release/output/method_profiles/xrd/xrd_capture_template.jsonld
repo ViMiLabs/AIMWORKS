@@ -1,0 +1,166 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/measurement",
+      "@type": [
+        "h2kg:Measurement",
+        "h2kg:XRayDiffractionMeasurement"
+      ],
+      "h2kg:hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/sample"
+        }
+      ],
+      "h2kg:usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/instrument"
+        }
+      ],
+      "h2kg:hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/raw-data"
+        }
+      ],
+      "h2kg:hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/measurement-metadata"
+        }
+      ],
+      "h2kg:hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-4"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/sample",
+      "@type": [
+        "h2kg:Matter"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/instrument",
+      "@type": [
+        "h2kg:Instrument",
+        "h2kg:XRayDiffractometer"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/raw-data",
+      "@type": [
+        "h2kg:Data",
+        "h2kg:XRDPatternDataset"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/measurement-metadata",
+      "@type": [
+        "h2kg:Metadata"
+      ],
+      "rdfs:comment": "Record source evidence, file details, and method-specific context here."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-1",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:XRayWavelength"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-2",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:XRDStepSize"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-3",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:XRDTwoThetaStart"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/parameter-4",
+      "@type": [
+        "h2kg:Parameter",
+        "h2kg:XRDTwoThetaEnd"
+      ],
+      "rdfs:comment": "Conditional: add a quantity value only when reported."
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/analysis",
+      "@type": [
+        "h2kg:Process"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/result",
+      "@type": [
+        "h2kg:DataPoint"
+      ],
+      "h2kg:fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/measurement"
+        }
+      ],
+      "h2kg:ofProperty": [
+        {
+          "@id": "h2kg:DiffractionPeakPosition2Theta"
+        }
+      ],
+      "prov:wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/analysis"
+        }
+      ],
+      "h2kg:hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/examples/xrd/result-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/examples/xrd/result-metadata",
+      "@type": [
+        "h2kg:Metadata"
+      ],
+      "rdfs:comment": "Use this explicit statement when no numeric value was reported; otherwise add h2kg:hasQuantityValue with QUDT numericValue, unit, and quantity kind."
+    }
+  ]
+}

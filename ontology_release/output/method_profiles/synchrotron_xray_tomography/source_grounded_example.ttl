@@ -1,0 +1,262 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#source-record>
+  a h2kg:Metadata ;
+  dcterms:title "Synchrotron x-ray tomography of dry electrode"@en ;
+  dcterms:identifier "ExperimentID: 2", "Measurement-ID: Run derived DOI" ;
+  dcterms:date "44845" ;
+  rdfs:comment "Canonical source sheet: SynchrotronTomo."@en, "SynchrotronRadio was validated as a duplicate-structure sheet with metadata-only deviations."@en, "Out-of-scope labels retained only as source metadata: Topic = VRFB; Device = VRFB."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#publication-record>
+  a h2kg:Metadata ;
+  dcterms:title "Synchrotron x-ray tomography of dry electrode"@en ;
+  dcterms:identifier "https://doi.org/10.3390/35654654654" ;
+  dcterms:issued "41215" ;
+  rdfs:comment "Journal: Nature; volume: 41; issue: 5; pages: 6456-6541."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode>
+  a h2kg:Matter ;
+  rdfs:label "Carbon felt electrode precursor"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Workbook context retained as metadata only: Manufacturer = SGL Carbon; Type = Sigracell GFA 6 EA."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample>
+  a h2kg:Matter ;
+  rdfs:label "Conditioned tomography sample"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Workbook context retained as metadata only: dry-electrode / VRFB study context."@en, "Sample geometry from sheet: XYZ = 7.4, 0.8, 0.6 cm."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step>
+  a h2kg:Manufacturing ;
+  rdfs:label "Sample conditioning and cutting"@en ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#carbon-felt-electrode> ;
+  h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-conditioning-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet steps represented conservatively as labeled process content: Buy, Dissolve, Bubble, Heat, Cool, Cut."@en, "Representative condition values: Heat temperature = 400 deg C; time = 25 h; Cool temperature = 25 deg C."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001>
+  a h2kg:Measurement, h2kg:XRayComputedTomographyMeasurement ;
+  rdfs:label "Synchrotron x-ray tomography pilot measurement"@en ;
+  h2kg:usesInstrument <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-001> ;
+  h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#conditioned-sample> ;
+  h2kg:hasParameter <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-metadata>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#publication-record>, <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#source-record> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "MeasurementType = ex-situ; Specimen = bulk material; Atmosphere = air; Pressure = 1 atm."@en, "Calibration note from workbook: adjusting lenses and apertures; adjusting the voltage."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-001>
+  a h2kg:Instrument, h2kg:XRayCTInstrument ;
+  rdfs:label "Synchrotron x-ray CT instrument configuration"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-instrument-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Facility = Canadian Light Source Inc.; Beamline = BMIT-ID 05ID-2."@en, "Monochromator = double layer monochromator; Detector = Orca Flash V2 sCMOS; Scintillator = YAG."@en, "Additional instrument metadata retained only as metadata: field of view, detector raw pixels, sample elevation, source-sample distance, probe, signal, time lapse, acquisition rate."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset>
+  a h2kg:Data, h2kg:TomographicProjectionDataset ;
+  rdfs:label "Raw synchrotron tomographic projection dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset-metadata>
+  a h2kg:Metadata ;
+  dcterms:format "tiff" ;
+  dcterms:extent "541 MB" ;
+  dcterms:source "link" ;
+  rdfs:comment "Filename = TestTomography.tif."@en, "Dimensions = 1024 x 1024 x 600; PixelPerMetric = 8.1."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset>
+  a h2kg:Data, h2kg:ExperimentDataset ;
+  rdfs:label "Synchrotron x-ray tomography experiment dataset record"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#experiment-dataset-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Source sheet bundle for the combined SynchrotronTomo / SynchrotronRadio controlled integration round."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step>
+  a h2kg:Process ;
+  rdfs:label "Correction, reconstruction, and segmentation"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#raw-projection-dataset> ;
+  h2kg:hasOutputData <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#preprocessing-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet preprocessing labels retained as process metadata: Convert, DarkFieldCorrect, FlatFieldCorrect, BackgroundCorrect, 3DReconstruct, ManualSegment."@en, "Workbook software notes retained as metadata: XXXX; Avizo."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset>
+  a h2kg:Data, h2kg:TomographicReconstructionDataset ;
+  rdfs:label "Reconstructed synchrotron tomograph dataset"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Mask exists = no; mask link = link."@en, "Segmentation semantics retained as metadata only: carbon felt, electrolyte, and air."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step>
+  a h2kg:Process ;
+  rdfs:label "Tomography analysis of deferred outputs"@en ;
+  h2kg:hasInputData <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#reconstructed-tomograph-dataset> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Worksheet analysis labels retained as process metadata: DecayFactorCalculation, BeamPathDistanceMeasurement, ElectrolyteSaturationMeasurement, ElectrodeSegmentRatioCalculation."@en, "Workbook software notes retained as metadata: ImageJ."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Deferred decay-factor datapoint"@en ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint-metadata> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#decay-factor-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred semantic target only: Decay factor; reported workbook value = 51 ms."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Deferred beam-path-distance datapoint"@en ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint-metadata> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#beam-path-distance-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred semantic target only: Real distance in beam path; reported workbook value = 99 cm."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Deferred electrolyte-saturation datapoint"@en ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint-metadata> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#electrolyte-saturation-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred semantic target only: Electrolyte saturation; reported workbook value = 47 mol/l."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint>
+  a h2kg:DataPoint ;
+  rdfs:label "Deferred carbonfelt/electrolyte/air-ratio datapoint"@en ;
+  h2kg:fromMeasurement <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xrayct-measurement-001> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint-metadata> ;
+  prov:wasGeneratedBy <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#analysis-step> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#phase-ratio-datapoint-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Deferred semantic target only: carbonfelt/electrolyte/air ratio; reported workbook value = 0.12640046296296295."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting>
+  a h2kg:Parameter, h2kg:XRayBeamEnergy ;
+  rdfs:label "Synchrotron x-ray beam-energy setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#xray-beam-energy-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 30 keV."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting>
+  a h2kg:Parameter, h2kg:ExposureTime ;
+  rdfs:label "Projection exposure-time setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#exposure-time-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 50 ms."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting>
+  a h2kg:Parameter, h2kg:PixelSize ;
+  rdfs:label "Projection pixel-size setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#pixel-size-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 13 um."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting>
+  a h2kg:Parameter, h2kg:ProjectionNumber ;
+  rdfs:label "Projection-number setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#projection-number-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 2000."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting>
+  a h2kg:Parameter, h2kg:SpatialResolution ;
+  rdfs:label "Spatial-resolution setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#spatial-resolution-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 1 um."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting>
+  a h2kg:Parameter, h2kg:SampleDetectorDistance ;
+  rdfs:label "Sample-detector-distance setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#sample-detector-distance-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 40 cm."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting>
+  a h2kg:Parameter, h2kg:Temperature ;
+  rdfs:label "Sample temperature setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#temperature-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 23 deg C."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting>
+  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  rdfs:label "Relative-humidity setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#relative-humidity-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 50 %."@en .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting>
+  a h2kg:Parameter, h2kg:Magnification ;
+  rdfs:label "Tomography magnification setting"@en ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting-metadata> .
+
+<https://w3id.org/h2kg/examples/synchrotron-xray-tomo#magnification-setting-metadata>
+  a h2kg:Metadata ;
+  rdfs:comment "Reported workbook value = 10."@en .
