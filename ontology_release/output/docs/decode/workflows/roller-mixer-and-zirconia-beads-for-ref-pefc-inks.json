@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 15,
     "source_edge_count": 14,
-    "mapped_anchor_count": 15,
-    "cross_workflow_connection_count": 105
+    "mapped_anchor_count": 12,
+    "cross_workflow_connection_count": 111
   },
   "nodes": [
     {
@@ -98,9 +98,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "catalyst_ink_composition_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -325,7 +325,21 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n3",
+      "iri": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3/data-point",
+      "label": "Catalyst ink composition value",
+      "kind": "value_proxy",
+      "workflow_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks",
+      "source_occurrence_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n3",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/blade-coating-and-decal-transfer-for-ref-pefc-ccm-process",
@@ -342,10 +356,12 @@
         "determination-of-cl-saturation-by-saxs-or-sans::n19",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n16",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n6",
-        "fib-sem-on-cl-material::n5",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n36",
+        "fib-sem-on-cl-material::n5",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n8",
         "ink-preparation-for-deposition-of-catalytic-layers::n8",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49",
         "mea-assembly-for-pefc-ref-mea::n5",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n15",
         "mpl-saturation-determination-from-x-ray-ct-data::n21",
@@ -384,8 +400,8 @@
       "label": "Catalyst ink composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -416,6 +432,8 @@
         "gde-catalytic-layer-preparation::n0",
         "ink-preparation-for-deposition-of-catalytic-layers::n0",
         "irras-operando-or-in-situ-ftir::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
         "operando-or-in-situ-xas-photon-out::n0",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
         "prism-preparation-for-atr-ftir::n1",
@@ -423,9 +441,7 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
-        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
       ]
     },
     {
@@ -448,10 +464,10 @@
         "electrospray-deposition-of-catalyst-layers::n12",
         "electrospray-deposition-of-catalyst-layers::n13",
         "electrospray-deposition-of-catalyst-layers::n14",
-        "fib-sem-on-cl-material::n15",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n31",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n35",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n37",
+        "fib-sem-on-cl-material::n15",
         "gde-cell-for-electrochemical-studies::n14",
         "gde-cell-for-electrochemical-studies::n15",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n11",
@@ -461,6 +477,10 @@
         "ink-preparation-for-deposition-of-catalytic-layers::n12",
         "ink-preparation-for-deposition-of-catalytic-layers::n13",
         "ink-preparation-for-deposition-of-catalytic-layers::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
         "mea-assembly-for-pefc-ref-mea::n8",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n12",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n16",
@@ -911,17 +931,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::0cab5199ec",
+      "id": "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::6ee7c281bc",
       "workflow_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks",
       "source": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
-      "target": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::1b2c63e831",
+      "workflow_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks",
+      "source": "projection::datapoint::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n3",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1169,7 +1204,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Catalyst ink composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "target_occurrence_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
       "target_node_id": "n7",
@@ -1178,16 +1213,17 @@
       "target_semantic_role": "Manufacturing",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::0cab5199ec"
+        "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::6ee7c281bc",
+        "semantic::roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3::1b2c63e831"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e4",

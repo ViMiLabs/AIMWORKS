@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 23,
     "source_edge_count": 22,
-    "mapped_anchor_count": 23,
-    "cross_workflow_connection_count": 118
+    "mapped_anchor_count": 22,
+    "cross_workflow_connection_count": 125
   },
   "nodes": [
     {
@@ -78,9 +78,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "ionomer_pka_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -336,7 +336,7 @@
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "visual_category": "model",
       "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "semantic_role": "Process",
@@ -539,6 +539,19 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
+      "iri": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2/data-point",
+      "label": "Ionomer pKa value",
+      "kind": "value_proxy",
+      "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
+      "source_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n3",
       "iri": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n3/data-point",
       "label": "Ionomer film thickness value",
@@ -696,8 +709,8 @@
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n16",
         "dft-onto-idealized-surfaces::n20",
         "dip-and-pull-operando-or-in-situ-xps::n6",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n14",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n21"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n21",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n14"
       ]
     },
     {
@@ -716,12 +729,12 @@
         "dft-onto-idealized-surfaces::n0",
         "dip-and-pull-operando-or-in-situ-xps::n3",
         "irras-operando-or-in-situ-ftir::n5",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n2",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrode-chemistry-94d6976a54",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n5",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n2",
         "operando-or-in-situ-xas-photon-out::n4",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n6",
-        "thin-windows-operando-or-in-situ-xps::n4",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrode-chemistry-94d6976a54"
+        "thin-windows-operando-or-in-situ-xps::n4"
       ]
     },
     {
@@ -739,24 +752,24 @@
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n1",
         "dft-onto-idealized-surfaces::n1",
         "dip-and-pull-operando-or-in-situ-xps::n1",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n3",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrode-morphology-c57f796a7f",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n6",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n3",
         "operando-or-in-situ-xas-photon-out::n1",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n1",
-        "thin-windows-operando-or-in-situ-xps::n1",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrode-morphology-c57f796a7f"
+        "thin-windows-operando-or-in-situ-xps::n1"
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "kind": "anchor",
       "label": "IET ink to composition model",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "semantic_role": "Process",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "PDF-defined computational-model schema anchor.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n19",
         "cea-mea-model-europium-2d::n77",
@@ -768,10 +781,17 @@
         "iet-1d-performance-model-for-mea-prediction::n33",
         "iet-composition-to-property-model::n19",
         "iet-ink-to-composition-model::n22",
+        "iet-multiscale-model-interface::model::itc",
         "image-fib-tomography-dataparameter-extraction-3d::n23",
         "image-parameter-extraction-2d::n47",
         "image-tem-data-parameter-extraction-3d::n17",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+        "manual-fzj-mod-stardist-temseg::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+        "manual-fzj-mod-starplatin-temseg::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n15",
         "sem-and-fib-powder::n7",
         "tem-and-eds-analysis-of-mea::n9"
@@ -804,8 +824,8 @@
       "occurrence_ids": [
         "iet-ink-to-composition-model::n10",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n10",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n12",
-        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::output-ionomer-contact-angles-1b2c5afe99"
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::output-ionomer-contact-angles-1b2c5afe99",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n12"
       ]
     },
     {
@@ -819,8 +839,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n5",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
         "iet-ink-to-composition-model::n2",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1"
       ]
@@ -846,8 +866,8 @@
       "label": "Ionomer pKa",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -891,10 +911,10 @@
         "image-parameter-extraction-2d::n57",
         "irras-operando-or-in-situ-ftir::n8",
         "irras-operando-or-in-situ-ftir::n9",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n11",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n12",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n18",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n19"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n19",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n11",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n12"
       ]
     },
     {
@@ -911,9 +931,9 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n3",
         "hierarchical-model-for-electrocatalytic-reactions::n12",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n6",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4",
+        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n8",
-        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4"
       ]
     },
     {
@@ -952,8 +972,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n11",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n17",
         "dft-onto-idealized-surfaces::n21",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n15",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n22",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n15",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n7"
       ]
     },
@@ -971,8 +991,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n9",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n15",
         "dft-onto-idealized-surfaces::n19",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n13",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n20",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n13",
         "operando-or-in-situ-xas-photon-out::n6"
       ]
     },
@@ -987,8 +1007,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n41",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-prediction::n12",
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n10",
         "electrospray-deposition-of-catalyst-layers::n25",
@@ -1012,8 +1032,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n6",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n12",
         "dft-onto-idealized-surfaces::n16",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n10",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n17",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n10",
         "thin-windows-operando-or-in-situ-xps::n7"
       ]
     },
@@ -1386,7 +1406,7 @@
       "id": "anchor::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n15::8cc7fd75df",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "source": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n15",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "target": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -1501,17 +1521,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::054c6f47fe",
+      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::027734b52b",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "source": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n13",
-      "target": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::57676b9674",
+      "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
+      "source": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -2003,7 +2038,7 @@
       "source_node_id": "n2",
       "source_graphml_id": "n2",
       "source_label": "Ionomer pKa",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material",
       "target_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n13",
       "target_node_id": "n13",
@@ -2012,16 +2047,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer-method",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::054c6f47fe"
+        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::027734b52b",
+        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2::57676b9674"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e3",
@@ -2353,7 +2389,7 @@
       "target_graphml_id": "n15",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",

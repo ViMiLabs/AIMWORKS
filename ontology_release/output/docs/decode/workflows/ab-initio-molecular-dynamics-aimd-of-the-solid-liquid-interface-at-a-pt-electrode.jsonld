@@ -83,7 +83,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -171,11 +171,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n1/data-point"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -402,6 +400,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n4/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -463,7 +484,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -644,7 +665,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/projection/d3fe64b05b",
+      "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/projection/4b80059b50",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -652,10 +673,10 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::e2"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -664,12 +685,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/projection/823534317a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

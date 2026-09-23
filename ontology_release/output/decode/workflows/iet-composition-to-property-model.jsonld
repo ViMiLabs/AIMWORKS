@@ -83,7 +83,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL structural parameters"
@@ -129,7 +129,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Percolation threshold"
@@ -397,7 +397,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
@@ -411,17 +411,15 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n10"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
-        {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n5/data-point"
@@ -525,7 +523,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-prediction-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
@@ -651,15 +649,13 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n3"
         }
@@ -687,7 +683,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-based-ccl-effective-transport-property-computation-from-numerical-simulations-model"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
         }
@@ -779,7 +775,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n0"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
         }
@@ -807,7 +803,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/microscopy-sem-and-optical-in-mea-cross-section-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n2"
         }
@@ -917,6 +913,29 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-orr-effective-exchange-current-density-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Percolation threshold value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/percolation-threshold-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/percolation-threshold-component"
         }
       ]
     },
@@ -1152,7 +1171,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-structural-parameters-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL structural parameters"
@@ -1213,7 +1232,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-prediction-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -1222,7 +1241,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -1231,7 +1250,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -1296,7 +1315,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/percolation-threshold-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Percolation threshold"
@@ -1363,7 +1382,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/0593beb183",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/43a33fcd1f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1374,7 +1393,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "activity_input_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1388,7 +1407,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     },
@@ -1423,7 +1442,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/e9f90083aa",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/80247b5dc0",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1431,10 +1450,10 @@
         "iet-composition-to-property-model::e4"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1443,12 +1462,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/c3e4aff404",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "iet-composition-to-property-model::e4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n4/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/percolation-threshold-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -2863,7 +2912,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/0d46175c44",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/16e55067a0",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2874,7 +2923,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "activity_output_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -2888,7 +2937,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
@@ -2923,7 +2972,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/19d596069d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/ee6c706a17",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2934,7 +2983,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "activity_output_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -2948,7 +2997,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
@@ -3043,7 +3092,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/95a5405cfe",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/61818cc1ef",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -3054,7 +3103,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "activity_output_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -3068,12 +3117,12 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/be0af75092",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/projection/cd3397cd87",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -3084,7 +3133,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "activity_output_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -3098,7 +3147,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },

@@ -106,7 +106,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte viscosity"
@@ -597,6 +597,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-surface-diffusion-on-electrocatalyst-support-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-surface-diffusion-on-electrocatalyst-support-method"
         }
       ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
@@ -605,6 +608,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n2/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n4/data-point"
@@ -640,6 +646,29 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/diffusion-coefficients-of-species-lre"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte viscosity value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material"
         }
       ]
     },
@@ -805,7 +834,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte viscosity"
@@ -1058,6 +1087,96 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
         "adsorbate-surface-diffusion-on-electrocatalyst-support::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n10/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-surface-diffusion-on-electrocatalyst-support-method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/projection/20a3464353",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "adsorbate-surface-diffusion-on-electrocatalyst-support::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n10/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/projection/af1d2821ac",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "adsorbate-surface-diffusion-on-electrocatalyst-support::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/projection/99d80c933a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "adsorbate-surface-diffusion-on-electrocatalyst-support::e3"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
         "h2kg_reified"

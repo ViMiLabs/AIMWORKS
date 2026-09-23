@@ -37,7 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -341,6 +341,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n2/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -392,9 +418,15 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
         }
       ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n2/data-point"
         }
@@ -423,9 +455,15 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
         }
       ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n2/data-point"
         }
@@ -452,7 +490,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -501,6 +539,96 @@
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE electrode (nanostructured)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/10bb92e9c9",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n7/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/bbd1ea2ef2",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/14ab67b5cf",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n7/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
       ]
     },
     {
@@ -765,6 +893,96 @@
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrode-nanostructured-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/1d1dab42c8",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n8/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/263ab13fee",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/projection/8aec66251b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "eis-on-nanostructured-electrodes::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n8/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [

@@ -20,7 +20,7 @@
     "mapping_status": "mapped",
     "source_node_count": 20,
     "source_edge_count": 19,
-    "mapped_anchor_count": 20,
+    "mapped_anchor_count": 17,
     "cross_workflow_connection_count": 68
   },
   "nodes": [
@@ -98,9 +98,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_viscosity_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -466,6 +466,19 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n3",
+      "iri": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n3/data-point",
+      "label": "Electrolyte viscosity value",
+      "kind": "value_proxy",
+      "workflow_id": "adsorbate-surface-diffusion-on-electrocatalyst-support",
+      "source_occurrence_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::n3",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n4",
       "iri": "https://w3id.org/h2kg/decode/workflow/adsorbate-surface-diffusion-on-electrocatalyst-support/node/n4/data-point",
       "label": "ORR charge transfer coefficient value",
@@ -628,8 +641,8 @@
       "label": "Electrolyte viscosity",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -754,8 +767,8 @@
       "occurrence_ids": [
         "adsorbate-surface-diffusion-on-electrocatalyst-support::n13",
         "adsorbate-surface-diffusion-on-electrocatalyst-support::n14",
-        "diffusion-theory::n9",
         "diffusion-theory::n10",
+        "diffusion-theory::n9",
         "fitting-version-of-the-hierachical-model::n15",
         "fitting-version-of-the-hierachical-model::n16",
         "rrde-on-model-electrodes-in-acidic-solutions::n11",
@@ -1271,6 +1284,51 @@
       "review_status": "classified"
     },
     {
+      "id": "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::00ebb3538d",
+      "workflow_id": "adsorbate-surface-diffusion-on-electrocatalyst-support",
+      "source": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n10",
+      "target": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n3",
+      "predicate": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "label": "wasDerivedFrom",
+      "type": "semantic_projection",
+      "source_dependency_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::e3",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "evidence": "Property-valued workflow dependency is represented as provenance between DataPoint proxies.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::d3b592bf9d",
+      "workflow_id": "adsorbate-surface-diffusion-on-electrocatalyst-support",
+      "source": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n3",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::e3",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Source DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::51b7c9b45e",
+      "workflow_id": "adsorbate-surface-diffusion-on-electrocatalyst-support",
+      "source": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n10",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-surface-diffusion-on-electrocatalyst-support-method",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::e3",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Target DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
       "id": "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e4::a06c11c454",
       "workflow_id": "adsorbate-surface-diffusion-on-electrocatalyst-support",
       "source": "projection::datapoint::adsorbate-surface-diffusion-on-electrocatalyst-support::n10",
@@ -1756,7 +1814,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Electrolyte viscosity",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-viscosity-material",
       "target_occurrence_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::n10",
       "target_node_id": "n10",
@@ -1765,14 +1823,18 @@
       "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-surface-diffusion-on-electrocatalyst-support-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "semantic_predicates": "http://www.w3.org/ns/prov#wasDerivedFrom; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "semantic_edge_ids": [
+        "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::00ebb3538d",
+        "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::d3b592bf9d",
+        "semantic::adsorbate-surface-diffusion-on-electrocatalyst-support::e3::51b7c9b45e"
+      ],
+      "semantic_direction": "reified_projection",
+      "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
     },
     {
       "source_dependency_id": "adsorbate-surface-diffusion-on-electrocatalyst-support::e4",

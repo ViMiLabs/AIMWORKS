@@ -21,6 +21,10 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     explorer = (output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8")
     assert "Federated DECODE workflow graph" in page
     assert "decode_workflows.json" in page
+    assert "decode-h2kg-aligned-ontology.ttl" in page
+    assert "decode-h2kg-aligned-ontology.jsonld" in page
+    assert "License is pending" not in page
+    assert "license is pending governance confirmation" in page
     assert (output_dir / "docs" / "assets" / "decode-workflows.js").exists()
     assert (output_dir / "docs" / "assets" / "decode-workflows.css").exists()
     assert (output_dir / "docs" / "data" / "decode_workflows.json").exists()
@@ -45,5 +49,7 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "Semantic role (node fill)" in script
     assert "Mixed role" in script
     assert "decode-semantic-filter" in script
+    assert "dependencyToggle = $('#decode-show-dependencies')" in script
+    assert "[sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter]" in script
     assert "edgeDecisionHtml" in script
     assert "decode_edge_registry.csv" in script

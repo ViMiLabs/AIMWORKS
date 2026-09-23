@@ -221,7 +221,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -532,15 +532,13 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n7/data-point"
         },
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n9/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n10/data-point"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -1018,6 +1016,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n9/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -1150,7 +1171,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -1715,7 +1736,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/projection/4aae86b175",
+      "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/projection/fed2f26ac2",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1723,10 +1744,10 @@
         "hierarchical-model-for-electrocatalytic-reactions::e8"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1735,12 +1756,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8"
+          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/projection/d10c0745be",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "hierarchical-model-for-electrocatalytic-reactions::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

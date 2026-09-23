@@ -21,7 +21,7 @@
     "source_node_count": 16,
     "source_edge_count": 15,
     "mapped_anchor_count": 16,
-    "cross_workflow_connection_count": 302
+    "cross_workflow_connection_count": 303
   },
   "nodes": [
     {
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "catalyst_ink_composition_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -198,9 +198,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
+      "role_assignment": "digital_twin_generation_is_process",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -345,7 +345,21 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::inpt-cl-process-model::n0",
+      "iri": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0/data-point",
+      "label": "Catalyst ink composition value",
+      "kind": "value_proxy",
+      "workflow_id": "inpt-cl-process-model",
+      "source_occurrence_id": "inpt-cl-process-model::n0",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model",
@@ -353,19 +367,19 @@
       "label": "AI-based generation of structural digital twins of multi-scale tomographies",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n8",
-        "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n9",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n10",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n11",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n12",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n13",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n14",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n15",
+        "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n8",
+        "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n9",
         "fib-sem-on-cl-material::n6",
         "image-classification-of-fib-tomography-data::n13",
         "image-classification-of-fib-tomography-data::n23",
@@ -421,8 +435,8 @@
       "label": "Catalyst ink composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -533,8 +547,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n42",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n40",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n42",
         "cea-mea-model-europium-2d::n79",
         "determination-of-cl-saturation-by-saxs-or-sans::n18",
         "diffusivities-from-tortuosities::n19",
@@ -563,13 +577,13 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n27",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n10",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n21",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n30",
-        "cea-mea-model-europium-2d::n99",
         "cea-mea-model-europium-2d::n100",
+        "cea-mea-model-europium-2d::n99",
         "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n27",
         "differential-cell-testing::n32",
         "diffusivities-from-tortuosities::n30",
@@ -592,6 +606,7 @@
         "inpt-cl-process-model::n9",
         "ionomer-reconstruction-in-ccl-3d-images::n14",
         "irras-operando-or-in-situ-ftir::n16",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
         "model-electrochemistry-in-a-rde-cell::n13",
         "modeling-of-mpl-coating-of-gdl::n10",
         "prism-preparation-for-atr-ftir::n11",
@@ -609,8 +624,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n48",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n46",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n48",
         "0d-particle-population-degradation-model-prediction::n13",
         "determination-of-cl-saturation-by-saxs-or-sans::n20",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n8",
@@ -683,8 +698,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n49",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n47",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n49",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n22",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n31",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n41",
@@ -750,10 +765,10 @@
         "modeling-of-mpl-coating-of-gdl::n16",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n33",
         "mpl-saturation-determination-from-x-ray-ct-data::n34",
-        "voxel-based-3d-electric-conductiviy-simulation::n9",
         "voxel-based-3d-electric-conductiviy-simulation::n10",
         "voxel-based-3d-electric-conductiviy-simulation::n11",
-        "voxel-based-3d-electric-conductiviy-simulation::n12"
+        "voxel-based-3d-electric-conductiviy-simulation::n12",
+        "voxel-based-3d-electric-conductiviy-simulation::n9"
       ]
     },
     {
@@ -788,10 +803,10 @@
         "modeling-of-mpl-coating-of-gdl::n14",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n32",
         "mpl-saturation-determination-from-x-ray-ct-data::n33",
-        "voxel-based-3d-permability-simulation::n9",
         "voxel-based-3d-permability-simulation::n10",
         "voxel-based-3d-permability-simulation::n11",
-        "voxel-based-3d-permability-simulation::n12"
+        "voxel-based-3d-permability-simulation::n12",
+        "voxel-based-3d-permability-simulation::n9"
       ]
     },
     {
@@ -825,10 +840,10 @@
         "modeling-of-mpl-coating-of-gdl::n17",
         "modeling-of-mpl-coating-of-gdl::n18",
         "mpl-saturation-determination-from-x-ray-ct-data::n35",
-        "voxel-based-3d-thermal-conductivity-simulation::n9",
         "voxel-based-3d-thermal-conductivity-simulation::n10",
         "voxel-based-3d-thermal-conductivity-simulation::n11",
-        "voxel-based-3d-thermal-conductivity-simulation::n12"
+        "voxel-based-3d-thermal-conductivity-simulation::n12",
+        "voxel-based-3d-thermal-conductivity-simulation::n9"
       ]
     },
     {
@@ -1157,17 +1172,32 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::inpt-cl-process-model::e0::041331d69a",
+      "id": "semantic::inpt-cl-process-model::e0::4173e2cc96",
       "workflow_id": "inpt-cl-process-model",
       "source": "inpt-cl-process-model::n4",
-      "target": "inpt-cl-process-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::inpt-cl-process-model::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "inpt-cl-process-model::e0",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::inpt-cl-process-model::e0::3ff009fe83",
+      "workflow_id": "inpt-cl-process-model",
+      "source": "projection::datapoint::inpt-cl-process-model::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "inpt-cl-process-model::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1255,6 +1285,21 @@
       "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "inpt-cl-process-model::e6",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "evidence": "Activity consumes the source data; H2KG direction is activity to data.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::inpt-cl-process-model::e7::1f3e9ac477",
+      "workflow_id": "inpt-cl-process-model",
+      "source": "inpt-cl-process-model::n8",
+      "target": "inpt-cl-process-model::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
+      "type": "semantic_projection",
+      "source_dependency_id": "inpt-cl-process-model::e7",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_input_data",
       "evidence": "Activity consumes the source data; H2KG direction is activity to data.",
@@ -1376,7 +1421,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Catalyst ink composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "target_occurrence_id": "inpt-cl-process-model::n4",
       "target_node_id": "n4",
@@ -1385,16 +1430,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/inpt-cl-process-model-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::inpt-cl-process-model::e0::041331d69a"
+        "semantic::inpt-cl-process-model::e0::4173e2cc96",
+        "semantic::inpt-cl-process-model::e0::3ff009fe83"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "inpt-cl-process-model::e1",
@@ -1578,17 +1624,19 @@
       "target_node_id": "n8",
       "target_graphml_id": "n8",
       "target_label": "AI-based generation of structural digital twins of multi-scale tomographies",
-      "target_semantic_role": "Parameter",
+      "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "semantic_edge_ids": [
+        "semantic::inpt-cl-process-model::e7::1f3e9ac477"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity consumes the source data; H2KG direction is activity to data."
     },
     {
       "source_dependency_id": "inpt-cl-process-model::e8",

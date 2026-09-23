@@ -79,7 +79,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst elemental composition"
@@ -98,7 +98,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -121,7 +121,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst support particle diameter"
@@ -199,18 +199,16 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material"
         },
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n2"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n4"
         }
       ]
     },
@@ -229,19 +227,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
         }
       ]
     },
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -250,7 +271,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst elemental composition"
@@ -268,7 +289,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst support particle diameter"
@@ -284,7 +305,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -362,7 +383,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/8244e8c202",
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/9d4da38b26",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -373,7 +394,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "measurement_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -382,17 +403,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/9a654fe06d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/268950a3b2",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -403,7 +424,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "measurement_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -412,17 +433,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/9b25230f8d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/fda9d12e5e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -433,7 +454,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "measurement_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -442,12 +463,12 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n4"
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
@@ -482,7 +503,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/e431818f4e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/23604b5c35",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -490,10 +511,10 @@
         "sem-and-fib-powder::e6"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -502,12 +523,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/projection/93bd2d6ccb",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "sem-and-fib-powder::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     }

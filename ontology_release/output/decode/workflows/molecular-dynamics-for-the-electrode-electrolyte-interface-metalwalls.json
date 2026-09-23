@@ -20,7 +20,7 @@
     "mapping_status": "mapped",
     "source_node_count": 16,
     "source_edge_count": 15,
-    "mapped_anchor_count": 16,
+    "mapped_anchor_count": 15,
     "cross_workflow_connection_count": 92
   },
   "nodes": [
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/lennard-jones-parameters-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "role_assignment": "lennard_jones_values_are_parameters",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -58,9 +58,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -347,6 +347,19 @@
   ],
   "projection_nodes": [
     {
+      "id": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
+      "iri": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1/data-point",
+      "label": "Electrolyte composition value",
+      "kind": "value_proxy",
+      "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls",
+      "source_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n2",
       "iri": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n2/data-point",
       "label": "Electrode chemistry value",
@@ -448,8 +461,8 @@
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n16",
         "dft-onto-idealized-surfaces::n20",
         "dip-and-pull-operando-or-in-situ-xps::n6",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n14",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n21"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n21",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n14"
       ]
     },
     {
@@ -484,12 +497,12 @@
         "dft-onto-idealized-surfaces::n0",
         "dip-and-pull-operando-or-in-situ-xps::n3",
         "irras-operando-or-in-situ-ftir::n5",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n2",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrode-chemistry-94d6976a54",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n5",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n2",
         "operando-or-in-situ-xas-photon-out::n4",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n6",
-        "thin-windows-operando-or-in-situ-xps::n4",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrode-chemistry-94d6976a54"
+        "thin-windows-operando-or-in-situ-xps::n4"
       ]
     },
     {
@@ -507,12 +520,12 @@
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n1",
         "dft-onto-idealized-surfaces::n1",
         "dip-and-pull-operando-or-in-situ-xps::n1",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n3",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrode-morphology-c57f796a7f",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n6",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n3",
         "operando-or-in-situ-xas-photon-out::n1",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n1",
-        "thin-windows-operando-or-in-situ-xps::n1",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrode-morphology-c57f796a7f"
+        "thin-windows-operando-or-in-situ-xps::n1"
       ]
     },
     {
@@ -521,8 +534,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -532,14 +545,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -583,10 +596,10 @@
         "image-parameter-extraction-2d::n57",
         "irras-operando-or-in-situ-ftir::n8",
         "irras-operando-or-in-situ-ftir::n9",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n11",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n12",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n18",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n19"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n19",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n11",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n12"
       ]
     },
     {
@@ -595,8 +608,8 @@
       "label": "Lennard-Jones parameters",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -617,9 +630,9 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n3",
         "hierarchical-model-for-electrocatalytic-reactions::n12",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n6",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4",
+        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n8",
-        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4"
       ]
     },
     {
@@ -672,8 +685,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n11",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n17",
         "dft-onto-idealized-surfaces::n21",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n15",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n22",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n15",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n7"
       ]
     },
@@ -691,8 +704,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n9",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n15",
         "dft-onto-idealized-surfaces::n19",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n13",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n20",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n13",
         "operando-or-in-situ-xas-photon-out::n6"
       ]
     },
@@ -710,8 +723,8 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n6",
         "density-potential-functional-theory-applied-to-supported-electrocatalysts::n12",
         "dft-onto-idealized-surfaces::n16",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n10",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n17",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n10",
         "thin-windows-operando-or-in-situ-xps::n7"
       ]
     }
@@ -999,32 +1012,47 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e0::d7f5228894",
+      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e0::67944ee87a",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls",
       "source": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n7",
       "target": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e0",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::7d4438c0ea",
+      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::522448e520",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls",
       "source": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n7",
-      "target": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::dc6ad86051",
+      "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls",
+      "source": "projection::datapoint::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1338,7 +1366,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Lennard-Jones parameters",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Parameter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/lennard-jones-parameters-material",
       "target_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n7",
       "target_node_id": "n7",
@@ -1348,15 +1376,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e0::d7f5228894"
+        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e0::67944ee87a"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
     },
     {
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1",
@@ -1366,7 +1394,7 @@
       "source_node_id": "n1",
       "source_graphml_id": "n1",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n7",
       "target_node_id": "n7",
@@ -1375,16 +1403,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls-method",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::7d4438c0ea"
+        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::522448e520",
+        "semantic::molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1::dc6ad86051"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e2",

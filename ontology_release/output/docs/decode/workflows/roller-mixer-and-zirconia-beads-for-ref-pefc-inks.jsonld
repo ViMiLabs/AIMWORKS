@@ -106,7 +106,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -243,9 +243,11 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n2"
-        },
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
@@ -431,6 +433,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst ink composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/blade-coating-and-decal-transfer-for-ref-pefc-ccm-process",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
@@ -442,7 +467,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -611,7 +636,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/projection/2870a4a948",
+      "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/projection/2caff6bb42",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -619,10 +644,10 @@
         "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -631,12 +656,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/projection/0470bf0b37",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/roller-mixer-and-zirconia-beads-for-ref-pefc-inks/node/n3/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

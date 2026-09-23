@@ -1,13 +1,13 @@
 # Inspection Report
 
-Generated on 2026-07-11.
+Generated on 2026-09-23.
 
 ## Ontology Summary
 
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
-- Raw JSON-LD nodes: 3365
-- Merged node count: 3365
-- Local `h2kg` nodes: 2209
+- Raw JSON-LD nodes: 3366
+- Merged node count: 3366
+- Local `h2kg` nodes: 2210
 - Explicit classes: 14
 - Explicit object properties: 19
 - Explicit datatype properties: 1
@@ -34,10 +34,10 @@ Generated on 2026-07-11.
 
 ## Namespace Usage
 
-- `https://w3id.org/h2kg/hydrogen-ontology#`: 4216
-- `http://www.w3.org/2004/02/skos/core#`: 3917
-- `http://purl.org/dc/terms/`: 2228
-- `http://www.w3.org/2000/01/rdf-schema#`: 2118
+- `https://w3id.org/h2kg/hydrogen-ontology#`: 4217
+- `http://www.w3.org/2004/02/skos/core#`: 3920
+- `http://purl.org/dc/terms/`: 2229
+- `http://www.w3.org/2000/01/rdf-schema#`: 2119
 - `http://qudt.org/schema/qudt/`: 1518
 - `http://www.w3.org/ns/prov#`: 18
 - `http://www.w3.org/2002/07/owl#`: 7

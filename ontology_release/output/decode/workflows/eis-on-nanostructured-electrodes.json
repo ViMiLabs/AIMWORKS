@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 12,
     "source_edge_count": 15,
-    "mapped_anchor_count": 12,
-    "cross_workflow_connection_count": 162
+    "mapped_anchor_count": 11,
+    "cross_workflow_connection_count": 164
   },
   "nodes": [
     {
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -267,6 +267,19 @@
   ],
   "projection_nodes": [
     {
+      "id": "projection::datapoint::eis-on-nanostructured-electrodes::n0",
+      "iri": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n0/data-point",
+      "label": "Electrolyte composition value",
+      "kind": "value_proxy",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source_occurrence_id": "eis-on-nanostructured-electrodes::n0",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::eis-on-nanostructured-electrodes::n2",
       "iri": "https://w3id.org/h2kg/decode/workflow/eis-on-nanostructured-electrodes/node/n2/data-point",
       "label": "RDE electrode (nanostructured) value",
@@ -318,8 +331,8 @@
       "confidence": "high",
       "evidence": "Reviewed exact mapping to the established catalyst-loading term.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n0",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n3",
         "cea-mea-model-europium-2d::n46",
         "differential-cell-testing::n1",
@@ -330,10 +343,10 @@
         "image-parameter-extraction-2d::n11",
         "ionomer-reconstruction-in-ccl-3d-images::n2",
         "irras-operando-or-in-situ-ftir::n3",
+        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
         "model-electrochemistry-in-a-rde-cell::n3",
         "prism-preparation-for-atr-ftir::n2",
-        "rotating-ring-disk-electrode-rrde::n3",
-        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca"
+        "rotating-ring-disk-electrode-rrde::n3"
       ]
     },
     {
@@ -365,8 +378,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "dropcasted-ink-on-gc-tips::n9",
         "dropcasted-ink-on-gc-tips::n10",
+        "dropcasted-ink-on-gc-tips::n9",
         "eis-on-nanostructured-electrodes::n7",
         "eis-on-nanostructured-electrodes::n8",
         "image-fib-tomography-dataparameter-extraction-3d::n32",
@@ -387,16 +400,18 @@
       "evidence": "Reusable electrochemical material category promoted after DECODE recurrence review.",
       "occurrence_ids": [
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n1",
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n2",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med2::n2",
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n2",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n2",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m2::n2",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n2",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n0",
         "dip-and-pull-operando-or-in-situ-xps::n2",
         "eis-on-nanostructured-electrodes::n1",
         "gde-cell-for-electrochemical-studies::n0",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n1",
         "irras-operando-or-in-situ-ftir::n1",
+        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-electrolyte-9d155cfe07",
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-electrolyte-9d155cfe07",
         "model-electrochemistry-in-a-rde-cell::n1",
         "operando-or-in-situ-xas-photon-out::n2",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n2",
@@ -407,9 +422,7 @@
         "rrde-on-model-electrodes-in-acidic-solutions::n0",
         "rrde-on-model-electrodes-in-alkaline-solutions::n0",
         "thin-windows-operando-or-in-situ-xps::n2",
-        "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n0",
-        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-electrolyte-9d155cfe07",
-        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-electrolyte-9d155cfe07"
+        "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n0"
       ]
     },
     {
@@ -418,8 +431,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -429,14 +442,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -451,13 +464,13 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n27",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n10",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n21",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n30",
-        "cea-mea-model-europium-2d::n99",
         "cea-mea-model-europium-2d::n100",
+        "cea-mea-model-europium-2d::n99",
         "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n27",
         "differential-cell-testing::n32",
         "diffusivities-from-tortuosities::n30",
@@ -480,6 +493,7 @@
         "inpt-cl-process-model::n9",
         "ionomer-reconstruction-in-ccl-3d-images::n14",
         "irras-operando-or-in-situ-ftir::n16",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
         "model-electrochemistry-in-a-rde-cell::n13",
         "modeling-of-mpl-coating-of-gdl::n10",
         "prism-preparation-for-atr-ftir::n11",
@@ -498,10 +512,10 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n26",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n44",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n9",
         "cea-mea-model-europium-2d::n92",
         "cea-mea-model-europium-2d::n93",
@@ -543,6 +557,7 @@
         "image-parameter-extraction-2d::n21",
         "ionomer-reconstruction-in-ccl-3d-images::n13",
         "irras-operando-or-in-situ-ftir::n15",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8",
         "model-electrochemistry-in-a-rde-cell::n12",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n26",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n27",
@@ -565,8 +580,8 @@
       "confidence": "high",
       "evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n2",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n4",
         "eis-on-nanostructured-electrodes::n4",
         "iet-composition-to-property-model::n1",
@@ -879,6 +894,51 @@
   ],
   "semantic_edges": [
     {
+      "id": "semantic::eis-on-nanostructured-electrodes::e0::32ca0c8709",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n7",
+      "target": "projection::datapoint::eis-on-nanostructured-electrodes::n0",
+      "predicate": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "label": "wasDerivedFrom",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "evidence": "Property-valued workflow dependency is represented as provenance between DataPoint proxies.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-nanostructured-electrodes::e0::3c1cd025ff",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Source DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-nanostructured-electrodes::e0::56a2c9fd1d",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n7",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Target DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
       "id": "semantic::eis-on-nanostructured-electrodes::e2::94e61bcd99",
       "workflow_id": "eis-on-nanostructured-electrodes",
       "source": "projection::datapoint::eis-on-nanostructured-electrodes::n7",
@@ -1014,6 +1074,51 @@
       "review_status": "classified"
     },
     {
+      "id": "semantic::eis-on-nanostructured-electrodes::e9::274fa8f0ed",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n8",
+      "target": "projection::datapoint::eis-on-nanostructured-electrodes::n0",
+      "predicate": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "label": "wasDerivedFrom",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e9",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "evidence": "Property-valued workflow dependency is represented as provenance between DataPoint proxies.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-nanostructured-electrodes::e9::3c1cd025ff",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e9",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Source DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-nanostructured-electrodes::e9::2b4371266f",
+      "workflow_id": "eis-on-nanostructured-electrodes",
+      "source": "projection::datapoint::eis-on-nanostructured-electrodes::n8",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-nanostructured-electrodes::e9",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Target DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
       "id": "semantic::eis-on-nanostructured-electrodes::e11::9daceddaa4",
       "workflow_id": "eis-on-nanostructured-electrodes",
       "source": "projection::datapoint::eis-on-nanostructured-electrodes::n8",
@@ -1098,7 +1203,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "eis-on-nanostructured-electrodes::n7",
       "target_node_id": "n7",
@@ -1107,14 +1212,18 @@
       "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "semantic_predicates": "http://www.w3.org/ns/prov#wasDerivedFrom; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "semantic_edge_ids": [
+        "semantic::eis-on-nanostructured-electrodes::e0::32ca0c8709",
+        "semantic::eis-on-nanostructured-electrodes::e0::3c1cd025ff",
+        "semantic::eis-on-nanostructured-electrodes::e0::56a2c9fd1d"
+      ],
+      "semantic_direction": "reified_projection",
+      "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
     },
     {
       "source_dependency_id": "eis-on-nanostructured-electrodes::e1",
@@ -1346,7 +1455,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "eis-on-nanostructured-electrodes::n8",
       "target_node_id": "n8",
@@ -1355,14 +1464,18 @@
       "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-nanostructured-electrodes-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "semantic_predicates": "http://www.w3.org/ns/prov#wasDerivedFrom; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "semantic_edge_ids": [
+        "semantic::eis-on-nanostructured-electrodes::e9::274fa8f0ed",
+        "semantic::eis-on-nanostructured-electrodes::e9::3c1cd025ff",
+        "semantic::eis-on-nanostructured-electrodes::e9::2b4371266f"
+      ],
+      "semantic_direction": "reified_projection",
+      "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
     },
     {
       "source_dependency_id": "eis-on-nanostructured-electrodes::e10",

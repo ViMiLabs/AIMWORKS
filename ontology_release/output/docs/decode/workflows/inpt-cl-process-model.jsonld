@@ -37,7 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -177,9 +177,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/inpt-cl-process-model-model"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
@@ -272,7 +272,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "AI-based generation of structural digital twins of multi-scale tomographies"
@@ -284,6 +284,11 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n3"
         }
       ]
     },
@@ -456,9 +461,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst ink composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies-model",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "AI-based generation of structural digital twins of multi-scale tomographies"
@@ -467,7 +495,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -600,7 +628,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/projection/794a603d22",
+      "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/projection/147c7d1b4c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -608,10 +636,10 @@
         "inpt-cl-process-model::e0"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -620,12 +648,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/projection/977845b0ac",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "inpt-cl-process-model::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -801,6 +859,36 @@
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/projection/7397511d32",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "inpt-cl-process-model::e7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/inpt-cl-process-model/node/n3"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [

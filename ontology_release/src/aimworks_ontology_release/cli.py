@@ -7,6 +7,7 @@ from pathlib import Path
 from .docs import build_docs
 from .decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
 from .decode_manual_overlay import ingest_decode_manual_json
+from .decode_ontology import build_decode_ontology_from_release
 from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
@@ -49,6 +50,9 @@ def main() -> None:
     decode_manual.add_argument("--source", required=True)
     decode_manual.add_argument("--snapshot", default="input/decode_workflows_source.json")
     decode_manual.add_argument("--overlay", default="input/decode_manual_workflow_overlay.json")
+    decode_ontology = subparsers.add_parser("decode-ontology")
+    decode_ontology.add_argument("--decode-dir", default="output/decode")
+    decode_ontology.add_argument("--config", default="config/decode_ontology.yaml")
     annotate = subparsers.add_parser("annotate")
     annotate.add_argument("--input", required=True)
     annotate.add_argument("--draft-llm", action="store_true")
@@ -130,6 +134,14 @@ def main() -> None:
         if not overlay.is_absolute():
             overlay = project_root / overlay
         result = ingest_decode_manual_json(args.source, overlay, snapshot)
+    elif args.command == "decode-ontology":
+        decode_dir = Path(args.decode_dir)
+        ontology_config = Path(args.config)
+        if not decode_dir.is_absolute():
+            decode_dir = project_root / decode_dir
+        if not ontology_config.is_absolute():
+            ontology_config = project_root / ontology_config
+        result = build_decode_ontology_from_release(decode_dir, ontology_config)
     elif args.command == "decode-build":
         snapshot = Path(args.snapshot)
         mapping_config = Path(args.mapping_config)

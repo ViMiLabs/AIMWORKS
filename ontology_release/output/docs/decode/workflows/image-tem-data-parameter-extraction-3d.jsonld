@@ -92,7 +92,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -173,7 +173,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst support particle diameter"
@@ -192,7 +192,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n6",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL structural parameters"
@@ -324,23 +324,21 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n1"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n6"
-        }
-      ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n3/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n4/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n6"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n7/data-point"
@@ -540,22 +538,20 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n1"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n3/data-point"
         }
       ]
     },
@@ -574,7 +570,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
@@ -582,7 +578,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n1"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n6"
         }
@@ -696,6 +692,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n3/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -756,6 +778,29 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst support particle diameter value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material"
         }
       ]
     },
@@ -835,7 +880,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -862,7 +907,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst support particle diameter"
@@ -898,7 +943,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-structural-parameters-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "CCL structural parameters"
@@ -941,7 +986,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -950,7 +995,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -1055,7 +1100,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/dfb8180a67",
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/6a4c1624eb",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1063,10 +1108,10 @@
         "image-tem-data-parameter-extraction-3d::e2"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1075,12 +1120,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/15199607b1",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-tem-data-parameter-extraction-3d::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1205,7 +1280,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/d5077b0871",
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/9267863562",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1213,10 +1288,10 @@
         "image-tem-data-parameter-extraction-3d::e5"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1225,17 +1300,47 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5"
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/1573a0ecaf",
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/485e92c597",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-tem-data-parameter-extraction-3d::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n5/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/2f61557760",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1246,7 +1351,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "activity_output_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1260,7 +1365,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
@@ -1865,7 +1970,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/cb51fe0713",
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/b3f35c2378",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1873,10 +1978,10 @@
         "image-tem-data-parameter-extraction-3d::e20"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1885,12 +1990,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/0fd53eb1ea",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "image-tem-data-parameter-extraction-3d::e20"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -2015,7 +2150,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/5f106d24e7",
+      "@id": "https://w3id.org/h2kg/decode/workflow/image-tem-data-parameter-extraction-3d/projection/a08265283a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2026,7 +2161,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "activity_input_data"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -2040,7 +2175,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     },

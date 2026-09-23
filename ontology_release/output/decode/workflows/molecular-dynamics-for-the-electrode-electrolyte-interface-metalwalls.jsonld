@@ -37,7 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Lennard-Jones parameters"
@@ -60,7 +60,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -217,15 +217,15 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n0"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n2/data-point"
         },
@@ -457,6 +457,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n2/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -630,7 +653,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -657,7 +680,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lennard-jones-parameters-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Lennard-Jones parameters"
@@ -718,7 +741,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/projection/b37db4fb82",
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/projection/584aad940c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -729,7 +752,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "activity_parameter"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -743,12 +766,12 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/projection/39018add87",
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/projection/ff5c7727c2",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -756,10 +779,10 @@
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -768,12 +791,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/projection/e53b73f1aa",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::e1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

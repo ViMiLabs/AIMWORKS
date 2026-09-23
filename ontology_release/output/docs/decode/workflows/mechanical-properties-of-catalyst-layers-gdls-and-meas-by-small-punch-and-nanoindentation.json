@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 18,
     "source_edge_count": 15,
-    "mapped_anchor_count": 18,
-    "cross_workflow_connection_count": 167
+    "mapped_anchor_count": 14,
+    "cross_workflow_connection_count": 178
   },
   "nodes": [
     {
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "role_assignment": "catalyst_layer_on_substrate_is_matter",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -300,7 +300,7 @@
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
       "semantic_role": "Manufacturing",
-      "role_assignment": "physical_manufacturing_workflow",
+      "role_assignment": "ultrasonic_spray_is_manufacturing",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -380,26 +380,12 @@
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
       "semantic_role": "Manufacturing",
-      "role_assignment": "physical_manufacturing_workflow",
+      "role_assignment": "ultrasonic_spray_is_manufacturing",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [
-    {
-      "id": "projection::datapoint::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "iri": "https://w3id.org/h2kg/decode/workflow/mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation/node/n0/data-point",
-      "label": "CL on substrate value",
-      "kind": "value_proxy",
-      "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
-      "source_occurrence_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    }
-  ],
+  "projection_nodes": [],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/blade-coating-and-decal-transfer-for-ref-pefc-ccm-process",
@@ -416,10 +402,12 @@
         "determination-of-cl-saturation-by-saxs-or-sans::n19",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n16",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n6",
-        "fib-sem-on-cl-material::n5",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n36",
+        "fib-sem-on-cl-material::n5",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n8",
         "ink-preparation-for-deposition-of-catalytic-layers::n8",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49",
         "mea-assembly-for-pefc-ref-mea::n5",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n15",
         "mpl-saturation-determination-from-x-ray-ct-data::n21",
@@ -449,9 +437,11 @@
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n2",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n0",
         "electrospray-deposition-of-catalyst-layers::n6",
-        "fib-sem-on-cl-material::n0",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n7",
+        "fib-sem-on-cl-material::n0",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n0",
+        "manual-cea-exp-tem-eds-analysis-cl::input-ccm-2acdae4ac5",
+        "manual-nel-exp-large-scale-durability-test::input-ccm-2acdae4ac5",
         "mea-assembly-for-pefc-ref-mea::n1",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n6",
         "mpl-saturation-determination-from-x-ray-ct-data::n1",
@@ -462,9 +452,7 @@
         "sheet-resistance-measurement::n4",
         "tem-and-eds-analysis-of-mea::n0",
         "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n2",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n3",
-        "manual-cea-exp-tem-eds-analysis-cl::input-ccm-2acdae4ac5",
-        "manual-nel-exp-large-scale-durability-test::input-ccm-2acdae4ac5"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n3"
       ]
     },
     {
@@ -529,19 +517,19 @@
       "label": "CL on substrate",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "electrospray-deposition-of-catalyst-layers::n10",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n3",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n3",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
         "sheet-resistance-measurement::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n5",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n5"
       ]
     },
     {
@@ -564,10 +552,10 @@
         "electrospray-deposition-of-catalyst-layers::n12",
         "electrospray-deposition-of-catalyst-layers::n13",
         "electrospray-deposition-of-catalyst-layers::n14",
-        "fib-sem-on-cl-material::n15",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n31",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n35",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n37",
+        "fib-sem-on-cl-material::n15",
         "gde-cell-for-electrochemical-studies::n14",
         "gde-cell-for-electrochemical-studies::n15",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n11",
@@ -577,6 +565,10 @@
         "ink-preparation-for-deposition-of-catalytic-layers::n12",
         "ink-preparation-for-deposition-of-catalytic-layers::n13",
         "ink-preparation-for-deposition-of-catalytic-layers::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
         "mea-assembly-for-pefc-ref-mea::n8",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n12",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n16",
@@ -625,6 +617,9 @@
         "hg-porosimetry-gdl::n0",
         "impregnation-by-immersion-and-blade-coating::n3",
         "lab-ct-measurements-on-gdl-or-mpl-materials::n0",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-gdl-f026f659b8",
+        "manual-nel-exp-large-scale-durability-test::input-gdl-f026f659b8",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-gdl-f026f659b8",
         "mea-assembly-for-pefc-ref-mea::n0",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n3",
         "mpl-saturation-determination-from-x-ray-ct-data::n0",
@@ -633,10 +628,7 @@
         "sem-and-edx::n0",
         "sem-and-fib-layer::n1",
         "synch-ct-measurements-on-gdl-or-mpl-materials::n0",
-        "wilhelmy-wettability-measurement::n0",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-gdl-f026f659b8",
-        "manual-nel-exp-large-scale-durability-test::input-gdl-f026f659b8",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-gdl-f026f659b8"
+        "wilhelmy-wettability-measurement::n0"
       ]
     },
     {
@@ -696,6 +688,9 @@
         "hg-porosimetry-gdl::n11",
         "impregnation-by-immersion-and-blade-coating::n4",
         "lab-ct-measurements-on-gdl-or-mpl-materials::n11",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
         "mea-assembly-for-pefc-ref-mea::n11",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n14",
         "mpl-saturation-determination-from-x-ray-ct-data::n41",
@@ -722,9 +717,9 @@
         "electrospray-deposition-of-catalyst-layers::n22",
         "electrospray-deposition-of-catalyst-layers::n42",
         "impregnation-by-immersion-and-blade-coating::n7",
-        "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n10",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n11",
+        "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
         "ultrasonic-spray-deposition-for-catalytic-layers::n10",
         "ultrasonic-spray-deposition-for-catalytic-layers::n25"
       ]
@@ -743,11 +738,13 @@
         "determination-of-cl-saturation-by-saxs-or-sans::n24",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n18",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n10",
-        "fib-sem-on-cl-material::n16",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n32",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n38",
+        "fib-sem-on-cl-material::n16",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n12",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5",
         "mea-assembly-for-pefc-ref-mea::n9",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n13",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n17",
@@ -1062,17 +1059,17 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e0::e52ae455e9",
+      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e0::ca20b7083a",
       "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
       "source": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
-      "label": "measures",
+      "target": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e0",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1107,62 +1104,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::420307d181",
+      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::3581e002c5",
       "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
       "source": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n12",
-      "target": "projection::datapoint::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
+      "target": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::3fa9e97611",
-      "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
-      "source": "projection::datapoint::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the target property anchor.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::0dd4c1f246",
+      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::1e0565e88c",
       "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
       "source": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n13",
-      "target": "projection::datapoint::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
+      "target": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::3fa9e97611",
-      "workflow_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation",
-      "source": "projection::datapoint::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the target property anchor.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1326,7 +1293,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "CL on substrate",
-      "source_semantic_role": "Property",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "target_occurrence_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
       "target_node_id": "n9",
@@ -1336,15 +1303,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e0::e52ae455e9"
+        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e0::ca20b7083a"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e1",
@@ -1416,20 +1383,19 @@
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "CL on substrate",
-      "target_semantic_role": "Property",
+      "target_semantic_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
       "semantic_edge_ids": [
-        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::420307d181",
-        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::3fa9e97611"
+        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e3::3581e002c5"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Activity produces the target material."
     },
     {
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4",
@@ -1445,20 +1411,19 @@
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "CL on substrate",
-      "target_semantic_role": "Property",
+      "target_semantic_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
       "semantic_edge_ids": [
-        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::0dd4c1f246",
-        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::3fa9e97611"
+        "semantic::mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e4::1e0565e88c"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Activity produces the target material."
     },
     {
       "source_dependency_id": "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::e5",

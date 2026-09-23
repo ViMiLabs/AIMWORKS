@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 13,
     "source_edge_count": 12,
-    "mapped_anchor_count": 13,
-    "cross_workflow_connection_count": 111
+    "mapped_anchor_count": 12,
+    "cross_workflow_connection_count": 114
   },
   "nodes": [
     {
@@ -98,9 +98,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "catalyst_ink_composition_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -285,7 +285,21 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::gde-catalytic-layer-preparation::n3",
+      "iri": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3/data-point",
+      "label": "Catalyst ink composition value",
+      "kind": "value_proxy",
+      "workflow_id": "gde-catalytic-layer-preparation",
+      "source_occurrence_id": "gde-catalytic-layer-preparation::n3",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
@@ -293,8 +307,8 @@
       "label": "Catalyst ink composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -325,6 +339,8 @@
         "gde-catalytic-layer-preparation::n0",
         "ink-preparation-for-deposition-of-catalytic-layers::n0",
         "irras-operando-or-in-situ-ftir::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
         "operando-or-in-situ-xas-photon-out::n0",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
         "prism-preparation-for-atr-ftir::n1",
@@ -332,9 +348,7 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
-        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
       ]
     },
     {
@@ -399,6 +413,9 @@
         "hg-porosimetry-gdl::n0",
         "impregnation-by-immersion-and-blade-coating::n3",
         "lab-ct-measurements-on-gdl-or-mpl-materials::n0",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-gdl-f026f659b8",
+        "manual-nel-exp-large-scale-durability-test::input-gdl-f026f659b8",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-gdl-f026f659b8",
         "mea-assembly-for-pefc-ref-mea::n0",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n3",
         "mpl-saturation-determination-from-x-ray-ct-data::n0",
@@ -407,10 +424,7 @@
         "sem-and-edx::n0",
         "sem-and-fib-layer::n1",
         "synch-ct-measurements-on-gdl-or-mpl-materials::n0",
-        "wilhelmy-wettability-measurement::n0",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-gdl-f026f659b8",
-        "manual-nel-exp-large-scale-durability-test::input-gdl-f026f659b8",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-gdl-f026f659b8"
+        "wilhelmy-wettability-measurement::n0"
       ]
     },
     {
@@ -500,6 +514,9 @@
         "hg-porosimetry-gdl::n11",
         "impregnation-by-immersion-and-blade-coating::n4",
         "lab-ct-measurements-on-gdl-or-mpl-materials::n11",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
         "mea-assembly-for-pefc-ref-mea::n11",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n14",
         "mpl-saturation-determination-from-x-ray-ct-data::n41",
@@ -841,17 +858,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::gde-catalytic-layer-preparation::e3::9b17f217a2",
+      "id": "semantic::gde-catalytic-layer-preparation::e3::2725c26a3b",
       "workflow_id": "gde-catalytic-layer-preparation",
       "source": "gde-catalytic-layer-preparation::n7",
-      "target": "gde-catalytic-layer-preparation::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::gde-catalytic-layer-preparation::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "gde-catalytic-layer-preparation::e3",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::gde-catalytic-layer-preparation::e3::177243c15f",
+      "workflow_id": "gde-catalytic-layer-preparation",
+      "source": "projection::datapoint::gde-catalytic-layer-preparation::n3",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "gde-catalytic-layer-preparation::e3",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1009,7 +1041,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Catalyst ink composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "target_occurrence_id": "gde-catalytic-layer-preparation::n7",
       "target_node_id": "n7",
@@ -1018,16 +1050,17 @@
       "target_semantic_role": "Manufacturing",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gde-catalytic-layer-preparation-process",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::gde-catalytic-layer-preparation::e3::9b17f217a2"
+        "semantic::gde-catalytic-layer-preparation::e3::2725c26a3b",
+        "semantic::gde-catalytic-layer-preparation::e3::177243c15f"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "gde-catalytic-layer-preparation::e4",

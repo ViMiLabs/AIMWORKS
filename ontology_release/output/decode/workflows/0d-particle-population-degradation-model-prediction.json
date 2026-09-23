@@ -21,7 +21,7 @@
     "source_node_count": 14,
     "source_edge_count": 25,
     "mapped_anchor_count": 14,
-    "cross_workflow_connection_count": 72
+    "cross_workflow_connection_count": 78
   },
   "nodes": [
     {
@@ -178,9 +178,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "component_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "aged_ecsa_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -383,6 +383,19 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
+      "id": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "iri": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-prediction/node/n7/data-point",
+      "label": "ECSA (aged) value",
+      "kind": "value_proxy",
+      "workflow_id": "0d-particle-population-degradation-model-prediction",
+      "source_occurrence_id": "0d-particle-population-degradation-model-prediction::n7",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     }
   ],
   "anchors": [
@@ -417,6 +430,9 @@
         "0d-particle-population-degradation-model-fitting::n9",
         "0d-particle-population-degradation-model-prediction::n9",
         "image-tem-data-parameter-extraction-3d::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb",
+        "manual-fzj-mod-stardist-temseg::linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb",
+        "manual-fzj-mod-starplatin-temseg::linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb",
         "tem-and-eds-analysis-of-mea::n6"
       ]
     },
@@ -439,6 +455,9 @@
         "iet-ink-to-composition-model::n30",
         "image-fib-tomography-dataparameter-extraction-3d::n22",
         "image-parameter-extraction-2d::n46",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18",
+        "manual-nel-exp-large-scale-durability-test::linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18",
         "microscopy-sem-and-optical-in-mea-cross-section::n15",
         "sem-and-edx::n45",
         "sem-and-fib-layer::n15"
@@ -455,14 +474,14 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n7",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n7",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n7",
         "0d-particle-population-degradation-model-prediction::n0",
         "image-tem-data-parameter-extraction-3d::n4",
-        "tem-and-eds-analysis-of-mea::n1",
         "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-radius-distribution-713aaacc30",
         "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-radius-distribution-713aaacc30",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-radius-distribution-713aaacc30"
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-radius-distribution-713aaacc30",
+        "tem-and-eds-analysis-of-mea::n1"
       ]
     },
     {
@@ -477,8 +496,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n3",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n27",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n27",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n27",
         "0d-particle-population-degradation-model-fitting::n2",
         "0d-particle-population-degradation-model-prediction::n6"
       ]
@@ -495,8 +514,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n12",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n10",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n10",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n10",
         "0d-particle-population-degradation-model-fitting::n5",
         "0d-particle-population-degradation-model-prediction::n3"
       ]
@@ -513,8 +532,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n13",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n11",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n11",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n11",
         "0d-particle-population-degradation-model-fitting::n6",
         "0d-particle-population-degradation-model-prediction::n4"
       ]
@@ -531,8 +550,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n10",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n8",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n8",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n8",
         "0d-particle-population-degradation-model-fitting::n3",
         "0d-particle-population-degradation-model-prediction::n1"
       ]
@@ -548,8 +567,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n29",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n29",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n29",
         "0d-particle-population-degradation-model-prediction::n8"
       ]
     },
@@ -565,8 +584,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n11",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n9",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n9",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n9",
         "0d-particle-population-degradation-model-fitting::n4",
         "0d-particle-population-degradation-model-prediction::n2"
       ]
@@ -583,8 +602,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n14",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n12",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n12",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n12",
         "0d-particle-population-degradation-model-fitting::n7",
         "0d-particle-population-degradation-model-prediction::n5"
       ]
@@ -595,14 +614,14 @@
       "label": "ECSA (aged)",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n0",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n28",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n28",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n28",
         "0d-particle-population-degradation-model-fitting::n0",
         "0d-particle-population-degradation-model-prediction::n7"
       ]
@@ -618,8 +637,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n48",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n46",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n48",
         "0d-particle-population-degradation-model-prediction::n13",
         "determination-of-cl-saturation-by-saxs-or-sans::n20",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n8",
@@ -643,8 +662,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n41",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-prediction::n12",
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n10",
         "electrospray-deposition-of-catalyst-layers::n25",
@@ -1229,17 +1248,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::0d-particle-population-degradation-model-prediction::e7::d5cae1b3f1",
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e7::f40e64843f",
       "workflow_id": "0d-particle-population-degradation-model-prediction",
       "source": "0d-particle-population-degradation-model-prediction::n9",
-      "target": "0d-particle-population-degradation-model-prediction::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
-      "label": "hasOutputMaterial",
+      "target": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e7",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "evidence": "Activity produces the target material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e7::88e0f70565",
+      "workflow_id": "0d-particle-population-degradation-model-prediction",
+      "source": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "0d-particle-population-degradation-model-prediction::e7",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the target property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1259,17 +1293,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::0d-particle-population-degradation-model-prediction::e9::36c14bb1b3",
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e9::9170bc3bfe",
       "workflow_id": "0d-particle-population-degradation-model-prediction",
       "source": "0d-particle-population-degradation-model-prediction::n10",
-      "target": "0d-particle-population-degradation-model-prediction::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e9",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e9::88e0f70565",
+      "workflow_id": "0d-particle-population-degradation-model-prediction",
+      "source": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "0d-particle-population-degradation-model-prediction::e9",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1439,17 +1488,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::0d-particle-population-degradation-model-prediction::e16::502654e560",
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e16::110459287e",
       "workflow_id": "0d-particle-population-degradation-model-prediction",
       "source": "0d-particle-population-degradation-model-prediction::n11",
-      "target": "0d-particle-population-degradation-model-prediction::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e16",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::0d-particle-population-degradation-model-prediction::e16::88e0f70565",
+      "workflow_id": "0d-particle-population-degradation-model-prediction",
+      "source": "projection::datapoint::0d-particle-population-degradation-model-prediction::n7",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "0d-particle-population-degradation-model-prediction::e16",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1896,19 +1960,20 @@
       "target_node_id": "n7",
       "target_graphml_id": "n7",
       "target_label": "ECSA (aged)",
-      "target_semantic_role": "Matter",
+      "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::0d-particle-population-degradation-model-prediction::e7::d5cae1b3f1"
+        "semantic::0d-particle-population-degradation-model-prediction::e7::f40e64843f",
+        "semantic::0d-particle-population-degradation-model-prediction::e7::88e0f70565"
       ],
-      "semantic_direction": "same_as_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces the target material."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e8",
@@ -1946,7 +2011,7 @@
       "source_node_id": "n7",
       "source_graphml_id": "n7",
       "source_label": "ECSA (aged)",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
       "target_occurrence_id": "0d-particle-population-degradation-model-prediction::n10",
       "target_node_id": "n10",
@@ -1955,16 +2020,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-fitting-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::0d-particle-population-degradation-model-prediction::e9::36c14bb1b3"
+        "semantic::0d-particle-population-degradation-model-prediction::e9::9170bc3bfe",
+        "semantic::0d-particle-population-degradation-model-prediction::e9::88e0f70565"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e10",
@@ -2147,7 +2213,7 @@
       "source_node_id": "n7",
       "source_graphml_id": "n7",
       "source_label": "ECSA (aged)",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
       "target_occurrence_id": "0d-particle-population-degradation-model-prediction::n11",
       "target_node_id": "n11",
@@ -2156,16 +2222,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-fitting-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::0d-particle-population-degradation-model-prediction::e16::502654e560"
+        "semantic::0d-particle-population-degradation-model-prediction::e16::110459287e",
+        "semantic::0d-particle-population-degradation-model-prediction::e16::88e0f70565"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "0d-particle-population-degradation-model-prediction::e17",

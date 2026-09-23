@@ -64,11 +64,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f/data-point"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -130,7 +128,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -374,6 +372,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -426,7 +447,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -616,7 +637,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/fccf8eab7c",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/92119ba8f9",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -624,10 +645,10 @@
         "manual-dtu-mod-machine-learning-force-fields::core-input-002"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -636,12 +657,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/f954e67f39",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-002"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

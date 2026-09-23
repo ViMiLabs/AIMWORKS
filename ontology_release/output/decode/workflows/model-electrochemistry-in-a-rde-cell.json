@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 15,
     "source_edge_count": 21,
-    "mapped_anchor_count": 15,
-    "cross_workflow_connection_count": 166
+    "mapped_anchor_count": 14,
+    "cross_workflow_connection_count": 168
   },
   "nodes": [
     {
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -198,9 +198,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "component_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "rde_ecsa_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -327,6 +327,19 @@
   ],
   "projection_nodes": [
     {
+      "id": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n0",
+      "iri": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point",
+      "label": "Electrolyte composition value",
+      "kind": "value_proxy",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source_occurrence_id": "model-electrochemistry-in-a-rde-cell::n0",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n5",
       "iri": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5/data-point",
       "label": "RDE kinetic current value",
@@ -351,6 +364,19 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
+      "id": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n8",
+      "iri": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point",
+      "label": "RDE ECSA value",
+      "kind": "value_proxy",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source_occurrence_id": "model-electrochemistry-in-a-rde-cell::n8",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     }
   ],
   "anchors": [
@@ -365,8 +391,8 @@
       "confidence": "high",
       "evidence": "Reviewed exact mapping to the established catalyst-loading term.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n0",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n3",
         "cea-mea-model-europium-2d::n46",
         "differential-cell-testing::n1",
@@ -377,10 +403,10 @@
         "image-parameter-extraction-2d::n11",
         "ionomer-reconstruction-in-ccl-3d-images::n2",
         "irras-operando-or-in-situ-ftir::n3",
+        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
         "model-electrochemistry-in-a-rde-cell::n3",
         "prism-preparation-for-atr-ftir::n2",
-        "rotating-ring-disk-electrode-rrde::n3",
-        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca"
+        "rotating-ring-disk-electrode-rrde::n3"
       ]
     },
     {
@@ -394,8 +420,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "cl-for-rde::n9",
         "cl-for-rde::n10",
+        "cl-for-rde::n9",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n39",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n40",
         "impregnation-by-immersion-and-blade-coating::n22",
@@ -417,9 +443,9 @@
       "occurrence_ids": [
         "cl-for-rde::n8",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n9",
+        "manual-cea-exp-tem-eds-analysis-cl::input-cl-on-glassy-carbon-e7444df106",
         "model-electrochemistry-in-a-rde-cell::n2",
-        "sheet-resistance-measurement::n6",
-        "manual-cea-exp-tem-eds-analysis-cl::input-cl-on-glassy-carbon-e7444df106"
+        "sheet-resistance-measurement::n6"
       ]
     },
     {
@@ -434,16 +460,18 @@
       "evidence": "Reusable electrochemical material category promoted after DECODE recurrence review.",
       "occurrence_ids": [
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n1",
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n2",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med2::n2",
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n2",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n2",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m2::n2",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n2",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n0",
         "dip-and-pull-operando-or-in-situ-xps::n2",
         "eis-on-nanostructured-electrodes::n1",
         "gde-cell-for-electrochemical-studies::n0",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n1",
         "irras-operando-or-in-situ-ftir::n1",
+        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-electrolyte-9d155cfe07",
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-electrolyte-9d155cfe07",
         "model-electrochemistry-in-a-rde-cell::n1",
         "operando-or-in-situ-xas-photon-out::n2",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n2",
@@ -454,9 +482,7 @@
         "rrde-on-model-electrodes-in-acidic-solutions::n0",
         "rrde-on-model-electrodes-in-alkaline-solutions::n0",
         "thin-windows-operando-or-in-situ-xps::n2",
-        "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n0",
-        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-electrolyte-9d155cfe07",
-        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-electrolyte-9d155cfe07"
+        "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n0"
       ]
     },
     {
@@ -465,8 +491,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -476,14 +502,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -498,13 +524,13 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n27",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n10",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n21",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n30",
-        "cea-mea-model-europium-2d::n99",
         "cea-mea-model-europium-2d::n100",
+        "cea-mea-model-europium-2d::n99",
         "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n27",
         "differential-cell-testing::n32",
         "diffusivities-from-tortuosities::n30",
@@ -527,6 +553,7 @@
         "inpt-cl-process-model::n9",
         "ionomer-reconstruction-in-ccl-3d-images::n14",
         "irras-operando-or-in-situ-ftir::n16",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
         "model-electrochemistry-in-a-rde-cell::n13",
         "modeling-of-mpl-coating-of-gdl::n10",
         "prism-preparation-for-atr-ftir::n11",
@@ -545,10 +572,10 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n26",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n44",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n9",
         "cea-mea-model-europium-2d::n92",
         "cea-mea-model-europium-2d::n93",
@@ -590,6 +617,7 @@
         "image-parameter-extraction-2d::n21",
         "ionomer-reconstruction-in-ccl-3d-images::n13",
         "irras-operando-or-in-situ-ftir::n15",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8",
         "model-electrochemistry-in-a-rde-cell::n12",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n26",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n27",
@@ -612,8 +640,8 @@
       "confidence": "high",
       "evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n2",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n4",
         "eis-on-nanostructured-electrodes::n4",
         "iet-composition-to-property-model::n1",
@@ -694,8 +722,8 @@
       "label": "RDE ECSA",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1059,17 +1087,32 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::model-electrochemistry-in-a-rde-cell::e0::af3751c2b5",
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e0::a2b450c05f",
       "workflow_id": "model-electrochemistry-in-a-rde-cell",
       "source": "model-electrochemistry-in-a-rde-cell::n10",
-      "target": "model-electrochemistry-in-a-rde-cell::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e0",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e0::20434a4463",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1209,17 +1252,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::model-electrochemistry-in-a-rde-cell::e8::92738fda29",
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e8::c07c9a7f85",
       "workflow_id": "model-electrochemistry-in-a-rde-cell",
       "source": "model-electrochemistry-in-a-rde-cell::n10",
-      "target": "model-electrochemistry-in-a-rde-cell::n8",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
-      "label": "hasOutputMaterial",
+      "target": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n8",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e8",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "evidence": "Activity produces the target material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e8::b7c0a2ab71",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n8",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e8",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the target property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1269,17 +1327,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::model-electrochemistry-in-a-rde-cell::e12::dd416e305a",
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e12::3921091d41",
       "workflow_id": "model-electrochemistry-in-a-rde-cell",
       "source": "model-electrochemistry-in-a-rde-cell::n11",
-      "target": "model-electrochemistry-in-a-rde-cell::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e12",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e12::20434a4463",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e12",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1419,17 +1492,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::model-electrochemistry-in-a-rde-cell::e20::4dc75aaa06",
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e20::835cfb4863",
       "workflow_id": "model-electrochemistry-in-a-rde-cell",
       "source": "model-electrochemistry-in-a-rde-cell::n11",
-      "target": "model-electrochemistry-in-a-rde-cell::n8",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
-      "label": "hasOutputMaterial",
+      "target": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n8",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e20",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "evidence": "Activity produces the target material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::model-electrochemistry-in-a-rde-cell::e20::b7c0a2ab71",
+      "workflow_id": "model-electrochemistry-in-a-rde-cell",
+      "source": "projection::datapoint::model-electrochemistry-in-a-rde-cell::n8",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e20",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the target property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     }
@@ -1443,7 +1531,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "model-electrochemistry-in-a-rde-cell::n10",
       "target_node_id": "n10",
@@ -1452,16 +1540,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::model-electrochemistry-in-a-rde-cell::e0::af3751c2b5"
+        "semantic::model-electrochemistry-in-a-rde-cell::e0::a2b450c05f",
+        "semantic::model-electrochemistry-in-a-rde-cell::e0::20434a4463"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e1",
@@ -1675,19 +1764,20 @@
       "target_node_id": "n8",
       "target_graphml_id": "n8",
       "target_label": "RDE ECSA",
-      "target_semantic_role": "Matter",
+      "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::model-electrochemistry-in-a-rde-cell::e8::92738fda29"
+        "semantic::model-electrochemistry-in-a-rde-cell::e8::c07c9a7f85",
+        "semantic::model-electrochemistry-in-a-rde-cell::e8::b7c0a2ab71"
       ],
-      "semantic_direction": "same_as_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces the target material."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e9",
@@ -1781,7 +1871,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "model-electrochemistry-in-a-rde-cell::n11",
       "target_node_id": "n11",
@@ -1790,16 +1880,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::model-electrochemistry-in-a-rde-cell::e12::dd416e305a"
+        "semantic::model-electrochemistry-in-a-rde-cell::e12::3921091d41",
+        "semantic::model-electrochemistry-in-a-rde-cell::e12::20434a4463"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "model-electrochemistry-in-a-rde-cell::e13",
@@ -2013,19 +2104,20 @@
       "target_node_id": "n8",
       "target_graphml_id": "n8",
       "target_label": "RDE ECSA",
-      "target_semantic_role": "Matter",
+      "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::model-electrochemistry-in-a-rde-cell::e20::4dc75aaa06"
+        "semantic::model-electrochemistry-in-a-rde-cell::e20::835cfb4863",
+        "semantic::model-electrochemistry-in-a-rde-cell::e20::b7c0a2ab71"
       ],
-      "semantic_direction": "same_as_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces the target material."
+      "rationale": "Activity produces a DataPoint representing the target property."
     }
   ],
   "workflow_dependencies": [

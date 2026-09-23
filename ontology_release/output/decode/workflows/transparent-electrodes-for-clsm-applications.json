@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/clsm-electrode-template-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-      "semantic_role": "Instrument",
-      "role_assignment": "apparatus_or_electrode",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "role_assignment": "clsm_electrode_template_is_matter",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -98,9 +98,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/transparent-electrode-for-clsm-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-      "semantic_role": "Instrument",
-      "role_assignment": "apparatus_or_electrode",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "role_assignment": "transparent_clsm_electrode_is_matter",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -173,8 +173,8 @@
       "label": "CLSM electrode template",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-      "semantic_role": "Instrument",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -248,8 +248,8 @@
       "label": "Transparent electrode for CLSM",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
-      "semantic_role": "Instrument",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -396,17 +396,17 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::transparent-electrodes-for-clsm-applications::e0::17417591a0",
+      "id": "semantic::transparent-electrodes-for-clsm-applications::e0::c9512667c5",
       "workflow_id": "transparent-electrodes-for-clsm-applications",
       "source": "transparent-electrodes-for-clsm-applications::n4",
       "target": "transparent-electrodes-for-clsm-applications::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
-      "label": "usesInstrument",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e0",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "evidence": "Activity uses the source instrument; H2KG direction is activity to instrument.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -441,47 +441,47 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::transparent-electrodes-for-clsm-applications::e3::79704839f7",
+      "id": "semantic::transparent-electrodes-for-clsm-applications::e3::9aba102d70",
       "workflow_id": "transparent-electrodes-for-clsm-applications",
       "source": "transparent-electrodes-for-clsm-applications::n4",
       "target": "transparent-electrodes-for-clsm-applications::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
-      "label": "usesInstrument",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e3",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "evidence": "Target instrument is used by the activity.",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::transparent-electrodes-for-clsm-applications::e4::c0e28153a1",
+      "id": "semantic::transparent-electrodes-for-clsm-applications::e4::0b813bf036",
       "workflow_id": "transparent-electrodes-for-clsm-applications",
       "source": "transparent-electrodes-for-clsm-applications::n5",
       "target": "transparent-electrodes-for-clsm-applications::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
-      "label": "usesInstrument",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e4",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "evidence": "Activity uses the source instrument; H2KG direction is activity to instrument.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::transparent-electrodes-for-clsm-applications::e5::720a180581",
+      "id": "semantic::transparent-electrodes-for-clsm-applications::e5::0dedc48212",
       "workflow_id": "transparent-electrodes-for-clsm-applications",
       "source": "transparent-electrodes-for-clsm-applications::n6",
       "target": "transparent-electrodes-for-clsm-applications::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
-      "label": "usesInstrument",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e5",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "evidence": "Activity uses the source instrument; H2KG direction is activity to instrument.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     }
@@ -495,7 +495,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "CLSM electrode template",
-      "source_semantic_role": "Instrument",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/clsm-electrode-template-component",
       "target_occurrence_id": "transparent-electrodes-for-clsm-applications::n4",
       "target_node_id": "n4",
@@ -505,15 +505,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/transparent-electrodes-for-clsm-applications-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::transparent-electrodes-for-clsm-applications::e0::17417591a0"
+        "semantic::transparent-electrodes-for-clsm-applications::e0::c9512667c5"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity uses the source instrument; H2KG direction is activity to instrument."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e1",
@@ -585,19 +585,19 @@
       "target_node_id": "n3",
       "target_graphml_id": "n3",
       "target_label": "Transparent electrode for CLSM",
-      "target_semantic_role": "Instrument",
+      "target_semantic_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/transparent-electrode-for-clsm-component",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
       "semantic_edge_ids": [
-        "semantic::transparent-electrodes-for-clsm-applications::e3::79704839f7"
+        "semantic::transparent-electrodes-for-clsm-applications::e3::9aba102d70"
       ],
       "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Target instrument is used by the activity."
+      "rationale": "Activity produces the target material."
     },
     {
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e4",
@@ -607,7 +607,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Transparent electrode for CLSM",
-      "source_semantic_role": "Instrument",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/transparent-electrode-for-clsm-component",
       "target_occurrence_id": "transparent-electrodes-for-clsm-applications::n5",
       "target_node_id": "n5",
@@ -617,15 +617,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-alkaline-media-on-model-unsupported-electrodes-model",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::transparent-electrodes-for-clsm-applications::e4::c0e28153a1"
+        "semantic::transparent-electrodes-for-clsm-applications::e4::0b813bf036"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity uses the source instrument; H2KG direction is activity to instrument."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "transparent-electrodes-for-clsm-applications::e5",
@@ -635,7 +635,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Transparent electrode for CLSM",
-      "source_semantic_role": "Instrument",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/transparent-electrode-for-clsm-component",
       "target_occurrence_id": "transparent-electrodes-for-clsm-applications::n6",
       "target_node_id": "n6",
@@ -645,15 +645,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-unsupported-electrodes-model",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_instrument",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::transparent-electrodes-for-clsm-applications::e5::720a180581"
+        "semantic::transparent-electrodes-for-clsm-applications::e5::0dedc48212"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity uses the source instrument; H2KG direction is activity to instrument."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     }
   ],
   "workflow_dependencies": [

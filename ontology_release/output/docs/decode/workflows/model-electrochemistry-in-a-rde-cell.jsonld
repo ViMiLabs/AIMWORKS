@@ -37,7 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte composition"
@@ -221,7 +221,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE ECSA"
@@ -290,10 +290,12 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
-        },
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n1"
         },
@@ -318,11 +320,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n7"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
         }
       ]
     },
@@ -357,10 +357,12 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
-        },
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n1"
         },
@@ -385,11 +387,9 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n7"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
         }
       ]
     },
@@ -478,6 +478,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -530,6 +556,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "RDE ECSA value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-for-rde-method",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
@@ -550,7 +602,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Electrolyte Composition"
@@ -613,7 +665,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "RDE ECSA"
@@ -629,7 +681,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/8280eda11b",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/a0e58c9afe",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -637,10 +689,10 @@
         "model-electrochemistry-in-a-rde-cell::e0"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -649,12 +701,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/43df134d44",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -929,7 +1011,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/b9f14d6f52",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/0a4af86544",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -937,10 +1019,10 @@
         "model-electrochemistry-in-a-rde-cell::e8"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -949,12 +1031,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/7fba5ceac4",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1049,7 +1161,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/694d9e2e18",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/85010a8d9d",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1057,10 +1169,10 @@
         "model-electrochemistry-in-a-rde-cell::e12"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1069,12 +1181,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/af8d291e17",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1349,7 +1491,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/2c3eea789d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/05be0a176d",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1357,10 +1499,10 @@
         "model-electrochemistry-in-a-rde-cell::e20"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1369,12 +1511,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/ce2938100f",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e20"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     }

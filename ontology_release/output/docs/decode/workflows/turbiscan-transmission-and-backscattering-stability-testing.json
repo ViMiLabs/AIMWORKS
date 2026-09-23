@@ -58,9 +58,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-turbiscan-factor-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "catalyst_ink_turbiscan_stability_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -152,8 +152,8 @@
       "label": "Catalyst ink stability (turbiscan factor)",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -313,17 +313,17 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::turbiscan-transmission-and-backscattering-stability-testing::e1::6850226728",
+      "id": "semantic::turbiscan-transmission-and-backscattering-stability-testing::e1::8910b33754",
       "workflow_id": "turbiscan-transmission-and-backscattering-stability-testing",
       "source": "turbiscan-transmission-and-backscattering-stability-testing::n2",
-      "target": "turbiscan-transmission-and-backscattering-stability-testing::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
-      "label": "hasOutputMaterial",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-turbiscan-factor-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "turbiscan-transmission-and-backscattering-stability-testing::e1",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "evidence": "Activity produces the target material.",
+      "projection_pattern": "measurement_property",
+      "evidence": "Measurement occurrence measures the mapped property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -401,19 +401,19 @@
       "target_node_id": "n1",
       "target_graphml_id": "n1",
       "target_label": "Catalyst ink stability (turbiscan factor)",
-      "target_semantic_role": "Matter",
+      "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-turbiscan-factor-material",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_output_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "projection_pattern": "measurement_property",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::turbiscan-transmission-and-backscattering-stability-testing::e1::6850226728"
+        "semantic::turbiscan-transmission-and-backscattering-stability-testing::e1::8910b33754"
       ],
-      "semantic_direction": "same_as_source",
+      "semantic_direction": "derived_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces the target material."
+      "rationale": "Measurement occurrence measures the mapped property."
     },
     {
       "source_dependency_id": "turbiscan-transmission-and-backscattering-stability-testing::e2",

@@ -20,7 +20,7 @@
     "mapping_status": "mapped",
     "source_node_count": 18,
     "source_edge_count": 22,
-    "mapped_anchor_count": 18,
+    "mapped_anchor_count": 14,
     "cross_workflow_connection_count": 115
   },
   "nodes": [
@@ -38,9 +38,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -385,7 +385,21 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::rrde-theory::n0",
+      "iri": "https://w3id.org/h2kg/decode/workflow/rrde-theory/node/n0/data-point",
+      "label": "Electrolyte composition value",
+      "kind": "value_proxy",
+      "workflow_id": "rrde-theory",
+      "source_occurrence_id": "rrde-theory::n0",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
@@ -393,8 +407,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -404,14 +418,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -425,14 +439,14 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n9",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n10",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n9",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n10",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n11",
         "dft-onto-idealized-surfaces::n11",
         "dft-onto-idealized-surfaces::n12",
-        "fitting-version-of-the-hierachical-model::n9",
         "fitting-version-of-the-hierachical-model::n10",
+        "fitting-version-of-the-hierachical-model::n9",
         "hierarchical-model-for-electrocatalytic-reactions::n23",
         "hierarchical-model-for-electrocatalytic-reactions::n24",
         "rde-on-mono-or-polycrystalline-electrodes::n11",
@@ -464,10 +478,10 @@
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n6",
         "fitting-version-of-the-hierachical-model::n3",
         "hierarchical-model-for-electrocatalytic-reactions::n13",
+        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89",
         "rde-simulation-in-comsol::n8",
         "rrde-simulation-in-comsol::n8",
-        "rrde-theory::n6",
-        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89"
+        "rrde-theory::n6"
       ]
     },
     {
@@ -605,8 +619,8 @@
       "occurrence_ids": [
         "adsorbate-surface-diffusion-on-electrocatalyst-support::n13",
         "adsorbate-surface-diffusion-on-electrocatalyst-support::n14",
-        "diffusion-theory::n9",
         "diffusion-theory::n10",
+        "diffusion-theory::n9",
         "fitting-version-of-the-hierachical-model::n15",
         "fitting-version-of-the-hierachical-model::n16",
         "rrde-on-model-electrodes-in-acidic-solutions::n11",
@@ -1073,17 +1087,32 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::rrde-theory::e0::932cd5eb6f",
+      "id": "semantic::rrde-theory::e0::cfd2253c50",
       "workflow_id": "rrde-theory",
       "source": "rrde-theory::n7",
-      "target": "rrde-theory::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::rrde-theory::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "rrde-theory::e0",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::rrde-theory::e0::9e70500fa0",
+      "workflow_id": "rrde-theory",
+      "source": "projection::datapoint::rrde-theory::n0",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "rrde-theory::e0",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1412,7 +1441,7 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "rrde-theory::n7",
       "target_node_id": "n7",
@@ -1421,16 +1450,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rrde-theory-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::rrde-theory::e0::932cd5eb6f"
+        "semantic::rrde-theory::e0::cfd2253c50",
+        "semantic::rrde-theory::e0::9e70500fa0"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "rrde-theory::e1",

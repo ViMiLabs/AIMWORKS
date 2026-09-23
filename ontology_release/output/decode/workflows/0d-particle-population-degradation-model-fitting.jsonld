@@ -37,7 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "ECSA (aged)"
@@ -281,12 +281,10 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-fitting-model"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
-        }
-      ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n1"
         },
@@ -357,11 +355,9 @@
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n2"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ]
     },
@@ -410,11 +406,9 @@
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n2"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ]
     },
@@ -463,11 +457,41 @@
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "ECSA (aged) value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
         }
       ]
     },
@@ -715,7 +739,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "ECSA (aged)"
@@ -731,7 +755,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/cbcab26ede",
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/4dd0a4ae7f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -739,10 +763,10 @@
         "0d-particle-population-degradation-model-fitting::e0"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -751,12 +775,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/c15539bcd9",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "0d-particle-population-degradation-model-fitting::e0"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1451,7 +1505,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/a7bace7c89",
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/d1f82af47a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1459,10 +1513,10 @@
         "0d-particle-population-degradation-model-fitting::e14"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1471,12 +1525,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/8163650637",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "0d-particle-population-degradation-model-fitting::e14"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1811,7 +1895,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/12ee5a1b22",
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/63a729c8e5",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1819,10 +1903,10 @@
         "0d-particle-population-degradation-model-fitting::e21"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1831,12 +1915,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/5472c13e48",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "0d-particle-population-degradation-model-fitting::e21"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -2171,7 +2285,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/4bd2b03b62",
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/7042a395c7",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2179,10 +2293,10 @@
         "0d-particle-population-degradation-model-fitting::e28"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -2191,12 +2305,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0"
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/projection/e2a95343b9",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "0d-particle-population-degradation-model-fitting::e28"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/0d-particle-population-degradation-model-fitting/node/n0/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ecsa-aged-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     }

@@ -22,6 +22,7 @@ from .scorer import lexical_score
 from .utils import COMMON_CONTEXT, SKOS_ALT_LABEL, SKOS_PREF_LABEL, dump_json, ensure_dir, load_json, try_load_yaml, write_text
 from .decode_multiscale_interface import append_multiscale_interface, build_decode_multiscale_model_interface
 from .decode_manual_overlay import merge_manual_overlay, write_manual_overlay_release
+from .decode_ontology import build_decode_ontology
 
 
 DECODE_NS = "https://w3id.org/h2kg/decode/workflow/"
@@ -113,6 +114,7 @@ def build_decode_workflow_release(
         semantic_projections,
         mapping_config.get("default_alignment", {}),
     )
+    _canonicalize_duplicate_anchors(graph, matrix_rows)
     if manual_overlay is not None:
         _build_workflow_dependencies(graph, manual_overlay.get("workflow_dependencies", []))
     else:
@@ -125,6 +127,7 @@ def build_decode_workflow_release(
             output_root,
         )
         append_multiscale_interface(graph, interface)
+        _canonicalize_duplicate_anchors(graph, matrix_rows)
     graph["counts"]["workflow_count"] = len(graph["workflows"])
     graph["counts"]["catalogue_entry_count"] = len(graph["workflows"])
     graph["counts"]["base_graphml_workflow_count"] = sum(
@@ -155,6 +158,12 @@ def build_decode_workflow_release(
     anchor_candidates = _anchor_candidates(snapshot, mappings)
     registry = _concept_registry(snapshot, graph, ontology_path)
     definition_drafts = _definition_drafts(registry)
+    decode_ontology = build_decode_ontology(
+        graph,
+        registry,
+        target,
+        Path(mapping_config_path).parent / "decode_ontology.yaml",
+    )
 
     generated: list[Path] = [
         dump_json(target / "decode_federated_graph.json", graph),
@@ -177,6 +186,7 @@ def build_decode_workflow_release(
         _write_semantic_role_conflict_audit(target / "decode_semantic_role_conflicts.csv", role_conflicts),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
+    generated.extend(Path(path) for path in decode_ontology["generated_files"])
     if manual_overlay is not None:
         generated.extend(write_manual_overlay_release(target, manual_overlay))
         generated.extend(_write_workflow_dependency_exports(target, graph))
@@ -238,6 +248,7 @@ def build_decode_workflow_release(
         "edge_classification_count": len(graph["edge_registry"]),
         "concept_registry_count": registry["counts"]["concept_count"],
         "definition_draft_count": definition_drafts["counts"]["concept_count"],
+        "decode_ontology": decode_ontology,
         "validation_status": validation["status"],
         "multiscale_interface": interface,
         "manual_overlay": manual_overlay.get("counts", {}) if manual_overlay else {"status": "not_requested"},
@@ -487,6 +498,119 @@ def _federate(
         },
     }
     return graph, matrix_rows
+
+
+def _canonicalize_duplicate_anchors(
+    graph: dict[str, Any],
+    matrix_rows: list[dict[str, str]],
+) -> None:
+    """Collapse equivalent same-label/same-role anchors without merging occurrences."""
+    groups: dict[tuple[str, str], set[str]] = defaultdict(set)
+    nodes_by_key: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for node in graph.get("nodes", []):
+        anchor_id = str(node.get("anchor_id", "")).strip()
+        role = str(node.get("semantic_role", "")).strip()
+        if not anchor_id or not role:
+            continue
+        key = (_normal(node.get("label", "")), role)
+        groups[key].add(anchor_id)
+        nodes_by_key[key].append(node)
+
+    anchors_by_id = {anchor["id"]: anchor for anchor in graph.get("anchors", [])}
+    aliases: dict[str, dict[str, str]] = {}
+    for key, anchor_ids in groups.items():
+        if len(anchor_ids) < 2:
+            continue
+        ranked = sorted(
+            anchor_ids,
+            key=lambda iri: (
+                0 if anchors_by_id.get(iri, {}).get("state") == "approved_h2kg" else 1,
+                1 if re.search(r"-[0-9a-f]{10}$", iri) else 0,
+                len(iri),
+                iri,
+            ),
+        )
+        canonical = ranked[0]
+        label = nodes_by_key[key][0].get("label", anchors_by_id.get(canonical, {}).get("label", ""))
+        for old in ranked[1:]:
+            if old == canonical or not old.startswith(DECODE_NS):
+                continue
+            aliases[old] = {
+                "deprecated_iri": old,
+                "canonical_iri": canonical,
+                "label": str(label),
+                "semantic_role": key[1],
+                "relation": "equivalentClass",
+                "rationale": "Same reviewed source label and compatible H2KG semantic role.",
+            }
+
+    if not aliases:
+        graph.setdefault("deprecated_anchor_aliases", [])
+        return
+
+    replacement = {old: row["canonical_iri"] for old, row in aliases.items()}
+    for node in graph.get("nodes", []):
+        old = str(node.get("anchor_id", ""))
+        if old in replacement:
+            node["anchor_id"] = replacement[old]
+    for edge in graph.get("anchor_edges", []):
+        if edge.get("target") in replacement:
+            edge["target"] = replacement[edge["target"]]
+
+    node_index = {
+        (str(node.get("workflow_id", "")), str(node.get("source_id", ""))): node
+        for node in graph.get("nodes", [])
+    }
+    for row in matrix_rows:
+        node = node_index.get((row.get("workflow_id", ""), row.get("source_node_id", "")))
+        if node:
+            row["anchor_iri"] = str(node.get("anchor_id", ""))
+            row["canonical_role_iri"] = str(node.get("canonical_role_iri", ""))
+            row["semantic_role"] = str(node.get("semantic_role", ""))
+            row["role_assignment"] = str(node.get("role_assignment", ""))
+
+    rebuilt: dict[str, dict[str, Any]] = {}
+    for node in graph.get("nodes", []):
+        anchor_id = str(node.get("anchor_id", ""))
+        if not anchor_id:
+            continue
+        source_anchor = anchors_by_id.get(anchor_id)
+        if source_anchor is None:
+            old_anchor = next(
+                (anchors_by_id[old] for old, new in replacement.items() if new == anchor_id and old in anchors_by_id),
+                {},
+            )
+            source_anchor = {**old_anchor, "id": anchor_id}
+        anchor = rebuilt.setdefault(
+            anchor_id,
+            {
+                **source_anchor,
+                "id": anchor_id,
+                "label": source_anchor.get("label") or node.get("label", _last_segment(anchor_id)),
+                "state": "approved_h2kg" if anchor_id.startswith(H2KG) else "reviewed_decode",
+                "occurrence_ids": [],
+            },
+        )
+        anchor["occurrence_ids"].append(node["id"])
+    for anchor in rebuilt.values():
+        anchor["occurrence_ids"] = sorted(set(anchor["occurrence_ids"]))
+    graph["anchors"] = sorted(rebuilt.values(), key=lambda item: (str(item.get("label", "")).lower(), item["id"]))
+    graph["anchor_index"] = {anchor_id: row["occurrence_ids"] for anchor_id, row in rebuilt.items()}
+    previous = {row["deprecated_iri"]: row for row in graph.get("deprecated_anchor_aliases", [])}
+    previous.update(aliases)
+    graph["deprecated_anchor_aliases"] = sorted(previous.values(), key=lambda row: row["deprecated_iri"])
+    graph["counts"]["anchor_count"] = len(rebuilt)
+    graph["counts"]["deprecated_anchor_alias_count"] = len(graph["deprecated_anchor_aliases"])
+    for workflow in graph.get("workflows", []):
+        visible = {
+            node.get("anchor_id") for node in graph.get("nodes", [])
+            if node.get("workflow_id") == workflow["id"] and node.get("anchor_id")
+        }
+        workflow["mapped_anchor_count"] = len(visible)
+        workflow["cross_workflow_connection_count"] = sum(
+            max(0, len(rebuilt[anchor_id]["occurrence_ids"]) - 1)
+            for anchor_id in visible if anchor_id in rebuilt
+        )
 
 
 def _build_edge_alignment(
@@ -1270,20 +1394,22 @@ def _with_semantic_role(
 ) -> dict[str, Any]:
     """Complete display-role metadata without changing a reviewed anchor decision."""
     result = dict(mapping)
-    role = str(result.get("canonical_role_iri", "")).strip()
-    if role:
-        result.setdefault("role_assignment", "explicit_mapping")
-    else:
-        curation = policy.get("semantic_role_curation", {})
-        override = _role_override(source_node, curation.get("overrides", []))
-        if override:
-            role = str(override.get("canonical_role_iri", "")).strip()
-            result["role_assignment"] = str(override.get("id", "curated_override"))
-        if not role:
-            rule = _role_rule(source_node, curation.get("rules", []))
-            if rule:
-                role = str(rule.get("canonical_role_iri", "")).strip()
-                result["role_assignment"] = str(rule.get("id", "curated_rule"))
+    curation = policy.get("semantic_role_curation", {})
+    override = _role_override(source_node, curation.get("overrides", []))
+    role = str(override.get("canonical_role_iri", "")).strip() if override else ""
+    if override and role:
+        result["role_assignment"] = str(override.get("id", "curated_override"))
+        result["canonical_role_iri"] = role
+        result["semantic_role"] = _last_segment(role)
+    if not role:
+        role = str(result.get("canonical_role_iri", "")).strip()
+        if role:
+            result.setdefault("role_assignment", "explicit_mapping")
+    if not role:
+        rule = _role_rule(source_node, curation.get("rules", []))
+        if rule:
+            role = str(rule.get("canonical_role_iri", "")).strip()
+            result["role_assignment"] = str(rule.get("id", "curated_rule"))
         if not role:
             role = str(policy.get("role_by_visual_category", {}).get(_visual_category(source_node), "")).strip()
             result["role_assignment"] = "visual_category_fallback"
@@ -1983,4 +2109,6 @@ Raw GraphML files and the original attached manual JSON are not redistributed in
 `decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.
 
 `decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
+
+`decode-h2kg-aligned-ontology.ttl` and `.jsonld` contain the complete merged DECODE vocabulary and workflow occurrence graph. Reviewed DECODE anchors are OWL classes under compatible H2KG roles, while source occurrences and reified source edges preserve the original workflow topology. Definitions in this module are marked `expert-draft`. DECODE licensing remains pending governance confirmation, so no open reuse license is asserted for these files.
 """

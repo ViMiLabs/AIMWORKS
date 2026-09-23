@@ -106,7 +106,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -236,10 +236,12 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n2"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3"
-        },
-        {
           "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
@@ -358,9 +360,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst ink composition value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst ink composition"
@@ -538,7 +563,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/projection/025fec20e9",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/projection/f9e6a26e8a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -546,10 +571,10 @@
         "gde-catalytic-layer-preparation::e3"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -558,12 +583,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/projection/84b14a1b27",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gde-catalytic-layer-preparation::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gde-catalytic-layer-preparation/node/n3/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

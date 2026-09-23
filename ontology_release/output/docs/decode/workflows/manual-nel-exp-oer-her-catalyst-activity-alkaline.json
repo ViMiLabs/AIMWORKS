@@ -122,9 +122,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -212,6 +212,8 @@
         "gde-catalytic-layer-preparation::n0",
         "ink-preparation-for-deposition-of-catalytic-layers::n0",
         "irras-operando-or-in-situ-ftir::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
         "operando-or-in-situ-xas-photon-out::n0",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
         "prism-preparation-for-atr-ftir::n1",
@@ -219,9 +221,7 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
-        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
       ]
     },
     {
@@ -245,8 +245,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -256,14 +256,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -399,17 +399,17 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::028298d5f9",
+      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::ce1e18f57c",
       "workflow_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline",
       "source": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
-      "target": "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_pattern": "measurement_property_reversed",
+      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -481,7 +481,7 @@
       "source_node_id": "input-electrolyte-composition-e69e18ddfd",
       "source_graphml_id": "input-electrolyte-composition-e69e18ddfd",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
       "target_node_id": "method",
@@ -491,15 +491,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/oer-her-catalyst-activity-in-alkaline-conditions-bb7f4ca70f",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_pattern": "measurement_property_reversed",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::028298d5f9"
+        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::ce1e18f57c"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "derived_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000",

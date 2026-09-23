@@ -20,7 +20,7 @@
     "mapping_status": "mapped",
     "source_node_count": 25,
     "source_edge_count": 32,
-    "mapped_anchor_count": 25,
+    "mapped_anchor_count": 24,
     "cross_workflow_connection_count": 98
   },
   "nodes": [
@@ -198,9 +198,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
       "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
     },
@@ -670,6 +670,19 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::hierarchical-model-for-electrocatalytic-reactions::n8",
+      "iri": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n8/data-point",
+      "label": "Electrolyte composition value",
+      "kind": "value_proxy",
+      "workflow_id": "hierarchical-model-for-electrocatalytic-reactions",
+      "source_occurrence_id": "hierarchical-model-for-electrocatalytic-reactions::n8",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::hierarchical-model-for-electrocatalytic-reactions::n9",
       "iri": "https://w3id.org/h2kg/decode/workflow/hierarchical-model-for-electrocatalytic-reactions/node/n9/data-point",
       "label": "Diffusion layer thickness value",
@@ -880,8 +893,8 @@
       "label": "Electrolyte Composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "unreviewed",
       "evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
       "occurrence_ids": [
@@ -891,14 +904,14 @@
         "diffusion-theory::n0",
         "eis-on-nanostructured-electrodes::n0",
         "hierarchical-model-for-electrocatalytic-reactions::n8",
+        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
         "model-electrochemistry-in-a-rde-cell::n0",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n1",
         "rde-simulation-in-comsol::n1",
         "rotating-ring-disk-electrode-rrde::n1",
         "rrde-simulation-in-comsol::n1",
-        "rrde-theory::n0",
-        "manual-dtu-mod-machine-learning-force-fields::input-electrolyte-composition-e69e18ddfd",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd"
+        "rrde-theory::n0"
       ]
     },
     {
@@ -912,14 +925,14 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n9",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n10",
+        "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-acidic-med::n9",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n10",
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n11",
         "dft-onto-idealized-surfaces::n11",
         "dft-onto-idealized-surfaces::n12",
-        "fitting-version-of-the-hierachical-model::n9",
         "fitting-version-of-the-hierachical-model::n10",
+        "fitting-version-of-the-hierachical-model::n9",
         "hierarchical-model-for-electrocatalytic-reactions::n23",
         "hierarchical-model-for-electrocatalytic-reactions::n24",
         "rde-on-mono-or-polycrystalline-electrodes::n11",
@@ -998,10 +1011,10 @@
         "confocal-laser-scanning-microscope-clsm-and-fluorescent-probes-for-local-ph-assessment-in-alkaline-m::n6",
         "fitting-version-of-the-hierachical-model::n3",
         "hierarchical-model-for-electrocatalytic-reactions::n13",
+        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89",
         "rde-simulation-in-comsol::n8",
         "rrde-simulation-in-comsol::n8",
-        "rrde-theory::n6",
-        "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89"
+        "rrde-theory::n6"
       ]
     },
     {
@@ -1033,9 +1046,9 @@
         "ab-initio-molecular-dynamics-aimd-of-the-solid-liquid-interface-at-a-pt-electrode::n3",
         "hierarchical-model-for-electrocatalytic-reactions::n12",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n6",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4",
+        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n8",
-        "manual-dtu-mod-machine-learning-force-fields::output-lre-species-distribution-idealized-6b9fbf0636"
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-metalwalls::n4"
       ]
     },
     {
@@ -1877,17 +1890,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::e4599c352d",
+      "id": "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::cda53c6219",
       "workflow_id": "hierarchical-model-for-electrocatalytic-reactions",
       "source": "hierarchical-model-for-electrocatalytic-reactions::n19",
-      "target": "hierarchical-model-for-electrocatalytic-reactions::n8",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::hierarchical-model-for-electrocatalytic-reactions::n8",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "hierarchical-model-for-electrocatalytic-reactions::e8",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::2bdb8156b5",
+      "workflow_id": "hierarchical-model-for-electrocatalytic-reactions",
+      "source": "projection::datapoint::hierarchical-model-for-electrocatalytic-reactions::n8",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "hierarchical-model-for-electrocatalytic-reactions::e8",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -2672,7 +2700,7 @@
       "source_node_id": "n8",
       "source_graphml_id": "n8",
       "source_label": "Electrolyte composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "hierarchical-model-for-electrocatalytic-reactions::n19",
       "target_node_id": "n19",
@@ -2681,16 +2709,17 @@
       "target_semantic_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/hierarchical-model-for-electrocatalytic-reactions-model",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::e4599c352d"
+        "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::cda53c6219",
+        "semantic::hierarchical-model-for-electrocatalytic-reactions::e8::2bdb8156b5"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "hierarchical-model-for-electrocatalytic-reactions::e9",

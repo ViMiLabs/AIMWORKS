@@ -20,8 +20,8 @@
     "mapping_status": "mapped",
     "source_node_count": 28,
     "source_edge_count": 28,
-    "mapped_anchor_count": 28,
-    "cross_workflow_connection_count": 285
+    "mapped_anchor_count": 23,
+    "cross_workflow_connection_count": 291
   },
   "nodes": [
     {
@@ -138,9 +138,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "role_assignment": "catalyst_layer_on_substrate_is_matter",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -160,7 +160,7 @@
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
       "semantic_role": "Manufacturing",
-      "role_assignment": "physical_manufacturing_workflow",
+      "role_assignment": "ultrasonic_spray_is_manufacturing",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -180,7 +180,7 @@
       "decision": "reviewed_decode_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
       "semantic_role": "Manufacturing",
-      "role_assignment": "physical_manufacturing_workflow",
+      "role_assignment": "ultrasonic_spray_is_manufacturing",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -585,34 +585,7 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [
-    {
-      "id": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n26",
-      "iri": "https://w3id.org/h2kg/decode/workflow/ultrasonic-spray-deposition-for-catalytic-layers/node/n26/data-point",
-      "label": "Sheet resistance measurement value",
-      "kind": "value_proxy",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n26",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sheet-resistance-measurement-method",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "iri": "https://w3id.org/h2kg/decode/workflow/ultrasonic-spray-deposition-for-catalytic-layers/node/n5/data-point",
-      "label": "CL on substrate value",
-      "kind": "value_proxy",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    }
-  ],
+  "projection_nodes": [],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystCoatedMembrane",
@@ -630,9 +603,11 @@
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n2",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n0",
         "electrospray-deposition-of-catalyst-layers::n6",
-        "fib-sem-on-cl-material::n0",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n7",
+        "fib-sem-on-cl-material::n0",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n0",
+        "manual-cea-exp-tem-eds-analysis-cl::input-ccm-2acdae4ac5",
+        "manual-nel-exp-large-scale-durability-test::input-ccm-2acdae4ac5",
         "mea-assembly-for-pefc-ref-mea::n1",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n6",
         "mpl-saturation-determination-from-x-ray-ct-data::n1",
@@ -643,9 +618,7 @@
         "sheet-resistance-measurement::n4",
         "tem-and-eds-analysis-of-mea::n0",
         "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n2",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n3",
-        "manual-cea-exp-tem-eds-analysis-cl::input-ccm-2acdae4ac5",
-        "manual-nel-exp-large-scale-durability-test::input-ccm-2acdae4ac5"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n3"
       ]
     },
     {
@@ -665,6 +638,8 @@
         "gde-catalytic-layer-preparation::n0",
         "ink-preparation-for-deposition-of-catalytic-layers::n0",
         "irras-operando-or-in-situ-ftir::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
         "operando-or-in-situ-xas-photon-out::n0",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
         "prism-preparation-for-atr-ftir::n1",
@@ -672,9 +647,7 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
-        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
       ]
     },
     {
@@ -683,19 +656,19 @@
       "label": "CL on substrate",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "electrospray-deposition-of-catalyst-layers::n10",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n3",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n3",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n0",
         "sheet-resistance-measurement::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n5",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-cl-on-substrate-ac3a1c73df"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n5"
       ]
     },
     {
@@ -828,19 +801,20 @@
         "iet-1d-performance-model-for-mea-prediction::n41",
         "iet-1d-performance-model-for-mea-prediction::n42",
         "iet-1d-performance-model-for-mea-prediction::n43",
-        "image-classification-of-fib-tomography-data::n8",
-        "image-classification-of-fib-tomography-data::n9",
         "image-classification-of-fib-tomography-data::n10",
         "image-classification-of-fib-tomography-data::n11",
         "image-classification-of-fib-tomography-data::n12",
         "image-classification-of-fib-tomography-data::n22",
-        "image-classification-on-nm-scale::n8",
-        "image-classification-on-nm-scale::n9",
+        "image-classification-of-fib-tomography-data::n8",
+        "image-classification-of-fib-tomography-data::n9",
         "image-classification-on-nm-scale::n10",
         "image-classification-on-nm-scale::n11",
         "image-classification-on-nm-scale::n12",
         "image-classification-on-nm-scale::n22",
+        "image-classification-on-nm-scale::n8",
+        "image-classification-on-nm-scale::n9",
         "impregnation-by-immersion-and-blade-coating::n15",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-exp-fib-gdl-mpl-catalyst-7ca37ef476",
         "ultrasonic-spray-deposition-for-catalytic-layers::n16",
         "ultrasonic-spray-deposition-for-catalytic-layers::n27"
       ]
@@ -896,8 +870,8 @@
         "image-classification-on-tem-data::n4",
         "image-tem-data-parameter-extraction-3d::n11",
         "image-tem-data-parameter-extraction-3d::n12",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n9",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n24"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n24",
+        "ultrasonic-spray-deposition-for-catalytic-layers::n9"
       ]
     },
     {
@@ -953,6 +927,8 @@
         "differential-cell-testing::n24",
         "electrospray-deposition-of-catalyst-layers::n26",
         "impregnation-by-immersion-and-blade-coating::n12",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-cea-exp-mea-assembly-pefc-ref-mea-94683234a4",
+        "manual-hte-exp-cell-testing::linked-upstream-cea-exp-mea-assembly-pefc-ref-mea-94683234a4",
         "mea-assembly-for-pefc-ref-mea::n4",
         "microscopy-sem-and-optical-in-mea-cross-section::n19",
         "ultrasonic-spray-deposition-for-catalytic-layers::n14"
@@ -973,9 +949,9 @@
         "electrospray-deposition-of-catalyst-layers::n22",
         "electrospray-deposition-of-catalyst-layers::n42",
         "impregnation-by-immersion-and-blade-coating::n7",
-        "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n10",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n11",
+        "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n9",
         "ultrasonic-spray-deposition-for-catalytic-layers::n10",
         "ultrasonic-spray-deposition-for-catalytic-layers::n25"
       ]
@@ -1041,10 +1017,10 @@
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n2",
         "electrospray-deposition-of-catalyst-layers::n1",
         "gde-cell-for-electrochemical-studies::n7",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n2",
         "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-membrane-d12d5dda08",
         "manual-nel-exp-large-scale-durability-test::input-membrane-d12d5dda08",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08"
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
+        "ultrasonic-spray-deposition-for-catalytic-layers::n2"
       ]
     },
     {
@@ -1098,8 +1074,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n29",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n52",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n50",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n52",
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n15",
         "cea-mea-model-europium-2d::n122",
         "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n33",
@@ -1116,6 +1092,7 @@
         "iet-1d-performance-model-for-mea-fitting::n33",
         "iet-1d-performance-model-for-mea-prediction::n56",
         "impregnation-by-immersion-and-blade-coating::n23",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-ciemat-exp-sem-fib-layer-0338a03ee6",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n43",
         "sem-and-fib-layer::n8",
         "ultrasonic-spray-deposition-for-catalytic-layers::n17"
@@ -1138,11 +1115,11 @@
         "electrospray-deposition-of-catalyst-layers::n17",
         "electrospray-deposition-of-catalyst-layers::n27",
         "electrospray-deposition-of-catalyst-layers::n43",
+        "sheet-resistance-measurement::n10",
+        "sheet-resistance-measurement::n11",
         "sheet-resistance-measurement::n7",
         "sheet-resistance-measurement::n8",
         "sheet-resistance-measurement::n9",
-        "sheet-resistance-measurement::n10",
-        "sheet-resistance-measurement::n11",
         "ultrasonic-spray-deposition-for-catalytic-layers::n15",
         "ultrasonic-spray-deposition-for-catalytic-layers::n26"
       ]
@@ -1158,8 +1135,8 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n41",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n43",
         "0d-particle-population-degradation-model-prediction::n12",
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n10",
         "electrospray-deposition-of-catalyst-layers::n25",
@@ -1200,11 +1177,13 @@
         "determination-of-cl-saturation-by-saxs-or-sans::n24",
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::n18",
         "electron-tomography-for-pt-c-and-ionomer-distribution-in-cl::n10",
-        "fib-sem-on-cl-material::n16",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n32",
         "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n38",
+        "fib-sem-on-cl-material::n16",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n12",
         "high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate::n14",
+        "manual-cea-exp-tem-eds-analysis-cl::linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5",
+        "manual-nel-exp-large-scale-durability-test::linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5",
         "mea-assembly-for-pefc-ref-mea::n9",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n13",
         "mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation::n17",
@@ -2017,122 +1996,62 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::0b554ba111",
+      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::d078dc2860",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n7",
-      "target": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
+      "target": "ultrasonic-spray-deposition-for-catalytic-layers::n5",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e23",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::2a8936760b",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e23",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the target property anchor.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e24::474b6fa162",
+      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e24::6c575a9cae",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n24",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
-      "label": "measures",
+      "target": "ultrasonic-spray-deposition-for-catalytic-layers::n5",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e24",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e25::8aa259e543",
+      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e25::61c4651c02",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n25",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
-      "label": "measures",
+      "target": "ultrasonic-spray-deposition-for-catalytic-layers::n5",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e25",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::f2ba918dfd",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n26",
-      "target": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "predicate": "http://www.w3.org/ns/prov#wasDerivedFrom",
-      "label": "wasDerivedFrom",
-      "type": "semantic_projection",
-      "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e26",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_derivation",
-      "evidence": "Property-valued workflow dependency is represented as provenance between DataPoint proxies.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::2a8936760b",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e26",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Source DataPoint proxy is typed by its property anchor.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::7efe07caa9",
-      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
-      "source": "projection::datapoint::ultrasonic-spray-deposition-for-catalytic-layers::n26",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/sheet-resistance-measurement-method",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e26",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Target DataPoint proxy is typed by its property anchor.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e27::acc11975a6",
+      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e27::65be9d12a6",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n27",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
-      "label": "measures",
+      "target": "ultrasonic-spray-deposition-for-catalytic-layers::n5",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e27",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
       "confidence": "rule_curated",
       "review_status": "classified"
     }
@@ -2788,20 +2707,19 @@
       "target_node_id": "n5",
       "target_graphml_id": "n5",
       "target_label": "CL on substrate",
-      "target_semantic_role": "Property",
+      "target_semantic_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
       "semantic_edge_ids": [
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::0b554ba111",
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::2a8936760b"
+        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e23::d078dc2860"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Activity produces the target material."
     },
     {
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e24",
@@ -2811,7 +2729,7 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "CL on substrate",
-      "source_semantic_role": "Property",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "target_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n24",
       "target_node_id": "n24",
@@ -2821,15 +2739,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/high-resolution-electron-tomography-for-accessing-pt-and-ionomer-distribution-on-carbon-aggregate-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e24::474b6fa162"
+        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e24::6c575a9cae"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e25",
@@ -2839,7 +2757,7 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "CL on substrate",
-      "source_semantic_role": "Property",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "target_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n25",
       "target_node_id": "n25",
@@ -2849,15 +2767,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/mechanical-properties-of-catalyst-layers-gdls-and-meas-by-small-punch-and-nanoindentation-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e25::8aa259e543"
+        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e25::61c4651c02"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e26",
@@ -2867,7 +2785,7 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "CL on substrate",
-      "source_semantic_role": "Property",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "target_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n26",
       "target_node_id": "n26",
@@ -2876,18 +2794,14 @@
       "target_semantic_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sheet-resistance-measurement-method",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_derivation",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasDerivedFrom; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "semantic_edge_ids": [
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::f2ba918dfd",
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::2a8936760b",
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e26::7efe07caa9"
-      ],
-      "semantic_direction": "reified_projection",
-      "confidence": "rule_curated",
+      "projection_outcome": "decode_structural_only",
+      "projection_pattern": "structural_dependency",
+      "semantic_predicates": "",
+      "semantic_edge_ids": [],
+      "semantic_direction": "not_projected",
+      "confidence": "context_required",
       "review_status": "classified",
-      "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
+      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
     },
     {
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e27",
@@ -2897,7 +2811,7 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "CL on substrate",
-      "source_semantic_role": "Property",
+      "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
       "target_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n27",
       "target_node_id": "n27",
@@ -2907,15 +2821,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "measurement_property_reversed",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
       "semantic_edge_ids": [
-        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e27::acc11975a6"
+        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e27::65be9d12a6"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     }
   ],
   "workflow_dependencies": [

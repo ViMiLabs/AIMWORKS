@@ -21,7 +21,7 @@
     "source_node_count": 12,
     "source_edge_count": 11,
     "mapped_anchor_count": 12,
-    "cross_workflow_connection_count": 145
+    "cross_workflow_connection_count": 148
   },
   "nodes": [
     {
@@ -118,9 +118,9 @@
       "mapping_state": "reviewed_decode",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "catalyst_ink_composition_is_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     },
@@ -265,7 +265,21 @@
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
     }
   ],
-  "projection_nodes": [],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::prism-preparation-for-atr-ftir::n4",
+      "iri": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n4/data-point",
+      "label": "Catalyst ink composition value",
+      "kind": "value_proxy",
+      "workflow_id": "prism-preparation-for-atr-ftir",
+      "source_occurrence_id": "prism-preparation-for-atr-ftir::n4",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
   "anchors": [
     {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/atr-ftir-electrode-component",
@@ -279,8 +293,8 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "in-situ-fourier-transformed-ir-in-atr-configuration::n0",
-        "prism-preparation-for-atr-ftir::n7",
-        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-atr-ftir-electrode-1c8a955c07"
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::input-atr-ftir-electrode-1c8a955c07",
+        "prism-preparation-for-atr-ftir::n7"
       ]
     },
     {
@@ -289,8 +303,8 @@
       "label": "Catalyst ink composition",
       "state": "reviewed_decode",
       "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -315,8 +329,8 @@
       "confidence": "high",
       "evidence": "Reviewed exact mapping to the established catalyst-loading term.",
       "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n0",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n0",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n3",
         "cea-mea-model-europium-2d::n46",
         "differential-cell-testing::n1",
@@ -327,10 +341,10 @@
         "image-parameter-extraction-2d::n11",
         "ionomer-reconstruction-in-ccl-3d-images::n2",
         "irras-operando-or-in-situ-ftir::n3",
+        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
         "model-electrochemistry-in-a-rde-cell::n3",
         "prism-preparation-for-atr-ftir::n2",
-        "rotating-ring-disk-electrode-rrde::n3",
-        "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca"
+        "rotating-ring-disk-electrode-rrde::n3"
       ]
     },
     {
@@ -350,6 +364,8 @@
         "gde-catalytic-layer-preparation::n0",
         "ink-preparation-for-deposition-of-catalytic-layers::n0",
         "irras-operando-or-in-situ-ftir::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
         "operando-or-in-situ-xas-photon-out::n0",
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
         "prism-preparation-for-atr-ftir::n1",
@@ -357,9 +373,7 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
-        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
-        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
       ]
     },
     {
@@ -388,13 +402,13 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n27",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n47",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n10",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n21",
         "ai-based-generation-of-structural-digital-twins-of-multi-scale-tomographies::n30",
-        "cea-mea-model-europium-2d::n99",
         "cea-mea-model-europium-2d::n100",
+        "cea-mea-model-europium-2d::n99",
         "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n27",
         "differential-cell-testing::n32",
         "diffusivities-from-tortuosities::n30",
@@ -417,6 +431,7 @@
         "inpt-cl-process-model::n9",
         "ionomer-reconstruction-in-ccl-3d-images::n14",
         "irras-operando-or-in-situ-ftir::n16",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
         "model-electrochemistry-in-a-rde-cell::n13",
         "modeling-of-mpl-coating-of-gdl::n10",
         "prism-preparation-for-atr-ftir::n11",
@@ -435,10 +450,10 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n26",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n43",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n44",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n45",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n46",
         "accelerated-stress-test-ast-on-nanostructured-electrodes::n9",
         "cea-mea-model-europium-2d::n92",
         "cea-mea-model-europium-2d::n93",
@@ -480,6 +495,7 @@
         "image-parameter-extraction-2d::n21",
         "ionomer-reconstruction-in-ccl-3d-images::n13",
         "irras-operando-or-in-situ-ftir::n15",
+        "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8",
         "model-electrochemistry-in-a-rde-cell::n12",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n26",
         "mpl-parameter-estimation-from-gdl-and-substrate-data::n27",
@@ -558,6 +574,7 @@
         "image-fib-tomography-dataparameter-extraction-3d::n14",
         "image-parameter-extraction-2d::n44",
         "in-situ-fourier-transformed-ir-in-atr-configuration::n13",
+        "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::linked-upstream-icpees-cnrs-unistra-psi-exp-prism-preparation-atr-ftir-4024a01e28",
         "prism-preparation-for-atr-ftir::n8"
       ]
     },
@@ -852,17 +869,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::prism-preparation-for-atr-ftir::e4::2acab4c4cf",
+      "id": "semantic::prism-preparation-for-atr-ftir::e4::3f2910517c",
       "workflow_id": "prism-preparation-for-atr-ftir",
       "source": "prism-preparation-for-atr-ftir::n8",
-      "target": "prism-preparation-for-atr-ftir::n4",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
-      "label": "hasInputMaterial",
+      "target": "projection::datapoint::prism-preparation-for-atr-ftir::n4",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "prism-preparation-for-atr-ftir::e4",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::prism-preparation-for-atr-ftir::e4::4919353f80",
+      "workflow_id": "prism-preparation-for-atr-ftir",
+      "source": "projection::datapoint::prism-preparation-for-atr-ftir::n4",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "prism-preparation-for-atr-ftir::e4",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint is typed by the source property anchor.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -1063,7 +1095,7 @@
       "source_node_id": "n4",
       "source_graphml_id": "n4",
       "source_label": "Catalyst ink composition",
-      "source_semantic_role": "Matter",
+      "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-composition-material",
       "target_occurrence_id": "prism-preparation-for-atr-ftir::n8",
       "target_node_id": "n8",
@@ -1072,16 +1104,17 @@
       "target_semantic_role": "Manufacturing",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/prism-preparation-for-atr-ftir-process",
       "source_description": "",
-      "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_input_material",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::prism-preparation-for-atr-ftir::e4::2acab4c4cf"
+        "semantic::prism-preparation-for-atr-ftir::e4::3f2910517c",
+        "semantic::prism-preparation-for-atr-ftir::e4::4919353f80"
       ],
-      "semantic_direction": "reversed_from_source",
+      "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "prism-preparation-for-atr-ftir::e5",

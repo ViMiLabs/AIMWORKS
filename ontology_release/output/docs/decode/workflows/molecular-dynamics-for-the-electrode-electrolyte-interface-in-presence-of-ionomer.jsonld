@@ -83,7 +83,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Ionomer pKa"
@@ -362,6 +362,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n1/data-point"
         },
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n3/data-point"
         },
         {
@@ -375,11 +378,6 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n7/data-point"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -441,7 +439,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
@@ -742,6 +740,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ionomer pKa value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n3/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -923,7 +944,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -961,7 +982,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Ionomer pKa"
@@ -1169,7 +1190,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/projection/42ae133be1",
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/projection/89f14a1e27",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1177,10 +1198,10 @@
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1189,12 +1210,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/projection/09b2af8694",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-pka-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

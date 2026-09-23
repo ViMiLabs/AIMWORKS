@@ -696,7 +696,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-prediction-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
@@ -950,7 +950,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -990,7 +990,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -1795,7 +1795,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/node/n60",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Single cell test bench: polarization, EIS"
@@ -1814,6 +1814,14 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/single-cell-test-bench-polarization-eis-method"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
         }
       ]
     },
@@ -2492,7 +2500,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-prediction-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -2501,7 +2509,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-composition-to-property-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -2510,7 +2518,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -2611,7 +2619,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/single-cell-test-bench-polarization-eis-method",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Instrument"
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Single cell test bench: polarization, EIS"
@@ -6222,6 +6230,66 @@
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/node/n59"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/projection/9571ca4ef9",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "iet-1d-performance-model-for-mea-prediction::e83"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/node/n60"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/projection/80704aed1a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "iet-1d-performance-model-for-mea-prediction::e84"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-performance-model-for-mea-prediction/node/n60"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [

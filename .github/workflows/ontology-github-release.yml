@@ -98,6 +98,17 @@ jobs:
                       shutil.copy2(source, assets / asset_name)
                       copied.append(asset_name)
 
+          decode_root = root / "output" / "decode"
+          for source_name, asset_name in (
+              ("decode-h2kg-aligned-ontology.ttl", f"decode-h2kg-aligned-ontology-{version}.ttl"),
+              ("decode-h2kg-aligned-ontology.jsonld", f"decode-h2kg-aligned-ontology-{version}.jsonld"),
+              ("decode_ontology_validation_report.json", f"decode-ontology-validation-{version}.json"),
+          ):
+              source = decode_root / source_name
+              if source.exists():
+                  shutil.copy2(source, assets / asset_name)
+                  copied.append(asset_name)
+
           manifest = {
               "version": version,
               "assets": sorted(item.name for item in assets.iterdir() if item.is_file()),
@@ -115,6 +126,7 @@ jobs:
                   "- per-profile asserted TTL/JSON-LD, full inferred TTL, context JSON-LD, and catalog-v001.xml files",
                   "",
                   "Profiles included: PEMFC and PEMWE.",
+                  "The release also includes the H2KG-aligned DECODE workflow ontology in Turtle and JSON-LD.",
                   "",
                   "Generated automatically from the AIMWORKS ontology release pipeline.",
               ]

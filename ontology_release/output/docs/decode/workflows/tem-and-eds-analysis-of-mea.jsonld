@@ -89,7 +89,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -169,12 +169,10 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n1/data-point"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n3/data-point"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n3/data-point"
         }
       ]
     },
@@ -289,12 +287,12 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model"
+          "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
         }
       ]
     },
@@ -415,6 +413,32 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n3/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -470,7 +494,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst active particle diameter"
@@ -495,7 +519,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "@id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
       "@type": [
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
@@ -621,7 +645,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/1c108ea9d0",
+      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/96ddd91fa6",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -629,10 +653,10 @@
         "tem-and-eds-analysis-of-mea::e2"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_output_material"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -641,12 +665,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/0546383189",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "tem-and-eds-analysis-of-mea::e2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -951,7 +1005,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/cc0c6a50ed",
+      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/b66cd1000e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -959,10 +1013,10 @@
         "tem-and-eds-analysis-of-mea::e8"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_input_material"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -971,12 +1025,42 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2"
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/projection/dd53e4db3d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "tem-and-eds-analysis-of-mea::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/tem-and-eds-analysis-of-mea/node/n2/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
