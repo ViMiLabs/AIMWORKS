@@ -7,12 +7,21 @@
     "source_filename": "Contact_resistance_measurement.graphml",
     "source_sha256": "fb9c18b8029c096a89ee6be516e07ab53d14d28cb0f91e2d60272a2c998701c1",
     "method_family": "other",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 3,
+    "core_edge_count": 2,
     "mapping_status": "mapped",
     "source_node_count": 3,
     "source_edge_count": 2,
     "mapped_anchor_count": 3,
-    "cross_workflow_connection_count": 0
+    "cross_workflow_connection_count": 5
   },
   "nodes": [
     {
@@ -61,7 +70,7 @@
       "source_id": "n2",
       "label": "Contact resistance measurement",
       "native_category": "",
-      "description": "Contact resistance measurement\nOwner: FZJ-IET-4:Andreas Glsen\nTask: T2.1\nMaturity: established method\nDocumentation: described in PhD thesis in preparation\nRange of validity or processability: \naverage value of the probe size is measured\ninternal key: Contact resistance measurement0",
+      "description": "Contact resistance measurement\nOwner organization: FZJ-IET-4\nTask: T2.1\nMaturity: established method\nDocumentation: described in PhD thesis in preparation\nRange of validity or processability: \naverage value of the probe size is measured\ninternal key: Contact resistance measurement0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "contact-resistance-measurement",
@@ -74,6 +83,83 @@
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    }
+  ],
+  "projection_nodes": [
+    {
+      "id": "projection::datapoint::contact-resistance-measurement::n1",
+      "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement/node/n1/data-point",
+      "label": "PTL contact resistance value",
+      "kind": "value_proxy",
+      "workflow_id": "contact-resistance-measurement",
+      "source_occurrence_id": "contact-resistance-measurement::n1",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
+      "id": "projection::datapoint::contact-resistance-measurement::n2",
+      "iri": "https://w3id.org/h2kg/decode/workflow/contact-resistance-measurement/node/n2/data-point",
+      "label": "Contact resistance measurement value",
+      "kind": "value_proxy",
+      "workflow_id": "contact-resistance-measurement",
+      "source_occurrence_id": "contact-resistance-measurement::n2",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    }
+  ],
+  "anchors": [
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "kind": "anchor",
+      "label": "Contact resistance measurement",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "contact-resistance-measurement::n2"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "kind": "anchor",
+      "label": "PTL",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "contact-resistance-measurement::n0",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-large-scale-durability-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-ptl-bulk-resistance::input-ptl-d9d7347fb8",
+        "manual-nel-exp-ptl-porosity-contact-angle::input-ptl-d9d7347fb8"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "kind": "anchor",
+      "label": "PTL contact resistance",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "contact-resistance-measurement::n1"
+      ]
     }
   ],
   "source_edges": [
@@ -123,6 +209,111 @@
       "type": "occurrence_anchor_mapping"
     }
   ],
-  "semantic_edges": [],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "semantic_edges": [
+    {
+      "id": "semantic::contact-resistance-measurement::e1::7d7ca6ebf1",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "projection::datapoint::contact-resistance-measurement::n1",
+      "target": "projection::datapoint::contact-resistance-measurement::n2",
+      "predicate": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "label": "wasDerivedFrom",
+      "type": "semantic_projection",
+      "source_dependency_id": "contact-resistance-measurement::e1",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "evidence": "Property-valued workflow dependency is represented as provenance between DataPoint proxies.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::contact-resistance-measurement::e1::658d2a9e82",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "projection::datapoint::contact-resistance-measurement::n2",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "contact-resistance-measurement::e1",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Source DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::contact-resistance-measurement::e1::8637e8de5d",
+      "workflow_id": "contact-resistance-measurement",
+      "source": "projection::datapoint::contact-resistance-measurement::n1",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty",
+      "type": "semantic_projection",
+      "source_dependency_id": "contact-resistance-measurement::e1",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_type",
+      "evidence": "Target DataPoint proxy is typed by its property anchor.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    }
+  ],
+  "edge_registry": [
+    {
+      "source_dependency_id": "contact-resistance-measurement::e0",
+      "workflow_id": "contact-resistance-measurement",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "contact-resistance-measurement::n0",
+      "source_node_id": "n0",
+      "source_graphml_id": "n0",
+      "source_label": "PTL",
+      "source_semantic_role": "Matter",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "target_occurrence_id": "contact-resistance-measurement::n2",
+      "target_node_id": "n2",
+      "target_graphml_id": "n2",
+      "target_label": "Contact resistance measurement",
+      "target_semantic_role": "Property",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "source_description": "",
+      "projection_outcome": "decode_structural_only",
+      "projection_pattern": "structural_dependency",
+      "semantic_predicates": "",
+      "semantic_edge_ids": [],
+      "semantic_direction": "not_projected",
+      "confidence": "context_required",
+      "review_status": "classified",
+      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+    },
+    {
+      "source_dependency_id": "contact-resistance-measurement::e1",
+      "workflow_id": "contact-resistance-measurement",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "contact-resistance-measurement::n2",
+      "source_node_id": "n2",
+      "source_graphml_id": "n2",
+      "source_label": "Contact resistance measurement",
+      "source_semantic_role": "Property",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
+      "target_occurrence_id": "contact-resistance-measurement::n1",
+      "target_node_id": "n1",
+      "target_graphml_id": "n1",
+      "target_label": "PTL contact resistance",
+      "target_semantic_role": "Property",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-resistance-component",
+      "source_description": "",
+      "projection_outcome": "h2kg_reified",
+      "projection_pattern": "property_value_derivation",
+      "semantic_predicates": "http://www.w3.org/ns/prov#wasDerivedFrom; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "semantic_edge_ids": [
+        "semantic::contact-resistance-measurement::e1::7d7ca6ebf1",
+        "semantic::contact-resistance-measurement::e1::658d2a9e82",
+        "semantic::contact-resistance-measurement::e1::8637e8de5d"
+      ],
+      "semantic_direction": "reified_projection",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
+    }
+  ],
+  "workflow_dependencies": [],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }

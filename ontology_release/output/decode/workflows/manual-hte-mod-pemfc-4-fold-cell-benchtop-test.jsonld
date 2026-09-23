@@ -1,0 +1,1252 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PEMFC 4-fold Cell Benchtop Test"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PEMFC 4-fold Cell Benchtop Test"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "method"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/pemfc-4-fold-cell-benchtop-test-066328d595"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-membrane-d12d5dda08"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-ptl-d9d7347fb8"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cell-temperature-8b58dd2512"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on membrane"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-cl-on-membrane-a8a44beaf3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-membrane-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on substrate"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-cl-on-substrate-ac3a1c73df"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cell-current-density-e6d7e79d93",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell current density"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-cell-current-density-e6d7e79d93"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cell-temperature-8b58dd2512",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell temperature"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-cell-temperature-8b58dd2512"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-temperature-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-gdl-f026f659b8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-membrane-d12d5dda08",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Membrane"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-membrane-d12d5dda08"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-ptl-d9d7347fb8",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-ptl-d9d7347fb8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell EIS"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-ciemat-exp-effective-proton-conductivity-e0e81208da"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-cell-eis-5865b26551"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-eis-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell polarization curve"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-cea-mod-europium-model-fitting-7ed4d249cc"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-3-mod-performance-model-mea-fitting-8d08851691"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-cell-polarization-curve-5de5263009"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-polarization-curve-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Time series of cell voltage"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-4-exp-data-extraction-pewe-u-i-t-7cba304bce"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-time-series-of-cell-voltage-e3fc99a4ab"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/time-series-of-cell-voltage-device"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Impregnation by immersion and blade coating"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-3fb4b5cee2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrospray deposition of Catalyst Layers"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrospray-deposition-of-catalyst-layers-c649dac006"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-cea-mod-europium-model-fitting-7ed4d249cc",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Fitting of the Europium model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-cea-mod-europium-model-fitting-7ed4d249cc"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-c5d75f6eaa"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-ciemat-exp-effective-proton-conductivity-e0e81208da",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL protonic resistance"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-ciemat-exp-effective-proton-conductivity-e0e81208da"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-protonic-resistance-18a311d49a"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-3-mod-performance-model-mea-fitting-8d08851691",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET 1D Performance model for MEA (fitting)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-fzj-iet-3-mod-performance-model-mea-fitting-8d08851691"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-1a2fbfa689"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-4-exp-data-extraction-pewe-u-i-t-7cba304bce",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Data extraction from existing PEWE measurements (U-i-t)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-fzj-iet-4-exp-data-extraction-pewe-u-i-t-7cba304bce"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/data-extraction-from-existing-pewe-measurements-u-i-t-6caff083e6"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model coupled with performance model fitting"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-fitting-e5902b8e0e"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on substrate value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-fitting-e5902b8e0e",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model coupled with performance model fitting"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-eis-device",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell EIS"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-polarization-curve-device",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell polarization curve"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-temperature-device",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Cell temperature"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-membrane-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on membrane"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on substrate"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-protonic-resistance-18a311d49a",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL protonic resistance"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/data-extraction-from-existing-pewe-measurements-u-i-t-6caff083e6",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Data extraction from existing PEWE measurements (U-i-t)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrospray-deposition-of-catalyst-layers-c649dac006",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrospray deposition of Catalyst Layers"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-c5d75f6eaa",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Fitting of the Europium model"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-1a2fbfa689",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET 1D Performance model for MEA (fitting)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-3fb4b5cee2",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Impregnation by immersion and blade coating"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/pemfc-4-fold-cell-benchtop-test-066328d595",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PEMFC 4-fold Cell Benchtop Test"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/time-series-of-cell-voltage-device",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Time series of cell voltage"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/6852fd43bb",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/c622c5d81a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property_reversed"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/17dea6c3db",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-002"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property_reversed"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/7cf0ab4551",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-003"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_parameter"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cell-temperature-8b58dd2512"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/e4b80dc6fe",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-004"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/6a4a7519fb",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-005"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-membrane-d12d5dda08"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/52faf62807",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-input-006"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-ptl-d9d7347fb8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/38bd2437fa",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/ef0aa5397e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-output-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/f6120a5058",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::core-output-002"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/fb3b4a20b1",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-7816239ebe"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-upstream-cea-exp-impregnation-immersion-blade-coating-cc5d898f4c"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-gdl-f026f659b8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/e2a328607a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-7ff7a11798"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-membrane-a8a44beaf3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/a0210cd305",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-788c71fcd8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_output"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/9f7bbd8e8b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-788c71fcd8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/input-cl-on-substrate-ac3a1c73df/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-substrate-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/c6ae6cf102",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-238c452690"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-cea-mod-europium-model-fitting-7ed4d249cc"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/a957d08e77",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-4c536437bf"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-ciemat-exp-effective-proton-conductivity-e0e81208da"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-eis-5865b26551"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/89c62f8812",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-fa8adfdae1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-3-mod-performance-model-mea-fitting-8d08851691"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-cell-polarization-curve-5de5263009"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/5e2f7542cd",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-ceace18e74"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-fzj-iet-4-exp-data-extraction-pewe-u-i-t-7cba304bce"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/projection/a112c5a6aa",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::context-b11f428b21"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-fitting-38641c5c18"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-hte-mod-pemfc-4-fold-cell-benchtop-test/node/output-time-series-of-cell-voltage-e3fc99a4ab"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    }
+  ]
+}

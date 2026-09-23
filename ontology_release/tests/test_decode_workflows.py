@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
+import re
+from collections import Counter
 from pathlib import Path
 
 from aimworks_ontology_release.decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
+from aimworks_ontology_release.decode_manual_overlay import ingest_decode_manual_json
 
 
 def _graphml(nodes: list[tuple[str, str]], edges: list[tuple[str, str]]) -> str:
@@ -328,3 +331,90 @@ semantic_projections: []
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
     }
     assert (tmp_path / "output" / "decode" / "decode_semantic_role_conflicts.csv").exists()
+
+
+def test_manual_overlay_reconciliation_counts_and_privacy() -> None:
+    root = Path(__file__).resolve().parents[1]
+    overlay = json.loads((root / "input" / "decode_manual_workflow_overlay.json").read_text(encoding="utf-8"))
+    counts = overlay["counts"]
+    assert counts["source_record_count"] == 102
+    assert counts["unique_method_count"] == 95
+    assert counts["matched_method_count"] == 79
+    assert counts["new_method_count"] == 16
+    assert counts["retained_graphml_workflow_count"] == 41
+    assert counts["resolved_missing_reference_value_count"] == 38
+    assert counts["unresolved_reference_value_count"] == 0
+    assert counts["new_core_node_count"] == 115
+    assert counts["new_core_edge_count"] == 99
+    assert counts["new_unique_io_concept_count"] == 62
+    assert len(overlay["reconciliation"]["duplicate_groups"]) == 7
+    serialized = json.dumps(overlay, ensure_ascii=False)
+    assert not re.search(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", serialized, flags=re.I)
+    assert '"contact"' not in serialized
+    assert '"decode_contact"' not in serialized
+
+
+def test_manual_overlay_build_adds_16_workflows_and_preserves_graphml(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    result = build_decode_workflow_release(
+        root / "input" / "decode_workflows_source.json",
+        tmp_path / "output",
+        root / "config" / "decode_workflow_mappings.yaml",
+        root / "input" / "current_ontology.jsonld",
+        include_multiscale_interface=True,
+        manual_overlay_path=root / "input" / "decode_manual_workflow_overlay.json",
+    )
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    validation = json.loads((tmp_path / "output" / "decode" / "decode_validation_report.json").read_text(encoding="utf-8"))
+    assert result["workflow_count"] == 137
+    assert len(graph["workflows"]) == 137
+    assert validation["status"] == "passed"
+    assert validation["base_graphml_workflow_count"] == 120
+    assert validation["base_graphml_node_count"] == 2951
+    assert validation["base_graphml_edge_count"] == 3986
+    assert validation["base_graphml_parity"] is True
+    assert graph["counts"]["base_graphml_workflow_count"] == 120
+    assert graph["counts"]["manual_workflow_count"] == 16
+    assert graph["counts"]["derived_workflow_count"] == 1
+    assert sum(workflow.get("source_kind") == "derived_schema" for workflow in graph["workflows"]) == 1
+    public_graph = json.dumps(graph, ensure_ascii=False)
+    assert not re.search(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", public_graph, flags=re.I)
+    assert not re.search(r"(?m)^\s*Owner:\s*[^:\n]+:[^\n]+$", public_graph)
+    manual = [workflow for workflow in graph["workflows"] if workflow.get("source_kind") == "source_manual_json"]
+    assert sum(workflow["core_node_count"] for workflow in manual) == 115
+    assert sum(workflow["core_edge_count"] for workflow in manual) == 99
+    assert (tmp_path / "output" / "decode" / "decode_workflow_dependencies.jsonld").exists()
+    assert (tmp_path / "output" / "decode" / "decode_workflow_dependencies.ttl").exists()
+
+
+def test_manual_dependency_and_mapping_decisions_are_traceable() -> None:
+    root = Path(__file__).resolve().parents[1]
+    overlay = json.loads((root / "input" / "decode_manual_workflow_overlay.json").read_text(encoding="utf-8"))
+    dependencies = overlay["workflow_dependencies"]
+    in_file = [row for row in dependencies if row["both_methods_in_manual_json"]]
+    states = Counter(row["reciprocity_state"] for row in in_file)
+    assert states == {
+        "confirmed_reciprocal": 328,
+        "confirmed_dependency_without_exact_handoff": 5,
+        "grounded_one_sided": 50,
+        "ungrounded_one_sided": 24,
+    }
+    tem = next(
+        row for row in dependencies
+        if row["upstream_method_id"] == "CEA-Exp-blade-coating-decal-transfer-ref-pefc-ccm"
+        and row["downstream_method_id"] == "CEA-Exp-tem-eds-analysis-CL"
+    )
+    assert tem["handoff_labels"] == ["CCM"]
+    assert tem["publication_status"] == "published_pending_review"
+    n2 = next(
+        row for row in dependencies
+        if row["upstream_method_id"] == "ICPEES-CNRS-Unistra-Exp-n2-adsorption-ex-situ"
+        and row["downstream_method_id"] == "FZJ-IET-3-Mod-ink-composition"
+    )
+    assert n2["handoff_labels"] == ["Catalyst pore size distribution"]
+
+    workflows = {workflow["external_method_id"]: workflow for workflow in overlay["new_workflows"]}
+    nitrogen = next(node for node in workflows["ICPEES-CNRS-Unistra-Exp-n2-adsorption-ex-situ"]["nodes"] if node["source_field"] == "method")
+    assert nitrogen["mapping_override"]["anchor_iri"].endswith("#NitrogenPhysisorptionMeasurement")
+    stardist_input = next(node for node in workflows["FZJ-Mod-StarDist-TEMSeg"]["nodes"] if node.get("source_field") == "input")
+    assert stardist_input["mapping_override"]["anchor_iri"].endswith("#MicrostructureImageDataset")

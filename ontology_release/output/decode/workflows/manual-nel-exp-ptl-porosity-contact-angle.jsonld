@@ -1,0 +1,263 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Measurement of PTL porosity and contact angle"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/method",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Measurement of PTL porosity and contact angle"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/output-ptl-porosity-a7857464ac"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/output-ptl-contact-angle-29a824dd69"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "method"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/measurement-of-ptl-porosity-and-contact-angle-ca87323694"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/input-ptl-d9d7347fb8"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-porosity-component"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-angle-bfdf5af6db"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/input-ptl-d9d7347fb8",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-ptl-d9d7347fb8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/output-ptl-porosity-a7857464ac",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL porosity"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-ptl-porosity-a7857464ac"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-porosity-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/output-ptl-contact-angle-29a824dd69",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL Contact Angle"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-ptl-contact-angle-29a824dd69"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-angle-bfdf5af6db"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/measurement-of-ptl-porosity-and-contact-angle-ca87323694",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Measurement of PTL porosity and contact angle"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-angle-bfdf5af6db",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL Contact Angle"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-porosity-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "PTL porosity"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/projection/71b73a411d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-nel-exp-ptl-porosity-contact-angle::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/input-ptl-d9d7347fb8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/projection/9c87b93f99",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-nel-exp-ptl-porosity-contact-angle::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-porosity-component"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/projection/c06fca021d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-nel-exp-ptl-porosity-contact-angle::core-output-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-porosity-contact-angle/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-contact-angle-bfdf5af6db"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    }
+  ]
+}

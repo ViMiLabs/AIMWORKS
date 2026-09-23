@@ -75,6 +75,7 @@ def run_release(
         project_root / "config" / "decode_workflow_mappings.yaml",
         input_path,
         include_multiscale_interface=True,
+        manual_overlay_path=project_root / "input" / "decode_manual_workflow_overlay.json",
     )
     tib_benchmark = build_tib_benchmark_package(
         input_path,

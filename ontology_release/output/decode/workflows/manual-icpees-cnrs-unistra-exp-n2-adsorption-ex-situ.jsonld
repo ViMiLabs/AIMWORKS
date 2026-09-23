@@ -1,0 +1,301 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "N2 Adsorption Ex-Situ PSD"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/method",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "N2 Adsorption Ex-Situ PSD"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "method"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#NitrogenPhysisorptionMeasurement"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/input-catalyst-powder-ceb45b3b74"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/input-catalyst-powder-ceb45b3b74",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst powder"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-catalyst-powder-ceb45b3b74"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst pore size distribution"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-catalyst-pore-size-distribution-cfa45b3bc7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET ink to composition model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-6e4e8153e3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst pore size distribution value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst pore size distribution"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-6e4e8153e3",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET ink to composition model"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/projection/0a4eb62458",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/input-catalyst-powder-ceb45b3b74"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/projection/1b011c6197",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/projection/b1f618083c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::context-aa21e7ec26"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/projection/4be2df764d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::context-aa21e7ec26"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ/node/output-catalyst-pore-size-distribution-cfa45b3bc7/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-pore-size-distribution-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    }
+  ]
+}

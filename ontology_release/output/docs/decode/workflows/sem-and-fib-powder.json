@@ -7,12 +7,21 @@
     "source_filename": "SEM_and_FIB_powder.graphml",
     "source_sha256": "3ac3ee509a80a2666f4ba6b69bf23c121dc1ccc0ef60465c75770f115af22d9c",
     "method_family": "microscopy",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 8,
+    "core_edge_count": 7,
     "mapping_status": "mapped",
     "source_node_count": 8,
     "source_edge_count": 7,
     "mapped_anchor_count": 8,
-    "cross_workflow_connection_count": 38
+    "cross_workflow_connection_count": 45
   },
   "nodes": [
     {
@@ -141,7 +150,7 @@
       "source_id": "n6",
       "label": "SEM and FIB (powder)",
       "native_category": "",
-      "description": "SEM and FIB (powder)\nOwner: CIEMAT:Susana Merino\nTask: T2.1\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n50 nm resolution\ninternal key: SEM and FIB (powder)0",
+      "description": "SEM and FIB (powder)\nOwner organization: CIEMAT\nTask: T2.1\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n50 nm resolution\ninternal key: SEM and FIB (powder)0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "sem-and-fib-powder",
@@ -161,7 +170,7 @@
       "source_id": "n7",
       "label": "IET ink to composition model",
       "native_category": "",
-      "description": "IET ink to composition model\nOwner: FZJ IET 3:Ying Sun\nTask: T1.4\nMaturity: established method\nDocumentation: DOI: 10.1016/j.electacta.2022.140850\nRange of validity or processability: unkonwn\ninternal key: IET ink to composition model0",
+      "description": "IET ink to composition model\nOwner organization: FZJ IET 3\nTask: T1.4\nMaturity: established method\nDocumentation: DOI: 10.1016/j.electacta.2022.140850\nRange of validity or processability: unkonwn\ninternal key: IET ink to composition model0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "sem-and-fib-powder",
@@ -174,6 +183,166 @@
       "role_assignment": "workflow_or_analysis",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    }
+  ],
+  "projection_nodes": [],
+  "anchors": [
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "kind": "anchor",
+      "label": "Catalyst active particle diameter",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "iet-ink-to-composition-model::n6",
+        "image-tem-data-parameter-extraction-3d::n2",
+        "sem-and-fib-powder::n3",
+        "tem-and-eds-analysis-of-mea::n2",
+        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material",
+      "kind": "anchor",
+      "label": "Catalyst elemental composition",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-fib-tomography-dataparameter-extraction-3d::n7",
+        "image-parameter-extraction-2d::n17",
+        "sem-and-fib-powder::n2"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material",
+      "kind": "anchor",
+      "label": "Catalyst morphology",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-tem-data-parameter-extraction-3d::n7",
+        "sem-and-fib-powder::n1",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-morphology-3ed9c4580b",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-morphology-3ed9c4580b"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
+      "kind": "anchor",
+      "label": "Catalyst Powder",
+      "state": "approved_h2kg",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "unreviewed",
+      "evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor.",
+      "occurrence_ids": [
+        "cl-for-rde::n0",
+        "dip-and-pull-operando-or-in-situ-xps::n0",
+        "dropcasted-ink-on-gc-tips::n0",
+        "gde-catalytic-layer-preparation::n0",
+        "ink-preparation-for-deposition-of-catalytic-layers::n0",
+        "irras-operando-or-in-situ-ftir::n0",
+        "operando-or-in-situ-xas-photon-out::n0",
+        "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n0",
+        "prism-preparation-for-atr-ftir::n1",
+        "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n0",
+        "rotating-ring-disk-electrode-rrde::n5",
+        "sem-and-fib-powder::n0",
+        "thin-windows-operando-or-in-situ-xps::n0",
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
+      "kind": "anchor",
+      "label": "Catalyst support particle diameter",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-tem-data-parameter-extraction-3d::n5",
+        "sem-and-fib-powder::n4"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material",
+      "kind": "anchor",
+      "label": "Electrocatalyst structure",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-tem-data-parameter-extraction-3d::n8",
+        "sem-and-fib-powder::n5"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "kind": "anchor",
+      "label": "IET ink to composition model",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-fitting::n19",
+        "cea-mea-model-europium-2d::n77",
+        "differential-cell-testing::n23",
+        "fitting-of-the-europium-model::n69",
+        "iet-1d-mea-with-water-transport-eis-model::n28",
+        "iet-1d-mea-with-water-transport-in-ccl-eis-model::n23",
+        "iet-1d-performance-model-for-mea-fitting::n19",
+        "iet-1d-performance-model-for-mea-prediction::n33",
+        "iet-composition-to-property-model::n19",
+        "iet-ink-to-composition-model::n22",
+        "image-fib-tomography-dataparameter-extraction-3d::n23",
+        "image-parameter-extraction-2d::n47",
+        "image-tem-data-parameter-extraction-3d::n17",
+        "in-situ-fourier-transformed-ir-in-atr-configuration::n14",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n15",
+        "sem-and-fib-powder::n7",
+        "tem-and-eds-analysis-of-mea::n9"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "kind": "anchor",
+      "label": "SEM and FIB (powder)",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "iet-ink-to-composition-model::n36",
+        "sem-and-fib-powder::n6"
+      ]
     }
   ],
   "source_edges": [
@@ -313,6 +482,353 @@
       "type": "occurrence_anchor_mapping"
     }
   ],
-  "semantic_edges": [],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "semantic_edges": [
+    {
+      "id": "semantic::sem-and-fib-powder::e0::3017789106",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "sem-and-fib-powder::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e0",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e1::47660c456b",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e1",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "evidence": "Measurement occurrence measures the mapped property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e2::9ed3e000f7",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "sem-and-fib-powder::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e2",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e3::ca1dc47b76",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "sem-and-fib-powder::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e3",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e4::be583fcdfa",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "sem-and-fib-powder::n4",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e4",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e5::cab398463c",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n6",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e5",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "evidence": "Measurement occurrence measures the mapped property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::sem-and-fib-powder::e6::21e11869e7",
+      "workflow_id": "sem-and-fib-powder",
+      "source": "sem-and-fib-powder::n7",
+      "target": "sem-and-fib-powder::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "sem-and-fib-powder::e6",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    }
+  ],
+  "edge_registry": [
+    {
+      "source_dependency_id": "sem-and-fib-powder::e0",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n0",
+      "source_node_id": "n0",
+      "source_graphml_id": "n0",
+      "source_label": "Catalyst powder",
+      "source_semantic_role": "Matter",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
+      "target_occurrence_id": "sem-and-fib-powder::n6",
+      "target_node_id": "n6",
+      "target_graphml_id": "n6",
+      "target_label": "SEM and FIB (powder)",
+      "target_semantic_role": "Measurement",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e0::3017789106"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e1",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
+      "source_graphml_id": "n6",
+      "source_label": "SEM and FIB (powder)",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "target_occurrence_id": "sem-and-fib-powder::n1",
+      "target_node_id": "n1",
+      "target_graphml_id": "n1",
+      "target_label": "Catalyst morphology",
+      "target_semantic_role": "Property",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e1::47660c456b"
+      ],
+      "semantic_direction": "derived_projection",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Measurement occurrence measures the mapped property."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e2",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
+      "source_graphml_id": "n6",
+      "source_label": "SEM and FIB (powder)",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "target_occurrence_id": "sem-and-fib-powder::n2",
+      "target_node_id": "n2",
+      "target_graphml_id": "n2",
+      "target_label": "Catalyst elemental composition",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e2::9ed3e000f7"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e3",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
+      "source_graphml_id": "n6",
+      "source_label": "SEM and FIB (powder)",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "target_occurrence_id": "sem-and-fib-powder::n3",
+      "target_node_id": "n3",
+      "target_graphml_id": "n3",
+      "target_label": "Catalyst active particle diameter",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e3::ca1dc47b76"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e4",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
+      "source_graphml_id": "n6",
+      "source_label": "SEM and FIB (powder)",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "target_occurrence_id": "sem-and-fib-powder::n4",
+      "target_node_id": "n4",
+      "target_graphml_id": "n4",
+      "target_label": "Catalyst support particle diameter",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e4::be583fcdfa"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e5",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
+      "source_graphml_id": "n6",
+      "source_label": "SEM and FIB (powder)",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
+      "target_occurrence_id": "sem-and-fib-powder::n5",
+      "target_node_id": "n5",
+      "target_graphml_id": "n5",
+      "target_label": "Electrocatalyst structure",
+      "target_semantic_role": "Property",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e5::cab398463c"
+      ],
+      "semantic_direction": "derived_projection",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Measurement occurrence measures the mapped property."
+    },
+    {
+      "source_dependency_id": "sem-and-fib-powder::e6",
+      "workflow_id": "sem-and-fib-powder",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "sem-and-fib-powder::n3",
+      "source_node_id": "n3",
+      "source_graphml_id": "n3",
+      "source_label": "Catalyst active particle diameter",
+      "source_semantic_role": "Matter",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target_occurrence_id": "sem-and-fib-powder::n7",
+      "target_node_id": "n7",
+      "target_graphml_id": "n7",
+      "target_label": "IET ink to composition model",
+      "target_semantic_role": "Process",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-model",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::sem-and-fib-powder::e6::21e11869e7"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+    }
+  ],
+  "workflow_dependencies": [
+    {
+      "id": "manual-dependency-0230-35facee647",
+      "upstream_method_id": "CIEMAT-Exp-sem-fib-powder",
+      "downstream_method_id": "FZJ-IET-3-Mod-ink-composition",
+      "upstream_workflow_id": "sem-and-fib-powder",
+      "downstream_workflow_id": "iet-ink-to-composition-model",
+      "declarations": [
+        "input_method",
+        "output_method"
+      ],
+      "reciprocity_state": "confirmed_reciprocal",
+      "handoff_labels": [
+        "Catalyst active particle diameter"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_confirmed",
+      "source_records": [
+        {
+          "record": "CIEMAT-Exp-sem-fib-powder",
+          "field": "output_method",
+          "value": "FZJ-IET-3-Mod-ink-composition"
+        },
+        {
+          "record": "FZJ-IET-3-Mod-ink-composition",
+          "field": "input_method",
+          "value": "CIEMAT-Exp-sem-fib-powder"
+        }
+      ],
+      "review_rationale": "Both method records declare the dependency and exact reviewed input/output handoff labels are shared.",
+      "both_methods_in_manual_json": true,
+      "upstream_occurrence_id": "sem-and-fib-powder::n6",
+      "downstream_occurrence_id": "iet-ink-to-composition-model::n22",
+      "source": "sem-and-fib-powder::n6",
+      "target": "iet-ink-to-composition-model::n22",
+      "semantic_source": "iet-ink-to-composition-model::n22",
+      "semantic_target": "sem-and-fib-powder::n6",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+      ],
+      "valid_endpoints": true
+    }
+  ],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }

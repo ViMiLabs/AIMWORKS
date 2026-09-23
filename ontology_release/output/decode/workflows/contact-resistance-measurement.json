@@ -7,12 +7,21 @@
     "source_filename": "Contact_resistance_measurement.graphml",
     "source_sha256": "fb9c18b8029c096a89ee6be516e07ab53d14d28cb0f91e2d60272a2c998701c1",
     "method_family": "other",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 3,
+    "core_edge_count": 2,
     "mapping_status": "mapped",
     "source_node_count": 3,
     "source_edge_count": 2,
     "mapped_anchor_count": 3,
-    "cross_workflow_connection_count": 0
+    "cross_workflow_connection_count": 5
   },
   "nodes": [
     {
@@ -61,7 +70,7 @@
       "source_id": "n2",
       "label": "Contact resistance measurement",
       "native_category": "",
-      "description": "Contact resistance measurement\nOwner: FZJ-IET-4:Andreas Glsen\nTask: T2.1\nMaturity: established method\nDocumentation: described in PhD thesis in preparation\nRange of validity or processability: \naverage value of the probe size is measured\ninternal key: Contact resistance measurement0",
+      "description": "Contact resistance measurement\nOwner organization: FZJ-IET-4\nTask: T2.1\nMaturity: established method\nDocumentation: described in PhD thesis in preparation\nRange of validity or processability: \naverage value of the probe size is measured\ninternal key: Contact resistance measurement0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "contact-resistance-measurement",
@@ -130,7 +139,12 @@
       "confidence": "reviewed_structural",
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
-        "contact-resistance-measurement::n0"
+        "contact-resistance-measurement::n0",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-large-scale-durability-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-ptl-d9d7347fb8",
+        "manual-nel-exp-ptl-bulk-resistance::input-ptl-d9d7347fb8",
+        "manual-nel-exp-ptl-porosity-contact-angle::input-ptl-d9d7347fb8"
       ]
     },
     {
@@ -248,11 +262,13 @@
       "workflow_id": "contact-resistance-measurement",
       "source_kind": "source_graphml",
       "source_occurrence_id": "contact-resistance-measurement::n0",
+      "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "PTL",
       "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ptl-component",
       "target_occurrence_id": "contact-resistance-measurement::n2",
+      "target_node_id": "n2",
       "target_graphml_id": "n2",
       "target_label": "Contact resistance measurement",
       "target_semantic_role": "Property",
@@ -272,11 +288,13 @@
       "workflow_id": "contact-resistance-measurement",
       "source_kind": "source_graphml",
       "source_occurrence_id": "contact-resistance-measurement::n2",
+      "source_node_id": "n2",
       "source_graphml_id": "n2",
       "source_label": "Contact resistance measurement",
       "source_semantic_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-resistance-measurement-method",
       "target_occurrence_id": "contact-resistance-measurement::n1",
+      "target_node_id": "n1",
       "target_graphml_id": "n1",
       "target_label": "PTL contact resistance",
       "target_semantic_role": "Property",
@@ -296,5 +314,6 @@
       "rationale": "Property-valued workflow dependency is represented as provenance between DataPoint proxies."
     }
   ],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "workflow_dependencies": [],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }

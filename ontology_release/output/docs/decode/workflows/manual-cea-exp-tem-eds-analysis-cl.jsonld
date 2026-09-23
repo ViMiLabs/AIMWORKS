@@ -1,0 +1,808 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "TEM and EDS analysis of CL"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "TEM and EDS analysis of CL"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "method"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/tem-and-eds-analysis-of-cl-51104f6090"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-cl-on-glassy-carbon-e7444df106"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CCM"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-ccm-2acdae4ac5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystCoatedMembrane"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-cl-on-glassy-carbon-e7444df106",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on glassy carbon"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-cl-on-glassy-carbon-e7444df106"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-glassy-carbon-component"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-catalyst-active-particle-diameter-05e2cc4fda"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle radius distribution"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-catalyst-active-particle-radius-distribution-713aaacc30"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Blade coating and Decal transfer for ref PEFC CCM"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/blade-coating-and-decal-transfer-for-ref-pefc-ccm-016403cf5a"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET ink to composition model"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-6e4e8153e3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model coupled with performance model prediction"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-prediction-2c30faebff"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model prediction"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-prediction-83484b17af"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrospray deposition of Catalyst Layers"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrospray-deposition-of-catalyst-layers-c649dac006"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ultrasonic spray deposition for catalytic layers"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ultrasonic-spray-deposition-for-catalytic-layers-0afa8edef1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle radius distribution value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-prediction-2c30faebff",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model coupled with performance model prediction"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-prediction-83484b17af",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "0D Particle population degradation model prediction"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/blade-coating-and-decal-transfer-for-ref-pefc-ccm-016403cf5a",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Blade coating and Decal transfer for ref PEFC CCM"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle diameter"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst active particle radius distribution"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-glassy-carbon-component",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "CL on glassy carbon"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrospray-deposition-of-catalyst-layers-c649dac006",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrospray deposition of Catalyst Layers"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-ink-to-composition-model-6e4e8153e3",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IET ink to composition model"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/tem-and-eds-analysis-of-cl-51104f6090",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "TEM and EDS analysis of CL"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ultrasonic-spray-deposition-for-catalytic-layers-0afa8edef1",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Ultrasonic spray deposition for catalytic layers"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/a00a75187a",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/cf4a7c6a9b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::core-input-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-cl-on-glassy-carbon-e7444df106"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/05628239dc",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/a5b3f0804d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::core-output-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/c28e7fa625",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-1cd6126e5b"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-cea-exp-blade-coating-decal-transfer-ref-pefc-ccm-46ed6cae49"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/d0f06298c3",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-8e56aac03e"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/3aa70963c2",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-13d788c003"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/2fe801af94",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-13d788c003"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/10a7cda6a3",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-07e408d69a"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-downstream-0d-particle-population-degradation-model-prediction-7191e149bb"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/8db390988e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-07e408d69a"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-radius-distribution-713aaacc30/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/5e839b131c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-a701fc8ae5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-ciemat-exp-electrospray-deposition-catalyst-layers-dc343fd691"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/projection/e1e0b2f95d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-cea-exp-tem-eds-analysis-cl::context-82a5f779cd"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/linked-upstream-ultrasonic-spray-deposition-for-catalytic-layers-5c89ca29e5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/input-ccm-2acdae4ac5"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial"
+        }
+      ]
+    }
+  ]
+}

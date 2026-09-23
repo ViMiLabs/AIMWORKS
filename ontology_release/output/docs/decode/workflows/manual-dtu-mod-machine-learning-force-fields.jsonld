@@ -1,0 +1,889 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "decode": "https://w3id.org/h2kg/decode/workflow/"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields",
+      "@type": [
+        "http://www.w3.org/ns/prov#Bundle"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Machine learning force fields"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Machine learning force fields"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-species-distribution-idealized-6b9fbf0636"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "method"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/machine-learning-force-fields-dbe5cc3888"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-species-distribution-idealized-6b9fbf0636"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode chemistry"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-electrode-chemistry-94d6976a54"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode morphology"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-electrode-morphology-c57f796a7f"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-morphology-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte composition"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "input-electrolyte-composition-e69e18ddfd"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LRE capacitance (idealized)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-lre-capacitance-idealized-291561ad11"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-capacitance-idealized-lre"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-species-distribution-idealized-6b9fbf0636",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LRE species distribution (idealized)"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "output-lre-species-distribution-idealized-6b9fbf0636"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-species-distribution-idealized-lre"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-dip-and-pull-operando-or-in-situ-xps-fe5159303d",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "dip-and-pull operando or in-situ XPS"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-dip-and-pull-operando-or-in-situ-xps-fe5159303d"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/dip-and-pull-operando-or-in-situ-xps-85de9450c9"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-irras-operando-or-in-situ-ftir-249aa3e628",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IRRAS operando or in-situ FTIR"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-irras-operando-or-in-situ-ftir-249aa3e628"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/irras-operando-or-in-situ-ftir-a4abd0119a"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-operando-or-in-situ-xas-photon-out-891ddb1e6d",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "operando or in-situ XAS photon-out"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-operando-or-in-situ-xas-photon-out-891ddb1e6d"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/operando-or-in-situ-xas-photon-out-be19c9fe9e"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy-bab0732bd2",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "operando SAXS or WAXS small or wide angle X-ray spectroscopy"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy-bab0732bd2"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy-1fe4fe5cbe"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-thin-windows-operando-or-in-situ-xps-aa61cd383a",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "thin windows operando or in-situ XPS"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependency": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceNodeId": [
+        "linked-upstream-thin-windows-operando-or-in-situ-xps-aa61cd383a"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/thin-windows-operando-or-in-situ-xps-d2c02e237a"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode chemistry value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode morphology value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-morphology-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-morphology-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LRE capacitance (idealized) value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-capacitance-idealized-lre"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-capacitance-idealized-lre"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/dip-and-pull-operando-or-in-situ-xps-85de9450c9",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "dip-and-pull operando or in-situ XPS"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode chemistry"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-morphology-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrode morphology"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Electrolyte Composition"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/irras-operando-or-in-situ-ftir-a4abd0119a",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "IRRAS operando or in-situ FTIR"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-capacitance-idealized-lre",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LRE capacitance (idealized)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-species-distribution-idealized-lre",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "LRE species distribution (idealized)"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/machine-learning-force-fields-dbe5cc3888",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Machine learning force fields"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/operando-or-in-situ-xas-photon-out-be19c9fe9e",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "operando or in-situ XAS photon-out"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy-1fe4fe5cbe",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "operando SAXS or WAXS small or wide angle X-ray spectroscopy"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/anchor/thin-windows-operando-or-in-situ-xps-d2c02e237a",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "thin windows operando or in-situ XPS"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/9361111650",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/e0eb2c1e71",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-chemistry-94d6976a54/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/c548cb3841",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/4d17b7cd13",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrode-morphology-c57f796a7f/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-morphology-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/fccf8eab7c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-input-002"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_input_material"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/input-electrolyte-composition-e69e18ddfd"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/dce049352e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_output"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/19eac50cd5",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-output-000"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-capacitance-idealized-291561ad11/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/lre-capacitance-idealized-lre"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/f6c7f915d1",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::core-output-001"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_output_data"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/method"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/output-lre-species-distribution-idealized-6b9fbf0636"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/66db93c43f",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::context-93d179de93"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-dip-and-pull-operando-or-in-situ-xps-fe5159303d"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/6df57a9c1e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::context-879fbb8882"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-irras-operando-or-in-situ-ftir-249aa3e628"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/6463ac7959",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::context-5db42acd6a"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-operando-or-in-situ-xas-photon-out-891ddb1e6d"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/9bce208068",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::context-10be1703f1"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy-bab0732bd2"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/projection/c0bb61f3bc",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-dtu-mod-machine-learning-force-fields::context-51a5488d52"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "measurement_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-dtu-mod-machine-learning-force-fields/node/linked-upstream-thin-windows-operando-or-in-situ-xps-aa61cd383a"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
+        }
+      ]
+    }
+  ]
+}

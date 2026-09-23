@@ -208,6 +208,8 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
         "title": "IET multiscale model interface (PDF-derived schema)",
         "source_filename": str(manifest.get("source", {}).get("filename", "Modeling methods inputs outputs FZJ.pdf")),
         "source_sha256": str(manifest.get("source", {}).get("sha256", "")),
+        "source_kind": "derived_schema",
+        "source_format": "pdf_interface_manifest",
         "method_family": "modeling_interface_schema",
         "source_status": "derived_pdf_schema",
         "mapping_status": "reviewed_schema",

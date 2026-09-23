@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .docs import build_docs
 from .decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
+from .decode_manual_overlay import ingest_decode_manual_json
 from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
@@ -39,9 +40,15 @@ def main() -> None:
         if command in {"decode-build", "decode-apply-aliases"}:
             sub.add_argument("--snapshot", default="input/decode_workflows_source.json")
             sub.add_argument("--mapping-config", default="config/decode_workflow_mappings.yaml")
+        if command == "decode-build":
+            sub.add_argument("--manual-overlay", default="input/decode_manual_workflow_overlay.json")
     decode_ingest = subparsers.add_parser("decode-ingest")
     decode_ingest.add_argument("--source-dir", required=True)
     decode_ingest.add_argument("--snapshot", default="input/decode_workflows_source.json")
+    decode_manual = subparsers.add_parser("decode-ingest-manual")
+    decode_manual.add_argument("--source", required=True)
+    decode_manual.add_argument("--snapshot", default="input/decode_workflows_source.json")
+    decode_manual.add_argument("--overlay", default="input/decode_manual_workflow_overlay.json")
     annotate = subparsers.add_parser("annotate")
     annotate.add_argument("--input", required=True)
     annotate.add_argument("--draft-llm", action="store_true")
@@ -115,6 +122,14 @@ def main() -> None:
         if not snapshot.is_absolute():
             snapshot = project_root / snapshot
         result = ingest_decode_graphml_directory(args.source_dir, snapshot)
+    elif args.command == "decode-ingest-manual":
+        snapshot = Path(args.snapshot)
+        overlay = Path(args.overlay)
+        if not snapshot.is_absolute():
+            snapshot = project_root / snapshot
+        if not overlay.is_absolute():
+            overlay = project_root / overlay
+        result = ingest_decode_manual_json(args.source, overlay, snapshot)
     elif args.command == "decode-build":
         snapshot = Path(args.snapshot)
         mapping_config = Path(args.mapping_config)
@@ -122,7 +137,17 @@ def main() -> None:
             snapshot = project_root / snapshot
         if not mapping_config.is_absolute():
             mapping_config = project_root / mapping_config
-        result = build_decode_workflow_release(snapshot, output, mapping_config, input_path, include_multiscale_interface=True)
+        manual_overlay = Path(args.manual_overlay)
+        if not manual_overlay.is_absolute():
+            manual_overlay = project_root / manual_overlay
+        result = build_decode_workflow_release(
+            snapshot,
+            output,
+            mapping_config,
+            input_path,
+            include_multiscale_interface=True,
+            manual_overlay_path=manual_overlay,
+        )
     elif args.command == "decode-apply-aliases":
         mapping_config = Path(args.mapping_config)
         if not mapping_config.is_absolute():

@@ -1,0 +1,20 @@
+@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Measurement> ; rdfs:label "Porous Transport Layer Bulk Resistance" .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/porous-transport-layer-bulk-resistance-dea93cd47e> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/input-ptl-d9d7347fb8> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "PTL" .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/input-ptl-d9d7347fb8> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/ptl-component> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/output-ptl-bulk-resistance-89a98c1383> a prov:Entity, <https://w3id.org/h2kg/hydrogen-ontology#Property> ; rdfs:label "PTL bulk resistance" .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/output-ptl-bulk-resistance-89a98c1383> decode:mappedToAnchor <https://w3id.org/h2kg/decode/workflow/anchor/ptl-bulk-resistance-141ca35fe5> .
+<https://w3id.org/h2kg/decode/workflow/anchor/porous-transport-layer-bulk-resistance-dea93cd47e> a <https://w3id.org/h2kg/hydrogen-ontology#Measurement> ; rdfs:label "Porous Transport Layer Bulk Resistance" .
+<https://w3id.org/h2kg/decode/workflow/anchor/ptl-component> a <https://w3id.org/h2kg/hydrogen-ontology#Matter> ; rdfs:label "PTL" .
+<https://w3id.org/h2kg/decode/workflow/anchor/ptl-bulk-resistance-141ca35fe5> a <https://w3id.org/h2kg/hydrogen-ontology#Property> ; rdfs:label "PTL bulk resistance" .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/input-ptl-d9d7347fb8> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> decode:sourceDependency <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/output-ptl-bulk-resistance-89a98c1383> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> <https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial> <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/input-ptl-d9d7347fb8> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/projection/ddb271764a> a decode:SemanticProjection ; decode:sourceDependencyId "manual-nel-exp-ptl-bulk-resistance::core-input-000" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "activity_input_material" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/input-ptl-d9d7347fb8> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> <https://w3id.org/h2kg/hydrogen-ontology#measures> <https://w3id.org/h2kg/decode/workflow/anchor/ptl-bulk-resistance-141ca35fe5> .
+<https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/projection/dc11ae30b2> a decode:SemanticProjection ; decode:sourceDependencyId "manual-nel-exp-ptl-bulk-resistance::core-output-000" ; decode:projectionOutcome "h2kg_direct" ; decode:projectionPattern "measurement_property" ; decode:semanticSource <https://w3id.org/h2kg/decode/workflow/manual-nel-exp-ptl-bulk-resistance/node/method> ; decode:semanticTarget <https://w3id.org/h2kg/decode/workflow/anchor/ptl-bulk-resistance-141ca35fe5> ; decode:semanticPredicate <https://w3id.org/h2kg/hydrogen-ontology#measures> .

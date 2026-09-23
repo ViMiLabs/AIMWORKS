@@ -7,7 +7,16 @@
     "source_filename": "Rheology.graphml",
     "source_sha256": "8c3ffd86a8afd353f25cb81d9d2f1de4784c0cd0d70aeff2f496b0dddb769044",
     "method_family": "other",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 6,
+    "core_edge_count": 5,
     "mapping_status": "mapped",
     "source_node_count": 6,
     "source_edge_count": 5,
@@ -81,7 +90,7 @@
       "source_id": "n3",
       "label": "Rheology",
       "native_category": "",
-      "description": "Rheology\nOwner: FZJ-IET-2:Dominik Dworschak\nTask: T.2.1, T2.5\nMaturity: established method\nDocumentation: \nRange of validity or processability: \nno bigger particles involved in suspension\ninternal key: Rheology0",
+      "description": "Rheology\nOwner organization: FZJ-IET-2\nTask: T.2.1, T2.5\nMaturity: established method\nDocumentation: \nRange of validity or processability: \nno bigger particles involved in suspension\ninternal key: Rheology0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "rheology",
@@ -101,7 +110,7 @@
       "source_id": "n4",
       "label": "Roller mixer and zirconia beads for ref PEFC inks",
       "native_category": "",
-      "description": "Roller mixer and zirconia beads for ref PEFC inks\nOwner: CEA:Pierre TOUDRET\nTask: T1.4\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n\ninternal key: Roller mixer and zirconia beads for ref PEFC inks0",
+      "description": "Roller mixer and zirconia beads for ref PEFC inks\nOwner organization: CEA\nTask: T1.4\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n\ninternal key: Roller mixer and zirconia beads for ref PEFC inks0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "rheology",
@@ -121,7 +130,7 @@
       "source_id": "n5",
       "label": "Ink preparation for deposition of catalytic layers",
       "native_category": "",
-      "description": "Ink preparation for deposition of catalytic layers\nOwner: CIEMAT:Ester Daz lvarez\nTask: T2.4\nMaturity: established method\nDocumentation: DOI: 10.1149/1.3425740\nRange of validity or processability: \nPt/C: 0.01 - 0.5 mgPt/cm^2 (electrode loading)Ionomer: 0 - 40 wt% (catalyst layer)Solvent: 1 - 10 wt% (ink)\ninternal key: Ink preparation for deposition of catalytic layers0",
+      "description": "Ink preparation for deposition of catalytic layers\nOwner organization: CIEMAT\nTask: T2.4\nMaturity: established method\nDocumentation: DOI: 10.1149/1.3425740\nRange of validity or processability: \nPt/C: 0.01 - 0.5 mgPt/cm^2 (electrode loading)Ionomer: 0 - 40 wt% (catalyst layer)Solvent: 1 - 10 wt% (ink)\ninternal key: Ink preparation for deposition of catalytic layers0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "rheology",
@@ -134,6 +143,108 @@
       "role_assignment": "physical_manufacturing_workflow",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    }
+  ],
+  "projection_nodes": [],
+  "anchors": [
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk",
+      "kind": "anchor",
+      "label": "Catalyst Ink",
+      "state": "approved_h2kg",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "unreviewed",
+      "evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-ink anchor.",
+      "occurrence_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n0",
+        "electrospray-deposition-of-catalyst-layers::n0",
+        "ink-preparation-for-deposition-of-catalytic-layers::n6",
+        "rheology::n0",
+        "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n6",
+        "turbiscan-transmission-and-backscattering-stability-testing::n0"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-rheologic-properties-material",
+      "kind": "anchor",
+      "label": "Catalyst ink rheologic properties",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "rheology::n1"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-material",
+      "kind": "anchor",
+      "label": "Catalyst ink stability",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "rheology::n2"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ink-preparation-for-deposition-of-catalytic-layers-process",
+      "kind": "anchor",
+      "label": "Ink preparation for deposition of catalytic layers",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
+      "semantic_role": "Manufacturing",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n16",
+        "electrospray-deposition-of-catalyst-layers::n19",
+        "ink-preparation-for-deposition-of-catalytic-layers::n7",
+        "rheology::n5",
+        "turbiscan-transmission-and-backscattering-stability-testing::n4"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/rheology-method",
+      "kind": "anchor",
+      "label": "Rheology",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "ink-preparation-for-deposition-of-catalytic-layers::n9",
+        "rheology::n3",
+        "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n9"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method",
+      "kind": "anchor",
+      "label": "Roller mixer and zirconia beads for ref PEFC inks",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
+      "semantic_role": "Manufacturing",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n11",
+        "electrospray-deposition-of-catalyst-layers::n16",
+        "rheology::n4",
+        "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
+        "turbiscan-transmission-and-backscattering-stability-testing::n3"
+      ]
     }
   ],
   "source_edges": [
@@ -237,6 +348,308 @@
       "type": "occurrence_anchor_mapping"
     }
   ],
-  "semantic_edges": [],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "semantic_edges": [
+    {
+      "id": "semantic::rheology::e0::8c1820cb1e",
+      "workflow_id": "rheology",
+      "source": "rheology::n3",
+      "target": "rheology::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "rheology::e0",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::rheology::e1::b57add59f4",
+      "workflow_id": "rheology",
+      "source": "rheology::n3",
+      "target": "rheology::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "rheology::e1",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::rheology::e2::ecf02e86f6",
+      "workflow_id": "rheology",
+      "source": "rheology::n3",
+      "target": "rheology::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "rheology::e2",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::rheology::e3::79e3e5840e",
+      "workflow_id": "rheology",
+      "source": "rheology::n4",
+      "target": "rheology::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "rheology::e3",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::rheology::e4::a923adf00f",
+      "workflow_id": "rheology",
+      "source": "rheology::n5",
+      "target": "rheology::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "rheology::e4",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    }
+  ],
+  "edge_registry": [
+    {
+      "source_dependency_id": "rheology::e0",
+      "workflow_id": "rheology",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "rheology::n0",
+      "source_node_id": "n0",
+      "source_graphml_id": "n0",
+      "source_label": "Catalyst ink",
+      "source_semantic_role": "Matter",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk",
+      "target_occurrence_id": "rheology::n3",
+      "target_node_id": "n3",
+      "target_graphml_id": "n3",
+      "target_label": "Rheology",
+      "target_semantic_role": "Measurement",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rheology-method",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::rheology::e0::8c1820cb1e"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
+    },
+    {
+      "source_dependency_id": "rheology::e1",
+      "workflow_id": "rheology",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "rheology::n3",
+      "source_node_id": "n3",
+      "source_graphml_id": "n3",
+      "source_label": "Rheology",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rheology-method",
+      "target_occurrence_id": "rheology::n1",
+      "target_node_id": "n1",
+      "target_graphml_id": "n1",
+      "target_label": "Catalyst ink rheologic properties",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-rheologic-properties-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::rheology::e1::b57add59f4"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "rheology::e2",
+      "workflow_id": "rheology",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "rheology::n3",
+      "source_node_id": "n3",
+      "source_graphml_id": "n3",
+      "source_label": "Rheology",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rheology-method",
+      "target_occurrence_id": "rheology::n2",
+      "target_node_id": "n2",
+      "target_graphml_id": "n2",
+      "target_label": "Catalyst ink stability",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-ink-stability-material",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::rheology::e2::ecf02e86f6"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "rheology::e3",
+      "workflow_id": "rheology",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "rheology::n4",
+      "source_node_id": "n4",
+      "source_graphml_id": "n4",
+      "source_label": "Roller mixer and zirconia beads for ref PEFC inks",
+      "source_semantic_role": "Manufacturing",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/roller-mixer-and-zirconia-beads-for-ref-pefc-inks-method",
+      "target_occurrence_id": "rheology::n0",
+      "target_node_id": "n0",
+      "target_graphml_id": "n0",
+      "target_label": "Catalyst ink",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::rheology::e3::79e3e5840e"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    },
+    {
+      "source_dependency_id": "rheology::e4",
+      "workflow_id": "rheology",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "rheology::n5",
+      "source_node_id": "n5",
+      "source_graphml_id": "n5",
+      "source_label": "Ink preparation for deposition of catalytic layers",
+      "source_semantic_role": "Manufacturing",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ink-preparation-for-deposition-of-catalytic-layers-process",
+      "target_occurrence_id": "rheology::n0",
+      "target_node_id": "n0",
+      "target_graphml_id": "n0",
+      "target_label": "Catalyst ink",
+      "target_semantic_role": "Matter",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::rheology::e4::a923adf00f"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity produces the target material."
+    }
+  ],
+  "workflow_dependencies": [
+    {
+      "id": "manual-dependency-0111-7d3e1a2795",
+      "upstream_method_id": "CEA-Exp-roller-mixer-zirconia-beads-ref-pefc-inks",
+      "downstream_method_id": "FZJ-IET-2-Exp-rheology",
+      "upstream_workflow_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks",
+      "downstream_workflow_id": "rheology",
+      "declarations": [
+        "input_method",
+        "output_method"
+      ],
+      "reciprocity_state": "confirmed_reciprocal",
+      "handoff_labels": [
+        "Catalyst ink"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_confirmed",
+      "source_records": [
+        {
+          "record": "CEA-Exp-roller-mixer-zirconia-beads-ref-pefc-inks",
+          "field": "output_method",
+          "value": "FZJ-IET-2-Exp-rheology"
+        },
+        {
+          "record": "FZJ-IET-2-Exp-rheology",
+          "field": "input_method",
+          "value": "CEA-Exp-roller-mixer-zirconia-beads-ref-pefc-inks"
+        }
+      ],
+      "review_rationale": "Both method records declare the dependency and exact reviewed input/output handoff labels are shared.",
+      "both_methods_in_manual_json": true,
+      "upstream_occurrence_id": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
+      "downstream_occurrence_id": "rheology::n3",
+      "source": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
+      "target": "rheology::n3",
+      "semantic_source": "rheology::n3",
+      "semantic_target": "roller-mixer-and-zirconia-beads-for-ref-pefc-inks::n7",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk"
+      ],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0193-ba5859609d",
+      "upstream_method_id": "CIEMAT-Exp-ink-preparation-deposition-catalytic-layers",
+      "downstream_method_id": "FZJ-IET-2-Exp-rheology",
+      "upstream_workflow_id": "ink-preparation-for-deposition-of-catalytic-layers",
+      "downstream_workflow_id": "rheology",
+      "declarations": [
+        "input_method",
+        "output_method"
+      ],
+      "reciprocity_state": "confirmed_reciprocal",
+      "handoff_labels": [
+        "Catalyst ink"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_confirmed",
+      "source_records": [
+        {
+          "record": "CIEMAT-Exp-ink-preparation-deposition-catalytic-layers",
+          "field": "output_method",
+          "value": "FZJ-IET-2-Exp-rheology"
+        },
+        {
+          "record": "FZJ-IET-2-Exp-rheology",
+          "field": "input_method",
+          "value": "CIEMAT-Exp-ink-preparation-deposition-catalytic-layers"
+        }
+      ],
+      "review_rationale": "Both method records declare the dependency and exact reviewed input/output handoff labels are shared.",
+      "both_methods_in_manual_json": true,
+      "upstream_occurrence_id": "ink-preparation-for-deposition-of-catalytic-layers::n7",
+      "downstream_occurrence_id": "rheology::n3",
+      "source": "ink-preparation-for-deposition-of-catalytic-layers::n7",
+      "target": "rheology::n3",
+      "semantic_source": "rheology::n3",
+      "semantic_target": "ink-preparation-for-deposition-of-catalytic-layers::n7",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystInk"
+      ],
+      "valid_endpoints": true
+    }
+  ],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }

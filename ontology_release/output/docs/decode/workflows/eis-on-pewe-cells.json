@@ -7,12 +7,21 @@
     "source_filename": "EIS_on_PEWE_cells.graphml",
     "source_sha256": "00d974eba149030a8bbef8d9bb97497f6347e02a6e7b504276351b5db40c315c",
     "method_family": "electrochemical_testing",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 8,
+    "core_edge_count": 7,
     "mapping_status": "mapped",
     "source_node_count": 8,
     "source_edge_count": 7,
     "mapped_anchor_count": 8,
-    "cross_workflow_connection_count": 75
+    "cross_workflow_connection_count": 79
   },
   "nodes": [
     {
@@ -121,7 +130,7 @@
       "source_id": "n5",
       "label": "EIS on PEWE cells",
       "native_category": "",
-      "description": "EIS on PEWE cells\nOwner: FZJ-IET-4:Andreas Glsen\nTask: T2.4\nMaturity: established method\nDocumentation: \nRange of validity or processability: \noperating window of potentiostat\ninternal key: EIS on PEWE cells0",
+      "description": "EIS on PEWE cells\nOwner organization: FZJ-IET-4\nTask: T2.4\nMaturity: established method\nDocumentation: \nRange of validity or processability: \noperating window of potentiostat\ninternal key: EIS on PEWE cells0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "eis-on-pewe-cells",
@@ -141,7 +150,7 @@
       "source_id": "n6",
       "label": "IET 1D Performance model for MEA (fitting)",
       "native_category": "",
-      "description": "IET 1D Performance model for MEA (fitting)\nOwner: FZJ-IET-3:Ying Sun\nTask: T1.4\nMaturity: under development\nDocumentation: \nRange of validity or processability: \nCCL+GDL\ninternal key: IET 1D Performance model for MEA (fitting)0",
+      "description": "IET 1D Performance model for MEA (fitting)\nOwner organization: FZJ-IET-3\nTask: T1.4\nMaturity: under development\nDocumentation: \nRange of validity or processability: \nCCL+GDL\ninternal key: IET 1D Performance model for MEA (fitting)0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "eis-on-pewe-cells",
@@ -161,7 +170,7 @@
       "source_id": "n7",
       "label": "Fitting of the Europium model",
       "native_category": "",
-      "description": "Fitting of the Europium model\nOwner: CEA:Pascal Schott\nTask: T2.2\nMaturity: established method\nDocumentation: \nRange of validity or processability: \nNumerous validations on experiments (polarization curves) but difficult to define a validity range,the applicability of the model is large,its validity (compared to experiments) depends on the range of the fitting and the accuracy requested\ninternal key: Fitting of the Europium model0",
+      "description": "Fitting of the Europium model\nOwner organization: CEA\nTask: T2.2\nMaturity: established method\nDocumentation: \nRange of validity or processability: \nNumerous validations on experiments (polarization curves) but difficult to define a validity range,the applicability of the model is large,its validity (compared to experiments) depends on the range of the fitting and the accuracy requested\ninternal key: Fitting of the Europium model0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "eis-on-pewe-cells",
@@ -174,6 +183,200 @@
       "role_assignment": "workflow_or_analysis",
       "confidence": "reviewed_structural",
       "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+    }
+  ],
+  "projection_nodes": [],
+  "anchors": [
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-charge-transfer-resistance-device",
+      "kind": "anchor",
+      "label": "Cell charge transfer resistance",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "eis-on-pewe-cells::n3"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device",
+      "kind": "anchor",
+      "label": "Cell high-frequency resistance",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "data-extraction-from-existing-pewe-measurements-u-i-t::n2",
+        "differential-cell-testing::n7",
+        "eis-on-pewe-cells::n2",
+        "fitting-of-the-europium-model::n2",
+        "iet-1d-performance-model-for-mea-fitting::n7",
+        "manual-ciemat-exp-single-cell-polarization-eis::output-cell-high-frequency-resistance-c721bb08a1"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-mass-transport-resistance-device",
+      "kind": "anchor",
+      "label": "Cell mass transport resistance",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "eis-on-pewe-cells::n4"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity",
+      "kind": "anchor",
+      "label": "Current Density",
+      "state": "approved_h2kg",
+      "decision": "strict_alt_label",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "high",
+      "evidence": "Reviewed cell-level naming variant for current density.",
+      "occurrence_ids": [
+        "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n3",
+        "determination-of-cl-saturation-by-saxs-or-sans::n5",
+        "eis-on-pewe-cells::n1",
+        "iet-1d-mea-with-water-transport-eis-model::n22",
+        "iet-1d-mea-with-water-transport-in-ccl-eis-model::n17",
+        "irras-operando-or-in-situ-ftir::n4",
+        "mpl-saturation-determination-from-x-ray-ct-data::n5",
+        "neutron-imaging::n4",
+        "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n5",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-cell-current-density-e6d7e79d93",
+        "manual-nel-exp-large-scale-durability-test::input-cell-current-density-e6d7e79d93",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-cell-current-density-e6d7e79d93"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "kind": "anchor",
+      "label": "EIS on PEWE cells",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "eis-on-pewe-cells::n5",
+        "fitting-of-the-europium-model::n123",
+        "iet-1d-performance-model-for-mea-fitting::n37"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
+      "kind": "anchor",
+      "label": "Fitting of the Europium model",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n54",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n52",
+        "cea-mea-model-europium-2d::n125",
+        "ct-based-capillary-pressure-saturation-curves::n20",
+        "current-modulated-hydrogen-flow-rate-spectroscopy-ch2s::n36",
+        "data-extraction-from-existing-pewe-measurements-u-i-t::n8",
+        "determination-of-cl-saturation-by-saxs-or-sans::n22",
+        "differential-cell-testing::n36",
+        "diffusivities-from-tortuosities::n40",
+        "distribution-of-contact-angles-in-ccl-fib-sem-image-from-ionomer-reconstruction::n15",
+        "eis-on-pewe-cells::n7",
+        "electrical-conductivity::n26",
+        "electrical-contact-resistance::n27",
+        "electrical-tlm-characterization-of-a-gdl-with-defined-compression::n26",
+        "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n20",
+        "fitting-of-the-europium-model::n61",
+        "gas-permeability-of-a-gdl-with-defined-compression::n26",
+        "gdl-compressability::n21",
+        "hg-porosimetry-gdl::n14",
+        "iet-1d-mea-with-water-transport-eis-model::n50",
+        "iet-1d-mea-with-water-transport-in-ccl-eis-model::n41",
+        "iet-1d-performance-model-for-mea-fitting::n35",
+        "iet-1d-performance-model-for-mea-prediction::n57",
+        "iet-composition-to-property-model::n26",
+        "iet-ink-to-composition-model::n38",
+        "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n20",
+        "image-fib-tomography-dataparameter-extraction-3d::n37",
+        "image-parameter-extraction-2d::n40",
+        "image-x-ray-tomography-data-parameter-extraction-3d::n33",
+        "microscopy-sem-and-optical-in-mea-cross-section::n27",
+        "mpl-parameter-estimation-from-gdl-and-substrate-data::n47",
+        "pulsed-gas-analysis::n9",
+        "sem-and-edx::n42",
+        "sem-and-fib-layer::n24",
+        "simulation-of-single-phase-3d-apparent-properties::n29",
+        "simulation-of-two-phase-3d-apparent-properties::n30",
+        "voxel-based-3d-effective-diffusivity-simulation::n26",
+        "voxel-based-3d-electric-conductiviy-simulation::n19",
+        "voxel-based-3d-permability-simulation::n19",
+        "voxel-based-3d-thermal-conductivity-simulation::n19",
+        "water-retention-curve-simulation::n29"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-model",
+      "kind": "anchor",
+      "label": "IET 1D Performance model for MEA (fitting)",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n35",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n35",
+        "cea-mea-model-europium-2d::n74",
+        "data-extraction-from-existing-pewe-measurements-u-i-t::n7",
+        "differential-cell-testing::n17",
+        "eis-on-pewe-cells::n6",
+        "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n24",
+        "fitting-of-the-europium-model::n64",
+        "gdl-compressability::n9",
+        "iet-1d-mea-with-water-transport-eis-model::n26",
+        "iet-1d-mea-with-water-transport-in-ccl-eis-model::n21",
+        "iet-1d-performance-model-for-mea-fitting::n13",
+        "iet-1d-performance-model-for-mea-prediction::n30",
+        "iet-composition-to-property-model::n14",
+        "iet-ink-to-composition-model::n26",
+        "image-fib-tomography-dataparameter-extraction-3d::n17",
+        "image-parameter-extraction-2d::n23",
+        "microscopy-sem-and-optical-in-mea-cross-section::n10",
+        "pulsed-gas-analysis::n7",
+        "sem-and-edx::n23",
+        "sem-and-fib-layer::n10"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/operating-pewe-cell-device",
+      "kind": "anchor",
+      "label": "Operating PEWE cell",
+      "state": "reviewed_decode",
+      "decision": "reviewed_decode_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+      "semantic_role": "Instrument",
+      "confidence": "reviewed_structural",
+      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "additional-measurements-on-pewe-during-operation::n0",
+        "eis-on-pewe-cells::n0"
+      ]
     }
   ],
   "source_edges": [
@@ -313,6 +516,506 @@
       "type": "occurrence_anchor_mapping"
     }
   ],
-  "semantic_edges": [],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "semantic_edges": [
+    {
+      "id": "semantic::eis-on-pewe-cells::e0::fb86cc684a",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "eis-on-pewe-cells::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "label": "usesInstrument",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e0",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_instrument",
+      "evidence": "Activity uses the source instrument; H2KG direction is activity to instrument.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e1::05e4719fab",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e1",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e2::42321a3d61",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "eis-on-pewe-cells::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e2",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Target parameter describes the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e3::31ff18217b",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cell-charge-transfer-resistance-device",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e3",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "evidence": "Measurement occurrence measures the mapped property.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e4::e83b14205f",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "eis-on-pewe-cells::n4",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e4",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Target parameter describes the activity.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e5::24017fd395",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n6",
+      "target": "eis-on-pewe-cells::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e5",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    },
+    {
+      "id": "semantic::eis-on-pewe-cells::e6::1422141625",
+      "workflow_id": "eis-on-pewe-cells",
+      "source": "eis-on-pewe-cells::n7",
+      "target": "eis-on-pewe-cells::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
+      "type": "semantic_projection",
+      "source_dependency_id": "eis-on-pewe-cells::e6",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
+      "confidence": "rule_curated",
+      "review_status": "classified"
+    }
+  ],
+  "edge_registry": [
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e0",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n0",
+      "source_node_id": "n0",
+      "source_graphml_id": "n0",
+      "source_label": "Operating PEWE cell",
+      "source_semantic_role": "Instrument",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/operating-pewe-cell-device",
+      "target_occurrence_id": "eis-on-pewe-cells::n5",
+      "target_node_id": "n5",
+      "target_graphml_id": "n5",
+      "target_label": "EIS on PEWE cells",
+      "target_semantic_role": "Measurement",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_instrument",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e0::fb86cc684a"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity uses the source instrument; H2KG direction is activity to instrument."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e1",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n1",
+      "source_node_id": "n1",
+      "source_graphml_id": "n1",
+      "source_label": "Cell current density",
+      "source_semantic_role": "Property",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CurrentDensity",
+      "target_occurrence_id": "eis-on-pewe-cells::n5",
+      "target_node_id": "n5",
+      "target_graphml_id": "n5",
+      "target_label": "EIS on PEWE cells",
+      "target_semantic_role": "Measurement",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e1::05e4719fab"
+      ],
+      "semantic_direction": "derived_projection",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e2",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n5",
+      "source_node_id": "n5",
+      "source_graphml_id": "n5",
+      "source_label": "EIS on PEWE cells",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "target_occurrence_id": "eis-on-pewe-cells::n2",
+      "target_node_id": "n2",
+      "target_graphml_id": "n2",
+      "target_label": "Cell high-frequency resistance",
+      "target_semantic_role": "Parameter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e2::42321a3d61"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Target parameter describes the activity."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e3",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n5",
+      "source_node_id": "n5",
+      "source_graphml_id": "n5",
+      "source_label": "EIS on PEWE cells",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "target_occurrence_id": "eis-on-pewe-cells::n3",
+      "target_node_id": "n3",
+      "target_graphml_id": "n3",
+      "target_label": "Cell charge transfer resistance",
+      "target_semantic_role": "Property",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-charge-transfer-resistance-device",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e3::31ff18217b"
+      ],
+      "semantic_direction": "derived_projection",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Measurement occurrence measures the mapped property."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e4",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n5",
+      "source_node_id": "n5",
+      "source_graphml_id": "n5",
+      "source_label": "EIS on PEWE cells",
+      "source_semantic_role": "Measurement",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/eis-on-pewe-cells-method",
+      "target_occurrence_id": "eis-on-pewe-cells::n4",
+      "target_node_id": "n4",
+      "target_graphml_id": "n4",
+      "target_label": "Cell mass transport resistance",
+      "target_semantic_role": "Parameter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-mass-transport-resistance-device",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e4::e83b14205f"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Target parameter describes the activity."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e5",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n2",
+      "source_node_id": "n2",
+      "source_graphml_id": "n2",
+      "source_label": "Cell high-frequency resistance",
+      "source_semantic_role": "Parameter",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device",
+      "target_occurrence_id": "eis-on-pewe-cells::n6",
+      "target_node_id": "n6",
+      "target_graphml_id": "n6",
+      "target_label": "IET 1D Performance model for MEA (fitting)",
+      "target_semantic_role": "Process",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-model",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e5::24017fd395"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
+    },
+    {
+      "source_dependency_id": "eis-on-pewe-cells::e6",
+      "workflow_id": "eis-on-pewe-cells",
+      "source_kind": "source_graphml",
+      "source_occurrence_id": "eis-on-pewe-cells::n2",
+      "source_node_id": "n2",
+      "source_graphml_id": "n2",
+      "source_label": "Cell high-frequency resistance",
+      "source_semantic_role": "Parameter",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device",
+      "target_occurrence_id": "eis-on-pewe-cells::n7",
+      "target_node_id": "n7",
+      "target_graphml_id": "n7",
+      "target_label": "Fitting of the Europium model",
+      "target_semantic_role": "Process",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
+      "source_description": "",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "semantic_edge_ids": [
+        "semantic::eis-on-pewe-cells::e6::1422141625"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
+      "review_status": "classified",
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
+    }
+  ],
+  "workflow_dependencies": [
+    {
+      "id": "manual-dependency-0285-39029ca682",
+      "upstream_method_id": "HTE-Exp-cell-testing",
+      "downstream_method_id": "eis-on-pewe-cells",
+      "upstream_workflow_id": "manual-hte-exp-cell-testing",
+      "downstream_workflow_id": "eis-on-pewe-cells",
+      "declarations": [
+        "output_method"
+      ],
+      "reciprocity_state": "ungrounded_one_sided",
+      "handoff_labels": [],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "audit_only",
+      "source_records": [
+        {
+          "record": "HTE-Exp-cell-testing",
+          "field": "output_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One-sided declaration lacks an exact reviewed handoff and is retained for audit only.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "manual-hte-exp-cell-testing::method",
+      "downstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "source": "manual-hte-exp-cell-testing::method",
+      "target": "eis-on-pewe-cells::n5",
+      "semantic_source": "eis-on-pewe-cells::n5",
+      "semantic_target": "manual-hte-exp-cell-testing::method",
+      "handoff_anchor_iris": [],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0291-db8cc8275d",
+      "upstream_method_id": "HTE-Mod-pemfc-4-fold-cell-benchtop-test",
+      "downstream_method_id": "eis-on-pewe-cells",
+      "upstream_workflow_id": "manual-hte-mod-pemfc-4-fold-cell-benchtop-test",
+      "downstream_workflow_id": "eis-on-pewe-cells",
+      "declarations": [
+        "output_method"
+      ],
+      "reciprocity_state": "ungrounded_one_sided",
+      "handoff_labels": [],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "audit_only",
+      "source_records": [
+        {
+          "record": "HTE-Mod-pemfc-4-fold-cell-benchtop-test",
+          "field": "output_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One-sided declaration lacks an exact reviewed handoff and is retained for audit only.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::method",
+      "downstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "source": "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::method",
+      "target": "eis-on-pewe-cells::n5",
+      "semantic_source": "eis-on-pewe-cells::n5",
+      "semantic_target": "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::method",
+      "handoff_anchor_iris": [],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0472-69c9976d88",
+      "upstream_method_id": "NEL-Exp-large-scale-durability-test",
+      "downstream_method_id": "eis-on-pewe-cells",
+      "upstream_workflow_id": "manual-nel-exp-large-scale-durability-test",
+      "downstream_workflow_id": "eis-on-pewe-cells",
+      "declarations": [
+        "output_method"
+      ],
+      "reciprocity_state": "ungrounded_one_sided",
+      "handoff_labels": [],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "audit_only",
+      "source_records": [
+        {
+          "record": "NEL-Exp-large-scale-durability-test",
+          "field": "output_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One-sided declaration lacks an exact reviewed handoff and is retained for audit only.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "manual-nel-exp-large-scale-durability-test::method",
+      "downstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "source": "manual-nel-exp-large-scale-durability-test::method",
+      "target": "eis-on-pewe-cells::n5",
+      "semantic_source": "eis-on-pewe-cells::n5",
+      "semantic_target": "manual-nel-exp-large-scale-durability-test::method",
+      "handoff_anchor_iris": [],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0478-54beab8153",
+      "upstream_method_id": "NEL-Exp-pewe-single-cell-benchtop-test",
+      "downstream_method_id": "eis-on-pewe-cells",
+      "upstream_workflow_id": "manual-nel-exp-pewe-single-cell-benchtop-test",
+      "downstream_workflow_id": "eis-on-pewe-cells",
+      "declarations": [
+        "output_method"
+      ],
+      "reciprocity_state": "ungrounded_one_sided",
+      "handoff_labels": [],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "audit_only",
+      "source_records": [
+        {
+          "record": "NEL-Exp-pewe-single-cell-benchtop-test",
+          "field": "output_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One-sided declaration lacks an exact reviewed handoff and is retained for audit only.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "manual-nel-exp-pewe-single-cell-benchtop-test::method",
+      "downstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "source": "manual-nel-exp-pewe-single-cell-benchtop-test::method",
+      "target": "eis-on-pewe-cells::n5",
+      "semantic_source": "eis-on-pewe-cells::n5",
+      "semantic_target": "manual-nel-exp-pewe-single-cell-benchtop-test::method",
+      "handoff_anchor_iris": [],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0550-ae14cb3a82",
+      "upstream_method_id": "eis-on-pewe-cells",
+      "downstream_method_id": "CEA-Mod-europium-model-fitting",
+      "upstream_workflow_id": "eis-on-pewe-cells",
+      "downstream_workflow_id": "fitting-of-the-europium-model",
+      "declarations": [
+        "input_method"
+      ],
+      "reciprocity_state": "grounded_one_sided",
+      "handoff_labels": [
+        "Cell high-frequency resistance"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_pending_review",
+      "source_records": [
+        {
+          "record": "CEA-Mod-europium-model-fitting",
+          "field": "input_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One record declares the dependency and an exact reviewed handoff grounds a pending-review link.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "downstream_occurrence_id": "fitting-of-the-europium-model::n61",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "fitting-of-the-europium-model::n61",
+      "semantic_source": "fitting-of-the-europium-model::n61",
+      "semantic_target": "eis-on-pewe-cells::n5",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device"
+      ],
+      "valid_endpoints": true
+    },
+    {
+      "id": "manual-dependency-0551-31a6f6b17a",
+      "upstream_method_id": "eis-on-pewe-cells",
+      "downstream_method_id": "FZJ-IET-3-Mod-performance-model-mea-fitting",
+      "upstream_workflow_id": "eis-on-pewe-cells",
+      "downstream_workflow_id": "iet-1d-performance-model-for-mea-fitting",
+      "declarations": [
+        "input_method"
+      ],
+      "reciprocity_state": "grounded_one_sided",
+      "handoff_labels": [
+        "Cell high-frequency resistance"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_pending_review",
+      "source_records": [
+        {
+          "record": "FZJ-IET-3-Mod-performance-model-mea-fitting",
+          "field": "input_method",
+          "value": "FZJ-IET-4-Exp-eis-pewe"
+        }
+      ],
+      "review_rationale": "One record declares the dependency and an exact reviewed handoff grounds a pending-review link.",
+      "both_methods_in_manual_json": false,
+      "upstream_occurrence_id": "eis-on-pewe-cells::n5",
+      "downstream_occurrence_id": "iet-1d-performance-model-for-mea-fitting::n13",
+      "source": "eis-on-pewe-cells::n5",
+      "target": "iet-1d-performance-model-for-mea-fitting::n13",
+      "semantic_source": "iet-1d-performance-model-for-mea-fitting::n13",
+      "semantic_target": "eis-on-pewe-cells::n5",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device"
+      ],
+      "valid_endpoints": true
+    }
+  ],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }

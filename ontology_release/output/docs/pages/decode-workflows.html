@@ -48,14 +48,17 @@
 <section class="decode-intro">
   <p class="eyebrow">Separate aligned workflow layer</p>
   <h2>Federated DECODE workflow graph</h2>
-  <p>Original GraphML occurrences and directed dependencies are preserved. Cross-workflow expansion is available only through explicit reviewed anchors; the H2KG TBox and its Explore page are unchanged.</p>
+  <p>The 120 original GraphML workflows remain immutable. Sanitized manual-JSON workflows are added as source-backed overlays, and cross-workflow traversal uses reviewed shared anchors plus a separate evidence-bearing method-dependency layer. The H2KG TBox and its Explore page are unchanged.</p>
   <div class="decode-metrics">
-    <span><strong>120</strong> preserved source workflows</span>
+    <span><strong>137</strong> catalogue entries</span>
+    <span><strong>120</strong> GraphML sources</span>
+    <span><strong>16</strong> manual JSON sources</span>
     <span><strong>1</strong> PDF-derived interface schemas</span>
-    <span><strong>2951</strong> source occurrences</span>
-    <span><strong>3986</strong> preserved dependencies</span>
-    <span><strong>4276</strong> classified dependencies</span>
-    <span><strong>522</strong> reviewed shared anchors</span>
+    <span><strong>3134</strong> source occurrences</span>
+    <span><strong>4173</strong> preserved dependencies</span>
+    <span><strong>4463</strong> classified dependencies</span>
+    <span><strong>573</strong> reviewed shared anchors</span>
+    <span><strong>572</strong> published method dependencies</span>
   </div>
 </section>
 <section id="decode-root" class="decode-root" data-decode-data="../data/decode_workflows.json" data-h2kg-explore="explore.html">
@@ -73,6 +76,7 @@
       <label id="decode-source-control"><input id="decode-show-source" type="checkbox" checked> <span id="decode-source-label">Source dependencies</span></label>
       <label id="decode-anchor-control"><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
       <label><input id="decode-show-semantic" type="checkbox" checked> Semantic projections</label>
+      <label><input id="decode-show-dependencies" type="checkbox" checked> Workflow dependencies</label>
       <label for="decode-semantic-filter">Projection outcome</label>
       <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H2KG direct</option><option value="h2kg_reified">H2KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
       <button id="decode-reset" type="button">Reset graph</button>

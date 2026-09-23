@@ -1,18 +1,23 @@
 # DECODE Federated Workflow Layer
 
-This release contains a normalized structural projection of DECODE GraphML workflows. It is a separate data layer aligned to H2KG; it does not change the H2KG ontology TBox or the TBox-only H2KG Explore page.
+This release contains a normalized structural projection of immutable DECODE GraphML workflows, a sanitized manual-JSON source overlay, and a separately identified derived interface schema. It is a separate data layer aligned to H2KG; it does not change the H2KG ontology TBox or the TBox-only H2KG Explore page.
 
-- Source workflows: 120
-- Preserved source occurrences: 2951
-- Preserved directed source dependencies: 3986
-- Explicitly mapped occurrences: 2951
-- Shared reviewed anchors: 522
-- Semantic-overview nodes: 695
-- Repeated source-concept groups: 293
+- Catalogue entries: 137
+- Immutable GraphML workflows: 120
+- Manual-JSON source workflows: 16
+- Derived interface schemas: 1
+- Preserved source occurrences: 3134
+- Preserved directed source dependencies: 4173
+- Explicitly mapped occurrences: 3134
+- Shared reviewed anchors: 573
+- Semantic-overview nodes: 746
+- Repeated source-concept groups: 294
 - Semantic role conflicts: 0
-- Classified source dependencies: 4276
-- H2KG/PROV semantic projection triples: 5631
-- Derived property-value DataPoint proxies: 551
+- Classified source dependencies: 4463
+- H2KG/PROV semantic projection triples: 5859
+- Derived property-value DataPoint proxies: 572
+- Reviewed workflow dependencies: 623
+- Published workflow dependencies: 572
 - Structural validation: passed
 
 ## Mapping states
@@ -21,7 +26,9 @@ This release contains a normalized structural projection of DECODE GraphML workf
 - `reviewed_decode`: a reviewed DECODE anchor pending a future H2KG vocabulary decision.
 - `unresolved`: retained without cross-workflow merging.
 
-Raw GraphML files are not redistributed in this package. The normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+Raw GraphML files and the original attached manual JSON are not redistributed in this package. The sanitized overlay excludes personal names and email addresses. Normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+
+`decode_manual_reconciliation.json` and `.csv` document duplicate handling, identifier correction, existing-workflow reconciliation, retained GraphML workflows, and the 16 new manual-source workflows. `decode_workflow_dependencies.*` publishes only reciprocal or exact-handoff-grounded method dependencies; unsupported one-sided declarations remain audit-only.
 
 `decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 

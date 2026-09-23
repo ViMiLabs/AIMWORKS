@@ -7,12 +7,21 @@
     "source_filename": "SEM_and_FIB_powder.graphml",
     "source_sha256": "3ac3ee509a80a2666f4ba6b69bf23c121dc1ccc0ef60465c75770f115af22d9c",
     "method_family": "microscopy",
+    "source_kind": "source_graphml",
+    "source_format": "graphml",
     "source_status": "preserved",
+    "external_method_id": "",
+    "alternate_titles": [],
+    "decode_tasks": [],
+    "partner_organization": [],
+    "search_terms": [],
+    "core_node_count": 8,
+    "core_edge_count": 7,
     "mapping_status": "mapped",
     "source_node_count": 8,
     "source_edge_count": 7,
     "mapped_anchor_count": 8,
-    "cross_workflow_connection_count": 38
+    "cross_workflow_connection_count": 45
   },
   "nodes": [
     {
@@ -141,7 +150,7 @@
       "source_id": "n6",
       "label": "SEM and FIB (powder)",
       "native_category": "",
-      "description": "SEM and FIB (powder)\nOwner: CIEMAT:Susana Merino\nTask: T2.1\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n50 nm resolution\ninternal key: SEM and FIB (powder)0",
+      "description": "SEM and FIB (powder)\nOwner organization: CIEMAT\nTask: T2.1\nMaturity: established method\nDocumentation: \nRange of validity or processability: \n50 nm resolution\ninternal key: SEM and FIB (powder)0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "sem-and-fib-powder",
@@ -161,7 +170,7 @@
       "source_id": "n7",
       "label": "IET ink to composition model",
       "native_category": "",
-      "description": "IET ink to composition model\nOwner: FZJ IET 3:Ying Sun\nTask: T1.4\nMaturity: established method\nDocumentation: DOI: 10.1016/j.electacta.2022.140850\nRange of validity or processability: unkonwn\ninternal key: IET ink to composition model0",
+      "description": "IET ink to composition model\nOwner organization: FZJ IET 3\nTask: T1.4\nMaturity: established method\nDocumentation: DOI: 10.1016/j.electacta.2022.140850\nRange of validity or processability: unkonwn\ninternal key: IET ink to composition model0",
       "shape": "hexagon",
       "kind": "occurrence",
       "workflow_id": "sem-and-fib-powder",
@@ -192,7 +201,10 @@
         "iet-ink-to-composition-model::n6",
         "image-tem-data-parameter-extraction-3d::n2",
         "sem-and-fib-powder::n3",
-        "tem-and-eds-analysis-of-mea::n2"
+        "tem-and-eds-analysis-of-mea::n2",
+        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda"
       ]
     },
     {
@@ -223,7 +235,9 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "image-tem-data-parameter-extraction-3d::n7",
-        "sem-and-fib-powder::n1"
+        "sem-and-fib-powder::n1",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-morphology-3ed9c4580b",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-morphology-3ed9c4580b"
       ]
     },
     {
@@ -250,7 +264,9 @@
         "rotating-ring-disk-electrode-rrde::n5",
         "sem-and-fib-powder::n0",
         "thin-windows-operando-or-in-situ-xps::n0",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n0"
+        "ultrasonic-spray-deposition-for-catalytic-layers::n0",
+        "manual-icpees-cnrs-unistra-exp-n2-adsorption-ex-situ::input-catalyst-powder-ceb45b3b74",
+        "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74"
       ]
     },
     {
@@ -579,11 +595,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n0",
+      "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Catalyst powder",
       "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
       "target_occurrence_id": "sem-and-fib-powder::n6",
+      "target_node_id": "n6",
       "target_graphml_id": "n6",
       "target_label": "SEM and FIB (powder)",
       "target_semantic_role": "Measurement",
@@ -605,11 +623,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n1",
+      "target_node_id": "n1",
       "target_graphml_id": "n1",
       "target_label": "Catalyst morphology",
       "target_semantic_role": "Property",
@@ -631,11 +651,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n2",
+      "target_node_id": "n2",
       "target_graphml_id": "n2",
       "target_label": "Catalyst elemental composition",
       "target_semantic_role": "Matter",
@@ -657,11 +679,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n3",
+      "target_node_id": "n3",
       "target_graphml_id": "n3",
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Matter",
@@ -683,11 +707,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n4",
+      "target_node_id": "n4",
       "target_graphml_id": "n4",
       "target_label": "Catalyst support particle diameter",
       "target_semantic_role": "Matter",
@@ -709,11 +735,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n6",
+      "source_node_id": "n6",
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n5",
+      "target_node_id": "n5",
       "target_graphml_id": "n5",
       "target_label": "Electrocatalyst structure",
       "target_semantic_role": "Property",
@@ -735,11 +763,13 @@
       "workflow_id": "sem-and-fib-powder",
       "source_kind": "source_graphml",
       "source_occurrence_id": "sem-and-fib-powder::n3",
+      "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Catalyst active particle diameter",
       "source_semantic_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "target_occurrence_id": "sem-and-fib-powder::n7",
+      "target_node_id": "n7",
       "target_graphml_id": "n7",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
@@ -757,5 +787,48 @@
       "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     }
   ],
-  "download_note": "Raw GraphML is not redistributed; this is a normalized structural projection."
+  "workflow_dependencies": [
+    {
+      "id": "manual-dependency-0230-35facee647",
+      "upstream_method_id": "CIEMAT-Exp-sem-fib-powder",
+      "downstream_method_id": "FZJ-IET-3-Mod-ink-composition",
+      "upstream_workflow_id": "sem-and-fib-powder",
+      "downstream_workflow_id": "iet-ink-to-composition-model",
+      "declarations": [
+        "input_method",
+        "output_method"
+      ],
+      "reciprocity_state": "confirmed_reciprocal",
+      "handoff_labels": [
+        "Catalyst active particle diameter"
+      ],
+      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
+      "publication_status": "published_confirmed",
+      "source_records": [
+        {
+          "record": "CIEMAT-Exp-sem-fib-powder",
+          "field": "output_method",
+          "value": "FZJ-IET-3-Mod-ink-composition"
+        },
+        {
+          "record": "FZJ-IET-3-Mod-ink-composition",
+          "field": "input_method",
+          "value": "CIEMAT-Exp-sem-fib-powder"
+        }
+      ],
+      "review_rationale": "Both method records declare the dependency and exact reviewed input/output handoff labels are shared.",
+      "both_methods_in_manual_json": true,
+      "upstream_occurrence_id": "sem-and-fib-powder::n6",
+      "downstream_occurrence_id": "iet-ink-to-composition-model::n22",
+      "source": "sem-and-fib-powder::n6",
+      "target": "iet-ink-to-composition-model::n22",
+      "semantic_source": "iet-ink-to-composition-model::n22",
+      "semantic_target": "sem-and-fib-powder::n6",
+      "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+      ],
+      "valid_endpoints": true
+    }
+  ],
+  "download_note": "Raw GraphML and the original manual JSON are not redistributed; this is a normalized structural projection."
 }
