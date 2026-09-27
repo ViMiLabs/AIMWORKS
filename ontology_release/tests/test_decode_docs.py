@@ -28,6 +28,7 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert (output_dir / "docs" / "assets" / "decode-workflows.js").exists()
     assert (output_dir / "docs" / "assets" / "decode-workflows.css").exists()
     assert (output_dir / "docs" / "data" / "decode_workflows.json").exists()
+    assert (output_dir / "docs" / "data" / "decode_workflow_catalog.json").exists()
     assert "decode/workflow/" not in explorer
     script = (output_dir / "docs" / "assets" / "decode-workflows.js").read_text(encoding="utf-8")
     assert "shownWorkflows" in script
@@ -53,3 +54,15 @@ def test_decode_explorer_is_separate_from_tbox_explorer(mini_ontology_file, outp
     assert "[sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter]" in script
     assert "edgeDecisionHtml" in script
     assert "decode_edge_registry.csv" in script
+    assert "data-decode-catalogue" in page
+    assert 'id="decode-controls" class="decode-controls" hidden' in page
+    assert 'id="decode-graph" aria-label="Interactive DECODE workflow graph" hidden' in page
+    assert "Select a workflow to open its graph" in page
+    assert "fetch(root.dataset.decodeCatalogue)" in script
+    assert "function loadGraphData" in script
+    assert "currentMatches.slice(0, 24)" in script
+    assert "selectWorkflow(data.workflows[0]?.id)" not in script
+    assert "Search for a workflow or select a method family to begin." in page
+    css = (output_dir / "docs" / "assets" / "decode-workflows.css").read_text(encoding="utf-8")
+    assert ".decode-graph-frame" in css
+    assert "height: clamp(590px, 68vh, 760px)" in css

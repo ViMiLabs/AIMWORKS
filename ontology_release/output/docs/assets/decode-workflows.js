@@ -5,27 +5,46 @@
   const $ = (selector) => document.querySelector(selector);
   const esc = (value) => String(value || '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const lower = (value) => String(value || '').toLowerCase();
-  const graph = $('#decode-graph'), details = $('#decode-details'), hover = $('#decode-hovercard');
+  const graph = $('#decode-graph'), details = $('#decode-details'), hover = $('#decode-hovercard'), emptyState = $('#decode-empty-state'), controls = $('#decode-controls'), legend = $('#decode-legend'), resultList = $('#decode-workflow-list');
   const sourceToggle = $('#decode-show-source'), anchorToggle = $('#decode-show-anchors'), semanticToggle = $('#decode-show-semantic'), dependencyToggle = $('#decode-show-dependencies'), semanticFilter = $('#decode-semantic-filter'), more = $('#decode-more');
-  let data, cy, selectedWorkflow, selectedAnchor, shownWorkflows = new Set(), viewMode = 'source';
+  let catalogue = [], catalogueById = {}, currentMatches = [], data, graphDataPromise, cy, selectedWorkflow, selectedAnchor, shownWorkflows = new Set(), viewMode = 'source';
 
-  fetch(root.dataset.decodeData).then((response) => response.json()).then((loaded) => { data = loaded; initialize(); }).catch((error) => { details.innerHTML = `<h2>Workflow data unavailable</h2><p>${esc(error.message)}</p>`; });
+  fetch(root.dataset.decodeCatalogue).then((response) => { if (!response.ok) throw new Error(`Catalogue request failed (${response.status})`); return response.json(); }).then((loaded) => { catalogue = Array.isArray(loaded) ? loaded : (loaded.workflows || []); initializeCatalogue(); }).catch((error) => { $('#decode-catalogue-status').textContent = 'Workflow catalogue unavailable.'; details.innerHTML = `<h2>Workflow catalogue unavailable</h2><p>${esc(error.message)}</p>`; setEmptyState('Workflow catalogue unavailable', 'Please reload the page or try again later.', false); });
 
   function index(items) { return Object.fromEntries((items || []).map((item) => [item.id, item])); }
-  function initialize() {
+  function initializeCatalogue() {
+    catalogueById = index(catalogue);
+    const family = $('#decode-family');
+    [...new Set(catalogue.map((workflow) => workflow.method_family))].sort().forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${esc(name)}">${esc(name.replaceAll('_', ' '))}</option>`));
+    $('#decode-search').addEventListener('input', renderCatalogue); family.addEventListener('change', renderCatalogue);
+    $('#decode-search').addEventListener('keydown', (event) => { if (event.key === 'Enter' && currentMatches.length) { event.preventDefault(); selectWorkflow(currentMatches[0].id); } });
+    [sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter].forEach((input) => input.addEventListener('change', () => { if (data && selectedWorkflow) renderGraph(); }));
+    document.querySelectorAll('input[name="decode-view"]').forEach((input) => input.addEventListener('change', () => { viewMode = input.value; syncViewControls(); if (data && selectedWorkflow) { renderGraph(); showWorkflowDetails(data.workflowById[selectedWorkflow]); } }));
+    $('#decode-reset').addEventListener('click', () => { if (selectedWorkflow) selectWorkflow(selectedWorkflow); });
+    more.addEventListener('click', () => addNextConnectedWorkflow(selectedAnchor));
+    document.addEventListener('click', (event) => { if (!event.target.closest('.decode-search-panel')) resultList.hidden = true; });
+    syncViewControls(); renderCatalogue();
+  }
+  function hydrateGraphData(loaded) {
+    data = loaded;
     data.nodeById = index(data.nodes); data.projectionNodeById = index(data.projection_nodes || []); data.anchorById = index(data.anchors); data.workflowById = index(data.workflows); data.edgeRegistryBySource = Object.fromEntries((data.edge_registry || []).map((row) => [row.source_dependency_id, row]));
     data.semantic_overview ||= { nodes: [], source_edges: [], semantic_edges: [] };
     data.workflow_dependencies ||= []; data.workflowDependencyById = index(data.workflow_dependencies);
     data.overviewNodeById = index(data.semantic_overview.nodes);
     data.nodesByWorkflow = {}; data.nodes.forEach((node) => (data.nodesByWorkflow[node.workflow_id] ||= []).push(node.id));
-    const family = $('#decode-family');
-    [...new Set(data.workflows.map((workflow) => workflow.method_family))].sort().forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${esc(name)}">${esc(name.replaceAll('_', ' '))}</option>`));
-    $('#decode-search').addEventListener('input', renderCatalogue); family.addEventListener('change', renderCatalogue);
-    [sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter].forEach((input) => input.addEventListener('change', renderGraph));
-    document.querySelectorAll('input[name="decode-view"]').forEach((input) => input.addEventListener('change', () => { viewMode = input.value; syncViewControls(); renderGraph(); showWorkflowDetails(data.workflowById[selectedWorkflow]); }));
-    $('#decode-reset').addEventListener('click', () => selectWorkflow(selectedWorkflow));
-    more.addEventListener('click', () => addNextConnectedWorkflow(selectedAnchor));
-    syncViewControls(); renderCatalogue(); selectWorkflow(data.workflows[0]?.id);
+    return data;
+  }
+  function loadGraphData() {
+    if (data) return Promise.resolve(data);
+    if (graphDataPromise) return graphDataPromise;
+    setEmptyState('Loading selected workflow', 'Preparing the federated source and semantic graph. This happens only once per page visit.', true);
+    graphDataPromise = fetch(root.dataset.decodeData).then((response) => { if (!response.ok) throw new Error(`Graph request failed (${response.status})`); return response.json(); }).then(hydrateGraphData).catch((error) => { graphDataPromise = null; throw error; });
+    return graphDataPromise;
+  }
+  function setEmptyState(title, message, loading) {
+    emptyState.hidden = false; emptyState.classList.toggle('is-loading', Boolean(loading));
+    emptyState.innerHTML = `<strong>${esc(title)}</strong><span>${esc(message)}</span>`;
+    graph.hidden = true; controls.hidden = true; legend.hidden = true;
   }
 
   function syncViewControls() {
@@ -44,15 +63,29 @@
   }
   function renderCatalogue() {
     const needle = lower($('#decode-search').value), family = $('#decode-family').value;
-    const matches = data.workflows.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri, workflow.external_method_id, ...(workflow.alternate_titles || []), ...(workflow.search_terms || []), ...(workflow.partner_organization || [])].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
-    $('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
-    $('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} reviewed mappings</small></button>`).join('');
+    if (!needle && !family) { currentMatches = []; resultList.innerHTML = ''; resultList.hidden = true; $('#decode-catalogue-status').textContent = selectedWorkflow ? `Selected: ${catalogueById[selectedWorkflow]?.title || selectedWorkflow}` : 'Search for a workflow or select a method family to begin.'; return; }
+    currentMatches = catalogue.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri, workflow.external_method_id, ...(workflow.alternate_titles || []), ...(workflow.search_terms || []), ...(workflow.partner_organization || [])].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
+    const visibleMatches = currentMatches.slice(0, 24);
+    $('#decode-catalogue-status').textContent = currentMatches.length ? `${currentMatches.length} matching workflow${currentMatches.length === 1 ? '' : 's'}${currentMatches.length > visibleMatches.length ? '; showing the first 24' : ''}. Select one to open its graph.` : 'No matching workflows. Try a broader term or another method family.';
+    resultList.innerHTML = visibleMatches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} reviewed mappings</small></button>`).join('');
+    resultList.hidden = !visibleMatches.length;
     document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
   }
-  function selectWorkflow(workflowId) {
-    if (!data.workflowById[workflowId]) return;
-    selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true;
-    renderCatalogue(); renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+  async function selectWorkflow(workflowId) {
+    const summary = catalogueById[workflowId]; if (!summary) return;
+    selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true; resultList.hidden = true;
+    $('#decode-catalogue-status').textContent = `Loading ${summary.title} ...`;
+    details.innerHTML = `<h2>${esc(summary.title)}</h2><p>Loading the preserved source workflow and reviewed semantic projections.</p>`;
+    try {
+      await loadGraphData();
+      if (!data.workflowById[workflowId]) throw new Error('The selected workflow is not present in the federated graph.');
+      emptyState.hidden = true; emptyState.classList.remove('is-loading'); graph.hidden = false; controls.hidden = false; legend.hidden = false;
+      $('#decode-catalogue-status').textContent = `Selected: ${summary.title}`;
+      renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+    } catch (error) {
+      setEmptyState('Workflow data unavailable', error.message, false);
+      details.innerHTML = `<h2>Workflow data unavailable</h2><p>${esc(error.message)}</p>`;
+    }
   }
   function visibleNodeIds() { return new Set([...shownWorkflows].flatMap((workflowId) => data.nodesByWorkflow[workflowId] || [])); }
   function overviewId(occurrenceId) { const node = data.nodeById[occurrenceId]; return node?.anchor_id || `unresolved::${occurrenceId}`; }

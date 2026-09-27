@@ -67,17 +67,18 @@
     <span><strong>572</strong> published method dependencies</span>
   </div>
 </section>
-<section id="decode-root" class="decode-root" data-decode-data="../data/decode_workflows.json" data-h2kg-explore="explore.html">
-  <aside class="decode-catalogue">
-    <label for="decode-search">Search workflows and terms</label>
-    <input id="decode-search" type="search" placeholder="label, workflow, category, H2KG IRI">
-    <label for="decode-family">Method family</label>
-    <select id="decode-family"><option value="">All method families</option></select>
-    <p id="decode-catalogue-status" class="muted"></p>
-    <div id="decode-workflow-list" class="decode-workflow-list"></div>
-  </aside>
-  <div class="decode-workspace">
-    <div class="decode-controls">
+<section id="decode-root" class="decode-root" data-decode-data="../data/decode_workflows.json" data-decode-catalogue="../data/decode_workflow_catalog.json" data-h2kg-explore="explore.html">
+  <div class="decode-search-panel">
+    <div class="decode-search-fields">
+      <div><label for="decode-search">Search workflows and terms</label><input id="decode-search" type="search" placeholder="Start typing a method, term, partner or H2KG IRI" autocomplete="off"></div>
+      <div><label for="decode-family">Method family</label><select id="decode-family"><option value="">All method families</option></select></div>
+    </div>
+    <p id="decode-catalogue-status" class="decode-search-status" aria-live="polite">Search for a workflow or select a method family to begin.</p>
+    <div id="decode-workflow-list" class="decode-workflow-list" hidden></div>
+  </div>
+  <div class="decode-stage">
+    <div class="decode-workspace">
+      <div id="decode-controls" class="decode-controls" hidden>
       <fieldset class="decode-view-switch"><legend>Graph view</legend><label><input name="decode-view" value="source" type="radio" checked> Preserved source occurrences</label><label><input name="decode-view" value="semantic" type="radio"> Semantic overview</label></fieldset>
       <label id="decode-source-control"><input id="decode-show-source" type="checkbox" checked> <span id="decode-source-label">Source dependencies</span></label>
       <label id="decode-anchor-control"><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
@@ -87,11 +88,15 @@
       <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H2KG direct</option><option value="h2kg_reified">H2KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
       <button id="decode-reset" type="button">Reset graph</button>
       <button id="decode-more" type="button" hidden>Add next connected workflow</button>
+      </div>
+      <div class="decode-graph-frame">
+        <div id="decode-empty-state" class="decode-empty-state"><strong>Select a workflow to open its graph</strong><span>Use the search field or method-family filter above. The complete federated graph is loaded only after selection.</span></div>
+        <div id="decode-graph" aria-label="Interactive DECODE workflow graph" hidden></div>
+      </div>
+      <p id="decode-legend" class="decode-legend" hidden></p>
     </div>
-    <div id="decode-graph" aria-label="Interactive DECODE workflow graph"></div>
-    <p id="decode-legend" class="decode-legend"></p>
+    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and reviewed semantic projections will appear in the graph workspace.</p></aside>
   </div>
-  <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow, then double-click an occurrence or shared anchor to traverse reviewed cross-workflow connections.</p></aside>
   <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
 </section>
 

@@ -182,6 +182,7 @@ def build_docs(
     )
     dump_json(output_dir / "data" / "explorer.json", explorer)
     if decode is not None:
+        dump_json(output_dir / "data" / "decode_workflow_catalog.json", decode.get("workflows", []))
         dump_json(output_dir / "data" / "decode_workflows.json", decode)
     return summary
 
@@ -469,6 +470,7 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
 <section class="notice"><h2>DECODE workflow bundle not built</h2><p>The DECODE Explorer is generated only after a reviewed GraphML snapshot has been ingested. The H2KG ontology and its TBox-only Explore page remain available independently.</p></section>
 """
     data_href = _relative_href(page_path, docs_root / "data" / "decode_workflows.json")
+    catalogue_href = _relative_href(page_path, docs_root / "data" / "decode_workflow_catalog.json")
     h2kg_explore = _relative_href(page_path, docs_root / "pages" / "explore.html")
     ontology_ttl = _relative_href(page_path, docs_root / "decode" / "decode-h2kg-aligned-ontology.ttl")
     ontology_jsonld = _relative_href(page_path, docs_root / "decode" / "decode-h2kg-aligned-ontology.jsonld")
@@ -497,17 +499,18 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
     <span><strong>{counts.get('published_workflow_dependency_count', 0)}</strong> published method dependencies</span>
   </div>
 </section>
-<section id="decode-root" class="decode-root" data-decode-data="{escape(data_href)}" data-h2kg-explore="{escape(h2kg_explore)}">
-  <aside class="decode-catalogue">
-    <label for="decode-search">Search workflows and terms</label>
-    <input id="decode-search" type="search" placeholder="label, workflow, category, H2KG IRI">
-    <label for="decode-family">Method family</label>
-    <select id="decode-family"><option value="">All method families</option></select>
-    <p id="decode-catalogue-status" class="muted"></p>
-    <div id="decode-workflow-list" class="decode-workflow-list"></div>
-  </aside>
-  <div class="decode-workspace">
-    <div class="decode-controls">
+<section id="decode-root" class="decode-root" data-decode-data="{escape(data_href)}" data-decode-catalogue="{escape(catalogue_href)}" data-h2kg-explore="{escape(h2kg_explore)}">
+  <div class="decode-search-panel">
+    <div class="decode-search-fields">
+      <div><label for="decode-search">Search workflows and terms</label><input id="decode-search" type="search" placeholder="Start typing a method, term, partner or H2KG IRI" autocomplete="off"></div>
+      <div><label for="decode-family">Method family</label><select id="decode-family"><option value="">All method families</option></select></div>
+    </div>
+    <p id="decode-catalogue-status" class="decode-search-status" aria-live="polite">Search for a workflow or select a method family to begin.</p>
+    <div id="decode-workflow-list" class="decode-workflow-list" hidden></div>
+  </div>
+  <div class="decode-stage">
+    <div class="decode-workspace">
+      <div id="decode-controls" class="decode-controls" hidden>
       <fieldset class="decode-view-switch"><legend>Graph view</legend><label><input name="decode-view" value="source" type="radio" checked> Preserved source occurrences</label><label><input name="decode-view" value="semantic" type="radio"> Semantic overview</label></fieldset>
       <label id="decode-source-control"><input id="decode-show-source" type="checkbox" checked> <span id="decode-source-label">Source dependencies</span></label>
       <label id="decode-anchor-control"><input id="decode-show-anchors" type="checkbox" checked> Shared anchors</label>
@@ -517,11 +520,15 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
       <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H2KG direct</option><option value="h2kg_reified">H2KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
       <button id="decode-reset" type="button">Reset graph</button>
       <button id="decode-more" type="button" hidden>Add next connected workflow</button>
+      </div>
+      <div class="decode-graph-frame">
+        <div id="decode-empty-state" class="decode-empty-state"><strong>Select a workflow to open its graph</strong><span>Use the search field or method-family filter above. The complete federated graph is loaded only after selection.</span></div>
+        <div id="decode-graph" aria-label="Interactive DECODE workflow graph" hidden></div>
+      </div>
+      <p id="decode-legend" class="decode-legend" hidden></p>
     </div>
-    <div id="decode-graph" aria-label="Interactive DECODE workflow graph"></div>
-    <p id="decode-legend" class="decode-legend"></p>
+    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and reviewed semantic projections will appear in the graph workspace.</p></aside>
   </div>
-  <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow, then double-click an occurrence or shared anchor to traverse reviewed cross-workflow connections.</p></aside>
   <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
 </section>
 """
@@ -537,23 +544,33 @@ def _decode_workflows_css() -> str:
 .decode-metrics { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
 .decode-metrics span { padding: .38rem .65rem; background: #fff; border: 1px solid #d7e1e2; border-radius: 999px; color: #40545c; }
 .decode-metrics strong { color: #0d7077; }
-.decode-root { display: grid; grid-template-columns: 260px minmax(430px, 1fr) 300px; min-height: 690px; border: 1px solid #cad9dd; border-radius: 16px; overflow: hidden; background: #fff; }
-.decode-catalogue, .decode-details { padding: 1rem; background: #f8fbfb; overflow: auto; }
-.decode-catalogue { border-right: 1px solid #d8e3e5; }
-.decode-details { border-left: 1px solid #d8e3e5; }
-.decode-catalogue label { display: block; margin: .35rem 0; font-size: .82rem; font-weight: 700; color: #34515a; }
-.decode-catalogue input, .decode-catalogue select { width: 100%; margin-bottom: .45rem; padding: .5rem; border: 1px solid #b8cbd0; border-radius: 7px; }
-.decode-workflow-list { display: grid; gap: .5rem; }
+.decode-root { position: relative; border: 1px solid #cad9dd; border-radius: 16px; overflow: visible; background: #fff; box-shadow: 0 14px 38px rgba(18,49,57,.08); }
+.decode-search-panel { position: relative; z-index: 12; padding: 1rem 1.1rem .8rem; border-bottom: 1px solid #d8e3e5; border-radius: 16px 16px 0 0; background: linear-gradient(110deg, #f4faf9, #fbf8f1); }
+.decode-search-fields { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(220px, 320px); gap: 1rem; align-items: end; }
+.decode-search-fields label { display: block; margin: 0 0 .35rem; font-size: .82rem; font-weight: 700; color: #34515a; }
+.decode-search-fields input, .decode-search-fields select { width: 100%; padding: .65rem .72rem; border: 1px solid #aebfc4; border-radius: 9px; background: #fff; color: #20373f; box-shadow: 0 2px 7px rgba(18,49,57,.04); }
+.decode-search-fields input:focus, .decode-search-fields select:focus { outline: 3px solid rgba(13,127,131,.15); border-color: #0d7f83; }
+.decode-search-status { min-height: 1.25rem; margin: .55rem 0 0; color: #5c6d73; font-size: .82rem; }
+.decode-workflow-list { position: absolute; top: calc(100% - .35rem); left: 1.1rem; width: min(760px, calc(100% - 2.2rem)); max-height: 360px; overflow: auto; display: grid; gap: .45rem; padding: .65rem; border: 1px solid #b9cace; border-radius: 11px; background: rgba(255,255,255,.99); box-shadow: 0 18px 46px rgba(16,36,45,.2); }
+.decode-workflow-list[hidden] { display: none; }
 .decode-workflow-card { width: 100%; text-align: left; border: 1px solid #d0dddf; padding: .65rem; border-radius: 9px; color: #20373f; background: #fff; cursor: pointer; }
 .decode-workflow-card:hover, .decode-workflow-card.active { border-color: #0d7f83; background: #e8f5f4; }
 .decode-workflow-card strong, .decode-workflow-card small { display: block; }
 .decode-workflow-card small { margin-top: .2rem; color: #5c6d73; line-height: 1.35; }
-.decode-workspace { min-width: 0; display: flex; flex-direction: column; background: #fff; }
+.decode-stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; min-height: 690px; }
+.decode-workspace { min-width: 0; display: flex; flex-direction: column; background: #fff; border-radius: 0 0 0 16px; overflow: hidden; }
+.decode-details { padding: 1rem; background: #f8fbfb; overflow: auto; border-left: 1px solid #d8e3e5; border-radius: 0 0 16px 0; max-height: 790px; }
 .decode-controls { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; padding: .75rem; border-bottom: 1px solid #d8e3e5; font-size: .86rem; }
+.decode-controls[hidden] { display: none; }
 .decode-controls select { padding: .32rem .45rem; border: 1px solid #b8cbd0; border-radius: 6px; background: #fff; color: #29464e; }
 .decode-view-switch { display: inline-flex; gap: .55rem; align-items: center; margin: 0; padding: .25rem .5rem; border: 1px solid #bfd0d3; border-radius: 7px; }.decode-view-switch legend { padding: 0 .18rem; color: #486168; font-size: .75rem; font-weight: 700; }.decode-view-switch label { white-space: nowrap; }
 .decode-controls button { border: 1px solid #0d7f83; background: #fff; color: #0d666c; padding: .35rem .6rem; border-radius: 6px; cursor: pointer; font-weight: 700; }
-#decode-graph { flex: 1; min-height: 560px; background: radial-gradient(circle at 20% 14%, rgba(13,127,131,.08), transparent 26%), #fff; }
+.decode-graph-frame { position: relative; height: clamp(590px, 68vh, 760px); min-height: 590px; background: radial-gradient(circle at 20% 14%, rgba(13,127,131,.08), transparent 26%), #fff; }
+#decode-graph { position: absolute; inset: 0; background: transparent; }
+#decode-graph[hidden] { display: none; }
+.decode-empty-state { position: absolute; inset: 0; display: grid; place-content: center; gap: .55rem; padding: 2rem; text-align: center; color: #526970; background: radial-gradient(circle at 50% 44%, rgba(13,127,131,.1), transparent 25%); }
+.decode-empty-state[hidden], .decode-legend[hidden] { display: none; }
+.decode-empty-state strong { font-size: 1.25rem; color: #183b43; }.decode-empty-state span { max-width: 560px; line-height: 1.55; }.decode-empty-state.is-loading strong::after { content: ' ...'; }
 .decode-legend { margin: 0; padding: .6rem .8rem; border-top: 1px solid #d8e3e5; color: #52656e; font-size: .78rem; line-height: 1.9; }
 .decode-legend span { display: inline-block; margin: 0 .4rem 0 0; font-weight: 700; }
 .decode-legend .legend-material::before, .decode-legend .legend-component::before, .decode-legend .legend-data::before, .decode-legend .legend-device::before, .decode-legend .legend-process::before, .decode-legend .legend-h2kg::before, .decode-legend .legend-decode::before, .decode-legend .legend-matter::before, .decode-legend .legend-manufacturing::before, .decode-legend .legend-measurement::before, .decode-legend .legend-instrument::before, .decode-legend .legend-parameter::before, .decode-legend .legend-property::before, .decode-legend .legend-metadata::before, .decode-legend .legend-mixed::before, .decode-legend .legend-approved::before, .decode-legend .legend-reviewed::before, .decode-legend .legend-unresolved::before { content: ''; display: inline-block; width: .72rem; height: .72rem; margin-right: .22rem; border-radius: 50%; vertical-align: -.08rem; border: 1px solid rgba(18,39,47,.35); }
@@ -563,8 +580,8 @@ def _decode_workflows_css() -> str:
 .decode-details h2 { margin-top: 0; }.decode-details h3 { margin: 1rem 0 .35rem; font-size: .98rem; }.decode-details p, .decode-details li { font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }.decode-details ul { padding-left: 1.1rem; }.decode-details a { color: #087279; }.decode-details code { font-size: .76rem; }
 .decode-status { display: inline-block; padding: .18rem .4rem; border-radius: 999px; background: #e8f5f4; color: #075e63; font-size: .73rem; font-weight: 700; }.decode-status.unresolved { background: #f5ece5; color: #86521c; }.decode-downloads { display: grid; gap: .35rem; margin-top: .8rem; }
 .decode-hovercard { position: fixed; z-index: 30; width: min(380px, calc(100vw - 24px)); max-height: min(440px, calc(100vh - 24px)); overflow: auto; padding: .85rem 1rem; border: 1px solid #b5c7cb; border-radius: 13px; background: rgba(255,255,255,.98); box-shadow: 0 16px 40px rgba(16,36,45,.23); color: #20373f; pointer-events: none; }.decode-hovercard.is-hidden { display: none; }.decode-hovercard h3 { margin: 0 0 .35rem; font-size: 1rem; }.decode-hovercard p { margin: .3rem 0; font-size: .8rem; line-height: 1.35; }.decode-hovercard code { font-size: .72rem; overflow-wrap: anywhere; }.decode-hovercard .decode-status { margin-right: .35rem; }.decode-add-workflow { display: block; width: 100%; margin: .4rem 0; padding: .45rem .55rem; border: 1px solid #a7b9bd; border-radius: 7px; background: #f8fbfb; color: #183139; text-align: left; cursor: pointer; }.decode-add-workflow:hover { border-color: #0d7f83; background: #eaf6f6; }
-@media (max-width: 1080px) { .decode-root { grid-template-columns: 240px 1fr; }.decode-details { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #d8e3e5; }.decode-details { max-height: 280px; } }
-@media (max-width: 700px) { .decode-root { display: block; }.decode-catalogue { border-right: 0; border-bottom: 1px solid #d8e3e5; max-height: 300px; }.decode-workspace { min-height: 560px; } }
+@media (max-width: 1080px) { .decode-stage { grid-template-columns: 1fr; }.decode-details { border-left: 0; border-top: 1px solid #d8e3e5; border-radius: 0 0 16px 16px; max-height: 300px; }.decode-workspace { border-radius: 0; } }
+@media (max-width: 700px) { .decode-search-fields { grid-template-columns: 1fr; gap: .55rem; }.decode-workflow-list { left: .65rem; width: calc(100% - 1.3rem); }.decode-graph-frame { height: 600px; min-height: 600px; }.decode-controls { align-items: flex-start; }.decode-view-switch { display: grid; }.decode-stage { min-height: 0; } }
 """
 
 
@@ -810,27 +827,46 @@ def _decode_workflows_js() -> str:
   const $ = (selector) => document.querySelector(selector);
   const esc = (value) => String(value || '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const lower = (value) => String(value || '').toLowerCase();
-  const graph = $('#decode-graph'), details = $('#decode-details'), hover = $('#decode-hovercard');
+  const graph = $('#decode-graph'), details = $('#decode-details'), hover = $('#decode-hovercard'), emptyState = $('#decode-empty-state'), controls = $('#decode-controls'), legend = $('#decode-legend'), resultList = $('#decode-workflow-list');
   const sourceToggle = $('#decode-show-source'), anchorToggle = $('#decode-show-anchors'), semanticToggle = $('#decode-show-semantic'), dependencyToggle = $('#decode-show-dependencies'), semanticFilter = $('#decode-semantic-filter'), more = $('#decode-more');
-  let data, cy, selectedWorkflow, selectedAnchor, shownWorkflows = new Set(), viewMode = 'source';
+  let catalogue = [], catalogueById = {}, currentMatches = [], data, graphDataPromise, cy, selectedWorkflow, selectedAnchor, shownWorkflows = new Set(), viewMode = 'source';
 
-  fetch(root.dataset.decodeData).then((response) => response.json()).then((loaded) => { data = loaded; initialize(); }).catch((error) => { details.innerHTML = `<h2>Workflow data unavailable</h2><p>${esc(error.message)}</p>`; });
+  fetch(root.dataset.decodeCatalogue).then((response) => { if (!response.ok) throw new Error(`Catalogue request failed (${response.status})`); return response.json(); }).then((loaded) => { catalogue = Array.isArray(loaded) ? loaded : (loaded.workflows || []); initializeCatalogue(); }).catch((error) => { $('#decode-catalogue-status').textContent = 'Workflow catalogue unavailable.'; details.innerHTML = `<h2>Workflow catalogue unavailable</h2><p>${esc(error.message)}</p>`; setEmptyState('Workflow catalogue unavailable', 'Please reload the page or try again later.', false); });
 
   function index(items) { return Object.fromEntries((items || []).map((item) => [item.id, item])); }
-  function initialize() {
+  function initializeCatalogue() {
+    catalogueById = index(catalogue);
+    const family = $('#decode-family');
+    [...new Set(catalogue.map((workflow) => workflow.method_family))].sort().forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${esc(name)}">${esc(name.replaceAll('_', ' '))}</option>`));
+    $('#decode-search').addEventListener('input', renderCatalogue); family.addEventListener('change', renderCatalogue);
+    $('#decode-search').addEventListener('keydown', (event) => { if (event.key === 'Enter' && currentMatches.length) { event.preventDefault(); selectWorkflow(currentMatches[0].id); } });
+    [sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter].forEach((input) => input.addEventListener('change', () => { if (data && selectedWorkflow) renderGraph(); }));
+    document.querySelectorAll('input[name="decode-view"]').forEach((input) => input.addEventListener('change', () => { viewMode = input.value; syncViewControls(); if (data && selectedWorkflow) { renderGraph(); showWorkflowDetails(data.workflowById[selectedWorkflow]); } }));
+    $('#decode-reset').addEventListener('click', () => { if (selectedWorkflow) selectWorkflow(selectedWorkflow); });
+    more.addEventListener('click', () => addNextConnectedWorkflow(selectedAnchor));
+    document.addEventListener('click', (event) => { if (!event.target.closest('.decode-search-panel')) resultList.hidden = true; });
+    syncViewControls(); renderCatalogue();
+  }
+  function hydrateGraphData(loaded) {
+    data = loaded;
     data.nodeById = index(data.nodes); data.projectionNodeById = index(data.projection_nodes || []); data.anchorById = index(data.anchors); data.workflowById = index(data.workflows); data.edgeRegistryBySource = Object.fromEntries((data.edge_registry || []).map((row) => [row.source_dependency_id, row]));
     data.semantic_overview ||= { nodes: [], source_edges: [], semantic_edges: [] };
     data.workflow_dependencies ||= []; data.workflowDependencyById = index(data.workflow_dependencies);
     data.overviewNodeById = index(data.semantic_overview.nodes);
     data.nodesByWorkflow = {}; data.nodes.forEach((node) => (data.nodesByWorkflow[node.workflow_id] ||= []).push(node.id));
-    const family = $('#decode-family');
-    [...new Set(data.workflows.map((workflow) => workflow.method_family))].sort().forEach((name) => family.insertAdjacentHTML('beforeend', `<option value="${esc(name)}">${esc(name.replaceAll('_', ' '))}</option>`));
-    $('#decode-search').addEventListener('input', renderCatalogue); family.addEventListener('change', renderCatalogue);
-    [sourceToggle, anchorToggle, semanticToggle, dependencyToggle, semanticFilter].forEach((input) => input.addEventListener('change', renderGraph));
-    document.querySelectorAll('input[name="decode-view"]').forEach((input) => input.addEventListener('change', () => { viewMode = input.value; syncViewControls(); renderGraph(); showWorkflowDetails(data.workflowById[selectedWorkflow]); }));
-    $('#decode-reset').addEventListener('click', () => selectWorkflow(selectedWorkflow));
-    more.addEventListener('click', () => addNextConnectedWorkflow(selectedAnchor));
-    syncViewControls(); renderCatalogue(); selectWorkflow(data.workflows[0]?.id);
+    return data;
+  }
+  function loadGraphData() {
+    if (data) return Promise.resolve(data);
+    if (graphDataPromise) return graphDataPromise;
+    setEmptyState('Loading selected workflow', 'Preparing the federated source and semantic graph. This happens only once per page visit.', true);
+    graphDataPromise = fetch(root.dataset.decodeData).then((response) => { if (!response.ok) throw new Error(`Graph request failed (${response.status})`); return response.json(); }).then(hydrateGraphData).catch((error) => { graphDataPromise = null; throw error; });
+    return graphDataPromise;
+  }
+  function setEmptyState(title, message, loading) {
+    emptyState.hidden = false; emptyState.classList.toggle('is-loading', Boolean(loading));
+    emptyState.innerHTML = `<strong>${esc(title)}</strong><span>${esc(message)}</span>`;
+    graph.hidden = true; controls.hidden = true; legend.hidden = true;
   }
 
   function syncViewControls() {
@@ -849,15 +885,29 @@ def _decode_workflows_js() -> str:
   }
   function renderCatalogue() {
     const needle = lower($('#decode-search').value), family = $('#decode-family').value;
-    const matches = data.workflows.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri, workflow.external_method_id, ...(workflow.alternate_titles || []), ...(workflow.search_terms || []), ...(workflow.partner_organization || [])].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
-    $('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
-    $('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} reviewed mappings</small></button>`).join('');
+    if (!needle && !family) { currentMatches = []; resultList.innerHTML = ''; resultList.hidden = true; $('#decode-catalogue-status').textContent = selectedWorkflow ? `Selected: ${catalogueById[selectedWorkflow]?.title || selectedWorkflow}` : 'Search for a workflow or select a method family to begin.'; return; }
+    currentMatches = catalogue.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri, workflow.external_method_id, ...(workflow.alternate_titles || []), ...(workflow.search_terms || []), ...(workflow.partner_organization || [])].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
+    const visibleMatches = currentMatches.slice(0, 24);
+    $('#decode-catalogue-status').textContent = currentMatches.length ? `${currentMatches.length} matching workflow${currentMatches.length === 1 ? '' : 's'}${currentMatches.length > visibleMatches.length ? '; showing the first 24' : ''}. Select one to open its graph.` : 'No matching workflows. Try a broader term or another method family.';
+    resultList.innerHTML = visibleMatches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} reviewed mappings</small></button>`).join('');
+    resultList.hidden = !visibleMatches.length;
     document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
   }
-  function selectWorkflow(workflowId) {
-    if (!data.workflowById[workflowId]) return;
-    selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true;
-    renderCatalogue(); renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+  async function selectWorkflow(workflowId) {
+    const summary = catalogueById[workflowId]; if (!summary) return;
+    selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true; resultList.hidden = true;
+    $('#decode-catalogue-status').textContent = `Loading ${summary.title} ...`;
+    details.innerHTML = `<h2>${esc(summary.title)}</h2><p>Loading the preserved source workflow and reviewed semantic projections.</p>`;
+    try {
+      await loadGraphData();
+      if (!data.workflowById[workflowId]) throw new Error('The selected workflow is not present in the federated graph.');
+      emptyState.hidden = true; emptyState.classList.remove('is-loading'); graph.hidden = false; controls.hidden = false; legend.hidden = false;
+      $('#decode-catalogue-status').textContent = `Selected: ${summary.title}`;
+      renderGraph(); showWorkflowDetails(data.workflowById[workflowId]);
+    } catch (error) {
+      setEmptyState('Workflow data unavailable', error.message, false);
+      details.innerHTML = `<h2>Workflow data unavailable</h2><p>${esc(error.message)}</p>`;
+    }
   }
   function visibleNodeIds() { return new Set([...shownWorkflows].flatMap((workflowId) => data.nodesByWorkflow[workflowId] || [])); }
   function overviewId(occurrenceId) { const node = data.nodeById[occurrenceId]; return node?.anchor_id || `unresolved::${occurrenceId}`; }
