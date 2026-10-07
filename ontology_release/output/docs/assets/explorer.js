@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const iri = normalize(node.iri || "");
     const details = normalize(node.search_text || node.description || "");
     const altLabels = normalize((node.alt_labels || []).join(" "));
+    const notations = normalize((node.notations || []).join(" "));
     const examples = normalize((node.examples || []).join(" "));
     const notes = normalize((node.notes || []).join(" "));
     const displayClass = normalize(node.display_class || "");
@@ -146,6 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (label.includes(q) || localName.includes(q) || qname.includes(q)) score += 70;
     if (details.includes(q)) score += 28;
     if (altLabels.includes(q)) score += 20;
+    if (notations === q) score += 120;
+    if (notations.includes(q)) score += 55;
     if (displayClass.includes(q)) score += 18;
     if (examples.includes(q) || notes.includes(q)) score += 12;
     if (iri.includes(q)) score += 12;
@@ -644,6 +647,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
+        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
+        ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
         <div class="explorer-inspector__section">
           <strong>Graph role</strong>
           <p>${escapeHtml(node.id === graph.center?.id ? "Current focus term." : "Visible through the current expanded neighborhood.")} Direct links in the explorer dataset: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml((node.modules || []).join(", "))}.</p>

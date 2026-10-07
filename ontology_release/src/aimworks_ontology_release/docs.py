@@ -40,7 +40,9 @@ from .utils import (
 H2KG_NS = "https://w3id.org/h2kg/hydrogen-ontology#"
 H2KG_ONTOLOGY_IRI = "https://w3id.org/h2kg/hydrogen-ontology"
 SKOS_ALT_LABEL = "http://www.w3.org/2004/02/skos/core#altLabel"
+SKOS_NOTATION = "http://www.w3.org/2004/02/skos/core#notation"
 SKOS_EXAMPLE = "http://www.w3.org/2004/02/skos/core#example"
+DCTERMS_SOURCE = "http://purl.org/dc/terms/source"
 DCTERMS_DESCRIPTION = "http://purl.org/dc/terms/description"
 RDFS_COMMENT = "http://www.w3.org/2000/01/rdf-schema#comment"
 RDFS_SUBCLASS = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
@@ -48,6 +50,9 @@ RDFS_SUBPROPERTY = "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
 RDFS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain"
 RDFS_RANGE = "http://www.w3.org/2000/01/rdf-schema#range"
 RDFS_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"
+H2KG_HAS_QUANTITY_VALUE = H2KG_NS + "hasQuantityValue"
+QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
+QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
 
 
 def build_docs(
@@ -161,6 +166,9 @@ def build_docs(
     if decode is not None:
         # Publish normalized projections and reports, never the supplied raw GraphML files.
         shutil.copytree(output_dir.parent / "decode", output_dir / "decode", dirs_exist_ok=True)
+    itc_example_dir = output_dir.parent / "examples" / "itc_pilot"
+    if itc_example_dir.exists():
+        shutil.copytree(itc_example_dir, output_dir / "examples" / "itc_pilot", dirs_exist_ok=True)
     _copy_odk_artifacts(output_dir)
     _copy_asserted_source_jsonld(input_path, output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
@@ -257,6 +265,9 @@ def _reference_terms_from_artifact(
             "label": best_label(item),
             "description": best_description(item) or "No description available in the source ontology.",
             "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL)),
+            "notations": _literal_values(item.get(SKOS_NOTATION)),
+            "sources": _iri_or_literal_values(item.get(DCTERMS_SOURCE)),
+            "quantity_guidance": _quantity_guidance(item, items),
             "examples": _literal_values(item.get(SKOS_EXAMPLE)),
             "notes": _literal_values(item.get(RDFS_COMMENT)),
             "domain": _iri_values(item.get(RDFS_DOMAIN)),
@@ -307,6 +318,9 @@ def _reference_terms_from_items(
             "label": best_label(item),
             "description": best_description(item) or "No description available in the source ontology.",
             "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL)),
+            "notations": _literal_values(item.get(SKOS_NOTATION)),
+            "sources": _iri_or_literal_values(item.get(DCTERMS_SOURCE)),
+            "quantity_guidance": _quantity_guidance(item, items),
             "examples": _literal_values(item.get(SKOS_EXAMPLE)),
             "notes": _literal_values(item.get(RDFS_COMMENT)),
             "domain": _iri_values(item.get(RDFS_DOMAIN)),
@@ -353,6 +367,35 @@ def _literal_values(value: Any) -> list[str]:
         if isinstance(candidate, str) and candidate.strip() and candidate not in seen:
             seen.append(candidate.strip())
     return seen
+
+
+def _iri_or_literal_values(value: Any) -> list[str]:
+    values = value if isinstance(value, list) else [value] if value is not None else []
+    result: list[str] = []
+    for entry in values:
+        candidate = entry.get("@id") or entry.get("@value") if isinstance(entry, dict) else entry
+        if isinstance(candidate, str) and candidate.strip() and candidate not in result:
+            result.append(candidate.strip())
+    return result
+
+
+def _quantity_guidance(item: dict[str, Any], items: dict[str, dict[str, Any]]) -> list[dict[str, str]]:
+    guidance: list[dict[str, str]] = []
+    for value in item.get(H2KG_HAS_QUANTITY_VALUE, []) if isinstance(item.get(H2KG_HAS_QUANTITY_VALUE), list) else [item.get(H2KG_HAS_QUANTITY_VALUE)]:
+        iri = value.get("@id", "") if isinstance(value, dict) else ""
+        target = items.get(iri, {})
+        if not target:
+            continue
+        units = _iri_or_literal_values(target.get(QUDT_UNIT))
+        kinds = _iri_or_literal_values(target.get(QUDT_QUANTITY_KIND))
+        descriptions = _literal_values(target.get(DCTERMS_DESCRIPTION))
+        guidance.append({
+            "iri": iri,
+            "unit": units[0] if units else "",
+            "quantity_kind": kinds[0] if kinds else "",
+            "description": descriptions[0] if descriptions else "",
+        })
+    return guidance
 
 
 def _iri_values(value: Any) -> list[dict[str, str]]:
@@ -854,6 +897,9 @@ def _decode_workflows_js() -> str:
     data.workflow_dependencies ||= []; data.workflowDependencyById = index(data.workflow_dependencies);
     data.overviewNodeById = index(data.semantic_overview.nodes);
     data.nodesByWorkflow = {}; data.nodes.forEach((node) => (data.nodesByWorkflow[node.workflow_id] ||= []).push(node.id));
+    data.expert_profile_overlays ||= [];
+    data.profileOverlayByWorkflow = Object.fromEntries(data.expert_profile_overlays.map((overlay) => [overlay.workflow_id, overlay]));
+    data.profileNodeById = Object.fromEntries(data.expert_profile_overlays.flatMap((overlay) => overlay.nodes || []).map((node) => [node.id, node]));
     return data;
   }
   function loadGraphData() {
@@ -922,6 +968,21 @@ def _decode_workflows_js() -> str:
   function mappingLabel(state) { return ({ approved_h2kg:'H2KG', reviewed_decode:'reviewed DECODE', unresolved:'Unresolved' })[state] || state || 'Unresolved'; }
   function sourceLabel(workflow) { if (workflow.is_derived) return 'Derived schema'; if (workflow.source_kind === 'source_manual_json') return 'Manual JSON source'; return 'GraphML source'; }
   function projectionVisible(edge) { return semanticFilter.value === 'all' || edge.projection_outcome === semanticFilter.value; }
+  function addProfileElements(output) {
+    if (!semanticToggle.checked) return;
+    const overlays = [...shownWorkflows].map((workflowId) => data.profileOverlayByWorkflow[workflowId]).filter(Boolean);
+    const nodeIds = new Set(output.filter((item) => item.group === 'nodes').map((item) => item.data.id));
+    overlays.forEach((overlay) => {
+      (overlay.nodes || []).forEach((node) => {
+        if (nodeIds.has(node.id)) return;
+        nodeIds.add(node.id);
+        output.push({ group:'nodes', data:{ id:node.id, label:node.label, kind:'profile-anchor', state:'approved_h2kg', role:semanticRoleKey(node), profileId:overlay.profile_id } });
+      });
+      (overlay.edges || []).forEach((edge) => {
+        if (nodeIds.has(edge.source) && nodeIds.has(edge.target)) output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'profile', label:edge.label, profileId:overlay.profile_id } });
+      });
+    });
+  }
 
   function sourceElements() {
     const nodes = visibleNodeIds(), anchors = visibleAnchorIds(nodes), output = [];
@@ -939,6 +1000,7 @@ def _decode_workflows_js() -> str:
     const visible = new Set(output.filter((item) => item.group === 'nodes').map((item) => item.data.id));
     semantic.filter((edge) => visible.has(edge.source) && visible.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:edge.id, source:edge.source, target:edge.target, kind:'semantic', label:edge.label, sourceDependencyId:edge.source_dependency_id, sourceEdgeIds:[edge.source_dependency_id], projectionOutcome:edge.projection_outcome, projectionPattern:edge.projection_pattern } }));
     if (dependencyToggle.checked) data.workflow_dependencies.filter((edge) => edge.publication_status !== 'audit_only' && nodes.has(edge.source) && nodes.has(edge.target)).forEach((edge) => output.push({ group:'edges', data:{ id:`dependency::${edge.id}`, source:edge.source, target:edge.target, kind:'dependency', label:'workflow handoff', dependencyId:edge.id, dependencyStatus:edge.publication_status } }));
+    addProfileElements(output);
     return output;
   }
   function semanticElements() {
@@ -956,6 +1018,7 @@ def _decode_workflows_js() -> str:
       const source = overviewId(edge.source), target = overviewId(edge.target);
       if (semanticIds.has(source) && semanticIds.has(target)) output.push({ group:'edges', data:{ id:`semantic-dependency::${edge.id}`, source, target, kind:'dependency', label:'workflow handoff', dependencyId:edge.id, dependencyStatus:edge.publication_status } });
     });
+    addProfileElements(output);
     return output;
   }
   function elements() { return viewMode === 'semantic' ? semanticElements() : sourceElements(); }
@@ -975,6 +1038,11 @@ def _decode_workflows_js() -> str:
       { selector:'node[kind = "occurrence"][role = "metadata"]', style:{ 'background-color':'#98a3aa', 'color':'#183139' } },
       { selector:'node[kind = "occurrence"][role = "mixed"], node[kind = "occurrence"][role = "unknown"]', style:{ 'background-color':'#adb8bd', 'color':'#183139' } },
       { selector:'node[kind = "value-proxy"]', style:{ 'shape':'diamond', 'background-color':'#64b4d5', 'border-color':'#087f71', 'border-width':3, 'color':'#183139', 'width':52, 'height':52, 'font-size':9 } },
+      { selector:'node[kind = "profile-anchor"]', style:{ 'shape':'round-rectangle', 'width':124, 'height':50, 'font-weight':700, 'border-color':'#006f73', 'border-width':4 } },
+      { selector:'node[kind = "profile-anchor"][role = "process"]', style:{ 'background-color':'#d49118', 'color':'#183139' } },
+      { selector:'node[kind = "profile-anchor"][role = "parameter"]', style:{ 'background-color':'#5d66a6', 'color':'#fff' } },
+      { selector:'node[kind = "profile-anchor"][role = "data"]', style:{ 'background-color':'#64b4d5', 'color':'#183139' } },
+      { selector:'node[kind = "profile-anchor"][role = "property"]', style:{ 'background-color':'#9d5549', 'color':'#fff' } },
       { selector:'node[kind = "source-anchor"], node[kind = "semantic-anchor"]', style:{ 'shape':'round-rectangle', 'width':124, 'height':50, 'font-weight':700 } },
       { selector:'node[kind = "source-anchor"][state = "approved_h2kg"]', style:{ 'background-color':'#0d7f83', 'border-color':'#07575a', 'color':'#fff' } },
       { selector:'node[kind = "source-anchor"][state = "reviewed_decode"]', style:{ 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff' } },
@@ -998,9 +1066,10 @@ def _decode_workflows_js() -> str:
       { selector:'edge[kind = "source"]', style:{ 'width':1.25, 'opacity':.45, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
       { selector:'edge[kind = "anchor"]', style:{ 'width':1.5, 'line-style':'dashed', 'line-color':'#bd8529', 'curve-style':'bezier' } },
       { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } }
+      ,{ selector:'edge[kind = "profile"]', style:{ 'width':2.8, 'line-color':'#b45309', 'target-arrow-color':'#b45309', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff7ed', 'text-background-opacity':.95, 'text-background-padding':2 } }
     ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:105, nodeRepulsion:520000 } });
-    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); const anchorId = item.anchorId || (item.kind === 'source-anchor' ? item.id : data.nodeById[item.id]?.anchor_id); if (anchorId) expandAnchor(anchorId); else if (item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
-    cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'source-anchor') showAnchorDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
+    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') return showProfileNodeDetails(item.id); const anchorId = item.anchorId || (item.kind === 'source-anchor' ? item.id : data.nodeById[item.id]?.anchor_id); if (anchorId) expandAnchor(anchorId); else if (item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
+    cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') showProfileNodeDetails(item.id); else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'source-anchor') showAnchorDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
     cy.on('tap', 'edge', (event) => showEdgeDetails(event.target.data()));
     cy.on('mouseover', 'node, edge', (event) => { event.target.addClass('hovered'); showHover(event.target, event.originalEvent); });
     cy.on('mousemove', 'node, edge', (event) => moveHover(event.originalEvent));
@@ -1017,16 +1086,17 @@ def _decode_workflows_js() -> str:
   function updateMoreButton() { const remaining = selectedAnchor ? rankedConnectedWorkflows(selectedAnchor).length : 0; more.hidden = !remaining; more.textContent = `Add next connected workflow (${remaining} remaining)`; }
 
   function downloads(workflow) { const standard = `<a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.validation.json" download>Download workflow validation</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_edge_registry.csv" download>Download edge-alignment registry</a><a href="../decode/decode_workflow_dependencies.csv" download>Download workflow dependencies</a><a href="../decode/decode_duplicate_occurrence_audit.csv" download>Download duplicate-occurrence audit</a><a href="../decode/decode_validation_report.json" download>Download release validation</a>`; const extras = (workflow.downloads || []).map((item) => `<a href="${esc(item.href)}" download>${esc(item.label)}</a>`).join(''); return `<div class="decode-downloads">${standard}${extras}</div>`; }
-  function showWorkflowDetails(workflow) { const semanticCount = new Set((data.nodesByWorkflow[workflow.id] || []).map(overviewId)).size; const sourceStatus = workflow.is_derived ? 'PDF-derived interface schema; the source workflows are unchanged.' : (viewMode === 'semantic' ? 'Select a canonical node to inspect its source occurrences and branch contexts.' : 'The complete source workflow is visible. Double-click an occurrence or anchor to traverse reviewed cross-workflow connections.'); details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">${esc(sourceLabel(workflow))}</span></p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method ID:</strong> ${esc(workflow.external_method_id || 'not supplied')}<br><strong>Partner:</strong> ${esc((workflow.partner_organization || []).join('; ') || 'not supplied')}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.<br><strong>Semantic overview:</strong> ${semanticCount} canonical nodes.</p><p>${sourceStatus}</p>${downloads(workflow)}`; }
+  function showWorkflowDetails(workflow) { const semanticCount = new Set((data.nodesByWorkflow[workflow.id] || []).map(overviewId)).size; const sourceStatus = workflow.is_derived ? 'PDF-derived interface schema; the source workflows are unchanged.' : (viewMode === 'semantic' ? 'Select a canonical node to inspect its source occurrences and branch contexts.' : 'The complete source workflow is visible. Double-click an occurrence or anchor to traverse reviewed cross-workflow connections.'); const profileBadge = workflow.expert_profile ? `<span class="decode-status approved_h2kg">${esc(workflow.expert_profile.badge)}</span>` : ''; details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">${esc(sourceLabel(workflow))}</span> ${profileBadge}</p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method ID:</strong> ${esc(workflow.external_method_id || 'not supplied')}<br><strong>Partner:</strong> ${esc((workflow.partner_organization || []).join('; ') || 'not supplied')}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.<br><strong>Semantic overview:</strong> ${semanticCount} canonical nodes.</p><p>${sourceStatus}</p>${workflow.expert_profile ? `<p>The expert profile is a derived semantic overlay and does not add source nodes or edges.</p>` : ''}${downloads(workflow)}`; }
   function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; const role = node.canonical_role_iri ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(node.semantic_role || node.canonical_role_iri)}</a></p>` : ''; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Decision:</strong> ${esc(node.decision || 'unresolved')}<br><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}${role}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; if (cy) { const selected = cy.$id(id); selected.addClass('focused'); cy.center(selected); } }
   function showProjectionNodeDetails(id) { const node = data.projectionNodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], source = data.nodeById[node.source_occurrence_id]; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status">derived semantic projection</span></p><p><strong>H2KG type:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">DataPoint</a><br><strong>Source occurrence:</strong> <code>${esc(source.source_id)}</code> ${esc(source.label)}<br><strong>Workflow:</strong> ${esc(workflow.title)}</p><p>${esc(node.description)}</p>`; }
+  function showProfileNodeDetails(id) { const node = data.profileNodeById[id]; if (!node) return; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}${node.io_id ? `<br><strong>Stable IO identifier:</strong> <code>${esc(node.io_id)}</code>` : ''}</p><p>${esc(node.description)}</p><p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.id)}">Inspect this public term in H2KG Explore</a></p>`; }
   function showSemanticNodeDetails(id) { const node = data.overviewNodeById[id]; if (!node) return; const visible = visibleNodeIds(), occurrences = node.occurrence_ids.filter((occurrenceId) => visible.has(occurrenceId)); const anchor = data.anchorById[id]; const h2kg = anchor?.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = node.canonical_role_iri && !node.role_conflict ? `<p><strong>Semantic role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(semanticRoleText(node))}</a></p>` : `<p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p>`; const list = occurrences.map((occurrenceId) => { const occurrence = data.nodeById[occurrenceId], workflow = data.workflowById[occurrence.workflow_id]; return `<li><button class="decode-add-workflow" data-inspect-occurrence="${esc(occurrenceId)}"><code>${esc(occurrence.source_id)}</code> in ${esc(workflow.title)}</button></li>`; }).join(''); details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span> ${esc(node.decision || '')}</p>${role}<p><strong>Semantic overview:</strong> ${occurrences.length} visible source occurrence${occurrences.length === 1 ? '' : 's'} represented by one canonical node.</p><p>${esc(node.evidence || '')}</p>${h2kg}<h3>Inspect preserved source occurrences</h3><ul>${list || '<li>No occurrence is visible.</li>'}</ul>${anchor ? `<p>Double-click this node to add one complete connected workflow through the shared anchor.</p>` : ''}`; document.querySelectorAll('[data-inspect-occurrence]').forEach((button) => button.addEventListener('click', () => { viewMode = 'source'; syncViewControls(); renderGraph(); showOccurrenceDetails(button.dataset.inspectOccurrence); })); }
   function showAnchorDetails(anchorId) { const anchor = data.anchorById[anchorId]; if (!anchor) return; const workflows = [...new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))].map((id) => data.workflowById[id]); const candidates = rankedConnectedWorkflows(anchorId); const h2kg = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = anchor.canonical_role_iri && anchor.state !== 'approved_h2kg' ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.canonical_role_iri)}">${esc(anchor.semantic_role || anchor.canonical_role_iri)}</a></p>` : ''; const cards = candidates.slice(0,8).map((workflow) => `<button class="decode-add-workflow" data-add-workflow="${esc(workflow.id)}">Add full workflow: ${esc(workflow.title)}</button>`).join(''); details.innerHTML = `<h2>${esc(anchor.label)}</h2><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span> ${esc(anchor.decision || '')}</p><p><code>${esc(anchor.id)}</code></p><p>${esc(anchor.evidence)}</p>${h2kg}${role}<h3>Linked workflows (${workflows.length})</h3><ul>${workflows.map((workflow) => `<li>${esc(workflow.title)}</li>`).join('')}</ul>${cards ? `<h3>Expand a connected workflow</h3>${cards}` : '<p>All linked workflows are visible.</p>'}`; document.querySelectorAll('[data-add-workflow]').forEach((button) => button.addEventListener('click', () => { shownWorkflows.add(button.dataset.addWorkflow); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); })); }
   function visibleRelations(id) { return [...cy.$id(id).connectedEdges()].map((edge) => `${edge.data('kind')}: ${edge.data('label') || 'relation'}`).join('; ') || 'none'; }
   function edgeDecision(item) { return data.edgeRegistryBySource[item.sourceDependencyId || item.id]; }
   function edgeDecisionHtml(item) { if (item.kind === 'dependency') { const decision = data.workflowDependencyById[item.dependencyId]; if (!decision) return ''; return `<p><strong>Status:</strong> ${esc(decision.publication_status)}<br><strong>Declarations:</strong> ${esc((decision.declarations || []).join(', '))}<br><strong>Handoff concepts:</strong> ${esc((decision.handoff_labels || []).join('; ') || 'none identified')}<br><strong>Handoff anchors:</strong> ${esc((decision.handoff_anchor_iris || []).join('; ') || 'none')}<br><strong>Evidence:</strong> ${esc(decision.review_rationale)}</p>`; } const decision = edgeDecision(item); if (!decision) return ''; return `<p><strong>Classification:</strong> ${esc(decision.projection_outcome)}<br><strong>Pattern:</strong> ${esc(decision.projection_pattern)}<br><strong>Semantic direction:</strong> ${esc(decision.semantic_direction)}<br><strong>Predicate(s):</strong> ${esc(decision.semantic_predicates || 'none')}<br><strong>Confidence:</strong> ${esc(decision.confidence)}<br><strong>Rationale:</strong> ${esc(decision.rationale)}</p>`; }
   function showEdgeDetails(item) { const relationId = item.kind === 'dependency' ? item.dependencyId : (item.sourceDependencyId || item.id); details.innerHTML = `<h2>${esc(item.label || 'Source dependency')}</h2><p><strong>Relation layer:</strong> ${esc(item.kind)}<br><strong>Display direction:</strong> <code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code><br><strong>Relation ID:</strong> <code>${esc(relationId)}</code></p>${edgeDecisionHtml(item)}`; }
-  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (item.kind === 'value-proxy') { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG DataPoint proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
+  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'profile-anchor') { const node = data.profileNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}</p><p>${esc(node.description)}</p>`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (item.kind === 'value-proxy') { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG DataPoint proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
   function moveHover(event) { if (!event || hover.classList.contains('is-hidden')) return; hover.style.left = `${Math.min((event.clientX || 0) + 14, window.innerWidth - hover.offsetWidth - 10)}px`; hover.style.top = `${Math.min((event.clientY || 0) + 14, window.innerHeight - hover.offsetHeight - 10)}px`; }
   function hideHover() { hover.classList.add('is-hidden'); }
 })();
@@ -1299,6 +1369,8 @@ def _node_search_text(record: dict[str, Any], item: dict[str, Any]) -> str:
         record.get("iri", ""),
         record.get("description", ""),
         *record.get("alt_labels", []),
+        *record.get("notations", []),
+        *record.get("sources", []),
         *record.get("examples", []),
         *record.get("notes", []),
         *record.get("type_labels", []),
@@ -1311,6 +1383,8 @@ def _node_search_text(record: dict[str, Any], item: dict[str, Any]) -> str:
         bits.append(mapping.get("target_label", ""))
         bits.append(mapping.get("target_iri", ""))
         bits.append(mapping.get("relation", ""))
+    for guidance in record.get("quantity_guidance", []):
+        bits.extend([guidance.get("unit", ""), guidance.get("quantity_kind", ""), guidance.get("description", "")])
     values: list[str] = []
     seen: set[str] = set()
     for bit in bits:
@@ -1334,6 +1408,9 @@ def _external_node_record(iri: str, label: str = "", description: str = "") -> d
         "qname": qname or iri,
         "description": description.strip() or "External aligned term linked from the current H2KG release.",
         "alt_labels": [],
+        "notations": [],
+        "sources": [],
+        "quantity_guidance": [],
         "examples": [],
         "notes": [],
         "type_labels": ["External"],
@@ -1388,6 +1465,9 @@ def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[s
             "qname": qname or iri,
             "description": record["description"],
             "alt_labels": record.get("alt_labels", []),
+            "notations": record.get("notations", []),
+            "sources": record.get("sources", []),
+            "quantity_guidance": record.get("quantity_guidance", []),
             "examples": record.get("examples", []),
             "notes": record.get("notes", []),
             "type_labels": record.get("type_labels", []),
@@ -1808,6 +1888,13 @@ def _reference_term_block(term: dict[str, Any], explore_href: str = "") -> str:
         meta_rows.append(("Explore", f"<a class='inline-button inline-button--small' href='{escape(explore_href)}'>Open in Explorer</a>"))
     if term.get("alt_labels"):
         meta_rows.append(("altLabel", escape("; ".join(term["alt_labels"]))))
+    if term.get("notations"):
+        meta_rows.append(("notation", escape("; ".join(term["notations"]))))
+    if term.get("sources"):
+        meta_rows.append(("source", "<br>".join(f"<a href='{escape(value)}'>{escape(value)}</a>" if value.startswith("http") else escape(value) for value in term["sources"])))
+    if term.get("quantity_guidance"):
+        guidance = term["quantity_guidance"]
+        meta_rows.append(("QUDT guidance", "<br>".join(escape(" | ".join(part for part in [row.get("quantity_kind", ""), row.get("unit", ""), row.get("description", "")] if part)) for row in guidance)))
     parent_rows = _reference_relation_text(term.get("parents", []))
     subclass_rows = _reference_relation_text(term.get("subclasses", []))
     subproperty_rows = _reference_relation_text(term.get("subproperties", []))
@@ -3094,6 +3181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const iri = normalize(node.iri || "");
     const details = normalize(node.search_text || node.description || "");
     const altLabels = normalize((node.alt_labels || []).join(" "));
+    const notations = normalize((node.notations || []).join(" "));
     const examples = normalize((node.examples || []).join(" "));
     const notes = normalize((node.notes || []).join(" "));
     const displayClass = normalize(node.display_class || "");
@@ -3105,6 +3193,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (label.includes(q) || localName.includes(q) || qname.includes(q)) score += 70;
     if (details.includes(q)) score += 28;
     if (altLabels.includes(q)) score += 20;
+    if (notations === q) score += 120;
+    if (notations.includes(q)) score += 55;
     if (displayClass.includes(q)) score += 18;
     if (examples.includes(q) || notes.includes(q)) score += 12;
     if (iri.includes(q)) score += 12;
@@ -3603,6 +3693,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
+        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
+        ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
         <div class="explorer-inspector__section">
           <strong>Graph role</strong>
           <p>${escapeHtml(node.id === graph.center?.id ? "Current focus term." : "Visible through the current expanded neighborhood.")} Direct links in the explorer dataset: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml((node.modules || []).join(", "))}.</p>

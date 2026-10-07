@@ -12,6 +12,7 @@ from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
+from .itc_pilot import build_itc_pilot_package, integrate_itc_terms
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
 from .normalize_source import normalize_source_document
@@ -28,7 +29,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases", "itc-integrate", "itc-build"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
         if command == "odk":
@@ -43,6 +44,10 @@ def main() -> None:
             sub.add_argument("--mapping-config", default="config/decode_workflow_mappings.yaml")
         if command == "decode-build":
             sub.add_argument("--manual-overlay", default="input/decode_manual_workflow_overlay.json")
+        if command in {"itc-integrate", "itc-build"}:
+            sub.add_argument("--review", default="input/itc_expert_review.json")
+        if command == "itc-integrate":
+            sub.add_argument("--write-in-place", action="store_true")
     decode_ingest = subparsers.add_parser("decode-ingest")
     decode_ingest.add_argument("--source-dir", required=True)
     decode_ingest.add_argument("--snapshot", default="input/decode_workflows_source.json")
@@ -165,6 +170,14 @@ def main() -> None:
         if not mapping_config.is_absolute():
             mapping_config = project_root / mapping_config
         result = apply_decode_alias_curation(input_path, mapping_config)
+    elif args.command in {"itc-integrate", "itc-build"}:
+        review_path = Path(args.review)
+        if not review_path.is_absolute():
+            review_path = project_root / review_path
+        if args.command == "itc-integrate":
+            result = integrate_itc_terms(input_path, review_path, write_in_place=args.write_in_place)
+        else:
+            result = build_itc_pilot_package(input_path, output, review_path)
     else:
         result = run_release(
             input_path,

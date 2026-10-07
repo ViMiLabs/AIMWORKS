@@ -14,6 +14,7 @@ from .fib_sem_pilot import build_fib_sem_pilot_package
 from .hdo import load_hdo_alignment_report
 from .ic_sem_pilot import build_ic_sem_pilot_package
 from .inspect import inspect_ontology
+from .itc_pilot import build_itc_pilot_package
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
 from .neutron_tomo_pilot import build_neutron_tomo_pilot_package
@@ -68,6 +69,11 @@ def run_release(
     synchrotron_xray_tomo_pilot = build_synchrotron_xray_tomo_pilot_package(input_path, output_root)
     xrd_pilot = build_xrd_pilot_package(input_path, output_root)
     xps_pilot = build_xps_pilot_package(input_path, output_root)
+    itc_pilot = build_itc_pilot_package(
+        input_path,
+        output_root,
+        project_root / "input" / "itc_expert_review.json",
+    )
     method_data_profiles = build_method_data_profiles(input_path, output_root)
     decode_workflows = build_decode_workflow_release(
         project_root / "input" / "decode_workflows_source.json",
@@ -118,6 +124,7 @@ def run_release(
         "synchrotron_xray_tomo_pilot": synchrotron_xray_tomo_pilot,
         "xrd_pilot": xrd_pilot,
         "xps_pilot": xps_pilot,
+        "itc_pilot": itc_pilot,
         "method_data_profiles": method_data_profiles,
         "decode_workflows": decode_workflows,
         "tib_benchmark": tib_benchmark,

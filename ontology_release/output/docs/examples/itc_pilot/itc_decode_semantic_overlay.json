@@ -1,0 +1,1156 @@
+{
+  "profile_id": "itc-expert-reviewed-interface",
+  "workflow_id": "iet-ink-to-composition-model",
+  "badge": "Expert-reviewed ITC profile",
+  "source_occurrence_id": "iet-ink-to-composition-model::n22",
+  "source_sha256": "2DF4CF1ADB53F99FE2E5C6D7C03629BD24E35A05E2DDFB23AB73F419BDFA7180",
+  "nodes": [
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "label": "Ink-to-Composition Model",
+      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "description": "A computational process that predicts cathode-catalyst-layer composition and wetting descriptors from catalyst, ionomer, pore-structure, wettability, and constituent-density inputs.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "label": "Ink-to-Composition Model input dataset",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free schema dataset grouping property-valued inputs expected by the Ink-to-Composition Model.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "label": "Ink-to-Composition Model scalar-result dataset",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free schema dataset grouping scalar property fields produced by the Ink-to-Composition Model.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterRetentionCurveDataset",
+      "label": "CCL water-retention-curve dataset",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A dataset profile containing the capillary-pressure axis and corresponding CCL water-saturation array.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionDataset",
+      "label": "CCL refined pore-size-distribution dataset",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A dataset profile containing a pore-radius axis and corresponding refined CCL pore-size distribution.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionDataset",
+      "label": "CCL contact-angle-distribution dataset",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A dataset profile containing a contact-angle-cosine axis and corresponding CCL contact-angle distribution.",
+      "io_id": "",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "label": "Platinum-to-carbon mass ratio",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Mass ratio of platinum catalyst to carbon support in the catalyst layer.",
+      "io_id": "IO_CMP_CatalystSupportRatio",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+      "label": "Ionomer-to-carbon ratio",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Mass ratio of dry ionomer to carbon support in the catalyst layer.",
+      "io_id": "IO_CMP_ICRatio",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
+      "label": "Ionomer-catalyst dispersion parameter",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Parameter describing the tendency of ionomer to spread over the platinum-on-carbon surface rather than form larger ionomer aggregates.",
+      "io_id": "IO_CMP_IonomerCatalystDispersionParameter",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#TotalPoreVolume",
+      "label": "Total pore volume",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Total volume of primary and secondary pores in the ionomer-free platinum-on-carbon structure per unit mass of carbon.",
+      "io_id": "IO_CMP_TotalPoreVolume",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreVolumeFraction",
+      "label": "CCL primary-pore volume fraction",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Fraction of the total pore volume assigned to primary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_phi1",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreVolumeFraction",
+      "label": "CCL secondary-pore volume fraction",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Fraction of the total pore volume assigned to secondary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_phi2",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusGeometricMean",
+      "label": "CCL primary-pore geometric-mean radius",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for primary pores in a cathode catalyst layer.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_rMu1",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusGeometricMean",
+      "label": "CCL secondary-pore geometric-mean radius",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for secondary pores in a cathode catalyst layer.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_rMu2",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusLogarithmicStandardDeviation",
+      "label": "CCL primary-pore logarithmic radius deviation",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Dimensionless standard deviation in the volume-weighted lognormal distribution of primary-pore radii, calculated using the natural logarithm.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_sigmaR1",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusLogarithmicStandardDeviation",
+      "label": "CCL secondary-pore logarithmic radius deviation",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Dimensionless standard deviation in the volume-weighted lognormal distribution of secondary-pore radii, calculated using the natural logarithm.",
+      "io_id": "IO_MAT_CatalystPoreSizeDistribution_sigmaR2",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportInducedIonomerAlignmentDegree",
+      "label": "Carbon-support-induced ionomer alignment degree",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface.",
+      "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceInducedIonomerAlignmentDegree",
+      "label": "Platinum-surface-induced ionomer alignment degree",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface.",
+      "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#LimitingIonomerAlignmentDegree",
+      "label": "Limiting ionomer alignment degree",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Limiting degree of ionomer molecular alignment in a thick film where the influence of the platinum-on-carbon surface is negligible.",
+      "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
+      "label": "Carbon-support water contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Water contact angle of the bare carbon-support surface used to describe its intrinsic wettability.",
+      "io_id": "IO_MAT_CatalystSupportContactAngle",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
+      "label": "Platinum-surface water contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Water contact angle of the bare platinum surface used to describe its intrinsic wettability.",
+      "io_id": "IO_MAT_CatalystActiveParticleContactAngle",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophilicIonomerContactAngle",
+      "label": "Ideal hydrophilic ionomer contact angle",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Limiting water contact angle of an ideally hydrophilic aligned ionomer surface used as the hydrophilic endpoint of the model wetting relation.",
+      "io_id": "IO_MAT_IonomerContactAngles_thetaHI",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophobicIonomerContactAngle",
+      "label": "Ideal hydrophobic ionomer contact angle",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Limiting water contact angle of an ideally hydrophobic aligned ionomer surface used as the hydrophobic endpoint of the model wetting relation.",
+      "io_id": "IO_MAT_IonomerContactAngles_thetaHO",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
+      "label": "Initial ionomer film thickness",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Limiting effective thickness of the ionomer film on the covered platinum-on-carbon surface as ionomer loading approaches zero, representing the characteristic thickness of the first deposited ionomer layer.",
+      "io_id": "IO_MAT_IonomerInitialFilmThickness",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerPatchRadius",
+      "label": "Equivalent ionomer patch radius",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "description": "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface.",
+      "io_id": "IO_CMP_MeanPoreRadiusInsideTheIonomer",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "label": "Platinum particle radius",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Radius of the hemispherical platinum nanoparticles used to determine platinum surface coverage in the model.",
+      "io_id": "IO_MAT_CatalystActiveParticleDiameter",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTension",
+      "label": "Surface tension",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Surface tension of liquid water at 353 K used to determine capillary flooding behavior in catalyst-layer pores.",
+      "io_id": "IO_CMP_SurfaceTensionOfWaterAtT353k",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "label": "Dry ionomer density",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Mass density of dry ionomer used to convert ionomer mass into ionomer volume.",
+      "io_id": "IO_MAT_IonomerDensityDry",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "label": "Platinum density",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Mass density of platinum used to relate platinum loading to the amount and surface coverage of catalyst particles.",
+      "io_id": "IO_MAT_CatalystActiveParticleDensity",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonDensity",
+      "label": "Carbon density",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Mass density of the carbon-support material.",
+      "io_id": "IO_CMP_DensityOfCarbon",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CapillaryPressureAxisData",
+      "label": "Capillary-pressure axis data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Array of capillary-pressure values used as the pressure axis for evaluating a cathode-catalyst-layer water-retention curve.",
+      "io_id": "IO_SIM_CapillaryPressureRange",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterSaturationData",
+      "label": "CCL water-saturation data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Array giving the fraction of cathode-catalyst-layer pore volume flooded with liquid water at each capillary pressure in the water-retention curve.",
+      "io_id": "IO_CMP_CCLWaterRetentionCurve",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessiblePrimaryPoreVolumeFraction",
+      "label": "CCL accessible primary-pore volume fraction",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Normalized fraction of the remaining accessible cathode-catalyst-layer pore volume belonging to primary pores after accounting for ionomer filling.",
+      "io_id": "IO_CMP_CCLFractionHydrophilicPores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessibleSecondaryPoreVolumeFraction",
+      "label": "CCL accessible secondary-pore volume fraction",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Normalized fraction of the remaining accessible cathode-catalyst-layer pore volume belonging to secondary pores after accounting for ionomer filling.",
+      "io_id": "IO_CMP_CCLFractionHydrophobicPores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
+      "label": "CCL effective ionomer coverage",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Fraction of the total secondary-pore surface covered by ionomer in a cathode catalyst layer.",
+      "io_id": "IO_CMP_CCLEffectiveIonomerCoverage",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
+      "label": "Equivalent ionomer film thickness",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Effective uniform thickness of the ionomer film obtained from its volume and the secondary-pore area it covers.",
+      "io_id": "IO_CMP_CCLIonomerEffectiveFilmThickness",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreSpecificSurfaceArea",
+      "label": "CCL primary-pore specific surface area",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Specific surface area of the primary-pore domain of the ionomer-free reference structure per unit carbon mass, calculated from the primary-pore size distribution.",
+      "io_id": "IO_CMP_CCLStructuralParameters_A1",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreSpecificSurfaceArea",
+      "label": "CCL secondary-pore specific surface area",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Specific surface area of the secondary-pore domain of the ionomer-free reference structure per unit carbon mass, calculated from the secondary-pore size distribution.",
+      "io_id": "IO_CMP_CCLStructuralParameters_A2",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLTotalPoreSpecificSurfaceArea",
+      "label": "CCL total-pore specific surface area",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Total specific surface area of the primary- and secondary-pore network of the ionomer-free cathode-catalyst-layer reference structure per unit carbon mass.",
+      "io_id": "IO_CMP_CCLStructuralParameters_Apores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLIonomerAlignmentDegree",
+      "label": "CCL ionomer alignment degree",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness.",
+      "io_id": "IO_CMP_CCLStructuralParameters_deltaDA",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumCarbonPoreWallContactAngle",
+      "label": "Platinum-carbon pore-wall contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Effective water contact angle of the uncovered platinum-on-carbon pore wall determined from the surface contributions of platinum and carbon.",
+      "io_id": "IO_CMP_CCLStructuralParameters_ThetaPtC",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCoatedPoreWallContactAngle",
+      "label": "Ionomer-coated pore-wall contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Effective water contact angle of an ionomer-coated pore wall determined by the ionomer degree of alignment.",
+      "io_id": "IO_CMP_CCLStructuralParameters_ThetaIon",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLMeanContactAngle",
+      "label": "CCL mean contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Arithmetic mean of local cathode-catalyst-layer pore contact angles, with primary- and secondary-pore distributions weighted by their shares of total pore volume remaining after ionomer filling.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCL",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophilicPoreMeanContactAngle",
+      "label": "CCL hydrophilic-pore mean contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Pore-volume-weighted arithmetic mean of contact angles below 90 degrees, considering cathode-catalyst-layer pore volume remaining after ionomer filling.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHI",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophobicPoreMeanContactAngle",
+      "label": "CCL hydrophobic-pore mean contact angle",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Pore-volume-weighted arithmetic mean of contact angles above 90 degrees, considering cathode-catalyst-layer pore volume remaining after ionomer filling.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHO",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreHydrophobicVolumeFraction",
+      "label": "CCL secondary-pore hydrophobic volume fraction",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "description": "Fraction of secondary-pore volume with hydrophobic wetting behavior, corresponding to contact angles greater than 90 degrees.",
+      "io_id": "IO_CMP_CCLFractionHydrophobicPores_XHO",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PoreRadiusAxisData",
+      "label": "Pore-radius axis data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Array of pore-radius values used as the size axis for evaluating cathode-catalyst-layer pore-size and contact-angle distributions.",
+      "io_id": "IO_SIM_PoreSizeRange",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionData",
+      "label": "CCL refined pore-size-distribution data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Normalized pore-volume density per natural-logarithmic interval of pore radius, combining primary and secondary pores after accounting for ionomer filling.",
+      "io_id": "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ContactAngleCosineAxisData",
+      "label": "Contact-angle cosine axis data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Array of contact-angle cosine values used as the angular axis for evaluating the cathode-catalyst-layer contact-angle distribution.",
+      "io_id": "IO_SIM_ContactAngleRange",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionData",
+      "label": "CCL contact-angle-distribution data",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "Normalized cathode-catalyst-layer contact-angle distribution on the specified cosine grid, combining primary- and secondary-pore contributions.",
+      "io_id": "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCTotalPoreVolumeInputField",
+      "label": "ITC Total pore volume input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_TotalPoreVolume",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonSupportWaterContactAngleInputField",
+      "label": "ITC Carbon-support water contact angle input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_MAT_CatalystSupportContactAngle",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumSurfaceWaterContactAngleInputField",
+      "label": "ITC Platinum-surface water contact angle input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_MAT_CatalystActiveParticleContactAngle",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumParticleRadiusInputField",
+      "label": "ITC Platinum particle radius input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_MAT_CatalystActiveParticleDiameter",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCSurfaceTensionInputField",
+      "label": "ITC Surface tension input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_SurfaceTensionOfWaterAtT353k",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCDryIonomerDensityInputField",
+      "label": "ITC Dry ionomer density input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_MAT_IonomerDensityDry",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumDensityInputField",
+      "label": "ITC Platinum density input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_MAT_CatalystActiveParticleDensity",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonDensityInputField",
+      "label": "ITC Carbon density input field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_DensityOfCarbon",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessiblePrimaryPoreVolumeFractionResultField",
+      "label": "ITC CCL accessible primary-pore volume fraction result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLFractionHydrophilicPores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessibleSecondaryPoreVolumeFractionResultField",
+      "label": "ITC CCL accessible secondary-pore volume fraction result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLFractionHydrophobicPores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLEffectiveIonomerCoverageResultField",
+      "label": "ITC CCL effective ionomer coverage result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLEffectiveIonomerCoverage",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCEquivalentIonomerFilmThicknessResultField",
+      "label": "ITC Equivalent ionomer film thickness result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLIonomerEffectiveFilmThickness",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLPrimaryPoreSpecificSurfaceAreaResultField",
+      "label": "ITC CCL primary-pore specific surface area result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_A1",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreSpecificSurfaceAreaResultField",
+      "label": "ITC CCL secondary-pore specific surface area result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_A2",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLTotalPoreSpecificSurfaceAreaResultField",
+      "label": "ITC CCL total-pore specific surface area result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_Apores",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLIonomerAlignmentDegreeResultField",
+      "label": "ITC CCL ionomer alignment degree result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_deltaDA",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumCarbonPoreWallContactAngleResultField",
+      "label": "ITC Platinum-carbon pore-wall contact angle result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_ThetaPtC",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCIonomerCoatedPoreWallContactAngleResultField",
+      "label": "ITC Ionomer-coated pore-wall contact angle result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_ThetaIon",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLMeanContactAngleResultField",
+      "label": "ITC CCL mean contact angle result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCL",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophilicPoreMeanContactAngleResultField",
+      "label": "ITC CCL hydrophilic-pore mean contact angle result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHI",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophobicPoreMeanContactAngleResultField",
+      "label": "ITC CCL hydrophobic-pore mean contact angle result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHO",
+      "mapping_state": "approved_h2kg"
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreHydrophobicVolumeFractionResultField",
+      "label": "ITC CCL secondary-pore hydrophobic volume fraction result field",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "description": "A value-free ITC profile field template; it is not an observation or experimental instance.",
+      "io_id": "IO_CMP_CCLFractionHydrophobicPores_XHO",
+      "mapping_state": "approved_h2kg"
+    }
+  ],
+  "edges": [
+    {
+      "id": "itc-profile::1",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::2",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::3",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::4",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreVolumeFraction",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::5",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreVolumeFraction",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::6",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusGeometricMean",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::7",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusGeometricMean",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::8",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusLogarithmicStandardDeviation",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::9",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusLogarithmicStandardDeviation",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::10",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportInducedIonomerAlignmentDegree",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::11",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceInducedIonomerAlignmentDegree",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::12",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#LimitingIonomerAlignmentDegree",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::13",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophilicIonomerContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::14",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophobicIonomerContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::15",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::16",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerPatchRadius",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter"
+    },
+    {
+      "id": "itc-profile::17",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData"
+    },
+    {
+      "id": "itc-profile::18",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData"
+    },
+    {
+      "id": "itc-profile::19",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterRetentionCurveDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData"
+    },
+    {
+      "id": "itc-profile::20",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData"
+    },
+    {
+      "id": "itc-profile::21",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionDataset",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData"
+    },
+    {
+      "id": "itc-profile::22",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCTotalPoreVolumeInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::23",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCTotalPoreVolumeInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#TotalPoreVolume",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::24",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonSupportWaterContactAngleInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::25",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonSupportWaterContactAngleInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::26",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumSurfaceWaterContactAngleInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::27",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumSurfaceWaterContactAngleInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::28",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumParticleRadiusInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::29",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumParticleRadiusInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::30",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCSurfaceTensionInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::31",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCSurfaceTensionInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTension",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::32",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCDryIonomerDensityInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::33",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCDryIonomerDensityInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::34",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumDensityInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::35",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumDensityInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::36",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelInputDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonDensityInputField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::37",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonDensityInputField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonDensity",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::38",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessiblePrimaryPoreVolumeFractionResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::39",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessiblePrimaryPoreVolumeFractionResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessiblePrimaryPoreVolumeFraction",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::40",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessibleSecondaryPoreVolumeFractionResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::41",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLAccessibleSecondaryPoreVolumeFractionResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessibleSecondaryPoreVolumeFraction",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::42",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLEffectiveIonomerCoverageResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::43",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLEffectiveIonomerCoverageResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::44",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCEquivalentIonomerFilmThicknessResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::45",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCEquivalentIonomerFilmThicknessResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::46",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLPrimaryPoreSpecificSurfaceAreaResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::47",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLPrimaryPoreSpecificSurfaceAreaResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreSpecificSurfaceArea",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::48",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreSpecificSurfaceAreaResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::49",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreSpecificSurfaceAreaResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreSpecificSurfaceArea",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::50",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLTotalPoreSpecificSurfaceAreaResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::51",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLTotalPoreSpecificSurfaceAreaResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLTotalPoreSpecificSurfaceArea",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::52",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLIonomerAlignmentDegreeResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::53",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLIonomerAlignmentDegreeResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLIonomerAlignmentDegree",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::54",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumCarbonPoreWallContactAngleResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::55",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCPlatinumCarbonPoreWallContactAngleResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumCarbonPoreWallContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::56",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCIonomerCoatedPoreWallContactAngleResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::57",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCIonomerCoatedPoreWallContactAngleResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCoatedPoreWallContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::58",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLMeanContactAngleResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::59",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLMeanContactAngleResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLMeanContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::60",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophilicPoreMeanContactAngleResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::61",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophilicPoreMeanContactAngleResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophilicPoreMeanContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::62",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophobicPoreMeanContactAngleResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::63",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLHydrophobicPoreMeanContactAngleResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophobicPoreMeanContactAngle",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::64",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModelScalarResultDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreHydrophobicVolumeFractionResultField",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::65",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ITCCCLSecondaryPoreHydrophobicVolumeFractionResultField",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreHydrophobicVolumeFraction",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "label": "ofProperty"
+    },
+    {
+      "id": "itc-profile::66",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterRetentionCurveDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CapillaryPressureAxisData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::67",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterRetentionCurveDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterSaturationData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::68",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PoreRadiusAxisData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::69",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::70",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#ContactAngleCosineAxisData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    },
+    {
+      "id": "itc-profile::71",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionDataset",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionData",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "label": "hasPart"
+    }
+  ]
+}

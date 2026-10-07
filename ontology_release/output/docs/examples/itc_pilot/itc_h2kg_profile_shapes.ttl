@@ -1,0 +1,11 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+h2kg:InkToCompositionModelProfileShape a sh:NodeShape ;
+  sh:targetNode h2kg:InkToCompositionModel ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:minCount 16 ] ;
+  sh:property [ sh:path h2kg:hasInputData ; sh:hasValue h2kg:InkToCompositionModelInputDataset ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:InkToCompositionModelScalarResultDataset ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLWaterRetentionCurveDataset ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLRefinedPoreSizeDistributionDataset ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLContactAngleDistributionDataset ] .

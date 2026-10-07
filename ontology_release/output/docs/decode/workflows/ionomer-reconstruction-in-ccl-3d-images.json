@@ -21,7 +21,7 @@
     "source_node_count": 16,
     "source_edge_count": 15,
     "mapped_anchor_count": 16,
-    "cross_workflow_connection_count": 304
+    "cross_workflow_connection_count": 305
   },
   "nodes": [
     {
@@ -52,17 +52,28 @@
       "native_category": "component",
       "description": "I/C-ratio\ninternal key: I/C-ratio: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+        "anchor_label": "Ionomer-to-carbon ratio",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "semantic_role": "Parameter",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Unambiguous exact-label mapping confirmed by the expert ITC registry for IO_CMP_ICRatio."
+      },
       "kind": "occurrence",
       "workflow_id": "ionomer-reconstruction-in-ccl-3d-images",
       "visual_category": "component",
       "mapping_state": "approved_h2kg",
       "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
-      "decision": "strict_alt_label",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
       "semantic_role": "Parameter",
-      "role_assignment": "explicit_mapping",
-      "confidence": "high",
-      "mapping_evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Unambiguous exact-label mapping confirmed by the expert ITC registry for IO_CMP_ICRatio."
     },
     {
       "id": "ionomer-reconstruction-in-ccl-3d-images::n2",
@@ -856,13 +867,13 @@
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
       "kind": "anchor",
-      "label": "Ionomer To Carbon Ratio",
+      "label": "Ionomer-to-carbon ratio",
       "state": "approved_h2kg",
-      "decision": "strict_alt_label",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
       "semantic_role": "Parameter",
-      "confidence": "high",
-      "evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio.",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_ICRatio; no public H2KG synonym has been asserted.",
       "occurrence_ids": [
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n2",
         "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
@@ -870,6 +881,7 @@
         "eis-on-nanostructured-electrodes::n4",
         "iet-composition-to-property-model::n1",
         "iet-ink-to-composition-model::n1",
+        "iet-multiscale-model-interface::variable::IO_CMP_ICRatio",
         "ionomer-reconstruction-in-ccl-3d-images::n1",
         "model-electrochemistry-in-a-rde-cell::n4",
         "rotating-ring-disk-electrode-rrde::n4"

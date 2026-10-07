@@ -23,6 +23,7 @@ from .utils import COMMON_CONTEXT, SKOS_ALT_LABEL, SKOS_PREF_LABEL, dump_json, e
 from .decode_multiscale_interface import append_multiscale_interface, build_decode_multiscale_model_interface
 from .decode_manual_overlay import merge_manual_overlay, write_manual_overlay_release
 from .decode_ontology import build_decode_ontology
+from .itc_pilot import apply_itc_mapping_overrides, attach_itc_profile_overlay
 
 
 DECODE_NS = "https://w3id.org/h2kg/decode/workflow/"
@@ -100,6 +101,10 @@ def build_decode_workflow_release(
         if overlay_path.exists():
             manual_overlay = load_json(overlay_path)
             snapshot = merge_manual_overlay(base_snapshot, manual_overlay)
+    itc_review_path = snapshot_path.parent / "itc_expert_review.json"
+    itc_review = load_json(itc_review_path) if itc_review_path.exists() else None
+    if itc_review is not None:
+        snapshot = apply_itc_mapping_overrides(snapshot, itc_review)
     mapping_config = try_load_yaml(
         Path(mapping_config_path),
         {"mappings": [], "semantic_projections": [], "default_alignment": {}, "alias_curation": []},
@@ -125,9 +130,12 @@ def build_decode_workflow_release(
             snapshot_path.parent / "decode_multiscale_model_interface.json",
             snapshot_path,
             output_root,
+            itc_review_path,
         )
         append_multiscale_interface(graph, interface)
         _canonicalize_duplicate_anchors(graph, matrix_rows)
+    if itc_review is not None:
+        attach_itc_profile_overlay(graph, itc_review)
     graph["counts"]["workflow_count"] = len(graph["workflows"])
     graph["counts"]["catalogue_entry_count"] = len(graph["workflows"])
     graph["counts"]["base_graphml_workflow_count"] = sum(

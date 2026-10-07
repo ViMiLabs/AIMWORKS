@@ -21,7 +21,31 @@
     "source_node_count": 41,
     "source_edge_count": 59,
     "mapped_anchor_count": 41,
-    "cross_workflow_connection_count": 518
+    "cross_workflow_connection_count": 529,
+    "expert_profile": {
+      "id": "itc-expert-reviewed-interface",
+      "badge": "Expert-reviewed ITC profile",
+      "field_count": 44,
+      "source_sha256": "2DF4CF1ADB53F99FE2E5C6D7C03629BD24E35A05E2DDFB23AB73F419BDFA7180"
+    },
+    "downloads": [
+      {
+        "href": "../examples/itc_pilot/itc_h2kg_profile.jsonld",
+        "label": "Download expert-reviewed ITC JSON-LD profile"
+      },
+      {
+        "href": "../examples/itc_pilot/itc_h2kg_profile.ttl",
+        "label": "Download expert-reviewed ITC Turtle profile"
+      },
+      {
+        "href": "../examples/itc_pilot/itc_mapping_matrix.csv",
+        "label": "Download ITC mapping matrix"
+      },
+      {
+        "href": "../examples/itc_pilot/itc_validation_report.json",
+        "label": "Download ITC validation report"
+      }
+    ]
   },
   "nodes": [
     {
@@ -52,17 +76,28 @@
       "native_category": "component",
       "description": "I/C-ratio\ninternal key: I/C-ratio: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+        "anchor_label": "Ionomer-to-carbon ratio",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "semantic_role": "Parameter",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_CMP_ICRatio."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "component",
       "mapping_state": "approved_h2kg",
       "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
-      "decision": "strict_alt_label",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
       "semantic_role": "Parameter",
-      "role_assignment": "explicit_mapping",
-      "confidence": "high",
-      "mapping_evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_CMP_ICRatio."
     },
     {
       "id": "iet-ink-to-composition-model::n2",
@@ -72,17 +107,28 @@
       "native_category": "material",
       "description": "Ionomer density (dry)\ninternal key: Ionomer density (dry): material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+        "anchor_label": "Dry ionomer density",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_IonomerDensityDry."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_IonomerDensityDry."
     },
     {
       "id": "iet-ink-to-composition-model::n3",
@@ -92,17 +138,28 @@
       "native_category": "material",
       "description": "Ionomer initial film thickness\ninternal key: Ionomer initial film thickness: material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
+        "anchor_label": "Initial ionomer film thickness",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "semantic_role": "Parameter",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_IonomerInitialFilmThickness."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_IonomerInitialFilmThickness."
     },
     {
       "id": "iet-ink-to-composition-model::n4",
@@ -132,17 +189,28 @@
       "native_category": "component",
       "description": "Ionomer-catalyst dispersion parameter\ninternal key: Ionomer-catalyst dispersion parameter: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
+        "anchor_label": "Ionomer-catalyst dispersion parameter",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "semantic_role": "Parameter",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_CMP_IonomerCatalystDispersionParameter."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "component",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_CMP_IonomerCatalystDispersionParameter."
     },
     {
       "id": "iet-ink-to-composition-model::n6",
@@ -152,17 +220,28 @@
       "native_category": "material",
       "description": "Catalyst active particle diameter\ninternal key: Catalyst active particle diameter: material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+        "anchor_label": "Platinum particle radius",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleDiameter. Corrected expert semantics supersede the historical source label for mapping only."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
       "role_assignment": "catalyst_active_particle_diameter_is_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleDiameter. Corrected expert semantics supersede the historical source label for mapping only."
     },
     {
       "id": "iet-ink-to-composition-model::n7",
@@ -172,17 +251,28 @@
       "native_category": "component",
       "description": "Catalyst-support ratio\ninternal key: Catalyst-support ratio: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+        "anchor_label": "Platinum-to-carbon mass ratio",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "semantic_role": "Parameter",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CatalystSupportRatio."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "component",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
       "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CatalystSupportRatio."
     },
     {
       "id": "iet-ink-to-composition-model::n8",
@@ -192,17 +282,28 @@
       "native_category": "material",
       "description": "Catalyst active particle density\ninternal key: Catalyst active particle density: material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "anchor_label": "Platinum density",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleDensity."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleDensity."
     },
     {
       "id": "iet-ink-to-composition-model::n9",
@@ -252,17 +353,28 @@
       "native_category": "material",
       "description": "Catalyst active particle contact angle\ninternal key: Catalyst active particle contact angle: material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
+        "anchor_label": "Platinum-surface water contact angle",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleContactAngle."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystActiveParticleContactAngle."
     },
     {
       "id": "iet-ink-to-composition-model::n12",
@@ -272,17 +384,28 @@
       "native_category": "material",
       "description": "Catalyst support contact angle\ninternal key: Catalyst support contact angle: material",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
+        "anchor_label": "Carbon-support water contact angle",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystSupportContactAngle."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "material",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_MAT_CatalystSupportContactAngle."
     },
     {
       "id": "iet-ink-to-composition-model::n13",
@@ -352,17 +475,28 @@
       "native_category": "component",
       "description": "CCL effective ionomer coverage\ninternal key: CCL effective ionomer coverage: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
+        "anchor_label": "CCL effective ionomer coverage",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CCLEffectiveIonomerCoverage."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "component",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CCLEffectiveIonomerCoverage."
     },
     {
       "id": "iet-ink-to-composition-model::n17",
@@ -372,17 +506,28 @@
       "native_category": "component",
       "description": "CCL ionomer effective film thickness\ninternal key: CCL ionomer effective film thickness: component",
       "shape": "ellipse",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
+        "anchor_label": "Equivalent ionomer film thickness",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+        "semantic_role": "Property",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CCLIonomerEffectiveFilmThickness."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "component",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "physical_or_derived_property",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed mapping for stable identifier IO_CMP_CCLIonomerEffectiveFilmThickness."
     },
     {
       "id": "iet-ink-to-composition-model::n18",
@@ -472,17 +617,28 @@
       "native_category": "",
       "description": "IET ink to composition model\nOwner organization: FZJ IET 3\nTask: T1.4\nMaturity: established method\nDocumentation: DOI: 10.1016/j.electacta.2022.140850\nRange of validity or processability: unkonwn\ninternal key: IET ink to composition model0",
       "shape": "hexagon",
+      "mapping_override": {
+        "state": "approved_h2kg",
+        "decision": "existing_h2kg_mapping",
+        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+        "anchor_label": "Ink-to-Composition Model",
+        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+        "semantic_role": "Process",
+        "role_assignment": "expert_review",
+        "confidence": "expert_reviewed",
+        "evidence": "Expert-reviewed ITC model anchor; the original GraphML occurrence remains unchanged."
+      },
       "kind": "occurrence",
       "workflow_id": "iet-ink-to-composition-model",
       "visual_category": "model",
-      "mapping_state": "reviewed_decode",
-      "anchor_id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
-      "decision": "reviewed_decode_anchor",
+      "mapping_state": "approved_h2kg",
+      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "semantic_role": "Process",
-      "role_assignment": "workflow_or_analysis",
-      "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "role_assignment": "expert_review",
+      "confidence": "expert_reviewed",
+      "mapping_evidence": "Expert-reviewed ITC model anchor; the original GraphML occurrence remains unchanged."
     },
     {
       "id": "iet-ink-to-composition-model::n23",
@@ -879,7 +1035,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n11",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -892,7 +1048,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n12",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -905,7 +1061,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n16",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -918,7 +1074,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n17",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -944,7 +1100,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n2",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -964,19 +1120,6 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
-      "id": "projection::datapoint::iet-ink-to-composition-model::n3",
-      "iri": "https://w3id.org/h2kg/decode/workflow/iet-ink-to-composition-model/node/n3/data-point",
-      "label": "Ionomer initial film thickness value",
-      "kind": "value_proxy",
-      "workflow_id": "iet-ink-to-composition-model",
-      "source_occurrence_id": "iet-ink-to-composition-model::n3",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
       "id": "projection::datapoint::iet-ink-to-composition-model::n4",
       "iri": "https://w3id.org/h2kg/decode/workflow/iet-ink-to-composition-model/node/n4/data-point",
       "label": "Ionomer proton conductivity value",
@@ -990,26 +1133,13 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
-      "id": "projection::datapoint::iet-ink-to-composition-model::n5",
-      "iri": "https://w3id.org/h2kg/decode/workflow/iet-ink-to-composition-model/node/n5/data-point",
-      "label": "Ionomer-catalyst dispersion parameter value",
-      "kind": "value_proxy",
-      "workflow_id": "iet-ink-to-composition-model",
-      "source_occurrence_id": "iet-ink-to-composition-model::n5",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
       "id": "projection::datapoint::iet-ink-to-composition-model::n6",
       "iri": "https://w3id.org/h2kg/decode/workflow/iet-ink-to-composition-model/node/n6/data-point",
       "label": "Catalyst active particle diameter value",
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n6",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -1022,7 +1152,7 @@
       "kind": "value_proxy",
       "workflow_id": "iet-ink-to-composition-model",
       "source_occurrence_id": "iet-ink-to-composition-model::n8",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -1131,58 +1261,18 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "kind": "anchor",
-      "label": "Catalyst active particle contact angle",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
+      "label": "Carbon-support water contact angle",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystSupportContactAngle; no public H2KG synonym has been asserted.",
       "occurrence_ids": [
-        "iet-ink-to-composition-model::n11"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-      "kind": "anchor",
-      "label": "Catalyst active particle density",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n3",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n3",
-        "iet-ink-to-composition-model::n8",
-        "image-fib-tomography-dataparameter-extraction-3d::n3",
-        "image-parameter-extraction-2d::n13",
-        "image-tem-data-parameter-extraction-3d::n3",
-        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-density-3577973ddb",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
-      "kind": "anchor",
-      "label": "Catalyst active particle diameter",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "iet-ink-to-composition-model::n6",
-        "image-tem-data-parameter-extraction-3d::n2",
-        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "sem-and-fib-powder::n3",
-        "tem-and-eds-analysis-of-mea::n2"
+        "iet-ink-to-composition-model::n12",
+        "iet-multiscale-model-interface::variable::IO_MAT_CatalystSupportContactAngle"
       ]
     },
     {
@@ -1230,40 +1320,6 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
-      "kind": "anchor",
-      "label": "Catalyst support contact angle",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "iet-ink-to-composition-model::n12"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
-      "kind": "anchor",
-      "label": "Catalyst-support ratio",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n1",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n1",
-        "iet-composition-to-property-model::n0",
-        "iet-ink-to-composition-model::n7",
-        "image-fib-tomography-dataparameter-extraction-3d::n2",
-        "image-parameter-extraction-2d::n12",
-        "image-tem-data-parameter-extraction-3d::n1"
-      ]
-    },
-    {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness",
       "kind": "anchor",
       "label": "Cathode Catalyst Layer Thickness",
@@ -1295,17 +1351,18 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "kind": "anchor",
       "label": "CCL effective ionomer coverage",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_CCLEffectiveIonomerCoverage; no public H2KG synonym has been asserted.",
       "occurrence_ids": [
-        "iet-ink-to-composition-model::n16"
+        "iet-ink-to-composition-model::n16",
+        "iet-multiscale-model-interface::variable::IO_CMP_CCLEffectiveIonomerCoverage"
       ]
     },
     {
@@ -1345,22 +1402,6 @@
       "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
         "iet-ink-to-composition-model::n15"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
-      "kind": "anchor",
-      "label": "CCL ionomer effective film thickness",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "cea-mea-model-europium-2d::n51",
-        "fitting-of-the-europium-model::n56",
-        "iet-ink-to-composition-model::n17"
       ]
     },
     {
@@ -1497,6 +1538,41 @@
         "microscopy-sem-and-optical-in-mea-cross-section::n28",
         "sem-and-edx::n47",
         "sem-and-fib-layer::n28"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "kind": "anchor",
+      "label": "Dry ionomer density",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_IonomerDensityDry; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n5",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
+        "iet-ink-to-composition-model::n2",
+        "iet-multiscale-model-interface::variable::IO_MAT_IonomerDensityDry",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
+      "kind": "anchor",
+      "label": "Equivalent ionomer film thickness",
+      "state": "approved_h2kg",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_CCLIonomerEffectiveFilmThickness; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "cea-mea-model-europium-2d::n51",
+        "fitting-of-the-europium-model::n56",
+        "iet-ink-to-composition-model::n17",
+        "iet-multiscale-model-interface::variable::IO_CMP_CCLIonomerEffectiveFilmThickness"
       ]
     },
     {
@@ -1735,11 +1811,11 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "kind": "anchor",
       "label": "IET ink to composition model",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
+      "state": "approved_h2kg",
+      "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "semantic_role": "Process",
       "confidence": "reviewed_pdf_schema",
@@ -1931,6 +2007,21 @@
       ]
     },
     {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
+      "kind": "anchor",
+      "label": "Initial ionomer film thickness",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_IonomerInitialFilmThickness; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "iet-ink-to-composition-model::n3",
+        "iet-multiscale-model-interface::variable::IO_MAT_IonomerInitialFilmThickness"
+      ]
+    },
+    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-contact-angles-material",
       "kind": "anchor",
       "label": "Ionomer contact angles",
@@ -1945,37 +2036,6 @@
         "in-situ-fourier-transformed-ir-in-atr-configuration::n10",
         "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::output-ionomer-contact-angles-1b2c5afe99",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n12"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
-      "kind": "anchor",
-      "label": "Ionomer density (dry)",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n5",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
-        "iet-ink-to-composition-model::n2",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
-      "kind": "anchor",
-      "label": "Ionomer initial film thickness",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "occurrence_ids": [
-        "iet-ink-to-composition-model::n3"
       ]
     },
     {
@@ -1995,28 +2055,6 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
-      "kind": "anchor",
-      "label": "Ionomer To Carbon Ratio",
-      "state": "approved_h2kg",
-      "decision": "strict_alt_label",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "confidence": "high",
-      "evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n2",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
-        "accelerated-stress-test-ast-on-nanostructured-electrodes::n4",
-        "eis-on-nanostructured-electrodes::n4",
-        "iet-composition-to-property-model::n1",
-        "iet-ink-to-composition-model::n1",
-        "ionomer-reconstruction-in-ccl-3d-images::n1",
-        "model-electrochemistry-in-a-rde-cell::n4",
-        "rotating-ring-disk-electrode-rrde::n4"
-      ]
-    },
-    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-degree-of-alignment-component",
       "kind": "anchor",
       "label": "Ionomer-catalyst degree of alignment",
@@ -2031,17 +2069,41 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
       "kind": "anchor",
       "label": "Ionomer-catalyst dispersion parameter",
-      "state": "reviewed_decode",
-      "decision": "reviewed_decode_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "reviewed_structural",
-      "evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_IonomerCatalystDispersionParameter; no public H2KG synonym has been asserted.",
       "occurrence_ids": [
-        "iet-ink-to-composition-model::n5"
+        "iet-ink-to-composition-model::n5",
+        "iet-multiscale-model-interface::variable::IO_CMP_IonomerCatalystDispersionParameter"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+      "kind": "anchor",
+      "label": "Ionomer-to-carbon ratio",
+      "state": "approved_h2kg",
+      "decision": "existing_h2kg_mapping",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_ICRatio; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n2",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n2",
+        "accelerated-stress-test-ast-on-nanostructured-electrodes::n4",
+        "eis-on-nanostructured-electrodes::n4",
+        "iet-composition-to-property-model::n1",
+        "iet-ink-to-composition-model::n1",
+        "iet-multiscale-model-interface::variable::IO_CMP_ICRatio",
+        "ionomer-reconstruction-in-ccl-3d-images::n1",
+        "model-electrochemistry-in-a-rde-cell::n4",
+        "rotating-ring-disk-electrode-rrde::n4"
       ]
     },
     {
@@ -2064,6 +2126,85 @@
         "operando-saxs-or-waxs-small-or-wide-angle-x-ray-spectroscopy::n12",
         "tem-and-eds-analysis-of-mea::n5",
         "thin-windows-operando-or-in-situ-xps::n12"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "kind": "anchor",
+      "label": "Platinum density",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleDensity; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n3",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n3",
+        "iet-ink-to-composition-model::n8",
+        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleDensity",
+        "image-fib-tomography-dataparameter-extraction-3d::n3",
+        "image-parameter-extraction-2d::n13",
+        "image-tem-data-parameter-extraction-3d::n3",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-density-3577973ddb",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "kind": "anchor",
+      "label": "Platinum particle radius",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleDiameter; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "iet-ink-to-composition-model::n6",
+        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleDiameter",
+        "image-tem-data-parameter-extraction-3d::n2",
+        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "sem-and-fib-powder::n3",
+        "tem-and-eds-analysis-of-mea::n2"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
+      "kind": "anchor",
+      "label": "Platinum-surface water contact angle",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleContactAngle; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "iet-ink-to-composition-model::n11",
+        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleContactAngle"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "kind": "anchor",
+      "label": "Platinum-to-carbon mass ratio",
+      "state": "approved_h2kg",
+      "decision": "new_h2kg_term",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "reviewed_pdf_schema",
+      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_CatalystSupportRatio; no public H2KG synonym has been asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n1",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n1",
+        "iet-composition-to-property-model::n0",
+        "iet-ink-to-composition-model::n7",
+        "iet-multiscale-model-interface::variable::IO_CMP_CatalystSupportRatio",
+        "image-fib-tomography-dataparameter-extraction-3d::n2",
+        "image-parameter-extraction-2d::n12",
+        "image-tem-data-parameter-extraction-3d::n1"
       ]
     },
     {
@@ -2803,17 +2944,17 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n2::d0283a0e33",
+      "id": "anchor::iet-ink-to-composition-model::n2::e767f5f523",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n2",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n3::57cfd238da",
+      "id": "anchor::iet-ink-to-composition-model::n3::078d12e4a8",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n3",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2824,31 +2965,31 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n5::f7ecb3f678",
+      "id": "anchor::iet-ink-to-composition-model::n5::481d8d30ad",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n6::0054de1851",
+      "id": "anchor::iet-ink-to-composition-model::n6::88e9511fb0",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n7::543b82c769",
+      "id": "anchor::iet-ink-to-composition-model::n7::7904dc8d19",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n7",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n8::a15a9283e6",
+      "id": "anchor::iet-ink-to-composition-model::n8::d05f94c3ca",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n8",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2866,17 +3007,17 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n11::5a36e467b4",
+      "id": "anchor::iet-ink-to-composition-model::n11::0502039349",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n11",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n12::800e7d2b93",
+      "id": "anchor::iet-ink-to-composition-model::n12::9ec2ee653f",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n12",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2901,17 +3042,17 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n16::d0f3d1258a",
+      "id": "anchor::iet-ink-to-composition-model::n16::b8ed83baed",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n16",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n17::032bc02ce1",
+      "id": "anchor::iet-ink-to-composition-model::n17::67f4f1a721",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n17",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2943,10 +3084,10 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::iet-ink-to-composition-model::n22::8cc7fd75df",
+      "id": "anchor::iet-ink-to-composition-model::n22::ab07987320",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n22",
-      "target": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -3138,10 +3279,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e2::a6b3c6863f",
+      "id": "semantic::iet-ink-to-composition-model::e2::d4db9c4b4a",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n2",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3153,32 +3294,17 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e3::b88edc5380",
+      "id": "semantic::iet-ink-to-composition-model::e3::ba97dfa41d",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n22",
-      "target": "projection::datapoint::iet-ink-to-composition-model::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
-      "label": "hasInputData",
+      "target": "iet-ink-to-composition-model::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-ink-to-composition-model::e3",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::iet-ink-to-composition-model::e3::c96dad77f3",
-      "workflow_id": "iet-ink-to-composition-model",
-      "source": "projection::datapoint::iet-ink-to-composition-model::n3",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-ink-to-composition-model::e3",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the source property anchor.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -3213,32 +3339,17 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e5::3d659bb7dc",
+      "id": "semantic::iet-ink-to-composition-model::e5::c28a818fbe",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n22",
-      "target": "projection::datapoint::iet-ink-to-composition-model::n5",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
-      "label": "hasInputData",
+      "target": "iet-ink-to-composition-model::n5",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-ink-to-composition-model::e5",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
-      "confidence": "rule_curated",
-      "review_status": "classified"
-    },
-    {
-      "id": "semantic::iet-ink-to-composition-model::e5::bb2afa366e",
-      "workflow_id": "iet-ink-to-composition-model",
-      "source": "projection::datapoint::iet-ink-to-composition-model::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-ink-to-composition-model::e5",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the source property anchor.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -3258,10 +3369,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e6::b241abbaa3",
+      "id": "semantic::iet-ink-to-composition-model::e6::db27b351fa",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3303,10 +3414,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e8::91666ce0ba",
+      "id": "semantic::iet-ink-to-composition-model::e8::ac3ed887f0",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n8",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3393,10 +3504,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e11::89b9584c25",
+      "id": "semantic::iet-ink-to-composition-model::e11::aca7c3cbdf",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n11",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3423,10 +3534,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e12::676725b317",
+      "id": "semantic::iet-ink-to-composition-model::e12::27e6b27fe3",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n12",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3498,10 +3609,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e16::d85445a821",
+      "id": "semantic::iet-ink-to-composition-model::e16::8217beb90f",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n16",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -3528,10 +3639,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e17::f726800b49",
+      "id": "semantic::iet-ink-to-composition-model::e17::2029d0daf1",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n17",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4023,10 +4134,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e38::b241abbaa3",
+      "id": "semantic::iet-ink-to-composition-model::e38::db27b351fa",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4083,10 +4194,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e41::91666ce0ba",
+      "id": "semantic::iet-ink-to-composition-model::e41::ac3ed887f0",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n8",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4143,10 +4254,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e44::91666ce0ba",
+      "id": "semantic::iet-ink-to-composition-model::e44::ac3ed887f0",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n8",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4188,10 +4299,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e46::b241abbaa3",
+      "id": "semantic::iet-ink-to-composition-model::e46::db27b351fa",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4218,10 +4329,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e47::91666ce0ba",
+      "id": "semantic::iet-ink-to-composition-model::e47::ac3ed887f0",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n8",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4233,10 +4344,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e48::b30cb7d023",
+      "id": "semantic::iet-ink-to-composition-model::e48::3525a11657",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "iet-ink-to-composition-model::n36",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
@@ -4338,10 +4449,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e52::f726800b49",
+      "id": "semantic::iet-ink-to-composition-model::e52::2029d0daf1",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n17",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4443,10 +4554,10 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::iet-ink-to-composition-model::e56::f726800b49",
+      "id": "semantic::iet-ink-to-composition-model::e56::2029d0daf1",
       "workflow_id": "iet-ink-to-composition-model",
       "source": "projection::datapoint::iet-ink-to-composition-model::n17",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
@@ -4504,7 +4615,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
@@ -4533,7 +4644,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -4555,20 +4666,20 @@
       "source_graphml_id": "n2",
       "source_label": "Ionomer density (dry)",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e2::9876ecfd57",
-        "semantic::iet-ink-to-composition-model::e2::a6b3c6863f"
+        "semantic::iet-ink-to-composition-model::e2::d4db9c4b4a"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4583,26 +4694,25 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "Ionomer initial film thickness",
-      "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-initial-film-thickness-material",
+      "source_semantic_role": "Parameter",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-ink-to-composition-model::e3::b88edc5380",
-        "semantic::iet-ink-to-composition-model::e3::c96dad77f3"
+        "semantic::iet-ink-to-composition-model::e3::ba97dfa41d"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
     },
     {
       "source_dependency_id": "iet-ink-to-composition-model::e4",
@@ -4619,7 +4729,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
@@ -4641,26 +4751,25 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "Ionomer-catalyst dispersion parameter",
-      "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-catalyst-dispersion-parameter-component",
+      "source_semantic_role": "Parameter",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-ink-to-composition-model::e5::3d659bb7dc",
-        "semantic::iet-ink-to-composition-model::e5::bb2afa366e"
+        "semantic::iet-ink-to-composition-model::e5::c28a818fbe"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
     },
     {
       "source_dependency_id": "iet-ink-to-composition-model::e6",
@@ -4671,20 +4780,20 @@
       "source_graphml_id": "n6",
       "source_label": "Catalyst active particle diameter",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e6::16446aef94",
-        "semantic::iet-ink-to-composition-model::e6::b241abbaa3"
+        "semantic::iet-ink-to-composition-model::e6::db27b351fa"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4700,13 +4809,13 @@
       "source_graphml_id": "n7",
       "source_label": "Catalyst-support ratio",
       "source_semantic_role": "Parameter",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -4728,20 +4837,20 @@
       "source_graphml_id": "n8",
       "source_label": "Catalyst active particle density",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e8::ab069b3235",
-        "semantic::iet-ink-to-composition-model::e8::91666ce0ba"
+        "semantic::iet-ink-to-composition-model::e8::ac3ed887f0"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4763,7 +4872,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
@@ -4792,7 +4901,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
@@ -4815,20 +4924,20 @@
       "source_graphml_id": "n11",
       "source_label": "Catalyst active particle contact angle",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-contact-angle-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e11::f49e4292e8",
-        "semantic::iet-ink-to-composition-model::e11::89b9584c25"
+        "semantic::iet-ink-to-composition-model::e11::aca7c3cbdf"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4844,20 +4953,20 @@
       "source_graphml_id": "n12",
       "source_label": "Catalyst support contact angle",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-contact-angle-material",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "target_occurrence_id": "iet-ink-to-composition-model::n22",
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_input",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e12::8d1c4b6108",
-        "semantic::iet-ink-to-composition-model::e12::676725b317"
+        "semantic::iet-ink-to-composition-model::e12::27e6b27fe3"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4879,7 +4988,7 @@
       "target_graphml_id": "n22",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -4901,7 +5010,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n14",
       "target_node_id": "n14",
       "target_graphml_id": "n14",
@@ -4929,7 +5038,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n15",
       "target_node_id": "n15",
       "target_graphml_id": "n15",
@@ -4957,20 +5066,20 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n16",
       "target_node_id": "n16",
       "target_graphml_id": "n16",
       "target_label": "CCL effective ionomer coverage",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-ionomer-coverage-component",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e16::ac7e1d16f1",
-        "semantic::iet-ink-to-composition-model::e16::d85445a821"
+        "semantic::iet-ink-to-composition-model::e16::8217beb90f"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -4986,20 +5095,20 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n17",
       "target_node_id": "n17",
       "target_graphml_id": "n17",
       "target_label": "CCL ionomer effective film thickness",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e17::048541d327",
-        "semantic::iet-ink-to-composition-model::e17::f726800b49"
+        "semantic::iet-ink-to-composition-model::e17::2029d0daf1"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5015,7 +5124,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n18",
       "target_node_id": "n18",
       "target_graphml_id": "n18",
@@ -5044,7 +5153,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n19",
       "target_node_id": "n19",
       "target_graphml_id": "n19",
@@ -5072,7 +5181,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n20",
       "target_node_id": "n20",
       "target_graphml_id": "n20",
@@ -5100,7 +5209,7 @@
       "source_graphml_id": "n22",
       "source_label": "IET ink to composition model",
       "source_semantic_role": "Process",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/itc",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "target_occurrence_id": "iet-ink-to-composition-model::n21",
       "target_node_id": "n21",
       "target_graphml_id": "n21",
@@ -5591,14 +5700,14 @@
       "target_graphml_id": "n6",
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e38::a383e593ce",
-        "semantic::iet-ink-to-composition-model::e38::b241abbaa3"
+        "semantic::iet-ink-to-composition-model::e38::db27b351fa"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5648,7 +5757,7 @@
       "target_graphml_id": "n7",
       "target_label": "Catalyst-support ratio",
       "target_semantic_role": "Parameter",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -5676,14 +5785,14 @@
       "target_graphml_id": "n8",
       "target_label": "Catalyst active particle density",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e41::41a053ccc7",
-        "semantic::iet-ink-to-composition-model::e41::91666ce0ba"
+        "semantic::iet-ink-to-composition-model::e41::ac3ed887f0"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5733,7 +5842,7 @@
       "target_graphml_id": "n7",
       "target_label": "Catalyst-support ratio",
       "target_semantic_role": "Parameter",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -5761,14 +5870,14 @@
       "target_graphml_id": "n8",
       "target_label": "Catalyst active particle density",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e44::473749e383",
-        "semantic::iet-ink-to-composition-model::e44::91666ce0ba"
+        "semantic::iet-ink-to-composition-model::e44::ac3ed887f0"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5790,7 +5899,7 @@
       "target_graphml_id": "n7",
       "target_label": "Catalyst-support ratio",
       "target_semantic_role": "Parameter",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_parameter",
@@ -5818,14 +5927,14 @@
       "target_graphml_id": "n6",
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e46::8511edbdf4",
-        "semantic::iet-ink-to-composition-model::e46::b241abbaa3"
+        "semantic::iet-ink-to-composition-model::e46::db27b351fa"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5847,14 +5956,14 @@
       "target_graphml_id": "n8",
       "target_label": "Catalyst active particle density",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e47::cd9c7d07a7",
-        "semantic::iet-ink-to-composition-model::e47::91666ce0ba"
+        "semantic::iet-ink-to-composition-model::e47::ac3ed887f0"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -5876,13 +5985,13 @@
       "target_graphml_id": "n6",
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::iet-ink-to-composition-model::e48::b30cb7d023"
+        "semantic::iet-ink-to-composition-model::e48::3525a11657"
       ],
       "semantic_direction": "derived_projection",
       "confidence": "rule_curated",
@@ -5984,7 +6093,7 @@
       "source_graphml_id": "n17",
       "source_label": "CCL ionomer effective film thickness",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "target_occurrence_id": "iet-ink-to-composition-model::n37",
       "target_node_id": "n37",
       "target_graphml_id": "n37",
@@ -5997,7 +6106,7 @@
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e52::48e08cfb0e",
-        "semantic::iet-ink-to-composition-model::e52::f726800b49"
+        "semantic::iet-ink-to-composition-model::e52::2029d0daf1"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -6099,7 +6208,7 @@
       "source_graphml_id": "n17",
       "source_label": "CCL ionomer effective film thickness",
       "source_semantic_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
       "target_occurrence_id": "iet-ink-to-composition-model::n38",
       "target_node_id": "n38",
       "target_graphml_id": "n38",
@@ -6112,7 +6221,7 @@
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::iet-ink-to-composition-model::e56::c24e48cc26",
-        "semantic::iet-ink-to-composition-model::e56::f726800b49"
+        "semantic::iet-ink-to-composition-model::e56::2029d0daf1"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
@@ -6208,7 +6317,7 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "manual-cea-exp-tem-eds-analysis-cl::method",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true
     },
@@ -6249,7 +6358,7 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "tem-and-eds-analysis-of-mea::n4",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true
     },
@@ -6290,7 +6399,7 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "sem-and-fib-powder::n6",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true
     },
@@ -6376,9 +6485,9 @@
       "semantic_target": "iet-ink-to-composition-model::n22",
       "handoff_anchor_iris": [
         "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component",
-        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
         "https://w3id.org/h2kg/decode/workflow/anchor/ccl-water-retention-curve-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+        "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness",
+        "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness"
       ],
       "valid_endpoints": true
     },
@@ -6423,9 +6532,9 @@
       "semantic_target": "iet-ink-to-composition-model::n22",
       "handoff_anchor_iris": [
         "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component",
-        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
         "https://w3id.org/h2kg/decode/workflow/anchor/ccl-water-retention-curve-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+        "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness",
+        "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness"
       ],
       "valid_endpoints": true
     },
@@ -6769,8 +6878,8 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "manual-fzj-mod-stardist-temseg::method",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true
     },
@@ -6806,8 +6915,8 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "manual-fzj-mod-starplatin-temseg::method",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true
     },
@@ -6850,9 +6959,9 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "image-parameter-extraction-2d::n18",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading"
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
       ],
       "valid_endpoints": true
     },
@@ -6895,9 +7004,9 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "image-fib-tomography-dataparameter-extraction-3d::n11",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading"
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
       ],
       "valid_endpoints": true
     },
@@ -6940,9 +7049,9 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "image-tem-data-parameter-extraction-3d::n10",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component"
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
       ],
       "valid_endpoints": true
     },

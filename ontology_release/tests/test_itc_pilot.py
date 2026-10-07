@@ -1,0 +1,79 @@
+from __future__ import annotations
+
+import json
+import shutil
+from pathlib import Path
+
+from rdflib import Graph, URIRef
+
+from aimworks_ontology_release.decode_multiscale_interface import build_decode_multiscale_model_interface
+from aimworks_ontology_release.itc_pilot import (
+    H2KG,
+    apply_itc_mapping_overrides,
+    build_decode_itc_overlay,
+    build_itc_pilot_package,
+    integrate_itc_terms,
+    validate_review_registry,
+)
+
+
+def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    review_path = root / "input" / "itc_expert_review.json"
+    review = json.loads(review_path.read_text(encoding="utf-8"))
+    validation = validate_review_registry(review)
+    assert validation["input_count"] == 24
+    assert validation["output_count"] == 20
+    assert validation["unique_identifier_count"] == 44
+    assert validation["new_term_count"] == 40
+    assert validation["reused_term_count"] == 4
+
+    ontology = tmp_path / "current_ontology.jsonld"
+    shutil.copy2(root / "input" / "current_ontology.jsonld", ontology)
+    integration = integrate_itc_terms(ontology, review_path, write_in_place=True)
+    assert integration["managed_resource_count"] == 116
+
+    package = build_itc_pilot_package(ontology, tmp_path / "output", review_path)
+    assert package["status"] == "passed"
+    assert package["validation"]["equivalent_rdf_statements"] is True
+    graph = Graph().parse(Path(package["output_dir"]) / "itc_h2kg_profile.ttl", format="turtle")
+    model = URIRef(H2KG + "InkToCompositionModel")
+    assert (model, URIRef(H2KG + "hasInputData"), URIRef(H2KG + "InkToCompositionModelInputDataset")) in graph
+    assert (model, URIRef(H2KG + "hasOutputData"), URIRef(H2KG + "CCLWaterRetentionCurveDataset")) in graph
+    assert (URIRef(H2KG + "PlatinumParticleRadius"), URIRef("http://www.w3.org/2004/02/skos/core#notation"), None) in graph
+    serialized = (Path(package["output_dir"]) / "itc_h2kg_profile.jsonld").read_text(encoding="utf-8")
+    assert "catalyst active particle diameter" not in serialized.lower()
+    assert "mean pore radius inside the ionomer" not in serialized.lower()
+
+
+def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    review = json.loads((root / "input" / "itc_expert_review.json").read_text(encoding="utf-8"))
+    snapshot = json.loads((root / "input" / "decode_workflows_source.json").read_text(encoding="utf-8"))
+    source = next(workflow for workflow in snapshot["workflows"] if workflow["id"] == "iet-ink-to-composition-model")
+    source_pairs = [(edge["source"], edge["target"]) for edge in source["edges"]]
+    mapped = apply_itc_mapping_overrides(snapshot, review)
+    mapped_source = next(workflow for workflow in mapped["workflows"] if workflow["id"] == "iet-ink-to-composition-model")
+    assert len(mapped_source["nodes"]) == 41
+    assert len(mapped_source["edges"]) == 59
+    assert source_pairs == [(edge["source"], edge["target"]) for edge in mapped_source["edges"]]
+    radius = next(node for node in mapped_source["nodes"] if node["source_id"] == "n6")
+    assert radius["label"] == "Catalyst active particle diameter"
+    assert radius["mapping_override"]["anchor_iri"] == H2KG + "PlatinumParticleRadius"
+    overlay = build_decode_itc_overlay(review)
+    assert overlay["badge"] == "Expert-reviewed ITC profile"
+    assert len(overlay["edges"]) == 71
+
+    interface = build_decode_multiscale_model_interface(
+        root / "input" / "decode_multiscale_model_interface.json",
+        root / "input" / "decode_workflows_source.json",
+        tmp_path / "output",
+        root / "input" / "itc_expert_review.json",
+    )
+    expert = interface["validation"]["expert_itc_profile"]
+    assert expert["stage_occurrence_count"] == 68
+    assert expert["shared_identifier_count"] == 12
+    nodes = {node["source_id"]: node for node in interface["nodes"]}
+    assert nodes["IO_MAT_CatalystActiveParticleDiameter"]["label"] == "Platinum particle radius"
+    assert nodes["IO_CMP_CCLFractionHydrophilicPores"]["label"] == "CCL accessible primary-pore volume fraction"
+    assert nodes["IO_MAT_CatalystPoreSizeDistribution_sigmaR2"]["label"] == "CCL secondary-pore logarithmic radius deviation"
