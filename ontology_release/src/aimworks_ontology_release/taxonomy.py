@@ -1217,6 +1217,7 @@ def _build_external_bridge(
     }
     relation_iris = {
         "owl:equivalentClass": OWL.equivalentClass,
+        "owl:equivalentProperty": OWL.equivalentProperty,
         "rdfs:subClassOf": RDFS.subClassOf,
         "rdfs:subPropertyOf": RDFS.subPropertyOf,
         "skos:exactMatch": SKOS.exactMatch,

@@ -42,6 +42,15 @@ def generate_candidates(
                     "score": round(score, 3),
                 }
             )
-        scored.sort(key=lambda row: row["score"], reverse=True)
+        # RDF graph iteration order is not stable across parsers or operating
+        # systems. Use explicit tie-breakers so reviewed mapping output is
+        # reproducible in local builds and CI.
+        scored.sort(
+            key=lambda row: (
+                -float(row["score"]),
+                str(row["source"]),
+                str(row["target_iri"]),
+            )
+        )
         candidates.extend(scored[:limit])
     return candidates
