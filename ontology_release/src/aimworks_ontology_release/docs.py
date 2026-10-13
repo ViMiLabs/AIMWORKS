@@ -2046,20 +2046,20 @@ def _merge_external_alignment_mappings(
     mappings: list[dict[str, Any]],
     registry_path: Path,
 ) -> list[dict[str, Any]]:
-    """Merge the validated v2 bridge into the documentation mapping surface."""
-    merged = {
-        (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", ""))): dict(row)
-        for row in mappings
-        if row.get("local_iri") and row.get("relation") and row.get("target_iri")
-    }
+    """Use the reviewed bridge as the authoritative documentation mapping surface."""
+    source_rows = mappings
     if registry_path.exists():
         payload = load_json(registry_path)
-        for row in payload.get("mappings", []):
-            key = (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", "")))
-            if all(key):
-                merged[key] = {**merged.get(key, {}), **row}
+        # The registry separates asserted mappings from pending review
+        # candidates. Only its `mappings` collection is publication-grade.
+        source_rows = payload.get("mappings", [])
+    reviewed = {
+        (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", ""))): dict(row)
+        for row in source_rows
+        if row.get("local_iri") and row.get("relation") and row.get("target_iri")
+    }
     return sorted(
-        merged.values(),
+        reviewed.values(),
         key=lambda row: (
             str(row.get("local_label", "")).casefold(),
             str(row.get("relation", "")),
@@ -2071,7 +2071,7 @@ def _merge_external_alignment_mappings(
 def _alignment_body(mappings: list[dict[str, Any]], summary: dict[str, Any]) -> str:
     stats = f"""
     <section class='grid'>
-      <article class='card'><h2>Accepted Alignments</h2><p><strong>{summary.get('accepted_count', len(mappings))}</strong> review-ready mappings are included in the published alignment layer.</p></article>
+      <article class='card'><h2>Accepted Alignments</h2><p><strong>{summary.get('accepted_count', len(mappings))}</strong> reviewed mappings are included in the published alignment layer.</p></article>
       <article class='card'><h2>Exploratory Candidates</h2><p><strong>{summary.get('exploratory_count', 0)}</strong> exploratory candidates are kept out of the published TTL and remain internal review material only.</p></article>
     </section>
     """

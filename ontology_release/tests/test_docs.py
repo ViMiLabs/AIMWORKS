@@ -268,7 +268,22 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
                         "status": "manual_override",
                         "rationale": "Reviewed test bridge.",
                     }
-                ]
+                ],
+                "pending_review_mappings": [
+                    {
+                        "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+                        "local_label": "Process",
+                        "local_kind": "class",
+                        "relation": "skos:closeMatch",
+                        "target_iri": "https://example.org/unreviewed-process",
+                        "target_label": "Unreviewed process candidate",
+                        "target_kind": "class",
+                        "source": "automatic-test-candidate",
+                        "status": "accepted",
+                        "reviewer_decision": "pending-human-review",
+                        "rationale": "Automatic candidate that must not be published.",
+                    }
+                ],
             }
         ),
         encoding="utf-8",
@@ -277,10 +292,14 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
     summary = build_docs(mini_ontology_file, output_dir / "docs")
     explorer = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
 
-    assert summary["mapping_count"] >= 1
+    assert summary["mapping_count"] == 1
     assert any(
         link["source"] == local
         and link["target"] == target
         and link["module"] == "alignments"
+        for link in explorer["links"]
+    )
+    assert not any(
+        link["target"] == "https://example.org/unreviewed-process"
         for link in explorer["links"]
     )
