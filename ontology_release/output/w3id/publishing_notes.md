@@ -12,6 +12,7 @@
 - Shared H2KG JSON-LD target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.jsonld`
 - PEMFC HTML target: `https://vimilabs.github.io/AIMWORKS/pemfc/hydrogen-ontology.html`
 - PEMWE HTML target: `https://vimilabs.github.io/AIMWORKS/pemwe/hydrogen-ontology.html`
+- H2KG v2 taxonomy target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
 
 ## Policy reminders
 

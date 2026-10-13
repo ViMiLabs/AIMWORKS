@@ -1,0 +1,7 @@
+# FIB-SEM Case Summary
+
+The FIB-SEM pilot demonstrates how H2KG can capture a tomography-oriented imaging workflow from electrode preparation through dual-beam acquisition, 3D preprocessing, and derived porous-microstructure analysis without uncontrolled ontology growth. The acquisition itself is represented as a `FIBSEMTomographyMeasurement` linked to a `FIBSEMInstrument`, explicit acquisition-parameter settings such as ion-beam current, ion-beam energy, electron-beam energy, cut thickness, slice number, stage tilt, voxel size, and total acquisition time, and a raw `SEMImageDataset`.
+
+The preprocessing chain transforms the raw slice stack through drift correction, reconstruction, artefact removal, cleanup, thresholding, and visualization into a final `MicrostructureImageDataset`. Downstream analysis then derives formal H2KG result nodes for `TotalPorosity`, `Constrictivity`, and `GeodesicTortuosity`, while legacy or not-yet-promoted outputs such as `PoreVolumeFraction`, `Direction`, and `Network relation` remain attached as structured metadata rather than being forced into semantically incorrect TBox patterns.
+
+This pilot is also deliberately honest about the source sheet itself. Where the sheet uses inconsistent intermediate identifiers or method labels, the example graph normalizes them into a coherent workflow while preserving the raw source wording as metadata. That makes the ontology representation faithful to the source without importing spreadsheet inconsistency into the released H2KG vocabulary.

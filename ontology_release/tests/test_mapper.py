@@ -19,7 +19,7 @@ def test_mapper_creates_review_and_exploratory_files(mini_ontology_file, output_
 
     rows = propose_mappings(mini_ontology_file, output_dir / "review")
 
-    assert any(row["local_label"] == "Measurement" for row in rows)
+    assert not any(row["local_label"] == "Measurement" for row in rows)
     assert (output_dir / "review" / "mapping_review.csv").exists()
     assert (output_dir / "review" / "mapping_exploratory.csv").exists()
     assert (output_dir / "reports" / "alignment_summary.json").exists()

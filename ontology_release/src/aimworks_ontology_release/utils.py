@@ -365,10 +365,10 @@ def default_mapping_rules() -> dict[str, Any]:
                 "target": "http://www.w3.org/ns/prov#Agent",
                 "rationale": "Agent should remain local while anchored in PROV-O.",
             },
-            "Measurement": {
+            "ElectrochemicalMeasurement": {
                 "relation": "rdfs:subClassOf",
                 "target": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29",
-                "rationale": "Measurement is better treated as a local specialization of electrochemical measurement practice.",
+                "rationale": "H2KG electrochemical measurement is a local specialization of the reviewed EMMO electrochemical-measurement class; the broader H2KG Measurement class also covers non-electrochemical characterization.",
             },
             "Water": {
                 "relation": "skos:exactMatch",

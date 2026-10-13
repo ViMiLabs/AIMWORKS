@@ -24,6 +24,7 @@ def generate_w3id_artifacts(
         "core": f"{html_base}hydrogen-ontology.html",
         "pemfc": f"{html_base}pemfc/hydrogen-ontology.html",
         "pemwe": f"{html_base}pemwe/hydrogen-ontology.html",
+        "v2_taxonomy": f"{html_base}pages/explore.html?view=taxonomy",
     }
     rdf_targets = {
         "core_ttl": f"{rdf_base}core_schema.ttl",
@@ -32,6 +33,10 @@ def generate_w3id_artifacts(
         "pemfc_jsonld": f"{rdf_base}pemfc_schema.jsonld",
         "pemwe_ttl": f"{rdf_base}pemwe_schema.ttl",
         "pemwe_jsonld": f"{rdf_base}pemwe_schema.jsonld",
+        "v2_taxonomy_ttl": f"{rdf_base}h2kg-v2-taxonomy.ttl",
+        "v2_taxonomy_jsonld": f"{rdf_base}h2kg-v2-taxonomy.jsonld",
+        "v2_compatibility_ttl": f"{rdf_base}h2kg-v2-compatibility.ttl",
+        "v2_compatibility_jsonld": f"{rdf_base}h2kg-v2-compatibility.jsonld",
     }
 
     htaccess = _htaccess(html_targets, rdf_targets)
@@ -77,6 +82,24 @@ RewriteRule ^hydrogen-ontology$ {rdf_targets['core_jsonld']} [R=302,L]
 RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
 RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
+
+# H2KG v2 taxonomy release candidate. Canonical routing remains on the
+# published v1 release until domain-review and external-reasoner gates pass.
+RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
+RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
+
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/json
+RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {rdf_targets['v2_taxonomy_jsonld']} [R=302,L]
+
+RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {html_targets['v2_taxonomy']} [R=302,L]
+
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/json
+RewriteRule ^hydrogen-ontology/compatibility$ {rdf_targets['v2_compatibility_jsonld']} [R=302,L]
+
+RewriteRule ^hydrogen-ontology/compatibility$ {rdf_targets['v2_compatibility_ttl']} [R=302,L]
 
 RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
 
@@ -162,6 +185,14 @@ register the `https://w3id.org/h2kg/` namespace.
 - Turtle: `{rdf_targets['pemwe_ttl']}`
 - JSON-LD: `{rdf_targets['pemwe_jsonld']}`
 
+### H2KG v2 taxonomy release candidate
+
+- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0`
+- Browser / HTML: `{html_targets['v2_taxonomy']}`
+- Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
+- JSON-LD: `{rdf_targets['v2_taxonomy_jsonld']}`
+- Compatibility Turtle: `{rdf_targets['v2_compatibility_ttl']}`
+
 ## Contact and maintenance
 
 - Repository: `{profile['repository_url']}`
@@ -199,6 +230,7 @@ def _publishing_notes(
 - Shared H2KG JSON-LD target: `{rdf_targets['core_jsonld']}`
 - PEMFC HTML target: `{html_targets['pemfc']}`
 - PEMWE HTML target: `{html_targets['pemwe']}`
+- H2KG v2 taxonomy target: `{rdf_targets['v2_taxonomy_ttl']}`
 
 ## Policy reminders
 
@@ -221,4 +253,8 @@ curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/pemfc/hydrogen-ontology
 
 curl -I -H "Accept: text/html" https://w3id.org/h2kg/pemwe/hydrogen-ontology
 curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/pemwe/hydrogen-ontology
+
+curl -I -H "Accept: text/html" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
+curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
+curl -I -H "Accept: application/ld+json" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
 """

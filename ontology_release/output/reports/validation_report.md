@@ -23,31 +23,26 @@ Conforms: True
 
 - Status: unavailable
 - Service: https://oops.linkeddata.es/rest
-- Message: OOPS! something went wrong. There was an unexpected error.
+- Message: OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError("HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))
 - Pitfall count: not assessed
 
 - No pitfalls listed.
 
 ## FOOPS! FAIR Assessment
 
-- Status: assessed
+- Status: unavailable
 - Service: https://foops.linkeddata.es/FAIR_validator.html
 - Mode: file
-- Message: FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.
-- Overall score: 75.0
-- Findable: 60.0
-- Accessible: None
-- Interoperable: 100.0
-- Reusable: 91.5
+- Message: FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError("HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))
+- Overall score: not assessed
+- Findable: not assessed
+- Accessible: not assessed
+- Interoperable: not assessed
+- Reusable: not assessed
 
 ## FOOPS! Failed Checks
 
-- F1: the ontology URI does not follow any of the schemes followed by known registers of persistent URIs. We checked w3id, purl, DOI, W3C, perma.cc, linked.data.gov.au, data.europa.eu and dbpedia.org
-- F2: The following metadata was not found: version iri
-- R1: The following metadata was not found: citation
-- R1: The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: backwards compatibility. Please consider adding them if appropriate.
-- R1.2: The following provenance information was not found: issued
-- F1: Version IRI  not defined. Version info found (1.0.0).
+- No failed-check detail extracted.
 
 ## Errors
 

@@ -49,6 +49,52 @@
   background: rgba(255,255,255,0.78);
   color: var(--ink);
 }
+.explorer-field select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.72rem 0.85rem;
+  font: inherit;
+  background: rgba(255,255,255,0.78);
+  color: var(--ink);
+}
+.explorer-view-switch {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0.7rem 0 0.9rem;
+}
+.explorer-view-switch label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.55rem 0.45rem;
+  background: rgba(255,255,255,0.72);
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+.explorer-taxonomy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.65rem 0 1rem;
+}
+.explorer-taxonomy-legend span {
+  border: 1px solid rgba(19,33,41,0.14);
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  background: var(--branch-color, #d7dde0);
+  color: #102027;
+}
+.explorer-taxonomy-legend [data-branch="Matter"] { --branch-color: #8dcfc4; }
+.explorer-taxonomy-legend [data-branch="Process"] { --branch-color: #f1b46f; }
+.explorer-taxonomy-legend [data-branch="InformationEntity"] { --branch-color: #b8a6dc; }
+.explorer-taxonomy-legend [data-branch="Characteristic"] { --branch-color: #91c9d8; }
+.explorer-taxonomy-legend [data-branch="Agent"] { --branch-color: #b9c0c5; }
 .explorer-note {
   margin-top: 0.7rem;
   color: var(--muted);
@@ -135,6 +181,27 @@
     position: relative;
     margin-top: 0.85rem;
   }
+  .explorer-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.1rem;
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.86rem;
+  }
+  .explorer-breadcrumb button,
+  .explorer-breadcrumb span {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.3rem 0.58rem;
+    background: rgba(15,109,122,0.08);
+    color: var(--ink);
+    font: inherit;
+  }
+  .explorer-breadcrumb button { cursor: pointer; }
+  .explorer-breadcrumb .separator { padding: 0; background: transparent; color: var(--muted); }
   .explorer-hovercard {
     position: absolute;
     top: 1rem;

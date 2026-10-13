@@ -1,0 +1,26 @@
+# XPS Case-Element Matrix
+
+This matrix maps the canonical PEMFC-focused XPS surface-chemistry case to H2KG anchors and classifies each as `reuse existing term`, `normalized existing term`, `metadata only`, or `deferred`.
+
+| Case element | Example value | Classification | H2KG anchor | Note |
+| --- | --- | --- | --- | --- |
+| Pt/C catalyst powder context | Carbon-supported Pt catalyst powder | reuse existing term | h2kg:CatalystPowder + h2kg:PtOnCarbonCatalyst | The canonical XPS case stays anchored to PEMFC-relevant Pt/C catalyst matter rather than legacy single-crystal surface inputs. |
+| PFSA ionomer context | PFSA binder / ionomer phase | reuse existing term | h2kg:PFSAIonomer | Kept as a public material anchor because ionomer-related surface chemistry is a recurring PEMFC XPS use case. |
+| Catalyst-ink sample conditioning | Prepare dried catalyst-ink film for XPS | normalized existing term | h2kg:Manufacturing + h2kg:CatalystInk | Sample-preparation labels stay conservative as manufacturing/process instances rather than new public XPS workflow classes. |
+| XPS acquisition | Surface chemical analysis of PEMFC catalyst-related sample | normalized existing term | h2kg:XRayPhotoelectronSpectroscopyMeasurement | The public XPS method node was cleaned to a coherent acquisition neighborhood with one canonical instrument anchor and one reusable parameter family. |
+| XPS instrument | Laboratory XPS system | normalized existing term | h2kg:XPSInstrument | The direct public method neighborhood now uses only the canonical XPS instrument anchor. |
+| XPS pass energy | 20 eV | normalized existing term | h2kg:XPSPassEnergy | Added as a reusable acquisition parameter for the public XPS neighborhood. |
+| XPS take-off angle | 45 deg | normalized existing term | h2kg:XPSTakeOffAngle | Added as a reusable acquisition parameter for the public XPS neighborhood. |
+| XPS analysis area | 400 um^2 | normalized existing term | h2kg:XPSAnalysisArea | Added as a reusable acquisition parameter for the public XPS neighborhood. |
+| Raw XPS dataset | Survey / high-resolution spectra | normalized existing term | h2kg:XPSDataset | Retained as the canonical public XPS data anchor. |
+| Acquisition record dataset | Run record / export bundle | reuse existing term | h2kg:ExperimentDataset | Used for generic acquisition-record context without creating a dedicated XPS log class. |
+| Analysis process | Peak fitting and quantification | reuse existing term | h2kg:Process | Deconvolution and quantification remain conservatively modeled through the generic Process class. |
+| Binding-energy output | C 1s peak at 284.8 eV | normalized existing term | h2kg:BindingEnergy | Definition broadened to remove legacy Pt(111)-specific wording. |
+| Carbon atomic percent output | 72 at% | reuse existing term | h2kg:C1sAtomicPercent | Core public XPS quantification output retained on the direct method neighborhood. |
+| Oxygen atomic percent output | 15 at% | reuse existing term | h2kg:O1sAtomicPercent | Core public XPS quantification output retained on the direct method neighborhood. |
+| Fluorine atomic percent output | 8 at% | reuse existing term | h2kg:F1sAtomicPercent | Core public XPS quantification output retained on the direct method neighborhood. |
+| Nitrogen atomic percent output | 3 at% | reuse existing term | h2kg:N1sAtomicPercent | Core public XPS quantification output retained on the direct method neighborhood. |
+| Carbon-to-oxygen atomic ratio | 4.8 | reuse existing term | h2kg:CarbonToOxygenAtomRatio | Retained as a compact public surface-chemistry comparison output. |
+| Metal atomic percent output | 2 at% | reuse existing term | h2kg:MetalAtomicPercent | Retained as a generic metal-composition output instead of exposing many element-specific or fit-specific public links on the direct method node. |
+| Source / anode / charge-neutralization details | Al Kα source, neutralizer on, calibration reference | metadata only | h2kg:hasMetadata | Source, analyzer mode, calibration, and charge-control details remain metadata in this round. |
+| Deconvolution fractions and state-specific ratios | C 1s fractions, Co/N, metallic-metal fractions | deferred | - | These public terms remain in the ontology, but they were intentionally removed from the direct generic XPS method neighborhood to avoid a graph-dump Explore view. |

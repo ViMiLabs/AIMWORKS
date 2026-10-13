@@ -677,7 +677,7 @@ def _ic_sem_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Thresholding with Watershed", language="en")],
             f"{H2KG}hasInputData": [ref(iri("ic-sem-raw-image-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("ic-sem-thresholded-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
             f"{H2KG}hasMetadata": [ref(iri("thresholding-step-metadata"))],
         },
         {
@@ -696,7 +696,7 @@ def _ic_sem_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Scale set preprocessing", language="en")],
             f"{H2KG}hasInputData": [ref(iri("ic-sem-thresholded-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("ic-sem-processed-image-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
         },
         {
             "@id": iri("ic-sem-processed-image-dataset"),
@@ -719,7 +719,7 @@ def _ic_sem_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Layer thickness analysis", language="en")],
             f"{H2KG}hasInputData": [ref(iri("ic-sem-processed-image-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("ic-sem-analysis-summary-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
         },
         {
             "@id": iri("porosity-analysis-step"),
@@ -727,7 +727,7 @@ def _ic_sem_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Porosity analysis", language="en")],
             f"{H2KG}hasInputData": [ref(iri("ic-sem-processed-image-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("ic-sem-analysis-summary-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
         },
         {
             "@id": iri("ic-sem-analysis-summary-dataset"),

@@ -1,0 +1,1355 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "afmcase": "https://w3id.org/h2kg/examples/afm#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#source-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Quantitative in Situ Analysis of Ionomer Structure in Fuel Cell catalytic layer",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/date": [
+        {
+          "@value": "2023-10-11",
+          "@type": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier": [
+        {
+          "@value": "5"
+        },
+        {
+          "@value": "Run derived DOI"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Topic: Fuel cell; device: PEMFC; component: MEA; subcomponent: Catalyst layer.",
+          "@language": "en"
+        },
+        {
+          "@value": "Granularity level: Microstructure.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#publication-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Quantitative in Situ Analysis of Ionomer Structure in Fuel Cell catalytic layer",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "https://doi.org/10.3390/afm38383"
+        }
+      ],
+      "http://purl.org/dc/terms/issued": [
+        {
+          "@value": "2012-11-28",
+          "@type": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Journal: PCCP; volume: 8; issue: 78; pages: 789-987.",
+          "@language": "en"
+        },
+        {
+          "@value": "Publication-status flag from worksheet: 1.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#institution-dlr",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "DLR",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#funding-hip",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "HIP",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#author-tobias-morawitz",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Tobias Morawitz",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#author-tobias-morawitz-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#author-tobias-morawitz-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "ORCID: 123-465-7777.",
+          "@language": "en"
+        },
+        {
+          "@value": "Email: tobi.mora@dlr.de.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Andre Colliard Granero",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "ORCID: 321-321-3211.",
+          "@language": "en"
+        },
+        {
+          "@value": "Email: andyhuebsch@gmail.mx.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#pdc-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Pd/C precursor material",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#pdc-material-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#pdc-material-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Pd/C amount metadata: 5 wt%.",
+          "@language": "en"
+        },
+        {
+          "@value": "Manufacturer: SigmaAldrich; lot number: 205680; CAS number: 7440-05-3.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#sieved-pdc-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sieved Pd/C material",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#sieved-pdc-material-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#sieved-pdc-material-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Sieve size: 75 um.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#mea-assembly-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+        "https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "MEA sample material for AFM preparation",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#cut-mea-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cut MEA sample",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#embedding-resin",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Embedding resin (Terosion Teromix PU6700)",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#embedded-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Embedded AFM sample",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#cured-embedded-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cured embedded AFM sample",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#microtomed-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Microtomed AFM sample",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#adhesive-tape",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Double sided adhesive tape",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-disc",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM sample disc",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-disc-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-disc-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Disc size: 12 mm; disc brand: Plano.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM pilot sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Specimen metadata from sheet: homogeneous powder.",
+          "@language": "en"
+        },
+        {
+          "@value": "Sample context assembled through cutting, embedding, curing, microtome sectioning, and mounting on an AFM sample disc.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#procure-pdc-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Procure Pd/C precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#pdc-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#sieving-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sieve Pd/C precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#pdc-material"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#sieved-pdc-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#drying-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dry catalyst material for AFM preparation",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#sieved-pdc-material"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#mea-assembly-material"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#drying-temperature-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#drying-time-setting"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#cut-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cut MEA sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#mea-assembly-material"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#cut-mea-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#cut-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#cut-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Cut size: 25 cm2.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#embedding-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Embed cut MEA sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#cut-mea-sample"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#embedding-resin"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#embedded-sample"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#curing-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cure embedded sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#embedded-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#cured-embedded-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#curing-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#curing-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Curing metadata: temperature 25 deg C; time 24 h.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#microtome-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Microtome section the cured sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#cured-embedded-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#microtomed-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#microtome-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#microtome-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Microtome: Leitz; thickness: 2 mm.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#mounting-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Fix sample on AFM sample disc",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#microtomed-sample"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#adhesive-tape"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-sample-disc"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-sample"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-measurement-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+        "https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM pilot measurement",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-instrument-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#temperature-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#relative-humidity-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#measured-area-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-acquisition-metadata"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#source-record"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#publication-record"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasAssociatedWith": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#author-tobias-morawitz"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#author-andre-colliard-granero"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#institution-dlr"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#funding-hip"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#publication-record"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-instrument-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+        "https://w3id.org/h2kg/hydrogen-ontology#AFMInstrument"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM instrument used in the pilot case",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-instrument-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-instrument-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Instrument worksheet label: Bruker multimode 8 AFM; mode: Conductive tapping.",
+          "@language": "en"
+        },
+        {
+          "@value": "Tip metadata: DLC SHR150, Nanosensors; lock-in amplifier: PF-TUNA module, Bruker.",
+          "@language": "en"
+        },
+        {
+          "@value": "Sensitivity: 1 fA; resolution: 0.5 mm; data acquisition rate: 1024 px.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM raw image dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-raw-image-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-raw-image-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/format": [
+        {
+          "@value": "tiff"
+        }
+      ],
+      "http://purl.org/dc/terms/extent": [
+        {
+          "@value": "258 MB"
+        },
+        {
+          "@value": "256 x 256 x 0 pixels"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "link"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Filename: afm_rawdata.tif.",
+          "@language": "en"
+        },
+        {
+          "@value": "PixelPerMetric: 8.1.",
+          "@language": "en"
+        },
+        {
+          "@value": "Worksheet raw-data descriptor: electron images.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#contrast-adjustment-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Contrast adjustment",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-raw-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#contrast-adjustment-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#contrast-adjustment-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Contrast factor: 1.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM contrast-adjusted image dataset",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#brightness-adjustment-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Brightness adjustment",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-contrast-adjusted-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#brightness-adjustment-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#brightness-adjustment-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Brightness factor: 1.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTopographyDataset",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM processed topography dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-processed-topography-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-processed-topography-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "link"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Mask present: yes.",
+          "@language": "en"
+        },
+        {
+          "@value": "Mask link: link.",
+          "@language": "en"
+        },
+        {
+          "@value": "Target label from worksheet: Post-processed image.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#manual-particle-measurement-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Manual particle measurement",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-processed-topography-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-analysis-summary-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-analysis-summary-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM analysis summary dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasPart": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM-derived mean particle size datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MeanParticleSize"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#manual-particle-measurement-step"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-metadata"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#publication-record"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Worksheet target label: Average size.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#drying-temperature-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DryingTemperature"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Drying temperature setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#drying-temperature-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#drying-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DryingTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Drying time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#drying-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#temperature-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM acquisition temperature setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#temperature-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#relative-humidity-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM acquisition relative-humidity setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#relative-humidity-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#measured-area-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicroscopyMeasuredArea"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM measured-area setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#measured-area-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM scan-speed setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#AFMTipNominalRadius"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "AFM tip nominal-radius setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#drying-temperature-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "100",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ThermodynamicTemperature"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG_C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#drying-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "10",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HR"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#temperature-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "23",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ThermodynamicTemperature"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG_C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#relative-humidity-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "80",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/RelativeHumidity"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/PERCENT"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#measured-area-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "1",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Area"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/MicroM2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-scan-speed-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "0.488",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Frequency"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HZ"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-tip-radius-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "1",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#mean-particle-size-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "110",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/MicroM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/afm#afm-acquisition-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Measurement type: ex-situ; specimen: homogeneous powder; atmosphere: air.",
+          "@language": "en"
+        },
+        {
+          "@value": "Pressure metadata: 1 atm; calibration notes: adjusting lenses and apertures / adjusting the voltage.",
+          "@language": "en"
+        }
+      ]
+    }
+  ]
+}

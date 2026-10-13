@@ -21,6 +21,7 @@ from .profile_modules import build_profile_modules
 from .prefix_repair import repair_doc_prefixes
 from .release import run_release
 from .split import split_ontology
+from .taxonomy import build_taxonomy_release
 from .tib_benchmark import build_tib_benchmark_package
 from .validate import validate_release
 
@@ -29,7 +30,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases", "itc-integrate", "itc-build"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "taxonomy", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases", "itc-integrate", "itc-build"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
         if command == "odk":
@@ -99,6 +100,8 @@ def main() -> None:
         result = enrich_ontology(input_path, output / "ontology", config_dir)
     elif args.command == "profiles":
         result = build_profile_modules(input_path, output / "ontology", config_dir)
+    elif args.command == "taxonomy":
+        result = build_taxonomy_release(input_path, output, config_dir)
     elif args.command == "annotate":
         result = draft_annotations(input_path, output / "review", args.draft_llm, config_dir / "llm_agent.example.yaml")
     elif args.command == "curate-definitions":

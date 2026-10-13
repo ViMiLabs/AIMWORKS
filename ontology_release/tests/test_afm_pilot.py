@@ -50,7 +50,8 @@ def test_afm_pilot_package_generates_outputs(tmp_path: Path):
     assert datapoint["https://w3id.org/h2kg/hydrogen-ontology#ofProperty"][0]["@id"] == "https://w3id.org/h2kg/hydrogen-ontology#MeanParticleSize"
 
     analysis = next(item for item in items if item["@id"].endswith("manual-particle-measurement-step"))
-    assert analysis["https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"][0]["@id"] == "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+    assert analysis["https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"][0]["@id"] == "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+    assert "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument" not in analysis
 
 
 def test_afm_pilot_package_skips_when_required_terms_are_missing(mini_ontology_file, tmp_path: Path):

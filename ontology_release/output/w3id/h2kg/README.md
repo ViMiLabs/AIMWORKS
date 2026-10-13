@@ -32,6 +32,14 @@ register the `https://w3id.org/h2kg/` namespace.
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/pemwe_schema.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/pemwe_schema.jsonld`
 
+### H2KG v2 taxonomy release candidate
+
+- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0`
+- Browser / HTML: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?view=taxonomy`
+- Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
+- JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`
+- Compatibility Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-compatibility.ttl`
+
 ## Contact and maintenance
 
 - Repository: `https://github.com/ViMiLabs/AIMWORKS`

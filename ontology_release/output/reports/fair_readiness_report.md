@@ -10,7 +10,7 @@
 ## Transparency Hooks
 
 - OOPS! ontology pitfall scan: external service unreachable (unavailable)
-- FOOPS! FAIR assessment: 75.0 / 100 (good)
+- FOOPS! FAIR assessment: external service unreachable (unavailable)
 
 ## Summary
 

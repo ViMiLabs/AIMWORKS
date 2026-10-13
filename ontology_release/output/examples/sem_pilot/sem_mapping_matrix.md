@@ -90,6 +90,6 @@ This matrix accounts for the SEM pilot fields and classifies them as `reuse exis
 | pre | Step 2 Target | Post-processed image | instance metadata | h2kg:SEMMicrographDataset | Mapped to the final processed SEM image dataset. |
 | anal | Step 1 Precursor | Post-processed image | instance metadata | h2kg:SEMMicrographDataset | The analysis process consumes the processed SEM image dataset. |
 | anal | Step 1 Technique | Manual particle measurement | reuse existing term | h2kg:Process | Modeled as a labeled analysis-process instance rather than a new TBox term. |
-| anal | Step 1 Software | ImageJ | reuse existing term | h2kg:FijiImageJSoftware | The analysis process reuses the existing software instrument term. |
+| anal | Step 1 Software | ImageJ | reuse existing term | h2kg:FijiImageJSoftware | The analysis process reuses the existing image-analysis software term through h2kg:usesSoftware. |
 | anal | Step 1 Target | Average size | reuse existing term | h2kg:CatalystParticleDiameter | Mapped conservatively to the existing CatalystParticleDiameter property. |
 | anal | Step 1 AmountTarget |  | not modeled | h2kg:DataPoint | A semantic result data point is created, but the worksheet does not provide a numeric value. |

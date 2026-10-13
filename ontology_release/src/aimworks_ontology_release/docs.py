@@ -74,7 +74,12 @@ def build_docs(
     items = {item["@id"]: item for item in merge_document_items(load_json_document(input_path)) if isinstance(item.get("@id"), str)}
     classes, properties, examples = _term_views(input_path, output_dir.parent / "review", config_dir, items)
     mappings = propose_mappings(input_path, output_dir.parent / "review", config_dir)
+    mappings = _merge_external_alignment_mappings(
+        mappings,
+        output_dir.parent / "ontology" / "external_alignment_registry.json",
+    )
     mapping_summary = _load_alignment_summary(output_dir.parent / "reports")
+    mapping_summary["accepted_count"] = len(mappings)
     # The whole-ontology Explorer must expose the current asserted source, not
     # a potentially stale compact-module artifact.
     namespace_terms = _reference_terms_from_items(
@@ -82,6 +87,48 @@ def build_docs(
         mappings,
         lambda iri, item: iri == H2KG_ONTOLOGY_IRI or iri.startswith(H2KG_NS),
     )
+    taxonomy_registry_path = output_dir.parent / "ontology" / "taxonomy_registry.json"
+    taxonomy_artifact_path = output_dir.parent / "ontology" / "h2kg-v2-taxonomy.ttl"
+    taxonomy_registry = load_json(taxonomy_registry_path) if taxonomy_registry_path.exists() else {}
+    if taxonomy_registry:
+        namespace_terms = _merge_taxonomy_reference_terms(namespace_terms, taxonomy_registry, mappings)
+        classes = [
+            {
+                "iri": str(term.get("iri", "")),
+                "label": str(term.get("label", "")),
+                "description": str(term.get("definition", "")),
+                "domain": "",
+                "range": "",
+                "mappings": [],
+            }
+            for term in taxonomy_registry.get("terms", [])
+            if term.get("disposition") == "active_local_class"
+        ]
+        classes.sort(key=lambda item: item["label"].casefold())
+    if taxonomy_artifact_path.exists():
+        taxonomy_artifact_terms = _reference_terms_from_artifact(taxonomy_artifact_path, items, mappings)
+        schema_categories = {"Object Properties", "Datatype Properties", "Annotation Properties"}
+        namespace_by_iri = {str(term["iri"]): term for term in namespace_terms}
+        for term in taxonomy_artifact_terms:
+            if term.get("category") in schema_categories:
+                namespace_by_iri[str(term["iri"])] = term
+        namespace_terms = sorted(
+            namespace_by_iri.values(),
+            key=lambda item: (_reference_category_order(str(item.get("category", ""))), str(item.get("label", "")).casefold()),
+        )
+        properties = [
+            {
+                "iri": str(term.get("iri", "")),
+                "label": str(term.get("label", "")),
+                "description": str(term.get("description", "")),
+                "domain": ", ".join(_short_label(iri) for iri in _reference_relation_iris(term.get("domain", []))),
+                "range": ", ".join(_short_label(iri) for iri in _reference_relation_iris(term.get("range", []))),
+                "mappings": term.get("mappings", []),
+            }
+            for term in taxonomy_artifact_terms
+            if term.get("category") in schema_categories
+        ]
+        properties.sort(key=lambda item: item["label"].casefold())
     core_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "schema.ttl", items, mappings)
     pemfc_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemfc_schema.ttl", items, mappings)
     pemwe_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemwe_schema.ttl", items, mappings)
@@ -110,8 +157,13 @@ def build_docs(
         "vocabulary_count": sum(1 for item in examples if "basis" in item["label"].lower() or "type" in item["label"].lower()),
         "example_count": len(examples),
         "mapping_count": len(mappings),
+        "taxonomy_class_count": sum(
+            1
+            for term in taxonomy_registry.get("terms", [])
+            if term.get("disposition") == "active_local_class"
+        ),
     }
-    explorer = _build_explorer_dataset(namespace_terms, items)
+    explorer = _build_explorer_dataset(namespace_terms, items, taxonomy_registry)
     decode_path = output_dir.parent / "decode" / "decode_federated_graph.json"
     decode = load_json(decode_path) if decode_path.exists() else None
     odk = load_odk_manifest(output_dir.parent)
@@ -170,6 +222,7 @@ def build_docs(
     if itc_example_dir.exists():
         shutil.copytree(itc_example_dir, output_dir / "examples" / "itc_pilot", dirs_exist_ok=True)
     _copy_odk_artifacts(output_dir)
+    _copy_taxonomy_artifacts(output_dir)
     _copy_asserted_source_jsonld(input_path, output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
     write_text(output_dir / "assets" / "explorer.css", _explorer_css())
@@ -246,6 +299,16 @@ def _reference_terms_from_artifact(
     mappings: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     selected = _artifact_subjects(artifact_path)
+    artifact_items = items
+    if Graph is not None and artifact_path.exists():
+        artifact_graph = Graph().parse(artifact_path)
+        serialized = json.loads(str(artifact_graph.serialize(format="json-ld")))
+        merged = merge_document_items(list(items.values()) + (serialized if isinstance(serialized, list) else [serialized]))
+        artifact_items = {
+            str(item["@id"]): item
+            for item in merged
+            if isinstance(item.get("@id"), str)
+        }
     mapping_index: dict[str, list[dict[str, str]]] = {}
     for mapping in mappings:
         mapping_index.setdefault(mapping["local_iri"], []).append(
@@ -257,7 +320,7 @@ def _reference_terms_from_artifact(
         )
     records: dict[str, dict[str, Any]] = {}
     for iri in selected:
-        item = items.get(iri, {"@id": iri})
+        item = artifact_items.get(iri, {"@id": iri})
         parents = _parent_links(item)
         records[iri] = {
             "iri": iri,
@@ -267,7 +330,7 @@ def _reference_terms_from_artifact(
             "alt_labels": _literal_values(item.get(SKOS_ALT_LABEL)),
             "notations": _literal_values(item.get(SKOS_NOTATION)),
             "sources": _iri_or_literal_values(item.get(DCTERMS_SOURCE)),
-            "quantity_guidance": _quantity_guidance(item, items),
+            "quantity_guidance": _quantity_guidance(item, artifact_items),
             "examples": _literal_values(item.get(SKOS_EXAMPLE)),
             "notes": _literal_values(item.get(RDFS_COMMENT)),
             "domain": _iri_values(item.get(RDFS_DOMAIN)),
@@ -344,6 +407,99 @@ def _reference_terms_from_items(
     return sorted(records.values(), key=lambda item: (_reference_category_order(item["category"]), item["label"].lower()))
 
 
+def _merge_taxonomy_reference_terms(
+    source_terms: list[dict[str, Any]],
+    taxonomy_registry: dict[str, Any],
+    mappings: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Overlay the clean v2 hierarchy on the backward-compatible namespace reference."""
+
+    records = {str(term["iri"]): dict(term) for term in source_terms}
+    taxonomy_terms = {
+        str(term.get("iri", "")): term
+        for term in taxonomy_registry.get("terms", [])
+        if term.get("iri")
+        and term.get("disposition") in {"active_local_class", "deprecated_compatibility_class"}
+    }
+    mapping_index: dict[str, list[dict[str, str]]] = {}
+    for mapping in mappings:
+        mapping_index.setdefault(str(mapping.get("local_iri", "")), []).append(
+            {
+                "relation": str(mapping.get("relation", "")),
+                "target_iri": str(mapping.get("target_iri", "")),
+                "target_label": str(mapping.get("target_label", "")),
+            }
+        )
+    for iri, taxonomy in taxonomy_terms.items():
+        record = records.get(
+            iri,
+            {
+                "iri": iri,
+                "anchor": _term_anchor_for_iri(iri),
+                "alt_labels": [],
+                "notations": [],
+                "sources": [],
+                "quantity_guidance": [],
+                "examples": [],
+                "notes": [],
+                "domain": [],
+                "range": [],
+                "parents": [],
+                "subclasses": [],
+                "subproperties": [],
+                "mappings": [],
+            },
+        )
+        parent_iri = str(taxonomy.get("parent_iri", "")).strip()
+        record_mappings = {
+            (str(item.get("relation", "")), str(item.get("target_iri", ""))): item
+            for item in [*record.get("mappings", []), *mapping_index.get(iri, [])]
+            if item.get("relation") and item.get("target_iri")
+        }
+        record.update(
+            {
+                "label": str(taxonomy.get("label") or record.get("label") or _short_label(iri)),
+                "description": str(taxonomy.get("definition") or record.get("description") or "No definition recorded."),
+                "alt_labels": sorted(set(record.get("alt_labels", [])) | set(taxonomy.get("alt_labels", []))),
+                "notations": sorted(set(record.get("notations", [])) | set(taxonomy.get("notations", []))),
+                "parents": (
+                    [{"relation": "subclassOf", "iri": parent_iri, "label": str(taxonomy.get("parent_label", "")), "anchor": _term_anchor_for_iri(parent_iri)}]
+                    if parent_iri
+                    else []
+                ),
+                "subclasses": [],
+                "mappings": sorted(
+                    record_mappings.values(),
+                    key=lambda item: (str(item.get("relation", "")), str(item.get("target_iri", ""))),
+                ),
+                "type_labels": ["Class", str(taxonomy.get("corrected_semantic_role", "Class"))],
+                "category": "Classes",
+            }
+        )
+        records[iri] = record
+
+    for iri, taxonomy in taxonomy_terms.items():
+        parent_iri = str(taxonomy.get("parent_iri", "")).strip()
+        if not parent_iri or parent_iri not in records:
+            continue
+        records[parent_iri].setdefault("subclasses", []).append(
+            {
+                "iri": iri,
+                "label": str(taxonomy.get("label", "")),
+                "anchor": _term_anchor_for_iri(iri),
+            }
+        )
+    for record in records.values():
+        record["subclasses"] = sorted(
+            {item["iri"]: item for item in record.get("subclasses", [])}.values(),
+            key=lambda item: str(item.get("label", "")).casefold(),
+        )
+    return sorted(
+        records.values(),
+        key=lambda item: (_reference_category_order(item["category"]), str(item.get("label", "")).casefold()),
+    )
+
+
 def _artifact_subjects(artifact_path: Path) -> set[str]:
     if Graph is None or not artifact_path.exists():
         return set()
@@ -414,6 +570,21 @@ def _iri_values(value: Any) -> list[dict[str, str]]:
     return seen
 
 
+def _reference_relation_iris(value: Any) -> list[str]:
+    """Return relation targets from normalized reference records or JSON-LD."""
+
+    values = value if isinstance(value, list) else [value] if value is not None else []
+    result: list[str] = []
+    for entry in values:
+        if isinstance(entry, dict):
+            candidate = entry.get("iri") or entry.get("@id")
+        else:
+            candidate = entry
+        if isinstance(candidate, str) and candidate.strip() and candidate.strip() not in result:
+            result.append(candidate.strip())
+    return result
+
+
 def _parent_links(item: dict[str, Any]) -> list[dict[str, str]]:
     parents: list[dict[str, str]] = []
     for predicate, relation in ((RDFS_SUBCLASS, "subclassOf"), (RDFS_SUBPROPERTY, "subPropertyOf")):
@@ -447,6 +618,8 @@ def _reference_category(item: dict[str, Any], iri: str) -> str:
         return "Object Properties"
     if "http://www.w3.org/2002/07/owl#DatatypeProperty" in type_set:
         return "Datatype Properties"
+    if "http://www.w3.org/2002/07/owl#AnnotationProperty" in type_set:
+        return "Annotation Properties"
     if "http://www.w3.org/2002/07/owl#Class" in type_set:
         return "Classes"
     semantic_order = [
@@ -473,15 +646,16 @@ def _reference_category_order(category: str) -> int:
         "Classes": 1,
         "Object Properties": 2,
         "Datatype Properties": 3,
-        "Measurements": 4,
-        "Instruments": 5,
-        "Materials": 6,
-        "Parameters": 7,
-        "Properties": 8,
-        "Manufacturing / Processes": 9,
-        "Data / Metadata": 10,
-        "Normalization Bases": 11,
-        "Other Terms": 12,
+        "Annotation Properties": 4,
+        "Measurements": 5,
+        "Instruments": 6,
+        "Materials": 7,
+        "Parameters": 8,
+        "Properties": 9,
+        "Manufacturing / Processes": 10,
+        "Data / Metadata": 11,
+        "Normalization Bases": 12,
+        "Other Terms": 13,
     }
     return order.get(category, 99)
 
@@ -1435,7 +1609,11 @@ def _link_record(source: str, target: str, predicate: str, value: str, module: s
     }
 
 
-def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def _build_explorer_dataset(
+    terms: list[dict[str, Any]],
+    items: dict[str, dict[str, Any]],
+    taxonomy_registry: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     local_records = {term["iri"]: term for term in terms}
     nodes: dict[str, dict[str, Any]] = {}
     links: dict[tuple[str, str, str, str], dict[str, Any]] = {}
@@ -1480,6 +1658,86 @@ def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[s
         }
         nodes[iri]["search_text"] = _node_search_text(record, item)
 
+    taxonomy_terms = {
+        str(term.get("iri", "")): term
+        for term in (taxonomy_registry or {}).get("terms", [])
+        if term.get("iri")
+    }
+    for iri, term in taxonomy_terms.items():
+        if term.get("disposition") not in {"active_local_class", "deprecated_compatibility_class"}:
+            continue
+        modules = set(nodes.get(iri, {}).get("modules", []))
+        modules.add("taxonomy")
+        taxonomy_payload = {
+            "taxonomy_parent": term.get("parent_iri", ""),
+            "taxonomy_parent_label": term.get("parent_label", ""),
+            "taxonomy_path": term.get("ancestor_path", []),
+            "taxonomy_top_branch": term.get("top_branch", ""),
+            "taxonomy_module": term.get("module", "core"),
+            "taxonomy_role": term.get("corrected_semantic_role", "Class"),
+            "definition_status": term.get("definition_status", ""),
+            "review_status": term.get("review_status", ""),
+            "migration_action": term.get("migration_action", ""),
+            "replacement_iri": term.get("replacement_iri", ""),
+        }
+        if iri in nodes:
+            nodes[iri].update(taxonomy_payload)
+            nodes[iri]["modules"] = sorted(modules)
+            nodes[iri]["description"] = term.get("definition") or nodes[iri].get("description", "")
+            nodes[iri]["alt_labels"] = sorted(set(nodes[iri].get("alt_labels", [])) | set(term.get("alt_labels", [])))
+            nodes[iri]["notations"] = sorted(set(nodes[iri].get("notations", [])) | set(term.get("notations", [])))
+            nodes[iri]["search_text"] = " ".join(
+                str(value)
+                for value in [
+                    nodes[iri].get("search_text", ""),
+                    term.get("definition", ""),
+                    term.get("parent_label", ""),
+                    term.get("top_branch", ""),
+                    term.get("module", ""),
+                    " ".join(term.get("ancestor_path", [])),
+                ]
+                if value
+            )
+            continue
+        local_name = str(term.get("local_name") or _fragment_for_iri(iri))
+        nodes[iri] = {
+            "id": iri,
+            "iri": iri,
+            "anchor": _term_anchor_for_iri(iri),
+            "label": str(term.get("label") or _short_label(iri)),
+            "localName": local_name,
+            "qname": canonical_qname(iri, "") or iri,
+            "description": str(term.get("definition") or "No definition recorded."),
+            "alt_labels": term.get("alt_labels", []),
+            "notations": term.get("notations", []),
+            "sources": [],
+            "quantity_guidance": [],
+            "examples": [],
+            "notes": [],
+            "type_labels": ["Class"],
+            "category": "Classes",
+            "display_class": str(term.get("corrected_semantic_role") or "Class"),
+            "modules": sorted(modules),
+            "local": True,
+            "deprecated": "Deprecated" if term.get("disposition") == "deprecated_compatibility_class" else "Active",
+            "mapping_labels": [],
+            "search_text": " ".join(
+                str(value)
+                for value in [
+                    term.get("label", ""),
+                    local_name,
+                    term.get("definition", ""),
+                    term.get("parent_label", ""),
+                    term.get("top_branch", ""),
+                    term.get("module", ""),
+                    " ".join(term.get("alt_labels", [])),
+                    " ".join(term.get("notations", [])),
+                ]
+                if value
+            ),
+            **taxonomy_payload,
+        }
+
     def ensure_external(iri: str, label: str = "", description: str = "") -> None:
         if not iri or iri in nodes or iri.startswith(H2KG_NS) or iri == H2KG_ONTOLOGY_IRI:
             return
@@ -1492,9 +1750,19 @@ def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[s
         if key not in links:
             links[key] = _link_record(source, target, predicate, value, module, edge_family)
 
+    for iri, term in taxonomy_terms.items():
+        parent_iri = str(term.get("parent_iri", "")).strip()
+        if iri not in nodes or not parent_iri or parent_iri not in nodes:
+            continue
+        add_link(iri, parent_iri, "subclassOf", "subclassOf", "taxonomy", "taxonomy")
+
     for iri, record in local_records.items():
         item = items.get(iri, {"@id": iri})
         for relation in record.get("parents", []):
+            if relation.get("relation") == "subclassOf" and iri in taxonomy_terms:
+                # The v2 taxonomy registry is the authoritative class hierarchy.
+                # Avoid rendering a duplicate legacy subclass edge in Combined view.
+                continue
             target_iri = relation.get("iri", "")
             ensure_external(target_iri, relation.get("label", ""))
             add_link(iri, target_iri, relation.get("relation", ""), relation.get("relation", ""), "schema", relation.get("relation", "schema"))
@@ -1559,6 +1827,13 @@ def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[s
             "nodeCount": sum(1 for node in nodes.values() if "alignments" in node.get("modules", [])),
             "edgeCount": sum(1 for link in links.values() if link["module"] == "alignments"),
         },
+        "taxonomy": {
+            "id": "taxonomy",
+            "label": "H2KG v2 taxonomy",
+            "description": "The complete class hierarchy generated from the reviewed taxonomy registry.",
+            "nodeCount": sum(1 for node in nodes.values() if "taxonomy" in node.get("modules", [])),
+            "edgeCount": sum(1 for link in links.values() if link["module"] == "taxonomy"),
+        },
     }
 
     return {
@@ -1568,6 +1843,9 @@ def _build_explorer_dataset(terms: list[dict[str, Any]], items: dict[str, dict[s
             "localNodeCount": sum(1 for node in nodes.values() if node.get("local")),
             "externalNodeCount": sum(1 for node in nodes.values() if not node.get("local")),
             "edgeCount": len(links),
+            "activeClassCount": sum(1 for term in taxonomy_terms.values() if term.get("disposition") == "active_local_class"),
+            "taxonomyVersion": (taxonomy_registry or {}).get("version", "not generated"),
+            "taxonomyReviewStatus": (taxonomy_registry or {}).get("review_status", "not generated"),
         },
         "modules": list(module_map.values()),
         "nodes": sorted(nodes.values(), key=lambda node: (not bool(node.get("local")), str(node.get("label", "")).lower())),
@@ -1579,6 +1857,9 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
     reference_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     data_href = _relative_href(page_path, docs_root / "data" / "explorer.json")
+    taxonomy_ttl = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.ttl")
+    taxonomy_jsonld = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.jsonld")
+    taxonomy_registry = _relative_href(page_path, docs_root / "ontology" / "taxonomy_registry.csv")
     modules = explorer.get("modules", [])
     module_html = "".join(
         f"""
@@ -1603,6 +1884,9 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
         <div class="button-row">
           <a class="inline-button" href="{reference_link}">Open full reference</a>
           <a class="inline-button" href="{release_link}">Release context</a>
+          <a class="inline-button" href="{taxonomy_ttl}" download>Taxonomy TTL</a>
+          <a class="inline-button" href="{taxonomy_jsonld}" download>Taxonomy JSON-LD</a>
+          <a class="inline-button" href="{taxonomy_registry}" download>Taxonomy registry</a>
         </div>
       </article>
       <article class="card">
@@ -1612,6 +1896,9 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
           <li><strong>Local terms:</strong> {overview.get('localNodeCount', 0)}</li>
           <li><strong>External anchors:</strong> {overview.get('externalNodeCount', 0)}</li>
           <li><strong>Visible link surface:</strong> {overview.get('edgeCount', 0)}</li>
+          <li><strong>Active v2 classes:</strong> {overview.get('activeClassCount', 0)}</li>
+          <li><strong>Taxonomy version:</strong> {escape(str(overview.get('taxonomyVersion', 'not generated')))}</li>
+          <li><strong>Review status:</strong> {escape(str(overview.get('taxonomyReviewStatus', 'not generated')))}</li>
         </ul>
         <p class="muted">The graph starts with the selected term and its direct visible neighborhood. Expansion is progressive and reversible.</p>
       </article>
@@ -1641,6 +1928,30 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
         </article>
         <article class="card explorer-panel">
           <p class="eyebrow">Graph filters</p>
+          <h3>View</h3>
+          <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
+            <label><input type="radio" name="explorer-view" value="relations" data-explorer-view checked> Relations</label>
+            <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view> Taxonomy</label>
+            <label><input type="radio" name="explorer-view" value="combined" data-explorer-view> Combined</label>
+          </div>
+          <div class="explorer-field">
+            <label for="explorer-taxonomy-branch">Taxonomy branch</label>
+            <select id="explorer-taxonomy-branch" data-explorer-branch>
+              <option value="">All branches</option>
+              <option value="Matter">Matter</option>
+              <option value="Process">Process</option>
+              <option value="InformationEntity">Information entity</option>
+              <option value="Characteristic">Characteristic</option>
+              <option value="Agent">Agent</option>
+            </select>
+          </div>
+          <div class="explorer-taxonomy-legend" aria-label="Taxonomy color legend">
+            <span data-branch="Matter">Matter</span>
+            <span data-branch="Process">Process</span>
+            <span data-branch="InformationEntity">Information</span>
+            <span data-branch="Characteristic">Characteristic</span>
+            <span data-branch="Agent">Agent</span>
+          </div>
           <h3>Release modules</h3>
           <div class="explorer-module-grid">{module_html}</div>
           <div class="explorer-toolbar">
@@ -1671,6 +1982,9 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
             </div>
           </div>
           <p class="explorer-note" data-explorer-graph-note>Select a term to render its graph neighborhood.</p>
+          <nav class="explorer-breadcrumb" data-explorer-breadcrumb aria-label="Taxonomy path">
+            <span>Select a taxonomy term to show its hierarchy path.</span>
+          </nav>
           <div class="explorer-chart-wrap">
             <div class="explorer-chart" data-explorer-chart></div>
           </div>
@@ -1726,6 +2040,32 @@ def _load_alignment_summary(reports_dir: Path) -> dict[str, Any]:
         "rejected_by_rule": {},
         "accepted_by_source": {},
     }
+
+
+def _merge_external_alignment_mappings(
+    mappings: list[dict[str, Any]],
+    registry_path: Path,
+) -> list[dict[str, Any]]:
+    """Merge the validated v2 bridge into the documentation mapping surface."""
+    merged = {
+        (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", ""))): dict(row)
+        for row in mappings
+        if row.get("local_iri") and row.get("relation") and row.get("target_iri")
+    }
+    if registry_path.exists():
+        payload = load_json(registry_path)
+        for row in payload.get("mappings", []):
+            key = (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", "")))
+            if all(key):
+                merged[key] = {**merged.get(key, {}), **row}
+    return sorted(
+        merged.values(),
+        key=lambda row: (
+            str(row.get("local_label", "")).casefold(),
+            str(row.get("relation", "")),
+            str(row.get("target_iri", "")),
+        ),
+    )
 
 
 def _alignment_body(mappings: list[dict[str, Any]], summary: dict[str, Any]) -> str:
@@ -2747,6 +3087,30 @@ def _copy_odk_artifacts(output_dir: Path) -> None:
             shutil.copyfile(artifact, target_dir / artifact.name)
 
 
+def _copy_taxonomy_artifacts(output_dir: Path) -> None:
+    source_dir = output_dir.parent / "ontology"
+    target_dir = ensure_dir(output_dir / "ontology")
+    filenames = (
+        "h2kg-v2-taxonomy.ttl",
+        "h2kg-v2-taxonomy.jsonld",
+        "h2kg-v2-compatibility.ttl",
+        "h2kg-v2-compatibility.jsonld",
+        "h2kg-v2-taxonomy-shapes.ttl",
+        "h2kg-v2-external-bridge.ttl",
+        "h2kg-v2-external-bridge.jsonld",
+        "taxonomy_registry.json",
+        "taxonomy_registry.csv",
+        "resource_disposition_registry.json",
+        "resource_disposition_registry.csv",
+        "external_alignment_registry.json",
+        "external_alignment_registry.csv",
+    )
+    for filename in filenames:
+        source = source_dir / filename
+        if source.exists():
+            shutil.copyfile(source, target_dir / filename)
+
+
 def _copy_asserted_source_jsonld(input_path: Path, output_dir: Path) -> None:
     target_dir = ensure_dir(output_dir / "source")
     shutil.copyfile(input_path, target_dir / "h2kg-asserted-source.jsonld")
@@ -2870,6 +3234,52 @@ def _explorer_css() -> str:
   background: rgba(255,255,255,0.78);
   color: var(--ink);
 }
+.explorer-field select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.72rem 0.85rem;
+  font: inherit;
+  background: rgba(255,255,255,0.78);
+  color: var(--ink);
+}
+.explorer-view-switch {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0.7rem 0 0.9rem;
+}
+.explorer-view-switch label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.55rem 0.45rem;
+  background: rgba(255,255,255,0.72);
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+.explorer-taxonomy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.65rem 0 1rem;
+}
+.explorer-taxonomy-legend span {
+  border: 1px solid rgba(19,33,41,0.14);
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  background: var(--branch-color, #d7dde0);
+  color: #102027;
+}
+.explorer-taxonomy-legend [data-branch="Matter"] { --branch-color: #8dcfc4; }
+.explorer-taxonomy-legend [data-branch="Process"] { --branch-color: #f1b46f; }
+.explorer-taxonomy-legend [data-branch="InformationEntity"] { --branch-color: #b8a6dc; }
+.explorer-taxonomy-legend [data-branch="Characteristic"] { --branch-color: #91c9d8; }
+.explorer-taxonomy-legend [data-branch="Agent"] { --branch-color: #b9c0c5; }
 .explorer-note {
   margin-top: 0.7rem;
   color: var(--muted);
@@ -2956,6 +3366,27 @@ def _explorer_css() -> str:
     position: relative;
     margin-top: 0.85rem;
   }
+  .explorer-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.1rem;
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.86rem;
+  }
+  .explorer-breadcrumb button,
+  .explorer-breadcrumb span {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.3rem 0.58rem;
+    background: rgba(15,109,122,0.08);
+    color: var(--ink);
+    font: inherit;
+  }
+  .explorer-breadcrumb button { cursor: pointer; }
+  .explorer-breadcrumb .separator { padding: 0; background: transparent; color: var(--muted); }
   .explorer-hovercard {
     position: absolute;
     top: 1rem;
@@ -3058,6 +3489,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const graphNoteEl = root.querySelector("[data-explorer-graph-note]");
   const inspectorEl = root.querySelector("[data-explorer-inspector]");
   const relationsEl = root.querySelector("[data-explorer-relations]");
+  const breadcrumbEl = root.querySelector("[data-explorer-breadcrumb]");
+  const branchEl = root.querySelector("[data-explorer-branch]");
   const chartEl = root.querySelector("[data-explorer-chart]");
   const downloadRelationsEl = root.querySelector("[data-explorer-download-relations]");
   const countNodesEl = root.querySelector('[data-explorer-count="nodes"]');
@@ -3091,7 +3524,8 @@ document.addEventListener("DOMContentLoaded", () => {
       highlightedIndex: 0,
       currentGraph: null,
       currentRelations: [],
-      hoverCardEl: null
+      hoverCardEl: null,
+      viewMode: "relations"
     };
 
   const escapeHtml = (value) => String(value ?? "")
@@ -3103,7 +3537,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
+  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "relations";
+  const activeBranch = () => branchEl?.value || "";
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
+    const branchColor = (branch) => ({
+      Matter: "#4aa99b",
+      Process: "#d88738",
+      InformationEntity: "#8a72bd",
+      Characteristic: "#4f9fb4",
+      Agent: "#7f8b92",
+      Compatibility: "#a6aaad"
+    }[branch] || "#9aa4a9");
+    const branchShape = (branch) => ({
+      Matter: "ellipse",
+      Process: "round-rectangle",
+      InformationEntity: "diamond",
+      Characteristic: "hexagon",
+      Agent: "rectangle"
+    }[branch] || "ellipse");
     const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
     const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
     const slugify = (value) => stripKey(value).slice(0, 64) || "selection";
@@ -3145,9 +3596,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function searchCandidates() {
     const allowExternal = toggleEnabled("includeExternalSearch");
+    const viewMode = activeView();
+    const branch = activeBranch();
     return (payload?.nodes || []).filter((node) => {
       if (!isSearchableNode(node)) return false;
       if (!allowExternal && !node.local) return false;
+      if (viewMode === "taxonomy" && !(node.modules || []).includes("taxonomy")) return false;
+      if (branch && node.taxonomy_top_branch !== branch) return false;
       return true;
     });
   }
@@ -3246,6 +3701,8 @@ document.addEventListener("DOMContentLoaded", () => {
       highlightedIndex: state.highlightedIndex,
       searchValue: searchInputEl.value,
       activeModules: activeModules(),
+      viewMode: activeView(),
+      branch: activeBranch(),
       toggles: Object.fromEntries(Array.from(root.querySelectorAll("[data-explorer-toggle]")).map((input) => [input.dataset.explorerToggle, input.checked]))
     };
   }
@@ -3267,6 +3724,9 @@ document.addEventListener("DOMContentLoaded", () => {
     root.querySelectorAll("[data-explorer-toggle]").forEach((input) => {
       input.checked = Boolean(snapshot.toggles?.[input.dataset.explorerToggle]);
     });
+    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "relations"}"]`);
+    if (viewInput) viewInput.checked = true;
+    if (branchEl) branchEl.value = snapshot.branch || "";
     state.selectedId = snapshot.selectedId || null;
     state.seedId = snapshot.seedId || null;
     state.expandedIds = new Set(snapshot.expandedIds || []);
@@ -3301,9 +3761,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function buildBaseView() {
     const selectedModules = new Set(activeModules());
-    const nodes = (payload.nodes || []).filter((node) => (node.modules || []).some((moduleId) => selectedModules.has(moduleId)));
+    const viewMode = activeView();
+    const branch = activeBranch();
+    state.viewMode = viewMode;
+    const nodes = (payload.nodes || []).filter((node) => {
+      if (!(node.modules || []).some((moduleId) => selectedModules.has(moduleId))) return false;
+      if (viewMode === "taxonomy" && !(node.modules || []).includes("taxonomy")) return false;
+      if (branch && node.taxonomy_top_branch !== branch) return false;
+      return true;
+    });
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
-    const links = (payload.links || []).filter((link) => selectedModules.has(link.module) && nodeMap.has(link.source) && nodeMap.has(link.target));
+    const links = (payload.links || []).filter((link) => {
+      if (!selectedModules.has(link.module) || !nodeMap.has(link.source) || !nodeMap.has(link.target)) return false;
+      const isTaxonomy = link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf";
+      if (viewMode === "taxonomy") return isTaxonomy;
+      if (viewMode === "relations") return !isTaxonomy;
+      return true;
+    });
     const adjacency = new Map();
     links.forEach((link) => {
       if (!adjacency.has(link.source)) adjacency.set(link.source, []);
@@ -3311,7 +3785,7 @@ document.addEventListener("DOMContentLoaded", () => {
       adjacency.get(link.source).push(link);
       adjacency.get(link.target).push(link);
     });
-    return { nodes, nodeMap, links, adjacency };
+    return { nodes, nodeMap, links, adjacency, viewMode, branch };
   }
 
   function buildExpandedGraph(view) {
@@ -3357,7 +3831,10 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           selector: "node",
           style: {
-            "background-color": (ele) => ele.data("isCenter") ? "#c86a2b" : ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f",
+            "background-color": (ele) => ele.data("viewMode") === "relations"
+              ? (ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f")
+              : branchColor(ele.data("topBranch")),
+            "shape": (ele) => ele.data("viewMode") === "relations" ? "ellipse" : branchShape(ele.data("topBranch")),
             "label": "data(label)",
             "font-size": 11,
             "text-wrap": "wrap",
@@ -3367,15 +3844,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "text-margin-y": 8,
             "width": (ele) => ele.data("isCenter") ? 38 : 28,
             "height": (ele) => ele.data("isCenter") ? 38 : 28,
-            "border-width": 1.4,
-            "border-color": "rgba(19,33,41,0.18)"
+            "border-width": (ele) => ele.data("isCenter") ? 4 : ele.data("isDeprecated") ? 2.5 : 1.4,
+            "border-style": (ele) => ele.data("isDeprecated") ? "dashed" : "solid",
+            "border-color": (ele) => ele.data("isCenter") ? "#c86a2b" : "rgba(19,33,41,0.28)"
           }
         },
         {
           selector: "edge",
           style: {
-            "line-color": "rgba(19,33,41,0.24)",
-            "target-arrow-color": "rgba(19,33,41,0.24)",
+            "line-color": (ele) => ele.data("isTaxonomy") ? "rgba(15,109,122,0.56)" : "rgba(19,33,41,0.24)",
+            "target-arrow-color": (ele) => ele.data("isTaxonomy") ? "rgba(15,109,122,0.56)" : "rgba(19,33,41,0.24)",
             "target-arrow-shape": "triangle",
             "curve-style": "bezier",
             "arrow-scale": 0.9,
@@ -3427,7 +3905,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!graph.nodes.length) return;
     const dense = graph.nodes.length > 28 || graph.links.length > 34;
     instance.layout(
-      dense
+      state.viewMode === "taxonomy"
+        ? { name: "breadthfirst", directed: true, animate: false, fit: true, padding: 50, spacingFactor: 1.35 }
+        : dense
         ? { name: "circle", animate: false, fit: true, padding: 55 }
         : {
             name: "cose",
@@ -3455,6 +3935,10 @@ document.addEventListener("DOMContentLoaded", () => {
         label: node.label,
         isLocal: node.local,
         isCenter: node.id === graph.center?.id,
+        isDeprecated: node.deprecated === "Deprecated",
+        topBranch: node.taxonomy_top_branch || "",
+        semanticRole: node.taxonomy_role || node.display_class || "",
+        viewMode: state.viewMode,
         iri: node.iri
       }
     }));
@@ -3463,7 +3947,8 @@ document.addEventListener("DOMContentLoaded", () => {
         id: `${link.source}|${link.target}|${link.predicate}|${link.module}`,
         source: link.source,
         target: link.target,
-        label: String(link.value || link.predicate || "")
+        label: String(link.value || link.predicate || ""),
+        isTaxonomy: link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf"
       }
     }));
     return [...nodes, ...edges];
@@ -3665,6 +4150,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function renderBreadcrumb(node) {
+    if (!breadcrumbEl) return;
+    if (!node || !(node.modules || []).includes("taxonomy")) {
+      breadcrumbEl.innerHTML = "<span>No taxonomy path is assigned to this resource.</span>";
+      return;
+    }
+    const allNodes = new Map((payload?.nodes || []).map((item) => [item.id, item]));
+    const path = [...(node.taxonomy_path || []), node.id]
+      .map((id) => allNodes.get(id))
+      .filter(Boolean);
+    breadcrumbEl.innerHTML = path.map((item, index) => `
+      ${index ? '<span class="separator" aria-hidden="true">/</span>' : ""}
+      <button type="button" data-explorer-breadcrumb-node="${escapeHtml(item.id)}">${escapeHtml(item.label)}</button>
+    `).join("");
+    breadcrumbEl.querySelectorAll("[data-explorer-breadcrumb-node]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          state.seedId = state.seedId || button.dataset.explorerBreadcrumbNode;
+          selectNode(button.dataset.explorerBreadcrumbNode, { reset: true });
+        });
+      });
+    });
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -3679,6 +4188,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="explorer-chip">${node.local ? "Local H2KG" : "External aligned"}</span>
             <span class="explorer-chip">${escapeHtml(node.display_class || node.category)}</span>
             <span class="explorer-chip">${escapeHtml(node.deprecated || "Active")}</span>
+            ${node.taxonomy_top_branch ? `<span class="explorer-chip">${escapeHtml(node.taxonomy_top_branch)}</span>` : ""}
+            ${node.review_status ? `<span class="explorer-chip">${escapeHtml(node.review_status)}</span>` : ""}
           </div>
         </div>
         <div class="explorer-inspector__section">
@@ -3693,6 +4204,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
         ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
@@ -3768,7 +4281,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cy) cy.elements().remove();
       return;
     }
-    graphNoteEl.textContent = `Showing the direct visible neighborhood for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
+    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and relation neighborhood" : "relation neighborhood";
+    graphNoteEl.textContent = `Showing the direct ${viewLabel} for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
     const instance = ensureCy();
     instance.elements().remove();
     instance.add(buildCyElements(graph));
@@ -3819,12 +4333,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const graph = buildExpandedGraph(view);
     renderGraph(graph);
     renderInspector(graph.center, graph);
+    renderBreadcrumb(graph.center);
     renderRelations(graph);
   }
 
   function applyDeepLink() {
     const params = new URLSearchParams(window.location.search);
     const iri = params.get("iri");
+    const requestedView = params.get("view");
+    if (["relations", "taxonomy", "combined"].includes(requestedView)) {
+      const input = root.querySelector(`[data-explorer-view][value="${requestedView}"]`);
+      if (input) input.checked = true;
+    }
     if (!iri || !payload) return;
     const match = (payload.nodes || []).find((node) => node.iri === iri);
     if (!match) return;
@@ -3859,7 +4379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  root.querySelectorAll("[data-explorer-module], [data-explorer-toggle]").forEach((input) => {
+  root.querySelectorAll("[data-explorer-module], [data-explorer-toggle], [data-explorer-view], [data-explorer-branch]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
     root.querySelectorAll("[data-explorer-action]").forEach((button) => {

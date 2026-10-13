@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const graphNoteEl = root.querySelector("[data-explorer-graph-note]");
   const inspectorEl = root.querySelector("[data-explorer-inspector]");
   const relationsEl = root.querySelector("[data-explorer-relations]");
+  const breadcrumbEl = root.querySelector("[data-explorer-breadcrumb]");
+  const branchEl = root.querySelector("[data-explorer-branch]");
   const chartEl = root.querySelector("[data-explorer-chart]");
   const downloadRelationsEl = root.querySelector("[data-explorer-download-relations]");
   const countNodesEl = root.querySelector('[data-explorer-count="nodes"]');
@@ -45,7 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
       highlightedIndex: 0,
       currentGraph: null,
       currentRelations: [],
-      hoverCardEl: null
+      hoverCardEl: null,
+      viewMode: "relations"
     };
 
   const escapeHtml = (value) => String(value ?? "")
@@ -57,7 +60,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
+  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "relations";
+  const activeBranch = () => branchEl?.value || "";
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
+    const branchColor = (branch) => ({
+      Matter: "#4aa99b",
+      Process: "#d88738",
+      InformationEntity: "#8a72bd",
+      Characteristic: "#4f9fb4",
+      Agent: "#7f8b92",
+      Compatibility: "#a6aaad"
+    }[branch] || "#9aa4a9");
+    const branchShape = (branch) => ({
+      Matter: "ellipse",
+      Process: "round-rectangle",
+      InformationEntity: "diamond",
+      Characteristic: "hexagon",
+      Agent: "rectangle"
+    }[branch] || "ellipse");
     const nodeQname = (node) => String(node.qname || node.localName || node.iri || "");
     const nodeAnchorHref = (node) => `${referencePage}#${encodeURIComponent(node.anchor || node.localName || "")}`;
     const slugify = (value) => stripKey(value).slice(0, 64) || "selection";
@@ -99,9 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function searchCandidates() {
     const allowExternal = toggleEnabled("includeExternalSearch");
+    const viewMode = activeView();
+    const branch = activeBranch();
     return (payload?.nodes || []).filter((node) => {
       if (!isSearchableNode(node)) return false;
       if (!allowExternal && !node.local) return false;
+      if (viewMode === "taxonomy" && !(node.modules || []).includes("taxonomy")) return false;
+      if (branch && node.taxonomy_top_branch !== branch) return false;
       return true;
     });
   }
@@ -200,6 +224,8 @@ document.addEventListener("DOMContentLoaded", () => {
       highlightedIndex: state.highlightedIndex,
       searchValue: searchInputEl.value,
       activeModules: activeModules(),
+      viewMode: activeView(),
+      branch: activeBranch(),
       toggles: Object.fromEntries(Array.from(root.querySelectorAll("[data-explorer-toggle]")).map((input) => [input.dataset.explorerToggle, input.checked]))
     };
   }
@@ -221,6 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
     root.querySelectorAll("[data-explorer-toggle]").forEach((input) => {
       input.checked = Boolean(snapshot.toggles?.[input.dataset.explorerToggle]);
     });
+    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "relations"}"]`);
+    if (viewInput) viewInput.checked = true;
+    if (branchEl) branchEl.value = snapshot.branch || "";
     state.selectedId = snapshot.selectedId || null;
     state.seedId = snapshot.seedId || null;
     state.expandedIds = new Set(snapshot.expandedIds || []);
@@ -255,9 +284,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function buildBaseView() {
     const selectedModules = new Set(activeModules());
-    const nodes = (payload.nodes || []).filter((node) => (node.modules || []).some((moduleId) => selectedModules.has(moduleId)));
+    const viewMode = activeView();
+    const branch = activeBranch();
+    state.viewMode = viewMode;
+    const nodes = (payload.nodes || []).filter((node) => {
+      if (!(node.modules || []).some((moduleId) => selectedModules.has(moduleId))) return false;
+      if (viewMode === "taxonomy" && !(node.modules || []).includes("taxonomy")) return false;
+      if (branch && node.taxonomy_top_branch !== branch) return false;
+      return true;
+    });
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
-    const links = (payload.links || []).filter((link) => selectedModules.has(link.module) && nodeMap.has(link.source) && nodeMap.has(link.target));
+    const links = (payload.links || []).filter((link) => {
+      if (!selectedModules.has(link.module) || !nodeMap.has(link.source) || !nodeMap.has(link.target)) return false;
+      const isTaxonomy = link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf";
+      if (viewMode === "taxonomy") return isTaxonomy;
+      if (viewMode === "relations") return !isTaxonomy;
+      return true;
+    });
     const adjacency = new Map();
     links.forEach((link) => {
       if (!adjacency.has(link.source)) adjacency.set(link.source, []);
@@ -265,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
       adjacency.get(link.source).push(link);
       adjacency.get(link.target).push(link);
     });
-    return { nodes, nodeMap, links, adjacency };
+    return { nodes, nodeMap, links, adjacency, viewMode, branch };
   }
 
   function buildExpandedGraph(view) {
@@ -311,7 +354,10 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           selector: "node",
           style: {
-            "background-color": (ele) => ele.data("isCenter") ? "#c86a2b" : ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f",
+            "background-color": (ele) => ele.data("viewMode") === "relations"
+              ? (ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f")
+              : branchColor(ele.data("topBranch")),
+            "shape": (ele) => ele.data("viewMode") === "relations" ? "ellipse" : branchShape(ele.data("topBranch")),
             "label": "data(label)",
             "font-size": 11,
             "text-wrap": "wrap",
@@ -321,15 +367,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "text-margin-y": 8,
             "width": (ele) => ele.data("isCenter") ? 38 : 28,
             "height": (ele) => ele.data("isCenter") ? 38 : 28,
-            "border-width": 1.4,
-            "border-color": "rgba(19,33,41,0.18)"
+            "border-width": (ele) => ele.data("isCenter") ? 4 : ele.data("isDeprecated") ? 2.5 : 1.4,
+            "border-style": (ele) => ele.data("isDeprecated") ? "dashed" : "solid",
+            "border-color": (ele) => ele.data("isCenter") ? "#c86a2b" : "rgba(19,33,41,0.28)"
           }
         },
         {
           selector: "edge",
           style: {
-            "line-color": "rgba(19,33,41,0.24)",
-            "target-arrow-color": "rgba(19,33,41,0.24)",
+            "line-color": (ele) => ele.data("isTaxonomy") ? "rgba(15,109,122,0.56)" : "rgba(19,33,41,0.24)",
+            "target-arrow-color": (ele) => ele.data("isTaxonomy") ? "rgba(15,109,122,0.56)" : "rgba(19,33,41,0.24)",
             "target-arrow-shape": "triangle",
             "curve-style": "bezier",
             "arrow-scale": 0.9,
@@ -381,7 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!graph.nodes.length) return;
     const dense = graph.nodes.length > 28 || graph.links.length > 34;
     instance.layout(
-      dense
+      state.viewMode === "taxonomy"
+        ? { name: "breadthfirst", directed: true, animate: false, fit: true, padding: 50, spacingFactor: 1.35 }
+        : dense
         ? { name: "circle", animate: false, fit: true, padding: 55 }
         : {
             name: "cose",
@@ -409,6 +458,10 @@ document.addEventListener("DOMContentLoaded", () => {
         label: node.label,
         isLocal: node.local,
         isCenter: node.id === graph.center?.id,
+        isDeprecated: node.deprecated === "Deprecated",
+        topBranch: node.taxonomy_top_branch || "",
+        semanticRole: node.taxonomy_role || node.display_class || "",
+        viewMode: state.viewMode,
         iri: node.iri
       }
     }));
@@ -417,7 +470,8 @@ document.addEventListener("DOMContentLoaded", () => {
         id: `${link.source}|${link.target}|${link.predicate}|${link.module}`,
         source: link.source,
         target: link.target,
-        label: String(link.value || link.predicate || "")
+        label: String(link.value || link.predicate || ""),
+        isTaxonomy: link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf"
       }
     }));
     return [...nodes, ...edges];
@@ -619,6 +673,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function renderBreadcrumb(node) {
+    if (!breadcrumbEl) return;
+    if (!node || !(node.modules || []).includes("taxonomy")) {
+      breadcrumbEl.innerHTML = "<span>No taxonomy path is assigned to this resource.</span>";
+      return;
+    }
+    const allNodes = new Map((payload?.nodes || []).map((item) => [item.id, item]));
+    const path = [...(node.taxonomy_path || []), node.id]
+      .map((id) => allNodes.get(id))
+      .filter(Boolean);
+    breadcrumbEl.innerHTML = path.map((item, index) => `
+      ${index ? '<span class="separator" aria-hidden="true">/</span>' : ""}
+      <button type="button" data-explorer-breadcrumb-node="${escapeHtml(item.id)}">${escapeHtml(item.label)}</button>
+    `).join("");
+    breadcrumbEl.querySelectorAll("[data-explorer-breadcrumb-node]").forEach((button) => {
+      button.addEventListener("click", () => {
+        runUndoable(() => {
+          state.seedId = state.seedId || button.dataset.explorerBreadcrumbNode;
+          selectNode(button.dataset.explorerBreadcrumbNode, { reset: true });
+        });
+      });
+    });
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -633,6 +711,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="explorer-chip">${node.local ? "Local H2KG" : "External aligned"}</span>
             <span class="explorer-chip">${escapeHtml(node.display_class || node.category)}</span>
             <span class="explorer-chip">${escapeHtml(node.deprecated || "Active")}</span>
+            ${node.taxonomy_top_branch ? `<span class="explorer-chip">${escapeHtml(node.taxonomy_top_branch)}</span>` : ""}
+            ${node.review_status ? `<span class="explorer-chip">${escapeHtml(node.review_status)}</span>` : ""}
           </div>
         </div>
         <div class="explorer-inspector__section">
@@ -647,6 +727,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
         ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
@@ -722,7 +804,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cy) cy.elements().remove();
       return;
     }
-    graphNoteEl.textContent = `Showing the direct visible neighborhood for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
+    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and relation neighborhood" : "relation neighborhood";
+    graphNoteEl.textContent = `Showing the direct ${viewLabel} for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
     const instance = ensureCy();
     instance.elements().remove();
     instance.add(buildCyElements(graph));
@@ -773,12 +856,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const graph = buildExpandedGraph(view);
     renderGraph(graph);
     renderInspector(graph.center, graph);
+    renderBreadcrumb(graph.center);
     renderRelations(graph);
   }
 
   function applyDeepLink() {
     const params = new URLSearchParams(window.location.search);
     const iri = params.get("iri");
+    const requestedView = params.get("view");
+    if (["relations", "taxonomy", "combined"].includes(requestedView)) {
+      const input = root.querySelector(`[data-explorer-view][value="${requestedView}"]`);
+      if (input) input.checked = true;
+    }
     if (!iri || !payload) return;
     const match = (payload.nodes || []).find((node) => node.iri === iri);
     if (!match) return;
@@ -813,7 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  root.querySelectorAll("[data-explorer-module], [data-explorer-toggle]").forEach((input) => {
+  root.querySelectorAll("[data-explorer-module], [data-explorer-toggle], [data-explorer-view], [data-explorer-branch]").forEach((input) => {
     input.addEventListener("change", renderAll);
   });
     root.querySelectorAll("[data-explorer-action]").forEach((button) => {

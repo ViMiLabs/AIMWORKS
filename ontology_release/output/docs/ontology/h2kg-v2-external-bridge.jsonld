@@ -1,0 +1,127 @@
+{
+  "@context": {
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "dcterms": "http://purl.org/dc/terms/",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "emmo": "https://w3id.org/emmo#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "unit": "http://qudt.org/vocab/unit/",
+    "vann": "http://purl.org/vocab/vann/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "h2kg:Hydrazine",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_18280"
+      }
+    },
+    {
+      "@id": "h2kg:hasQuantityValue",
+      "rdfs:subPropertyOf": {
+        "@id": "qudt:quantityValue"
+      }
+    },
+    {
+      "@id": "h2kg:ElectrochemicalMeasurement",
+      "rdfs:subClassOf": {
+        "@id": "electrochemistry:electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29"
+      }
+    },
+    {
+      "@id": "h2kg:FormicAcid",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_30751"
+      }
+    },
+    {
+      "@id": "h2kg:HydrofluoricAcid",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_29241"
+      }
+    },
+    {
+      "@id": "h2kg:hasIdentifier",
+      "rdfs:subPropertyOf": {
+        "@id": "dcterms:identifier"
+      }
+    },
+    {
+      "@id": "h2kg:Process",
+      "owl:equivalentClass": {
+        "@id": "emmo:EMMO_process"
+      }
+    },
+    {
+      "@id": "h2kg:CarbonDioxide",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_16526"
+      }
+    },
+    {
+      "@id": "h2kg:HydrochloricAcid",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_17883"
+      }
+    },
+    {
+      "@id": "h2kg:Ethanol",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_16236"
+      }
+    },
+    {
+      "@id": "h2kg:Water",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_15377"
+      }
+    },
+    {
+      "@id": "h2kg:Property",
+      "owl:equivalentClass": {
+        "@id": "emmo:EMMO_property"
+      }
+    },
+    {
+      "@id": "h2kg:PotassiumHydroxide",
+      "skos:exactMatch": {
+        "@id": "http://purl.obolibrary.org/obo/CHEBI_32035"
+      }
+    },
+    {
+      "@id": "h2kg:Agent",
+      "rdfs:subClassOf": {
+        "@id": "prov:Agent"
+      }
+    },
+    {
+      "@id": "https://w3id.org/h2kg/hydrogen-ontology/bridge/tib",
+      "@type": "owl:Ontology",
+      "dcterms:description": {
+        "@language": "en",
+        "@value": "Reviewed, selective mappings from H2KG to external resources indexed by the TIB Terminology Service; no external ontology collection is imported wholesale."
+      },
+      "dcterms:title": {
+        "@language": "en",
+        "@value": "H2KG Selective External-Ontology Bridge"
+      },
+      "owl:imports": {
+        "@id": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0"
+      },
+      "owl:versionInfo": "2.0.0"
+    }
+  ]
+}

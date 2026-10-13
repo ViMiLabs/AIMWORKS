@@ -123,6 +123,11 @@ def build_itc_pilot_package(
     """Build the public value-free profile and review package from one registry."""
     ontology_path = Path(ontology_path)
     review_path = Path(review_path or ontology_path.parent / "itc_expert_review.json")
+    if not review_path.exists():
+        return {
+            "status": "skipped_missing_review",
+            "review": str(review_path),
+        }
     review = load_json(review_path)
     validation = validate_review_registry(review)
     ontology_items = {

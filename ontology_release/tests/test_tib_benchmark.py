@@ -36,6 +36,11 @@ class FakeSession:
         return FakeResponse({"response": {"docs": hits}})
 
 
+class FailingSession:
+    def get(self, url: str, params: dict, timeout: int):
+        raise AssertionError("An offline release must not contact the TIB API")
+
+
 def _source(path: Path) -> Path:
     payload = [
         {"@id": f"{H2KG}ScanningElectronMicroscopyImaging", "@type": [f"{H2KG}Measurement"], "http://www.w3.org/2000/01/rdf-schema#label": [{"@value": "Scanning Electron Microscopy Imaging"}]},
@@ -84,3 +89,23 @@ def test_existing_manual_decisions_are_preserved(tmp_path: Path) -> None:
         writer.writeheader(); writer.writerows(rows)
     summary = build_tib_benchmark_package(source, tmp_path / "output", snapshot, refresh=False)
     assert summary["accepted_terms"] == 1
+
+
+def test_offline_build_skips_when_candidate_cache_is_missing(tmp_path: Path) -> None:
+    source = _source(tmp_path / "source.jsonld")
+    snapshot = tmp_path / "tib_snapshot.json"
+    snapshot.write_text(
+        json.dumps({"format": "h2kg-tib-terminology-snapshot/v1", "retrieved_at": "2026-09-03T00:00:00Z", "ontologies": []}),
+        encoding="utf-8",
+    )
+
+    summary = build_tib_benchmark_package(
+        source,
+        tmp_path / "output",
+        snapshot,
+        refresh=False,
+        session=FailingSession(),
+    )
+
+    assert summary["status"] == "skipped_missing_candidate_cache"
+    assert (tmp_path / "output" / "benchmarks" / "tib_terminology" / "README.md").exists()

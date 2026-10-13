@@ -1,0 +1,174 @@
+{
+  "conforms": true,
+  "publication_ready": false,
+  "publication_status": "release-candidate",
+  "errors": [],
+  "warnings": [
+    "Domain-reviewer sign-off is pending; this is a technically validated release candidate, not a community-approved taxonomy release.",
+    "External OWL reasoner approval is pending; structural consistency checks passed locally."
+  ],
+  "counts": {
+    "active_local_classes": 2360,
+    "deprecated_compatibility_classes": 6,
+    "new_structural_classes": 131,
+    "subclass_axioms": 2360,
+    "object_properties": 23,
+    "datatype_properties": 1,
+    "annotation_properties": 9,
+    "definitions": 2378,
+    "source_local_resources": 2324,
+    "source_resources_with_disposition": 2324,
+    "all_registered_resources": 2467,
+    "profile_or_workflow_fields": 66,
+    "named_individuals": 0,
+    "external_mappings": 14,
+    "competency_checks": 9,
+    "competency_checks_passed": 9
+  },
+  "top_branch_counts": {
+    "Agent": 4,
+    "Characteristic": 1171,
+    "InformationEntity": 116,
+    "Matter": 704,
+    "Process": 365
+  },
+  "missing_parent_iris": [],
+  "orphan_class_iris": [],
+  "missing_definition_iris": [],
+  "placeholder_definition_iris": [],
+  "duplicate_active_labels": {},
+  "file_uris": [],
+  "unclassified_resource_iris": [],
+  "source_resources_without_disposition": [],
+  "subclass_cycles": [],
+  "classes_below_owl_nothing": [],
+  "incompatible_role_type_iris": [],
+  "asserted_foundational_imports": [
+    "http://qudt.org/2.1/schema/qudt",
+    "https://www.w3.org/ns/prov-o"
+  ],
+  "unapproved_imports": [],
+  "resolved_legacy_multi_role_classes": [
+    "https://w3id.org/h2kg/hydrogen-ontology#AcceleratedStressTestVoltageCycling",
+    "https://w3id.org/h2kg/hydrogen-ontology#CatalystLayerThickness",
+    "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
+    "https://w3id.org/h2kg/hydrogen-ontology#MembraneThickness"
+  ],
+  "governance": {
+    "domain_reviewer_status": "pending",
+    "external_reasoner_status": "pending",
+    "technical_validation": "passed"
+  },
+  "serialization_parity": true,
+  "shacl_conforms": true,
+  "shacl_report": "Validation Report\nConforms: True\n",
+  "competency_checks": {
+    "schema_version": "h2kg-taxonomy-competency-report/v2",
+    "generated_at": "2026-10-13T10:27:10.282157+00:00",
+    "all_passed": true,
+    "passed": 9,
+    "total": 9,
+    "checks": [
+      {
+        "id": "electron-microscopy-method-retrieval",
+        "passed": true,
+        "detail": "Representative TEM, SEM, and IC-SEM methods are retrievable below ElectronMicroscopyMeasurement.",
+        "evidence": [
+          "ICSEMImagingMeasurement",
+          "SEMImagingMeasurement",
+          "ScanningElectronMicroscopyImaging",
+          "TransmissionElectronMicroscopyImaging"
+        ]
+      },
+      {
+        "id": "tomography-method-retrieval",
+        "passed": true,
+        "detail": "FIB-SEM, neutron, and X-ray tomography methods are retrievable below TomographyMeasurement.",
+        "evidence": [
+          "FIBSEMTomographyMeasurement",
+          "NeutronTomographyMeasurement",
+          "XRayComputedTomographyMeasurement"
+        ]
+      },
+      {
+        "id": "characterization-dataset-retrieval",
+        "passed": true,
+        "detail": "Representative microscopy, diffraction, and tomography datasets resolve through their dataset branches.",
+        "evidence": [
+          "SEMImageDataset -> ElectronMicroscopyImageDataset",
+          "TomographicReconstructionDataset -> TomographyDataset",
+          "XRDPatternDataset -> DiffractionDataset"
+        ]
+      },
+      {
+        "id": "canonical-characteristic-identity",
+        "passed": true,
+        "detail": "Quantities used as parameters or results have one canonical identity below Characteristic.",
+        "evidence": [
+          "CatalystLayerThickness",
+          "CurrentDensity",
+          "GasDiffusionLayerPorosity",
+          "IonomerToCarbonRatio"
+        ]
+      },
+      {
+        "id": "tem-workflow-compatibility",
+        "passed": true,
+        "detail": "The preserved TEM vocabulary view retains instrument, parameter, and output-data anchors; sample context is expressed on occurrences through hasMeasurementSubject.",
+        "evidence": [
+          "hasOutputData=1",
+          "hasParameter=6",
+          "usesInstrument=1"
+        ]
+      },
+      {
+        "id": "itc-profile-retrieval",
+        "passed": true,
+        "detail": "The grouped ITC profile exposes its 16 parameters, input dataset, scalar-result dataset, and three distribution datasets.",
+        "evidence": [
+          "input_datasets=1",
+          "output_datasets=4",
+          "parameters=16"
+        ]
+      },
+      {
+        "id": "mea-measurement-subject-retrieval",
+        "passed": true,
+        "detail": "Measurements using an MEA input are retrievable through the corrected measurement-subject projection.",
+        "evidence": [
+          "AcceleratedStressTestVoltageCycling",
+          "AtomicForceMicroscopyMeasurement",
+          "CurrentInterruptHFRMeasurement",
+          "CyclicVoltammetry",
+          "ElectrochemicalImpedanceSpectroscopyGalvanostatic",
+          "FuelCellPolarizationMeasurement",
+          "ICSEMImagingMeasurement",
+          "LimitingCurrentMeasurement",
+          "NeutronTomographyMeasurement",
+          "O2N2SwitchingMeasurement",
+          "OxygenGainLossMeasurement"
+        ]
+      },
+      {
+        "id": "software-use-projection",
+        "passed": true,
+        "detail": "Fiji/ImageJ is represented below SoftwareArtifact and the dedicated usesSoftware relation is available to profiles and occurrences.",
+        "evidence": [
+          "FijiImageJSoftware -> SoftwareArtifact",
+          "usesSoftware -> owl:ObjectProperty"
+        ]
+      },
+      {
+        "id": "technology-module-retrieval",
+        "passed": true,
+        "detail": "Core, PEMFC, and PEMWE placements are all represented without duplicating shared concepts.",
+        "evidence": [
+          "core=2330",
+          "electrochemistry-extension=9",
+          "pemfc=19",
+          "pemwe=2"
+        ]
+      }
+    ]
+  }
+}

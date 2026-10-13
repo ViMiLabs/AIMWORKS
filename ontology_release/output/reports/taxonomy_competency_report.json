@@ -1,0 +1,109 @@
+{
+  "schema_version": "h2kg-taxonomy-competency-report/v2",
+  "generated_at": "2026-10-13T10:27:10.282157+00:00",
+  "all_passed": true,
+  "passed": 9,
+  "total": 9,
+  "checks": [
+    {
+      "id": "electron-microscopy-method-retrieval",
+      "passed": true,
+      "detail": "Representative TEM, SEM, and IC-SEM methods are retrievable below ElectronMicroscopyMeasurement.",
+      "evidence": [
+        "ICSEMImagingMeasurement",
+        "SEMImagingMeasurement",
+        "ScanningElectronMicroscopyImaging",
+        "TransmissionElectronMicroscopyImaging"
+      ]
+    },
+    {
+      "id": "tomography-method-retrieval",
+      "passed": true,
+      "detail": "FIB-SEM, neutron, and X-ray tomography methods are retrievable below TomographyMeasurement.",
+      "evidence": [
+        "FIBSEMTomographyMeasurement",
+        "NeutronTomographyMeasurement",
+        "XRayComputedTomographyMeasurement"
+      ]
+    },
+    {
+      "id": "characterization-dataset-retrieval",
+      "passed": true,
+      "detail": "Representative microscopy, diffraction, and tomography datasets resolve through their dataset branches.",
+      "evidence": [
+        "SEMImageDataset -> ElectronMicroscopyImageDataset",
+        "TomographicReconstructionDataset -> TomographyDataset",
+        "XRDPatternDataset -> DiffractionDataset"
+      ]
+    },
+    {
+      "id": "canonical-characteristic-identity",
+      "passed": true,
+      "detail": "Quantities used as parameters or results have one canonical identity below Characteristic.",
+      "evidence": [
+        "CatalystLayerThickness",
+        "CurrentDensity",
+        "GasDiffusionLayerPorosity",
+        "IonomerToCarbonRatio"
+      ]
+    },
+    {
+      "id": "tem-workflow-compatibility",
+      "passed": true,
+      "detail": "The preserved TEM vocabulary view retains instrument, parameter, and output-data anchors; sample context is expressed on occurrences through hasMeasurementSubject.",
+      "evidence": [
+        "hasOutputData=1",
+        "hasParameter=6",
+        "usesInstrument=1"
+      ]
+    },
+    {
+      "id": "itc-profile-retrieval",
+      "passed": true,
+      "detail": "The grouped ITC profile exposes its 16 parameters, input dataset, scalar-result dataset, and three distribution datasets.",
+      "evidence": [
+        "input_datasets=1",
+        "output_datasets=4",
+        "parameters=16"
+      ]
+    },
+    {
+      "id": "mea-measurement-subject-retrieval",
+      "passed": true,
+      "detail": "Measurements using an MEA input are retrievable through the corrected measurement-subject projection.",
+      "evidence": [
+        "AcceleratedStressTestVoltageCycling",
+        "AtomicForceMicroscopyMeasurement",
+        "CurrentInterruptHFRMeasurement",
+        "CyclicVoltammetry",
+        "ElectrochemicalImpedanceSpectroscopyGalvanostatic",
+        "FuelCellPolarizationMeasurement",
+        "ICSEMImagingMeasurement",
+        "LimitingCurrentMeasurement",
+        "NeutronTomographyMeasurement",
+        "O2N2SwitchingMeasurement",
+        "OxygenGainLossMeasurement"
+      ]
+    },
+    {
+      "id": "software-use-projection",
+      "passed": true,
+      "detail": "Fiji/ImageJ is represented below SoftwareArtifact and the dedicated usesSoftware relation is available to profiles and occurrences.",
+      "evidence": [
+        "FijiImageJSoftware -> SoftwareArtifact",
+        "usesSoftware -> owl:ObjectProperty"
+      ]
+    },
+    {
+      "id": "technology-module-retrieval",
+      "passed": true,
+      "detail": "Core, PEMFC, and PEMWE placements are all represented without duplicating shared concepts.",
+      "evidence": [
+        "core=2330",
+        "electrochemistry-extension=9",
+        "pemfc=19",
+        "pemwe=2"
+      ]
+    }
+  ]
+}

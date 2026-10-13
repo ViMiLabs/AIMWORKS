@@ -1,0 +1,153 @@
+section,field,example_value,classification,h2kg_anchor,note
+org,ExperimentTitle,Understanding water dynamics in operating fuel cells by operando neutron tomography: investigation of different flow field designs,instance metadata,h2kg:hasMetadata + dcterms:title,Stored on the source-record metadata node.
+org,ExperimentID,8,instance metadata,h2kg:hasMetadata + h2kg:hasIdentifier,Stored as a literal identifier on the source record.
+org,Measurement-ID,Run derived DOI,instance metadata,h2kg:hasMetadata + h2kg:hasIdentifier,Stored on measurement metadata.
+org,UploadDate,2024-02-11,instance metadata,h2kg:hasMetadata + dcterms:date,Excel serial normalized to ISO date.
+org,MeasurementDate,,not modeled,-,No measurement date value was populated in the sheet.
+org,Institution,HZB,instance metadata,prov:Agent,Represented as an institutional agent.
+org,FoundingBody,Helmholtz AI,instance metadata,prov:Agent,Represented as a funding-body agent.
+org,Country,Germany,instance metadata,h2kg:hasMetadata,Retained as contextual metadata.
+org,Author,Ralf Ziesche; André Colliard Granero,instance metadata,prov:Agent,Represented as author agent instances.
+org,ORCID,123-465-7765; 321-321-3211,instance metadata,h2kg:hasMetadata,Stored on author metadata nodes.
+org,Email,ralf.ziesche@yahoo.ru; andyhuebsch@gmail.mx,instance metadata,h2kg:hasMetadata,Stored on author metadata nodes.
+org,Published,1,instance metadata,h2kg:hasMetadata,Retained as publication-status metadata.
+org,Publication,Understanding water dynamics in operating fuel cells by operando neutron tomography: investigation of different flow field designs,instance metadata,h2kg:hasMetadata + dcterms:title,Stored on a publication metadata node.
+org,DOI,https://doi.org/10.1088/2515-7655/ad3984,instance metadata,h2kg:hasMetadata + dcterms:identifier,Stored on a publication metadata node.
+org,Journal,Materials Today,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Volume,1,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Issue,8,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Pages,23-45,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,PublicationDate,2012-11-28,instance metadata,h2kg:hasMetadata + dcterms:issued,Excel serial normalized to ISO date.
+org,Topic,Battery,instance metadata,h2kg:hasMetadata,Contradictory to the fuel-cell title and sample chain; retained as source metadata only.
+org,Device,Lithium Battery,instance metadata,h2kg:hasMetadata,Contradictory to the fuel-cell title and sample chain; retained as source metadata only.
+org,Component,Electrode,instance metadata,h2kg:hasMetadata,Retained as source metadata because the public H2KG case is centered on the MEA assembly context.
+org,Subcomponent,-,not modeled,-,The sheet explicitly reports no subcomponent value.
+org,Granularity Level,Macrostructure,instance metadata,h2kg:hasMetadata,Retained as granularity metadata.
+org,Format,png,instance metadata,h2kg:hasMetadata + dcterms:format,Stored on raw-dataset metadata.
+org,FileSize,200,instance metadata,h2kg:hasMetadata + dcterms:extent,Stored with file-size unit in dataset metadata.
+org,FileSizeUnit,MB,instance metadata,h2kg:hasMetadata + dcterms:extent,Stored with file size in dataset metadata.
+org,FileName,TestNeutronTomography.tif,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionX,1024,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionY,1024,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionZ,1300,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,PixelPerMetric,30,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,Link,link,instance metadata,h2kg:hasMetadata + dcterms:source,Stored as source/link metadata.
+org,MaskExist,no,instance metadata,h2kg:hasMetadata,Stored on processed-dataset metadata.
+org,MaskLink,link,instance metadata,h2kg:hasMetadata + dcterms:source,Stored on processed-dataset metadata.
+syn,Step 1 Precursor,Gas diffusion electrode,instance metadata,h2kg:Matter,Represented as a supporting material instance in the assembly chain.
+syn,Step 1 AmountPrecursor,2,instance metadata,h2kg:hasMetadata,Stored as precursor metadata in round 1.
+syn,Step 1 Technique,Buy,reuse existing term,h2kg:Process,Modeled as a labeled procurement process instance.
+syn,Step 1 Condition,"Manufacturer = HyPlat, South Africa; PtLoading = 0.4 mg/cm2",instance metadata,h2kg:hasMetadata,Retained as procurement metadata on the gas-diffusion-electrode material.
+syn,Step 1 Target,SInt1,instance metadata,h2kg:Matter,Represents the procured gas-diffusion-electrode material instance.
+syn,Step 2 Precursor,Membrane,instance metadata,h2kg:Matter,Represented as a membrane material instance.
+syn,Step 2 Technique,Buy,reuse existing term,h2kg:Process,Modeled as a labeled procurement process instance.
+syn,Step 2 Condition,"Manufacturer = Gore, USA; Type = GORE Select-M8",instance metadata,h2kg:hasMetadata,Retained as membrane procurement metadata.
+syn,Step 2 Target,SInt2,instance metadata,h2kg:Matter,Represents the procured membrane material instance.
+syn,Step 3 Precursor,SInt2,instance metadata,h2kg:Matter,Uses the procured membrane instance as input.
+syn,Step 3 Technique,LaserCut,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing instance rather than a new public TBox term.
+syn,Step 3 Condition,-,instance metadata,h2kg:hasMetadata,No explicit laser-cut condition was reported.
+syn,Step 3 Target,SInt3,instance metadata,h2kg:Matter,Represents the laser-cut membrane intermediate.
+syn,Step 4 Precursor A,SInt1,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the hot-press step.
+syn,Step 4 Precursor B,SInt3,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the hot-press step.
+syn,Step 4 Technique,HotPress,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing instance rather than promoting a new method term in this round.
+syn,Step 4 Condition,Temperature = 150 °C; Time = 3 min; Pressure = 400 psi,instance metadata,h2kg:hasMetadata,Retained as hot-press metadata in the example graph.
+syn,Step 4 Target,MEA,reuse existing term,h2kg:MEAAssembly,Used as the main public sample anchor for the neutron-tomography case.
+sp,Step 1 Precursor,MEA,reuse existing term,h2kg:MEAAssembly,Represents the MEA entering sample preparation.
+sp,Step 1 Technique,Mount,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing instance.
+sp,Step 1 Condition,-,instance metadata,h2kg:hasMetadata,No explicit mount condition was reported.
+sp,Step 1 Target,SPInt1,instance metadata,h2kg:Matter,Represents the mounted-holder intermediate.
+sp,Step 2 Precursor,Custom-built holder,instance metadata,h2kg:Matter,Retained as a support material instance with holder metadata.
+sp,Step 2 Technique,Mount,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing instance.
+sp,Step 2 Condition,-,instance metadata,h2kg:hasMetadata,No explicit mount condition was reported.
+sp,Step 2 Target,SPInt1,instance metadata,h2kg:Matter,Same intermediate as the mounted MEA/holder combination.
+sp,Step 3 Precursor A,SPInt1,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the integration step.
+sp,Step 3 Precursor B,Slip ring,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the integration step.
+sp,Step 3 AmountPrecursor,2,instance metadata,h2kg:hasMetadata,Stored as slip-ring metadata in the example graph.
+sp,Step 3 Technique,Integrate,reuse existing term,h2kg:Manufacturing,Modeled as a labeled integration process instance.
+sp,Step 3 Condition,-,instance metadata,h2kg:hasMetadata,No explicit integration condition was reported.
+sp,Step 3 Target,Sample,instance metadata,h2kg:Matter,Represents the final operando neutron-tomography sample context.
+char,MeasurementMethod,HR Neutron CT,new ontology term,h2kg:NeutronTomographyMeasurement,Promoted as the public neutron-tomography measurement anchor.
+char,MeasurementType,operando,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+char,Specimen,bulk material,instance metadata,h2kg:hasMetadata,Retained as specimen metadata in round 1.
+char,Characterization environment,,not modeled,-,No explicit value was populated.
+char,Temperature,23,reuse existing term,h2kg:Temperature,Modeled as a parameter-setting instance linked to the neutron measurement.
+char,TemperatureUnit,°C,reuse existing term,h2kg:Temperature,Unit captured through the quantity-value pattern on the temperature setting.
+char,Humidity,50,reuse existing term,h2kg:RelativeHumidity,Modeled as a parameter-setting instance linked to the neutron measurement.
+char,HumidityUnit,%,reuse existing term,h2kg:RelativeHumidity,Unit captured through the quantity-value pattern on the humidity setting.
+char,Atmosphere,air,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+char,AtmosphereUnit,-,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+char,Pressure,1,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+char,PressureUnit,atm,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+char,Calibration,adjusting lenses and apertures; adjusting the voltage,instance metadata,h2kg:hasMetadata,Retained as calibration metadata in round 1.
+inst,Facility,Institut Laue–Langevin (ILL),instance metadata,h2kg:hasMetadata,Retained as instrument/facility metadata in round 1.
+inst,Beamline,NeXT Beamline,instance metadata,h2kg:hasMetadata,Retained as instrument/facility metadata in round 1.
+inst,BeamType,Polychromatic cold neutron,instance metadata,h2kg:hasMetadata,Retained as beam metadata in round 1.
+inst,MaximalWavelenght,44593,instance metadata,h2kg:hasMetadata,Retained as beam metadata because wavelength was not promoted in this round.
+inst,MaximalWavelenghtUnit,A°,instance metadata,h2kg:hasMetadata,Retained as beam metadata because wavelength was not promoted in this round.
+inst,Detector,"CCD camera (DW436N-BC, Oxford Instruments Andor, UK)",instance metadata,h2kg:hasMetadata,Retained as detector metadata in round 1.
+inst,Lens,Nikkon photo lens 20 mm,instance metadata,h2kg:hasMetadata,Retained as optical metadata in round 1.
+inst,NeutronFlux,2.7 x 10^6,new ontology term,h2kg:NeutronFlux,Promoted as a reusable neutron-acquisition parameter.
+inst,NeutronFluxUnit,n/cm2s,new ontology term,h2kg:NeutronFlux,Retained on the neutron-flux setting metadata because exact QUDT specialization is deferred.
+inst,ExposureTime,9,reuse existing term,h2kg:ExposureTime,Modeled as a parameter-setting instance linked to the neutron measurement.
+inst,ExposureTimeUnit,s,reuse existing term,h2kg:ExposureTime,Unit captured through the quantity-value pattern on the exposure-time setting.
+inst,BeamSize,30,instance metadata,h2kg:hasMetadata,Retained as beam-shape metadata in round 1.
+inst,BeamSizeUnit,cm2,instance metadata,h2kg:hasMetadata,Retained as beam-shape metadata in round 1.
+inst,L/D value,500,instance metadata,h2kg:hasMetadata,Retained as collimation metadata in round 1.
+inst,Resolution,0.5,instance metadata,h2kg:hasMetadata,Retained as metadata because the promoted public anchor is `SpatialResolution`.
+inst,ResolutionUnit,mm,instance metadata,h2kg:hasMetadata,Retained as metadata because the promoted public anchor is `SpatialResolution`.
+inst,SampleDetectorDistance,50,new ontology term,h2kg:SampleDetectorDistance,Promoted as a reusable tomography parameter.
+inst,SampleDetectorDistanceUnit,mm,new ontology term,h2kg:SampleDetectorDistance,Unit captured through the quantity-value pattern on the sample-detector-distance setting.
+inst,Scintillator,GADOX,instance metadata,h2kg:hasMetadata,Retained as detector metadata in round 1.
+inst,ScintillatorThickness,10,instance metadata,h2kg:hasMetadata,Retained as detector metadata in round 1.
+inst,ScintillatorThicknessUnit,um,instance metadata,h2kg:hasMetadata,Retained as detector metadata in round 1.
+inst,Binning,4,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,Focus,20,instance metadata,h2kg:hasMetadata,Retained as optical metadata in round 1.
+inst,FocusUnit,mm,instance metadata,h2kg:hasMetadata,Retained as optical metadata in round 1.
+inst,SpatialResolution,300,new ontology term,h2kg:SpatialResolution,Promoted as a reusable tomography parameter.
+inst,SpatialResolutionUnit,um,new ontology term,h2kg:SpatialResolution,Unit captured through the quantity-value pattern on the spatial-resolution setting.
+inst,PixelSize,63.6,reuse existing term,h2kg:PixelSize,Modeled as a parameter-setting instance linked to the neutron measurement.
+inst,PixelSizeUnit,um,reuse existing term,h2kg:PixelSize,Unit captured through the quantity-value pattern on the pixel-size setting.
+inst,FieldOfView,26,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,FieldOfViewUnit,mm2,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,CollimatorDiameter,30,instance metadata,h2kg:hasMetadata,Retained as collimator metadata in round 1.
+inst,CollimatorDiameterUnit,mm,instance metadata,h2kg:hasMetadata,Retained as collimator metadata in round 1.
+inst,PinholeSize,30,instance metadata,h2kg:hasMetadata,Retained as pinhole metadata in round 1.
+inst,PinholeSizeUnit,mm,instance metadata,h2kg:hasMetadata,Retained as pinhole metadata in round 1.
+inst,PinholeSampleDistance,20,instance metadata,h2kg:hasMetadata,Retained as pinhole metadata in round 1.
+inst,PinholeSampleDistanceUnit,um,instance metadata,h2kg:hasMetadata,Retained as pinhole metadata in round 1.
+inst,ImageFrequency,40,instance metadata,h2kg:hasMetadata,Retained as frequency metadata in round 1.
+inst,ImageFrequencyUnit,Hz,instance metadata,h2kg:hasMetadata,Retained as frequency metadata in round 1.
+inst,ProjectionNumber,1440,new ontology term,h2kg:ProjectionNumber,Promoted as a reusable tomography-acquisition parameter.
+inst,DataAcquisitionRate,36,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,DataAcquisitionRateUnit,s,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+pre,Step 1 Precursor,RawData,reuse existing term,h2kg:TomographicProjectionDataset,Mapped to the raw tomographic-projection dataset anchor.
+pre,Step 1 Technique,Reconstruct,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance.
+pre,Step 1 Condition,-,instance metadata,h2kg:hasMetadata,No explicit reconstruction condition was reported.
+pre,Step 1 Software,Astra Toolbox,instance metadata,h2kg:hasMetadata,Retained as preprocessing metadata in round 1.
+pre,Step 1 Target,PPInt1,instance metadata,h2kg:Data,Represents the first reconstruction intermediate dataset.
+pre,Step 2 Precursor,PPInt1,instance metadata,h2kg:Data,Represents the first reconstruction intermediate dataset.
+pre,Step 2 Technique,DarkFieldCorrect,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance.
+pre,Step 2 Software,XXXX,instance metadata,h2kg:hasMetadata,Retained as preprocessing metadata in round 1.
+pre,Step 2 Target,PPInt2,instance metadata,h2kg:Data,Represents the dark-field-corrected intermediate dataset.
+pre,Step 3 Precursor,PPInt2,instance metadata,h2kg:Data,Represents the dark-field-corrected intermediate dataset.
+pre,Step 3 Technique,3DReconstruct,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance.
+pre,Step 3 Condition,Axis = Rotation axis,instance metadata,h2kg:hasMetadata,Retained as preprocessing metadata in round 1.
+pre,Step 3 Software,Avizo,instance metadata,h2kg:hasMetadata,Retained as preprocessing metadata in round 1.
+pre,Step 3 Target,PPInt3,instance metadata,h2kg:Data,Represents the reconstructed tomographic intermediate dataset.
+pre,Step 4 Precursor,PPInt3,instance metadata,h2kg:Data,Represents the reconstructed tomographic intermediate dataset.
+pre,Step 4 Technique,Threshold,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance.
+pre,Step 4 Software,XXXX,instance metadata,h2kg:hasMetadata,Retained as preprocessing metadata in round 1.
+pre,Step 4 Target,Post-processed tomograph,new ontology term,h2kg:TomographicReconstructionDataset,Mapped to the public reconstructed tomograph dataset anchor.
+anal,Step 1 Precursor,Post-processed tomograph,reuse existing term,h2kg:TomographicReconstructionDataset,Mapped to the reconstructed tomograph dataset anchor.
+anal,Step 1 Technique,TortuosityMeasurement,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance.
+anal,Step 1 Software,MATLAB TauFactor,instance metadata,h2kg:hasMetadata,Retained as analysis metadata in round 1.
+anal,Step 1 Target,Tortuosity Factor,new ontology term,h2kg:TortuosityFactor,Promoted as the public derived-property anchor for the TauFactor output.
+anal,Step 1 AmountTarget,1.5,new ontology term,h2kg:TortuosityFactor,Represented through a datapoint and quantity value in the example graph.
+anal,Step 2 Technique,DropletAnalysis,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance.
+anal,Step 2 Software,"LabelAnalysis, Avizo",instance metadata,h2kg:hasMetadata,Retained as analysis metadata in round 1.
+anal,Step 2 Target,AverageBaryCenter,instance metadata,h2kg:Metadata,Explicitly retained as deferred metadata instead of promoting a weak public property term.
+anal,Step 2 AmountTarget,5,instance metadata,h2kg:Metadata,Stored on the deferred-barycenter metadata node.
+anal,Step 3 Target,AverageArea,new ontology term,h2kg:AverageWaterDropletArea,Promoted as a public water-dynamics property term.
+anal,Step 3 AmountTarget,45 cm2,new ontology term,h2kg:AverageWaterDropletArea,Represented through a datapoint and quantity value in the example graph.
+anal,Step 4 Target,AverageNumber,new ontology term,h2kg:AverageWaterDropletCount,Promoted as a public water-dynamics property term.
+anal,Step 4 AmountTarget,45,new ontology term,h2kg:AverageWaterDropletCount,Represented through a datapoint and quantity value in the example graph.

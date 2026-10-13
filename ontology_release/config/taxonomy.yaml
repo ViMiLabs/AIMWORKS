@@ -1,0 +1,946 @@
+version: 2.0.0
+version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
+review_status: domain-review-required
+governance:
+  require_domain_reviewer_signoff: true
+  domain_reviewer_status: pending
+  require_external_reasoner_for_publication: true
+  external_reasoner_status: pending
+  publication_status: release-candidate
+
+allowed_foundational_imports:
+  - https://www.w3.org/ns/prov-o
+  - http://qudt.org/2.1/schema/qudt
+
+top_branches:
+  - Matter
+  - Process
+  - InformationEntity
+  - Characteristic
+  - Agent
+
+structural_classes:
+  Matter:
+    label: Matter
+    parent: null
+    definition: A physical entity that can participate in a hydrogen-electrochemical process, measurement, or system configuration.
+  MaterialEntity:
+    label: Material entity
+    parent: Matter
+    definition: A matter entity whose identity and behavior are primarily determined by its material composition and structure.
+  ChemicalSubstance:
+    label: Chemical substance
+    parent: MaterialEntity
+    definition: A material entity consisting of chemical species with a defined or characterizable composition.
+  PolymerMaterial:
+    label: Polymer material
+    parent: MaterialEntity
+    definition: A material entity whose functional composition or structure is dominated by one or more polymers.
+  CarbonMaterial:
+    label: Carbon material
+    parent: MaterialEntity
+    definition: A material entity whose functional structure is predominantly composed of carbon in elemental, graphitic, porous, fibrous, or particulate form.
+  MetalMaterial:
+    label: Metal material
+    parent: MaterialEntity
+    definition: A material entity whose functional composition contains a metallic element or alloy as a principal constituent.
+  MetalOxideMaterial:
+    label: Metal-oxide material
+    parent: MaterialEntity
+    definition: A material entity containing a metal oxide as a principal functional constituent or phase.
+  Solvent:
+    label: Solvent
+    parent: ChemicalSubstance
+    definition: A chemical substance used as the continuous liquid medium in which another substance is dissolved or dispersed.
+  ElectrolyteMaterial:
+    label: Electrolyte material
+    parent: MaterialEntity
+    definition: A material entity that supports ionic transport in an electrochemical system.
+  Mixture:
+    label: Mixture
+    parent: MaterialEntity
+    definition: A material entity containing two or more substances that coexist without being represented as one pure chemical substance.
+  Dispersion:
+    label: Dispersion
+    parent: Mixture
+    definition: A mixture in which particles, droplets, or macromolecular entities are distributed through a continuous phase.
+  CompositeMaterial:
+    label: Composite material
+    parent: MaterialEntity
+    definition: A material entity composed of distinguishable constituent materials whose combination provides the material's functional structure or behavior.
+  CatalystMaterial:
+    label: Catalyst material
+    parent: MaterialEntity
+    definition: A material entity that increases the rate of a chemical or electrochemical reaction without being consumed stoichiometrically by that reaction.
+  Electrocatalyst:
+    label: Electrocatalyst
+    parent: CatalystMaterial
+    definition: A catalyst material that promotes an electrochemical reaction at an electrode interface.
+  SupportedMetalCatalyst:
+    label: Supported metal catalyst
+    parent: Electrocatalyst
+    definition: An electrocatalyst in which catalytically active metal particles are dispersed on a supporting material.
+  EngineeredObject:
+    label: Engineered object
+    parent: Matter
+    definition: A matter entity intentionally manufactured or assembled to perform one or more technical functions.
+  ElectrochemicalComponent:
+    label: Electrochemical component
+    parent: EngineeredObject
+    definition: An engineered object that performs a material, electrical, electrochemical, or transport function within an electrochemical system.
+  ElectrodeComponent:
+    label: Electrode
+    parent: ElectrochemicalComponent
+    definition: An electrochemical component through which electronic charge enters or leaves an electrochemical reaction region.
+  CatalystLayerComponent:
+    label: Catalyst-layer component
+    parent: ElectrodeComponent
+    definition: An electrode component containing catalyst and ion-conducting or binding phases arranged to support electrochemical reaction and transport.
+  MembraneComponent:
+    label: Membrane component
+    parent: ElectrochemicalComponent
+    definition: An electrochemical component formed as a selective layer for ionic transport and separation of adjoining regions.
+  GasDiffusionLayerComponent:
+    label: Gas-diffusion-layer component
+    parent: ElectrodeComponent
+    definition: A porous electrode component that distributes reactant gas, conducts electrons, and manages water between a flow field and a catalyst layer.
+  CurrentCollectorComponent:
+    label: Current-collector component
+    parent: ElectrochemicalComponent
+    definition: An electrochemical component that conducts electronic current between an electrode and an external circuit or adjoining device part.
+  CellAssembly:
+    label: Cell assembly
+    parent: ElectrochemicalComponent
+    definition: An electrochemical component formed by assembling functional layers or parts into a cell-level structure.
+  MembraneElectrodeAssembly:
+    label: Membrane-electrode assembly
+    parent: CellAssembly
+    definition: A cell assembly comprising an ion-conducting membrane and adjoining electrode layers arranged for operation in a membrane-based electrochemical cell.
+  Specimen:
+    label: Specimen
+    parent: Matter
+    definition: A matter entity selected or prepared for observation, measurement, testing, or analysis.
+  Device:
+    label: Device
+    parent: EngineeredObject
+    definition: An engineered object designed to perform a defined technical operation.
+  ElectrochemicalSystem:
+    label: Electrochemical system
+    parent: Device
+    definition: A device in which electrochemical reactions and charge transport are arranged to convert, store, produce, or consume energy or chemical species.
+  FuelCellSystem:
+    label: Fuel-cell system
+    parent: ElectrochemicalSystem
+    definition: An electrochemical system that converts the chemical energy of a continuously supplied fuel and oxidant into electrical energy.
+  ElectrolyzerSystem:
+    label: Electrolyzer system
+    parent: ElectrochemicalSystem
+    definition: An electrochemical system that uses electrical energy to drive a non-spontaneous reaction that produces hydrogen or another chemical product.
+  BatterySystem:
+    label: Battery system
+    parent: ElectrochemicalSystem
+    definition: An electrochemical system that stores chemical energy internally and delivers or accepts electrical energy through electrochemical reactions.
+  FlowBatterySystem:
+    label: Flow-battery system
+    parent: BatterySystem
+    definition: A battery system in which electroactive species are stored in flowing electrolytes external to the electrochemical cell stack.
+  PhotovoltaicDevice:
+    label: Photovoltaic device
+    parent: Device
+    definition: A device that converts incident electromagnetic radiation into electrical energy by a photovoltaic effect.
+  ReactorDevice:
+    label: Reactor device
+    parent: Device
+    definition: A device that provides a controlled volume and operating environment for a chemical, catalytic, or electrochemical reaction.
+  Instrument:
+    label: Instrument
+    parent: Device
+    definition: A device used to perform, support, control, or record a scientific measurement or manufacturing operation.
+  ManufacturingInstrument:
+    label: Manufacturing instrument
+    parent: Instrument
+    definition: An instrument used to prepare, transform, deposit, shape, assemble, or condition matter during a manufacturing process.
+  MixingInstrument:
+    label: Mixing instrument
+    parent: ManufacturingInstrument
+    definition: A manufacturing instrument that mixes, disperses, homogenizes, mills, or sonicates material constituents.
+  CoatingInstrument:
+    label: Coating instrument
+    parent: ManufacturingInstrument
+    definition: A manufacturing instrument that deposits, casts, sprays, prints, or otherwise forms a material layer on a substrate or component.
+  ThermalProcessingInstrument:
+    label: Thermal-processing instrument
+    parent: ManufacturingInstrument
+    definition: A manufacturing instrument that heats, cools, dries, freezes, cures, anneals, calcines, or sinters matter under controlled conditions.
+  PrintingInstrument:
+    label: Printing instrument
+    parent: CoatingInstrument
+    definition: A coating instrument that places material according to a controlled spatial pattern by a printing process.
+  FluidHandlingInstrument:
+    label: Fluid-handling instrument
+    parent: ManufacturingInstrument
+    definition: A manufacturing instrument that pumps, dispenses, meters, regulates, or transfers a fluid during material preparation or device operation.
+  ReactionInstrument:
+    label: Reaction instrument
+    parent: ManufacturingInstrument
+    definition: A manufacturing instrument that provides a controlled vessel or environment for synthesis, reaction, or hydrothermal treatment.
+  MeasurementInstrument:
+    label: Measurement instrument
+    parent: Instrument
+    definition: An instrument used to impose measurement conditions, interact with a measurement subject, or acquire scientific observations.
+  ElectrochemicalTestInstrument:
+    label: Electrochemical test instrument
+    parent: MeasurementInstrument
+    definition: An instrument used to impose, control, or record electrical and operating conditions during an electrochemical measurement or device test.
+  ImagingInstrument:
+    label: Imaging instrument
+    parent: MeasurementInstrument
+    definition: A measurement instrument that acquires spatially resolved representations of a specimen or system.
+  ElectronMicroscope:
+    label: Electron microscope
+    parent: ImagingInstrument
+    definition: An imaging instrument that uses an electron beam and electron-matter interactions to acquire microscopy data.
+  ProbeMicroscope:
+    label: Probe microscope
+    parent: ImagingInstrument
+    definition: An imaging instrument that scans a localized probe across a specimen surface.
+  TomographyInstrument:
+    label: Tomography instrument
+    parent: ImagingInstrument
+    definition: An imaging instrument used to acquire projections or sections for tomographic reconstruction.
+  SpectroscopyInstrument:
+    label: Spectroscopy instrument
+    parent: MeasurementInstrument
+    definition: A measurement instrument used to acquire a response as a function of a spectral coordinate.
+  DiffractionInstrument:
+    label: Diffraction instrument
+    parent: MeasurementInstrument
+    definition: A measurement instrument used to record radiation or particle diffraction from a specimen.
+  MechanicalTestInstrument:
+    label: Mechanical test instrument
+    parent: MeasurementInstrument
+    definition: A measurement instrument used to impose and record force, displacement, deformation, hardness, adhesion, or related mechanical response.
+  InstrumentComponent:
+    label: Instrument component
+    parent: Device
+    definition: A device that functions as a constituent or accessory of a scientific instrument or measurement arrangement.
+  ReferenceElectrode:
+    label: Reference electrode
+    parent: InstrumentComponent
+    definition: An electrode that provides a stable reference potential for an electrochemical measurement.
+
+  Process:
+    label: Process
+    parent: null
+    definition: An activity or temporal development in which matter or information is transformed, measured, analyzed, or used.
+  Manufacturing:
+    label: Manufacturing
+    parent: Process
+    definition: A process that intentionally prepares, modifies, joins, or assembles matter to produce a material, specimen, component, or device.
+  MaterialProcessing:
+    label: Material processing
+    parent: Manufacturing
+    definition: A manufacturing process that changes the composition, structure, state, geometry, or arrangement of a material.
+  ProcurementProcess:
+    label: Procurement process
+    parent: Manufacturing
+    definition: A manufacturing-support process through which a material, component, or specimen is obtained for subsequent workflow use.
+  SynthesisProcess:
+    label: Synthesis process
+    parent: MaterialProcessing
+    definition: A material-processing operation that produces a material through chemical, electrochemical, or physical formation.
+  FormulationProcess:
+    label: Formulation process
+    parent: MaterialProcessing
+    definition: A material-processing operation that combines constituents to obtain a mixture or dispersion with a specified composition.
+  DispersionProcess:
+    label: Dispersion process
+    parent: FormulationProcess
+    definition: A formulation process that distributes particles, droplets, or macromolecular entities through a continuous phase.
+  MixingOrDispersionProcess:
+    label: Mixing or dispersion process
+    parent: DispersionProcess
+    definition: A formulation process that distributes constituents through mechanical, acoustic, or fluid-mediated mixing.
+  CoatingOrDepositionProcess:
+    label: Coating or deposition process
+    parent: MaterialProcessing
+    definition: A material-processing operation that places a material layer or deposit onto a substrate or component.
+  ThermalTreatmentProcess:
+    label: Thermal treatment process
+    parent: MaterialProcessing
+    definition: A material-processing operation that controls temperature over time to dry, cure, anneal, calcine, sinter, or otherwise modify matter.
+  MachiningProcess:
+    label: Cutting or machining process
+    parent: MaterialProcessing
+    definition: A material-processing operation that changes geometry by cutting, milling, polishing, grinding, sectioning, or related removal of matter.
+  AssemblyProcess:
+    label: Assembly process
+    parent: Manufacturing
+    definition: A manufacturing process that joins or arranges materials and components into a larger functional object.
+  ConditioningProcess:
+    label: Conditioning process
+    parent: Process
+    definition: A process that establishes or changes environmental or operational state before, during, or after an electrochemical experiment.
+  Measurement:
+    label: Measurement
+    parent: Process
+    definition: A process that acquires observations or data to determine or estimate a characteristic of a material, component, process, or system.
+  CharacterizationMeasurement:
+    label: Characterization measurement
+    parent: Measurement
+    definition: A measurement that acquires data for determining one or more characteristics of a material, component, or system.
+  ElectrochemicalMeasurement:
+    label: Electrochemical measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that observes electrical and chemical behavior at an electrochemical interface or in an electrochemical device.
+  ImagingMeasurement:
+    label: Imaging measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that produces spatially resolved data representing a specimen or system.
+  ElectronMicroscopyMeasurement:
+    label: Electron microscopy measurement
+    parent: ImagingMeasurement
+    definition: An imaging measurement that uses an electron beam and electron-matter interactions to produce image or analytical data about a specimen.
+  ProbeMicroscopyMeasurement:
+    label: Probe microscopy measurement
+    parent: ImagingMeasurement
+    definition: An imaging measurement that scans a localized probe across a specimen to determine spatially resolved surface characteristics.
+  TomographyMeasurement:
+    label: Tomography measurement
+    parent: ImagingMeasurement
+    definition: An imaging measurement that acquires projections or sections used to reconstruct the internal spatial structure of a specimen.
+  ElectronTomographyMeasurement:
+    label: Electron tomography measurement
+    parent: TomographyMeasurement
+    definition: A tomography measurement that uses electron-beam images or serial electron-microscopy sections to reconstruct specimen structure.
+  SpectroscopyMeasurement:
+    label: Spectroscopy measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines a response as a function of energy, wavelength, frequency, mass-to-charge ratio, or another spectral coordinate.
+  DiffractionMeasurement:
+    label: Diffraction measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that records the scattering or diffraction of incident radiation to determine structural characteristics.
+  ScatteringMeasurement:
+    label: Scattering measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that analyzes radiation or particles scattered by a specimen.
+  MechanicalMeasurement:
+    label: Mechanical measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines mechanical response or a mechanical characteristic of a specimen or component.
+  ThermalMeasurement:
+    label: Thermal measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines thermal response or a temperature-dependent characteristic.
+  TransportMeasurement:
+    label: Transport measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines the transport of mass, charge, momentum, or energy through a material or system.
+  CompositionMeasurement:
+    label: Composition measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines the chemical or material composition of a specimen.
+  OpticalMeasurement:
+    label: Optical measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines an optical response or uses visible, ultraviolet, or infrared radiation to inspect a specimen.
+  AdsorptionMeasurement:
+    label: Adsorption measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines uptake, surface area, porosity, or interaction behavior from adsorption or desorption data.
+  PorosimetryMeasurement:
+    label: Porosimetry measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines pore-size, pore-volume, or porosity characteristics from fluid intrusion, adsorption, imaging, or related observations.
+  RheologicalMeasurement:
+    label: Rheological measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines flow, deformation, viscosity, viscoelasticity, or thixotropic behavior of a material.
+  ParticleCharacterizationMeasurement:
+    label: Particle-characterization measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines particle size, size distribution, aggregation, sedimentation, or related particulate characteristics.
+  ChromatographyMeasurement:
+    label: Chromatography measurement
+    parent: CompositionMeasurement
+    definition: A composition measurement that separates mixture constituents and records their detector response for qualitative or quantitative analysis.
+  PhysicalPropertyMeasurement:
+    label: Physical-property measurement
+    parent: CharacterizationMeasurement
+    definition: A characterization measurement that determines a physical characteristic not represented by a more specific measurement branch.
+  Analysis:
+    label: Analysis
+    parent: Process
+    definition: A process that interprets, transforms, or evaluates data to obtain information, classifications, or scientific results.
+  DataProcessing:
+    label: Data processing
+    parent: Analysis
+    definition: An analysis process that transforms data representation, quality, organization, or content without constituting a new physical measurement.
+  Simulation:
+    label: Simulation
+    parent: Process
+    definition: A process that executes a computational representation of a system to generate predicted state or behavior data.
+  ModelExecution:
+    label: Model execution
+    parent: Simulation
+    definition: A simulation process that evaluates a defined computational model using specified inputs to produce model outputs.
+
+  InformationEntity:
+    label: Information entity
+    parent: null
+    definition: An entity whose identity is determined by information content that can be recorded, communicated, or processed.
+  Data:
+    label: Data
+    parent: InformationEntity
+    definition: An information entity that records observations, values, representations, or computational results.
+  Dataset:
+    label: Dataset
+    parent: Data
+    definition: Data organized as an identifiable collection for storage, exchange, processing, or analysis.
+  DataPoint:
+    label: Data point
+    parent: Data
+    definition: Data that records one result, observation, or value and its semantic and provenance context.
+  ImageDataset:
+    label: Image dataset
+    parent: Dataset
+    definition: A dataset whose primary content consists of spatially arranged pixel or voxel values representing an observed or reconstructed object.
+  ElectronMicroscopyImageDataset:
+    label: Electron microscopy image dataset
+    parent: ImageDataset
+    definition: An image dataset produced by an electron microscopy measurement or its subsequent processing.
+  TomographyDataset:
+    label: Tomography dataset
+    parent: ImageDataset
+    definition: An image dataset containing tomographic projections, reconstructed sections, or reconstructed volumetric data.
+  SpectrumDataset:
+    label: Spectrum dataset
+    parent: Dataset
+    definition: A dataset that records a measured or computed response against a spectral coordinate.
+  DiffractionDataset:
+    label: Diffraction dataset
+    parent: Dataset
+    definition: A dataset containing diffraction or scattering intensity as a function of angle, reciprocal-space coordinate, or related variable.
+  ElectrochemicalDataset:
+    label: Electrochemical dataset
+    parent: Dataset
+    definition: A dataset containing observations or results produced by an electrochemical measurement or analysis.
+  CurveDataset:
+    label: Curve dataset
+    parent: Dataset
+    definition: A dataset representing one dependent variable as a function of one or more independent variables.
+  TabularDataset:
+    label: Tabular dataset
+    parent: Dataset
+    definition: A dataset whose records are organized into rows and columns.
+  SimulationDataset:
+    label: Simulation dataset
+    parent: Dataset
+    definition: A dataset generated or consumed by a simulation or model-execution process.
+  Metadata:
+    label: Metadata
+    parent: Data
+    definition: Data that describes the identity, context, provenance, structure, management, or interpretation of another entity.
+  SoftwareArtifact:
+    label: Software artifact
+    parent: InformationEntity
+    definition: An information entity comprising executable code, source code, configuration, or another software product.
+  ScientificSoftware:
+    label: Scientific software
+    parent: SoftwareArtifact
+    definition: A software artifact used to acquire, process, analyze, simulate, or visualize scientific data.
+  ImageAnalysisSoftware:
+    label: Image-analysis software
+    parent: ScientificSoftware
+    definition: Scientific software used to process, segment, quantify, analyze, or visualize image or volumetric data.
+  ModelArtifact:
+    label: Model artifact
+    parent: InformationEntity
+    definition: An information entity that specifies a conceptual, mathematical, statistical, or computational representation of a system.
+  MachineLearningModel:
+    label: Machine-learning model
+    parent: ModelArtifact
+    definition: A model artifact whose behavior is learned from data through a machine-learning procedure.
+  WorkflowProfile:
+    label: Workflow profile
+    parent: InformationEntity
+    definition: An information entity that specifies expected entities, relations, cardinalities, and validation rules for a scientific workflow record.
+  Specification:
+    label: Specification
+    parent: InformationEntity
+    definition: An information entity that prescribes or records a required, selected, or intended characteristic or setting.
+  ParameterRecord:
+    label: Parameter record
+    parent: Specification
+    definition: A specification record that identifies a characteristic and, when reported, its selected value for a process, measurement, analysis, or model execution.
+  Parameter:
+    label: Parameter
+    parent: ParameterRecord
+    definition: A parameter record retained as the stable H2KG anchor for a selected input, setting, or condition of a process, measurement, analysis, or model execution.
+  NormalizationBasis:
+    label: Normalization basis
+    parent: Specification
+    definition: A specification identifying the quantity or reference basis used to normalize another value.
+  ReferenceScale:
+    label: Reference scale
+    parent: Specification
+    definition: A specification defining the reference against which a reported potential or related quantity is expressed.
+  Unit:
+    label: Unit
+    parent: InformationEntity
+    definition: An information entity that provides an agreed reference magnitude for expressing a quantity value.
+
+  Characteristic:
+    label: Characteristic
+    parent: null
+    definition: A dependent feature that can characterize a material, component, process, dataset, or system.
+  Property:
+    label: Property
+    parent: Characteristic
+    definition: A characteristic that can be measured, computed, specified, or otherwise attributed to an entity.
+  QuantitativeCharacteristic:
+    label: Quantitative characteristic
+    parent: Property
+    definition: A property whose value can be expressed using a number, quantity kind, unit, range, distribution, or mathematical object.
+  TemporalCharacteristic:
+    label: Temporal characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing duration, time, interval, temporal position, or temporal rate.
+  PressureCharacteristic:
+    label: Pressure characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing pressure, pressure difference, or a pressure-dependent setting.
+  DensityCharacteristic:
+    label: Density characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing mass, number, or another extensive quantity per unit volume or area.
+  FrequencyCharacteristic:
+    label: Frequency characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing frequency, frequency range, or periodic repetition rate.
+  CountCharacteristic:
+    label: Count characteristic
+    parent: QuantitativeCharacteristic
+    definition: A dimensionless quantitative characteristic expressing the number of discrete entities, events, cycles, projections, or repetitions.
+  EnergyCharacteristic:
+    label: Energy characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing energy, energy density, or an energy-related experimental setting.
+  StatisticalCharacteristic:
+    label: Statistical characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing a statistic, goodness-of-fit measure, uncertainty, deviation, or fitted coefficient.
+  OpticalCharacteristic:
+    label: Optical characteristic
+    parent: Property
+    definition: A property describing interaction with light or another optical response of a material, component, or system.
+  CategoricalCharacteristic:
+    label: Categorical characteristic
+    parent: Property
+    definition: A property whose value is expressed as a category, state, type, mode, or controlled qualitative descriptor.
+  CompositionCharacteristic:
+    label: Composition characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing the amount, fraction, ratio, concentration, or loading of a constituent.
+  GeometricCharacteristic:
+    label: Geometric characteristic
+    parent: QuantitativeCharacteristic
+    definition: A quantitative characteristic describing size, shape, position, orientation, or spatial extent.
+  LayerThickness:
+    label: Layer thickness
+    parent: GeometricCharacteristic
+    definition: A length characteristic representing the separation between the bounding surfaces of a material layer.
+  StructuralCharacteristic:
+    label: Structural characteristic
+    parent: Property
+    definition: A property describing the internal arrangement, connectivity, phase structure, or architecture of matter.
+  MorphologicalCharacteristic:
+    label: Morphological characteristic
+    parent: StructuralCharacteristic
+    definition: A structural property describing form, size distribution, topology, porosity, or spatial morphology.
+  SurfaceCharacteristic:
+    label: Surface characteristic
+    parent: Property
+    definition: A property describing a surface, interface, or surface-mediated behavior.
+  ElectrochemicalCharacteristic:
+    label: Electrochemical characteristic
+    parent: Property
+    definition: A property describing electrical or chemical behavior associated with an electrochemical process or interface.
+  TransportCharacteristic:
+    label: Transport characteristic
+    parent: Property
+    definition: A property describing the transport of matter, charge, momentum, or energy through a material or system.
+  MechanicalCharacteristic:
+    label: Mechanical characteristic
+    parent: Property
+    definition: A property describing deformation, strength, stiffness, adhesion, hardness, or another mechanical response.
+  ThermalCharacteristic:
+    label: Thermal characteristic
+    parent: Property
+    definition: A property describing temperature, heat transfer, thermal response, or thermally induced change.
+  SpectroscopicCharacteristic:
+    label: Spectroscopic characteristic
+    parent: Property
+    definition: A property determined from the position, intensity, width, assignment, or shape of a spectral feature.
+  PerformanceCharacteristic:
+    label: Performance characteristic
+    parent: Property
+    definition: A property describing functional output, efficiency, capacity, power, or operational effectiveness.
+  DegradationCharacteristic:
+    label: Degradation characteristic
+    parent: PerformanceCharacteristic
+    definition: A performance property describing deterioration, loss, rate of change, durability, or lifetime.
+
+  Agent:
+    label: Agent
+    parent: null
+    definition: An entity that bears responsibility for an activity, decision, contribution, or generated resource.
+  Person:
+    label: Person
+    parent: Agent
+    definition: A human agent associated with a scientific activity or resource.
+  Organization:
+    label: Organization
+    parent: Agent
+    definition: A collective agent such as a research institution, facility, project, or company.
+  SoftwareAgent:
+    label: Software agent
+    parent: Agent
+    definition: A software system that performs an activity with recorded responsibility or provenance.
+
+duplicate_replacements:
+  BandgapEnergy: BandGapEnergy
+  CatalystLayerThickness_2: CatalystLayerThickness
+  GeometricArea_2: GeometricArea
+  HomogenizationTemperature_2: HomogenizationTemperature
+  PolyvinylAlcohol: PolyVinylAlcohol
+  PtMass_2: PtMass
+
+parent_overrides:
+  PtOnCarbonCatalyst: SupportedMetalCatalyst
+  SilicaCoatedPtOnCarbonCatalyst: SupportedMetalCatalyst
+  MEAAssembly: MembraneElectrodeAssembly
+  ETekCommercialMEA: MembraneElectrodeAssembly
+  DirectMethanolFuelCell: FuelCellSystem
+  HighTemperaturePEMFC: FuelCellSystem
+  AqueousOrganicFlowBattery: FlowBatterySystem
+  FuelCellTestStation: ElectrochemicalTestInstrument
+  FuelCellTestCell: ElectrochemicalTestInstrument
+  GDEHalfCellSetup: ElectrochemicalTestInstrument
+  RotatingDiskElectrodeSystem: ElectrochemicalTestInstrument
+  RRDEAssembly: ElectrochemicalTestInstrument
+  SegmentedCellSystem: ElectrochemicalTestInstrument
+  DynamicHydrogenElectrode: ReferenceElectrode
+  SCE: ReferenceElectrode
+  SHE: ReferenceElectrode
+  GlassyCarbonDiskElectrode: ElectrodeComponent
+  GraphiteRodCounterElectrode: ElectrodeComponent
+  PlatinumWireCounterElectrode: ElectrodeComponent
+  InterdigitatedElectrodeArray: ElectrodeComponent
+  GDEFixture: InstrumentComponent
+  DLPResinTank: InstrumentComponent
+  LinearStage: InstrumentComponent
+  PrintingPlatformStage: InstrumentComponent
+  XYMovingStage: InstrumentComponent
+  Nozzle: InstrumentComponent
+  NordsonEFD781Nozzle: InstrumentComponent
+  Elcometer4340BarCoatingDevice: CoatingInstrument
+  UltrasonicSprayCoatingSystem: CoatingInstrument
+  Envisiontec3DBioPlotter: PrintingInstrument
+  ScreenPrintingMachine: PrintingInstrument
+  DLPProjector: PrintingInstrument
+  MassFlowController: FluidHandlingInstrument
+  GasHumidificationUnit: FluidHandlingInstrument
+  Micropipette: FluidHandlingInstrument
+  CryoUltramicrotome: ManufacturingInstrument
+  RollPressMachine: ManufacturingInstrument
+  RollingMachine: ManufacturingInstrument
+  VacuumMoulder: ManufacturingInstrument
+  PneumaticJack: ManufacturingInstrument
+  CatalystInk: Dispersion
+  CatalystInkPreparation: MixingOrDispersionProcess
+  FijiImageJSoftware: ImageAnalysisSoftware
+  IlastikSoftware: ImageAnalysisSoftware
+  MATLABSoftware: ScientificSoftware
+  SEMImageDataset: ElectronMicroscopyImageDataset
+  MicrostructureImageDataset: ImageDataset
+  XRDPatternDataset: DiffractionDataset
+  TransmissionElectronMicroscopyImaging: ElectronMicroscopyMeasurement
+  ScanningElectronMicroscopyImaging: ElectronMicroscopyMeasurement
+  SEMImagingMeasurement: ElectronMicroscopyMeasurement
+  ICSEMImagingMeasurement: ElectronMicroscopyMeasurement
+  FIBSEMTomographyMeasurement: ElectronTomographyMeasurement
+  AtomicForceMicroscopyMeasurement: ProbeMicroscopyMeasurement
+  NeutronTomographyMeasurement: TomographyMeasurement
+  XRayComputedTomographyMeasurement: TomographyMeasurement
+  XRayDiffractionMeasurement: DiffractionMeasurement
+  XRayPhotoelectronSpectroscopyMeasurement: SpectroscopyMeasurement
+  MicroXRayFluorescenceMeasurement: SpectroscopyMeasurement
+  MercuryIntrusionPorosimetryMeasurement3: PorosimetryMeasurement
+  CatalystLayerThickness: LayerThickness
+  MembraneThickness: LayerThickness
+  GasDiffusionLayerThickness: LayerThickness
+  MembraneElectrodeAssemblyThickness: LayerThickness
+  IonomerToCarbonRatio: CompositionCharacteristic
+  CurrentDensity: ElectrochemicalCharacteristic
+  CarbonMass: NormalizationBasis
+  SampleMass: NormalizationBasis
+  GasDiffusionLayerPorosity: MorphologicalCharacteristic
+  TotalPorosity: MorphologicalCharacteristic
+  PoreSizeDistribution: MorphologicalCharacteristic
+  GeodesicTortuosity: TransportCharacteristic
+  Constrictivity: TransportCharacteristic
+  ApparatusSpecificationMeasurement: Analysis
+  CapillaryPressureEstimation: Analysis
+  CatalystLayerCompositionSpecification: WorkflowProfile
+  CrackConnectivityAnalysis: Analysis
+  DegradationPredictionEvaluationMeasurement: Analysis
+  DistributionOfRelaxationTimesAnalysis: Analysis
+  FabricationDesignSpecification: WorkflowProfile
+  ImageAnalysisPoreMeasurement: Analysis
+  InkCompositionSpecification: WorkflowProfile
+  InkFormulationSpecification: WorkflowProfile
+  InkFormulationSpecificationMeasurement: Analysis
+  InkPrintabilityAssessment: Analysis
+  InkRecipeDefinition: WorkflowProfile
+  MaterialSpecification: Specification
+  MaterialSpecificationMeasurement: Analysis
+  ReviewStatementExtraction: Analysis
+  SurfacePreparationSpecification: WorkflowProfile
+  TafelSlopeStepAnalysis: Analysis
+  TransmissionLineModelAnalysis: Analysis
+
+classification_rules:
+  Matter:
+    - parent: Specimen
+      keywords: [sample, specimen, coupon, cross section, cross-section]
+    - parent: FlowBatterySystem
+      keywords: [flow battery]
+    - parent: FuelCellSystem
+      keywords: [fuel cell, pemfc, dmfc]
+    - parent: ElectrolyzerSystem
+      keywords: [electrolyzer, electrolyser, pemwe]
+    - parent: BatterySystem
+      keywords: [battery]
+    - parent: PhotovoltaicDevice
+      keywords: [photovoltaic cell, solar cell]
+    - parent: ReactorDevice
+      keywords: [reactor]
+    - parent: Dispersion
+      keywords: [ink, slurry, dispersion, suspension, solution, mixture, paste]
+    - parent: CellAssembly
+      keywords: [membrane electrode assembly, mea assembly, cell assembly]
+    - parent: GasDiffusionLayerComponent
+      keywords: [gas diffusion layer, gdl]
+    - parent: CatalystLayerComponent
+      keywords: [catalyst layer, ccl, acl]
+    - parent: MembraneComponent
+      keywords: [membrane]
+    - parent: ElectrodeComponent
+      keywords: [electrode, anode, cathode]
+    - parent: CurrentCollectorComponent
+      keywords: [current collector]
+    - parent: ElectrochemicalComponent
+      keywords: [microporous layer, bipolar plate, cell, gasket]
+    - parent: Device
+      keywords: [holder, fixture, sensor, reactor, device, station]
+    - parent: SupportedMetalCatalyst
+      keywords: [on carbon catalyst, supported catalyst]
+    - parent: Electrocatalyst
+      keywords: [electrocatalyst]
+    - parent: CatalystMaterial
+      keywords: [catalyst]
+    - parent: CompositeMaterial
+      keywords: [composite, coated]
+    - parent: ElectrolyteMaterial
+      keywords: [electrolyte, ion-conducting medium]
+    - parent: PolymerMaterial
+      keywords: [polymer*, ionomer*, resin, nafion, peek, speek, polyvinyl, polystyrene, polyethylene, polypropylene]
+    - parent: CarbonMaterial
+      keywords: [carbon, graphite, graphene, nanotube, xerogel]
+    - parent: MetalOxideMaterial
+      keywords: [oxide, alumina, silica, titania, zirconia]
+    - parent: MetalMaterial
+      keywords: [platinum, palladium, iridium, ruthenium, nickel, cobalt, copper, aluminum, silver, gold, alloy]
+    - parent: Solvent
+      keywords: [solvent, acetone, alcohol, ethanol, methanol, propanol, acetonitrile, water]
+    - parent: ChemicalSubstance
+      keywords: [acid, alcohol, oxide, hydroxide, solvent, polymer, ionomer, platinum, palladium, iridium, ruthenium, carbon black, water, oxygen, hydrogen, nitrogen]
+    - parent: MaterialEntity
+      keywords: []
+  Manufacturing:
+    - parent: ConditioningProcess
+      keywords: [activation, activate, break-in, break in, conditioning, durability test, stress test]
+    - parent: ProcurementProcess
+      keywords: [procure, procurement, purchase, buy]
+    - parent: MixingOrDispersionProcess
+      keywords: [mix, dispersion, disperse, sonicat*, homogen*, dissolve, formulation, ink preparation]
+    - parent: CoatingOrDepositionProcess
+      keywords: [coat, coating, deposit, deposition, cast, casting, spray, print, sputter]
+    - parent: ThermalTreatmentProcess
+      keywords: [dry, drying, anneal, cure, curing, calcine, sinter, heat treatment, thermal treatment]
+    - parent: MachiningProcess
+      keywords: [cut, cutting, mill, milling, polish, polishing, grind, section, etch]
+    - parent: AssemblyProcess
+      keywords: [assembl*, mount, mounting, embed, hot press, laminate, integration]
+    - parent: SynthesisProcess
+      keywords: [synthesis, synthesize, polymerization, precipitation]
+    - parent: MaterialProcessing
+      keywords: []
+  Measurement:
+    - parent: ElectronTomographyMeasurement
+      keywords: [fib-sem, fibsem, electron tomography]
+    - parent: ElectronMicroscopyMeasurement
+      keywords: [electron microscopy, sem, tem, eds, stem]
+    - parent: ProbeMicroscopyMeasurement
+      keywords: [atomic force, afm, probe microscopy]
+    - parent: TomographyMeasurement
+      keywords: [tomography, computed tomography, ct measurement]
+    - parent: ImagingMeasurement
+      keywords: [microscopy, imaging]
+    - parent: DiffractionMeasurement
+      keywords: [diffraction, xrd]
+    - parent: SpectroscopyMeasurement
+      keywords: [spectroscopy, xps, raman, ftir, nmr, photoluminescence, spectrometry]
+    - parent: ScatteringMeasurement
+      keywords: [scattering, sans, usans, dynamic light scattering, dls]
+    - parent: OpticalMeasurement
+      keywords: [optical, fluorescence, gloss, quantum efficiency, light intensity, video imaging]
+    - parent: ElectrochemicalMeasurement
+      keywords: [voltam*, impedance, eis, polarization, amperometr*, potentiometr*, galvanostat*, chrono*, tafel, current interrupt, electrochemical]
+    - parent: MechanicalMeasurement
+      keywords: [tensile, compression, compressive, flexural, bending, hardness, adhesion, strain]
+    - parent: ThermalMeasurement
+      keywords: [thermal, calorimetry, thermogravimetric, thermometry]
+    - parent: TransportMeasurement
+      keywords: [permeab*, diffus*, transport, conductivity]
+    - parent: PorosimetryMeasurement
+      keywords: [porosimetry, pore measurement, porosity measurement, pycnometry]
+    - parent: AdsorptionMeasurement
+      keywords: [adsorption, physisorption, sorption, vapor uptake]
+    - parent: RheologicalMeasurement
+      keywords: [rheolog*, viscosity, thixotropy]
+    - parent: ParticleCharacterizationMeasurement
+      keywords: [particle size, sedimentation, analytical centrifuge]
+    - parent: ChromatographyMeasurement
+      keywords: [chromatography, chromatograph]
+    - parent: CompositionMeasurement
+      keywords: [composition, elemental, titration, chromatography]
+    - parent: PhysicalPropertyMeasurement
+      keywords: [density measurement, thickness measurement, contact angle, resistivity measurement, resistance measurement, solid content, water content]
+    - parent: CharacterizationMeasurement
+      keywords: []
+  Process:
+    - parent: ModelExecution
+      keywords: [model, prediction, fit, fitting, simulation]
+    - parent: DataProcessing
+      keywords: [analysis, calculation, segmentation, reconstruction, preprocess*, correction, threshold, conversion, visualization]
+    - parent: ConditioningProcess
+      keywords: [condition, conditioning, activation, degradation, operation]
+    - parent: Process
+      keywords: []
+  Instrument:
+    - parent: ScientificSoftware
+      keywords: [software, toolbox, module, imagej, matlab, ansys, comsol, ilastik, blender]
+    - parent: ReferenceElectrode
+      keywords: [reference electrode, ag/agcl, agagcl, reversible hydrogen electrode]
+    - parent: ElectrochemicalTestInstrument
+      keywords: [electrochemical workstation, potentiostat, galvanostat, impedance analyzer, fuel cell test station, battery analyzer]
+    - parent: ElectronMicroscope
+      keywords: [sem instrument, tem instrument, fibsem, fib-sem, electron microscope]
+    - parent: ProbeMicroscope
+      keywords: [afm instrument, atomic force microscope]
+    - parent: TomographyInstrument
+      keywords: [tomography instrument, x ray ct, x-ray ct, neutron tomography]
+    - parent: DiffractionInstrument
+      keywords: [diffractometer, diffraction instrument]
+    - parent: SpectroscopyInstrument
+      keywords: [spectrometer, spectrophotometer, spectroscopy, xps instrument, ftir instrument, nmr instrument, raman, ellipsometer, fluorescence]
+    - parent: MechanicalTestInstrument
+      keywords: [tensile test, nanoindenter, indentation, tackoscope, mechanical test]
+    - parent: ImagingInstrument
+      keywords: [microscope, imaging instrument]
+    - parent: PrintingInstrument
+      keywords: [printer, printing system, bioplotter]
+    - parent: CoatingInstrument
+      keywords: [coater, airbrush, deposition system, dispenser]
+    - parent: MixingInstrument
+      keywords: [ball mill, bead mill, mixer, stirrer, homogenizer, homogeniser, ultrasonicator, ultrasonic bath, dispersion machine]
+    - parent: ThermalProcessingInstrument
+      keywords: [furnace, oven, freeze drier, freezer, hot plate, heat gun, hot blower, heated vacuum table, hot press]
+    - parent: FluidHandlingInstrument
+      keywords: [pump, syringe driver, pressure regulator]
+    - parent: ReactionInstrument
+      keywords: [reactor, autoclave]
+    - parent: MeasurementInstrument
+      keywords: []
+  Data:
+    - parent: ElectronMicroscopyImageDataset
+      keywords: [sem image, tem image, electron microscopy image, micrograph]
+    - parent: TomographyDataset
+      keywords: [tomograph*, projection dataset, reconstructed volume, voxel]
+    - parent: DiffractionDataset
+      keywords: [diffraction, xrd pattern]
+    - parent: SpectrumDataset
+      keywords: [spectrum, spectra, xps dataset]
+    - parent: ElectrochemicalDataset
+      keywords: [voltammogram, polarization, impedance, eis, electrochemical]
+    - parent: CurveDataset
+      keywords: [curve, distribution, profile, isotherm]
+    - parent: SimulationDataset
+      keywords: [simulation, model output, prediction]
+    - parent: ImageDataset
+      keywords: [image]
+    - parent: Dataset
+      keywords: []
+  Characteristic:
+    - parent: DegradationCharacteristic
+      keywords: [degradation, decay, durability, lifetime, loss rate, aging]
+    - parent: PerformanceCharacteristic
+      keywords: [power, efficiency, performance, capacity, yield, conversion, activity]
+    - parent: MechanicalCharacteristic
+      keywords: [strength, modulus, stress, strain, hardness, adhesion, toughness]
+    - parent: ThermalCharacteristic
+      keywords: [temperature, thermal, heat, enthalpy]
+    - parent: TemporalCharacteristic
+      keywords: [duration, time, interval, residence time, time step, timestep]
+    - parent: PressureCharacteristic
+      keywords: [pressure, vacuum]
+    - parent: FrequencyCharacteristic
+      keywords: [frequency, hertz]
+    - parent: DensityCharacteristic
+      keywords: [density, particles per volume, surface density]
+    - parent: TransportCharacteristic
+      keywords: [diffus*, permeab*, flux, flow rate, transport, conductivity]
+    - parent: ElectrochemicalCharacteristic
+      keywords: [current, voltage, potential, resistance, impedance, capacitance, conductance, electrochemical, tafel, charge]
+    - parent: SpectroscopicCharacteristic
+      keywords: [binding energy, peak position, peak width, fwhm, wavelength, wavenumber, spectral]
+    - parent: CountCharacteristic
+      keywords: [count, number, repetitions, cycles, passes]
+    - parent: EnergyCharacteristic
+      keywords: [energy, band gap]
+    - parent: StatisticalCharacteristic
+      keywords: [coefficient of determination, standard deviation, deviation, uncertainty, confidence interval, r squared]
+    - parent: OpticalCharacteristic
+      keywords: [optical, transmittance, absorbance, reflectance, refractive, color difference, photoluminescence]
+    - parent: SurfaceCharacteristic
+      keywords: [surface area, contact angle, surface energy, wettability, coverage, zeta potential]
+    - parent: MorphologicalCharacteristic
+      keywords: [porosity, pore, tortuosity, constrictivity, particle size, diameter, radius, agglomerate, crystallite, roughness, morphology]
+    - parent: LayerThickness
+      keywords: [layer thickness, membrane thickness, coating thickness, film thickness]
+    - parent: GeometricCharacteristic
+      keywords: [thickness, diameter, radius, length, width, area, volume, size, distance, spacing, angle, orientation]
+    - parent: CompositionCharacteristic
+      keywords: [ratio, fraction, concentration, composition, loading, content, stoichiometry, atomic percent, weight percent, mass percent, molar percent, percentage]
+    - parent: CategoricalCharacteristic
+      keywords: [type, mode, presence, state, category, shape, model, method]
+    - parent: QuantitativeCharacteristic
+      keywords: []
+
+module_rules:
+  pemfc: [pemfc, fuel cell, cathode catalyst layer, gas diffusion layer, membrane electrode assembly]
+  pemwe: [pemwe, electrolyzer, electrolysis, oxygen evolution, hydrogen evolution]
+  electrochemistry-extension: [flow battery, microbial fuel cell, photovoltaic, battery analyzer, dry reforming, transesterification]

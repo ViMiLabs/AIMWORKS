@@ -138,12 +138,12 @@ pre,Step 3 Software,In-house 3D Unet,instance metadata,h2kg:hasMetadata,Retained
 pre,Step 3 Target,PPInt3,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the artefact-cleaned volume dataset.
 pre,Step 4 Precursor,PPInt3,instance metadata,h2kg:MicrostructureImageDataset,Uses the artefact-cleaned dataset as input.
 pre,Step 4 Technique,Clean,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
-pre,Step 4 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The cleanup process reuses the existing software instrument anchor.
+pre,Step 4 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The cleanup process reuses the image-analysis software anchor through h2kg:usesSoftware.
 pre,Step 4 Target,PPInt4,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the cleaned volume dataset.
 pre,Step 5 Precursor,PPInt4,instance metadata,h2kg:MicrostructureImageDataset,Uses the cleaned dataset as input.
 pre,Step 5 Technique,Threshold,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
 pre,Step 5 Condition,Algorithm = Watershed,instance metadata,h2kg:hasMetadata,Retained as thresholding metadata in round 1.
-pre,Step 5 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The thresholding process reuses the existing software instrument anchor.
+pre,Step 5 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The thresholding process reuses the image-analysis software anchor through h2kg:usesSoftware.
 pre,Step 5 Target,PPInt5,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the segmented volume dataset.
 pre,Step 6 Precursor,PPInt5,instance metadata,h2kg:MicrostructureImageDataset,Uses the segmented dataset as input.
 pre,Step 6 Technique,Visualize,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
@@ -151,15 +151,15 @@ pre,Step 6 Software,Blender3D,instance metadata,h2kg:hasMetadata,Retained as vis
 pre,Step 6 Target,Post-processed image,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the final processed FIB-SEM microstructure image dataset.
 anal,Step 1 Precursor,Post-processed image,instance metadata,h2kg:MicrostructureImageDataset,The analysis processes consume the processed FIB-SEM image dataset.
 anal,Step 1 Technique,Volume fraction calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
-anal,Step 1 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 1 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the image-analysis software anchor through h2kg:usesSoftware.
 anal,Step 1 Target,Volume fraction,reuse existing term,h2kg:PoreVolumeFraction,Mapped conservatively to the existing legacy anchor; retained as metadata in the example graph because `ofProperty` expects a property-valued target.
 anal,Step 1 AmountTarget,80 nm,instance metadata,h2kg:hasMetadata,Retained as source metadata because the reported unit is inconsistent with the mapped concept.
 anal,Step 2 Technique,Surface calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
-anal,Step 2 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 2 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the image-analysis software anchor through h2kg:usesSoftware.
 anal,Step 2 Target,Porosity,reuse existing term,h2kg:TotalPorosity,Mapped to the existing total-porosity property anchor.
 anal,Step 2 AmountTarget,10 pu,instance metadata,h2kg:DataPoint,Represented as a result data point with source-value metadata instead of an interpreted quantity value.
 anal,Step 3 Technique,Direction calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
-anal,Step 3 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 3 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the image-analysis software anchor through h2kg:usesSoftware.
 anal,Step 3 Target,Direction,not modeled,-,No stable local H2KG term is promoted in this round for the reported direction output.
 anal,Step 3 AmountTarget,6 deg,instance metadata,h2kg:hasMetadata,Retained as source metadata in the analysis summary dataset.
 anal,Step 4 Technique,Network relation analysis,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.

@@ -25,6 +25,7 @@ from .profile_modules import build_profile_modules
 from .sem_pilot import build_sem_pilot_package
 from .split import split_ontology
 from .synchrotron_xray_tomo_pilot import build_synchrotron_xray_tomo_pilot_package
+from .taxonomy import build_taxonomy_release
 from .tem_pilot import build_tem_pilot_package
 from .tib_benchmark import build_tib_benchmark_package
 from .xps_pilot import build_xps_pilot_package
@@ -55,6 +56,12 @@ def run_release(
     inspection = inspect_ontology(input_path, reports_dir, project_root / "config")
     split_summary = split_ontology(input_path, ontology_dir, project_root / "config")
     mappings = propose_mappings(input_path, review_dir, project_root / "config")
+    taxonomy_config = project_root / "config" / "taxonomy.yaml"
+    taxonomy = (
+        build_taxonomy_release(input_path, output_root, project_root / "config")
+        if taxonomy_config.exists()
+        else {"status": "skipped_missing_config", "config": str(taxonomy_config)}
+    )
     hdo = load_hdo_alignment_report(reports_dir)
     enrich_ontology(input_path, ontology_dir, project_root / "config")
     profile_modules = build_profile_modules(input_path, ontology_dir, project_root / "config")
@@ -111,6 +118,7 @@ def run_release(
         "inspection": inspection["counts"],
         "split": split_summary,
         "mappings": len(mappings),
+        "taxonomy": taxonomy,
         "hdo": hdo,
         "profile_modules": profile_modules,
         "annotation_drafts": len(drafts),

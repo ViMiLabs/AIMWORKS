@@ -750,10 +750,14 @@ h2kg:IonomerType
 
 h2kg:IonomerToCarbonRatio
   a h2kg:Parameter ;
-  skos:prefLabel "Ionomer To Carbon Ratio"@en ;
-  h2kg:hasQuantityValue <_:N91984db0f9d743ed89f9ac2992bd5107> ;
-  skos:altLabel "I/C ratio"@en, "I/C weight ratio"@en, "dry ionomer to carbon ratio"@en ;
-  dcterms:description "A parameter specifying ionomer to carbon ratio used to characterize Oxygen Gain/Loss Measurement, O2–N2 Switching Measurement, and Current-Interrupt HFR Measurement."@en ;
+  skos:prefLabel "Ionomer-to-carbon ratio"@en ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IonomerToCarbonRatio ;
+  skos:altLabel "I/C-ratio"@en, "ITC ionomer-to-carbon ratio"@en ;
+  dcterms:description "Mass ratio of dry ionomer to carbon support in the catalyst layer."@en ;
+  skos:notation "mI:C" ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  rdfs:label "Ionomer-to-carbon ratio"@en ;
+  dcterms:identifier "IO_CMP_ICRatio" ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -2465,7 +2469,7 @@ h2kg:IonomerFilmThickness
   a h2kg:Property ;
   skos:prefLabel "Ionomer Film Thickness"@en ;
   rdfs:label "Ionomer Film Thickness"@en ;
-  skos:altLabel "ionomer layer thickness"@en, "lN"@en, "Nafion film thickness"@en ;
+  skos:altLabel "ionomer layer thickness"@en, "lN"@en, "Nafion film thickness"@en, "Ionomer film thickness"@en ;
   dcterms:description "A property denoting thickness of ionomer film covering catalyst particles or supports (nm scale)."@en ;
   h2kg:hasQuantityValue <_IonomerFilmThickness_QV> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
@@ -2503,11 +2507,14 @@ h2kg:SolubilityParameterTotal
 
 h2kg:SurfaceTension
   a h2kg:Property ;
-  skos:prefLabel "Surface Tension"@en ;
-  rdfs:label "Surface Tension"@en ;
-  skos:altLabel "ink surface tension"@en, "carbon cloth surface tension"@en, "surface tension (d cm−1)"@en ;
-  dcterms:description "A property denoting surface tension of solvent; affects wetting, coating, and film formation."@en ;
-  h2kg:hasQuantityValue <_SurfaceTension_QV> ;
+  skos:prefLabel "Surface tension"@en ;
+  rdfs:label "Surface tension"@en ;
+  skos:altLabel "surface tension of water at 353 K"@en ;
+  dcterms:description "Surface tension of liquid water at 353 K used to determine capillary flooding behavior in catalyst-layer pores."@en ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_SurfaceTension ;
+  skos:notation "gamma" ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  dcterms:identifier "IO_CMP_SurfaceTensionOfWaterAtT353k" ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -3578,11 +3585,14 @@ h2kg:LateralElectronicResistance
 
 h2kg:TotalPoreVolume
   a h2kg:Property ;
-  skos:prefLabel "Total Pore Volume"@en ;
-  rdfs:label "Total Pore Volume"@en ;
-  skos:altLabel "V_tot"@en, "pore volume"@en, "Pore volume (cc/g_catalyst)"@en ;
-  dcterms:description "A property denoting total pore volume from N2 adsorption (Gurvich rule at p/ps=0.99). Unit in paper appears as cm^3 g^-1 (verify)."@en ;
-  h2kg:hasQuantityValue <_TotalPoreVolume_QV>, <_TotalPoreVolume_QV_2> ;
+  skos:prefLabel "Total pore volume"@en ;
+  rdfs:label "Total pore volume"@en ;
+  skos:altLabel "ITC total pore volume"@en ;
+  dcterms:description "Total volume of primary and secondary pores in the ionomer-free platinum-on-carbon structure per unit mass of carbon."@en ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_TotalPoreVolume ;
+  skos:notation "Vpores" ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  dcterms:identifier "IO_CMP_TotalPoreVolume" ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -17707,11 +17717,14 @@ h2kg:CarbonAgglomerateCoreRadius
 
 h2kg:EquivalentIonomerFilmThickness
   a h2kg:Property ;
-  skos:prefLabel "Equivalent Ionomer Film Thickness"@en ;
-  rdfs:label "Equivalent Ionomer Film Thickness"@en ;
-  skos:altLabel "equivalent Nafion film thickness"@en, "interfacial resistance equivalent thickness"@en ;
-  dcterms:description "A property denoting equivalent ionomer film thickness."@en ;
-  h2kg:hasQuantityValue <_EquivalentIonomerFilmThickness_QV> ;
+  skos:prefLabel "Equivalent ionomer film thickness"@en ;
+  rdfs:label "Equivalent ionomer film thickness"@en ;
+  skos:altLabel "CCL ionomer effective film thickness"@en ;
+  dcterms:description "Effective uniform thickness of the ionomer film obtained from its volume and the secondary-pore area it covers."@en ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_EquivalentIonomerFilmThickness ;
+  skos:notation "t" ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  dcterms:identifier "IO_CMP_CCLIonomerEffectiveFilmThickness" ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -21203,6 +21216,7 @@ h2kg:CathodeCatalystLayerThickness
   skos:prefLabel "Cathode Catalyst Layer Thickness"@en ;
   rdfs:label "Cathode Catalyst Layer Thickness"@en ;
   dcterms:description "A property denoting the thickness of a cathode catalyst layer."@en ;
+  skos:altLabel "CCL thickness"@en ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
@@ -21314,5 +21328,808 @@ h2kg:AverageWaterDropletCount
   skos:altLabel "average droplet count"@en, "AverageNumber"@en ;
   dcterms:description "A property denoting the average number of detected water droplets derived from tomography-based droplet analysis in fuel-cell water-dynamics studies."@en ;
   h2kg:hasQuantityValue <_AverageWaterDropletCount_QV> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:Electrolyte
+  a h2kg:Matter ;
+  skos:prefLabel "Electrolyte"@en ;
+  rdfs:label "Electrolyte"@en ;
+  skos:altLabel "electrolytic medium"@en ;
+  dcterms:description "A material that conducts ionic charge and provides an ion-transport medium in an electrochemical system, including liquid, gel, polymer, or solid electrolytes."@en ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:InkToCompositionModel
+  a h2kg:Process ;
+  skos:prefLabel "Ink-to-Composition Model"@en ;
+  rdfs:label "Ink-to-Composition Model"@en ;
+  dcterms:description "A computational process that predicts cathode-catalyst-layer composition and wetting descriptors from catalyst, ionomer, pore-structure, wettability, and constituent-density inputs."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "IET ink to composition model"@en, "ITC model"@en ;
+  h2kg:hasParameter h2kg:PlatinumToCarbonMassRatio, h2kg:IonomerToCarbonRatio, h2kg:IonomerCatalystDispersionParameter, h2kg:CCLPrimaryPoreVolumeFraction, h2kg:CCLSecondaryPoreVolumeFraction, h2kg:CCLPrimaryPoreRadiusGeometricMean, h2kg:CCLSecondaryPoreRadiusGeometricMean, h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation, h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation, h2kg:CarbonSupportInducedIonomerAlignmentDegree, h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree, h2kg:LimitingIonomerAlignmentDegree, h2kg:IdealHydrophilicIonomerContactAngle, h2kg:IdealHydrophobicIonomerContactAngle, h2kg:InitialIonomerFilmThickness, h2kg:EquivalentIonomerPatchRadius ;
+  h2kg:hasInputData h2kg:InkToCompositionModelInputDataset ;
+  h2kg:hasOutputData h2kg:InkToCompositionModelScalarResultDataset, h2kg:CCLWaterRetentionCurveDataset, h2kg:CCLRefinedPoreSizeDistributionDataset, h2kg:CCLContactAngleDistributionDataset ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumToCarbonMassRatio
+  a h2kg:Parameter ;
+  skos:prefLabel "Platinum-to-carbon mass ratio"@en ;
+  rdfs:label "Platinum-to-carbon mass ratio"@en ;
+  dcterms:description "Mass ratio of platinum catalyst to carbon support in the catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "catalyst-support ratio"@en ;
+  skos:notation "mPt:C" ;
+  dcterms:identifier "IO_CMP_CatalystSupportRatio" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumToCarbonMassRatio ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:IonomerCatalystDispersionParameter
+  a h2kg:Parameter ;
+  skos:prefLabel "Ionomer-catalyst dispersion parameter"@en ;
+  rdfs:label "Ionomer-catalyst dispersion parameter"@en ;
+  dcterms:description "Parameter describing the tendency of ionomer to spread over the platinum-on-carbon surface rather than form larger ionomer aggregates."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "kA" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDispersionParameter" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IonomerCatalystDispersionParameter ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLPrimaryPoreVolumeFraction
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL primary-pore volume fraction"@en ;
+  rdfs:label "CCL primary-pore volume fraction"@en ;
+  dcterms:description "Fraction of the total pore volume assigned to primary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "volume fraction of primary pores inside CCL"@en ;
+  skos:notation "phi1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi1" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreVolumeFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLSecondaryPoreVolumeFraction
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL secondary-pore volume fraction"@en ;
+  rdfs:label "CCL secondary-pore volume fraction"@en ;
+  dcterms:description "Fraction of the total pore volume assigned to secondary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "volume fraction of secondary pores inside CCL"@en ;
+  skos:notation "phi2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi2" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreVolumeFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLPrimaryPoreRadiusGeometricMean
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL primary-pore geometric-mean radius"@en ;
+  rdfs:label "CCL primary-pore geometric-mean radius"@en ;
+  dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for primary pores in a cathode catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "geometric mean pore radius for CCL primary pores"@en ;
+  skos:notation "rmu1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu1" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusGeometricMean ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLSecondaryPoreRadiusGeometricMean
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL secondary-pore geometric-mean radius"@en ;
+  rdfs:label "CCL secondary-pore geometric-mean radius"@en ;
+  dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for secondary pores in a cathode catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "geometric mean pore radius for CCL secondary pores"@en ;
+  skos:notation "rmu2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu2" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusGeometricMean ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL primary-pore logarithmic radius deviation"@en ;
+  rdfs:label "CCL primary-pore logarithmic radius deviation"@en ;
+  dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of primary-pore radii, calculated using the natural logarithm."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "logarithmic standard deviation of CCL primary-pore radii"@en ;
+  skos:notation "sigmaR1" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR1" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusLogarithmicStandardDeviation ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation
+  a h2kg:Parameter ;
+  skos:prefLabel "CCL secondary-pore logarithmic radius deviation"@en ;
+  rdfs:label "CCL secondary-pore logarithmic radius deviation"@en ;
+  dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of secondary-pore radii, calculated using the natural logarithm."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "logarithmic standard deviation of CCL secondary-pore radii"@en ;
+  skos:notation "sigmaR2" ;
+  dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR2" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusLogarithmicStandardDeviation ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CarbonSupportInducedIonomerAlignmentDegree
+  a h2kg:Parameter ;
+  skos:prefLabel "Carbon-support-induced ionomer alignment degree"@en ;
+  rdfs:label "Carbon-support-induced ionomer alignment degree"@en ;
+  dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "deltaDA,C" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CarbonSupportInducedIonomerAlignmentDegree ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree
+  a h2kg:Parameter ;
+  skos:prefLabel "Platinum-surface-induced ionomer alignment degree"@en ;
+  rdfs:label "Platinum-surface-induced ionomer alignment degree"@en ;
+  dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "deltaDA,Pt" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumSurfaceInducedIonomerAlignmentDegree ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:LimitingIonomerAlignmentDegree
+  a h2kg:Parameter ;
+  skos:prefLabel "Limiting ionomer alignment degree"@en ;
+  rdfs:label "Limiting ionomer alignment degree"@en ;
+  dcterms:description "Limiting degree of ionomer molecular alignment in a thick film where the influence of the platinum-on-carbon surface is negligible."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "deltaDA,inf" ;
+  dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_LimitingIonomerAlignmentDegree ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CarbonSupportWaterContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "Carbon-support water contact angle"@en ;
+  rdfs:label "Carbon-support water contact angle"@en ;
+  dcterms:description "Water contact angle of the bare carbon-support surface used to describe its intrinsic wettability."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "catalyst support contact angle"@en ;
+  skos:notation "thetaC" ;
+  dcterms:identifier "IO_MAT_CatalystSupportContactAngle" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CarbonSupportWaterContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumSurfaceWaterContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "Platinum-surface water contact angle"@en ;
+  rdfs:label "Platinum-surface water contact angle"@en ;
+  dcterms:description "Water contact angle of the bare platinum surface used to describe its intrinsic wettability."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "catalyst active particle contact angle"@en ;
+  skos:notation "thetaPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleContactAngle" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumSurfaceWaterContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:IdealHydrophilicIonomerContactAngle
+  a h2kg:Parameter ;
+  skos:prefLabel "Ideal hydrophilic ionomer contact angle"@en ;
+  rdfs:label "Ideal hydrophilic ionomer contact angle"@en ;
+  dcterms:description "Limiting water contact angle of an ideally hydrophilic aligned ionomer surface used as the hydrophilic endpoint of the model wetting relation."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "thetaHI" ;
+  dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHI" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IdealHydrophilicIonomerContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:IdealHydrophobicIonomerContactAngle
+  a h2kg:Parameter ;
+  skos:prefLabel "Ideal hydrophobic ionomer contact angle"@en ;
+  rdfs:label "Ideal hydrophobic ionomer contact angle"@en ;
+  dcterms:description "Limiting water contact angle of an ideally hydrophobic aligned ionomer surface used as the hydrophobic endpoint of the model wetting relation."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "thetaHO" ;
+  dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHO" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IdealHydrophobicIonomerContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:InitialIonomerFilmThickness
+  a h2kg:Parameter ;
+  skos:prefLabel "Initial ionomer film thickness"@en ;
+  rdfs:label "Initial ionomer film thickness"@en ;
+  dcterms:description "Limiting effective thickness of the ionomer film on the covered platinum-on-carbon surface as ionomer loading approaches zero, representing the characteristic thickness of the first deposited ionomer layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "ionomer initial film thickness"@en ;
+  skos:notation "t0" ;
+  dcterms:identifier "IO_MAT_IonomerInitialFilmThickness" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_InitialIonomerFilmThickness ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:EquivalentIonomerPatchRadius
+  a h2kg:Parameter ;
+  skos:prefLabel "Equivalent ionomer patch radius"@en ;
+  rdfs:label "Equivalent ionomer patch radius"@en ;
+  dcterms:description "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "rion" ;
+  dcterms:identifier "IO_CMP_MeanPoreRadiusInsideTheIonomer" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_EquivalentIonomerPatchRadius ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumParticleRadius
+  a h2kg:Property ;
+  skos:prefLabel "Platinum particle radius"@en ;
+  rdfs:label "Platinum particle radius"@en ;
+  dcterms:description "Radius of the hemispherical platinum nanoparticles used to determine platinum surface coverage in the model."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "catalyst active particle radius"@en ;
+  skos:notation "rPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDiameter" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumParticleRadius ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:DryIonomerDensity
+  a h2kg:Property ;
+  skos:prefLabel "Dry ionomer density"@en ;
+  rdfs:label "Dry ionomer density"@en ;
+  dcterms:description "Mass density of dry ionomer used to convert ionomer mass into ionomer volume."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "ionomer density (dry)"@en ;
+  skos:notation "rhoion" ;
+  dcterms:identifier "IO_MAT_IonomerDensityDry" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_DryIonomerDensity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumDensity
+  a h2kg:Property ;
+  skos:prefLabel "Platinum density"@en ;
+  rdfs:label "Platinum density"@en ;
+  dcterms:description "Mass density of platinum used to relate platinum loading to the amount and surface coverage of catalyst particles."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "catalyst active particle density"@en ;
+  skos:notation "rhoPt" ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDensity" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumDensity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CarbonDensity
+  a h2kg:Property ;
+  skos:prefLabel "Carbon density"@en ;
+  rdfs:label "Carbon density"@en ;
+  dcterms:description "Mass density of the carbon-support material."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "density of carbon"@en ;
+  skos:notation "rhoC" ;
+  dcterms:identifier "IO_CMP_DensityOfCarbon" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CarbonDensity ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CapillaryPressureAxisData
+  a h2kg:Data ;
+  skos:prefLabel "Capillary-pressure axis data"@en ;
+  rdfs:label "Capillary-pressure axis data"@en ;
+  dcterms:description "Array of capillary-pressure values used as the pressure axis for evaluating a cathode-catalyst-layer water-retention curve."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "capillary pressure range for WRC"@en ;
+  skos:notation "pC" ;
+  dcterms:identifier "IO_SIM_CapillaryPressureRange" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CapillaryPressureAxisData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLWaterSaturationData
+  a h2kg:Data ;
+  skos:prefLabel "CCL water-saturation data"@en ;
+  rdfs:label "CCL water-saturation data"@en ;
+  dcterms:description "Array giving the fraction of cathode-catalyst-layer pore volume flooded with liquid water at each capillary pressure in the water-retention curve."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL water saturation for WRC"@en ;
+  skos:notation "Sr" ;
+  dcterms:identifier "IO_CMP_CCLWaterRetentionCurve" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLWaterSaturationData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLAccessiblePrimaryPoreVolumeFraction
+  a h2kg:Property ;
+  skos:prefLabel "CCL accessible primary-pore volume fraction"@en ;
+  rdfs:label "CCL accessible primary-pore volume fraction"@en ;
+  dcterms:description "Normalized fraction of the remaining accessible cathode-catalyst-layer pore volume belonging to primary pores after accounting for ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL fraction of primary pores"@en ;
+  skos:notation "X1" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophilicPores" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLAccessiblePrimaryPoreVolumeFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLAccessibleSecondaryPoreVolumeFraction
+  a h2kg:Property ;
+  skos:prefLabel "CCL accessible secondary-pore volume fraction"@en ;
+  rdfs:label "CCL accessible secondary-pore volume fraction"@en ;
+  dcterms:description "Normalized fraction of the remaining accessible cathode-catalyst-layer pore volume belonging to secondary pores after accounting for ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL fraction of secondary pores"@en ;
+  skos:notation "X2" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLAccessibleSecondaryPoreVolumeFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLEffectiveIonomerCoverage
+  a h2kg:Property ;
+  skos:prefLabel "CCL effective ionomer coverage"@en ;
+  rdfs:label "CCL effective ionomer coverage"@en ;
+  dcterms:description "Fraction of the total secondary-pore surface covered by ionomer in a cathode catalyst layer."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "aion" ;
+  dcterms:identifier "IO_CMP_CCLEffectiveIonomerCoverage" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLEffectiveIonomerCoverage ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLPrimaryPoreSpecificSurfaceArea
+  a h2kg:Property ;
+  skos:prefLabel "CCL primary-pore specific surface area"@en ;
+  rdfs:label "CCL primary-pore specific surface area"@en ;
+  dcterms:description "Specific surface area of the primary-pore domain of the ionomer-free reference structure per unit carbon mass, calculated from the primary-pore size distribution."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL pore area of primary pores"@en ;
+  skos:notation "A1" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A1" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreSpecificSurfaceArea ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLSecondaryPoreSpecificSurfaceArea
+  a h2kg:Property ;
+  skos:prefLabel "CCL secondary-pore specific surface area"@en ;
+  rdfs:label "CCL secondary-pore specific surface area"@en ;
+  dcterms:description "Specific surface area of the secondary-pore domain of the ionomer-free reference structure per unit carbon mass, calculated from the secondary-pore size distribution."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL pore area of secondary pores"@en ;
+  skos:notation "A2" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A2" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreSpecificSurfaceArea ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLTotalPoreSpecificSurfaceArea
+  a h2kg:Property ;
+  skos:prefLabel "CCL total-pore specific surface area"@en ;
+  rdfs:label "CCL total-pore specific surface area"@en ;
+  dcterms:description "Total specific surface area of the primary- and secondary-pore network of the ionomer-free cathode-catalyst-layer reference structure per unit carbon mass."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL total pore area"@en ;
+  skos:notation "Apores" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_Apores" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLTotalPoreSpecificSurfaceArea ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLIonomerAlignmentDegree
+  a h2kg:Property ;
+  skos:prefLabel "CCL ionomer alignment degree"@en ;
+  rdfs:label "CCL ionomer alignment degree"@en ;
+  dcterms:description "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL degree of alignment of ionomer film"@en ;
+  skos:notation "deltaDA" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_deltaDA" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLIonomerAlignmentDegree ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PlatinumCarbonPoreWallContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "Platinum-carbon pore-wall contact angle"@en ;
+  rdfs:label "Platinum-carbon pore-wall contact angle"@en ;
+  dcterms:description "Effective water contact angle of the uncovered platinum-on-carbon pore wall determined from the surface contributions of platinum and carbon."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL contact angle of PtC pore wall"@en ;
+  skos:notation "thetaPt/C" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaPtC" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumCarbonPoreWallContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:IonomerCoatedPoreWallContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "Ionomer-coated pore-wall contact angle"@en ;
+  rdfs:label "Ionomer-coated pore-wall contact angle"@en ;
+  dcterms:description "Effective water contact angle of an ionomer-coated pore wall determined by the ionomer degree of alignment."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL contact angle of ionomer pore wall"@en ;
+  skos:notation "thetaion" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaIon" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IonomerCoatedPoreWallContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLMeanContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "CCL mean contact angle"@en ;
+  rdfs:label "CCL mean contact angle"@en ;
+  dcterms:description "Arithmetic mean of local cathode-catalyst-layer pore contact angles, with primary- and secondary-pore distributions weighted by their shares of total pore volume remaining after ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:notation "thetaCCL" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCL" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLMeanContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLHydrophilicPoreMeanContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "CCL hydrophilic-pore mean contact angle"@en ;
+  rdfs:label "CCL hydrophilic-pore mean contact angle"@en ;
+  dcterms:description "Pore-volume-weighted arithmetic mean of contact angles below 90 degrees, considering cathode-catalyst-layer pore volume remaining after ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL mean contact angle of hydrophilic pores"@en ;
+  skos:notation "thetaCCL,HI" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHI" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLHydrophilicPoreMeanContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLHydrophobicPoreMeanContactAngle
+  a h2kg:Property ;
+  skos:prefLabel "CCL hydrophobic-pore mean contact angle"@en ;
+  rdfs:label "CCL hydrophobic-pore mean contact angle"@en ;
+  dcterms:description "Pore-volume-weighted arithmetic mean of contact angles above 90 degrees, considering cathode-catalyst-layer pore volume remaining after ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL mean contact angle of hydrophobic pores"@en ;
+  skos:notation "thetaCCL,HO" ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHO" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLHydrophobicPoreMeanContactAngle ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLSecondaryPoreHydrophobicVolumeFraction
+  a h2kg:Property ;
+  skos:prefLabel "CCL secondary-pore hydrophobic volume fraction"@en ;
+  rdfs:label "CCL secondary-pore hydrophobic volume fraction"@en ;
+  dcterms:description "Fraction of secondary-pore volume with hydrophobic wetting behavior, corresponding to contact angles greater than 90 degrees."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL hydrophobic fraction of secondary pores"@en ;
+  skos:notation "XHO" ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores_XHO" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreHydrophobicVolumeFraction ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:PoreRadiusAxisData
+  a h2kg:Data ;
+  skos:prefLabel "Pore-radius axis data"@en ;
+  rdfs:label "Pore-radius axis data"@en ;
+  dcterms:description "Array of pore-radius values used as the size axis for evaluating cathode-catalyst-layer pore-size and contact-angle distributions."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "pore size for PSD"@en ;
+  skos:notation "r" ;
+  dcterms:identifier "IO_SIM_PoreSizeRange" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PoreRadiusAxisData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLRefinedPoreSizeDistributionData
+  a h2kg:Data ;
+  skos:prefLabel "CCL refined pore-size-distribution data"@en ;
+  rdfs:label "CCL refined pore-size-distribution data"@en ;
+  dcterms:description "Normalized pore-volume density per natural-logarithmic interval of pore radius, combining primary and secondary pores after accounting for ionomer filling."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL refined pore size distribution"@en ;
+  skos:notation "PSD" ;
+  dcterms:identifier "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLRefinedPoreSizeDistributionData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ContactAngleCosineAxisData
+  a h2kg:Data ;
+  skos:prefLabel "Contact-angle cosine axis data"@en ;
+  rdfs:label "Contact-angle cosine axis data"@en ;
+  dcterms:description "Array of contact-angle cosine values used as the angular axis for evaluating the cathode-catalyst-layer contact-angle distribution."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "contact angles for CAD"@en ;
+  skos:notation "cos(theta)" ;
+  dcterms:identifier "IO_SIM_ContactAngleRange" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_ContactAngleCosineAxisData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLContactAngleDistributionData
+  a h2kg:Data ;
+  skos:prefLabel "CCL contact-angle-distribution data"@en ;
+  rdfs:label "CCL contact-angle-distribution data"@en ;
+  dcterms:description "Normalized cathode-catalyst-layer contact-angle distribution on the specified cosine grid, combining primary- and secondary-pore contributions."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  skos:altLabel "CCL contact angle distribution"@en ;
+  skos:notation "CAD" ;
+  dcterms:identifier "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD" ;
+  h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLContactAngleDistributionData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:InkToCompositionModelInputDataset
+  a h2kg:Data ;
+  skos:prefLabel "Ink-to-Composition Model input dataset"@en ;
+  rdfs:label "Ink-to-Composition Model input dataset"@en ;
+  dcterms:description "A value-free schema dataset grouping property-valued inputs expected by the Ink-to-Composition Model."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:hasPart h2kg:ITCTotalPoreVolumeInputField, h2kg:ITCCarbonSupportWaterContactAngleInputField, h2kg:ITCPlatinumSurfaceWaterContactAngleInputField, h2kg:ITCPlatinumParticleRadiusInputField, h2kg:ITCSurfaceTensionInputField, h2kg:ITCDryIonomerDensityInputField, h2kg:ITCPlatinumDensityInputField, h2kg:ITCCarbonDensityInputField ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:InkToCompositionModelScalarResultDataset
+  a h2kg:Data ;
+  skos:prefLabel "Ink-to-Composition Model scalar-result dataset"@en ;
+  rdfs:label "Ink-to-Composition Model scalar-result dataset"@en ;
+  dcterms:description "A value-free schema dataset grouping scalar property fields produced by the Ink-to-Composition Model."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:hasPart h2kg:ITCCCLAccessiblePrimaryPoreVolumeFractionResultField, h2kg:ITCCCLAccessibleSecondaryPoreVolumeFractionResultField, h2kg:ITCCCLEffectiveIonomerCoverageResultField, h2kg:ITCEquivalentIonomerFilmThicknessResultField, h2kg:ITCCCLPrimaryPoreSpecificSurfaceAreaResultField, h2kg:ITCCCLSecondaryPoreSpecificSurfaceAreaResultField, h2kg:ITCCCLTotalPoreSpecificSurfaceAreaResultField, h2kg:ITCCCLIonomerAlignmentDegreeResultField, h2kg:ITCPlatinumCarbonPoreWallContactAngleResultField, h2kg:ITCIonomerCoatedPoreWallContactAngleResultField, h2kg:ITCCCLMeanContactAngleResultField, h2kg:ITCCCLHydrophilicPoreMeanContactAngleResultField, h2kg:ITCCCLHydrophobicPoreMeanContactAngleResultField, h2kg:ITCCCLSecondaryPoreHydrophobicVolumeFractionResultField ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLWaterRetentionCurveDataset
+  a h2kg:Data ;
+  skos:prefLabel "CCL water-retention-curve dataset"@en ;
+  rdfs:label "CCL water-retention-curve dataset"@en ;
+  dcterms:description "A dataset profile containing the capillary-pressure axis and corresponding CCL water-saturation array."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:hasPart h2kg:CapillaryPressureAxisData, h2kg:CCLWaterSaturationData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLRefinedPoreSizeDistributionDataset
+  a h2kg:Data ;
+  skos:prefLabel "CCL refined pore-size-distribution dataset"@en ;
+  rdfs:label "CCL refined pore-size-distribution dataset"@en ;
+  dcterms:description "A dataset profile containing a pore-radius axis and corresponding refined CCL pore-size distribution."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:hasPart h2kg:PoreRadiusAxisData, h2kg:CCLRefinedPoreSizeDistributionData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:CCLContactAngleDistributionDataset
+  a h2kg:Data ;
+  skos:prefLabel "CCL contact-angle-distribution dataset"@en ;
+  rdfs:label "CCL contact-angle-distribution dataset"@en ;
+  dcterms:description "A dataset profile containing a contact-angle-cosine axis and corresponding CCL contact-angle distribution."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:hasPart h2kg:ContactAngleCosineAxisData, h2kg:CCLContactAngleDistributionData ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCTotalPoreVolumeInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Total pore volume input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_TotalPoreVolume" ;
+  h2kg:ofProperty h2kg:TotalPoreVolume ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCarbonSupportWaterContactAngleInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Carbon-support water contact angle input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_MAT_CatalystSupportContactAngle" ;
+  h2kg:ofProperty h2kg:CarbonSupportWaterContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCPlatinumSurfaceWaterContactAngleInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Platinum-surface water contact angle input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleContactAngle" ;
+  h2kg:ofProperty h2kg:PlatinumSurfaceWaterContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCPlatinumParticleRadiusInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Platinum particle radius input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDiameter" ;
+  h2kg:ofProperty h2kg:PlatinumParticleRadius ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCSurfaceTensionInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Surface tension input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_SurfaceTensionOfWaterAtT353k" ;
+  h2kg:ofProperty h2kg:SurfaceTension ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCDryIonomerDensityInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Dry ionomer density input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_MAT_IonomerDensityDry" ;
+  h2kg:ofProperty h2kg:DryIonomerDensity ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCPlatinumDensityInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Platinum density input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_MAT_CatalystActiveParticleDensity" ;
+  h2kg:ofProperty h2kg:PlatinumDensity ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCarbonDensityInputField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Carbon density input field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_DensityOfCarbon" ;
+  h2kg:ofProperty h2kg:CarbonDensity ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLAccessiblePrimaryPoreVolumeFractionResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL accessible primary-pore volume fraction result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophilicPores" ;
+  h2kg:ofProperty h2kg:CCLAccessiblePrimaryPoreVolumeFraction ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLAccessibleSecondaryPoreVolumeFractionResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL accessible secondary-pore volume fraction result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores" ;
+  h2kg:ofProperty h2kg:CCLAccessibleSecondaryPoreVolumeFraction ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLEffectiveIonomerCoverageResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL effective ionomer coverage result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLEffectiveIonomerCoverage" ;
+  h2kg:ofProperty h2kg:CCLEffectiveIonomerCoverage ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCEquivalentIonomerFilmThicknessResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Equivalent ionomer film thickness result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLIonomerEffectiveFilmThickness" ;
+  h2kg:ofProperty h2kg:EquivalentIonomerFilmThickness ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLPrimaryPoreSpecificSurfaceAreaResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL primary-pore specific surface area result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A1" ;
+  h2kg:ofProperty h2kg:CCLPrimaryPoreSpecificSurfaceArea ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLSecondaryPoreSpecificSurfaceAreaResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL secondary-pore specific surface area result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_A2" ;
+  h2kg:ofProperty h2kg:CCLSecondaryPoreSpecificSurfaceArea ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLTotalPoreSpecificSurfaceAreaResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL total-pore specific surface area result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_Apores" ;
+  h2kg:ofProperty h2kg:CCLTotalPoreSpecificSurfaceArea ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLIonomerAlignmentDegreeResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL ionomer alignment degree result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_deltaDA" ;
+  h2kg:ofProperty h2kg:CCLIonomerAlignmentDegree ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCPlatinumCarbonPoreWallContactAngleResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Platinum-carbon pore-wall contact angle result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaPtC" ;
+  h2kg:ofProperty h2kg:PlatinumCarbonPoreWallContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCIonomerCoatedPoreWallContactAngleResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC Ionomer-coated pore-wall contact angle result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_ThetaIon" ;
+  h2kg:ofProperty h2kg:IonomerCoatedPoreWallContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLMeanContactAngleResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL mean contact angle result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCL" ;
+  h2kg:ofProperty h2kg:CCLMeanContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLHydrophilicPoreMeanContactAngleResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL hydrophilic-pore mean contact angle result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHI" ;
+  h2kg:ofProperty h2kg:CCLHydrophilicPoreMeanContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLHydrophobicPoreMeanContactAngleResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL hydrophobic-pore mean contact angle result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLStructuralParameters_thetaCCLHO" ;
+  h2kg:ofProperty h2kg:CCLHydrophobicPoreMeanContactAngle ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+  h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
+  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:ITCCCLSecondaryPoreHydrophobicVolumeFractionResultField
+  a h2kg:DataPoint ;
+  skos:prefLabel "ITC CCL secondary-pore hydrophobic volume fraction result field"@en ;
+  dcterms:description "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."@en ;
+  dcterms:identifier "IO_CMP_CCLFractionHydrophobicPores_XHO" ;
+  h2kg:ofProperty h2kg:CCLSecondaryPoreHydrophobicVolumeFraction ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
   h2kg:appliesToProfile <https://w3id.org/h2kg/pemfc/hydrogen-ontology>, <https://w3id.org/h2kg/pemwe/hydrogen-ontology> ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .

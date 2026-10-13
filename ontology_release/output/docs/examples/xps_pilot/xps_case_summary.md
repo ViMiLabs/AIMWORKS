@@ -1,0 +1,5 @@
+# XPS Case Summary
+
+The XPS round demonstrates how H2KG captures a PEMFC-relevant surface-chemistry characterization case without introducing a second XPS method node. A Pt/C catalyst-powder and PFSA-ionomer context feeds a conservative sample-conditioning step that yields an XPS-ready catalyst-ink film. That sample is analyzed by `h2kg:XRayPhotoelectronSpectroscopyMeasurement` using an `h2kg:XPSInstrument`, producing an `h2kg:XPSDataset` and a generic `h2kg:ExperimentDataset` acquisition record. A downstream generic `h2kg:Process` instance represents peak fitting and quantification, from which `h2kg:DataPoint` instances are linked to `h2kg:BindingEnergy`, `h2kg:C1sAtomicPercent`, `h2kg:O1sAtomicPercent`, `h2kg:F1sAtomicPercent`, `h2kg:N1sAtomicPercent`, `h2kg:CarbonToOxygenAtomRatio`, and `h2kg:MetalAtomicPercent`.
+
+This keeps the public ontology Explore surface disciplined: users find reusable TBox anchors for XPS acquisition, datasets, parameters, and core surface-chemistry outputs, while source/anode details, calibration notes, and fit-specific deconvolution assumptions remain metadata on example instances.

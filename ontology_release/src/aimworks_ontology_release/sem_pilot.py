@@ -266,7 +266,7 @@ def _sem_mapping_rows() -> list[dict[str, str]]:
     anal_fields = [
         ("Step 1 Precursor", "Post-processed image", "instance metadata", "h2kg:SEMMicrographDataset", "The analysis process consumes the processed SEM image dataset."),
         ("Step 1 Technique", "Manual particle measurement", "reuse existing term", "h2kg:Process", "Modeled as a labeled analysis-process instance rather than a new TBox term."),
-        ("Step 1 Software", "ImageJ", "reuse existing term", "h2kg:FijiImageJSoftware", "The analysis process reuses the existing software instrument term."),
+        ("Step 1 Software", "ImageJ", "reuse existing term", "h2kg:FijiImageJSoftware", "The analysis process reuses the existing image-analysis software term through h2kg:usesSoftware."),
         ("Step 1 Target", "Average size", "reuse existing term", "h2kg:CatalystParticleDiameter", "Mapped conservatively to the existing CatalystParticleDiameter property."),
         ("Step 1 AmountTarget", "", "not modeled", "h2kg:DataPoint", "A semantic result data point is created, but the worksheet does not provide a numeric value."),
     ]
@@ -563,7 +563,7 @@ def _sem_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Manual particle measurement", language="en")],
             f"{H2KG}hasInputData": [ref(iri("sem-processed-image-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("sem-analysis-summary-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
         },
         {
             "@id": iri("sem-analysis-summary-dataset"),

@@ -1,0 +1,42 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+h2kg:Agent rdfs:subClassOf prov:Agent .
+
+h2kg:CarbonDioxide skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_16526> .
+
+h2kg:ElectrochemicalMeasurement rdfs:subClassOf <https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29> .
+
+h2kg:Ethanol skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_16236> .
+
+h2kg:FormicAcid skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_30751> .
+
+h2kg:Hydrazine skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_18280> .
+
+h2kg:HydrochloricAcid skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_17883> .
+
+h2kg:HydrofluoricAcid skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_29241> .
+
+h2kg:PotassiumHydroxide skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_32035> .
+
+h2kg:Process owl:equivalentClass <https://w3id.org/emmo#EMMO_process> .
+
+h2kg:Property owl:equivalentClass <https://w3id.org/emmo#EMMO_property> .
+
+h2kg:Water skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_15377> .
+
+h2kg:hasIdentifier rdfs:subPropertyOf dcterms:identifier .
+
+h2kg:hasQuantityValue rdfs:subPropertyOf qudt:quantityValue .
+
+<https://w3id.org/h2kg/hydrogen-ontology/bridge/tib> a owl:Ontology ;
+    dcterms:description "Reviewed, selective mappings from H2KG to external resources indexed by the TIB Terminology Service; no external ontology collection is imported wholesale."@en ;
+    dcterms:title "H2KG Selective External-Ontology Bridge"@en ;
+    owl:imports <https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0> ;
+    owl:versionInfo "2.0.0" .
+

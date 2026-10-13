@@ -93,6 +93,9 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert 'data-explorer-root' in explore_page
     assert "Search the ontology" in explore_page
     assert "Download Excel (.xls)" in explore_page
+    assert 'value="relations" data-explorer-view checked' in explore_page
+    assert 'value="taxonomy" data-explorer-view' in explore_page
+    assert 'value="combined" data-explorer-view' in explore_page
     explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
     local_nodes = {item["iri"]: item for item in explorer_data["nodes"] if item.get("local")}
     assert "https://w3id.org/h2kg/hydrogen-ontology#Parameter" in local_nodes
@@ -102,6 +105,8 @@ def test_docs_generation(mini_ontology_file, output_dir):
     explorer_js = (output_dir / "docs" / "assets" / "explorer.js").read_text(encoding="utf-8")
     assert "downloadRelationsAsExcel" in explorer_js
     assert "showHoverCardForNode" in explorer_js
+    assert 'state.viewMode = viewMode' in explorer_js
+    assert 'link.module === "taxonomy"' in explorer_js
     pemfc_reference_page = (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Profile Reference Scope" in pemfc_reference_page
     assert "Reference Contents" in pemfc_reference_page
@@ -155,3 +160,127 @@ def test_docs_quality_dashboard_flags_stale_report_inputs(mini_ontology_file, ou
     build_docs(mini_ontology_file, output_dir / "docs", fair_snapshot=fair_snapshot)
     quality_page = (output_dir / "docs" / "pages" / "quality-dashboard.html").read_text(encoding="utf-8")
     assert "out of sync" in quality_page
+
+
+def test_docs_merge_taxonomy_property_domains_and_ranges(mini_ontology_file, output_dir):
+    ontology_dir = output_dir / "ontology"
+    ontology_dir.mkdir()
+    (ontology_dir / "h2kg-v2-taxonomy.ttl").write_text(
+        """@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+h2kg:Process a owl:Class ; skos:prefLabel \"Process\" ; skos:definition \"A test process.\" .
+h2kg:SoftwareArtifact a owl:Class ; skos:prefLabel \"Software artifact\" ; skos:definition \"A test software artifact.\" .
+h2kg:usesSoftware a owl:ObjectProperty ;
+  rdfs:label \"uses software\" ;
+  rdfs:domain h2kg:Process ;
+  rdfs:range h2kg:SoftwareArtifact ;
+  skos:definition \"Relates a process to software it uses.\" .
+""",
+        encoding="utf-8",
+    )
+    (ontology_dir / "taxonomy_registry.json").write_text(
+        json.dumps(
+            {
+                "version": "test",
+                "review_status": "test",
+                "terms": [
+                    {
+                        "iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+                        "local_name": "Process",
+                        "label": "Process",
+                        "definition": "A test process.",
+                        "disposition": "active_local_class",
+                        "parent_iri": "",
+                        "parent_label": "",
+                        "ancestor_path": [],
+                        "top_branch": "Process",
+                        "module": "core",
+                        "corrected_semantic_role": "Process",
+                    },
+                    {
+                        "iri": "https://w3id.org/h2kg/hydrogen-ontology#SoftwareArtifact",
+                        "local_name": "SoftwareArtifact",
+                        "label": "Software artifact",
+                        "definition": "A test software artifact.",
+                        "disposition": "active_local_class",
+                        "parent_iri": "",
+                        "parent_label": "",
+                        "ancestor_path": [],
+                        "top_branch": "InformationEntity",
+                        "module": "core",
+                        "corrected_semantic_role": "SoftwareArtifact",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    build_docs(mini_ontology_file, output_dir / "docs")
+
+    property_page = (output_dir / "docs" / "pages" / "property-index.html").read_text(encoding="utf-8")
+    assert "uses software" in property_page
+    assert "Process" in property_page
+    assert "SoftwareArtifact" in property_page
+
+
+def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, output_dir):
+    ontology_dir = output_dir / "ontology"
+    ontology_dir.mkdir()
+    local = "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement"
+    target = "https://w3id.org/emmo/domain/electrochemistry#electrochemical-measurement"
+    (ontology_dir / "taxonomy_registry.json").write_text(
+        json.dumps(
+            {
+                "terms": [
+                    {
+                        "iri": local,
+                        "label": "Electrochemical measurement",
+                        "definition": "A test electrochemical measurement class.",
+                        "disposition": "active_local_class",
+                        "parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+                        "parent_label": "Measurement",
+                        "ancestor_path": ["https://w3id.org/h2kg/hydrogen-ontology#Process"],
+                        "top_branch": "Process",
+                        "module": "core",
+                        "corrected_semantic_role": "Measurement",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (ontology_dir / "external_alignment_registry.json").write_text(
+        json.dumps(
+            {
+                "mappings": [
+                    {
+                        "local_iri": local,
+                        "local_label": "Electrochemical measurement",
+                        "local_kind": "class",
+                        "relation": "rdfs:subClassOf",
+                        "target_iri": target,
+                        "target_label": "Electrochemical measurement",
+                        "target_kind": "class",
+                        "source": "emmo-electrochemistry",
+                        "status": "manual_override",
+                        "rationale": "Reviewed test bridge.",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    summary = build_docs(mini_ontology_file, output_dir / "docs")
+    explorer = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
+
+    assert summary["mapping_count"] >= 1
+    assert any(
+        link["source"] == local
+        and link["target"] == target
+        and link["module"] == "alignments"
+        for link in explorer["links"]
+    )

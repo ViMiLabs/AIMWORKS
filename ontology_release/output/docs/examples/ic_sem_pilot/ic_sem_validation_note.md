@@ -1,0 +1,28 @@
+# IC-SEM Validation Note
+
+- New public ontology terms introduced in this round:
+  - `h2kg:ICSEMImagingMeasurement`
+  - `h2kg:ICSEMInstrument`
+  - `h2kg:MembraneElectrodeAssemblyThickness`
+  - `h2kg:PixelSize`
+- Existing terms deliberately reused:
+  - `h2kg:GasDiffusionLayerThickness`
+  - `h2kg:TotalPorosity`
+  - `h2kg:Magnification`
+  - `h2kg:Temperature`
+  - `h2kg:RelativeHumidity`
+  - `h2kg:VacuumChamberPressure`
+  - `h2kg:DwellTime`
+  - `h2kg:MicroscopyMeasuredArea`
+  - `h2kg:ExposureTime`
+  - `h2kg:IonBeamCurrent`
+  - `h2kg:IonBeamEnergy`
+  - `h2kg:ElectronCurrent`
+  - `h2kg:ElectronBeamEnergy`
+  - `h2kg:CutThickness`
+  - `h2kg:TotalAcquisitionTime`
+  - `h2kg:SEMImageDataset`
+  - `h2kg:SEMMicrographDataset`
+  - `h2kg:MicrostructureImageDataset`
+- Worksheet-specific steps such as `Cut`, `Fix`, `Dispersion`, `Thresholding`, `Scale set`, and `Layer thickness measurement` remain labeled process instances rather than public TBox terms.
+- Instrument details, detector names, publication metadata, filenames, and dimensional metadata remain attached through `h2kg:hasMetadata`.

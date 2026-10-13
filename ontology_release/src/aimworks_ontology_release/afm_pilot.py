@@ -288,7 +288,7 @@ def _afm_mapping_rows() -> list[dict[str, str]]:
         ("Step 1 Precursor", "Post-processed image", "instance metadata", "h2kg:SurfaceTopographyDataset", "The analysis process consumes the processed AFM dataset."),
         ("Step 1 Technique", "Manual particle measurement", "reuse existing term", "h2kg:Process", "Modeled as a labeled analysis-process instance rather than a new TBox term."),
         ("Step 1 Condition", "-", "instance metadata", "h2kg:hasMetadata", "No extra analysis condition was reported."),
-        ("Step 1 Software", "ImageJ", "reuse existing term", "h2kg:FijiImageJSoftware", "Reuses the existing software instrument term."),
+        ("Step 1 Software", "ImageJ", "reuse existing term", "h2kg:FijiImageJSoftware", "Reuses the existing image-analysis software term through h2kg:usesSoftware."),
         ("Step 1 Target", "Average size", "reuse existing term", "h2kg:MeanParticleSize", "Mapped to the broadened reusable MeanParticleSize property."),
         ("Step 1 AmountTarget", "110 um", "reuse existing term", "h2kg:DataPoint + h2kg:MeanParticleSize", "Represented as a datapoint with a quantity value for MeanParticleSize."),
     ]:
@@ -656,7 +656,7 @@ def _afm_example_items() -> list[dict[str, Any]]:
             "http://www.w3.org/2000/01/rdf-schema#label": [lit("Manual particle measurement", language="en")],
             f"{H2KG}hasInputData": [ref(iri("afm-processed-topography-dataset"))],
             f"{H2KG}hasOutputData": [ref(iri("afm-analysis-summary-dataset"))],
-            f"{H2KG}usesInstrument": [ref(f"{H2KG}FijiImageJSoftware")],
+            f"{H2KG}usesSoftware": [ref(f"{H2KG}FijiImageJSoftware")],
         },
         {
             "@id": iri("afm-analysis-summary-dataset"),

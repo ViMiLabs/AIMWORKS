@@ -1,0 +1,5 @@
+# NeutronTomo Case Summary
+
+H2KG captures the neutron-tomography case as an operando fuel-cell characterization pattern centered on `h2kg:NeutronTomographyMeasurement`. The public TBox connects the measurement to `h2kg:MEAAssembly`, `h2kg:NeutronTomographyInstrument`, a projection-data output (`h2kg:TomographicProjectionDataset`), a reconstructed tomograph output (`h2kg:TomographicReconstructionDataset`), and the main acquisition parameters `h2kg:PixelSize`, `h2kg:ExposureTime`, `h2kg:ProjectionNumber`, `h2kg:NeutronFlux`, `h2kg:SpatialResolution`, `h2kg:SampleDetectorDistance`, `h2kg:Temperature`, and `h2kg:RelativeHumidity`.
+
+The example graph then shows how worksheet-grounded preprocessing and analysis steps are represented conservatively as labeled `h2kg:Process` instances rather than promoted public classes. Derived scientific outcomes are expressed as datapoints for `h2kg:TortuosityFactor`, `h2kg:AverageWaterDropletArea`, and `h2kg:AverageWaterDropletCount`, with source provenance and deferred ambiguous worksheet content preserved through `h2kg:Metadata`.

@@ -1,0 +1,176 @@
+section,field,example_value,classification,h2kg_anchor,note
+org,ExperimentTitle,FIB tomography of NMC111 electrode,instance metadata,h2kg:hasMetadata + dcterms:title,Stored on the source-record metadata node.
+org,ExperimentID,7,instance metadata,h2kg:hasMetadata + h2kg:hasIdentifier,Stored as a literal identifier on the source-record metadata node.
+org,Measurement-ID,Run derived DOI,instance metadata,h2kg:hasMetadata + h2kg:hasIdentifier,Stored as a literal identifier on the measurement metadata node.
+org,UploadDate,2021-12-15,instance metadata,h2kg:hasMetadata + dcterms:date,Stored as a normalized upload-date literal on the source record.
+org,MeasurementDate,,not modeled,-,No value was present in the FIB-SEM sheet.
+org,Institution,HZB,instance metadata,prov:Agent,Represented as an institutional agent instance.
+org,FoundingBody,Helmholtz Imaging (HI),instance metadata,prov:Agent,Represented as a funding-body agent instance.
+org,Country,Germany,instance metadata,h2kg:hasMetadata,Retained as contextual metadata on the source record.
+org,Author,Markus Osenberg; Andre Colliard,instance metadata,prov:Agent,Represented as author agent instances linked from the source record and publication metadata.
+org,ORCID,123-465-7123; 321-321-3211,instance metadata,h2kg:hasMetadata,Stored on author metadata nodes.
+org,Email,mark.osen@hzb.de; andyhuebsch@gmail.mx,instance metadata,h2kg:hasMetadata,Stored on author metadata nodes.
+org,Published,TRUE,instance metadata,h2kg:hasMetadata,Retained as publication-status metadata.
+org,Publication,FIB tomography of NMC111 electrode,instance metadata,h2kg:hasMetadata + dcterms:title,Stored on a publication metadata node.
+org,DOI,https://doi.org/10.3390/1077778,instance metadata,h2kg:hasMetadata + dcterms:identifier,Stored on a publication metadata node.
+org,Journal,Nature Communications,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Volume,12,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Issue,4,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,Pages,123-321,instance metadata,h2kg:hasMetadata,Retained as bibliographic metadata.
+org,PublicationDate,2021-09-17,instance metadata,h2kg:hasMetadata + dcterms:issued,Stored as a normalized issued-date literal on the publication metadata node.
+org,Topic,Battery,instance metadata,h2kg:hasMetadata,Retained as thematic metadata.
+org,Device,Lithium-ion battery,instance metadata,h2kg:hasMetadata,Retained as application-context metadata.
+org,Component,Electrode,instance metadata,h2kg:hasMetadata,Retained as component-context metadata.
+org,Subcomponent,-,not modeled,-,The sheet explicitly reports no subcomponent value.
+org,Granularity Level,Nanostructure,instance metadata,h2kg:hasMetadata,Retained as scale/granularity metadata.
+org,Format,tiff,instance metadata,h2kg:hasMetadata + dcterms:format,Stored on raw-dataset metadata.
+org,FileSize,1250,instance metadata,h2kg:hasMetadata + dcterms:extent,Stored with file-size unit in dataset metadata.
+org,FileSizeUnit,MB,instance metadata,h2kg:hasMetadata + dcterms:extent,Stored with file size in dataset metadata.
+org,FileName,batNMC111.zip,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionX,1024,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionY,1024,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,DimensionZ,1000,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,PixelPerMetric,14,instance metadata,h2kg:hasMetadata,Stored on raw-dataset metadata.
+org,Link,link,instance metadata,h2kg:hasMetadata + dcterms:source,Stored as source/link metadata.
+org,MaskExist,yes,instance metadata,h2kg:hasMetadata,Stored on processed-dataset metadata.
+org,MaskLink,github-com/FIB-SEM_NMC,instance metadata,h2kg:hasMetadata + dcterms:source,Stored on processed-dataset metadata.
+syn,Step 1 Precursor,PTMA,instance metadata,h2kg:Matter,Represented as a material instance with procurement metadata.
+syn,Step 1 Technique,Buy,reuse existing term,h2kg:Process,Modeled as a labeled procurement process instance rather than a new TBox term.
+syn,Step 1 Condition,Manufacturer = SigmaAldrich; lot number = 205680; CAS-number = 7440-05-3,instance metadata,h2kg:hasMetadata,Stored on the PTMA material metadata node.
+syn,Step 1 Target,SInt1,instance metadata,h2kg:Matter,Represents the procured PTMA material instance.
+syn,Step 2 Precursor,SuperP,instance metadata,h2kg:Matter,Represented as a material instance with procurement metadata.
+syn,Step 2 Technique,Buy,reuse existing term,h2kg:Process,Modeled as a labeled procurement process instance rather than a new TBox term.
+syn,Step 2 Condition,Manufacturer = SigmaAldrich; lot number = 205680; CAS-number = 7440-05-3,instance metadata,h2kg:hasMetadata,Stored on the SuperP material metadata node.
+syn,Step 2 Target,SInt2,instance metadata,h2kg:Matter,Represents the procured SuperP material instance.
+syn,Step 3 Precursor,PVdF,instance metadata,h2kg:Matter,Represented as a material instance with procurement metadata.
+syn,Step 3 Technique,Buy,reuse existing term,h2kg:Process,Modeled as a labeled procurement process instance rather than a new TBox term.
+syn,Step 3 Condition,Manufacturer = SigmaAldrich; lot number = 205680; CAS-number = 7440-05-3,instance metadata,h2kg:hasMetadata,Stored on the PVdF material metadata node.
+syn,Step 3 Target,Nafion ionomer,instance metadata,h2kg:hasMetadata,The source sheet reports a target label inconsistent with the PVdF precursor; the normalized example keeps the raw value as metadata.
+syn,Step 4 Precursor A,SInt1,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the dissolve step.
+syn,Step 4 Precursor B,SInt2,instance metadata,h2kg:hasInputMaterial,Connected as one input material to the dissolve step.
+syn,Step 4 Precursor C,SInt3,instance metadata,h2kg:hasMetadata,The source sheet references SInt3 as an input before it is coherently defined; preserved as source metadata in the pilot note.
+syn,Step 4 Precursor D,NMP,instance metadata,h2kg:Matter,Represented as an NMP solvent material instance.
+syn,Step 4 AmountPrecursor,25 mL,instance metadata,h2kg:hasMetadata,Stored as solvent metadata on the NMP input material.
+syn,Step 4 Technique,Dissolve,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance rather than a new TBox term.
+syn,Step 4 Condition,Ratio = 70:20:10; Viscosity = 80 Pas,instance metadata,h2kg:hasMetadata,Retained as slurry-formation metadata in round 1.
+syn,Step 5 Precursor,SInt4,instance metadata,h2kg:hasMetadata,The source sheet uses an intermediate identifier that is normalized into a coherent slurry output in the example graph.
+syn,Step 5 Additional Input,Aluminum current collector,instance metadata,h2kg:hasInputMaterial,Connected as an input material to the doctor-blade coating step.
+syn,Step 5 Technique,Doctor blade,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance rather than a new TBox term.
+syn,Step 5 Condition,Velocity = 1 cm/s; Instrument = MICOS Blading; Thickness = 1 mm,instance metadata,h2kg:hasMetadata,Retained as coating metadata in round 1.
+syn,Step 5 Target,SInt3,instance metadata,h2kg:hasMetadata,The source sheet target identifier is inconsistent with downstream use; the normalized example records the raw identifier as metadata.
+syn,Step 6 Precursor,SInt5,instance metadata,h2kg:hasMetadata,The source sheet references SInt5 without a coherent prior target; the example graph normalizes it to the wet electrode intermediate.
+syn,Step 6 Technique,Dry,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance with explicit drying parameters.
+syn,Step 6 Condition,Temperature = 80 deg C; Time = 16 h,instance metadata,h2kg:hasMetadata,Retained as drying metadata because no dedicated battery-electrode drying profile is promoted in this round.
+syn,Step 6 Target,Cathode electrode,instance metadata,h2kg:Matter,Represents the dried electrode material used for FIB-SEM sample preparation.
+sp,Step 1 Precursor,Cathode electrode,instance metadata,h2kg:Matter,Uses the prepared electrode material as sample-preparation input.
+sp,Step 1 Technique,Cut,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance rather than a new TBox term.
+sp,Step 1 Condition,Size = 3 mm2,instance metadata,h2kg:hasMetadata,Retained as cut-size metadata.
+sp,Step 1 Target,SPInt1,instance metadata,h2kg:Matter,Represents the cut electrode coupon.
+sp,Step 2 Precursor A,SPInt1,instance metadata,h2kg:hasInputMaterial,Connected as one input to the fixing step.
+sp,Step 2 Precursor B,Aluminum pin stub,instance metadata,h2kg:Matter,Represented as an auxiliary mounting material instance.
+sp,Step 2 AmountPrecursor B,12.5 mm,instance metadata,h2kg:hasMetadata,Stored as mounting-material metadata.
+sp,Step 2 Precursor C,Conductive silver,instance metadata,h2kg:Matter,Represented as an auxiliary conductive mounting material instance.
+sp,Step 2 Technique,Fix,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance rather than a new TBox term.
+sp,Step 2 Condition,Time = 8 h,instance metadata,h2kg:hasMetadata,Retained as fixing metadata.
+sp,Step 2 Target,SPInt2,instance metadata,h2kg:Matter,Represents the mounted sample intermediate.
+sp,Step 3 Precursor A,SPInt2,instance metadata,h2kg:hasInputMaterial,Connected as one input to the Pt deposition step.
+sp,Step 3 Precursor B,Pt,instance metadata,h2kg:Matter,Represented as the deposited protective material.
+sp,Step 3 Technique,Deposit,reuse existing term,h2kg:Manufacturing,Modeled as a labeled manufacturing process instance rather than a new TBox term.
+sp,Step 3 Condition,Thickness = 0.5 um; Area = 15 um2,instance metadata,h2kg:hasMetadata,Retained as deposition metadata.
+sp,Step 3 Target,SPInt3,instance metadata,h2kg:Matter,Represents the Pt-protected sample intermediate.
+sp,Step 4 Precursor,SPInt3,instance metadata,h2kg:hasInputMaterial,Connected as input to the electron-beam polishing step.
+sp,Step 4 Technique,Electron beam,reuse existing term,h2kg:Process,Modeled as a labeled process instance rather than a new TBox term.
+sp,Step 4 Condition,Temperature = 50 deg C; Time = 10 min; Current = 250 pA; Energy = 5 keV,instance metadata,h2kg:hasMetadata,Retained as polishing metadata while the reusable current and energy anchors are attached at measurement level.
+sp,Step 4 Target,SPInt4,instance metadata,h2kg:Matter,Represents the electron-beam-polished sample intermediate.
+sp,Step 5 Precursor,SPInt4,instance metadata,h2kg:hasInputMaterial,Connected as input to the gallium milling step.
+sp,Step 5 Technique,Gallium current,reuse existing term,h2kg:Process,Modeled as a labeled process instance rather than a new TBox term.
+sp,Step 5 Condition,Temperature = 50 deg C; Time = 30 min; Current = 300 pA; Energy = 30 keV,instance metadata,h2kg:hasMetadata,Retained as milling metadata while reusable current and energy anchors are attached at measurement level.
+sp,Step 5 Target,Sample,instance metadata,h2kg:Matter,Represents the final FIB-SEM sample material instance.
+char,MeasurementMethod,FIB-SEM,reuse existing term,h2kg:FIBSEMTomographyMeasurement,Defines the pilot measurement instance type.
+char,MeasurementType,ex-situ,instance metadata,h2kg:hasMetadata,Retained as measurement-context metadata in round 1.
+char,Specimen,highly porous bulk material,instance metadata,h2kg:hasMetadata,Retained as specimen-context metadata in round 1.
+char,Characterization environment,,not modeled,-,No value was present in the FIB-SEM sheet.
+char,Temperature,23 C,reuse existing term,h2kg:Temperature,Modeled as a parameter-setting instance linked to the FIB-SEM measurement.
+char,Humidity,0 %,reuse existing term,h2kg:RelativeHumidity,Modeled as a parameter-setting instance linked to the FIB-SEM measurement.
+char,Atmosphere,Vacuum,instance metadata,h2kg:hasMetadata,Retained as measurement metadata in round 1.
+char,Pressure,10^-5 atm,reuse existing term,h2kg:VacuumChamberPressure,Modeled as a parameter-setting instance linked to the FIB-SEM measurement.
+char,Calibration,adjusting lenses and apertures; adjusting the voltage,instance metadata,h2kg:hasMetadata,Retained as calibration metadata in round 1.
+inst,Instrument,FIB-SEM,new ontology term,h2kg:FIBSEMInstrument,Introduced as a reusable instrument anchor for focused ion beam SEM tomography.
+inst,FIBEquipment,ZEISS Crossbeam 340,instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,SEMEquipment,-,not modeled,-,The sheet explicitly reports no separate SEM equipment value.
+inst,Optics,GEMINI,instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,InjectedElement,Pt,instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,InjectionSystem,multi channel gas injection system GIS,instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,IonBeamType,Ga,instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,IonBeamCurrent,700 pA,new ontology term,h2kg:IonBeamCurrent,Introduced as a reusable acquisition parameter.
+inst,IonBeamEnergy,30 keV,new ontology term,h2kg:IonBeamEnergy,Introduced as a reusable acquisition parameter.
+inst,PlaneSpacing,10,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,MeasuredArea,20 um2,reuse existing term,h2kg:MicroscopyMeasuredArea,Mapped conservatively to the existing microscopy measured-area anchor.
+inst,CutThickness,150 nm,new ontology term,h2kg:CutThickness,Introduced as a reusable acquisition parameter.
+inst,SliceNumber,1300,new ontology term,h2kg:SliceNumber,Introduced as a reusable acquisition parameter.
+inst,DwellTime,3 h,reuse existing term,h2kg:DwellTime,Reused as a generic dwell/residence-time acquisition anchor.
+inst,Imaging technique,,not modeled,-,No value was present in the FIB-SEM sheet.
+inst,Detector,"InLens, SE2",instance metadata,h2kg:hasMetadata,Stored as instrument metadata.
+inst,ElectronCurrent,250 pA,new ontology term,h2kg:ElectronCurrent,Introduced as a reusable acquisition parameter.
+inst,ElectronBeamEnergy,1.50 keV,new ontology term,h2kg:ElectronBeamEnergy,Introduced as a reusable acquisition parameter.
+inst,PixelSize,20 nm,reuse existing term,h2kg:VoxelSize,Mapped conservatively to the existing tomography voxel-size anchor.
+inst,Magnification,10,reuse existing term,h2kg:Magnification,Reused as an imaging magnification parameter.
+inst,Positioning coordinates,,not modeled,-,No value was present in the FIB-SEM sheet.
+inst,TiltCompensation,36,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,StageTilt,54,new ontology term,h2kg:StageTilt,Introduced as a reusable acquisition parameter.
+inst,DynamicFocus,-3,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,DriftCompensation,False,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,Brightness,1,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,Contrast,1,instance metadata,h2kg:hasMetadata,Retained as acquisition metadata in round 1.
+inst,ImageAcquisitionTime,60 s,reuse existing term,h2kg:ExposureTime,Mapped conservatively to the existing exposure-time anchor.
+inst,TotalAcquisitionTime,12 h,new ontology term,h2kg:TotalAcquisitionTime,Introduced as a reusable acquisition parameter.
+pre,Step 1 Precursor,RawData,instance metadata,h2kg:SEMImageDataset,Mapped to the raw FIB-SEM image-stack dataset.
+pre,Step 1 Technique,DriftCorrect,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 1 Software,SIFT,instance metadata,h2kg:hasMetadata,Retained as preprocessing-software metadata in round 1.
+pre,Step 1 Target,PPInt1,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the drift-corrected image-stack dataset.
+pre,Step 2 Precursor,PPInt1,instance metadata,h2kg:MicrostructureImageDataset,Uses the drift-corrected dataset as input.
+pre,Step 2 Technique,3D Reconstruct,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 2 Software,Astra toolbox,instance metadata,h2kg:hasMetadata,Retained as preprocessing-software metadata in round 1.
+pre,Step 2 Target,PPInt2,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the reconstructed-volume dataset.
+pre,Step 3 Precursor,PPInt2,instance metadata,h2kg:MicrostructureImageDataset,Uses the reconstructed-volume dataset as input.
+pre,Step 3 Technique,Artefact remove,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 3 Software,In-house 3D Unet,instance metadata,h2kg:hasMetadata,Retained as preprocessing-software metadata in round 1.
+pre,Step 3 Target,PPInt3,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the artefact-cleaned volume dataset.
+pre,Step 4 Precursor,PPInt3,instance metadata,h2kg:MicrostructureImageDataset,Uses the artefact-cleaned dataset as input.
+pre,Step 4 Technique,Clean,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 4 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The cleanup process reuses the existing software instrument anchor.
+pre,Step 4 Target,PPInt4,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the cleaned volume dataset.
+pre,Step 5 Precursor,PPInt4,instance metadata,h2kg:MicrostructureImageDataset,Uses the cleaned dataset as input.
+pre,Step 5 Technique,Threshold,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 5 Condition,Algorithm = Watershed,instance metadata,h2kg:hasMetadata,Retained as thresholding metadata in round 1.
+pre,Step 5 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The thresholding process reuses the existing software instrument anchor.
+pre,Step 5 Target,PPInt5,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the segmented volume dataset.
+pre,Step 6 Precursor,PPInt5,instance metadata,h2kg:MicrostructureImageDataset,Uses the segmented dataset as input.
+pre,Step 6 Technique,Visualize,reuse existing term,h2kg:Process,Modeled as a labeled preprocessing process instance rather than a new TBox term.
+pre,Step 6 Software,Blender3D,instance metadata,h2kg:hasMetadata,Retained as visualization-software metadata in round 1.
+pre,Step 6 Target,Post-processed image,instance metadata,h2kg:MicrostructureImageDataset,Mapped to the final processed FIB-SEM microstructure image dataset.
+anal,Step 1 Precursor,Post-processed image,instance metadata,h2kg:MicrostructureImageDataset,The analysis processes consume the processed FIB-SEM image dataset.
+anal,Step 1 Technique,Volume fraction calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 1 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 1 Target,Volume fraction,reuse existing term,h2kg:PoreVolumeFraction,Mapped conservatively to the existing legacy anchor; retained as metadata in the example graph because `ofProperty` expects a property-valued target.
+anal,Step 1 AmountTarget,80 nm,instance metadata,h2kg:hasMetadata,Retained as source metadata because the reported unit is inconsistent with the mapped concept.
+anal,Step 2 Technique,Surface calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 2 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 2 Target,Porosity,reuse existing term,h2kg:TotalPorosity,Mapped to the existing total-porosity property anchor.
+anal,Step 2 AmountTarget,10 pu,instance metadata,h2kg:DataPoint,Represented as a result data point with source-value metadata instead of an interpreted quantity value.
+anal,Step 3 Technique,Direction calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 3 Software,ImageJ,reuse existing term,h2kg:FijiImageJSoftware,The analysis process reuses the existing software instrument anchor.
+anal,Step 3 Target,Direction,not modeled,-,No stable local H2KG term is promoted in this round for the reported direction output.
+anal,Step 3 AmountTarget,6 deg,instance metadata,h2kg:hasMetadata,Retained as source metadata in the analysis summary dataset.
+anal,Step 4 Technique,Network relation analysis,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 4 Software,-,not modeled,-,The source sheet provides no software value for this analysis step.
+anal,Step 4 Target,Network relation,not modeled,-,No stable local H2KG term is promoted in this round for the reported network relation output.
+anal,Step 4 AmountTarget,7 pu,instance metadata,h2kg:hasMetadata,Retained as source metadata in the analysis summary dataset.
+anal,Step 5 Technique,Constrictivity calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 5 Condition,Constrictivity is defined by beta = rmin^2 / rmax^2.,instance metadata,h2kg:hasMetadata,Retained as analysis-definition metadata.
+anal,Step 5 Target,Constrictivity,new ontology term,h2kg:Constrictivity,Introduced as a reusable FIB-SEM-derived microstructure property.
+anal,Step 5 AmountTarget,8 pu,instance metadata,h2kg:DataPoint,Represented as a result data point with source-value metadata instead of an interpreted quantity value.
+anal,Step 6 Technique,Mean geodesic tortuosity calculation,reuse existing term,h2kg:Process,Modeled as a labeled analysis process instance rather than a new TBox term.
+anal,Step 6 Condition,Quantifying bottleneck effects and shortest transportation paths.,instance metadata,h2kg:hasMetadata,Retained as analysis-definition metadata.
+anal,Step 6 Target,Mean geodesic torutosity,new ontology term,h2kg:GeodesicTortuosity,Introduced as a reusable FIB-SEM-derived transport property.
+anal,Step 6 AmountTarget,9 pu,instance metadata,h2kg:DataPoint,Represented as a result data point with source-value metadata instead of an interpreted quantity value.

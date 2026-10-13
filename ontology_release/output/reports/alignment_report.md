@@ -2,18 +2,18 @@
 
 ## Summary
 
-- Accepted review-ready mappings: 14
-- Exploratory mappings: 136
-- Manual overrides: 11
+- Accepted review-ready mappings: 13
+- Exploratory mappings: 138
+- Manual overrides: 10
 - Accepted exact matches: 8
-- Accepted subclass or subproperty anchors: 4
+- Accepted subclass or subproperty anchors: 3
 - Accepted equivalence anchors: 2
 - Accepted close matches: 0
 
 ## Rejected Candidate Counts
 
-- `generic_electrochemical_measurement`: 50
-- `chemical_non_exact`: 68
+- `generic_electrochemical_measurement`: 51
+- `chemical_non_exact`: 69
 - `kind_mismatch`: 3
 - `qudt_scaffold`: 3
 - `metadata_scope`: 2
@@ -27,7 +27,6 @@
 - `Hydrazine` -> `skos:exactMatch` -> `http://purl.obolibrary.org/obo/CHEBI_18280` (0.99)
 - `Hydrochloric Acid` -> `skos:exactMatch` -> `http://purl.obolibrary.org/obo/CHEBI_17883` (0.99)
 - `Hydrofluoric Acid` -> `skos:exactMatch` -> `http://purl.obolibrary.org/obo/CHEBI_29241` (0.99)
-- `Measurement` -> `rdfs:subClassOf` -> `https://w3id.org/emmo/domain/electrochemistry#electrochemistry_7729c34e_1ae9_403d_b933_1765885e7f29` (0.99)
 - `Potassium Hydroxide` -> `skos:exactMatch` -> `http://purl.obolibrary.org/obo/CHEBI_32035` (0.99)
 - `Process` -> `owl:equivalentClass` -> `https://w3id.org/emmo#EMMO_process` (1.0)
 - `Property` -> `owl:equivalentClass` -> `https://w3id.org/emmo#EMMO_property` (1.0)
@@ -51,9 +50,6 @@
 
 - `Process` -> `owl:equivalentClass` -> `Process` (1.0)
 - `Property` -> `owl:equivalentClass` -> `Property` (1.0)
-### emmo-electrochemistry
-
-- `Measurement` -> `rdfs:subClassOf` -> `Electrochemical measurement` (0.99)
 ### prov-o
 
 - `Agent` -> `rdfs:subClassOf` -> `Agent` (0.99)
@@ -83,13 +79,13 @@ Exploratory mappings are preserved in `output/review/mapping_exploratory.csv` fo
 - `Carbon Oxide Fraction Percent` -> `Carbon dioxide` [rejected_chemical_non_exact]
 - `Carbon Support` -> `Carbon dioxide` [rejected_chemical_non_exact]
 - `Carbon Yield` -> `Carbon dioxide` [rejected_chemical_non_exact]
+- `Carbon density` -> `Carbon dioxide` [rejected_chemical_non_exact]
 - `Castor Oil` -> `Material` [exploratory_candidate]
 - `Chronoamperometry Measurement` -> `Electrochemical measurement` [rejected_generic_electrochemical_measurement]
 - `Chronopotentiometry Measurement` -> `Electrochemical measurement` [rejected_generic_electrochemical_measurement]
 - `Coating Mass Measurement` -> `Electrochemical measurement` [rejected_generic_electrochemical_measurement]
 - `Coating Weight Measurement` -> `Electrochemical measurement` [rejected_generic_electrochemical_measurement]
 - `Contact Angle` -> `Agent` [rejected_metadata_scope]
-- `Contact Angle Measurement` -> `Electrochemical measurement` [rejected_generic_electrochemical_measurement]
 
 ## Policy Notes
 

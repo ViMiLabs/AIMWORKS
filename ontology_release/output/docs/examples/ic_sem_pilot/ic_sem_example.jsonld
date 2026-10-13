@@ -1,0 +1,2094 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "icsem": "https://w3id.org/h2kg/examples/ic-sem#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#source-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Ion-cut SEM of a doctor bladed MEA",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/date": [
+        {
+          "@value": "2021-10-15",
+          "@type": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasIdentifier": [
+        {
+          "@value": "4"
+        },
+        {
+          "@value": "Run derived DOI"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Topic: Fuel Cell; device: PEMFC; component: MEA; subcomponent: Gas diffusion layer.",
+          "@language": "en"
+        },
+        {
+          "@value": "Granularity level: Nanostructure; country: Germany; source link: link.",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/creator": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard"
+        }
+      ],
+      "http://purl.org/dc/terms/contributor": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#institution-dlr"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#funding-hi"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "link"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#publication-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/title": [
+        {
+          "@value": "Automatic Characterization of Ion-cut SEM of a doctor bladed MEA",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "https://doi.org/10.3390/catal11077778"
+        }
+      ],
+      "http://purl.org/dc/terms/issued": [
+        {
+          "@value": "2021-10-18",
+          "@type": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Journal: Nature; volume: 89; issue: 5; pages: 7778-9998.",
+          "@language": "en"
+        },
+        {
+          "@value": "Published flag from source sheet: 1.",
+          "@language": "en"
+        }
+      ],
+      "http://purl.org/dc/terms/creator": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Tobias Morawietz",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Andre Colliard",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "ORCID: 123-465-7777"
+        },
+        {
+          "@value": "Email: tobi.mora@dlr.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/identifier": [
+        {
+          "@value": "ORCID: 321-321-3211"
+        },
+        {
+          "@value": "Email: andyhuebsch@gmail.mx"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#institution-dlr",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "DLR",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#funding-hi",
+      "@type": [
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Helmholtz Imaging (HI)",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "HiSPEC 4000 catalyst precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Amount: 40 wt%.",
+          "@language": "en"
+        },
+        {
+          "@value": "Manufacturer: Johnson Matthey; lot number: 205680; CAS-number: 7440-05-3.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Nafion XL membrane precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Amount: 28 um.",
+          "@language": "en"
+        },
+        {
+          "@value": "Manufacturer: DuPont; lot number: 205680; CAS-number: 7440-05-3.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Nafion ionomer precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Amount: 5 wt.%.",
+          "@language": "en"
+        },
+        {
+          "@value": "Manufacturer: DuPont; lot number: 205680; CAS-number: 7440-05-3.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-support-material",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Gas diffusion layer support precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-support-material-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-support-material-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Manufacturer: SGL Carbon; ID: 25BC Sigracet.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dissolved catalyst-membrane intermediate",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Ratio = 70:30; viscosity = 80 Pas.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#aluminum-current-collector",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Aluminum current collector",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Wet doctor-bladed MEA intermediate",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+        "https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Doctor-bladed MEA sample",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-coupon",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cut MEA coupon",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#si-wafer",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Si-wafer support",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#mounted-coupon",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Mounted IC-SEM intermediate",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#carbon-coated-copper-grid",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Carbon coated copper grid",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dispersed IC-SEM intermediate",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Matter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM pilot sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Specimen metadata from sheet: highly porous bulk material.",
+          "@language": "en"
+        },
+        {
+          "@value": "Local source context emphasizes an MEA sample with gas-diffusion-layer-focused interpretation.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#procure-hispec-4000",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Procure HiSPEC 4000 precursor",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#procure-nafion-xl-membrane",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Procure Nafion XL membrane",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#procure-nafion-ionomer",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Procure Nafion ionomer",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#procure-gdl-support",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Procure gas diffusion layer support",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-support-material"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolve-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dissolve catalyst, membrane, and ionomer precursor mixture",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#hispec-4000-material"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-xl-membrane"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#nafion-ionomer-material"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolve-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolve-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Worksheet technique label: Dissolved.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
+        "https://w3id.org/h2kg/hydrogen-ontology#DoctorBladeCoating"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Doctor blade coat dissolved intermediate on aluminum current collector",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dissolved-intermediate"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#aluminum-current-collector"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-blade-coating-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Velocity = 1 cm/s; instrument = MICOS Blading; thickness = 1 mm.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dry-doctor-bladed-mea-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dry doctor-bladed MEA",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#wet-doctor-bladed-mea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-time-setting"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-mea-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Cut MEA coupon",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-coupon"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-mea-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-mea-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Size = 5 mm2.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#fix-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Fix MEA coupon on Si-wafer support",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-coupon"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#si-wafer"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mounted-coupon"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#fix-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#fix-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "SampleHolder = Standard CSP.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dispersion-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Disperse mounted coupon with carbon coated copper grid",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mounted-coupon"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#carbon-coated-copper-grid"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dry-sample-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Dry dispersed IC-SEM sample",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dispersed-coupon"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-sample"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+        "https://w3id.org/h2kg/hydrogen-ontology#ICSEMImagingMeasurement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM pilot measurement",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#doctor-bladed-mea"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#temperature-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#magnification-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#measured-area-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-current-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-acquisition-metadata"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#source-record"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#publication-record"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasAssociatedWith": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-tobias-morawietz"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#author-andre-colliard"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#institution-dlr"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#funding-hi"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#publication-record"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-001",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Instrument",
+        "https://w3id.org/h2kg/hydrogen-ontology#ICSEMInstrument"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM instrument used in the pilot case",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-instrument-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Instrument stack: FIB-SEM; FIB equipment: Jeol IB-19530CP Cross Section Polisher; SEM equipment: Jeol JSM-7200F SEM.",
+          "@language": "en"
+        },
+        {
+          "@value": "Optics: GEMINI; injection system: multi channel gas injection system GIS; ion beam type: Ar.",
+          "@language": "en"
+        },
+        {
+          "@value": "Detector: InLens, SE2; brightness: 1; contrast: 1.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-acquisition-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Measurement type: ex-situ.",
+          "@language": "en"
+        },
+        {
+          "@value": "Specimen: highly porous bulk material; atmosphere: vacuum.",
+          "@language": "en"
+        },
+        {
+          "@value": "Calibration: adjusting lenses and apertures; adjusting the voltage.",
+          "@language": "en"
+        },
+        {
+          "@value": "Plane spacing reported in sheet: 10.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM raw image dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/format": [
+        {
+          "@value": "tiff"
+        }
+      ],
+      "http://purl.org/dc/terms/extent": [
+        {
+          "@value": "50 MB"
+        },
+        {
+          "@value": "512 x 512 x 0 pixels"
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "link"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Filename: ICSEM.zip.",
+          "@language": "en"
+        },
+        {
+          "@value": "PixelPerMetric: 20.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#thresholding-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Thresholding with Watershed",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-raw-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#thresholding-step-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#thresholding-step-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Software = ImageJ; algorithm = Watershed.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#SEMImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM thresholded image dataset",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#scale-set-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Scale set preprocessing",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-thresholded-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data",
+        "https://w3id.org/h2kg/hydrogen-ontology#SEMMicrographDataset",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicrostructureImageDataset"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM processed micrograph dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@value": "github-com/ICSEM"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Mask present: yes.",
+          "@language": "en"
+        },
+        {
+          "@value": "Processed target label: Post-processed image.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Layer thickness analysis",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#porosity-analysis-step",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Process"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Porosity analysis",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-processed-image-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#FijiImageJSoftware"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-analysis-summary-dataset",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Data"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM analysis summary dataset",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasPart": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM-derived MEA thickness datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#MembraneElectrodeAssemblyThickness"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM-derived gas diffusion layer thickness datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#layer-thickness-analysis-step"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM-derived total porosity datapoint",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#TotalPorosity"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#fromMeasurement": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ic-sem-measurement-001"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-qv"
+        }
+      ],
+      "http://www.w3.org/ns/prov#wasGeneratedBy": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#porosity-analysis-step"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#comment": [
+        {
+          "@value": "Raw worksheet amount target reported as 6 pu; normalized here as a percent-style porosity datapoint.",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DryingTemperature"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Drying temperature setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DryingTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Drying time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DryingTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "Sample drying time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#temperature-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM temperature setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#temperature-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#RelativeHumidity"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM relative humidity setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#VacuumChamberPressure"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM vacuum-chamber pressure setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#DwellTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM dwell-time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#magnification-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#Magnification"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM magnification setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#magnification-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#PixelSize"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM pixel-size setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#measured-area-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#MicroscopyMeasuredArea"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM measured-area setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#measured-area-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#ExposureTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM exposure-time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#IonBeamCurrent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM ion-beam current setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#IonBeamEnergy"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM ion-beam energy setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-current-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#ElectronCurrent"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM electron current setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-current-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#ElectronBeamEnergy"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM electron-beam energy setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#CutThickness"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM cut-thickness setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+        "https://w3id.org/h2kg/hydrogen-ontology#TotalAcquisitionTime"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@value": "IC-SEM total acquisition time setting",
+          "@language": "en"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting-qv"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-temperature-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "80",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ThermodynamicTemperature"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG_C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#drying-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "16",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HR"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#sample-drying-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "24",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HR"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#temperature-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "25",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ThermodynamicTemperature"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/DEG_C"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#relative-humidity-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "0",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/RelativeHumidity"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/PERCENT"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#vacuum-pressure-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "1.0e-6",
+          "@type": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Pressure"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/ATM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#dwell-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "12",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HR"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#magnification-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "10",
+          "@type": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Dimensionless"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/UNITLESS"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#pixel-size-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "20",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#measured-area-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "20",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Area"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/MicroM2"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#exposure-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "60",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/SEC"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-current-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "700",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ElectricCurrent"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/PicoA"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#ion-beam-energy-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "6",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ElectricPotential"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/KiloV"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-current-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "250",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ElectricCurrent"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/PicoA"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#electron-beam-energy-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "1.5",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ElectricPotential"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/KiloV"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#cut-thickness-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "150",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#total-acquisition-time-setting-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "12",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Time"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/HR"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#mea-thickness-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "80",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#gdl-thickness-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "160",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/Length"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/examples/ic-sem#total-porosity-datapoint-qv",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "6",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/PorosityPercent"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/PERCENT"
+        }
+      ]
+    }
+  ]
+}

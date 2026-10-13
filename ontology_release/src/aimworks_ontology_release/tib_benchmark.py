@@ -114,10 +114,12 @@ def build_tib_benchmark_package(
 
     terms = extract_local_h2kg_terms(input_path)
     candidate_path = target / "candidate_mappings.json"
-    if refresh or not candidate_path.exists():
+    if refresh:
         candidates, discovery_failures = discover_candidates(terms, snapshot, session=session)
         dump_json(candidate_path, candidates)
         dump_json(target / "discovery_failures.json", discovery_failures)
+    elif not candidate_path.exists():
+        return _write_missing_candidate_cache_package(target, snapshot_path, candidate_path)
     else:
         candidates = json.loads(candidate_path.read_text(encoding="utf-8"))
         failure_path = target / "discovery_failures.json"
@@ -434,6 +436,26 @@ def _write_missing_snapshot_package(target: Path, snapshot_path: Path) -> dict[s
     )
     write_text(target / "README.md", message)
     return {"status": "skipped_missing_snapshot", "snapshot": str(snapshot_path), "target": str(target)}
+
+
+def _write_missing_candidate_cache_package(
+    target: Path,
+    snapshot_path: Path,
+    candidate_path: Path,
+) -> dict[str, Any]:
+    message = (
+        "# H2KG--TIB Terminology Benchmark\n\n"
+        "The dated TIB catalogue snapshot is available, but the frozen candidate cache is missing. "
+        "The normal release remains offline and will not query TIB implicitly. Run the benchmark "
+        "command with `--refresh` to create a new dated candidate cache intentionally.\n"
+    )
+    write_text(target / "README.md", message)
+    return {
+        "status": "skipped_missing_candidate_cache",
+        "snapshot": str(snapshot_path),
+        "candidate_cache": str(candidate_path),
+        "target": str(target),
+    }
 
 
 def _write_csv(path: Path, rows: list[dict[str, Any]], columns: list[str]) -> None:
