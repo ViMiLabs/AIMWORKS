@@ -160,6 +160,18 @@ def test_external_bridge_accepts_reviewed_equivalent_property(tmp_path: Path) ->
         + "\n",
         encoding="utf-8",
     )
+    review_dir = output_dir / "review"
+    review_dir.mkdir(parents=True)
+    (review_dir / "mapping_review.csv").write_text(
+        "\n".join(
+            [
+                "local_iri,local_label,local_kind,relation,target_iri,target_label,target_kind,source,score,status,rationale",
+                "https://w3id.org/h2kg/hydrogen-ontology#AutomaticRelation,Automatic relation,object_property,owl:equivalentProperty,http://www.w3.org/ns/prov#used,used,object_property,prov-o,1.0,accepted,Automatic lexical candidate awaiting review.",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     result = _build_external_bridge(
         output_dir,
@@ -168,6 +180,10 @@ def test_external_bridge_accepts_reviewed_equivalent_property(tmp_path: Path) ->
     )
 
     assert result["mapping_count"] == 1
+    assert result["pending_review_mapping_count"] == 1
     assert result["invalid_mapping_count"] == 0
     graph = Graph().parse(result["turtle"], format="turtle")
     assert (_iri("generatedBy"), OWL.equivalentProperty, PROV.wasGeneratedBy) in graph
+    assert (_iri("AutomaticRelation"), OWL.equivalentProperty, PROV.used) not in graph
+    registry = json.loads((output_dir / "ontology" / "external_alignment_registry.json").read_text(encoding="utf-8"))
+    assert registry["pending_review_mappings"][0]["reviewer_decision"] == "pending-human-review"

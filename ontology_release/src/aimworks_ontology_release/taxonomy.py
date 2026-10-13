@@ -1149,7 +1149,11 @@ def _build_external_bridge(
     config_dir: str | Path,
     config: dict[str, Any],
 ) -> dict[str, Any]:
-    """Publish only reviewed mappings and record their dated TIB provenance."""
+    """Publish only reviewed mappings and record their dated TIB provenance.
+
+    Mapper threshold decisions are discovery candidates, not human review. They
+    remain in the registry as pending rows and never become bridge axioms.
+    """
 
     ontology_dir = ensure_dir(output_root / "ontology")
     reports_dir = ensure_dir(output_root / "reports")
@@ -1226,8 +1230,10 @@ def _build_external_bridge(
         "skos:narrowMatch": SKOS.narrowMatch,
     }
     registry_rows: list[dict[str, Any]] = []
+    pending_review_rows: list[dict[str, Any]] = []
     stale_manual_rows: list[dict[str, str]] = []
     invalid_rows: list[dict[str, str]] = []
+    reviewed_statuses = {"manual_override", "human_reviewed", "reviewed", "approved"}
     review_path = output_root / "review" / "mapping_review.csv"
     if review_path.exists():
         with review_path.open("r", encoding="utf-8", newline="") as handle:
@@ -1275,8 +1281,18 @@ def _build_external_bridge(
                     "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
                     "tib_loaded_at": tib_record.get("loaded", "not-indexed-as-separate-resource"),
                     "mapping_evidence": row.get("rationale", ""),
-                    "reviewer_decision": "accepted-existing-review",
+                    "reviewer_decision": (
+                        "accepted-configured-review"
+                        if status == "manual_override"
+                        else "accepted-human-review"
+                        if status in reviewed_statuses
+                        else "pending-human-review"
+                    ),
                 }
+                if status not in reviewed_statuses:
+                    registry_row["publication_status"] = "pending-human-review"
+                    pending_review_rows.append(registry_row)
+                    continue
                 required_values = (
                     registry_row.get("local_iri"),
                     registry_row.get("target_iri"),
@@ -1369,6 +1385,7 @@ def _build_external_bridge(
                 "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
                 "policy": "selective-reviewed-reuse",
                 "mappings": registry_rows,
+                "pending_review_mappings": pending_review_rows,
                 "excluded_stale_manual_mappings": stale_manual_rows,
                 "invalid_mappings": invalid_rows,
             },
@@ -1379,6 +1396,7 @@ def _build_external_bridge(
     _write_dict_csv(registry_csv, registry_rows)
     report = {
         "mapping_count": len(registry_rows),
+        "pending_review_mapping_count": len(pending_review_rows),
         "excluded_stale_manual_mapping_count": len(stale_manual_rows),
         "invalid_mapping_count": len(invalid_rows),
         "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
@@ -1643,6 +1661,10 @@ def _validate_taxonomy(
     if int(bridge.get("excluded_stale_manual_mapping_count", 0)):
         warnings.append(
             f"{bridge['excluded_stale_manual_mapping_count']} stale manual external mapping was excluded because it no longer matches the reviewed mapping configuration."
+        )
+    if int(bridge.get("pending_review_mapping_count", 0)):
+        warnings.append(
+            f"{bridge['pending_review_mapping_count']} automatically proposed external mappings remain pending human review and are excluded from the published bridge."
         )
     publication_ready = not errors and (
         reviewer_signed or not governance.get("require_domain_reviewer_signoff", True)
