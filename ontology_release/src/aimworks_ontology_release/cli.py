@@ -23,6 +23,7 @@ from .release import run_release
 from .split import split_ontology
 from .taxonomy import build_taxonomy_release
 from .tib_benchmark import build_tib_benchmark_package
+from .tib_collections import apply_harmonization_registry, build_collection_benchmark
 from .validate import validate_release
 
 
@@ -78,6 +79,26 @@ def main() -> None:
     run.add_argument("--draft-llm", action="store_true")
     repair = subparsers.add_parser("repair-doc-prefixes")
     repair.add_argument("--docs-root", required=True)
+    tib_collections = subparsers.add_parser("tib-collection-benchmark")
+    tib_collections.add_argument("--taxonomy-registry", default="output/ontology/taxonomy_registry.json")
+    tib_collections.add_argument("--snapshot", default="input/tib_collection_snapshot.json")
+    tib_collections.add_argument("--candidate-cache", default="input/tib_collection_candidate_cache.json")
+    tib_collections.add_argument("--existing-mappings", default="output/ontology/external_alignment_registry.json")
+    tib_collections.add_argument("--harmonization-registry", default="config/tib_auto_harmonization.json")
+    tib_collections.add_argument("--correction-registry", default="config/tib_h2kg_corrections.json")
+    tib_collections.add_argument("--collections", default="NFDI4CAT,NFDI4ENERGY,NFDI4ING")
+    tib_collections.add_argument("--refresh", action="store_true")
+    tib_collections.add_argument(
+        "--retry-failures",
+        action="store_true",
+        help="Retry only failed candidate queries against the frozen catalogue snapshot.",
+    )
+    tib_harmonize = subparsers.add_parser("tib-harmonize")
+    tib_harmonize.add_argument(
+        "--benchmark-registry",
+        default="output/benchmarks/tib_collections/automatic_harmonization_registry.json",
+    )
+    tib_harmonize.add_argument("--output-registry", default="config/tib_auto_harmonization.json")
     args = parser.parse_args()
     project_root = Path(args.project_root)
     input_path = Path(getattr(args, "input", project_root))
@@ -85,7 +106,46 @@ def main() -> None:
         input_path = project_root / input_path
     config_dir = project_root / "config"
     output = project_root / "output"
-    if args.command == "repair-doc-prefixes":
+    if args.command == "tib-collection-benchmark":
+        taxonomy_registry = Path(args.taxonomy_registry)
+        snapshot = Path(args.snapshot)
+        candidate_cache = Path(args.candidate_cache)
+        existing_mappings = Path(args.existing_mappings)
+        harmonization_registry = Path(args.harmonization_registry)
+        correction_registry = Path(args.correction_registry)
+        if not taxonomy_registry.is_absolute():
+            taxonomy_registry = project_root / taxonomy_registry
+        if not snapshot.is_absolute():
+            snapshot = project_root / snapshot
+        if not candidate_cache.is_absolute():
+            candidate_cache = project_root / candidate_cache
+        if not existing_mappings.is_absolute():
+            existing_mappings = project_root / existing_mappings
+        if not harmonization_registry.is_absolute():
+            harmonization_registry = project_root / harmonization_registry
+        if not correction_registry.is_absolute():
+            correction_registry = project_root / correction_registry
+        result = build_collection_benchmark(
+            taxonomy_registry,
+            output,
+            snapshot,
+            candidate_cache,
+            collections=[value.strip() for value in args.collections.split(",") if value.strip()],
+            refresh=args.refresh,
+            retry_failures=args.retry_failures,
+            existing_mapping_path=existing_mappings,
+            existing_harmonization_path=harmonization_registry,
+            correction_registry_path=correction_registry,
+        )
+    elif args.command == "tib-harmonize":
+        benchmark_registry = Path(args.benchmark_registry)
+        output_registry = Path(args.output_registry)
+        if not benchmark_registry.is_absolute():
+            benchmark_registry = project_root / benchmark_registry
+        if not output_registry.is_absolute():
+            output_registry = project_root / output_registry
+        result = apply_harmonization_registry(benchmark_registry, output_registry)
+    elif args.command == "repair-doc-prefixes":
         docs_root = Path(args.docs_root)
         if not docs_root.is_absolute():
             docs_root = project_root / docs_root

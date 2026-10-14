@@ -18,7 +18,6 @@ def generate_w3id_artifacts(
     strategy = policy["active_strategy"]
     html_base = policy["publication_base_html"].rstrip("/") + "/"
     rdf_base = policy["publication_base_rdf"].rstrip("/") + "/"
-
     html_targets = {
         "root": f"{html_base}index.html",
         "core": f"{html_base}hydrogen-ontology.html",
@@ -42,9 +41,9 @@ def generate_w3id_artifacts(
     htaccess = _htaccess(html_targets, rdf_targets)
     readme = _w3id_readme(strategy, profile, html_targets, rdf_targets)
 
-    # Root-level helper files remain useful for FAIR checks and local review,
-    # while the nested h2kg directory mirrors the actual structure expected by
-    # a future PR to perma-id/w3id.org.
+    # These files document the established H2KG resolver configuration. The
+    # external bridge is published through GitHub Pages and does not mint a new
+    # W3ID route.
     write_text(output_dir / ".htaccess", htaccess)
     write_text(output_dir / "README.md", _root_readme())
     write_text(output_dir / "publishing_notes.md", _publishing_notes(strategy, profile, html_targets, rdf_targets))
@@ -83,8 +82,7 @@ RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
 RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
 
-# H2KG v2 taxonomy release candidate. Canonical routing remains on the
-# published v1 release until domain-review and external-reasoner gates pass.
+# Published H2KG v2 taxonomy
 RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
 RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
@@ -136,17 +134,18 @@ RewriteRule ^pemwe/hydrogen-ontology$ {html_targets['pemwe']} [R=302,L]
 
 
 def _root_readme() -> str:
-    return """# Local w3id Review Output
+    return """# H2KG Resolver Reference
 
-This directory contains locally generated materials for a future `perma-id/w3id.org`
-pull request.
+This directory is a generated reference copy of the established H2KG resolver
+configuration. Existing H2KG ontology and term IRIs remain unchanged.
 
-The actual submission structure should use the nested `h2kg/` directory:
+The resolver configuration is represented by:
 
 - `h2kg/.htaccess`
 - `h2kg/README.md`
 
-The root-level files are kept as local helpers and for FAIR readiness checks.
+No new W3ID route is required for external alignments because mapping targets
+use their original ontology IRIs and bridge files are served by GitHub Pages.
 """
 
 
@@ -155,8 +154,8 @@ def _w3id_readme(strategy: str, profile: dict[str, Any], html_targets: dict[str,
 
 Project: `{profile['title']}`
 
-This directory is intended for a future pull request to `perma-id/w3id.org` to
-register the `https://w3id.org/h2kg/` namespace.
+This file documents the established `https://w3id.org/h2kg/` namespace and its
+current H2KG release targets.
 
 ## Namespace policy
 
@@ -185,7 +184,7 @@ register the `https://w3id.org/h2kg/` namespace.
 - Turtle: `{rdf_targets['pemwe_ttl']}`
 - JSON-LD: `{rdf_targets['pemwe_jsonld']}`
 
-### H2KG v2 taxonomy release candidate
+### H2KG v2 taxonomy release
 
 - Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0`
 - Browser / HTML: `{html_targets['v2_taxonomy']}`
@@ -216,12 +215,10 @@ def _publishing_notes(
     html_targets: dict[str, str],
     rdf_targets: dict[str, str],
 ) -> str:
-    return f"""# Publishing Notes
+    return f"""# Resolver and Publishing Notes
 
-1. Fork `perma-id/w3id.org`.
-2. Create the directory `h2kg/`.
-3. Copy `h2kg/.htaccess` and `h2kg/README.md` from this output.
-4. Open a PR describing the namespace and the long-term maintenance contact.
+The H2KG namespace is already established. This generated configuration is a
+reference for resolver maintenance and does not require a new W3ID registration.
 
 ## Resolver targets
 
@@ -235,13 +232,15 @@ def _publishing_notes(
 ## Policy reminders
 
 - Preserve existing hash IRIs under `{profile['namespace_uri']}`.
-- Do not switch to slash-term IRIs during the w3id registration step.
+- Do not switch to slash-term IRIs during release publication.
 - Keep the active namespace strategy as `{strategy}` until a reviewed migration plan exists.
+- Publish external bridge artifacts through GitHub Pages and retain original
+  external ontology IRIs as mapping targets.
 """
 
 
 def _curl_tests() -> str:
-    return """#!/usr/bin/env sh
+    return f"""#!/usr/bin/env sh
 set -eu
 
 curl -I -H "Accept: text/html" https://w3id.org/h2kg/hydrogen-ontology

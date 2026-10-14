@@ -13,6 +13,7 @@ from typing import Any, Iterable
 import yaml
 from pyshacl import validate as shacl_validate
 from rdflib import BNode, Graph, Literal, Namespace, RDF, RDFS, SKOS, URIRef
+from rdflib.compare import isomorphic
 from rdflib.namespace import DCTERMS, OWL, PROV, XSD
 
 from .utils import COMMON_CONTEXT, ensure_dir, write_text
@@ -48,6 +49,7 @@ MAPPING_PREDICATES = {
     SKOS.closeMatch,
     SKOS.broadMatch,
     SKOS.narrowMatch,
+    SKOS.relatedMatch,
     RDFS.seeAlso,
 }
 ANNOTATION_PREDICATES = {
@@ -57,6 +59,7 @@ ANNOTATION_PREDICATES = {
     SKOS.altLabel,
     SKOS.notation,
     SKOS.definition,
+    SKOS.scopeNote,
     DCTERMS.description,
     DCTERMS.source,
     DCTERMS.identifier,
@@ -97,6 +100,8 @@ def build_taxonomy_release(
     input_path: str | Path,
     output_root: str | Path,
     config_dir: str | Path | None = None,
+    *,
+    auto_harmonization_override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build the H2KG v2 class taxonomy and its compatibility layer.
 
@@ -109,12 +114,39 @@ def build_taxonomy_release(
     output_root = ensure_dir(Path(output_root))
     ontology_dir = ensure_dir(output_root / "ontology")
     reports_dir = ensure_dir(output_root / "reports")
-    config_path = Path(config_dir or input_path.parent.parent / "config") / "taxonomy.yaml"
+    config_root = Path(config_dir or input_path.parent.parent / "config")
+    config_path = config_root / "taxonomy.yaml"
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    controlled_corrections = _load_controlled_corrections(config_root / "tib_h2kg_corrections.json")
 
     source = Graph().parse(input_path, format="json-ld")
-    clean, compatibility, decisions = _build_graphs(source, config)
+    auto_harmonization = (
+        auto_harmonization_override
+        if auto_harmonization_override is not None
+        else _load_auto_harmonization(config_dir or input_path.parent.parent / "config")
+    )
+    clean, compatibility, decisions = _build_graphs(
+        source,
+        config,
+        auto_harmonization,
+        controlled_corrections,
+    )
     resources = _resource_dispositions(source, clean, decisions, config)
+
+    clean.add(
+        (
+            H2KG_ONTOLOGY,
+            RDFS.seeAlso,
+            URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl"),
+        )
+    )
+    clean.add(
+        (
+            H2KG_ONTOLOGY,
+            RDFS.seeAlso,
+            URIRef("https://vimilabs.github.io/AIMWORKS/pages/tib-benchmark.html"),
+        )
+    )
 
     clean_ttl = ontology_dir / "h2kg-v2-taxonomy.ttl"
     clean_jsonld = ontology_dir / "h2kg-v2-taxonomy.jsonld"
@@ -150,7 +182,7 @@ def build_taxonomy_release(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sha256": _sha256(input_path),
         "taxonomy_config_sha256": _sha256(config_path),
-        "review_status": str(config.get("review_status", "domain-review-required")),
+        "review_status": str(config.get("review_status", "domain-expert-reviewed")),
         "top_branches": [str(H2KG[name]) for name in config.get("top_branches", [])],
         "terms": [asdict(decision) for decision in decisions],
     }
@@ -171,7 +203,12 @@ def build_taxonomy_release(
     )
     _write_dict_csv(resource_registry_csv, resources)
 
-    bridge = _build_external_bridge(output_root, config_dir or input_path.parent.parent / "config", config)
+    bridge = _build_external_bridge(
+        output_root,
+        config_dir or input_path.parent.parent / "config",
+        config,
+        auto_harmonization,
+    )
     competency = _run_competency_checks(clean, compatibility, decisions)
     write_text(competency_path, json.dumps(competency, indent=2, ensure_ascii=False))
 
@@ -218,6 +255,8 @@ def build_taxonomy_release(
 def _build_graphs(
     source: Graph,
     config: dict[str, Any],
+    auto_harmonization: dict[str, Any] | None = None,
+    controlled_corrections: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[Graph, Graph, list[TaxonomyDecision]]:
     clean = Graph()
     compatibility = Graph()
@@ -227,6 +266,7 @@ def _build_graphs(
     structural = config.get("structural_classes", {})
     replacements = {str(key): str(value) for key, value in config.get("duplicate_replacements", {}).items()}
     parent_overrides = {str(key): str(value) for key, value in config.get("parent_overrides", {}).items()}
+    controlled_corrections = controlled_corrections or {}
     candidates = _class_candidates(source, structural)
     property_resources = _property_resources(source)
 
@@ -266,6 +306,35 @@ def _build_graphs(
             },
         )
 
+    label_changes = {
+        str(row.get("local_iri", "")): row
+        for row in (auto_harmonization or {}).get("label_changes", [])
+        if row.get("status") == "machine_safe" and row.get("local_iri") and row.get("new_preferred_label")
+    }
+    for record in records.values():
+        change = label_changes.get(str(record["subject"]))
+        if not change:
+            continue
+        old_label = str(record["label"])
+        new_label = str(change["new_preferred_label"]).strip()
+        if not new_label or new_label.casefold() == old_label.casefold():
+            continue
+        record["label"] = new_label
+        record["alt_labels"] = tuple(dict.fromkeys([*record.get("alt_labels", ()), old_label]))
+
+    for local_name, correction in controlled_corrections.items():
+        record = records.get(local_name)
+        if not record:
+            raise ValueError(f"Controlled correction targets unknown H2KG class {local_name}.")
+        preferred_label = str(correction.get("preferred_label_override", "")).strip()
+        if preferred_label:
+            record["label"] = preferred_label
+            record["alt_labels"] = tuple(
+                value
+                for value in record.get("alt_labels", ())
+                if "�" not in str(value) and str(value).casefold() != preferred_label.casefold()
+            )
+
     parent_by_name: dict[str, str] = {}
     for local_name, record in records.items():
         if local_name in replacements:
@@ -296,6 +365,7 @@ def _build_graphs(
             label = "Catalyst Layer Thickness"
         corrected_role = _corrected_semantic_role(local_name, parent_by_name)
         corrected_from_source_role = _needs_corrected_definition(tuple(record["roles"]), corrected_role)
+        correction = controlled_corrections.get(local_name, {})
 
         if local_name in structural:
             definition = str(structural[local_name].get("definition", "")).strip()
@@ -308,6 +378,20 @@ def _build_graphs(
             else:
                 definition = _generated_definition(label, parent_name, record["roles"], structural)
                 definition_status = "expert-draft-role-corrected" if corrected_from_source_role else "expert-draft"
+
+        if correction:
+            required_parent = str(correction.get("required_parent", ""))
+            if required_parent and parent_name != required_parent:
+                raise ValueError(
+                    f"Controlled correction {correction.get('correction_id')} expected {local_name} "
+                    f"under {required_parent}, found {parent_name or 'no parent'}."
+                )
+            replacement_definition = str(
+                correction.get("definition_override") or correction.get("final_value", "")
+            ).strip()
+            if replacement_definition:
+                definition = replacement_definition
+                definition_status = "curated-controlled-correction"
 
         if deprecated:
             replacement = H2KG[replacement_name]
@@ -329,6 +413,14 @@ def _build_graphs(
             clean.set((subject, SKOS.prefLabel, Literal(label, lang="en")))
             clean.set((subject, SKOS.definition, Literal(definition, lang="en")))
             _copy_term_annotations(source, subject, clean)
+            if correction.get("definition_override") or correction.get("final_value"):
+                clean.set((subject, DCTERMS.description, Literal(definition, lang="en")))
+            scope_note = str(correction.get("scope_note", "")).strip()
+            if scope_note:
+                clean.set((subject, SKOS.scopeNote, Literal(scope_note, lang="en")))
+            for alt_label in record.get("alt_labels", ()):
+                if str(alt_label).casefold() != label.casefold():
+                    clean.add((subject, SKOS.altLabel, Literal(str(alt_label), lang="en")))
             if parent_name:
                 clean.add((subject, RDFS.subClassOf, H2KG[parent_name]))
             _add_upper_alignment(clean, local_name)
@@ -342,7 +434,8 @@ def _build_graphs(
 
         module, technologies = _module_for(label, local_name, config.get("module_rules", {}))
         migration_action = _migration_action(record, deprecated, local_name in structural)
-        review_status = str(config.get("review_status", "domain-review-required"))
+        review_status = str(config.get("review_status", "domain-expert-reviewed"))
+        reviewer_decision = str(config.get("reviewer_decision", "approved-domain-expert-review"))
         _add_taxonomy_annotations(
             clean,
             subject,
@@ -353,7 +446,7 @@ def _build_graphs(
             definition_status=definition_status,
             review_status=review_status,
             migration_action=migration_action,
-            reviewer_decision="pending-domain-review",
+            reviewer_decision=reviewer_decision,
             source_exists=bool(record.get("source_exists")),
         )
         decisions.append(
@@ -378,7 +471,7 @@ def _build_graphs(
                 replacement_iri=str(H2KG[replacement_name]) if replacement_name else "",
                 review_status=review_status,
                 migration_action=migration_action,
-                reviewer_decision="pending-domain-review",
+                reviewer_decision=reviewer_decision,
                 rationale=rationale,
             )
         )
@@ -1126,7 +1219,7 @@ def _resource_dispositions(
             corrected_kind = "owl:NamedIndividual"
             rationale = "Contextual source resource retained as an individual pending a more specific profile disposition."
             label = _best_label(source, subject, local_name)
-            review_status = str(config.get("review_status", "domain-review-required"))
+            review_status = str(config.get("review_status", "domain-expert-reviewed"))
 
         rows.append(
             {
@@ -1144,16 +1237,56 @@ def _resource_dispositions(
     return rows
 
 
+def _load_auto_harmonization(config_dir: str | Path) -> dict[str, Any]:
+    path = Path(config_dir) / "tib_auto_harmonization.json"
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("format") not in {
+        "h2kg-tib-auto-harmonization/v1",
+        "h2kg-tib-auto-harmonization/v2",
+    }:
+        raise ValueError(f"Unsupported TIB harmonization registry format: {payload.get('format')}")
+    if payload.get("owl_imports_added"):
+        raise ValueError("The automatic TIB harmonization registry may not add owl:imports.")
+    unsafe = [row for row in payload.get("mappings", []) if row.get("status") != "machine_safe"]
+    unsafe.extend(row for row in payload.get("label_changes", []) if row.get("status") != "machine_safe")
+    if unsafe:
+        raise ValueError("The automatic TIB harmonization registry contains non-machine-safe rows.")
+    if payload.get("format") == "h2kg-tib-auto-harmonization/v2":
+        supported = {"skos:exactMatch", "skos:broadMatch", "skos:narrowMatch"}
+        invalid = [row for row in payload.get("mappings", []) if row.get("relation") not in supported]
+        if invalid:
+            raise ValueError("The automatic TIB harmonization registry contains an unsupported relation.")
+    return payload
+
+
+def _load_controlled_corrections(path: Path) -> dict[str, dict[str, Any]]:
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("format") != "h2kg-tib-controlled-corrections/v1":
+        raise ValueError(f"Unsupported H2KG correction registry format: {payload.get('format')}")
+    corrections: dict[str, dict[str, Any]] = {}
+    for record in payload.get("corrections", []):
+        if record.get("status") != "applied" or record.get("confidence") != "high":
+            continue
+        local_name = str(record.get("local_name", "")).strip()
+        if not local_name:
+            raise ValueError("A controlled H2KG correction lacks local_name.")
+        if local_name in corrections:
+            raise ValueError(f"Duplicate controlled correction for {local_name}.")
+        corrections[local_name] = dict(record)
+    return corrections
+
+
 def _build_external_bridge(
     output_root: Path,
     config_dir: str | Path,
     config: dict[str, Any],
+    auto_harmonization: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Publish only reviewed mappings and record their dated TIB provenance.
-
-    Mapper threshold decisions are discovery candidates, not human review. They
-    remain in the registry as pending rows and never become bridge axioms.
-    """
+    """Publish a conservative, versioned SKOS bridge plus reviewed mappings."""
 
     ontology_dir = ensure_dir(output_root / "ontology")
     reports_dir = ensure_dir(output_root / "reports")
@@ -1161,33 +1294,60 @@ def _build_external_bridge(
     bridge_jsonld = ontology_dir / "h2kg-v2-external-bridge.jsonld"
     registry_json = ontology_dir / "external_alignment_registry.json"
     registry_csv = ontology_dir / "external_alignment_registry.csv"
-    bridge_iri = URIRef("https://w3id.org/h2kg/hydrogen-ontology/bridge/tib")
+    sssom_tsv = ontology_dir / "h2kg-tib-asserted-mappings.sssom.tsv"
+    changelog_csv = ontology_dir / "h2kg-tib-alignment-changelog.csv"
+    previous_registry: dict[str, Any] = {}
+    if registry_json.exists():
+        previous_registry = json.loads(registry_json.read_text(encoding="utf-8"))
+    config_root = Path(config_dir)
+    collection_snapshot_path = config_root.parent / "input" / "tib_collection_snapshot.json"
+    legacy_snapshot_path = config_root.parent / "input" / "tib_terminology_snapshot.json"
+    collection_snapshot: dict[str, Any] = {}
+    legacy_snapshot: dict[str, Any] = {}
+    if collection_snapshot_path.exists():
+        collection_snapshot = json.loads(collection_snapshot_path.read_text(encoding="utf-8"))
+    if legacy_snapshot_path.exists():
+        legacy_snapshot = json.loads(legacy_snapshot_path.read_text(encoding="utf-8"))
+    snapshot = collection_snapshot or legacy_snapshot
+    snapshot_sha256 = str((auto_harmonization or {}).get("snapshot_sha256") or _json_payload_sha256(snapshot))
+    snapshot_date = str(snapshot.get("retrieved_at", "snapshot-not-available"))
+    snapshot_slug = re.sub(r"[^0-9]", "", snapshot_date[:10]) or "undated"
+    version = str(config.get("version", "2.0.0"))
+    immutable_stem = f"h2kg-external-bridge-{snapshot_slug}-{snapshot_sha256[:12]}"
+    bridge_iri = URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl")
+    version_iri = URIRef(
+        f"https://vimilabs.github.io/AIMWORKS/ontology/releases/{version}/{immutable_stem}.ttl"
+    )
     graph = Graph()
     _bind_namespaces(graph, Graph())
     graph.add((bridge_iri, RDF.type, OWL.Ontology))
     graph.add((bridge_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
-    graph.add((bridge_iri, OWL.versionInfo, Literal(str(config.get("version", "2.0.0")))))
-    graph.add((bridge_iri, DCTERMS.title, Literal("H2KG Selective External-Ontology Bridge", lang="en")))
+    graph.add((bridge_iri, OWL.versionIRI, version_iri))
+    graph.add((bridge_iri, OWL.versionInfo, Literal(version)))
+    graph.add((bridge_iri, DCTERMS.title, Literal("H2KG External Semantic Alignment Bridge", lang="en")))
+    graph.add((bridge_iri, DCTERMS.created, Literal(datetime.now(timezone.utc).replace(microsecond=0).isoformat(), datatype=XSD.dateTime)))
+    graph.add((bridge_iri, DCTERMS.identifier, Literal(snapshot_sha256)))
+    graph.add((bridge_iri, DCTERMS.source, URIRef("https://api.terminology.tib.eu/api")))
+    graph.add((bridge_iri, RDFS.seeAlso, URIRef("https://vimilabs.github.io/AIMWORKS/pages/tib-benchmark.html")))
     graph.add(
         (
             bridge_iri,
             DCTERMS.description,
             Literal(
-                "Reviewed, selective mappings from H2KG to external resources indexed by the TIB Terminology Service; no external ontology collection is imported wholesale.",
+                "Versioned exact, broader, and narrower mappings from H2KG to original ontology IRIs discovered through the TIB Terminology Service. Related benchmark evidence is published separately and no external ontology collection is imported wholesale.",
                 lang="en",
             ),
         )
     )
 
-    snapshot_path = Path(config_dir).parent / "input" / "tib_terminology_snapshot.json"
-    snapshot: dict[str, Any] = {}
-    if snapshot_path.exists():
-        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
     tib_by_id = {
         str(item.get("ontology_id", "")).casefold(): item
         for item in snapshot.get("ontologies", [])
         if item.get("ontology_id")
     }
+    for item in legacy_snapshot.get("ontologies", []):
+        if item.get("ontology_id"):
+            tib_by_id.setdefault(str(item["ontology_id"]).casefold(), item)
     source_to_tib = {
         "chebi": "chebi",
         "emmo-core": "emmo",
@@ -1228,6 +1388,7 @@ def _build_external_bridge(
         "skos:closeMatch": SKOS.closeMatch,
         "skos:broadMatch": SKOS.broadMatch,
         "skos:narrowMatch": SKOS.narrowMatch,
+        "skos:relatedMatch": SKOS.relatedMatch,
     }
     registry_rows: list[dict[str, Any]] = []
     pending_review_rows: list[dict[str, Any]] = []
@@ -1260,13 +1421,13 @@ def _build_external_bridge(
                         )
                         continue
                 predicate = relation_iris.get(relation)
-                if not local_iri or not target_iri or predicate is None:
+                if not local_iri or not target_iri or predicate is None or not _is_original_external_iri(target_iri):
                     invalid_rows.append(
                         {
                             "local_iri": local_iri,
                             "relation": relation,
                             "target_iri": target_iri,
-                            "reason": "Mapping lacks a local IRI, target IRI, or supported reviewed relation.",
+                            "reason": "Mapping lacks a local IRI, original target ontology IRI, or supported reviewed relation.",
                         }
                     )
                     continue
@@ -1279,7 +1440,13 @@ def _build_external_bridge(
                     "tib_ontology_title": tib_record.get("title", source_id),
                     "tib_ontology_version": tib_record.get("version") or "version-not-reported-in-TIB-snapshot",
                     "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
+                    "tib_snapshot_sha256": snapshot_sha256,
                     "tib_loaded_at": tib_record.get("loaded", "not-indexed-as-separate-resource"),
+                    "tib_catalogue_url": f"https://terminology.tib.eu/ts/ontologies/{tib_id}" if tib_id else "",
+                    "collections": _snapshot_collections(snapshot, tib_id),
+                    "confidence": "high",
+                    "rule_id": "MANUAL-REVIEWED-MAPPING",
+                    "alignment_category": "reviewed_foundational_alignment",
                     "mapping_evidence": row.get("rationale", ""),
                     "reviewer_decision": (
                         "accepted-configured-review"
@@ -1314,6 +1481,7 @@ def _build_external_bridge(
                     )
                     continue
                 registry_rows.append(registry_row)
+                registry_row["publication_status"] = "asserted-reviewed"
                 graph.add((URIRef(local_iri), predicate, URIRef(target_iri)))
 
     represented_local_names = {
@@ -1348,9 +1516,16 @@ def _build_external_bridge(
             "tib_ontology_title": tib_record.get("title", source_id),
             "tib_ontology_version": tib_record.get("version") or "version-not-reported-in-TIB-snapshot",
             "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
+            "tib_snapshot_sha256": snapshot_sha256,
             "tib_loaded_at": tib_record.get("loaded", "not-indexed-as-separate-resource"),
+            "tib_catalogue_url": f"https://terminology.tib.eu/ts/ontologies/{tib_id}" if tib_id else "",
+            "collections": _snapshot_collections(snapshot, tib_id),
+            "confidence": "high",
+            "rule_id": "MANUAL-CONFIGURED-MAPPING",
+            "alignment_category": "reviewed_foundational_alignment",
             "mapping_evidence": str(full_spec.get("rationale", "")),
             "reviewer_decision": "accepted-configured-review",
+            "publication_status": "asserted-reviewed",
         }
         required_values = (
             registry_row["local_kind"],
@@ -1362,7 +1537,12 @@ def _build_external_bridge(
             registry_row["tib_ontology_version"],
             registry_row["tib_snapshot_retrieved_at"],
         )
-        if predicate is None or not target_iri or not all(str(value or "").strip() for value in required_values):
+        if (
+            predicate is None
+            or not target_iri
+            or not _is_original_external_iri(target_iri)
+            or not all(str(value or "").strip() for value in required_values)
+        ):
             invalid_rows.append(
                 {
                     "local_iri": local_iri,
@@ -1375,39 +1555,415 @@ def _build_external_bridge(
         registry_rows.append(registry_row)
         graph.add((URIRef(local_iri), predicate, URIRef(target_iri)))
 
+    represented_mappings = {
+        (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", "")))
+        for row in registry_rows
+    }
+    reviewed_pairs = {
+        (str(row.get("local_iri", "")), str(row.get("target_iri", "")))
+        for row in registry_rows
+    }
+    for row in (auto_harmonization or {}).get("mappings", []):
+        relation = str(row.get("relation", ""))
+        if (
+            row.get("status") != "machine_safe"
+            or row.get("confidence") != "high"
+            or relation not in {"skos:exactMatch", "skos:broadMatch", "skos:narrowMatch"}
+        ):
+            continue
+        local_iri = str(row.get("local_iri", "")).strip()
+        target_iri = str(row.get("target_iri", "")).strip()
+        mapping_key = (local_iri, relation, target_iri)
+        if local_iri and target_iri and not _is_original_external_iri(target_iri):
+            invalid_rows.append(
+                {
+                    "local_iri": local_iri,
+                    "relation": relation,
+                    "target_iri": target_iri,
+                    "reason": "Automatic target is a catalogue page rather than an original ontology IRI.",
+                }
+            )
+            continue
+        if (
+            not local_iri
+            or not target_iri
+            or (local_iri, target_iri) in reviewed_pairs
+            or mapping_key in represented_mappings
+        ):
+            continue
+        tib_id = str(row.get("tib_ontology_id", "")).casefold()
+        tib_record = tib_by_id.get(tib_id, {})
+        registry_row = {
+            "local_iri": local_iri,
+            "local_label": str(row.get("local_label", "")),
+            "local_kind": "class",
+            "relation": relation,
+            "target_iri": target_iri,
+            "target_label": str(row.get("target_label", "")),
+            "target_kind": "class",
+            "source": tib_id,
+            "score": "1.0" if relation == "skos:exactMatch" else "0.95",
+            "status": "machine_safe",
+            "rationale": str(row.get("decision_basis", "Strict automated publication gates passed.")),
+            "tib_ontology_id": tib_id,
+            "tib_ontology_title": row.get("tib_ontology_title") or tib_record.get("title", tib_id),
+            "tib_ontology_version": row.get("tib_ontology_version") or tib_record.get("version") or "version-not-reported-in-TIB-snapshot",
+            "tib_snapshot_retrieved_at": row.get("snapshot_retrieved_at") or snapshot.get("retrieved_at", "snapshot-not-available"),
+            "tib_snapshot_sha256": row.get("snapshot_sha256") or snapshot_sha256,
+            "tib_loaded_at": tib_record.get("loaded", "not-indexed-as-separate-resource"),
+            "tib_catalogue_url": row.get("tib_catalogue_url") or f"https://terminology.tib.eu/ts/ontologies/{tib_id}",
+            "collections": row.get("collections") or _snapshot_collections(snapshot, tib_id),
+            "outcome": str(row.get("outcome", "")),
+            "confidence": "high",
+            "rule_id": str(row.get("rule_id", "")),
+            "alignment_category": "tib_benchmark_alignment",
+            "scope_evidence": str(row.get("scope_evidence", "")),
+            "mapping_evidence": str(row.get("decision_basis", "Strict automated publication gates passed.")),
+            "reviewer_decision": "accepted-machine-safe",
+            "publication_status": "asserted-machine-safe",
+        }
+        required_values = (
+            registry_row["tib_ontology_id"],
+            registry_row["tib_ontology_version"],
+            registry_row["tib_snapshot_retrieved_at"],
+            registry_row["tib_snapshot_sha256"],
+            registry_row["mapping_evidence"],
+            registry_row["rule_id"],
+        )
+        if not all(str(value or "").strip() for value in required_values):
+            invalid_rows.append(
+                {
+                    "local_iri": local_iri,
+                    "relation": relation,
+                    "target_iri": target_iri,
+                    "reason": "Machine mapping lacks target ontology, rule, evidence, version, or snapshot provenance.",
+                }
+            )
+            continue
+        registry_rows.append(registry_row)
+        represented_mappings.add(mapping_key)
+        reviewed_pairs.add((local_iri, target_iri))
+        graph.add((URIRef(local_iri), relation_iris[relation], URIRef(target_iri)))
+
+    exact_iri_reuse = [
+        dict(row)
+        for row in (auto_harmonization or {}).get("exact_iri_reuse", [])
+        if row.get("status") == "machine_safe"
+    ]
+    invalid_rows.extend(_external_bridge_conflicts(registry_rows))
+    external_imports = {
+        str(value)
+        for value in graph.objects(bridge_iri, OWL.imports)
+        if str(value) != str(config.get("version_iri", H2KG_ONTOLOGY))
+    }
+    if external_imports:
+        invalid_rows.append(
+            {
+                "local_iri": str(bridge_iri),
+                "relation": "owl:imports",
+                "target_iri": " | ".join(sorted(external_imports)),
+                "reason": "The bridge must not import external ontology collections.",
+            }
+        )
+
+    registry_rows.sort(
+        key=lambda row: (
+            str(row.get("local_iri", "")),
+            str(row.get("relation", "")),
+            str(row.get("target_iri", "")),
+        )
+    )
     _serialize_graph(graph, bridge_ttl, "turtle")
     _serialize_graph(graph, bridge_jsonld, "json-ld")
+    immutable_dir = ensure_dir(ontology_dir / "releases" / version)
+    immutable_ttl = immutable_dir / f"{immutable_stem}.ttl"
+    immutable_jsonld = immutable_dir / f"{immutable_stem}.jsonld"
+    _serialize_graph(graph, immutable_ttl, "turtle")
+    _serialize_graph(graph, immutable_jsonld, "json-ld")
+    turtle_graph = Graph().parse(bridge_ttl, format="turtle")
+    jsonld_graph = Graph().parse(bridge_jsonld, format="json-ld")
+    serializations_isomorphic = isomorphic(turtle_graph, jsonld_graph)
+    if not serializations_isomorphic:
+        invalid_rows.append(
+            {
+                "local_iri": str(bridge_iri),
+                "relation": "serialization-parity",
+                "target_iri": "",
+                "reason": "Turtle and JSON-LD bridge serializations are not RDF-isomorphic.",
+            }
+        )
+
+    changelog_rows = _external_alignment_changelog(
+        previous_registry.get("mappings", []),
+        registry_rows,
+    )
+    _write_sssom(sssom_tsv, registry_rows, str(bridge_iri), version)
+    _write_dict_csv(changelog_csv, changelog_rows)
     write_text(
         registry_json,
         json.dumps(
             {
-                "schema_version": "h2kg-external-alignment-registry/v2",
+                "schema_version": "h2kg-external-alignment-registry/v3",
+                "ontology_iri": str(bridge_iri),
+                "version_iri": str(version_iri),
+                "h2kg_version": version,
                 "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
-                "policy": "selective-reviewed-reuse",
+                "tib_snapshot_sha256": snapshot_sha256,
+                "policy": "reviewed mappings plus strict machine-safe SKOS exact/broad/narrow assertions; related evidence is not asserted",
                 "mappings": registry_rows,
+                "exact_iri_reuse": exact_iri_reuse,
                 "pending_review_mappings": pending_review_rows,
                 "excluded_stale_manual_mappings": stale_manual_rows,
                 "invalid_mappings": invalid_rows,
+                "benchmark_evidence": "../benchmarks/tib_collections/candidate_decisions.csv",
+                "changelog": changelog_rows,
             },
             indent=2,
             ensure_ascii=False,
         ),
     )
     _write_dict_csv(registry_csv, registry_rows)
+    asserted_counts = dict(sorted(Counter(str(row.get("relation", "")) for row in registry_rows).items()))
+    category_counts = dict(
+        sorted(Counter(str(row.get("alignment_category", "unspecified")) for row in registry_rows).items())
+    )
+    machine_rows = [row for row in registry_rows if row.get("status") == "machine_safe"]
+    reviewed_rows = [row for row in registry_rows if row.get("status") != "machine_safe"]
+    tib_asserted_counts = dict(
+        sorted(Counter(str(row.get("relation", "")) for row in machine_rows).items())
+    )
     report = {
+        "h2kg_version": version,
+        "bridge_iri": str(bridge_iri),
+        "bridge_version_iri": str(version_iri),
         "mapping_count": len(registry_rows),
+        "asserted_mapping_counts": asserted_counts,
+        "tib_asserted_mapping_counts": tib_asserted_counts,
+        "alignment_category_counts": category_counts,
+        "tib_benchmark_asserted_mapping_count": len(machine_rows),
+        "reviewed_foundational_mapping_count": len(reviewed_rows),
+        "mapped_h2kg_class_count": len({row.get("local_iri") for row in registry_rows}),
+        "external_ontology_count": len({row.get("tib_ontology_id") for row in registry_rows if row.get("tib_ontology_id")}),
+        "exact_iri_reuse_count": len(exact_iri_reuse),
         "pending_review_mapping_count": len(pending_review_rows),
         "excluded_stale_manual_mapping_count": len(stale_manual_rows),
         "invalid_mapping_count": len(invalid_rows),
         "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
+        "tib_snapshot_sha256": snapshot_sha256,
+        "tib_collection_count": len(snapshot.get("collections", {})),
+        "tib_unique_ontology_count": int(snapshot.get("unique_ontology_count") or len(snapshot.get("ontologies", []))),
+        "tib_collection_membership_count": sum(
+            len(record.get("ontology_ids", [])) for record in snapshot.get("collections", {}).values()
+        ),
         "sources": dict(sorted(Counter(row.get("source", "") for row in registry_rows).items())),
+        "tib_benchmark_sources": dict(
+            sorted(Counter(row.get("source", "") for row in machine_rows).items())
+        ),
+        "reviewed_foundational_sources": dict(
+            sorted(Counter(row.get("source", "") for row in reviewed_rows).items())
+        ),
         "turtle": str(bridge_ttl),
         "jsonld": str(bridge_jsonld),
+        "immutable_turtle": str(immutable_ttl),
+        "immutable_jsonld": str(immutable_jsonld),
         "registry": str(registry_json),
-        "policy": "selective-reviewed-reuse; no wholesale TIB/NFDI4Cat import",
+        "sssom": str(sssom_tsv),
+        "changelog": str(changelog_csv),
+        "machine_safe_mapping_count": len(machine_rows),
+        "serializations_isomorphic": serializations_isomorphic,
+        "automatic_logical_axiom_count": sum(
+            row.get("status") == "machine_safe"
+            and row.get("relation") in {
+                "owl:equivalentClass", "owl:equivalentProperty", "owl:sameAs",
+                "rdfs:subClassOf", "rdfs:subPropertyOf",
+            }
+            for row in registry_rows
+        ),
+        "external_import_count": len(external_imports),
+        "policy": "conservative SKOS assertion tiers; related evidence is non-asserted; no wholesale TIB collection import",
     }
     write_text(reports_dir / "tib_alignment_readiness.json", json.dumps(report, indent=2, ensure_ascii=False))
     return report
+
+
+def _json_payload_sha256(payload: dict[str, Any]) -> str:
+    encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _snapshot_collections(snapshot: dict[str, Any], ontology_id: str) -> list[str]:
+    ontology_key = str(ontology_id).casefold()
+    values: list[str] = []
+    for record in snapshot.get("ontologies", []):
+        if str(record.get("ontology_id", "")).casefold() != ontology_key:
+            continue
+        values.extend(str(value) for value in record.get("target_collections", []) if value)
+        values.extend(str(value) for value in record.get("collections", []) if value)
+    for key, record in snapshot.get("collections", {}).items():
+        members = {str(value).casefold() for value in record.get("ontology_ids", [])}
+        if ontology_key in members:
+            values.append(str(record.get("catalogue_name") or record.get("requested_name") or key))
+    return sorted(set(values), key=str.casefold)
+
+
+def _is_original_external_iri(value: str) -> bool:
+    candidate = str(value).strip()
+    if not re.match(r"^(?:https?://|urn:)", candidate):
+        return False
+    lowered = candidate.casefold()
+    return "terminology.tib.eu/ts/" not in lowered and "api.terminology.tib.eu/" not in lowered
+
+
+def _external_bridge_conflicts(rows: list[dict[str, Any]]) -> list[dict[str, str]]:
+    errors: list[dict[str, str]] = []
+    by_pair: dict[tuple[str, str], set[str]] = defaultdict(set)
+    exact_targets: dict[str, set[str]] = defaultdict(set)
+    exact_relations = {"skos:exactMatch", "owl:equivalentClass", "owl:sameAs"}
+    logical_relations = {
+        "owl:equivalentClass", "owl:equivalentProperty", "owl:sameAs",
+        "rdfs:subClassOf", "rdfs:subPropertyOf",
+    }
+    for row in rows:
+        local_iri = str(row.get("local_iri", ""))
+        target_iri = str(row.get("target_iri", ""))
+        relation = str(row.get("relation", ""))
+        by_pair[(local_iri, target_iri)].add(relation)
+        if relation in exact_relations:
+            exact_targets[target_iri].add(local_iri)
+        if row.get("status") == "machine_safe" and relation in logical_relations | {"skos:relatedMatch"}:
+            errors.append(
+                {
+                    "local_iri": local_iri,
+                    "relation": relation,
+                    "target_iri": target_iri,
+                    "reason": "Automatic mappings may assert only SKOS exactMatch, broadMatch, or narrowMatch.",
+                }
+            )
+        if not _is_original_external_iri(target_iri):
+            errors.append(
+                {
+                    "local_iri": local_iri,
+                    "relation": relation,
+                    "target_iri": target_iri,
+                    "reason": "Asserted mapping target is not an original ontology IRI.",
+                }
+            )
+        required = (
+            row.get("tib_ontology_id"),
+            row.get("tib_ontology_version"),
+            row.get("tib_snapshot_retrieved_at"),
+            row.get("tib_snapshot_sha256"),
+            row.get("mapping_evidence"),
+        )
+        if not all(str(value or "").strip() for value in required):
+            errors.append(
+                {
+                    "local_iri": local_iri,
+                    "relation": relation,
+                    "target_iri": target_iri,
+                    "reason": "Asserted mapping lacks ontology version, evidence, or frozen-snapshot provenance.",
+                }
+            )
+    for (local_iri, target_iri), relations in sorted(by_pair.items()):
+        if len(relations) <= 1:
+            continue
+        errors.append(
+            {
+                "local_iri": local_iri,
+                "relation": " | ".join(sorted(relations)),
+                "target_iri": target_iri,
+                "reason": "The same IRI pair has contradictory mapping predicates.",
+            }
+        )
+    for target_iri, local_iris in sorted(exact_targets.items()):
+        if len(local_iris) <= 1:
+            continue
+        errors.append(
+            {
+                "local_iri": " | ".join(sorted(local_iris)),
+                "relation": "exact-equivalence-collision",
+                "target_iri": target_iri,
+                "reason": "Multiple active H2KG classes exact-match the same external class.",
+            }
+        )
+    return errors
+
+
+def _write_sssom(path: Path, rows: list[dict[str, Any]], mapping_set_id: str, version: str) -> None:
+    ensure_dir(path.parent)
+    fieldnames = [
+        "subject_id", "subject_label", "predicate_id", "object_id", "object_label",
+        "mapping_justification", "confidence", "mapping_tool", "mapping_date",
+        "subject_source", "object_source", "object_source_version", "mapping_set_id",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, delimiter="\t", lineterminator="\n")
+        writer.writeheader()
+        for row in rows:
+            manual = row.get("status") != "machine_safe"
+            writer.writerow(
+                {
+                    "subject_id": row.get("local_iri", ""),
+                    "subject_label": row.get("local_label", ""),
+                    "predicate_id": row.get("relation", ""),
+                    "object_id": row.get("target_iri", ""),
+                    "object_label": row.get("target_label", ""),
+                    "mapping_justification": (
+                        "semapv:ManualMappingCuration" if manual else "semapv:CompositeMatching"
+                    ),
+                    "confidence": "1.0" if manual else str(row.get("score") or "0.95"),
+                    "mapping_tool": "https://github.com/ViMiLabs/AIMWORKS",
+                    "mapping_date": datetime.now(timezone.utc).date().isoformat(),
+                    "subject_source": f"h2kg:{version}",
+                    "object_source": row.get("tib_ontology_id", ""),
+                    "object_source_version": row.get("tib_ontology_version", ""),
+                    "mapping_set_id": mapping_set_id,
+                }
+            )
+
+
+def _external_alignment_changelog(
+    previous_rows: list[dict[str, Any]],
+    final_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    def pair_index(rows: list[dict[str, Any]]) -> dict[tuple[str, str], list[dict[str, Any]]]:
+        result: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+        for row in rows:
+            result[(str(row.get("local_iri", "")), str(row.get("target_iri", "")))].append(row)
+        return result
+
+    previous = pair_index(previous_rows)
+    final = pair_index(final_rows)
+    changelog: list[dict[str, Any]] = []
+    for pair in sorted(set(previous) | set(final)):
+        old_rows = previous.get(pair, [])
+        new_rows = final.get(pair, [])
+        old_relations = sorted({str(row.get("relation", "")) for row in old_rows})
+        new_relations = sorted({str(row.get("relation", "")) for row in new_rows})
+        if old_relations == new_relations:
+            status = "retained"
+        elif old_rows and new_rows:
+            status = "reclassified"
+        elif new_rows:
+            status = "added"
+        else:
+            status = "removed"
+        exemplar = (new_rows or old_rows)[0]
+        changelog.append(
+            {
+                "change": status,
+                "local_iri": pair[0],
+                "local_label": exemplar.get("local_label", ""),
+                "target_iri": pair[1],
+                "target_label": exemplar.get("target_label", ""),
+                "previous_relation": " | ".join(old_relations),
+                "final_relation": " | ".join(new_relations),
+                "previous_status": " | ".join(sorted({str(row.get("status", "")) for row in old_rows})),
+                "final_status": " | ".join(sorted({str(row.get("status", "")) for row in new_rows})),
+                "rationale": str(exemplar.get("mapping_evidence") or exemplar.get("rationale") or ""),
+            }
+        )
+    return changelog
 
 
 def _is_descendant(graph: Graph, child: URIRef, ancestor: URIRef) -> bool:
@@ -1638,6 +2194,12 @@ def _validate_taxonomy(
         errors.append(f"{len(unapproved_imports)} ontology imports are outside the foundational allowlist.")
     if int(bridge.get("invalid_mapping_count", 0)):
         errors.append(f"{bridge['invalid_mapping_count']} external mappings lack required relation, review, or dated TIB provenance fields.")
+    if not bridge.get("serializations_isomorphic", False):
+        errors.append("External-bridge Turtle and JSON-LD serializations are not RDF-isomorphic.")
+    if int(bridge.get("automatic_logical_axiom_count", 0)):
+        errors.append("Automatic external mappings introduced OWL/RDFS logical axioms or asserted relatedMatch links.")
+    if int(bridge.get("external_import_count", 0)):
+        errors.append("The external bridge imports one or more external ontology collections.")
     if not shacl_conforms:
         errors.append("The taxonomy class-label/definition SHACL profile does not conform.")
     if not competency.get("all_passed", False):
@@ -1655,16 +2217,12 @@ def _validate_taxonomy(
     reviewer_signed = str(governance.get("domain_reviewer_status", "pending")).casefold() == "approved"
     reasoner_passed = str(governance.get("external_reasoner_status", "pending")).casefold() == "passed"
     if not reviewer_signed:
-        warnings.append("Domain-reviewer sign-off is pending; this is a technically validated release candidate, not a community-approved taxonomy release.")
+        warnings.append("Domain-expert approval is not recorded; publication is blocked.")
     if not reasoner_passed:
-        warnings.append("External OWL reasoner approval is pending; structural consistency checks passed locally.")
+        warnings.append("External OWL reasoner validation is not recorded as passed; publication is blocked.")
     if int(bridge.get("excluded_stale_manual_mapping_count", 0)):
         warnings.append(
             f"{bridge['excluded_stale_manual_mapping_count']} stale manual external mapping was excluded because it no longer matches the reviewed mapping configuration."
-        )
-    if int(bridge.get("pending_review_mapping_count", 0)):
-        warnings.append(
-            f"{bridge['pending_review_mapping_count']} automatically proposed external mappings remain pending human review and are excluded from the published bridge."
         )
     publication_ready = not errors and (
         reviewer_signed or not governance.get("require_domain_reviewer_signoff", True)
@@ -1674,7 +2232,7 @@ def _validate_taxonomy(
     return {
         "conforms": not errors,
         "publication_ready": publication_ready,
-        "publication_status": "approved" if publication_ready else "release-candidate",
+        "publication_status": "approved" if publication_ready else "blocked",
         "errors": errors,
         "warnings": warnings,
         "counts": {
@@ -1779,7 +2337,7 @@ def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecisio
 
 ## Governance
 
-Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. Terms marked `domain-review-required` are complete enough for technical publication and visualization but remain subject to named human domain review before they are described as community-approved.
+Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. The H2KG v2 terminology and taxonomy are recorded as domain-expert reviewed. Automated external mappings remain governed separately by conservative publication gates.
 
 The compatibility graph preserves the v1 role-typed and workflow-neighborhood statements. The clean taxonomy contains reusable classes and schema properties only; profile fields and value records are deliberately excluded from its class count.
 

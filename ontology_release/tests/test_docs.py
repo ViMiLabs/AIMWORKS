@@ -9,6 +9,15 @@ from aimworks_ontology_release.docs import build_docs
 def test_docs_generation(mini_ontology_file, output_dir):
     (output_dir / "review").mkdir()
     (output_dir / "reports").mkdir()
+    legacy_page = output_dir / "docs" / "pemfc" / "pages" / "release.html"
+    legacy_page.parent.mkdir(parents=True)
+    legacy_page.write_text("EMMO-aligned legacy release", encoding="utf-8")
+    legacy_data = output_dir / "docs" / "pemfc" / "data" / "graph_explorer.json"
+    legacy_data.parent.mkdir(parents=True)
+    legacy_data.write_text(
+        '{"description": "A release-ready, FAIR-oriented, EMMO-aligned application ontology"}',
+        encoding="utf-8",
+    )
     fair_snapshot = {
         "generated_at": "2026-04-13T10:00:00+00:00",
         "findable": 78,
@@ -41,6 +50,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "index.html").exists()
     assert (output_dir / "docs" / "hydrogen-ontology.html").exists()
     assert (output_dir / "docs" / "data" / "explorer.json").exists()
+    assert (output_dir / "docs" / "data" / "external_alignment_evidence.json").exists()
     assert (output_dir / "docs" / "assets" / "explorer.css").exists()
     assert (output_dir / "docs" / "assets" / "explorer.js").exists()
     assert (output_dir / "docs" / "source" / "h2kg-asserted-source.jsonld").exists()
@@ -54,10 +64,19 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "./pemfc/index.html" in home_page
     assert "./pemwe/index.html" in home_page
     assert "./pages/explore.html" in home_page
+    assert "Foundational reuse" in home_page
+    assert "External alignment" in home_page
+    assert "NFDI4Cat, NFDI4Energy, and NFDI4Ing" in home_page
+    assert "Standards-aligned" not in home_page
     assert (output_dir / "docs" / "pemfc" / "index.html").exists()
     assert (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").exists()
     assert (output_dir / "docs" / "pemwe" / "index.html").exists()
     assert (output_dir / "docs" / "pemwe" / "hydrogen-ontology.html").exists()
+    assert "domain-expert-reviewed H2KG v2" in legacy_page.read_text(encoding="utf-8")
+    assert "EMMO-aligned" not in legacy_page.read_text(encoding="utf-8")
+    assert legacy_data.exists()
+    assert "domain-expert-reviewed H2KG v2" in legacy_data.read_text(encoding="utf-8")
+    assert "EMMO-aligned" not in legacy_data.read_text(encoding="utf-8")
     assert (output_dir / "docs" / "pages" / "import-guide.html").exists()
     assert (output_dir / "docs" / "pages" / "import-catalog.html").exists()
     assert (output_dir / "docs" / "pages" / "developer-guide.html").exists()
@@ -79,6 +98,14 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "download='h2kg-asserted-source.jsonld'" in release_page
     assert "ODK and HDO Integration" in release_page
     assert "Publication Establishment" in release_page
+    assert "External semantic alignment" in release_page
+    assert "original external ontology IRIs" in release_page
+    assert "no nfdi collection is imported wholesale" in release_page.lower()
+    alignment_page = (output_dir / "docs" / "pages" / "alignment.html").read_text(encoding="utf-8")
+    assert "Search asserted alignments" in alignment_page
+    assert "Publication status" in alignment_page
+    assert "Confidence" in alignment_page
+    assert "Category" in alignment_page
     namespace_page = (output_dir / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "H2KG Namespace Reference" in namespace_page
     assert 'id="Parameter"' in namespace_page
@@ -96,6 +123,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert 'value="relations" data-explorer-view checked' in explore_page
     assert 'value="taxonomy" data-explorer-view' in explore_page
     assert 'value="combined" data-explorer-view' in explore_page
+    assert "data-alignment-evidence" in explore_page
     explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
     local_nodes = {item["iri"]: item for item in explorer_data["nodes"] if item.get("local")}
     assert "https://w3id.org/h2kg/hydrogen-ontology#Parameter" in local_nodes
@@ -107,6 +135,8 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "showHoverCardForNode" in explorer_js
     assert 'state.viewMode = viewMode' in explorer_js
     assert 'link.module === "taxonomy"' in explorer_js
+    assert "External alignments" in explorer_js
+    assert "Benchmark evidence, not asserted" in explorer_js
     pemfc_reference_page = (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").read_text(encoding="utf-8")
     assert "Profile Reference Scope" in pemfc_reference_page
     assert "Reference Contents" in pemfc_reference_page
@@ -266,6 +296,7 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
                         "target_kind": "class",
                         "source": "emmo-electrochemistry",
                         "status": "manual_override",
+                        "alignment_category": "reviewed_foundational_alignment",
                         "rationale": "Reviewed test bridge.",
                     }
                 ],
@@ -303,3 +334,5 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
         link["target"] == "https://example.org/unreviewed-process"
         for link in explorer["links"]
     )
+    local_node = next(node for node in explorer["nodes"] if node["iri"] == local)
+    assert local_node["external_alignments"][0]["alignment_category"] == "reviewed_foundational_alignment"

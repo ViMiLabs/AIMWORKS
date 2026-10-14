@@ -11,11 +11,37 @@ from aimworks_ontology_release.odk import (
     _build_parity_report,
     _custom_makefile,
     _promotion_gates,
+    _write_merged_edit_file,
     _write_import_term_files,
 )
 
 
 H2KG = Namespace("https://w3id.org/h2kg/hydrogen-ontology#")
+
+
+def test_odk_edit_seed_prefers_v2_taxonomy_over_legacy_split_outputs(tmp_path):
+    project_root = tmp_path / "ontology_release"
+    ontology_dir = project_root / "output" / "ontology"
+    ontology_dir.mkdir(parents=True)
+
+    taxonomy = Graph()
+    taxonomy.add((H2KG.V2TaxonomyOnly, RDF.type, OWL.Class))
+    taxonomy.serialize(ontology_dir / "h2kg-v2-taxonomy.ttl", format="turtle")
+
+    legacy = Graph()
+    legacy.add((H2KG.LegacySplitOnly, RDF.type, OWL.Class))
+    legacy.serialize(ontology_dir / "schema.ttl", format="turtle")
+
+    target = tmp_path / "h2kg-edit.owl"
+    _write_merged_edit_file(
+        project_root,
+        target,
+        {"project": {"ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology"}},
+    )
+
+    seeded = Graph().parse(target)
+    assert (H2KG.V2TaxonomyOnly, RDF.type, OWL.Class) in seeded
+    assert (H2KG.LegacySplitOnly, RDF.type, OWL.Class) not in seeded
 
 
 def test_custom_makefile_overrides_base_rule_for_w3id_namespace():

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!root) return;
 
   const dataPath = root.dataset.explorerData;
+  const alignmentEvidencePath = root.dataset.alignmentEvidence;
   const referencePage = root.dataset.referencePage || "../hydrogen-ontology.html";
   const searchInputEl = root.querySelector("[data-explorer-search]");
   const searchStatusEl = root.querySelector("[data-explorer-search-status]");
@@ -35,6 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_SUGGESTIONS = 14;
 
   let payload = null;
+  let alignmentEvidencePayload = null;
+  let alignmentEvidencePromise = null;
   let cy = null;
   let currentSuggestions = [];
 
@@ -697,6 +700,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const alignmentRelationLabel = (relation) => ({
+    "skos:exactMatch": "exact equivalent",
+    "skos:broadMatch": "H2KG narrower than",
+    "skos:narrowMatch": "H2KG broader than",
+    "skos:relatedMatch": "related to",
+    "owl:equivalentClass": "reviewed equivalent class",
+    "owl:equivalentProperty": "reviewed equivalent property",
+    "rdfs:subClassOf": "reviewed subclass of",
+    "rdfs:subPropertyOf": "reviewed subproperty of"
+  })[relation] || relation || "mapping";
+
+  function assertedAlignmentHtml(node) {
+    const rows = node.external_alignments || [];
+    if (!rows.length) return "";
+    return `<div class="explorer-inspector__section"><strong>External alignments</strong>${rows.map((row) => `
+      <p><strong>${escapeHtml(alignmentRelationLabel(row.relation))}</strong><br>
+      <a href="${escapeHtml(row.target_iri)}">${escapeHtml(row.target_label || row.target_iri)}</a>
+      ${row.ontology_id ? `<br>${escapeHtml(row.ontology_id)}${row.ontology_version ? ` · ${escapeHtml(row.ontology_version)}` : ""}` : ""}
+      ${row.collections?.length ? `<br>${escapeHtml(row.collections.join(", "))}` : ""}
+      ${row.alignment_category ? `<br>Category: ${escapeHtml(row.alignment_category.replaceAll("_", " "))}` : ""}
+      ${row.confidence ? `<br>Confidence: ${escapeHtml(row.confidence)}` : ""}
+      ${row.evidence ? `<br>${escapeHtml(row.evidence)}` : ""}
+      ${row.tib_catalogue_url ? `<br><a href="${escapeHtml(row.tib_catalogue_url)}">TIB catalogue record</a>` : ""}</p>
+    `).join("")}</div>`;
+  }
+
+  async function renderNonAssertedAlignmentEvidence(node) {
+    const target = inspectorEl.querySelector("[data-external-evidence-for]");
+    if (!target || !node.local || !alignmentEvidencePath) return;
+    if (!alignmentEvidencePromise) {
+      alignmentEvidencePromise = fetch(alignmentEvidencePath)
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then((data) => { alignmentEvidencePayload = data; return data; });
+    }
+    try {
+      const data = alignmentEvidencePayload || await alignmentEvidencePromise;
+      if (target.dataset.externalEvidenceFor !== node.id) return;
+      const rows = data.by_h2kg_iri?.[node.id] || [];
+      if (!rows.length) {
+        target.innerHTML = '<p>No non-asserted related or directional candidate is recorded for this term in the compact collection-level index.</p>';
+        return;
+      }
+      target.innerHTML = rows.map((row) => `<p><strong>${escapeHtml(row.relation_label)}</strong><br><a href="${escapeHtml(row.target_iri)}">${escapeHtml(row.target_label || row.target_iri)}</a><br>${escapeHtml(row.ontology_id)}${row.ontology_version ? ` · ${escapeHtml(row.ontology_version)}` : ""} · ${escapeHtml(row.collection)}<br>${escapeHtml(row.evidence)}${row.tib_catalogue_url ? `<br><a href="${escapeHtml(row.tib_catalogue_url)}">TIB catalogue record</a>` : ""}</p>`).join("") + '<p><a href="tib-benchmark.html">Open the full ontology-level benchmark</a></p>';
+    } catch (_error) {
+      target.innerHTML = '<p>Benchmark evidence could not be loaded. The asserted bridge remains available above.</p>';
+    }
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -727,6 +781,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${assertedAlignmentHtml(node)}
+        ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
         ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
         ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
@@ -738,6 +794,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
+    renderNonAssertedAlignmentEvidence(node);
     inspectorEl.querySelectorAll("[data-copy-iri]").forEach((button) => {
       button.addEventListener("click", async () => {
         try {

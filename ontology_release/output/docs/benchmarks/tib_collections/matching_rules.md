@@ -1,0 +1,11 @@
+# Automated H2KG--TIB Collection Matching Rules
+
+The primary denominator is every active local H2KG class in the frozen taxonomy registry. Deprecated compatibility classes and ontology properties are excluded. TIB imported classes are excluded from primary per-ontology coverage and reported separately.
+
+External roles are inferred from weighted evidence. The preferred label and its head noun carry the highest lexical weight, followed by the definition genus, direct parent, nearest ancestors, ontology convention, and then distant ancestors. Incidental words in distant ancestors cannot override stronger local evidence. This prevents, for example, CHMO atomic layer deposition from becoming Matter because one ancestor is named `sample deposition`.
+
+`machine_exact_equivalent` requires an active, native, non-obsolete class; preferred-label or synonym identity after controlled normalization; compatible semantic roles; non-conflicting definitions; independent definition or hierarchy support; and one canonical target. Exact labels alone never establish equivalence. Strict semantic-token containment with compatible roles supports `h2kg_narrower` and `h2kg_broader`. A discovered candidate that lacks defensible equivalence or direction is `related_non_equivalent`; no candidate after a successful complete search is `unmatched`.
+
+Multiple equivalence targets and many-to-one equivalence collisions are conservatively downgraded to related unless a stable IRI uniquely resolves the collision. The matcher changes no H2KG IRI and never creates a collection-wide OWL import. It exports only high-confidence machine-safe mappings to the external bridge: equivalence as `skos:exactMatch`, an H2KG specialization as `skos:broadMatch`, and an H2KG generalization as `skos:narrowMatch`. Related candidates remain non-asserted benchmark evidence.
+
+`ambiguous_abstained` remains a visible reporting column for methodological continuity, but its value must be zero in a publishable build. Any failed search or class-evidence request blocks publication and is written to `retrieval_failures.csv`; a technical failure is never converted into a semantic result. The pipeline uses deterministic rules and no embedding or free-form LLM adjudication.

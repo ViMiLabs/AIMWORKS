@@ -17,8 +17,7 @@ RewriteCond %{HTTP_ACCEPT} text/html [OR]
 RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
 RewriteRule ^hydrogen-ontology$ https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html [R=302,L]
 
-# H2KG v2 taxonomy release candidate. Canonical routing remains on the
-# published v1 release until domain-review and external-reasoner gates pass.
+# Published H2KG v2 taxonomy
 RewriteCond %{HTTP_ACCEPT} text/turtle [OR]
 RewriteCond %{HTTP_ACCEPT} application/x-turtle
 RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl [R=302,L]

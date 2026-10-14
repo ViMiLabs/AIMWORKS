@@ -1,11 +1,12 @@
-# Local w3id Review Output
+# H2KG Resolver Reference
 
-This directory contains locally generated materials for a future `perma-id/w3id.org`
-pull request.
+This directory is a generated reference copy of the established H2KG resolver
+configuration. Existing H2KG ontology and term IRIs remain unchanged.
 
-The actual submission structure should use the nested `h2kg/` directory:
+The resolver configuration is represented by:
 
 - `h2kg/.htaccess`
 - `h2kg/README.md`
 
-The root-level files are kept as local helpers and for FAIR readiness checks.
+No new W3ID route is required for external alignments because mapping targets
+use their original ontology IRIs and bridge files are served by GitHub Pages.

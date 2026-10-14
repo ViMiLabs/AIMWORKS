@@ -19,6 +19,9 @@ def test_validate_outputs_reports(mini_ontology_file, output_dir):
     assert report["external_assessments"]["oops"]["status"] == "disabled"
     payload = json.loads((output_dir / "validation_report.json").read_text(encoding="utf-8"))
     assert payload["external_assessments"]["foops"]["status"] == "disabled"
+    markdown = (output_dir / "validation_report.md").read_text(encoding="utf-8")
+    assert "## Release Checks" in markdown
+    assert "Release candidate" not in markdown
 
 
 def test_parse_oops_xml_extracts_pitfalls():

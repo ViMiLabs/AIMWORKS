@@ -2,8 +2,8 @@
 
 Project: `H2KG Application Ontology for Hydrogen Electrochemical Systems`
 
-This directory is intended for a future pull request to `perma-id/w3id.org` to
-register the `https://w3id.org/h2kg/` namespace.
+This file documents the established `https://w3id.org/h2kg/` namespace and its
+current H2KG release targets.
 
 ## Namespace policy
 
@@ -32,7 +32,7 @@ register the `https://w3id.org/h2kg/` namespace.
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/pemwe_schema.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/pemwe_schema.jsonld`
 
-### H2KG v2 taxonomy release candidate
+### H2KG v2 taxonomy release
 
 - Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0`
 - Browser / HTML: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?view=taxonomy`

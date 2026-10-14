@@ -1,13 +1,14 @@
 # AIMWORKS Ontology Release Pipeline
 
-`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats the existing `h2kg` ontology as a conservative, EMMO-aligned application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and related FAIR release assets.
+`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats `h2kg` as a domain-expert-reviewed application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and reusable FAIR workflow patterns.
 
 The package is designed to:
 
 - inspect the current ontology and identify release blockers
 - separate schema, curated vocabulary, and example or data-like content
 - enrich metadata without breaking stable term IRIs
-- propose conservative alignments to EMMO, ECHO, QUDT, ChEBI, PROV-O, and DCTERMS
+- reuse foundational terms from HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS where appropriate
+- publish exact, broader, and narrower SKOS mappings to original ontology IRIs discovered through the TIB benchmark
 - generate review artifacts for mappings and optional LLM-assisted annotations
 - validate the ontology locally with SHACL and policy checks
 - generate a polished static documentation site
@@ -29,6 +30,7 @@ Create an environment with Python 3.11+ and install dependencies:
 
 ```bash
 pip install -r requirements.txt
+pip install --no-build-isolation -e .
 ```
 
 Run the end-to-end release preparation flow:
@@ -49,6 +51,34 @@ This writes:
 - `output/ontology/pemfc_schema.ttl` and `.jsonld`
 - `output/ontology/pemwe_schema.ttl` and `.jsonld`
 - `output/reports/profile_module_report.md` and `.json`
+
+## TIB Collection Benchmark
+
+Refresh the dated TIB Terminology Service catalogue and candidate cache explicitly:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . tib-collection-benchmark --refresh
+```
+
+Retry failed searches without changing the frozen catalogue membership snapshot:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . tib-collection-benchmark --retry-failures
+```
+
+Rebuild the reports and Excel workbooks from the committed snapshot and cache without network access:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . tib-collection-benchmark
+```
+
+Apply the machine-safe terminology corrections and exact or directional alignment decisions to the taxonomy release configuration:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . tib-harmonize
+```
+
+The benchmark reports NFDI4Cat, NFDI4Energy, and NFDI4Ing separately and produces collection-, ontology-, branch-, and class-level evidence. A publishable build requires complete TIB retrieval and zero `ambiguous_abstained` outcomes; a failed request blocks publication rather than being counted as scientific non-overlap. The benchmark does not add collection-wide `owl:imports` or replace H2KG IRIs. The external bridge publishes only high-confidence `skos:exactMatch`, `skos:broadMatch`, and `skos:narrowMatch` assertions; related and unmatched candidates remain non-asserted audit evidence. Normal release builds use the local snapshot and never refresh TIB implicitly.
 
 ## Detailed Coding Plan
 

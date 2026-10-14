@@ -1,9 +1,7 @@
-# Publishing Notes
+# Resolver and Publishing Notes
 
-1. Fork `perma-id/w3id.org`.
-2. Create the directory `h2kg/`.
-3. Copy `h2kg/.htaccess` and `h2kg/README.md` from this output.
-4. Open a PR describing the namespace and the long-term maintenance contact.
+The H2KG namespace is already established. This generated configuration is a
+reference for resolver maintenance and does not require a new W3ID registration.
 
 ## Resolver targets
 
@@ -17,5 +15,7 @@
 ## Policy reminders
 
 - Preserve existing hash IRIs under `https://w3id.org/h2kg/hydrogen-ontology#`.
-- Do not switch to slash-term IRIs during the w3id registration step.
+- Do not switch to slash-term IRIs during release publication.
 - Keep the active namespace strategy as `preserve_hash_namespace` until a reviewed migration plan exists.
+- Publish external bridge artifacts through GitHub Pages and retain original
+  external ontology IRIs as mapping targets.

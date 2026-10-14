@@ -1,15 +1,119 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl#"
-     xml:base="http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl"/>
-</rdf:RDF>
+Prefix(:=<http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl>
+<http://purl.obolibrary.org/obo/h2kg/releases/2026-10-14/imports/prov-o_import.owl>
+Annotation(owl:versionInfo "2026-10-14")
+
+Declaration(Class(<http://www.w3.org/ns/prov#Activity>))
+Declaration(Class(<http://www.w3.org/ns/prov#Agent>))
+Declaration(Class(<http://www.w3.org/ns/prov#Entity>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#alternateOf>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#generated>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#influenced>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#specializationOf>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#used>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#wasDerivedFrom>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#wasGeneratedBy>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#wasInfluencedBy>))
+Declaration(ObjectProperty(<http://www.w3.org/ns/prov#wasRevisionOf>))
+Declaration(NamedIndividual(<http://www.w3.org/ns/prov-o>))
+Declaration(NamedIndividual(<http://www.w3.org/ns/prov-o-20130312>))
+Declaration(NamedIndividual(<http://www.w3.org/ns/prov-o#>))
+
+############################
+#   Object Properties
+############################
+
+# Object Property: <http://www.w3.org/ns/prov#alternateOf> (alternateOf)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#alternateOf> "alternateOf")
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#alternateOf> <http://www.w3.org/ns/prov#Entity>)
+ObjectPropertyRange(<http://www.w3.org/ns/prov#alternateOf> <http://www.w3.org/ns/prov#Entity>)
+
+# Object Property: <http://www.w3.org/ns/prov#generated> (generated)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#generated> "generated")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#generated> <http://www.w3.org/ns/prov#influenced>)
+InverseObjectProperties(<http://www.w3.org/ns/prov#generated> <http://www.w3.org/ns/prov#wasGeneratedBy>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#generated> <http://www.w3.org/ns/prov#Activity>)
+ObjectPropertyRange(<http://www.w3.org/ns/prov#generated> <http://www.w3.org/ns/prov#Entity>)
+
+# Object Property: <http://www.w3.org/ns/prov#influenced> (influenced)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#influenced> "influenced")
+InverseObjectProperties(<http://www.w3.org/ns/prov#influenced> <http://www.w3.org/ns/prov#wasInfluencedBy>)
+
+# Object Property: <http://www.w3.org/ns/prov#specializationOf> (specializationOf)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#specializationOf> "specializationOf")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#specializationOf> <http://www.w3.org/ns/prov#alternateOf>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#specializationOf> <http://www.w3.org/ns/prov#Entity>)
+
+# Object Property: <http://www.w3.org/ns/prov#used> (used)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#used> "used")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#used> <http://www.w3.org/ns/prov#wasInfluencedBy>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#used> <http://www.w3.org/ns/prov#Activity>)
+ObjectPropertyRange(<http://www.w3.org/ns/prov#used> <http://www.w3.org/ns/prov#Entity>)
+
+# Object Property: <http://www.w3.org/ns/prov#wasDerivedFrom> (wasDerivedFrom)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#wasDerivedFrom> "wasDerivedFrom")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#wasDerivedFrom> <http://www.w3.org/ns/prov#wasInfluencedBy>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#wasDerivedFrom> <http://www.w3.org/ns/prov#Entity>)
+ObjectPropertyRange(<http://www.w3.org/ns/prov#wasDerivedFrom> <http://www.w3.org/ns/prov#Entity>)
+
+# Object Property: <http://www.w3.org/ns/prov#wasGeneratedBy> (wasGeneratedBy)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#wasGeneratedBy> "wasGeneratedBy")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#wasGeneratedBy> <http://www.w3.org/ns/prov#wasInfluencedBy>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#wasGeneratedBy> <http://www.w3.org/ns/prov#Entity>)
+ObjectPropertyRange(<http://www.w3.org/ns/prov#wasGeneratedBy> <http://www.w3.org/ns/prov#Activity>)
+
+# Object Property: <http://www.w3.org/ns/prov#wasInfluencedBy> (wasInfluencedBy)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#wasInfluencedBy> "wasInfluencedBy")
+
+# Object Property: <http://www.w3.org/ns/prov#wasRevisionOf> (wasRevisionOf)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#wasRevisionOf> "wasRevisionOf")
+SubObjectPropertyOf(<http://www.w3.org/ns/prov#wasRevisionOf> <http://www.w3.org/ns/prov#wasDerivedFrom>)
+ObjectPropertyDomain(<http://www.w3.org/ns/prov#wasRevisionOf> <http://www.w3.org/ns/prov#Entity>)
 
 
 
-<!-- Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi -->
+############################
+#   Classes
+############################
 
+# Class: <http://www.w3.org/ns/prov#Activity> (Activity)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#Activity> "Activity")
+DisjointClasses(<http://www.w3.org/ns/prov#Activity> <http://www.w3.org/ns/prov#Entity>)
+
+# Class: <http://www.w3.org/ns/prov#Agent> (Agent)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#Agent> "Agent")
+
+# Class: <http://www.w3.org/ns/prov#Entity> (Entity)
+
+AnnotationAssertion(rdfs:label <http://www.w3.org/ns/prov#Entity> "Entity")
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: <http://www.w3.org/ns/prov-o#> (<http://www.w3.org/ns/prov-o#>)
+
+ObjectPropertyAssertion(<http://www.w3.org/ns/prov#specializationOf> <http://www.w3.org/ns/prov-o#> <http://www.w3.org/ns/prov-o>)
+ObjectPropertyAssertion(<http://www.w3.org/ns/prov#wasRevisionOf> <http://www.w3.org/ns/prov-o#> <http://www.w3.org/ns/prov-o-20130312>)
+
+
+)

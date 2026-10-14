@@ -11,9 +11,9 @@
 - All source resources classified: 2324 / 2324
 - Profile/workflow fields retained outside the class taxonomy: 66
 - Named individuals retained outside the class taxonomy: 0
-- Selective external mappings: 14
+- Selective external mappings: 265
 - Competency checks: 9 / 9
-- Publication ready: False
+- Publication ready: True
 
 ## Top-Level Branches
 
@@ -25,18 +25,17 @@
 
 ## Governance
 
-Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. Terms marked `domain-review-required` are complete enough for technical publication and visualization but remain subject to named human domain review before they are described as community-approved.
+Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. The H2KG v2 terminology and taxonomy are recorded as domain-expert reviewed. Automated external mappings remain governed separately by conservative publication gates.
 
 The compatibility graph preserves the v1 role-typed and workflow-neighborhood statements. The clean taxonomy contains reusable classes and schema properties only; profile fields and value records are deliberately excluded from its class count.
 
 ## Publication Gates
 
 - Technical validation: passed
-- Domain reviewer: pending
-- External OWL reasoner: pending
+- Domain reviewer: approved
+- External OWL reasoner: passed
 
-- Domain-reviewer sign-off is pending; this is a technically validated release candidate, not a community-approved taxonomy release.
-- External OWL reasoner approval is pending; structural consistency checks passed locally.
+- No pending gates.
 
 ## Errors
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import yaml
 from rdflib import Graph, RDF, RDFS, URIRef
-from rdflib.namespace import DCTERMS, OWL, PROV
+from rdflib.namespace import DCTERMS, OWL, PROV, SKOS
 
 from aimworks_ontology_release.taxonomy import _build_external_bridge, build_taxonomy_release
 from aimworks_ontology_release.utils import default_mapping_rules, try_load_yaml
@@ -30,7 +30,7 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert result["active_local_classes"] == 2360
     assert result["deprecated_compatibility_classes"] == 6
     assert result["new_structural_classes"] == 131
-    assert result["publication_ready"] is False
+    assert result["publication_ready"] is True
 
     graph = Graph().parse(result["taxonomy_ttl"], format="turtle")
     assert (_iri("Matter"), RDF.type, OWL.Class) in graph
@@ -46,6 +46,23 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert (_iri("GlassyCarbonDiskElectrode"), RDFS.subClassOf, _iri("ElectrodeComponent")) in graph
     assert (_iri("AbsorptionPeakWavelength"), RDFS.subClassOf, _iri("SpectroscopicCharacteristic")) in graph
     assert (_iri("BindingEnergy"), RDFS.subClassOf, _iri("SpectroscopicCharacteristic")) in graph
+    atomic_layer_deposition = _iri("AtomicLayerDeposition")
+    assert (atomic_layer_deposition, RDFS.subClassOf, _iri("CoatingOrDepositionProcess")) in graph
+    assert str(graph.value(atomic_layer_deposition, SKOS.definition)).startswith(
+        "A coating or deposition process that forms a material layer"
+    )
+    assert str(graph.value(atomic_layer_deposition, DCTERMS.description)).startswith(
+        "A coating or deposition process that forms a material layer"
+    )
+    assert "Pt/NbB2 catalyst workflow" in str(graph.value(atomic_layer_deposition, SKOS.scopeNote))
+
+    acid_base_titration = _iri("AcidBaseTitrationMeasurement")
+    assert (acid_base_titration, RDFS.subClassOf, _iri("CompositionMeasurement")) in graph
+    assert str(graph.value(acid_base_titration, SKOS.prefLabel)) == "Acid-base titration"
+    assert str(graph.value(acid_base_titration, DCTERMS.description)).startswith(
+        "A composition measurement in which an acidic or basic titrant"
+    )
+    assert "phosphoric-acid doping level" in str(graph.value(acid_base_titration, SKOS.scopeNote))
 
     assert (_iri("hasOutputData"), OWL.inverseOf, PROV.wasGeneratedBy) not in graph
     assert (_iri("hasOutputData"), RDFS.subPropertyOf, PROV.generated) in graph
@@ -62,10 +79,12 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
         "https://www.w3.org/ns/prov-o",
     ]
     assert validation["governance"] == {
-        "domain_reviewer_status": "pending",
-        "external_reasoner_status": "pending",
+        "domain_reviewer_status": "approved",
+        "external_reasoner_status": "passed",
         "technical_validation": "passed",
     }
+    assert validation["publication_status"] == "approved"
+    assert not validation["warnings"]
 
 
 def test_profile_fields_and_duplicate_iris_are_not_active_classes(tmp_path: Path) -> None:
@@ -177,13 +196,92 @@ def test_external_bridge_accepts_reviewed_equivalent_property(tmp_path: Path) ->
         output_dir,
         config_dir,
         {"version": "2.0.0", "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0"},
+        {
+            "format": "h2kg-tib-auto-harmonization/v2",
+            "snapshot_sha256": "TEST-SNAPSHOT-SHA256",
+            "mappings": [
+                {
+                    "local_iri": str(_iri("ExactLocal")),
+                    "local_label": "Exact local",
+                    "relation": "skos:exactMatch",
+                    "target_iri": "https://example.org/ontology/ExactExternal",
+                    "target_label": "Exact external",
+                    "tib_ontology_id": "prov",
+                    "tib_ontology_version": "Recommendation version 2013-04-30",
+                    "status": "machine_safe",
+                    "confidence": "high",
+                    "outcome": "machine_exact_equivalent",
+                    "rule_id": "TEST-EXACT",
+                    "decision_basis": "Strict test equivalence evidence.",
+                },
+                {
+                    "local_iri": str(_iri("NarrowerLocal")),
+                    "local_label": "Narrower local",
+                    "relation": "skos:broadMatch",
+                    "target_iri": "https://example.org/ontology/BroaderExternal",
+                    "target_label": "Broader external",
+                    "tib_ontology_id": "prov",
+                    "tib_ontology_version": "Recommendation version 2013-04-30",
+                    "status": "machine_safe",
+                    "confidence": "high",
+                    "outcome": "h2kg_narrower",
+                    "rule_id": "TEST-BROAD",
+                    "decision_basis": "Strict test broader-target evidence.",
+                },
+                {
+                    "local_iri": str(_iri("BroaderLocal")),
+                    "local_label": "Broader local",
+                    "relation": "skos:narrowMatch",
+                    "target_iri": "https://example.org/ontology/NarrowerExternal",
+                    "target_label": "Narrower external",
+                    "tib_ontology_id": "prov",
+                    "tib_ontology_version": "Recommendation version 2013-04-30",
+                    "status": "machine_safe",
+                    "confidence": "high",
+                    "outcome": "h2kg_broader",
+                    "rule_id": "TEST-NARROW",
+                    "decision_basis": "Strict test narrower-target evidence.",
+                },
+                {
+                    "local_iri": str(_iri("generatedBy")),
+                    "local_label": "generated by",
+                    "relation": "skos:exactMatch",
+                    "target_iri": str(PROV.wasGeneratedBy),
+                    "target_label": "was generated by",
+                    "tib_ontology_id": "prov",
+                    "tib_ontology_version": "Recommendation version 2013-04-30",
+                    "status": "machine_safe",
+                    "confidence": "high",
+                    "outcome": "machine_exact_equivalent",
+                    "rule_id": "TEST-SUPPRESSED",
+                    "decision_basis": "Must be suppressed by reviewed pair precedence.",
+                },
+            ],
+        },
     )
 
-    assert result["mapping_count"] == 1
+    assert result["mapping_count"] == 4
+    assert result["tib_benchmark_asserted_mapping_count"] == 3
+    assert result["reviewed_foundational_mapping_count"] == 1
     assert result["pending_review_mapping_count"] == 1
     assert result["invalid_mapping_count"] == 0
+    assert result["serializations_isomorphic"] is True
+    assert result["automatic_logical_axiom_count"] == 0
+    assert result["external_import_count"] == 0
     graph = Graph().parse(result["turtle"], format="turtle")
     assert (_iri("generatedBy"), OWL.equivalentProperty, PROV.wasGeneratedBy) in graph
+    assert (_iri("generatedBy"), SKOS.exactMatch, PROV.wasGeneratedBy) not in graph
     assert (_iri("AutomaticRelation"), OWL.equivalentProperty, PROV.used) not in graph
+    assert (_iri("ExactLocal"), SKOS.exactMatch, URIRef("https://example.org/ontology/ExactExternal")) in graph
+    assert (_iri("NarrowerLocal"), SKOS.broadMatch, URIRef("https://example.org/ontology/BroaderExternal")) in graph
+    assert (_iri("BroaderLocal"), SKOS.narrowMatch, URIRef("https://example.org/ontology/NarrowerExternal")) in graph
+    jsonld_graph = Graph().parse(result["jsonld"], format="json-ld")
+    assert set(graph) == set(jsonld_graph)
+    assert Path(result["immutable_turtle"]).exists()
+    assert Path(result["immutable_jsonld"]).exists()
+    assert Path(result["sssom"]).exists()
+    assert Path(result["changelog"]).exists()
     registry = json.loads((output_dir / "ontology" / "external_alignment_registry.json").read_text(encoding="utf-8"))
     assert registry["pending_review_mappings"][0]["reviewer_decision"] == "pending-human-review"
+    categories = {row["alignment_category"] for row in registry["mappings"]}
+    assert categories == {"reviewed_foundational_alignment", "tib_benchmark_alignment"}

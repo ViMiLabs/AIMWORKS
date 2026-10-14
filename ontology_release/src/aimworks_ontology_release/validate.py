@@ -61,9 +61,9 @@ def validate_release(
     errors: list[str] = []
     warnings: list[str] = []
     if graph_metrics["missing_labels"] > 0:
-        warnings.append(f"{graph_metrics['missing_labels']} local schema terms are missing rdfs:label in the release candidate.")
+        warnings.append(f"{graph_metrics['missing_labels']} local schema terms are missing rdfs:label in the release graph.")
     if graph_metrics["missing_definitions"] > 0:
-        warnings.append(f"{graph_metrics['missing_definitions']} local schema terms are missing skos:definition or rdfs:comment in the release candidate.")
+        warnings.append(f"{graph_metrics['missing_definitions']} local schema terms are missing skos:definition or rdfs:comment in the release graph.")
     if graph_metrics["placeholder_definition_count"] > 0:
         warnings.append(f"{graph_metrics['placeholder_definition_count']} local schema terms still use template-style generated definitions or comments.")
     if not namespace_policy["policy"]["preserve_existing_term_iris"]:
@@ -334,7 +334,7 @@ def _run_oops_assessment(candidate_path: Path, settings: dict[str, Any]) -> dict
                 "message": _short_message(response_text),
             }
         parsed = _parse_oops_xml(response_text)
-        parsed.update({"status": "assessed", "service": service, "message": "OOPS! assessment completed against the release candidate ontology."})
+        parsed.update({"status": "assessed", "service": service, "message": "OOPS! assessment completed against the H2KG release ontology."})
         return parsed
     except Exception as exc:
         return {
@@ -832,9 +832,9 @@ def _validation_markdown(report: dict[str, Any]) -> str:
 - Namespace strategy: `{report['namespace_strategy']}`
 - SHACL executed: {str(report['shacl']['executed']).lower()}
 - SHACL details: {report['shacl']['details']}
-- Release candidate path: `{release['path']}`
+- Release path: `{release['path']}`
 
-## Release Candidate Checks
+## Release Checks
 
 - Local schema terms: {release['local_schema_term_count']}
 - Missing labels: {release['missing_labels']}

@@ -81,17 +81,20 @@ def prepare_odk_shadow(
             existing_manifest = {}
 
     schema_source = _pick_existing(
+        project_root / "output" / "ontology" / "h2kg-v2-taxonomy.ttl",
         project_root / "output" / "ontology" / "schema.ttl",
         project_root / "ontology" / "schema.ttl",
         Path(input_path),
     )
     full_source = _pick_existing(
+        project_root / "output" / "ontology" / "h2kg-v2-taxonomy.ttl",
         project_root / "output" / "ontology" / "inferred.ttl",
         project_root / "output" / "ontology" / "schema.ttl",
         project_root / "ontology" / "schema.ttl",
         Path(input_path),
     )
     simple_source = _pick_existing(
+        project_root / "output" / "ontology" / "h2kg-v2-taxonomy.ttl",
         project_root / "output" / "ontology" / "schema.ttl",
         project_root / "ontology" / "schema.ttl",
         Path(input_path),
@@ -313,12 +316,17 @@ def _write_merged_edit_file(project_root: Path, target: Path, profile: dict[str,
     try:
         graph = Graph()
         ontology_iri = str(profile.get("project", {}).get("ontology_iri", "https://w3id.org/h2kg/hydrogen-ontology"))
-        sources = [
-            project_root / "output" / "ontology" / "schema.ttl",
-            project_root / "output" / "ontology" / "controlled_vocabulary.ttl",
-            project_root / "ontology" / "schema.ttl",
-            project_root / "ontology" / "controlled_vocabulary.ttl",
-        ]
+        taxonomy_source = project_root / "output" / "ontology" / "h2kg-v2-taxonomy.ttl"
+        sources = (
+            [taxonomy_source]
+            if taxonomy_source.exists()
+            else [
+                project_root / "output" / "ontology" / "schema.ttl",
+                project_root / "output" / "ontology" / "controlled_vocabulary.ttl",
+                project_root / "ontology" / "schema.ttl",
+                project_root / "ontology" / "controlled_vocabulary.ttl",
+            ]
+        )
         parsed_any = False
         for seed_source in sources:
             if not seed_source.exists():

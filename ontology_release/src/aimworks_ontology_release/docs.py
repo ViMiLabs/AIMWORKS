@@ -4,6 +4,7 @@ import json
 import os
 import re
 import shutil
+import csv
 from datetime import datetime
 from html import escape
 from pathlib import Path
@@ -73,13 +74,18 @@ def build_docs(
     project = profile["project"]
     items = {item["@id"]: item for item in merge_document_items(load_json_document(input_path)) if isinstance(item.get("@id"), str)}
     classes, properties, examples = _term_views(input_path, output_dir.parent / "review", config_dir, items)
+    alignment_registry_path = output_dir.parent / "ontology" / "external_alignment_registry.json"
     mappings = propose_mappings(input_path, output_dir.parent / "review", config_dir)
     mappings = _merge_external_alignment_mappings(
         mappings,
-        output_dir.parent / "ontology" / "external_alignment_registry.json",
+        alignment_registry_path,
     )
     mapping_summary = _load_alignment_summary(output_dir.parent / "reports")
     mapping_summary["accepted_count"] = len(mappings)
+    alignment_registry = load_json(alignment_registry_path) if alignment_registry_path.exists() else {}
+    alignment_report_path = output_dir.parent / "reports" / "tib_alignment_readiness.json"
+    alignment_report = load_json(alignment_report_path) if alignment_report_path.exists() else {}
+    mapping_summary.update(alignment_report)
     # The whole-ontology Explorer must expose the current asserted source, not
     # a potentially stale compact-module artifact.
     namespace_terms = _reference_terms_from_items(
@@ -164,6 +170,10 @@ def build_docs(
         ),
     }
     explorer = _build_explorer_dataset(namespace_terms, items, taxonomy_registry)
+    alignment_evidence = _build_external_alignment_evidence(
+        output_dir.parent / "benchmarks" / "tib_collections" / "h2kg_collection_coverage.csv",
+        mappings,
+    )
     decode_path = output_dir.parent / "decode" / "decode_federated_graph.json"
     decode = load_json(decode_path) if decode_path.exists() else None
     odk = load_odk_manifest(output_dir.parent)
@@ -180,10 +190,10 @@ def build_docs(
         (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
         (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
-        (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary)),
+        (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary, alignment_registry)),
         (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
         (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo)),
-        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, output_dir / "pages" / "release.html", output_dir)),
+        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, output_dir / "pages" / "release.html", output_dir)),
         (output_dir / "pages" / "import-guide.html", "Import Guide", _import_guide_body(odk, hdo)),
         (output_dir / "pages" / "import-catalog.html", "Import Catalog", _import_catalog_body(odk)),
         (output_dir / "pages" / "developer-guide.html", "Developer Guide", _developer_body(odk, hdo)),
@@ -242,10 +252,38 @@ def build_docs(
         },
     )
     dump_json(output_dir / "data" / "explorer.json", explorer)
+    dump_json(output_dir / "data" / "external_alignment_evidence.json", alignment_evidence)
     if decode is not None:
         dump_json(output_dir / "data" / "decode_workflow_catalog.json", decode.get("workflows", []))
         dump_json(output_dir / "data" / "decode_workflows.json", decode)
+    _modernize_legacy_profile_content(output_dir)
     return summary
+
+
+def _modernize_legacy_profile_content(output_dir: Path) -> None:
+    """Preserve established profile pages while removing superseded v1 wording."""
+    replacements = {
+        "FAIR, EMMO-aligned documentation": "Domain-expert-reviewed H2KG v2 documentation",
+        "An EMMO-aligned application ontology release profile": "A domain-expert-reviewed H2KG v2 ontology profile",
+        "A release-ready, FAIR-oriented, EMMO-aligned application ontology": "A domain-expert-reviewed H2KG v2 application ontology",
+        "EMMO-aligned ontology": "Domain-expert-reviewed H2KG v2 ontology",
+        "EMMO-aligned": "domain-expert-reviewed H2KG v2",
+        "domain-review-required": "domain-expert-reviewed",
+        "pending-domain-review": "domain-expert-reviewed",
+        "release candidate": "release",
+        "release-candidate": "release",
+    }
+    for profile_key in ("pemfc", "pemwe"):
+        profile_root = output_dir / profile_key
+        candidates = list((profile_root / "pages").glob("*.html"))
+        candidates.extend((profile_root / "data").glob("*.json"))
+        for path in candidates:
+            content = path.read_text(encoding="utf-8")
+            updated = content
+            for old, new in replacements.items():
+                updated = updated.replace(old, new)
+            if updated != content:
+                write_text(path, updated)
 
 
 def _term_views(
@@ -293,6 +331,41 @@ def _first_iri(value: Any) -> str:
     return ""
 
 
+def _mapping_doc_record(mapping: dict[str, Any]) -> dict[str, Any]:
+    collections = mapping.get("collections", [])
+    if isinstance(collections, str):
+        collections = [value.strip() for value in collections.split("|") if value.strip()]
+    return {
+        "relation": str(mapping.get("relation", "")),
+        "target_iri": str(mapping.get("target_iri", "")),
+        "target_label": str(mapping.get("target_label", "")),
+        "ontology_id": str(mapping.get("tib_ontology_id") or mapping.get("source") or ""),
+        "ontology_title": str(mapping.get("tib_ontology_title", "")),
+        "ontology_version": str(mapping.get("tib_ontology_version", "")),
+        "collections": [str(value) for value in collections if value],
+        "confidence": str(mapping.get("confidence") or mapping.get("score") or ""),
+        "evidence": str(mapping.get("mapping_evidence") or mapping.get("rationale") or ""),
+        "rule_id": str(mapping.get("rule_id", "")),
+        "alignment_category": str(mapping.get("alignment_category", "")),
+        "publication_status": str(mapping.get("publication_status", "asserted")),
+        "tib_catalogue_url": str(mapping.get("tib_catalogue_url", "")),
+        "snapshot_retrieved_at": str(mapping.get("tib_snapshot_retrieved_at", "")),
+    }
+
+
+def _mapping_relation_label(relation: str) -> str:
+    return {
+        "skos:exactMatch": "exact equivalent",
+        "skos:broadMatch": "H2KG narrower than",
+        "skos:narrowMatch": "H2KG broader than",
+        "skos:relatedMatch": "related to",
+        "owl:equivalentClass": "reviewed equivalent class",
+        "owl:equivalentProperty": "reviewed equivalent property",
+        "rdfs:subClassOf": "reviewed subclass of",
+        "rdfs:subPropertyOf": "reviewed subproperty of",
+    }.get(relation, relation or "mapping")
+
+
 def _reference_terms_from_artifact(
     artifact_path: Path,
     items: dict[str, dict[str, Any]],
@@ -309,15 +382,9 @@ def _reference_terms_from_artifact(
             for item in merged
             if isinstance(item.get("@id"), str)
         }
-    mapping_index: dict[str, list[dict[str, str]]] = {}
+    mapping_index: dict[str, list[dict[str, Any]]] = {}
     for mapping in mappings:
-        mapping_index.setdefault(mapping["local_iri"], []).append(
-            {
-                "relation": mapping["relation"],
-                "target_iri": mapping["target_iri"],
-                "target_label": mapping.get("target_label", ""),
-            }
-        )
+        mapping_index.setdefault(mapping["local_iri"], []).append(_mapping_doc_record(mapping))
     records: dict[str, dict[str, Any]] = {}
     for iri in selected:
         item = artifact_items.get(iri, {"@id": iri})
@@ -362,15 +429,9 @@ def _reference_terms_from_items(
     selected = {iri for iri, item in items.items() if include(iri, item)}
     if not selected:
         return []
-    mapping_index: dict[str, list[dict[str, str]]] = {}
+    mapping_index: dict[str, list[dict[str, Any]]] = {}
     for mapping in mappings:
-        mapping_index.setdefault(mapping["local_iri"], []).append(
-            {
-                "relation": mapping["relation"],
-                "target_iri": mapping["target_iri"],
-                "target_label": mapping.get("target_label", ""),
-            }
-        )
+        mapping_index.setdefault(mapping["local_iri"], []).append(_mapping_doc_record(mapping))
     records: dict[str, dict[str, Any]] = {}
     for iri in selected:
         item = items.get(iri, {"@id": iri})
@@ -421,15 +482,9 @@ def _merge_taxonomy_reference_terms(
         if term.get("iri")
         and term.get("disposition") in {"active_local_class", "deprecated_compatibility_class"}
     }
-    mapping_index: dict[str, list[dict[str, str]]] = {}
+    mapping_index: dict[str, list[dict[str, Any]]] = {}
     for mapping in mappings:
-        mapping_index.setdefault(str(mapping.get("local_iri", "")), []).append(
-            {
-                "relation": str(mapping.get("relation", "")),
-                "target_iri": str(mapping.get("target_iri", "")),
-                "target_label": str(mapping.get("target_label", "")),
-            }
-        )
+        mapping_index.setdefault(str(mapping.get("local_iri", "")), []).append(_mapping_doc_record(mapping))
     for iri, taxonomy in taxonomy_terms.items():
         record = records.get(
             iri,
@@ -1305,6 +1360,7 @@ def _page_template(
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'import-guide.html')}">Import</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'import-catalog.html')}">Import Catalog</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'quality-dashboard.html')}">Quality</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'tib-benchmark.html')}">TIB Benchmark</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'developer-guide.html')}">Developer</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'release.html')}">Release</a>
     </nav>
@@ -1429,7 +1485,8 @@ def _legacy_profile_home() -> str:
       </div>
       <aside class="hero-card hero-metrics">
         <div class="metric"><strong>Shared core</strong><span>Stable H2KG namespace with profile-specific PEMFC and PEMWE views.</span></div>
-        <div class="metric"><strong>Standards-aligned</strong><span>EMMO, HDO, QUDT, ChEBI, PROV-O, and DCTERMS integration through the AIMWORKS release pipeline.</span></div>
+        <div class="metric"><strong>Foundational reuse</strong><span>HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS support shared quantities, chemicals, provenance, and metadata.</span></div>
+        <div class="metric"><strong>External alignment</strong><span>Exact, broader, and narrower SKOS mappings point to original ontology IRIs discovered across NFDI4Cat, NFDI4Energy, and NFDI4Ing in TIB.</span></div>
         <div class="metric"><strong>Publication-ready</strong><span>GitHub Pages documentation, downloadable ontology artefacts, mappings, and quality reports.</span></div>
       </aside>
     </section>
@@ -1480,7 +1537,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
         if iri:
             profile_lines.append(f"{key.upper()} ontology IRI: {iri}")
     paragraphs = [
-        f"{project['title']} is an EMMO-aligned application ontology rather than a broad hydrogen-economy ontology.",
+        f"{project['title']} is a domain-expert-reviewed application ontology focused on hydrogen electrochemical systems rather than the full hydrogen economy.",
         "Its primary scope is hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, data, and provenance.",
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
         *profile_lines,
@@ -1490,7 +1547,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
       <article class="card">
         <h2>Release Architecture</h2>
         <p>AIMWORKS remains the domain-specific release and documentation layer, while ODK is introduced as a nested standard ontology engineering and QC backend.</p>
-        <p>PEMFC and PEMWE profile modules remain AIMWORKS outputs in shadow mode, and ODK does not change public H2KG IRIs unless a later promotion step is explicitly approved.</p>
+        <p>PEMFC and PEMWE profile modules remain AIMWORKS outputs in H2KG v2, while the ODK machine backend preserves the established public H2KG IRIs.</p>
       </article>
       <article class="card">
         <h2>ODK Shadow Mode</h2>
@@ -1655,6 +1712,7 @@ def _build_explorer_dataset(
             "local": True,
             "deprecated": _deprecated_status(item),
             "mapping_labels": [str(mapping.get("target_label", "")).strip() for mapping in record.get("mappings", []) if str(mapping.get("target_label", "")).strip()],
+            "external_alignments": record.get("mappings", []),
         }
         nodes[iri]["search_text"] = _node_search_text(record, item)
 
@@ -1721,6 +1779,7 @@ def _build_explorer_dataset(
             "local": True,
             "deprecated": "Deprecated" if term.get("disposition") == "deprecated_compatibility_class" else "Active",
             "mapping_labels": [],
+            "external_alignments": [],
             "search_text": " ".join(
                 str(value)
                 for value in [
@@ -1774,7 +1833,14 @@ def _build_explorer_dataset(
         for mapping in record.get("mappings", []):
             target_iri = str(mapping.get("target_iri", "")).strip()
             ensure_external(target_iri, str(mapping.get("target_label", "")).strip(), f"Reviewed {mapping.get('relation', 'mapping')} target.")
-            add_link(iri, target_iri, str(mapping.get("relation", "mapping")), canonical_qname(target_iri, ""), "alignments", "mapping")
+            add_link(
+                iri,
+                target_iri,
+                str(mapping.get("relation", "mapping")),
+                _mapping_relation_label(str(mapping.get("relation", "mapping"))),
+                "alignments",
+                "mapping",
+            )
         types = item.get("@type", [])
         if isinstance(types, str):
             types = [types]
@@ -1857,6 +1923,7 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
     reference_link = _relative_href(page_path, docs_root / "hydrogen-ontology.html")
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     data_href = _relative_href(page_path, docs_root / "data" / "explorer.json")
+    alignment_evidence_href = _relative_href(page_path, docs_root / "data" / "external_alignment_evidence.json")
     taxonomy_ttl = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.ttl")
     taxonomy_jsonld = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.jsonld")
     taxonomy_registry = _relative_href(page_path, docs_root / "ontology" / "taxonomy_registry.csv")
@@ -1898,12 +1965,12 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
           <li><strong>Visible link surface:</strong> {overview.get('edgeCount', 0)}</li>
           <li><strong>Active v2 classes:</strong> {overview.get('activeClassCount', 0)}</li>
           <li><strong>Taxonomy version:</strong> {escape(str(overview.get('taxonomyVersion', 'not generated')))}</li>
-          <li><strong>Review status:</strong> {escape(str(overview.get('taxonomyReviewStatus', 'not generated')))}</li>
+          <li><strong>Taxonomy governance:</strong> {escape(str(overview.get('taxonomyReviewStatus', 'not generated')).replace('-', ' '))}</li>
         </ul>
         <p class="muted">The graph starts with the selected term and its direct visible neighborhood. Expansion is progressive and reversible.</p>
       </article>
     </section>
-    <section class="explorer-shell" data-explorer-root data-explorer-data="{data_href}" data-reference-page="{reference_link}">
+    <section class="explorer-shell" data-explorer-root data-explorer-data="{data_href}" data-alignment-evidence="{alignment_evidence_href}" data-reference-page="{reference_link}">
       <aside class="explorer-sidebar">
         <article class="card explorer-panel">
           <p class="eyebrow">Find a term</p>
@@ -2068,18 +2135,195 @@ def _merge_external_alignment_mappings(
     )
 
 
-def _alignment_body(mappings: list[dict[str, Any]], summary: dict[str, Any]) -> str:
-    stats = f"""
-    <section class='grid'>
-      <article class='card'><h2>Accepted Alignments</h2><p><strong>{summary.get('accepted_count', len(mappings))}</strong> reviewed mappings are included in the published alignment layer.</p></article>
-      <article class='card'><h2>Exploratory Candidates</h2><p><strong>{summary.get('exploratory_count', 0)}</strong> exploratory candidates are kept out of the published TTL and remain internal review material only.</p></article>
-    </section>
-    """
-    cards = "".join(
-        f"<article class='term-card'><h2>{item['local_label']}</h2><p class='iri'>{item['local_iri']}</p><p><strong>{item['relation']}</strong> {item['target_iri']}</p><p>{item['rationale']}</p></article>"
-        for item in mappings[:60]
+def _build_external_alignment_evidence(
+    coverage_path: Path,
+    asserted_mappings: list[dict[str, Any]],
+) -> dict[str, Any]:
+    asserted_pairs = {
+        (str(row.get("local_iri", "")), str(row.get("target_iri", "")))
+        for row in asserted_mappings
+    }
+    ontology_metadata: dict[str, dict[str, str]] = {}
+    ontology_summary = coverage_path.parent / "ontology_summary.csv"
+    if ontology_summary.exists():
+        with ontology_summary.open("r", encoding="utf-8", newline="") as handle:
+            for row in csv.DictReader(handle):
+                ontology_id = str(row.get("ontology_id", ""))
+                ontology_metadata.setdefault(
+                    ontology_id,
+                    {
+                        "title": str(row.get("ontology_title", "")),
+                        "version": str(row.get("ontology_version", "")),
+                    },
+                )
+    by_iri: dict[str, list[dict[str, Any]]] = {}
+    if coverage_path.exists():
+        with coverage_path.open("r", encoding="utf-8", newline="") as handle:
+            for row in csv.DictReader(handle):
+                outcome = str(row.get("outcome", ""))
+                if outcome not in {"related_non_equivalent", "h2kg_narrower", "h2kg_broader"}:
+                    continue
+                local_iri = str(row.get("h2kg_iri", ""))
+                target_iri = str(row.get("best_external_iri", ""))
+                if not local_iri or not target_iri or (local_iri, target_iri) in asserted_pairs:
+                    continue
+                ontology_id = str(row.get("best_ontology_id", ""))
+                metadata = ontology_metadata.get(ontology_id, {})
+                record = {
+                    "outcome": outcome,
+                    "relation_label": {
+                        "related_non_equivalent": "related, not equivalent",
+                        "h2kg_narrower": "candidate broader than H2KG",
+                        "h2kg_broader": "candidate narrower than H2KG",
+                    }[outcome],
+                    "target_iri": target_iri,
+                    "target_label": str(row.get("best_external_label", "")),
+                    "ontology_id": ontology_id,
+                    "ontology_title": metadata.get("title", ""),
+                    "ontology_version": metadata.get("version", ""),
+                    "collection": str(row.get("collection", "")),
+                    "evidence": str(row.get("decision_basis", "")),
+                    "tib_catalogue_url": f"https://terminology.tib.eu/ts/ontologies/{ontology_id}",
+                    "publication_status": "benchmark-evidence-not-asserted",
+                }
+                by_iri.setdefault(local_iri, []).append(record)
+    for iri, rows in by_iri.items():
+        unique = {
+            (row["outcome"], row["target_iri"], row["collection"]): row
+            for row in rows
+        }
+        by_iri[iri] = sorted(
+            unique.values(),
+            key=lambda row: (row["outcome"], row["ontology_id"], row["target_label"].casefold()),
+        )
+    return {
+        "schema_version": "h2kg-external-alignment-evidence/v1",
+        "source": "h2kg_collection_coverage.csv",
+        "record_count": sum(len(rows) for rows in by_iri.values()),
+        "h2kg_term_count": len(by_iri),
+        "by_h2kg_iri": dict(sorted(by_iri.items())),
+    }
+
+
+def _alignment_body(
+    mappings: list[dict[str, Any]],
+    summary: dict[str, Any],
+    registry: dict[str, Any],
+) -> str:
+    machine_mappings = [row for row in mappings if row.get("status") == "machine_safe"]
+    machine_exact_count = sum(row.get("relation") == "skos:exactMatch" for row in machine_mappings)
+    machine_broad_count = sum(row.get("relation") == "skos:broadMatch" for row in machine_mappings)
+    machine_narrow_count = sum(row.get("relation") == "skos:narrowMatch" for row in machine_mappings)
+    reviewed_count = sum(row.get("status") != "machine_safe" for row in mappings)
+    relation_options = sorted({str(row.get("relation", "")) for row in mappings if row.get("relation")})
+    ontology_options = sorted({str(row.get("tib_ontology_id", "")) for row in mappings if row.get("tib_ontology_id")})
+    collection_options = sorted(
+        {
+            str(value)
+            for row in mappings
+            for value in (
+                row.get("collections", [])
+                if isinstance(row.get("collections", []), list)
+                else str(row.get("collections", "")).split("|")
+            )
+            if str(value).strip()
+        },
+        key=str.casefold,
     )
-    return stats + f"<section class='list-grid'>{cards}</section>"
+    category_options = sorted(
+        {str(row.get("alignment_category", "")) for row in mappings if row.get("alignment_category")},
+        key=str.casefold,
+    )
+    confidence_options = sorted(
+        {str(row.get("confidence", "")) for row in mappings if row.get("confidence")},
+        key=str.casefold,
+    )
+    status_options = sorted(
+        {str(row.get("publication_status", "")) for row in mappings if row.get("publication_status")},
+        key=str.casefold,
+    )
+
+    def options(values: list[str]) -> str:
+        return "".join(f"<option value='{escape(value)}'>{escape(value)}</option>" for value in values)
+
+    rows = "".join(
+        f"""
+        <tr data-alignment-row
+            data-relation="{escape(str(item.get('relation', '')))}"
+            data-ontology="{escape(str(item.get('tib_ontology_id', '')))}"
+            data-collection="{escape(' '.join(item.get('collections', [])) if isinstance(item.get('collections', []), list) else str(item.get('collections', '')))}"
+            data-category="{escape(str(item.get('alignment_category', '')))}"
+            data-confidence="{escape(str(item.get('confidence', '')))}"
+            data-status="{escape(str(item.get('publication_status', 'asserted')))}">
+          <td><strong>{escape(str(item.get('local_label', '')))}</strong><br><code>{escape(str(item.get('local_iri', '')))}</code></td>
+          <td><span class="status-pill good">{escape(_mapping_relation_label(str(item.get('relation', ''))))}</span></td>
+          <td><strong>{escape(str(item.get('target_label', '')))}</strong><br><a href="{escape(str(item.get('target_iri', '')))}"><code>{escape(str(item.get('target_iri', '')))}</code></a></td>
+          <td><strong>{escape(str(item.get('tib_ontology_id', '')))}</strong><br>{escape(str(item.get('tib_ontology_version', '')))}<br><a href="{escape(str(item.get('tib_catalogue_url', '')))}">TIB catalogue</a></td>
+          <td>{escape(', '.join(item.get('collections', [])) if isinstance(item.get('collections', []), list) else str(item.get('collections', '')))}</td>
+          <td>{escape(str(item.get('alignment_category', '')).replace('_', ' '))}</td>
+          <td>{escape(str(item.get('confidence', '')))}<br><small>{escape(str(item.get('publication_status', 'asserted')))}</small></td>
+          <td>{escape(str(item.get('mapping_evidence') or item.get('rationale') or ''))}</td>
+        </tr>
+        """
+        for item in mappings
+    )
+    return f"""
+    <section class='grid'>
+      <article class='card'><h2>Asserted mappings</h2><p><strong>{len(mappings)}</strong> mappings are published in the versioned bridge: {len(machine_mappings)} TIB benchmark assertions ({machine_exact_count} exact, {machine_broad_count} H2KG-narrower, and {machine_narrow_count} H2KG-broader) plus {reviewed_count} reviewed foundational assertions.</p></article>
+      <article class='card'><h2>Conservative boundary</h2><p>Only exact, broader, and narrower mappings pass into the asserted SKOS bridge. Other benchmark results remain audit evidence.</p></article>
+      <article class='card'><h2>Snapshot scope</h2><p>{summary.get('tib_unique_ontology_count', 0)} unique ontologies across {summary.get('tib_collection_membership_count', 0)} collection memberships; snapshot {escape(str(summary.get('tib_snapshot_retrieved_at', 'not available')))}.</p></article>
+    </section>
+    <section class="card">
+      <h2>Downloads and full evidence</h2>
+      <p>The bridge is separate from the H2KG taxonomy. It adds no collection-wide imports, preserves original external ontology IRIs, and is published directly through the H2KG release downloads.</p>
+      <div class="button-row">
+        <a class="inline-button" href="../ontology/h2kg-v2-external-bridge.ttl" download>Turtle</a>
+        <a class="inline-button" href="../ontology/h2kg-v2-external-bridge.jsonld" download>JSON-LD</a>
+        <a class="inline-button" href="../ontology/h2kg-tib-asserted-mappings.sssom.tsv" download>SSSOM</a>
+        <a class="inline-button" href="../ontology/external_alignment_registry.csv" download>Registry CSV</a>
+        <a class="inline-button" href="../ontology/h2kg-tib-alignment-changelog.csv" download>Changelog</a>
+        <a class="inline-button" href="tib-benchmark.html">Ontology-level benchmark</a>
+        <a class="inline-button" href="../benchmarks/tib_collections/h2kg_tib_collection_benchmark.xlsx" download>Audit workbook</a>
+      </div>
+    </section>
+    <section class="card" data-alignment-table-root>
+      <h2>Search asserted alignments</h2>
+      <div class="alignment-filters">
+        <label>Search <input type="search" data-alignment-query placeholder="H2KG term, target, IRI, evidence"></label>
+        <label>Relation <select data-alignment-filter="relation"><option value="">All</option>{options(relation_options)}</select></label>
+        <label>Ontology <select data-alignment-filter="ontology"><option value="">All</option>{options(ontology_options)}</select></label>
+        <label>Collection <select data-alignment-filter="collection"><option value="">All</option>{options(collection_options)}</select></label>
+        <label>Category <select data-alignment-filter="category"><option value="">All</option>{options(category_options)}</select></label>
+        <label>Confidence <select data-alignment-filter="confidence"><option value="">All</option>{options(confidence_options)}</select></label>
+        <label>Publication status <select data-alignment-filter="status"><option value="">All</option>{options(status_options)}</select></label>
+      </div>
+      <p class="muted"><span data-alignment-visible>{len(mappings)}</span> of {len(mappings)} mappings shown.</p>
+      <div class="table-wrap"><table class="catalog-table"><thead><tr><th>H2KG term</th><th>Relation</th><th>External term</th><th>Ontology/version</th><th>Collection</th><th>Category</th><th>Confidence/status</th><th>Evidence</th></tr></thead><tbody>{rows}</tbody></table></div>
+    </section>
+    <script>
+    (() => {{
+      const root = document.querySelector('[data-alignment-table-root]');
+      if (!root) return;
+      const rows = [...root.querySelectorAll('[data-alignment-row]')];
+      const query = root.querySelector('[data-alignment-query]');
+      const filters = [...root.querySelectorAll('[data-alignment-filter]')];
+      const count = root.querySelector('[data-alignment-visible]');
+      const apply = () => {{
+        const needle = query.value.trim().toLowerCase();
+        let visible = 0;
+        rows.forEach((row) => {{
+          const filterMatch = filters.every((control) => !control.value || (row.dataset[control.dataset.alignmentFilter] || '').toLowerCase().includes(control.value.toLowerCase()));
+          const textMatch = !needle || row.textContent.toLowerCase().includes(needle);
+          row.hidden = !(filterMatch && textMatch);
+          if (!row.hidden) visible += 1;
+        }});
+        count.textContent = String(visible);
+      }};
+      query.addEventListener('input', apply);
+      filters.forEach((control) => control.addEventListener('change', apply));
+    }})();
+    </script>
+    """
 
 
 def _examples_body(examples: list[dict[str, Any]]) -> str:
@@ -2177,7 +2421,7 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
       <article class="card">
         <h2>Profile Reference Scope</h2>
         <p>This page presents the {title} as a structured reference, grouping all profile-visible terms into navigable sections instead of one flat list. It is the intended future human-readable landing page for the {title} namespace.</p>
-        <p class="muted">ODK shadow-mode status: {escape(_shadow_mode_summary(odk))}</p>
+        <p class="muted">ODK backend status: {escape(_shadow_mode_summary(odk))}</p>
         <p class="muted">HDO-reviewed terms in the current run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
         <div class="button-row">
           <a class="inline-button" href="{namespace_link}">Full H2KG namespace</a>
@@ -2302,7 +2546,14 @@ def _reference_optional_block(title: str, content: str) -> str:
     return f"<section class='reference-subblock'><h4>{escape(title)}</h4>{content}</section>"
 
 
-def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any], page_path: Path, docs_root: Path) -> str:
+def _release_body(
+    release: dict[str, Any],
+    odk: dict[str, Any],
+    hdo: dict[str, Any],
+    alignment: dict[str, Any],
+    page_path: Path,
+    docs_root: Path,
+) -> str:
     artifacts = "".join(f"<li>{escape(str(item))}</li>" for item in release.get("artifacts", []))
     odk_base = _relative_href(page_path, docs_root / "odk")
     odk_artifacts = _odk_artifact_cards(odk, odk_base)
@@ -2312,6 +2563,20 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     publication = release.get("publication_evidence", {})
     promotion_state = str(odk.get("promotion_state", "shadow"))
     publication_established = publication.get("publication_status") == "published" and publication.get("resolver_status") == "established"
+    alignment_links = {
+        "ttl": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-external-bridge.ttl"),
+        "jsonld": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-external-bridge.jsonld"),
+        "sssom": _relative_href(page_path, docs_root / "ontology" / "h2kg-tib-asserted-mappings.sssom.tsv"),
+        "csv": _relative_href(page_path, docs_root / "ontology" / "external_alignment_registry.csv"),
+        "excel": _relative_href(page_path, docs_root / "benchmarks" / "tib_collections" / "h2kg_tib_collection_benchmark.xlsx"),
+        "page": _relative_href(page_path, docs_root / "pages" / "alignment.html"),
+        "benchmark": _relative_href(page_path, docs_root / "pages" / "tib-benchmark.html"),
+    }
+    principal_sources = sorted(
+        alignment.get("tib_benchmark_sources", alignment.get("sources", {})).items(),
+        key=lambda item: (-int(item[1]), str(item[0]).casefold()),
+    )[:8]
+    principal_source_text = ", ".join(f"{source} ({count})" for source, count in principal_sources) or "not available"
     artifacts_fallback = (
         "<li>Public release artefacts are established and synchronized with the current resolver-backed publication.</li>"
         if publication_established
@@ -2342,6 +2607,30 @@ def _release_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       <article class="card">
         <h2>Release Artifacts</h2>
         <ul>{artifacts or artifacts_fallback}</ul>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <p class="eyebrow">Interoperability</p>
+        <h2>External semantic alignment</h2>
+        <p>H2KG {escape(str(alignment.get('h2kg_version', '2.0.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H2KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
+        <ul class="stats">
+          <li><strong>Discovery scope:</strong> {alignment.get('tib_collection_count', 0)} TIB collections, {alignment.get('tib_unique_ontology_count', 0)} unique ontologies, {alignment.get('tib_collection_membership_count', 0)} collection memberships</li>
+          <li><strong>TIB benchmark assertions:</strong> {alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} ({escape(', '.join(f'{key}={value}' for key, value in alignment.get('tib_asserted_mapping_counts', {}).items()) or 'none')})</li>
+          <li><strong>Reviewed foundational mappings:</strong> {alignment.get('reviewed_foundational_mapping_count', 0)}</li>
+          <li><strong>Asserted relations:</strong> {escape(', '.join(f'{key}={value}' for key, value in alignment.get('asserted_mapping_counts', {}).items()) or 'none')}</li>
+          <li><strong>Principal benchmark ontologies:</strong> {escape(principal_source_text)}</li>
+        </ul>
+        <p><strong>Foundational dependencies and reused vocabularies</strong> such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{alignment_links['page']}">Browse alignments</a>
+          <a class="inline-button" href="{alignment_links['benchmark']}">Benchmark</a>
+          <a class="inline-button" href="{alignment_links['ttl']}" download>Bridge TTL</a>
+          <a class="inline-button" href="{alignment_links['jsonld']}" download>Bridge JSON-LD</a>
+          <a class="inline-button" href="{alignment_links['sssom']}" download>SSSOM</a>
+          <a class="inline-button" href="{alignment_links['csv']}" download>Registry CSV</a>
+          <a class="inline-button" href="{alignment_links['excel']}" download>Audit Excel</a>
+        </div>
       </article>
     </section>
     <section class="stack">
@@ -2442,7 +2731,7 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
             "label": "ROBOT warnings",
             "status": "watch" if odk.get("robot_summary", {}).get("warnings", 0) else "good",
             "value": str(odk.get("robot_summary", {}).get("warnings", 0)),
-            "detail": "Warnings indicate shadow scaffolding or follow-up work still required before promotion.",
+            "detail": "Warnings identify import or technical follow-up work without changing the published H2KG IRIs.",
         },
         {
             "label": "Import refresh health",
@@ -2487,6 +2776,13 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     </section>
     <section class="grid">
       <article class="card">
+        <h2>TIB Collection Benchmark</h2>
+        <p>Review the reproducible H2KG comparison with NFDI4Cat, NFDI4Energy, and NFDI4Ing, including collection- and ontology-level percentages and downloadable Excel evidence.</p>
+        <div class="button-row"><a class="inline-button" href="tib-benchmark.html">Open benchmark</a></div>
+      </article>
+    </section>
+    <section class="grid">
+      <article class="card">
         <h2>Current Release Status</h2>
         <p class="muted">This summary shows the current release state using a public-first FAIR interpretation together with the current ODK governance and QC state.</p>
         {_render_rows(current_status_rows)}
@@ -2525,7 +2821,7 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       </article>
       <article class="card">
         <h2>Validation Signals</h2>
-        <p class="muted">{escape(str(explanations.get('validation_signals', 'Validation signals summarize local structural and metadata checks against the release candidate ontology.')))}</p>
+        <p class="muted">{escape(str(explanations.get('validation_signals', 'Validation signals summarize structural and metadata checks against the published H2KG release.')))}</p>
         {_render_rows(release.get('validation_signals', []))}
       </article>
       <article class="card">
@@ -2667,12 +2963,12 @@ def _architecture_body(project: dict[str, Any], odk: dict[str, Any], hdo: dict[s
       </article>
       <article class="card">
         <h2>ODK Layer</h2>
-        <p>ODK now runs as a nested shadow-mode ontology engineering backend for edit-file management, import refresh, ROBOT-oriented QC, and standard machine artefacts such as <code>base</code>, <code>full</code>, and <code>simple</code>.</p>
+        <p>ODK runs as the nested H2KG v2 machine-release backend for edit-file management, import refresh, ROBOT-oriented QC, and standard artefacts such as <code>base</code>, <code>full</code>, and <code>simple</code>.</p>
         <p>Current status: <strong>{escape(str(odk.get('mode', 'shadow')))}</strong>. Public H2KG IRIs remain unchanged.</p>
       </article>
       <article class="card">
         <h2>Profile Modules</h2>
-        <p>The <code>pemfc</code> and <code>pemwe</code> profiles remain AIMWORKS outputs in v1. ODK does not replace them or publish a competing documentation site.</p>
+        <p>The <code>pemfc</code> and <code>pemwe</code> profiles remain AIMWORKS outputs in H2KG v2. ODK supplies the machine release and QC backend rather than a competing documentation site.</p>
         <p>{escape(str(project.get('title', 'H2KG')))} keeps the current profile-oriented website while gaining a standards-based machine release and QC backend.</p>
       </article>
       <article class="card">
@@ -2715,8 +3011,8 @@ def _profile_home_body(project: dict[str, Any], profile_key: str, odk: dict[str,
           <li><strong>Primary artefact:</strong> {escape(str(odk.get('primary_artifact', 'base')))}</li>
           <li><strong>Parity:</strong> {escape(str(parity_status))}</li>
         </ul>
-        <p>Standard ODK machine artefacts and ROBOT QC are generated in parallel with the AIMWORKS release pipeline.</p>
-        <p class="muted">Managed imports include HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS. HDO is the preferred anchor for data and metadata-management concepts.</p>
+        <p>H2KG v2 ODK machine artefacts, ELK reasoning, and ROBOT quality checks are generated in parallel with the AIMWORKS release pipeline.</p>
+        <p class="muted">Foundational reuse includes HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS. External TIB alignments are published separately as SKOS exact, broader, and narrower mappings to original ontology IRIs; no NFDI collection is imported wholesale.</p>
         <div class="button-row">
           <a class="inline-button" href="{release_link}">Release</a>
           <a class="inline-button" href="{quality_link}">Quality</a>
@@ -2754,7 +3050,7 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
           {_artifact_line(odk, 'full', odk_base)}
           {_artifact_line(odk, 'simple', odk_base)}
         </ul>
-        <p>ODK artefacts are machine-oriented companion releases. Example and data-like content remain outside ODK v1.</p>
+        <p>ODK artefacts are machine-oriented H2KG v2 releases. Example and data-like content remain in the AIMWORKS profile and workflow packages.</p>
         <p>HDO is used as a primary alignment source for data, metadata, digital-object, and process-management concepts.</p>
         <p class="muted">HDO-reviewed H2KG terms in this run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
         {_shadow_note(parity)}
@@ -3098,6 +3394,8 @@ def _copy_taxonomy_artifacts(output_dir: Path) -> None:
         "h2kg-v2-taxonomy-shapes.ttl",
         "h2kg-v2-external-bridge.ttl",
         "h2kg-v2-external-bridge.jsonld",
+        "h2kg-tib-asserted-mappings.sssom.tsv",
+        "h2kg-tib-alignment-changelog.csv",
         "taxonomy_registry.json",
         "taxonomy_registry.csv",
         "resource_disposition_registry.json",
@@ -3109,6 +3407,9 @@ def _copy_taxonomy_artifacts(output_dir: Path) -> None:
         source = source_dir / filename
         if source.exists():
             shutil.copyfile(source, target_dir / filename)
+    releases = source_dir / "releases"
+    if releases.exists():
+        shutil.copytree(releases, target_dir / "releases", dirs_exist_ok=True)
 
 
 def _copy_asserted_source_jsonld(input_path: Path, output_dir: Path) -> None:
@@ -3152,8 +3453,8 @@ def _artifact_line(odk: dict[str, Any], name: str, odk_base: str) -> str:
 
 def _shadow_note(parity: dict[str, Any]) -> str:
     if parity.get("status") == "aligned":
-        return "<p class='muted'>ODK shadow-mode artefacts are currently aligned with the curated release baseline.</p>"
-    return "<p class='muted'>ODK artefacts are currently shadow-mode outputs for comparison and QC.</p>"
+        return "<p class='muted'>ODK machine artefacts are aligned with the curated H2KG v2 release baseline.</p>"
+    return "<p class='muted'>ODK machine artefacts are available for release validation and QC.</p>"
 
 
 def _hdo_import_record(odk: dict[str, Any]) -> dict[str, Any]:
@@ -3481,6 +3782,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!root) return;
 
   const dataPath = root.dataset.explorerData;
+  const alignmentEvidencePath = root.dataset.alignmentEvidence;
   const referencePage = root.dataset.referencePage || "../hydrogen-ontology.html";
   const searchInputEl = root.querySelector("[data-explorer-search]");
   const searchStatusEl = root.querySelector("[data-explorer-search-status]");
@@ -3512,6 +3814,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_SUGGESTIONS = 14;
 
   let payload = null;
+  let alignmentEvidencePayload = null;
+  let alignmentEvidencePromise = null;
   let cy = null;
   let currentSuggestions = [];
 
@@ -4174,6 +4478,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const alignmentRelationLabel = (relation) => ({
+    "skos:exactMatch": "exact equivalent",
+    "skos:broadMatch": "H2KG narrower than",
+    "skos:narrowMatch": "H2KG broader than",
+    "skos:relatedMatch": "related to",
+    "owl:equivalentClass": "reviewed equivalent class",
+    "owl:equivalentProperty": "reviewed equivalent property",
+    "rdfs:subClassOf": "reviewed subclass of",
+    "rdfs:subPropertyOf": "reviewed subproperty of"
+  })[relation] || relation || "mapping";
+
+  function assertedAlignmentHtml(node) {
+    const rows = node.external_alignments || [];
+    if (!rows.length) return "";
+    return `<div class="explorer-inspector__section"><strong>External alignments</strong>${rows.map((row) => `
+      <p><strong>${escapeHtml(alignmentRelationLabel(row.relation))}</strong><br>
+      <a href="${escapeHtml(row.target_iri)}">${escapeHtml(row.target_label || row.target_iri)}</a>
+      ${row.ontology_id ? `<br>${escapeHtml(row.ontology_id)}${row.ontology_version ? ` · ${escapeHtml(row.ontology_version)}` : ""}` : ""}
+      ${row.collections?.length ? `<br>${escapeHtml(row.collections.join(", "))}` : ""}
+      ${row.alignment_category ? `<br>Category: ${escapeHtml(row.alignment_category.replaceAll("_", " "))}` : ""}
+      ${row.confidence ? `<br>Confidence: ${escapeHtml(row.confidence)}` : ""}
+      ${row.evidence ? `<br>${escapeHtml(row.evidence)}` : ""}
+      ${row.tib_catalogue_url ? `<br><a href="${escapeHtml(row.tib_catalogue_url)}">TIB catalogue record</a>` : ""}</p>
+    `).join("")}</div>`;
+  }
+
+  async function renderNonAssertedAlignmentEvidence(node) {
+    const target = inspectorEl.querySelector("[data-external-evidence-for]");
+    if (!target || !node.local || !alignmentEvidencePath) return;
+    if (!alignmentEvidencePromise) {
+      alignmentEvidencePromise = fetch(alignmentEvidencePath)
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then((data) => { alignmentEvidencePayload = data; return data; });
+    }
+    try {
+      const data = alignmentEvidencePayload || await alignmentEvidencePromise;
+      if (target.dataset.externalEvidenceFor !== node.id) return;
+      const rows = data.by_h2kg_iri?.[node.id] || [];
+      if (!rows.length) {
+        target.innerHTML = '<p>No non-asserted related or directional candidate is recorded for this term in the compact collection-level index.</p>';
+        return;
+      }
+      target.innerHTML = rows.map((row) => `<p><strong>${escapeHtml(row.relation_label)}</strong><br><a href="${escapeHtml(row.target_iri)}">${escapeHtml(row.target_label || row.target_iri)}</a><br>${escapeHtml(row.ontology_id)}${row.ontology_version ? ` · ${escapeHtml(row.ontology_version)}` : ""} · ${escapeHtml(row.collection)}<br>${escapeHtml(row.evidence)}${row.tib_catalogue_url ? `<br><a href="${escapeHtml(row.tib_catalogue_url)}">TIB catalogue record</a>` : ""}</p>`).join("") + '<p><a href="tib-benchmark.html">Open the full ontology-level benchmark</a></p>';
+    } catch (_error) {
+      target.innerHTML = '<p>Benchmark evidence could not be loaded. The asserted bridge remains available above.</p>';
+    }
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -4204,6 +4559,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${assertedAlignmentHtml(node)}
+        ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
         ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
         ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
@@ -4215,6 +4572,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
+    renderNonAssertedAlignmentEvidence(node);
     inspectorEl.querySelectorAll("[data-copy-iri]").forEach((button) => {
       button.addEventListener("click", async () => {
         try {
@@ -4596,6 +4954,9 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
 .command-list { margin: 0; padding-left: 1.2rem; }
 .command-list li { margin-bottom: 0.45rem; }
 .table-wrap { overflow-x: auto; }
+.alignment-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 0.8rem; margin: 1rem 0; }
+.alignment-filters label { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.84rem; font-weight: 700; }
+.alignment-filters input, .alignment-filters select { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,0.9); color: var(--ink); }
 .catalog-table { width: 100%; border-collapse: collapse; }
 .catalog-table th, .catalog-table td { text-align: left; padding: 0.65rem; border-bottom: 1px solid rgba(21,32,37,0.08); vertical-align: top; }
 .catalog-table th { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(21,32,37,0.72); }
@@ -4666,6 +5027,7 @@ code { background: rgba(15,109,122,0.08); padding: 0.1rem 0.35rem; border-radius
 .acknowledgement-copy p { margin: 0 0 0.85rem; }
 .acknowledgement-copy p:last-child { margin-bottom: 0; }
 @media (max-width: 760px) {
+  .alignment-filters { grid-template-columns: 1fr; }
   .acknowledgement { grid-template-columns: 1fr; }
   .hero-head { grid-template-columns: 1fr; }
   .hero-brand { justify-self: start; min-width: 0; width: fit-content; }

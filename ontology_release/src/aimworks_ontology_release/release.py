@@ -28,6 +28,7 @@ from .synchrotron_xray_tomo_pilot import build_synchrotron_xray_tomo_pilot_packa
 from .taxonomy import build_taxonomy_release
 from .tem_pilot import build_tem_pilot_package
 from .tib_benchmark import build_tib_benchmark_package
+from .tib_collections import build_collection_benchmark
 from .xps_pilot import build_xps_pilot_package
 from .xrd_pilot import build_xrd_pilot_package
 from .utils import ensure_dir, write_text
@@ -57,6 +58,12 @@ def run_release(
     split_summary = split_ontology(input_path, ontology_dir, project_root / "config")
     mappings = propose_mappings(input_path, review_dir, project_root / "config")
     taxonomy_config = project_root / "config" / "taxonomy.yaml"
+    prior_alignment_registry_path = output_root / "ontology" / "external_alignment_registry.json"
+    prior_alignment_registry_text = (
+        prior_alignment_registry_path.read_text(encoding="utf-8")
+        if prior_alignment_registry_path.exists()
+        else ""
+    )
     taxonomy = (
         build_taxonomy_release(input_path, output_root, project_root / "config")
         if taxonomy_config.exists()
@@ -95,6 +102,30 @@ def run_release(
         output_root,
         project_root / "input" / "tib_terminology_snapshot.json",
     )
+    tib_collection_benchmark = build_collection_benchmark(
+        output_root / "ontology" / "taxonomy_registry.json",
+        output_root,
+        project_root / "input" / "tib_collection_snapshot.json",
+        project_root / "input" / "tib_collection_candidate_cache.json",
+        existing_mapping_path=output_root / "ontology" / "external_alignment_registry.json",
+        existing_harmonization_path=project_root / "config" / "tib_auto_harmonization.json",
+        correction_registry_path=project_root / "config" / "tib_h2kg_corrections.json",
+    )
+    # Rebuild the taxonomy publication surfaces with the harmonization registry
+    # generated from this same frozen-snapshot run.  This prevents the bridge
+    # from lagging one release behind the benchmark that justifies it.
+    generated_harmonization = (
+        output_root / "benchmarks" / "tib_collections" / "automatic_harmonization_registry.json"
+    )
+    if taxonomy_config.exists() and generated_harmonization.exists():
+        if prior_alignment_registry_text:
+            write_text(prior_alignment_registry_path, prior_alignment_registry_text)
+        taxonomy = build_taxonomy_release(
+            input_path,
+            output_root,
+            project_root / "config",
+            auto_harmonization_override=json.loads(generated_harmonization.read_text(encoding="utf-8")),
+        )
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -136,6 +167,7 @@ def run_release(
         "method_data_profiles": method_data_profiles,
         "decode_workflows": decode_workflows,
         "tib_benchmark": tib_benchmark,
+        "tib_collection_benchmark": tib_collection_benchmark,
         "fair": fair,
         "odk": odk,
         "docs": docs,

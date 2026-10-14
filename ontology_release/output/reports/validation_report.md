@@ -5,9 +5,9 @@
 - SHACL executed: true
 - SHACL details: Validation Report
 Conforms: True
-- Release candidate path: `output\ontology\schema.ttl`
+- Release path: `output\ontology\schema.ttl`
 
-## Release Candidate Checks
+## Release Checks
 
 - Local schema terms: 33
 - Missing labels: 0

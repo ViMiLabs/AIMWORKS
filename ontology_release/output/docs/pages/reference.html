@@ -14,7 +14,7 @@
         <div class="hero-copy">
           <p class="eyebrow">H2KG Ontology</p>
           <h1>H2KG Namespace Reference</h1>
-          <p class="subtitle">EMMO-aligned ontology for hydrogen electrochemical systems, experiments, materials, measurements, and FAIR metadata</p>
+          <p class="subtitle">Domain-expert-reviewed ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
         </div>
         <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
       </div>
@@ -35,6 +35,7 @@
       <a href="import-guide.html">Import</a>
       <a href="import-catalog.html">Import Catalog</a>
       <a href="quality-dashboard.html">Quality</a>
+      <a href="tib-benchmark.html">TIB Benchmark</a>
       <a href="developer-guide.html">Developer</a>
       <a href="release.html">Release</a>
     </nav>
@@ -121,7 +122,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000565</code> <span class='muted'>(wavelength)</span></li></ul></section>
       
       
     </article>
@@ -197,7 +198,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee</code> <span class='muted'>(Voltage)</span></li><li><strong>skos:broadMatch</strong> <code>https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage</code> <span class='muted'>(Voltage)</span></li></ul></section>
       
       
     </article>
@@ -278,25 +279,6 @@
       
     </article>
     
-    <article class="reference-term" id="AcidBaseTitrationMeasurement">
-      <span id="acidbasetitrationmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Acid Base Titration Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#AcidBaseTitrationMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23AcidBaseTitrationMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>acid-base titration</dd></div>
-      </dl>
-      <p class="reference-definition">Acid-base titration used to determine phosphoric-acid doping level (ADL).</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CompositionMeasurement'>Composition measurement</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
-      
-      
-    </article>
-    
     <article class="reference-term" id="AcidDopedPAAPVAHydrogel">
       <span id="aciddopedpaapvahydrogel" class="anchor-alias" aria-hidden="true"></span>
       <h3>Acid Doped PAAPVA Hydrogel</h3>
@@ -330,7 +312,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000015</code> <span class='muted'>(doping)</span></li></ul></section>
       
       
     </article>
@@ -482,7 +464,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/T4FS_0000347</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.org/spar/fabio/Dataset</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000089</code> <span class='muted'>(dataset)</span></li></ul></section>
       
       
     </article>
@@ -544,6 +526,25 @@
       
     </article>
     
+    <article class="reference-term" id="AcidBaseTitrationMeasurement">
+      <span id="acidbasetitrationmeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Acid-base titration</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#AcidBaseTitrationMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23AcidBaseTitrationMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Acid Base Titration Measurement; acid-base titration</dd></div>
+      </dl>
+      <p class="reference-definition">A composition measurement in which an acidic or basic titrant is added to determine the amount or concentration of a complementary basic or acidic analyte.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CompositionMeasurement'>Composition measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0001510</code> <span class='muted'>(acid-base titration)</span></li></ul></section>
+      
+      
+    </article>
+    
     <article class="reference-term" id="AcousticFrequency">
       <span id="acousticfrequency" class="anchor-alias" aria-hidden="true"></span>
       <h3>Acoustic Frequency</h3>
@@ -558,7 +559,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_852b4ab8_fc29_4749_a8c7_b92d4fca7d5a</code> <span class='muted'>(Frequency)</span></li><li><strong>skos:broadMatch</strong> <code>http://www.w3.org/ns/ssn/systems/Frequency</code> <span class='muted'>(Frequency)</span></li></ul></section>
       
       
     </article>
@@ -596,7 +597,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/ENVO_00002044</code> <span class='muted'>(sludge)</span></li></ul></section>
       
       
     </article>
@@ -691,7 +692,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00340068</code> <span class='muted'>(size)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Size</code> <span class='muted'>(Size)</span></li></ul></section>
       
       
     </article>
@@ -705,7 +706,7 @@
       <p class="reference-definition">A characterization measurement that determines uptake, surface area, porosity, or interaction behavior from adsorption or desorption data.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#DynamicVaporSorptionMeasurement'>Dynamic Vapor Sorption Measurement</a>, <a href='#IonomerAdsorptionIsothermMeasurement'>Ionomer Adsorption Isotherm Measurement</a>, <a href='#IonomerAdsorptionRateMeasurement'>Ionomer Adsorption Rate Measurement</a>, <a href='#NitrogenPhysisorptionMeasurement'>Nitrogen Physisorption Measurement</a>, <a href='#OctaneAdsorptionBETMeasurement'>Octane Adsorption BET Measurement</a>, <a href='#WaterVaporAdsorptionMeasurement'>Water Vapor Adsorption Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#DynamicVaporSorptionMeasurement'>Dynamic vapor sorption</a>, <a href='#IonomerAdsorptionIsothermMeasurement'>Ionomer Adsorption Isotherm Measurement</a>, <a href='#IonomerAdsorptionRateMeasurement'>Ionomer Adsorption Rate Measurement</a>, <a href='#NitrogenPhysisorptionMeasurement'>Nitrogen Physisorption Measurement</a>, <a href='#OctaneAdsorptionBETMeasurement'>Octane Adsorption BET Measurement</a>, <a href='#WaterVaporAdsorptionMeasurement'>Water Vapor Adsorption Measurement</a></dd></div>
         
         
         
@@ -748,7 +749,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/MS_1000463</code> <span class='muted'>(instrument)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/polymat/Instrument</code> <span class='muted'>(Instrument)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/skgo/modsci#Instrument</code> <span class='muted'>(Instrument)</span></li></ul></section>
       
       
     </article>
@@ -767,7 +768,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_001368</code> <span class='muted'>(speed)</span></li><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp</code> <span class='muted'>(Speed)</span></li></ul></section>
       
       
     </article>
@@ -786,7 +787,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/rad_xxx_xxx-39e050dffbd342e199b7330a964f3dc6-vp</code> <span class='muted'>(Radius)</span></li></ul></section>
       
       
     </article>
@@ -824,7 +825,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044</code> <span class='muted'>(Density)</span></li></ul></section>
       
       
     </article>
@@ -900,7 +901,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dia_xxx_xxx-bb6404c75508494a93ef3ae2ad7f72ff-vp</code> <span class='muted'>(Diameter)</span></li></ul></section>
       
       
     </article>
@@ -938,7 +939,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/T4FS_0000347</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.org/spar/fabio/Dataset</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000089</code> <span class='muted'>(dataset)</span></li></ul></section>
       
       
     </article>
@@ -957,7 +958,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000045</code> <span class='muted'>(area)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Area</code> <span class='muted'>(Area)</span></li></ul></section>
       
       
     </article>
@@ -1033,7 +1034,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://www.w3id.org/ecsel-dr-SO#Fab</code> <span class='muted'>(Fabrication)</span></li></ul></section>
       
       
     </article>
@@ -1261,7 +1262,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000043</code> <span class='muted'>(thickness)</span></li><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp</code> <span class='muted'>(Thickness)</span></li></ul></section>
       
       
     </article>
@@ -1280,7 +1281,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007793</code> <span class='muted'>(additive)</span></li></ul></section>
       
       
     </article>
@@ -1299,7 +1300,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://edamontology.org/data_2140</code> <span class='muted'>(Concentration)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002820</code> <span class='muted'>(concentration)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007244</code> <span class='muted'>(concentration)</span></li></ul></section>
       
       
     </article>
@@ -1451,7 +1452,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001117</code> <span class='muted'>(ammonia gas)</span></li></ul></section>
       
       
     </article>
@@ -1489,7 +1490,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_229630</code> <span class='muted'>(ammonium carbonate)</span></li></ul></section>
       
       
     </article>
@@ -1579,7 +1580,7 @@
       <p class="reference-definition">A process that interprets, transforms, or evaluates data to obtain information, classifications, or scientific results.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#Process'>Process</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#ApparatusSpecificationMeasurement'>Apparatus Specification Measurement</a>, <a href='#CapillaryPressureEstimation'>Capillary Pressure Estimation</a>, <a href='#CrackConnectivityAnalysis'>Crack Connectivity Analysis</a>, <a href='#DataProcessing'>Data processing</a>, <a href='#DeflectionCriterionCalculation'>Deflection Criterion Calculation</a>, <a href='#DegradationPredictionEvaluationMeasurement'>Degradation Prediction Evaluation Measurement</a>, <a href='#DensityFunctionalTheoryCalculation'>Density Functional Theory Calculation</a>, <a href='#DistributionOfRelaxationTimesAnalysis'>Distribution Of Relaxation Times Analysis</a>, <a href='#ImageAnalysisPoreMeasurement'>Image Analysis Pore Measurement</a>, <a href='#InkFormulationSpecificationMeasurement'>Ink Formulation Specification Measurement</a>, <a href='#InkPrintabilityAssessment'>Ink Printability Assessment</a>, <a href='#InkStabilityModelCalculation'>Ink Stability Model Calculation</a>, <a href='#IonomerDispersionPropertyCompilation'>Ionomer Dispersion Property Compilation</a>, <a href='#LiteratureMicrostructureCompilation'>Literature Microstructure Compilation</a>, <a href='#LiteratureReviewSynthesis'>Literature Review Synthesis</a>, <a href='#MaterialSpecificationMeasurement'>Material Specification Measurement</a>, <a href='#PtUtilizationCalculation'>Pt Utilization Calculation</a>, <a href='#ReportedMaterialProperty'>Reported Material Property</a>, <a href='#ReviewStatementExtraction'>Review Statement Extraction</a>, <a href='#SolventPhysicalPropertyCompilation'>Solvent Physical Property Compilation</a>, <a href='#SolventPropertyLookup'>Solvent Property Lookup</a>, <a href='#TafelSlopeStepAnalysis'>Tafel Slope Step Analysis</a>, <a href='#TortuosityCalculation'>Tortuosity Calculation</a>, <a href='#TransmissionLineModelAnalysis'>Transmission Line Model Analysis</a>, <a href='#WaterStorageSpaceCalculation'>Water Storage Space Calculation</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#ApparatusSpecificationMeasurement'>Apparatus Specification Measurement</a>, <a href='#CapillaryPressureEstimation'>Capillary Pressure Estimation</a>, <a href='#CrackConnectivityAnalysis'>Crack Connectivity Analysis</a>, <a href='#DataProcessing'>Data processing</a>, <a href='#DeflectionCriterionCalculation'>Deflection Criterion Calculation</a>, <a href='#DegradationPredictionEvaluationMeasurement'>Degradation Prediction Evaluation Measurement</a>, <a href='#DensityFunctionalTheoryCalculation'>Density Functional Theory Calculation</a>, <a href='#DistributionOfRelaxationTimesAnalysis'>Distribution Of Relaxation Times Analysis</a>, <a href='#ImageAnalysisPoreMeasurement'>Image Analysis Pore Measurement</a>, <a href='#InkFormulationSpecificationMeasurement'>Ink Formulation Specification Measurement</a>, <a href='#InkPrintabilityAssessment'>Ink Printability Assessment</a>, <a href='#InkStabilityModelCalculation'>Ink Stability Model Calculation</a>, <a href='#IonomerDispersionPropertyCompilation'>Ionomer Dispersion Property Compilation</a>, <a href='#LiteratureMicrostructureCompilation'>Literature Microstructure Compilation</a>, <a href='#LiteratureReviewSynthesis'>Literature Review Synthesis</a>, <a href='#MaterialSpecificationMeasurement'>Material Specification Measurement</a>, <a href='#PtUtilizationCalculation'>Pt Utilization Calculation</a>, <a href='#ReportedMaterialProperty'>Reported Material Property</a>, <a href='#ReviewStatementExtraction'>Review Statement Extraction</a>, <a href='#SolventPhysicalPropertyCompilation'>Solvent Physical Property Compilation</a>, <a href='#SolventPropertyLookup'>Solvent Property Lookup</a>, <a href='#TafelSlopeStepAnalysis'>Tafel Slope Step Analysis</a>, <a href='#ThermogravimetricAnalysisMeasurement'>Thermogravimetric analysis</a>, <a href='#TortuosityCalculation'>Tortuosity Calculation</a>, <a href='#TransmissionLineModelAnalysis'>Transmission Line Model Analysis</a>, <a href='#WaterStorageSpaceCalculation'>Water Storage Space Calculation</a></dd></div>
         
         
         
@@ -1603,7 +1604,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/OBI_0001135</code> <span class='muted'>(balance)</span></li></ul></section>
       
       
     </article>
@@ -1717,7 +1718,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_001018</code> <span class='muted'>(ratio)</span></li></ul></section>
       
       
     </article>
@@ -2211,7 +2212,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001130</code> <span class='muted'>(argon gas)</span></li></ul></section>
       
       
     </article>
@@ -2306,7 +2307,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/T4FS_0000347</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.org/spar/fabio/Dataset</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000089</code> <span class='muted'>(dataset)</span></li></ul></section>
       
       
     </article>
@@ -2351,9 +2352,9 @@
     
     <article class="reference-term" id="AtomicForceMicroscopyMeasurement">
       <span id="atomicforcemicroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Atomic Force Microscopy Measurement</h3>
+      <h3>Atomic force microscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23AtomicForceMicroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>AFM; AFM imaging; atomic force microscopy</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23AtomicForceMicroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>AFM; AFM imaging; Atomic Force Microscopy Measurement; atomic force microscopy</dd></div>
       </dl>
       <p class="reference-definition">A measurement process that uses atomic force microscopy for in-situ or ex-situ surface-topography and microstructure characterization, including catalyst-layer and membrane-electrode-assembly imaging as well as adsorbed-ionomer structure analysis.</p>
       <dl class="reference-relations">
@@ -2363,7 +2364,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000113</code> <span class='muted'>(atomic force microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#AtomicForceMicroscopy</code> <span class='muted'>(AtomicForceMicroscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000070</code> <span class='muted'>(atomic force microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/ImagingAFM</code> <span class='muted'>(Imaging AFM)</span></li></ul></section>
       
       
     </article>
@@ -2374,7 +2375,7 @@
       <dl class="reference-meta">
         <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#AtomicLayerDeposition</code></dd></div><div><dt>Type</dt><dd>Class, Manufacturing</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23AtomicLayerDeposition'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>ALD</dd></div>
       </dl>
-      <p class="reference-definition">Pt deposition process used to synthesize Pt/NbB2 catalyst (MeCpMe3Pt precursor).</p>
+      <p class="reference-definition">A coating or deposition process that forms a material layer through sequential, self-limiting surface reactions of gaseous precursors.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CoatingOrDepositionProcess'>Coating or deposition process</a></dd></div>
         
@@ -2382,7 +2383,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001311</code> <span class='muted'>(atomic layer deposition)</span></li></ul></section>
       
       
     </article>
@@ -2458,7 +2459,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0003270</code> <span class='muted'>(pore diameter)</span></li></ul></section>
       
       
     </article>
@@ -2477,7 +2478,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.allotrope.org/ontologies/quality#AFQ_0000244</code> <span class='muted'>(pore size)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/MS_1003924</code> <span class='muted'>(pore size)</span></li></ul></section>
       
       
     </article>
@@ -3313,7 +3314,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0003781</code> <span class='muted'>(bulk density)</span></li></ul></section>
       
       
     </article>
@@ -3826,7 +3827,7 @@
         
         
       </dl>
-      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_16526</code> <span class='muted'>(Carbon dioxide)</span></li></ul></section>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_16526</code> <span class='muted'>(Carbon dioxide)</span></li><li><strong>skos:exactMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00000006</code> <span class='muted'>(carbon dioxide)</span></li><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001116</code> <span class='muted'>(carbon dioxide gas)</span></li></ul></section>
       
       
     </article>
@@ -4491,7 +4492,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow</code> <span class='muted'>(Flow)</span></li></ul></section>
       
       
     </article>
@@ -4510,7 +4511,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_140618</code> <span class='muted'>(castor oil)</span></li></ul></section>
       
       
     </article>
@@ -5061,7 +5062,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000045</code> <span class='muted'>(area)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Area</code> <span class='muted'>(Area)</span></li></ul></section>
       
       
     </article>
@@ -6068,7 +6069,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000045</code> <span class='muted'>(area)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Area</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007258</code> <span class='muted'>(active area)</span></li></ul></section>
       
       
     </article>
@@ -6462,7 +6463,7 @@
       <p class="reference-definition">A measurement that acquires data for determining one or more characteristics of a material, component, or system.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#Measurement'>Measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#AcceleratedStressTestVoltageCycling'>Accelerated Stress Test Voltage Cycling</a>, <a href='#AcidUptakeMeasurement'>Acid Uptake Measurement</a>, <a href='#AdsorptionMeasurement'>Adsorption measurement</a>, <a href='#ATRFTIRMeasurement'>ATRFTIR Measurement</a>, <a href='#CatalystLayerAcidLoadingDetermination'>Catalyst Layer Acid Loading Determination</a>, <a href='#CatalystLoadingDetermination'>Catalyst Loading Determination</a>, <a href='#CoatingMassMeasurement'>Coating Mass Measurement</a>, <a href='#CoatingWeightMeasurement'>Coating Weight Measurement</a>, <a href='#ColdStartTest'>Cold Start Test</a>, <a href='#CompositionMeasurement'>Composition measurement</a>, <a href='#ContrastVariationSANSUSANSMeasurement'>Contrast Variation SANSUSANS Measurement</a>, <a href='#CrackCharacterizationMeasurement'>Crack Characterization Measurement</a>, <a href='#CrushStrengthMeasurement'>Crush Strength Measurement</a>, <a href='#DecalTransferEvaluationMeasurement'>Decal Transfer Evaluation Measurement</a>, <a href='#DiffractionMeasurement'>Diffraction measurement</a>, <a href='#DryReformingOfMethanePerformanceMeasurement'>Dry Reforming Of Methane Performance Measurement</a>, <a href='#ECSAByDoubleLayerCapacitance'>ECSA by Double-Layer Capacitance</a>, <a href='#ElectrochemicalMeasurement'>Electrochemical measurement</a>, <a href='#ExSituHydrationTest'>Ex Situ Hydration Test</a>, <a href='#FentonOxidativeStabilityMeasurement'>Fenton Oxidative Stability Measurement</a>, <a href='#FurfuralHydrogenationReactionMeasurement'>Furfural Hydrogenation Reaction Measurement</a>, <a href='#GasCrossoverMethod'>Gas Crossover Method</a>, <a href='#HallEffectMeasurement'>Hall Effect Measurement</a>, <a href='#HumiditySweepMeasurement'>Humidity Sweep Measurement</a>, <a href='#ImagingMeasurement'>Imaging measurement</a>, <a href='#ImmunofluorescenceCytocompatibilityAssay'>Immunofluorescence Cytocompatibility Assay</a>, <a href='#IncidentPhotonToCurrentEfficiencyMeasurement'>Incident Photon To Current Efficiency Measurement</a>, <a href='#InkFormulationMeasurement'>Ink Formulation Measurement</a>, <a href='#IodineValueMeasurement'>Iodine Value Measurement</a>, <a href='#IonExchangeCapacityMeasurement'>Ion Exchange Capacity Measurement</a>, <a href='#LimitingCurrentMeasurement'>Limiting Current Measurement</a>, <a href='#LinearShrinkageMeasurement'>Linear Shrinkage Measurement</a>, <a href='#MEADurabilityMeasurement'>MEA Durability Measurement</a>, <a href='#MechanicalMeasurement'>Mechanical measurement</a>, <a href='#MembraneAreaExpansionMeasurement'>Membrane Area Expansion Measurement</a>, <a href='#MembraneSwellingMeasurement'>Membrane Swelling Measurement</a>, <a href='#MethanolOxidationReactionMeasurement'>Methanol Oxidation Reaction Measurement</a>, <a href='#O2N2SwitchingMeasurement'>O2–N2 Switching Measurement</a>, <a href='#OpticalMeasurement'>Optical measurement</a>, <a href='#OxygenGainLossMeasurement'>Oxygen Gain/Loss Measurement</a>, <a href='#ParticleCharacterizationMeasurement'>Particle-characterization measurement</a>, <a href='#PhotocatalyticDegradationMeasurement'>Photocatalytic Degradation Measurement</a>, <a href='#PhotovoltaicJVMeasurement'>Photovoltaic JV Measurement</a>, <a href='#PhysicalPropertyMeasurement'>Physical-property measurement</a>, <a href='#PolymerCharacterizationMeasurement'>Polymer Characterization Measurement</a>, <a href='#PorosimetryMeasurement'>Porosimetry measurement</a>, <a href='#QuartzCrystalMicrobalanceMeasurement'>Quartz Crystal Microbalance Measurement</a>, <a href='#ReferenceElectrodeCalibrationMeasurement'>Reference Electrode Calibration Measurement</a>, <a href='#RheologicalMeasurement'>Rheological measurement</a>, <a href='#ScatteringMeasurement'>Scattering measurement</a>, <a href='#ScreenMeshCharacterizationMeasurement'>Screen Mesh Characterization Measurement</a>, <a href='#SolventPropertyMeasurement'>Solvent Property Measurement</a>, <a href='#SpectroscopicEllipsometryMeasurement'>Spectroscopic Ellipsometry Measurement</a>, <a href='#SpectroscopyMeasurement'>Spectroscopy measurement</a>, <a href='#StylusProfilometryMeasurement'>Stylus Profilometry Measurement</a>, <a href='#SurfaceBasicityMeasurement'>Surface Basicity Measurement</a>, <a href='#ThermalMeasurement'>Thermal measurement</a>, <a href='#TransesterificationPerformanceMeasurement'>Transesterification Performance Measurement</a>, <a href='#TransportMeasurement'>Transport measurement</a>, <a href='#VisualInspectionStabilityMeasurement'>Visual Inspection Stability Measurement</a>, <a href='#ZetaPotentialMeasurement'>Zeta Potential Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#AcceleratedStressTestVoltageCycling'>Accelerated Stress Test Voltage Cycling</a>, <a href='#AcidUptakeMeasurement'>Acid Uptake Measurement</a>, <a href='#AdsorptionMeasurement'>Adsorption measurement</a>, <a href='#ATRFTIRMeasurement'>ATRFTIR Measurement</a>, <a href='#CatalystLayerAcidLoadingDetermination'>Catalyst Layer Acid Loading Determination</a>, <a href='#CatalystLoadingDetermination'>Catalyst Loading Determination</a>, <a href='#CoatingMassMeasurement'>Coating Mass Measurement</a>, <a href='#CoatingWeightMeasurement'>Coating Weight Measurement</a>, <a href='#ColdStartTest'>Cold Start Test</a>, <a href='#CompositionMeasurement'>Composition measurement</a>, <a href='#ContrastVariationSANSUSANSMeasurement'>Contrast Variation SANSUSANS Measurement</a>, <a href='#CrackCharacterizationMeasurement'>Crack Characterization Measurement</a>, <a href='#CrushStrengthMeasurement'>Crush Strength Measurement</a>, <a href='#DecalTransferEvaluationMeasurement'>Decal Transfer Evaluation Measurement</a>, <a href='#DiffractionMeasurement'>Diffraction measurement</a>, <a href='#DryReformingOfMethanePerformanceMeasurement'>Dry Reforming Of Methane Performance Measurement</a>, <a href='#ECSAByDoubleLayerCapacitance'>ECSA by Double-Layer Capacitance</a>, <a href='#ElectrochemicalMeasurement'>Electrochemical measurement</a>, <a href='#ExSituHydrationTest'>Ex Situ Hydration Test</a>, <a href='#FentonOxidativeStabilityMeasurement'>Fenton Oxidative Stability Measurement</a>, <a href='#FurfuralHydrogenationReactionMeasurement'>Furfural Hydrogenation Reaction Measurement</a>, <a href='#GasCrossoverMethod'>Gas Crossover Method</a>, <a href='#HallEffectMeasurement'>Hall Effect Measurement</a>, <a href='#HumiditySweepMeasurement'>Humidity Sweep Measurement</a>, <a href='#ImagingMeasurement'>Imaging measurement</a>, <a href='#ImmunofluorescenceCytocompatibilityAssay'>Immunofluorescence Cytocompatibility Assay</a>, <a href='#IncidentPhotonToCurrentEfficiencyMeasurement'>Incident Photon To Current Efficiency Measurement</a>, <a href='#InkFormulationMeasurement'>Ink Formulation Measurement</a>, <a href='#IodineValueMeasurement'>Iodine Value Measurement</a>, <a href='#IonExchangeCapacityMeasurement'>Ion Exchange Capacity Measurement</a>, <a href='#LimitingCurrentMeasurement'>Limiting Current Measurement</a>, <a href='#LinearShrinkageMeasurement'>Linear Shrinkage Measurement</a>, <a href='#MEADurabilityMeasurement'>MEA Durability Measurement</a>, <a href='#MechanicalMeasurement'>Mechanical measurement</a>, <a href='#MembraneAreaExpansionMeasurement'>Membrane Area Expansion Measurement</a>, <a href='#MembraneSwellingMeasurement'>Membrane Swelling Measurement</a>, <a href='#MethanolOxidationReactionMeasurement'>Methanol Oxidation Reaction Measurement</a>, <a href='#O2N2SwitchingMeasurement'>O2–N2 Switching Measurement</a>, <a href='#OpticalMeasurement'>Optical measurement</a>, <a href='#OxygenGainLossMeasurement'>Oxygen Gain/Loss Measurement</a>, <a href='#ParticleCharacterizationMeasurement'>Particle-characterization measurement</a>, <a href='#PhotocatalyticDegradationMeasurement'>Photocatalytic Degradation Measurement</a>, <a href='#PhotovoltaicJVMeasurement'>Photovoltaic JV Measurement</a>, <a href='#PhysicalPropertyMeasurement'>Physical-property measurement</a>, <a href='#PolymerCharacterizationMeasurement'>Polymer Characterization Measurement</a>, <a href='#PorosimetryMeasurement'>Porosimetry measurement</a>, <a href='#QuartzCrystalMicrobalanceMeasurement'>Quartz Crystal Microbalance Measurement</a>, <a href='#ReferenceElectrodeCalibrationMeasurement'>Reference Electrode Calibration Measurement</a>, <a href='#RheologicalMeasurement'>Rheological measurement</a>, <a href='#ScatteringMeasurement'>Scattering measurement</a>, <a href='#ScreenMeshCharacterizationMeasurement'>Screen Mesh Characterization Measurement</a>, <a href='#SolventPropertyMeasurement'>Solvent Property Measurement</a>, <a href='#SpectroscopicEllipsometryMeasurement'>Spectroscopic ellipsometry</a>, <a href='#SpectroscopyMeasurement'>Spectroscopy measurement</a>, <a href='#StylusProfilometryMeasurement'>Stylus Profilometry Measurement</a>, <a href='#SurfaceBasicityMeasurement'>Surface Basicity Measurement</a>, <a href='#ThermalMeasurement'>Thermal measurement</a>, <a href='#TransesterificationPerformanceMeasurement'>Transesterification Performance Measurement</a>, <a href='#TransportMeasurement'>Transport measurement</a>, <a href='#VisualInspectionStabilityMeasurement'>Visual Inspection Stability Measurement</a>, <a href='#ZetaPotentialMeasurement'>Zeta Potential Measurement</a></dd></div>
         
         
         
@@ -6581,7 +6582,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001097</code> <span class='muted'>(chemical substance)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_59999</code> <span class='muted'>(chemical substance)</span></li><li><strong>skos:exactMatch</strong> <code>http://semanticscience.org/resource/CHEMINF_000266</code> <span class='muted'>(Chemical substance)</span></li><li><strong>skos:exactMatch</strong> <code>http://semanticscience.org/resource/SIO_011126</code> <span class='muted'>(chemical substance)</span></li><li><strong>skos:exactMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00240027</code> <span class='muted'>(chemical substance)</span></li></ul></section>
       
       
     </article>
@@ -6633,7 +6634,7 @@
       <p class="reference-definition">A composition measurement that separates mixture constituents and records their detector response for qualitative or quantitative analysis.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CompositionMeasurement'>Composition measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#GasChromatographyMeasurement'>Gas Chromatography Measurement</a>, <a href='#GelPermeationChromatographyMeasurement'>Gel Permeation Chromatography Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#GasChromatographyMeasurement'>Gas chromatography</a>, <a href='#GelPermeationChromatographyMeasurement'>Gel permeation chromatography process</a></dd></div>
         
         
         
@@ -6999,7 +7000,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_0329f1f5_8339_4ce4_8505_a264c6d606ba</code> <span class='muted'>(Velocity)</span></li></ul></section>
       
       
     </article>
@@ -7626,7 +7627,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002368</code> <span class='muted'>(analyte molar ratio)</span></li></ul></section>
       
       
     </article>
@@ -7716,7 +7717,7 @@
       <p class="reference-definition">A characterization measurement that determines the chemical or material composition of a specimen.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#AcidBaseTitrationMeasurement'>Acid Base Titration Measurement</a>, <a href='#ChromatographyMeasurement'>Chromatography measurement</a>, <a href='#EpoxyEquivalentTitrationMeasurement'>Epoxy Equivalent Titration Measurement</a>, <a href='#ICPElementalAnalysisMeasurement'>ICP Elemental Analysis Measurement</a>, <a href='#SolutionCompositionMeasurement'>Solution Composition Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#AcidBaseTitrationMeasurement'>Acid-base titration</a>, <a href='#ChromatographyMeasurement'>Chromatography measurement</a>, <a href='#EpoxyEquivalentTitrationMeasurement'>Epoxy Equivalent Titration Measurement</a>, <a href='#ICPElementalAnalysisMeasurement'>ICP Elemental Analysis Measurement</a>, <a href='#SolutionCompositionMeasurement'>Solution Composition Measurement</a></dd></div>
         
         
         
@@ -7968,7 +7969,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001125</code> <span class='muted'>(confocal microscope)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/OBI_0001079</code> <span class='muted'>(confocal microscope)</span></li></ul></section>
       
       
     </article>
@@ -8937,7 +8938,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.ontology-of-units-of-measure.org/resource/om-2/CurrentDensity</code> <span class='muted'>(current density)</span></li></ul></section>
       
       
     </article>
@@ -9241,7 +9242,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000025</code> <span class='muted'>(cyclic voltammetry)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000082</code> <span class='muted'>(cyclic voltammetry)</span></li></ul></section>
       
       
     </article>
@@ -9260,7 +9261,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000794</code> <span class='muted'>(cyclic voltammogram)</span></li></ul></section>
       
       
     </article>
@@ -9336,7 +9337,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/T4FS_0000430</code> <span class='muted'>(data)</span></li></ul></section>
       
       
     </article>
@@ -9374,7 +9375,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://saref.etsi.org/saref4ener/DataPoint</code> <span class='muted'>(Data point)</span></li></ul></section>
       
       
     </article>
@@ -9545,7 +9546,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dia_xxx_xxx-bb6404c75508494a93ef3ae2ad7f72ff-vp</code> <span class='muted'>(Diameter)</span></li></ul></section>
       
       
     </article>
@@ -9659,7 +9660,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00030033</code> <span class='muted'>(time step)</span></li></ul></section>
       
       
     </article>
@@ -9811,7 +9812,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000045</code> <span class='muted'>(area)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Area</code> <span class='muted'>(Area)</span></li></ul></section>
       
       
     </article>
@@ -10027,9 +10028,9 @@
     
     <article class="reference-term" id="DifferentialScanningCalorimetryMeasurement">
       <span id="differentialscanningcalorimetrymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Differential Scanning Calorimetry Measurement</h3>
+      <h3>Differential scanning calorimetry</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DifferentialScanningCalorimetryMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DifferentialScanningCalorimetryMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DSC; differential scanning calorimetry</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DifferentialScanningCalorimetryMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DifferentialScanningCalorimetryMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DSC; Differential Scanning Calorimetry Measurement; differential scanning calorimetry</dd></div>
       </dl>
       <p class="reference-definition">A measurement process used to determine thermal event peak temperature and phase transition temperature by differential scanning calorimetry, typically using a differential scanning calorimeter, DSC instrument, or synchronous thermal analyzer, and generating a thermal analysis dataset.</p>
       <dl class="reference-relations">
@@ -10039,7 +10040,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0002124</code> <span class='muted'>(differential scanning calorimetry)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#DifferentialScanningCalorimetry</code> <span class='muted'>(DifferentialScanningCalorimetry)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000071</code> <span class='muted'>(differential scanning calorimetry)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/pmd/co/PMD_0000606</code> <span class='muted'>(differential scanning calorimetry process)</span></li></ul></section>
       
       
     </article>
@@ -10091,7 +10092,7 @@
       <p class="reference-definition">A characterization measurement that records the scattering or diffraction of incident radiation to determine structural characteristics.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#LaserDiffractionScatteringParticleSizeMeasurement'>Laser Diffraction Scattering Particle Size Measurement</a>, <a href='#XRayDiffractionMeasurement'>X Ray Diffraction Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#LaserDiffractionScatteringParticleSizeMeasurement'>Laser Diffraction Scattering Particle Size Measurement</a>, <a href='#XRayDiffractionMeasurement'>X-ray diffraction</a></dd></div>
         
         
         
@@ -10172,7 +10173,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/OBI_0001126</code> <span class='muted'>(digital microscope)</span></li></ul></section>
       
       
     </article>
@@ -10229,7 +10230,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002758</code> <span class='muted'>(dilution factor)</span></li></ul></section>
       
       
     </article>
@@ -10343,7 +10344,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001471</code> <span class='muted'>(dip coating)</span></li></ul></section>
       
       
     </article>
@@ -10571,7 +10572,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://emmo.info/emmo#EMMO_0b15f4ae_092e_4487_9100_3c44176c545c</code> <span class='muted'>(Dispersion)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001079</code> <span class='muted'>(dispersion)</span></li></ul></section>
       
       
     </article>
@@ -11141,7 +11142,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0008207</code> <span class='muted'>(drying temperature)</span></li></ul></section>
       
       
     </article>
@@ -11255,7 +11256,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dwe_tim_xxx-760e87eb75194dab84c3adec35f358e7-vp</code> <span class='muted'>(Dwell Time)</span></li></ul></section>
       
       
     </article>
@@ -11336,6 +11337,25 @@
       
     </article>
     
+    <article class="reference-term" id="DynamicLightScatteringMeasurement">
+      <span id="dynamiclightscatteringmeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Dynamic light scattering</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DynamicLightScatteringMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DynamicLightScatteringMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DLS; Dynamic Light Scattering Measurement; dynamic light scattering; dynamic scattered-light intensity analysis</dd></div>
+      </dl>
+      <p class="reference-definition">Measurement of hydrodynamic radius/agglomerate size distribution in ink/solution.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ScatteringMeasurement'>Scattering measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#DynamicLightScattering</code> <span class='muted'>(DynamicLightScattering)</span></li></ul></section>
+      
+      
+    </article>
+    
     <article class="reference-term" id="DynamicLightScatteringInstrument">
       <span id="dynamiclightscatteringinstrument" class="anchor-alias" aria-hidden="true"></span>
       <h3>Dynamic Light Scattering Instrument</h3>
@@ -11355,32 +11375,13 @@
       
     </article>
     
-    <article class="reference-term" id="DynamicLightScatteringMeasurement">
-      <span id="dynamiclightscatteringmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Dynamic Light Scattering Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DynamicLightScatteringMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DynamicLightScatteringMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DLS; dynamic light scattering; dynamic scattered-light intensity analysis</dd></div>
-      </dl>
-      <p class="reference-definition">Measurement of hydrodynamic radius/agglomerate size distribution in ink/solution.</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ScatteringMeasurement'>Scattering measurement</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
-      
-      
-    </article>
-    
     <article class="reference-term" id="DynamicVaporSorptionMeasurement">
       <span id="dynamicvaporsorptionmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Dynamic Vapor Sorption Measurement</h3>
+      <h3>Dynamic vapor sorption</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DynamicVaporSorptionMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DynamicVaporSorptionMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DVS; dynamic vapor sorption</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#DynamicVaporSorptionMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23DynamicVaporSorptionMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>DVS; Dynamic Vapor Sorption Measurement; dynamic vapor sorption</dd></div>
       </dl>
-      <p class="reference-definition">An adsorption measurement that applies dynamic vapor sorption measurement to acquire scientific data about a material, component, or system.</p>
+      <p class="reference-definition">An adsorption measurement that applies dynamic vapor sorption to acquire scientific data about a material, component, or system.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#AdsorptionMeasurement'>Adsorption measurement</a></dd></div>
         
@@ -11388,7 +11389,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0003765</code> <span class='muted'>(dynamic vapor sorption)</span></li></ul></section>
       
       
     </article>
@@ -12053,7 +12054,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890</code> <span class='muted'>(Area)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000045</code> <span class='muted'>(area)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Area</code> <span class='muted'>(Area)</span></li></ul></section>
       
       
     </article>
@@ -12072,7 +12073,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002345</code> <span class='muted'>(reference electrode)</span></li></ul></section>
       
       
     </article>
@@ -12205,7 +12206,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://edamontology.org/data_2140</code> <span class='muted'>(Concentration)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002820</code> <span class='muted'>(concentration)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007244</code> <span class='muted'>(concentration)</span></li></ul></section>
       
       
     </article>
@@ -12300,7 +12301,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007108</code> <span class='muted'>(beam energy)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/MS_1003410</code> <span class='muted'>(electron beam energy)</span></li></ul></section>
       
       
     </article>
@@ -12357,7 +12358,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001088</code> <span class='muted'>(electron microscope)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/OBI_0000990</code> <span class='muted'>(electron microscope)</span></li></ul></section>
       
       
     </article>
@@ -12404,26 +12405,26 @@
       <span id="electronmicroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
       <h3>Electron microscopy measurement</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ElectronMicroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ElectronMicroscopyMeasurement'>Open in Explorer</a></dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ElectronMicroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ElectronMicroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Electron Microscopy Measurement</dd></div>
       </dl>
       <p class="reference-definition">An imaging measurement that uses an electron beam and electron-matter interactions to produce image or analytical data about a specimen.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ImagingMeasurement'>Imaging measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#ElectronMicroscopyImaging'>Electron Microscopy Imaging</a>, <a href='#ICSEMImagingMeasurement'>IC-SEM Imaging Measurement</a>, <a href='#ScanningElectronMicroscopyImaging'>Scanning Electron Microscopy Imaging</a>, <a href='#SEMImaging'>SEM Imaging</a>, <a href='#SEMImagingMeasurement'>SEM Imaging Measurement</a>, <a href='#TransmissionElectronMicroscopyImaging'>Transmission Electron Microscopy Imaging</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#ElectronMicroscopyImaging'>Electron Microscopy Imaging</a>, <a href='#ICSEMImagingMeasurement'>IC-SEM Imaging Measurement</a>, <a href='#ScanningElectronMicroscopyImaging'>Scanning electron microscopy</a>, <a href='#SEMImaging'>SEM Imaging</a>, <a href='#SEMImagingMeasurement'>SEM Imaging Measurement</a>, <a href='#TransmissionElectronMicroscopyImaging'>Transmission electron microscopy</a></dd></div>
         
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/ele_mic_xxx-840bbf9ffd9648fc883b251d106e3733-vp</code> <span class='muted'>(Electron Microscopy)</span></li><li><strong>skos:narrowMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000073</code> <span class='muted'>(scanning electron microscopy)</span></li><li><strong>skos:narrowMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000454</code> <span class='muted'>(scanning electron microscopy)</span></li><li><strong>skos:narrowMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy</code> <span class='muted'>(ScanningElectronMicroscopy)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="ElectronSpinResonanceSpectroscopyMeasurement">
       <span id="electronspinresonancespectroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Electron Spin Resonance Spectroscopy Measurement</h3>
+      <h3>Electron spin resonance spectroscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ElectronSpinResonanceSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ElectronSpinResonanceSpectroscopyMeasurement'>Open in Explorer</a></dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ElectronSpinResonanceSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ElectronSpinResonanceSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Electron Spin Resonance Spectroscopy Measurement</dd></div>
       </dl>
       <p class="reference-definition">ESR spectroscopy used to detect reactive oxygen species (•OH, •O2−) via spin-trap (DMPO).</p>
       <dl class="reference-relations">
@@ -12433,7 +12434,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000328</code> <span class='muted'>(electron spin resonance spectroscopy)</span></li></ul></section>
       
       
     </article>
@@ -12832,7 +12833,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.w3id.org/ecsel-dr-RAMI40#Energy_Efficiency</code> <span class='muted'>(Energy Efficiency)</span></li></ul></section>
       
       
     </article>
@@ -13269,7 +13270,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_27750</code> <span class='muted'>(ethyl acetate)</span></li></ul></section>
       
       
     </article>
@@ -13573,7 +13574,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp</code> <span class='muted'>(Exposure Time)</span></li></ul></section>
       
       
     </article>
@@ -13953,7 +13954,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044</code> <span class='muted'>(Density)</span></li></ul></section>
       
       
     </article>
@@ -14447,7 +14448,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002609</code> <span class='muted'>(chromatography column film thickness)</span></li></ul></section>
       
       
     </article>
@@ -14732,16 +14733,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001095</code> <span class='muted'>(fluorescence microscope)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="FluorescenceMicroscopyImaging">
       <span id="fluorescencemicroscopyimaging" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Fluorescence Microscopy Imaging</h3>
+      <h3>Fluorescence microscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#FluorescenceMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23FluorescenceMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>fluorescence microscopy; fluorescent images</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#FluorescenceMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23FluorescenceMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Fluorescence Microscopy Imaging; fluorescence microscopy; fluorescent images</dd></div>
       </dl>
       <p class="reference-definition">Imaging method used to assess QD uniformity and coffee-ring formation in dried droplets/patterns.</p>
       <dl class="reference-relations">
@@ -14751,7 +14752,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000064</code> <span class='muted'>(total internal reflection fluorescence microscopy)</span></li></ul></section>
       
       
     </article>
@@ -15055,7 +15056,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/T4FS_0000347</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.org/spar/fabio/Dataset</code> <span class='muted'>(dataset)</span></li><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000089</code> <span class='muted'>(dataset)</span></li></ul></section>
       
       
     </article>
@@ -15492,7 +15493,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/equipment#AFE_0000024</code> <span class='muted'>(gas chromatograph)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002478</code> <span class='muted'>(gas chromatograph)</span></li></ul></section>
       
       
     </article>
@@ -15512,6 +15513,25 @@
         
       </dl>
       
+      
+      
+    </article>
+    
+    <article class="reference-term" id="GasChromatographyMeasurement">
+      <span id="gaschromatographymeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Gas chromatography</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#GasChromatographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23GasChromatographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>GC; Gas Chromatography Measurement; gas chromatography (FID)</dd></div>
+      </dl>
+      <p class="reference-definition">Gas chromatography measurement used to quantify fatty acid distribution of oils (soybean, castor) via silica-gel column chromatography / GC analysis.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ChromatographyMeasurement'>Chromatography measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0000310</code> <span class='muted'>(gas chromatography)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001002</code> <span class='muted'>(gas chromatography)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000130</code> <span class='muted'>(gas chromatography)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/pmd/co/PMD_0000656</code> <span class='muted'>(gas chromatography process)</span></li></ul></section>
       
       
     </article>
@@ -15544,25 +15564,6 @@
       <p class="reference-definition">GC-MS used to identify intermediate products and m/z peaks during RhB degradation.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#SpectroscopyMeasurement'>Spectroscopy measurement</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
-      
-      
-    </article>
-    
-    <article class="reference-term" id="GasChromatographyMeasurement">
-      <span id="gaschromatographymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Gas Chromatography Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#GasChromatographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23GasChromatographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>GC; gas chromatography (FID)</dd></div>
-      </dl>
-      <p class="reference-definition">Gas chromatography measurement used to quantify fatty acid distribution of oils (soybean, castor) via silica-gel column chromatography / GC analysis.</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ChromatographyMeasurement'>Chromatography measurement</a></dd></div>
         
         
         
@@ -15701,7 +15702,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0001574</code> <span class='muted'>(flow rate)</span></li></ul></section>
       
       
     </article>
@@ -15955,9 +15956,9 @@
     
     <article class="reference-term" id="GelPermeationChromatographyMeasurement">
       <span id="gelpermeationchromatographymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Gel Permeation Chromatography Measurement</h3>
+      <h3>Gel permeation chromatography process</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#GelPermeationChromatographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23GelPermeationChromatographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>GPC; gel permeation chromatography</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#GelPermeationChromatographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23GelPermeationChromatographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>GPC; Gel Permeation Chromatography Measurement; gel permeation chromatography</dd></div>
       </dl>
       <p class="reference-definition">GPC used to determine PBI molecular weight distribution; not found in ontology.</p>
       <dl class="reference-relations">
@@ -16328,7 +16329,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/pmd/co/PMD_0020243</code> <span class='muted'>(grain size)</span></li></ul></section>
       
       
     </article>
@@ -16480,7 +16481,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_132889</code> <span class='muted'>(graphene oxide)</span></li></ul></section>
       
       
     </article>
@@ -16556,7 +16557,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_132888</code> <span class='muted'>(graphite oxide)</span></li></ul></section>
       
       
     </article>
@@ -17202,7 +17203,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001115</code> <span class='muted'>(helium gas)</span></li></ul></section>
       
       
     </article>
@@ -17677,7 +17678,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/HotPlate</code> <span class='muted'>(Hot plate)</span></li></ul></section>
       
       
     </article>
@@ -18076,7 +18077,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00000220</code> <span class='muted'>(hydrogen)</span></li><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001112</code> <span class='muted'>(hydrogen gas)</span></li></ul></section>
       
       
     </article>
@@ -18304,7 +18305,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0001574</code> <span class='muted'>(flow rate)</span></li></ul></section>
       
       
     </article>
@@ -18418,7 +18419,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001377</code> <span class='muted'>(hydrothermal synthesis)</span></li></ul></section>
       
       
     </article>
@@ -18736,7 +18737,7 @@
       <p class="reference-definition">A characterization measurement that produces spatially resolved data representing a specimen or system.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#ElectronMicroscopyMeasurement'>Electron microscopy measurement</a>, <a href='#FluorescenceMicroscopyImaging'>Fluorescence Microscopy Imaging</a>, <a href='#HighSpeedVideoImagingMeasurement'>High Speed Video Imaging Measurement</a>, <a href='#OpticalMicroscopyImagingMeasurement'>Optical Microscopy Imaging Measurement</a>, <a href='#ProbeMicroscopyMeasurement'>Probe microscopy measurement</a>, <a href='#ThreeDLaserScanningMicroscopyMeasurement'>Three D Laser Scanning Microscopy Measurement</a>, <a href='#TomographyMeasurement'>Tomography measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#ElectronMicroscopyMeasurement'>Electron microscopy measurement</a>, <a href='#FluorescenceMicroscopyImaging'>Fluorescence microscopy</a>, <a href='#HighSpeedVideoImagingMeasurement'>High Speed Video Imaging Measurement</a>, <a href='#OpticalMicroscopyImagingMeasurement'>Optical microscopy</a>, <a href='#ProbeMicroscopyMeasurement'>Probe microscopy measurement</a>, <a href='#ThreeDLaserScanningMicroscopyMeasurement'>Three D Laser Scanning Microscopy Measurement</a>, <a href='#TomographyMeasurement'>Tomography measurement</a></dd></div>
         
         
         
@@ -19672,7 +19673,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/Instrument</code> <span class='muted'>(Instrument)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/skgo/modsci#ScientificInstrument</code> <span class='muted'>(Instrument)</span></li><li><strong>skos:narrowMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000697</code> <span class='muted'>(detection instrument)</span></li></ul></section>
       
       
     </article>
@@ -19710,7 +19711,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.allotrope.org/ontologies/quality#AFQ_0000244</code> <span class='muted'>(pore size)</span></li><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/MS_1003924</code> <span class='muted'>(pore size)</span></li></ul></section>
       
       
     </article>
@@ -20090,7 +20091,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://biomodels.net/SBO/SBO_0000623</code> <span class='muted'>(ionic strength)</span></li><li><strong>skos:exactMatch</strong> <code>http://champ-project.org/images/ontology/cao.owl#CAO_000143</code> <span class='muted'>(Ionic strength)</span></li></ul></section>
       
       
     </article>
@@ -20204,7 +20205,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_001018</code> <span class='muted'>(ratio)</span></li></ul></section>
       
       
     </article>
@@ -20223,7 +20224,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dia_xxx_xxx-bb6404c75508494a93ef3ae2ad7f72ff-vp</code> <span class='muted'>(Diameter)</span></li></ul></section>
       
       
     </article>
@@ -20774,7 +20775,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000042</code> <span class='muted'>(thin film thickness)</span></li></ul></section>
       
       
     </article>
@@ -21477,7 +21478,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.ontology-of-units-of-measure.org/resource/om-2/KnudsenNumber</code> <span class='muted'>(Knudsen number)</span></li></ul></section>
       
       
     </article>
@@ -22465,7 +22466,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000028</code> <span class='muted'>(linear-sweep voltammetry)</span></li></ul></section>
       
       
     </article>
@@ -22560,7 +22561,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0001574</code> <span class='muted'>(flow rate)</span></li></ul></section>
       
       
     </article>
@@ -22940,7 +22941,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/equipment#AFE_0000374</code> <span class='muted'>(magnetic stirrer)</span></li></ul></section>
       
       
     </article>
@@ -23111,7 +23112,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0001574</code> <span class='muted'>(flow rate)</span></li></ul></section>
       
       
     </article>
@@ -23301,7 +23302,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://biomodels.net/SBO/SBO_0000240</code> <span class='muted'>(material entity)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/BFO_0000040</code> <span class='muted'>(material entity)</span></li></ul></section>
       
       
     </article>
@@ -23396,7 +23397,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://emmo.info/emmo#EMMO_5b2222df_4da6_442f_8244_96e9e45887d1</code> <span class='muted'>(Matter)</span></li></ul></section>
       
       
     </article>
@@ -23662,7 +23663,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00340068</code> <span class='muted'>(size)</span></li><li><strong>skos:broadMatch</strong> <code>https://saref.etsi.org/saref4inma/Size</code> <span class='muted'>(Size)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0008212</code> <span class='muted'>(particle size)</span></li></ul></section>
       
       
     </article>
@@ -23771,7 +23772,7 @@
       <p class="reference-definition">A characterization measurement that determines mechanical response or a mechanical characteristic of a specimen or component.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#AdhesionTapeTestMeasurement'>Adhesion Tape Test Measurement</a>, <a href='#CompressiveStrengthMeasurement'>Compressive Strength Measurement</a>, <a href='#CyclicBendingTestMeasurement'>Cyclic Bending Test Measurement</a>, <a href='#StrainGaugeSensingMeasurement'>Strain Gauge Sensing Measurement</a>, <a href='#TensileTestMeasurement'>Tensile Test Measurement</a>, <a href='#ThreePointFlexuralStrengthMeasurement'>Three Point Flexural Strength Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#AdhesionTapeTestMeasurement'>Adhesion Tape Test Measurement</a>, <a href='#CompressiveStrengthMeasurement'>Compressive Strength Measurement</a>, <a href='#CyclicBendingTestMeasurement'>Cyclic Bending Test Measurement</a>, <a href='#StrainGaugeSensingMeasurement'>Strain Gauge Sensing Measurement</a>, <a href='#TensileTestMeasurement'>Tensile Test</a>, <a href='#ThreePointFlexuralStrengthMeasurement'>Three Point Flexural Strength Measurement</a></dd></div>
         
         
         
@@ -23985,7 +23986,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007262</code> <span class='muted'>(membrane thickness)</span></li></ul></section>
       
       
     </article>
@@ -24232,7 +24233,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001760</code> <span class='muted'>(MES buffer)</span></li></ul></section>
       
       
     </article>
@@ -24517,7 +24518,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00000025</code> <span class='muted'>(methane)</span></li><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001118</code> <span class='muted'>(methane gas)</span></li></ul></section>
       
       
     </article>
@@ -24707,7 +24708,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_6872</code> <span class='muted'>(methylene blue)</span></li></ul></section>
       
       
     </article>
@@ -25391,7 +25392,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://champ-project.org/images/ontology/cao.owl#CAO_000156</code> <span class='muted'>(Mixture)</span></li><li><strong>skos:exactMatch</strong> <code>http://emmo.info/emmo#EMMO_ec2c8ac8_98c5_4c74_b85b_ff8e8ca6655c</code> <span class='muted'>(Mixture)</span></li><li><strong>skos:narrowMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00010236</code> <span class='muted'>(gas mixture)</span></li></ul></section>
       
       
     </article>
@@ -25562,7 +25563,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002006</code> <span class='muted'>(molar concentration)</span></li></ul></section>
       
       
     </article>
@@ -25600,7 +25601,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0002301</code> <span class='muted'>(molecular dynamics simulation)</span></li></ul></section>
       
       
     </article>
@@ -26384,15 +26385,15 @@
       
     </article>
     
-    <article class="reference-term" id="NeutronTomographyInstrument">
-      <span id="neutrontomographyinstrument" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Neutron Tomography Instrument</h3>
+    <article class="reference-term" id="NeutronTomographyMeasurement">
+      <span id="neutrontomographymeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Neutron tomography</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyInstrument</code></dd></div><div><dt>Type</dt><dd>Class, Instrument</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23NeutronTomographyInstrument'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>neutron tomography setup</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23NeutronTomographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>HR Neutron CT; Neutron Tomography Measurement; operando neutron tomography</dd></div>
       </dl>
-      <p class="reference-definition">An instrument configuration for neutron tomography that combines neutron imaging, projection acquisition, and tomographic reconstruction workflows for operando fuel-cell characterization.</p>
+      <p class="reference-definition">A measurement process that uses neutron tomography to characterize membrane-electrode assemblies and operando fuel-cell water dynamics while generating tomographic projection and reconstruction datasets and determining tortuosity and water-droplet descriptors.</p>
       <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#TomographyInstrument'>Tomography instrument</a></dd></div>
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#TomographyMeasurement'>Tomography measurement</a></dd></div>
         
         
         
@@ -26403,15 +26404,15 @@
       
     </article>
     
-    <article class="reference-term" id="NeutronTomographyMeasurement">
-      <span id="neutrontomographymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Neutron Tomography Measurement</h3>
+    <article class="reference-term" id="NeutronTomographyInstrument">
+      <span id="neutrontomographyinstrument" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Neutron Tomography Instrument</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23NeutronTomographyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>HR Neutron CT; operando neutron tomography</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyInstrument</code></dd></div><div><dt>Type</dt><dd>Class, Instrument</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23NeutronTomographyInstrument'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>neutron tomography setup</dd></div>
       </dl>
-      <p class="reference-definition">A measurement process that uses neutron tomography to characterize membrane-electrode assemblies and operando fuel-cell water dynamics while generating tomographic projection and reconstruction datasets and determining tortuosity and water-droplet descriptors.</p>
+      <p class="reference-definition">An instrument configuration for neutron tomography that combines neutron imaging, projection acquisition, and tomographic reconstruction workflows for operando fuel-cell characterization.</p>
       <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#TomographyMeasurement'>Tomography measurement</a></dd></div>
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#TomographyInstrument'>Tomography instrument</a></dd></div>
         
         
         
@@ -26873,7 +26874,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001131</code> <span class='muted'>(liquid nitrogen)</span></li></ul></section>
       
       
     </article>
@@ -26968,7 +26969,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0001574</code> <span class='muted'>(flow rate)</span></li></ul></section>
       
       
     </article>
@@ -27557,7 +27558,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007210</code> <span class='muted'>(open circuit voltage)</span></li></ul></section>
       
       
     </article>
@@ -27690,16 +27691,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/equipment#AFE_0000129</code> <span class='muted'>(optical microscope)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/OBI_0000940</code> <span class='muted'>(optical microscope)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/OpticalMicroscope</code> <span class='muted'>(Optical microscope)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="OpticalMicroscopyImagingMeasurement">
       <span id="opticalmicroscopyimagingmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Optical Microscopy Imaging Measurement</h3>
+      <h3>Optical microscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#OpticalMicroscopyImagingMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23OpticalMicroscopyImagingMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>optical micrographs; optical microscopy; optical microscopy images</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#OpticalMicroscopyImagingMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23OpticalMicroscopyImagingMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Optical Microscopy Imaging Measurement; optical micrographs; optical microscopy; optical microscopy images</dd></div>
       </dl>
       <p class="reference-definition">Optical microscopy imaging used to observe macroscopic structure of printed grids.</p>
       <dl class="reference-relations">
@@ -27709,7 +27710,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0001404</code> <span class='muted'>(optical microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000451</code> <span class='muted'>(optical microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#OpticalMicroscopy</code> <span class='muted'>(OpticalMicroscopy)</span></li></ul></section>
       
       
     </article>
@@ -27861,7 +27862,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.w3.org/ns/prov#Organization</code> <span class='muted'>(Organization)</span></li></ul></section>
       
       
     </article>
@@ -28013,7 +28014,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/material#AFM_0001113</code> <span class='muted'>(oxygen gas)</span></li></ul></section>
       
       
     </article>
@@ -28488,7 +28489,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/quality#AFQ_0000328</code> <span class='muted'>(cumulative particle density (quality))</span></li></ul></section>
       
       
     </article>
@@ -29780,16 +29781,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0005005</code> <span class='muted'>(yield)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="PhotoluminescenceSpectroscopyMeasurement">
       <span id="photoluminescencespectroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Photoluminescence Spectroscopy Measurement</h3>
+      <h3>Photoluminescence spectroscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#PhotoluminescenceSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23PhotoluminescenceSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>photoluminescence spectra</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#PhotoluminescenceSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23PhotoluminescenceSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Photoluminescence Spectroscopy Measurement; photoluminescence spectra</dd></div>
       </dl>
       <p class="reference-definition">Optical spectroscopy measurement of photoluminescence (spectrum) referenced in the review.</p>
       <dl class="reference-relations">
@@ -29799,7 +29800,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000773</code> <span class='muted'>(photoluminescence spectroscopy)</span></li></ul></section>
       
       
     </article>
@@ -30217,7 +30218,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001560</code> <span class='muted'>(plasma etching)</span></li></ul></section>
       
       
     </article>
@@ -32853,12 +32854,12 @@
       <p class="reference-definition">An imaging measurement that scans a localized probe across a specimen to determine spatially resolved surface characteristics.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ImagingMeasurement'>Imaging measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#AtomicForceMicroscopyMeasurement'>Atomic Force Microscopy Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#AtomicForceMicroscopyMeasurement'>Atomic force microscopy</a></dd></div>
         
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000459</code> <span class='muted'>(scanning probe microscopy)</span></li></ul></section>
       
       
     </article>
@@ -32877,7 +32878,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://semanticscience.org/resource/SIO_000090</code> <span class='muted'>(specification)</span></li></ul></section>
       
       
     </article>
@@ -32896,7 +32897,7 @@
         
         
       </dl>
-      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>owl:equivalentClass</strong> <code>https://w3id.org/emmo#EMMO_process</code> <span class='muted'>(Process)</span></li></ul></section>
+      
       
       
     </article>
@@ -32991,7 +32992,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/tip_rad_xxx-c8b3c6933460431c9397a3fbe809cd7e-vp</code> <span class='muted'>(Tip Radius)</span></li></ul></section>
       
       
     </article>
@@ -33105,7 +33106,7 @@
         
         
       </dl>
-      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>owl:equivalentClass</strong> <code>https://w3id.org/emmo#EMMO_property</code> <span class='muted'>(Property)</span></li></ul></section>
+      
       
       
     </article>
@@ -33257,7 +33258,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/ENVO_01000281</code> <span class='muted'>(layer)</span></li></ul></section>
       
       
     </article>
@@ -34321,7 +34322,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001363</code> <span class='muted'>(pulsed laser deposition)</span></li></ul></section>
       
       
     </article>
@@ -34720,7 +34721,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001077</code> <span class='muted'>(quartz crystal microbalance)</span></li></ul></section>
       
       
     </article>
@@ -34739,7 +34740,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000456</code> <span class='muted'>(quartz crystal microbalance)</span></li></ul></section>
       
       
     </article>
@@ -34986,16 +34987,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/polymat/Spectrometer</code> <span class='muted'>(Spectrometer)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/equipment#AFE_0000551</code> <span class='muted'>(Raman spectrometer)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001235</code> <span class='muted'>(Raman spectrometer)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="RamanSpectroscopyMeasurement">
       <span id="ramanspectroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Raman Spectroscopy Measurement</h3>
+      <h3>Raman spectroscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#RamanSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23RamanSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>RAMAN; Raman spectra; Raman spectroscopy</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#RamanSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23RamanSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>RAMAN; Raman Spectroscopy Measurement; Raman spectra; Raman spectroscopy</dd></div>
       </dl>
       <p class="reference-definition">A measurement process that uses Raman spectroscopy to determine Raman band positions and intensity ratios using a Raman spectrometer.</p>
       <dl class="reference-relations">
@@ -35005,7 +35006,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0000047</code> <span class='muted'>(Raman spectroscopy)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000656</code> <span class='muted'>(Raman spectroscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#RamanSpectroscopy</code> <span class='muted'>(RamanSpectroscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000069</code> <span class='muted'>(Raman spectroscopy)</span></li></ul></section>
       
       
     </article>
@@ -35138,7 +35139,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/ENVO_01000281</code> <span class='muted'>(layer)</span></li></ul></section>
       
       
     </article>
@@ -35176,7 +35177,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007013</code> <span class='muted'>(reaction temperature)</span></li></ul></section>
       
       
     </article>
@@ -35575,7 +35576,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://astrothesaurus.org/uat/764</code> <span class='muted'>(Humidity)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002614</code> <span class='muted'>(relative humidity)</span></li></ul></section>
       
       
     </article>
@@ -36126,7 +36127,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_52334</code> <span class='muted'>(rhodamine B)</span></li></ul></section>
       
       
     </article>
@@ -36677,16 +36678,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/MS_1000015</code> <span class='muted'>(scan rate)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="ScanningElectronMicroscopyImaging">
       <span id="scanningelectronmicroscopyimaging" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Scanning Electron Microscopy Imaging</h3>
+      <h3>Scanning electron microscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ScanningElectronMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>SEM; SEM images; SEM imaging; scanning electron microscopy</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ScanningElectronMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>SEM; SEM images; SEM imaging; Scanning Electron Microscopy Imaging; scanning electron microscopy</dd></div>
       </dl>
       <p class="reference-definition">A measurement process that uses scanning electron microscopy imaging to determine catalyst particle diameter, catalyst-layer morphology, catalyst-layer thickness, grain size, and carbon nanotube forest height using SEM Instrument and generating SEM Image Dataset, SEM Micrograph Dataset, and Microstructure Image Dataset.</p>
       <dl class="reference-relations">
@@ -36696,7 +36697,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://edamontology.org/topic_0611</code> <span class='muted'>(Electron microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/sem_xxx_xxx-a7b1177950514f9c9de50af6b8252a9e-vp</code> <span class='muted'>(SEM)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000075</code> <span class='muted'>(scanning electron microscopy)</span></li></ul></section>
       
       
     </article>
@@ -36729,7 +36730,7 @@
       <p class="reference-definition">A characterization measurement that analyzes radiation or particles scattered by a specimen.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#DynamicLightScatteringMeasurement'>Dynamic Light Scattering Measurement</a>, <a href='#UltraSmallAngleXRayScatteringMeasurement'>Ultra Small Angle X Ray Scattering Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#DynamicLightScatteringMeasurement'>Dynamic light scattering</a>, <a href='#UltraSmallAngleXRayScatteringMeasurement'>Ultra Small Angle X Ray Scattering Measurement</a></dd></div>
         
         
         
@@ -37361,7 +37362,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/quality#AFQ_0000214</code> <span class='muted'>(shear strain)</span></li></ul></section>
       
       
     </article>
@@ -37684,7 +37685,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_30563</code> <span class='muted'>(silicon dioxide)</span></li></ul></section>
       
       
     </article>
@@ -37836,7 +37837,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://nfdi.fiz-karlsruhe.de/ontology/NFDI_0001205</code> <span class='muted'>(simulation dataset)</span></li></ul></section>
       
       
     </article>
@@ -38159,7 +38160,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_8984</code> <span class='muted'>(sodium dodecyl sulfate)</span></li></ul></section>
       
       
     </article>
@@ -38235,7 +38236,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_60720</code> <span class='muted'>(sodium silicate)</span></li></ul></section>
       
       
     </article>
@@ -38577,7 +38578,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007246</code> <span class='muted'>(solvent)</span></li></ul></section>
       
       
     </article>
@@ -39052,7 +39053,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://biomodels.net/SBO/SBO_0000558</code> <span class='muted'>(specific activity)</span></li></ul></section>
       
       
     </article>
@@ -39166,16 +39167,16 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002683</code> <span class='muted'>(spectroscopic ellipsometer)</span></li></ul></section>
       
       
     </article>
     
     <article class="reference-term" id="SpectroscopicEllipsometryMeasurement">
       <span id="spectroscopicellipsometrymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Spectroscopic Ellipsometry Measurement</h3>
+      <h3>Spectroscopic ellipsometry</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#SpectroscopicEllipsometryMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23SpectroscopicEllipsometryMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>spectroscopic ellipsometry; swelling measurement; thickness measurement</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#SpectroscopicEllipsometryMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23SpectroscopicEllipsometryMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Spectroscopic Ellipsometry Measurement; spectroscopic ellipsometry; swelling measurement; thickness measurement</dd></div>
       </dl>
       <p class="reference-definition">Spectroscopic ellipsometry used to measure film thickness and swelling fraction vs RH.</p>
       <dl class="reference-relations">
@@ -39218,7 +39219,7 @@
       <p class="reference-definition">A characterization measurement that determines a response as a function of energy, wavelength, frequency, mass-to-charge ratio, or another spectral coordinate.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#ElectrochemicalImpedanceSpectroscopyGalvanostatic'>Electrochemical Impedance Spectroscopy Galvanostatic</a>, <a href='#ElectrochemicalImpedanceSpectroscopyPotentiostatic'>Electrochemical Impedance Spectroscopy Potentiostatic</a>, <a href='#ElectronSpinResonanceSpectroscopyMeasurement'>Electron Spin Resonance Spectroscopy Measurement</a>, <a href='#EnergyDispersiveXRaySpectroscopy'>Energy Dispersive X Ray Spectroscopy</a>, <a href='#F19NMRMobilityMeasurement'>F 19 NMR Mobility Measurement</a>, <a href='#FTIRSpectroscopyMeasurement'>FTIR Spectroscopy Measurement</a>, <a href='#GasChromatographyMassSpectrometryMeasurement'>Gas Chromatography Mass Spectrometry Measurement</a>, <a href='#MicroXRayFluorescenceMeasurement'>Micro X Ray Fluorescence Measurement</a>, <a href='#NMRMeasurement'>NMR Measurement</a>, <a href='#PhotoluminescenceSpectroscopyMeasurement'>Photoluminescence Spectroscopy Measurement</a>, <a href='#RamanSpectroscopyMeasurement'>Raman Spectroscopy Measurement</a>, <a href='#TimeResolvedPhotoluminescenceMeasurement'>Time Resolved Photoluminescence Measurement</a>, <a href='#UVVisibleSpectroscopyMeasurement'>UV Visible Spectroscopy Measurement</a>, <a href='#XRayPhotoelectronSpectroscopyMeasurement'>X Ray Photoelectron Spectroscopy Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#ElectrochemicalImpedanceSpectroscopyGalvanostatic'>Electrochemical Impedance Spectroscopy Galvanostatic</a>, <a href='#ElectrochemicalImpedanceSpectroscopyPotentiostatic'>Electrochemical Impedance Spectroscopy Potentiostatic</a>, <a href='#ElectronSpinResonanceSpectroscopyMeasurement'>Electron spin resonance spectroscopy</a>, <a href='#EnergyDispersiveXRaySpectroscopy'>Energy Dispersive X Ray Spectroscopy</a>, <a href='#F19NMRMobilityMeasurement'>F 19 NMR Mobility Measurement</a>, <a href='#FTIRSpectroscopyMeasurement'>FTIR Spectroscopy Measurement</a>, <a href='#GasChromatographyMassSpectrometryMeasurement'>Gas Chromatography Mass Spectrometry Measurement</a>, <a href='#MicroXRayFluorescenceMeasurement'>Micro X Ray Fluorescence Measurement</a>, <a href='#NMRMeasurement'>NMR Measurement</a>, <a href='#PhotoluminescenceSpectroscopyMeasurement'>Photoluminescence spectroscopy</a>, <a href='#RamanSpectroscopyMeasurement'>Raman spectroscopy</a>, <a href='#TimeResolvedPhotoluminescenceMeasurement'>Time Resolved Photoluminescence Measurement</a>, <a href='#UVVisibleSpectroscopyMeasurement'>UV Visible Spectroscopy Measurement</a>, <a href='#XRayPhotoelectronSpectroscopyMeasurement'>X-ray photoelectron spectroscopy</a></dd></div>
         
         
         
@@ -39375,7 +39376,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://openenergyplatform.org/ontology/oeo/OEO_00010454</code> <span class='muted'>(pressure)</span></li></ul></section>
       
       
     </article>
@@ -39432,7 +39433,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000021</code> <span class='muted'>(spray coating)</span></li></ul></section>
       
       
     </article>
@@ -39546,7 +39547,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002122</code> <span class='muted'>(sputter coater)</span></li></ul></section>
       
       
     </article>
@@ -39641,7 +39642,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000040</code> <span class='muted'>(square-wave voltammetry)</span></li></ul></section>
       
       
     </article>
@@ -39717,7 +39718,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/sta_til_xxx-ad96bdf6eafa44c6b1be9ad9ef5af6f4-vp</code> <span class='muted'>(Stage Tilt)</span></li></ul></section>
       
       
     </article>
@@ -40211,7 +40212,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/pmd/co/PMD_0000779</code> <span class='muted'>(heat treatment)</span></li></ul></section>
       
       
     </article>
@@ -40686,7 +40687,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://www.ontology-of-units-of-measure.org/resource/om-2/SurfaceTension</code> <span class='muted'>(surface tension)</span></li></ul></section>
       
       
     </article>
@@ -41147,6 +41148,25 @@
       
     </article>
     
+    <article class="reference-term" id="TensileTestMeasurement">
+      <span id="tensiletestmeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>Tensile Test</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#TensileTestMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23TensileTestMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>INSTRON 3344 tensile test; Instron tensile test; Tensile Test Measurement; tensile test</dd></div>
+      </dl>
+      <p class="reference-definition">Mechanical tensile testing to obtain tensile strength, elongation, and Young’s modulus.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#MechanicalMeasurement'>Mechanical measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/ten_tes_xxx-17d3573b2c024e45852539dad7393228-vp</code> <span class='muted'>(Tensile Test)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/TensileTest</code> <span class='muted'>(Tensile test)</span></li></ul></section>
+      
+      
+    </article>
+    
     <article class="reference-term" id="TensileTestInstrument">
       <span id="tensiletestinstrument" class="anchor-alias" aria-hidden="true"></span>
       <h3>Tensile Test Instrument</h3>
@@ -41156,25 +41176,6 @@
       <p class="reference-definition">Universal testing machine used for tensile measurements.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#MechanicalTestInstrument'>Mechanical test instrument</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
-      
-      
-    </article>
-    
-    <article class="reference-term" id="TensileTestMeasurement">
-      <span id="tensiletestmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Tensile Test Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#TensileTestMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23TensileTestMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>INSTRON 3344 tensile test; Instron tensile test; tensile test</dd></div>
-      </dl>
-      <p class="reference-definition">Mechanical tensile testing to obtain tensile strength, elongation, and Young’s modulus.</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#MechanicalMeasurement'>Mechanical measurement</a></dd></div>
         
         
         
@@ -41351,7 +41352,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_137944</code> <span class='muted'>(tetrahydrofurfuryl alcohol)</span></li></ul></section>
       
       
     </article>
@@ -41446,7 +41447,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0002392</code> <span class='muted'>(thermal conductivity)</span></li><li><strong>skos:exactMatch</strong> <code>http://www.ontology-of-units-of-measure.org/resource/om-2/ThermalConductivity</code> <span class='muted'>(thermal conductivity)</span></li></ul></section>
       
       
     </article>
@@ -41536,7 +41537,7 @@
       <p class="reference-definition">A characterization measurement that determines thermal response or a temperature-dependent characteristic.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#CharacterizationMeasurement'>Characterization measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#DifferentialScanningCalorimetryMeasurement'>Differential Scanning Calorimetry Measurement</a>, <a href='#InfraredThermometryMeasurement'>Infrared Thermometry Measurement</a>, <a href='#ThermogravimetricAnalysisMeasurement'>Thermogravimetric Analysis Measurement</a>, <a href='#ThroughPlaneThermalConductivityMeasurement'>Through Plane Thermal Conductivity Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#DifferentialScanningCalorimetryMeasurement'>Differential scanning calorimetry</a>, <a href='#InfraredThermometryMeasurement'>Infrared Thermometry Measurement</a>, <a href='#ThroughPlaneThermalConductivityMeasurement'>Through Plane Thermal Conductivity Measurement</a></dd></div>
         
         
         
@@ -41624,19 +41625,19 @@
     
     <article class="reference-term" id="ThermogravimetricAnalysisMeasurement">
       <span id="thermogravimetricanalysismeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Thermogravimetric Analysis Measurement</h3>
+      <h3>Thermogravimetric analysis</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ThermogravimetricAnalysisMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ThermogravimetricAnalysisMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>thermogravimetric analysis</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#ThermogravimetricAnalysisMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Process</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23ThermogravimetricAnalysisMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>Thermogravimetric Analysis Measurement; thermogravimetric analysis</dd></div>
       </dl>
-      <p class="reference-definition">Thermogravimetric analysis used to quantify polymer grafting via mass loss.</p>
+      <p class="reference-definition">An analysis that evaluates or transforms scientific information through thermogravimetric analysis.</p>
       <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ThermalMeasurement'>Thermal measurement</a></dd></div>
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#Analysis'>Analysis</a></dd></div>
         
         
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000072</code> <span class='muted'>(thermogravimetric analysis)</span></li></ul></section>
       
       
     </article>
@@ -41655,7 +41656,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/polymat/ThermogravimetricAnalyzer</code> <span class='muted'>(Thermogravimetric analyzer)</span></li></ul></section>
       
       
     </article>
@@ -41883,7 +41884,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.allotrope.org/ontologies/process#AFP_0002206</code> <span class='muted'>(thermal conductivity measurement)</span></li></ul></section>
       
       
     </article>
@@ -42144,7 +42145,7 @@
       <p class="reference-definition">An imaging measurement that acquires projections or sections used to reconstruct the internal spatial structure of a specimen.</p>
       <dl class="reference-relations">
         <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#ImagingMeasurement'>Imaging measurement</a></dd></div>
-        <div><dt>subclasses</dt><dd><a href='#ElectronTomographyMeasurement'>Electron tomography measurement</a>, <a href='#NeutronTomographyMeasurement'>Neutron Tomography Measurement</a>, <a href='#XRayComputedTomographyImaging'>X Ray Computed Tomography Imaging</a>, <a href='#XRayComputedTomographyMeasurement'>X Ray Computed Tomography Measurement</a></dd></div>
+        <div><dt>subclasses</dt><dd><a href='#ElectronTomographyMeasurement'>Electron tomography measurement</a>, <a href='#NeutronTomographyMeasurement'>Neutron tomography</a>, <a href='#XRayComputedTomographyImaging'>X Ray Computed Tomography Imaging</a>, <a href='#XRayComputedTomographyMeasurement'>X Ray Computed Tomography Measurement</a></dd></div>
         
         
         
@@ -42358,7 +42359,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.obolibrary.org/obo/PATO_0000973</code> <span class='muted'>(porosity)</span></li><li><strong>skos:broadMatch</strong> <code>https://w3id.org/pmd/co/PMD_0020005</code> <span class='muted'>(porosity)</span></li></ul></section>
       
       
     </article>
@@ -42422,9 +42423,9 @@
     
     <article class="reference-term" id="TransmissionElectronMicroscopyImaging">
       <span id="transmissionelectronmicroscopyimaging" class="anchor-alias" aria-hidden="true"></span>
-      <h3>Transmission Electron Microscopy Imaging</h3>
+      <h3>Transmission electron microscopy</h3>
       <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#TransmissionElectronMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23TransmissionElectronMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>TEM; TEM imaging; transmission electron microscopy</dd></div>
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#TransmissionElectronMicroscopyImaging</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23TransmissionElectronMicroscopyImaging'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>TEM; TEM imaging; Transmission Electron Microscopy Imaging; transmission electron microscopy</dd></div>
       </dl>
       <p class="reference-definition">A measurement process that uses transmission electron microscopy imaging to determine Interplanar Spacing, Mean Particle Size, and Carbon Nanotube Outer Diameter using TEM Instrument and generating Microstructure Image Dataset.</p>
       <dl class="reference-relations">
@@ -42434,7 +42435,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://edamontology.org/topic_0611</code> <span class='muted'>(Electron microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000080</code> <span class='muted'>(transmission electron microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000455</code> <span class='muted'>(transmission electron microscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#TransmissionElectronMicroscopy</code> <span class='muted'>(TransmissionElectronMicroscopy)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000078</code> <span class='muted'>(transmission electron microscopy)</span></li></ul></section>
       
       
     </article>
@@ -42719,7 +42720,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007817</code> <span class='muted'>(turnover frequency)</span></li></ul></section>
       
       
     </article>
@@ -43327,7 +43328,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0001557</code> <span class='muted'>(vacuum drying)</span></li></ul></section>
       
       
     </article>
@@ -43346,7 +43347,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0008206</code> <span class='muted'>(drying time)</span></li></ul></section>
       
       
     </article>
@@ -43422,7 +43423,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/vac_pre_xxx-0e3383a3004647868136b88ad085c456-vp</code> <span class='muted'>(Vacuum Pressure)</span></li></ul></section>
       
       
     </article>
@@ -43441,7 +43442,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://purl.allotrope.org/ontologies/quality#AFQ_0000275</code> <span class='muted'>(saturation vapor pressure (quality))</span></li></ul></section>
       
       
     </article>
@@ -43726,7 +43727,7 @@
         
         
       </dl>
-      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_15377</code> <span class='muted'>(Water)</span></li></ul></section>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHEBI_15377</code> <span class='muted'>(Water)</span></li><li><strong>skos:narrowMatch</strong> <code>http://purl.obolibrary.org/obo/ENVO_00002006</code> <span class='muted'>(liquid water)</span></li></ul></section>
       
       
     </article>
@@ -44125,7 +44126,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:narrowMatch</strong> <code>http://www.bioassayontology.org/bao#BAO_0000566</code> <span class='muted'>(excitation wavelength)</span></li></ul></section>
       
       
     </article>
@@ -44296,7 +44297,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/wor_dis_xxx-a4f624127a304e46bce69d6b214bb831-vp</code> <span class='muted'>(Working Distance)</span></li></ul></section>
       
       
     </article>
@@ -44372,7 +44373,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0007108</code> <span class='muted'>(beam energy)</span></li></ul></section>
       
       
     </article>
@@ -44434,25 +44435,6 @@
       
     </article>
     
-    <article class="reference-term" id="XRayDiffractionMeasurement">
-      <span id="xraydiffractionmeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>X Ray Diffraction Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#XRayDiffractionMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23XRayDiffractionMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>X-ray diffraction; XRD; XRD measurement</dd></div>
-      </dl>
-      <p class="reference-definition">X-ray diffraction measurement used to characterize PEMFC-relevant catalyst powders and related electrode materials by recording diffraction patterns and deriving peak positions, peak widths, Pt crystallite size, and theoretical metal surface area.</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#DiffractionMeasurement'>Diffraction measurement</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
-      
-      
-    </article>
-    
     <article class="reference-term" id="XRayDiffractometer">
       <span id="xraydiffractometer" class="anchor-alias" aria-hidden="true"></span>
       <h3>X Ray Diffractometer</h3>
@@ -44467,7 +44449,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002105</code> <span class='muted'>(X-ray diffractometer)</span></li></ul></section>
       
       
     </article>
@@ -44505,26 +44487,7 @@
         
         
       </dl>
-      
-      
-      
-    </article>
-    
-    <article class="reference-term" id="XRayPhotoelectronSpectroscopyMeasurement">
-      <span id="xrayphotoelectronspectroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
-      <h3>X Ray Photoelectron Spectroscopy Measurement</h3>
-      <dl class="reference-meta">
-        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23XRayPhotoelectronSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>X-ray photoelectron spectroscopy</dd></div>
-      </dl>
-      <p class="reference-definition">Surface chemical analysis measurement used to characterize PEMFC-relevant catalyst powders, catalyst inks, ionomers, and related surface chemistries by acquiring XPS spectra and quantifying elemental composition and chemical-state information.</p>
-      <dl class="reference-relations">
-        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#SpectroscopyMeasurement'>Spectroscopy measurement</a></dd></div>
-        
-        
-        
-        
-      </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0002648</code> <span class='muted'>(X-ray photoelectron spectrometer)</span></li></ul></section>
       
       
     </article>
@@ -44544,6 +44507,44 @@
         
       </dl>
       
+      
+      
+    </article>
+    
+    <article class="reference-term" id="XRayDiffractionMeasurement">
+      <span id="xraydiffractionmeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>X-ray diffraction</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#XRayDiffractionMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23XRayDiffractionMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>X Ray Diffraction Measurement; X-ray diffraction; XRD; XRD measurement</dd></div>
+      </dl>
+      <p class="reference-definition">X-ray diffraction measurement used to characterize PEMFC-relevant catalyst powders and related electrode materials by recording diffraction patterns and deriving peak positions, peak widths, Pt crystallite size, and theoretical metal surface area.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#DiffractionMeasurement'>Diffraction measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>http://purl.obolibrary.org/obo/CHMO_0000156</code> <span class='muted'>(X-ray diffraction)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/emmo/domain/characterisation-methodology/chameo#XrayDiffraction</code> <span class='muted'>(XrayDiffraction)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000077</code> <span class='muted'>(X-ray diffraction)</span></li><li><strong>skos:exactMatch</strong> <code>https://w3id.org/pmd/co/PMD_0001016</code> <span class='muted'>(x-ray diffraction process)</span></li></ul></section>
+      
+      
+    </article>
+    
+    <article class="reference-term" id="XRayPhotoelectronSpectroscopyMeasurement">
+      <span id="xrayphotoelectronspectroscopymeasurement" class="anchor-alias" aria-hidden="true"></span>
+      <h3>X-ray photoelectron spectroscopy</h3>
+      <dl class="reference-meta">
+        <div><dt>IRI</dt><dd><code>https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectroscopyMeasurement</code></dd></div><div><dt>Type</dt><dd>Class, Measurement</dd></div><div><dt>Explore</dt><dd><a class='inline-button inline-button--small' href='explore.html?iri=https%3A%2F%2Fw3id.org%2Fh2kg%2Fhydrogen-ontology%23XRayPhotoelectronSpectroscopyMeasurement'>Open in Explorer</a></dd></div><div><dt>altLabel</dt><dd>X Ray Photoelectron Spectroscopy Measurement; X-ray photoelectron spectroscopy</dd></div>
+      </dl>
+      <p class="reference-definition">Surface chemical analysis measurement used to characterize PEMFC-relevant catalyst powders, catalyst inks, ionomers, and related surface chemistries by acquiring XPS spectra and quantifying elemental composition and chemical-state information.</p>
+      <dl class="reference-relations">
+        <div><dt>subclassOf / subPropertyOf</dt><dd><a href='#SpectroscopyMeasurement'>Spectroscopy measurement</a></dd></div>
+        
+        
+        
+        
+      </dl>
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/nfdi4cat/voc4cat_0000076</code> <span class='muted'>(X-ray photoelectron spectroscopy)</span></li></ul></section>
       
       
     </article>
@@ -44733,7 +44734,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:broadMatch</strong> <code>http://purl.allotrope.org/ontologies/result#AFR_0000950</code> <span class='muted'>(step size)</span></li></ul></section>
       
       
     </article>
@@ -44866,7 +44867,7 @@
         
         
       </dl>
-      
+      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>skos:exactMatch</strong> <code>https://w3id.org/pmd/co/PMD_0080171</code> <span class='muted'>(yield stress)</span></li></ul></section>
       
       
     </article>
@@ -45528,7 +45529,7 @@
         
         <div><dt>range</dt><dd><code>http://www.w3.org/2000/01/rdf-schema#Literal</code></dd></div>
       </dl>
-      <section class='reference-subblock'><h4>Mappings</h4><ul><li><strong>rdfs:subPropertyOf</strong> <code>http://purl.org/dc/terms/identifier</code> <span class='muted'>(identifier)</span></li></ul></section>
+      
       
       
     </article>
@@ -47000,7 +47001,7 @@
         </div>
       </section>
     
-      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 1.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 2.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
 </body>

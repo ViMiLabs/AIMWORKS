@@ -92,8 +92,8 @@ def compute_fair_readiness(
         _score_row("R / Reusable", reusable, "Purely internal release-quality score for license, provenance, versioning, definitions, examples, and release packaging."),
     ]
     transparency_hooks = [
-        _external_row("OOPS! ontology pitfall scan", validation["external_assessments"]["oops"], "External ontology pitfall scan against the release candidate. Service availability is outside the repository."),
-        _external_row("FOOPS! FAIR assessment", validation["external_assessments"]["foops"], "External FAIR-oriented ontology assessment against the release candidate. File mode does not assess accessibility."),
+        _external_row("OOPS! ontology pitfall scan", validation["external_assessments"]["oops"], "External ontology pitfall scan against the H2KG release. Service availability is outside the repository."),
+        _external_row("FOOPS! FAIR assessment", validation["external_assessments"]["foops"], "External FAIR-oriented ontology assessment against the H2KG release. File mode does not assess accessibility."),
     ]
     validation_signals = [
         _status_row("Overall validation status", "good" if validation["valid"] else "action", "pass" if validation["valid"] else "fail", "Combined metadata, namespace, mapping, and SHACL validation checks."),
@@ -114,12 +114,12 @@ def compute_fair_readiness(
     ]
     publication_assets = [
         _asset_row("HTML reference page", _publication_asset_value(docs_ready, publication["docs_published"]), "Generated documentation assets. Public availability is tracked separately from local generation."),
-        _asset_row("Machine-readable source", _publication_asset_value(machine_ttl_ready, publication["artifacts_published"]), "Primary Turtle serialization for the release candidate."),
-        _asset_row("JSON-LD source", _publication_asset_value(machine_jsonld_ready, publication["artifacts_published"]), "JSON-LD serialization for the release candidate."),
+        _asset_row("Machine-readable source", _publication_asset_value(machine_ttl_ready, publication["artifacts_published"]), "Primary Turtle serialization for the H2KG release."),
+        _asset_row("JSON-LD source", _publication_asset_value(machine_jsonld_ready, publication["artifacts_published"]), "JSON-LD serialization for the H2KG release."),
         _asset_row("Alignment mappings", _publication_asset_value(mappings_ready, publication["artifacts_published"]), "Conservative alignment output for review and publication."),
         _asset_row("Examples module", _publication_asset_value(examples_ready, publication["artifacts_published"]), "Separated example and data-like instances."),
         _asset_row("Release bundle", "published" if release_bundle_ready and publication["artifacts_published"] else "prepared" if release_bundle_ready else "not built in docs-only run", "Bundle status depends on whether the current command executed the release-bundle stage."),
-        _asset_row("w3id artifacts", "published" if publication["resolver_established"] else "prepared" if w3id_ready else "missing", "Resolver templates may be prepared locally even when public resolver registration is still pending."),
+        _asset_row("w3id artifacts", "published" if publication["resolver_established"] else "prepared" if w3id_ready else "missing", "Generated reference files document the established H2KG resolver configuration."),
     ]
 
     result = {
@@ -144,7 +144,7 @@ def compute_fair_readiness(
         "section_explanations": {
             "fair_signals": "FAIR signals are public-first release indicators. Local artefacts and metadata improve readiness, but full Findable and Accessible credit requires publication to be explicitly established.",
             "transparency_hooks": "External service rows report what third-party assessment services returned, or state clearly when they were unavailable.",
-            "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, SHACL, and optional non-blocking hook checks on the release candidate.",
+            "validation_signals": "Validation signals summarize local structural, metadata, namespace, mapping, SHACL, and optional non-blocking checks on the H2KG release.",
             "publication_assets": "Publication asset rows distinguish assets that were prepared locally from those explicitly treated as publicly established.",
         },
     }
