@@ -37,6 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer",
         "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -60,7 +61,8 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL thickness"
@@ -116,6 +118,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-stress-strain-curve-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -157,6 +160,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -180,6 +184,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -227,6 +232,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n5",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-stress-strain-curve-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -259,6 +265,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n6",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-compressability-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -285,7 +292,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n0"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
         }
@@ -300,6 +307,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n7",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gdl-compressability-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -323,10 +331,10 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n3"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -339,6 +347,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-mea-with-water-transport-eis-model-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -355,7 +364,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -363,6 +372,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n9",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -379,7 +389,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -387,6 +397,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n10",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/interface/model/ptp",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -403,7 +414,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -411,6 +422,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n11",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-mea-with-water-transport-in-ccl-eis-model-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -427,7 +439,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -435,6 +447,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n12",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-prediction-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -451,7 +464,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -459,6 +472,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n13",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/0d-particle-population-degradation-model-coupled-with-performance-model-prediction-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -475,7 +489,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ]
     },
@@ -483,6 +497,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n14",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/diffusivities-from-tortuosities-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -499,7 +514,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
@@ -512,6 +527,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -531,6 +547,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -550,6 +567,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n17",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-tlm-characterization-of-a-gdl-with-defined-compression-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -564,7 +582,7 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-tlm-characterization-of-a-gdl-with-defined-compression-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
         }
@@ -579,6 +597,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/mpl-parameter-estimation-from-gdl-and-substrate-data-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -598,6 +617,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -617,6 +637,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n20",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cea-mea-model-europium-2d-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -644,6 +665,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n21",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -671,6 +693,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n22",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -690,6 +713,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n23",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-process",
         "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -718,6 +742,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -737,6 +762,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -756,6 +782,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n26",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-tlm-characterization-of-a-gdl-with-defined-compression-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -772,7 +799,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
@@ -785,6 +812,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -797,6 +825,35 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL thickness value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
         }
       ]
     },
@@ -814,17 +871,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15"
         }
       ]
     },
@@ -842,17 +902,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16"
         }
       ]
     },
@@ -870,17 +933,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-parameter-estimation-from-gdl-and-substrate-data-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-parameter-estimation-from-gdl-and-substrate-data-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18"
         }
       ]
     },
@@ -898,17 +964,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19"
         }
       ]
     },
@@ -926,23 +995,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24"
         }
       ]
     },
@@ -960,23 +1026,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4/data-point"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n5"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25"
         }
       ]
     },
@@ -994,23 +1057,20 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
-        }
-      ],
       "http://www.w3.org/ns/prov#wasDerivedFrom": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n5"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27"
         }
       ]
     },
@@ -1030,28 +1090,63 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL thickness parameter record"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
         }
       ]
     },
@@ -1266,7 +1361,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/020b03c015",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/a1f4ce4e61",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1277,7 +1372,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "measurement_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1291,7 +1386,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
@@ -1326,7 +1421,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/590b1d67a9",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/10100354f1",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1334,10 +1429,10 @@
         "gdl-compressability::e3"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1346,7 +1441,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1356,7 +1451,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/d8e71a999f",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/29dc2169dd",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/4c1eca2c8e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1364,10 +1489,10 @@
         "gdl-compressability::e4"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1376,7 +1501,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1386,7 +1511,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/47f16dec3c",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/d8df8b67c6",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/aeb080140c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1394,10 +1549,10 @@
         "gdl-compressability::e5"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1406,7 +1561,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1416,7 +1571,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/4479fe5a1a",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/1f5d701843",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e5"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/91eba66cd5",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1424,10 +1609,10 @@
         "gdl-compressability::e6"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1436,7 +1621,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1446,7 +1631,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/49a376cb84",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/08d0230d5d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e6"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/1beaa64f6f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1454,10 +1669,10 @@
         "gdl-compressability::e7"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1466,7 +1681,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1476,7 +1691,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/56f501f879",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/e596fc95f5",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e7"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/1345e1d312",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1484,10 +1729,10 @@
         "gdl-compressability::e8"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1496,7 +1741,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1506,22 +1751,22 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/223ad7d08c",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/ab101f9ce1",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
       "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
-        "gdl-compressability::e9"
+        "gdl-compressability::e8"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n14"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -1531,7 +1776,157 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/d2061e517b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_input"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n14"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/1351835b87",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e9"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/e6fac12a30",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/36228b8f70",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/5d05fba9dc",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1566,7 +1961,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/8c6e761d44",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/dc00c47085",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1586,7 +1981,97 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n15"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/e4c8b385ed",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/38543c51a8",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/55a2ce9ac2",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e12"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1626,7 +2111,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/fdc3326404",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/b4fbf953f1",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1646,7 +2131,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n16"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1656,7 +2141,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/ec25149ff4",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/7c86febd70",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1667,7 +2152,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "measurement_property_reversed"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1681,7 +2166,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
@@ -1716,6 +2201,96 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/86441fde0d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e16"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/9bc1eb0905",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e16"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/86650ff0d4",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e16"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/51c865d055",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
@@ -1746,7 +2321,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/91d700912b",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/c700700015",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1766,7 +2341,97 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/5d7b2c3fe3",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e18"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_derivation"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/74514820b1",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e18"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/c083ebbf6d",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "gdl-compressability::e18"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n19"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1866,7 +2531,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/e0bdeedd12",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/3bb1be0105",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1886,7 +2551,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n3"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1896,7 +2561,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/812fb42bb4",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/c98b784f4a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1916,7 +2581,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1986,7 +2651,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/95d1b4fbb7",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/720c0b7c01",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2006,7 +2671,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2046,7 +2711,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/c9a46d40cd",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/d3ceddd150",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2066,7 +2731,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2076,7 +2741,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/2a15484edf",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/38a3b08074",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2096,7 +2761,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2136,7 +2801,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/dda3cd11ef",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/108f8a8c6b",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2156,7 +2821,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-conductivity-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n24"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2196,7 +2861,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/fcf6dfeef6",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/55447f38b2",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2216,7 +2881,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2226,7 +2891,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/9e0d64b9d9",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/a46af94e6c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2246,7 +2911,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2286,7 +2951,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/e4b13a0ea6",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/963c9380d7",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2306,7 +2971,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gas-permeability-of-a-gdl-with-defined-compression-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n25"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2316,7 +2981,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/48ffc32319",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/367d746315",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2336,7 +3001,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2406,7 +3071,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/f808cae70d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/a0c3aff261",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2426,7 +3091,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2436,7 +3101,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/9cd7542a50",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/841a92e05c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2456,7 +3121,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-parameter-estimation-from-gdl-and-substrate-data-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n18"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2496,7 +3161,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/87f5452aa4",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/720675d46d",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2516,7 +3181,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2556,7 +3221,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/a30d5b36b8",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/285ebf5424",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2576,7 +3241,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2586,7 +3251,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/1e69d80691",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/d66c589e27",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2606,7 +3271,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrical-contact-resistance-method"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n27"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2646,7 +3311,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/55974e8b78",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/ce5d875421",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2666,7 +3331,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2706,7 +3371,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/389a0305c8",
+      "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/projection/4204c22d23",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2726,7 +3391,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-thickness-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/gdl-compressability/node/n4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [

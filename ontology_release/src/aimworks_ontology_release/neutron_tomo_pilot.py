@@ -260,8 +260,8 @@ def _neutron_tomo_mapping_rows() -> list[dict[str, str]]:
         ("MaximalWavelenghtUnit", "A°", "instance metadata", "h2kg:hasMetadata", "Retained as beam metadata because wavelength was not promoted in this round."),
         ("Detector", "CCD camera (DW436N-BC, Oxford Instruments Andor, UK)", "instance metadata", "h2kg:hasMetadata", "Retained as detector metadata in round 1."),
         ("Lens", "Nikkon photo lens 20 mm", "instance metadata", "h2kg:hasMetadata", "Retained as optical metadata in round 1."),
-        ("NeutronFlux", "2.7 x 10^6", "new ontology term", "h2kg:NeutronFlux", "Promoted as a reusable neutron-acquisition parameter."),
-        ("NeutronFluxUnit", "n/cm2s", "new ontology term", "h2kg:NeutronFlux", "Retained on the neutron-flux setting metadata because exact QUDT specialization is deferred."),
+        ("NeutronFlux", "2.7 x 10^6", "new ontology term", "h2kg:NeutronFlux", "Promoted as a reusable neutron-flux characteristic; its use as an acquisition setting is represented by a Parameter record."),
+        ("NeutronFluxUnit", "n/cm2s", "instance metadata", "h2kg:hasMetadata", "Retained with the reported numeric value as source metadata because exact QUDT unit and quantity-kind mappings are deferred."),
         ("ExposureTime", "9", "reuse existing term", "h2kg:ExposureTime", "Modeled as a parameter-setting instance linked to the neutron measurement."),
         ("ExposureTimeUnit", "s", "reuse existing term", "h2kg:ExposureTime", "Unit captured through the quantity-value pattern on the exposure-time setting."),
         ("BeamSize", "30", "instance metadata", "h2kg:hasMetadata", "Retained as beam-shape metadata in round 1."),
@@ -756,18 +756,18 @@ def _neutron_tomo_example_items() -> list[dict[str, Any]]:
             "@id": iri("neutron-flux-setting"),
             "@type": [h("Parameter"), h("NeutronFlux")],
             label: [lit("Neutron flux setting")],
-            h("hasQuantityValue"): [ref(iri("neutron-flux-setting-qv"))],
             h("hasMetadata"): [ref(iri("neutron-flux-setting-metadata"))],
-        },
-        {
-            "@id": iri("neutron-flux-setting-qv"),
-            "@type": [qv],
-            qv_num: [{"@value": "2700000", "@type": f"{XSD}decimal"}],
         },
         {
             "@id": iri("neutron-flux-setting-metadata"),
             "@type": [h("Metadata")],
-            comment: [lit("Sheet unit retained as metadata in round 1: n/cm2s. Exact QUDT specialization is deferred.")],
+            comment: [
+                lit(
+                    "Reported neutron flux retained as metadata: numeric value 2700000; "
+                    "source unit token n/cm2s. No h2kg:hasQuantityValue is asserted because "
+                    "exact QUDT unit and quantity-kind mappings are deferred."
+                )
+            ],
         },
         {
             "@id": iri("spatial-resolution-setting"),
@@ -881,7 +881,7 @@ What was intentionally deferred:
 - a public TBox term for `AverageBaryCenter`
 - public TBox terms for worksheet preprocessing labels such as `Reconstruct`, `DarkFieldCorrect`, `3DReconstruct`, and `Threshold`
 - public TBox terms for facility-specific hardware details
-- exact QUDT specialization of neutron flux beyond the reusable public parameter anchor
+- exact QUDT specialization of neutron flux; its reported numeric value and raw unit remain metadata until both the unit and quantity kind can be represented without approximation
 """
 
 

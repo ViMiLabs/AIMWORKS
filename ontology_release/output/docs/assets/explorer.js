@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentGraph: null,
       currentRelations: [],
       hoverCardEl: null,
-      viewMode: "relations"
+      viewMode: "taxonomy"
     };
 
   const escapeHtml = (value) => String(value ?? "")
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
-  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "relations";
+  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "taxonomy";
   const activeBranch = () => branchEl?.value || "";
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
     const branchColor = (branch) => ({
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     root.querySelectorAll("[data-explorer-toggle]").forEach((input) => {
       input.checked = Boolean(snapshot.toggles?.[input.dataset.explorerToggle]);
     });
-    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "relations"}"]`);
+    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "taxonomy"}"]`);
     if (viewInput) viewInput.checked = true;
     if (branchEl) branchEl.value = snapshot.branch || "";
     state.selectedId = snapshot.selectedId || null;
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!selectedModules.has(link.module) || !nodeMap.has(link.source) || !nodeMap.has(link.target)) return false;
       const isTaxonomy = link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf";
       if (viewMode === "taxonomy") return isTaxonomy;
-      if (viewMode === "relations") return !isTaxonomy;
+      if (viewMode === "relations") return link.module === "profiles" || link.edgeFamily === "workflow_usage";
       return true;
     });
     const adjacency = new Map();
@@ -357,10 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           selector: "node",
           style: {
-            "background-color": (ele) => ele.data("viewMode") === "relations"
-              ? (ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f")
-              : branchColor(ele.data("topBranch")),
-            "shape": (ele) => ele.data("viewMode") === "relations" ? "ellipse" : branchShape(ele.data("topBranch")),
+            "background-color": (ele) => branchColor(ele.data("topBranch")),
+            "shape": (ele) => branchShape(ele.data("topBranch")),
             "label": "data(label)",
             "font-size": 11,
             "text-wrap": "wrap",
@@ -519,7 +517,9 @@ document.addEventListener("DOMContentLoaded", () => {
         predicate: String(link.value || link.predicate || ""),
         target: graph.nodeMap.get(link.target)?.label || link.target,
         module: link.module,
-        kind: link.edgeFamily
+        kind: link.edgeFamily,
+        path: link.profilePath || "",
+        rationale: link.rationale || ""
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
   }
@@ -537,7 +537,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${preview.length ? preview.map((row) => `
           <div class="explorer-hovercard__triple">
             <div class="explorer-hovercard__spo"><strong>${escapeHtml(row.source)}</strong> <code>${escapeHtml(row.predicate)}</code> <strong>${escapeHtml(row.target)}</strong></div>
-            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}</div>
+            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}${row.path ? ` | path: ${escapeHtml(row.path)}` : ""}</div>
+            ${row.rationale ? `<div class="explorer-hovercard__meta">${escapeHtml(row.rationale)}</div>` : ""}
           </div>
         `).join("") : '<div class="explorer-empty">No visible SPO relations for this selection.</div>'}
         ${rows.length > preview.length ? `<div class="explorer-hovercard__meta">Showing ${preview.length} of ${rows.length} visible relations.</div>` : ""}
@@ -573,7 +574,9 @@ document.addEventListener("DOMContentLoaded", () => {
       predicate: String(link.value || link.predicate || ""),
       target: graph.nodeMap.get(link.target)?.label || link.target,
       module: link.module,
-      kind: link.edgeFamily
+      kind: link.edgeFamily,
+      path: link.profilePath || "",
+      rationale: link.rationale || ""
     };
     renderHoverCard(row.predicate, "Edge relation", [row]);
     positionHoverCard(event);
@@ -751,6 +754,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function workflowUsageHtml(node) {
+    const rows = node.workflow_usages || [];
+    if (!rows.length) return '<p>No contextual workflow use is asserted for this class.</p>';
+    const unique = new Map();
+    rows.forEach((row) => {
+      const key = `${row.source_iri}|${row.relation}|${row.target_iri}|${row.path}`;
+      unique.set(key, row);
+    });
+    return Array.from(unique.values()).slice(0, 24).map((row) => `
+      <p><strong>${escapeHtml(row.source_label || row.source_iri)}</strong>
+      ${escapeHtml(row.relation)}
+      <strong>${escapeHtml(row.target_label || row.target_iri)}</strong>
+      ${row.path ? `<br>Path: <code>${escapeHtml(row.path)}</code>` : ""}
+      ${row.rationale ? `<br>${escapeHtml(row.rationale)}` : ""}</p>
+    `).join("");
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -766,7 +786,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="explorer-chip">${escapeHtml(node.display_class || node.category)}</span>
             <span class="explorer-chip">${escapeHtml(node.deprecated || "Active")}</span>
             ${node.taxonomy_top_branch ? `<span class="explorer-chip">${escapeHtml(node.taxonomy_top_branch)}</span>` : ""}
-            ${node.review_status ? `<span class="explorer-chip">${escapeHtml(node.review_status)}</span>` : ""}
+            ${(node.workflow_badges || []).map((badge) => `<span class="explorer-chip">${escapeHtml(badge)}</span>`).join("")}
           </div>
         </div>
         <div class="explorer-inspector__section">
@@ -783,13 +803,14 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         ${assertedAlignmentHtml(node)}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
-        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
-        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
+        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Intrinsic classification</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Semantic role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
+        ${node.local ? `<div class="explorer-inspector__section"><strong>Workflow usage</strong>${workflowUsageHtml(node)}</div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: approved<br>Definition status: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
-        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
+        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>Quantity guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
         <div class="explorer-inspector__section">
-          <strong>Graph role</strong>
+          <strong>Visualization context</strong>
           <p>${escapeHtml(node.id === graph.center?.id ? "Current focus term." : "Visible through the current expanded neighborhood.")} Direct links in the explorer dataset: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml((node.modules || []).join(", "))}.</p>
         </div>
       </div>
@@ -821,7 +842,9 @@ document.addEventListener("DOMContentLoaded", () => {
         predicate: String(link.value || link.predicate || ""),
         target: graph.nodeMap.get(link.target)?.label || link.target,
         module: link.module,
-        kind: link.edgeFamily
+        kind: link.edgeFamily,
+        path: link.profilePath || "",
+        rationale: link.rationale || ""
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
     state.currentRelations = rows;
@@ -833,7 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
     relationsEl.innerHTML = `
       <table class="explorer-relations">
         <thead>
-          <tr><th>Source</th><th>Predicate</th><th>Target</th><th>Module</th></tr>
+          <tr><th>Source</th><th>Predicate</th><th>Target</th><th>Path</th><th>Module</th></tr>
         </thead>
         <tbody>
           ${rows.map((row) => `
@@ -841,6 +864,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${escapeHtml(row.source)}</td>
               <td><code>${escapeHtml(row.predicate)}</code></td>
               <td>${escapeHtml(row.target)}</td>
+              <td>${row.path ? `<code>${escapeHtml(row.path)}</code>` : "-"}</td>
               <td>${escapeHtml(row.module)}</td>
             </tr>
           `).join("")}
@@ -861,7 +885,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cy) cy.elements().remove();
       return;
     }
-    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and relation neighborhood" : "relation neighborhood";
+    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and workflow-use neighborhood" : "workflow-use neighborhood";
     graphNoteEl.textContent = `Showing the direct ${viewLabel} for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
     const instance = ensureCy();
     instance.elements().remove();

@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const iri = String(node.iri || "");
     if (!node.local || node.category === "Ontology" || node.category === "BlankNode") return false;
     if (localName.startsWith("_") || /_QV$/i.test(localName)) return false;
-    if (iri.startsWith("file:///")) return false;
+    if (iri.startsWith("file:" + "///")) return false;
     return true;
   }
 

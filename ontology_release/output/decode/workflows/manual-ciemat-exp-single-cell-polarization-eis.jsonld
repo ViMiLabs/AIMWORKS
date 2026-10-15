@@ -37,6 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/method",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/single-cell-test-bench-polarization-eis-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -84,35 +85,35 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-mea-e7165a5d5c"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
         },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-limiting-current-5f17fbf1f3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-cell-operation-conditions-f78571689e"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-high-frequency-resistance-c721bb08a1"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#measures": [
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -131,6 +132,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-mea-e7165a5d5c",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#MEAAssembly",
         "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -154,7 +156,8 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst loading"
@@ -177,6 +180,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -200,6 +204,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-cell-operation-conditions-f78571689e",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-operation-conditions-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -223,6 +228,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-polarization-curve-5de5263009",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-polarization-curve-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -249,6 +255,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -278,6 +285,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-high-frequency-resistance-c721bb08a1",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-high-frequency-resistance-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -304,6 +312,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-eis-5865b26551",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-eis-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -327,6 +336,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-voltammogram-16f083e96f",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-voltammogram-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -350,6 +360,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-limiting-current-5f17fbf1f3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -373,6 +384,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -399,6 +411,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -425,6 +438,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -454,6 +468,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-cea-exp-mea-assembly-pefc-ref-mea-94683234a4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/mea-assembly-for-pefc-ref-mea-process",
         "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -482,6 +497,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-ciemat-exp-microscopy-sem-optical-mea-cross-section-401a457165",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/microscopy-sem-and-optical-in-mea-cross-section-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -502,7 +518,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ]
     },
@@ -510,6 +526,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-ciemat-exp-sem-fib-layer-0338a03ee6",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-layer-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -530,7 +547,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ]
     },
@@ -538,6 +555,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-downstream-cea-mod-europium-2d-mea-model-2adfc5c807",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cea-mea-model-europium-2d-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -568,6 +586,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-downstream-cea-mod-europium-model-fitting-7ed4d249cc",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -615,6 +634,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-downstream-ciemat-exp-effective-proton-conductivity-e0e81208da",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cl-protonic-resistance-18a311d49a",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -639,6 +659,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-downstream-fzj-iet-3-mod-performance-model-mea-fitting-8d08851691",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-performance-model-for-mea-fitting-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -671,6 +692,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-downstream-fzj-iet-3-mod-performance-model-mea-prediction-d68fd48e80",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/interface/model/ptp",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -698,6 +720,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -726,6 +749,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-exp-fib-gdl-mpl-catalyst-7ca37ef476",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/fib-measurements-on-gdl-mpl-and-catalyst-materials-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -746,7 +770,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ]
     },
@@ -754,6 +778,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-exp-sem-edx-5c30eb090d",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-edx-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -774,7 +799,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#measures": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ]
     },
@@ -782,6 +807,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/image-parameter-extraction-2d-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -805,7 +831,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -818,6 +844,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -841,7 +868,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -866,16 +893,13 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ]
     },
@@ -895,13 +919,10 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
         }
       ]
     },
@@ -921,16 +942,13 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         }
       ]
     },
@@ -950,16 +968,13 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         }
       ]
     },
@@ -979,10 +994,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-limiting-current-5f17fbf1f3"
         }
       ]
     },
@@ -1002,13 +1014,33 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst loading parameter record"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
         },
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca"
         }
       ]
     },
@@ -1241,7 +1273,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/15ff4eb10d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/a7738b7736",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1252,7 +1284,7 @@
         "h2kg_direct"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "measurement_property_reversed"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1266,12 +1298,12 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#measures"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/ca9eeb090e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/2434dd7a68",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1291,7 +1323,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1361,7 +1393,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e459fdf953",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/653fd61518",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1381,7 +1413,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1481,7 +1513,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/2e45343076",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/a005dc4dab",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1501,7 +1533,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-limiting-current-5f17fbf1f3"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1511,7 +1543,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/9220189fc5",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/09524d2171",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1531,7 +1563,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1541,7 +1573,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/fe0f1f7d2e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/941efef122",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1561,7 +1593,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1571,7 +1603,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/12b1a07f5f",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e33bbfd53d",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1591,7 +1623,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1631,7 +1663,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/581ee2a576",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/3a95cc2534",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1651,7 +1683,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1661,7 +1693,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/8f18635e8e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/eb4de34c89",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1681,7 +1713,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1721,7 +1753,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/5e0c43e195",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/fe39c4054e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1741,7 +1773,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1781,7 +1813,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/0cdc37fb15",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e1a3ad24c4",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1801,7 +1833,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1841,7 +1873,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/6b3509e1a0",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/26146fd434",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1861,7 +1893,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1931,7 +1963,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/b852bf02df",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/312549d8ba",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1951,7 +1983,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2051,7 +2083,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e64bbf070c",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/b6dbc8949f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2071,7 +2103,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-limiting-current-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-limiting-current-5f17fbf1f3"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2111,7 +2143,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/009f8393ae",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/ca7c3773c6",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2131,7 +2163,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicallyActiveSurfaceArea"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ecsa-bfabf94bc4"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2171,7 +2203,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/9ad2d9c6c6",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/ee80d2f421",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2191,7 +2223,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-double-layer-capacitance-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-double-layer-capacitance-aa35e131a8"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2231,7 +2263,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e1098c077d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/81aa19d99a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2251,7 +2283,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2351,7 +2383,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/72848a3c52",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/cfd4df151a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2371,7 +2403,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2441,7 +2473,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e62fbbd028",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/b400a194fd",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2461,7 +2493,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/cell-crossover-current-density-device"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-cell-crossover-current-density-b9f1fe1b6b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2501,7 +2533,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/b25d344f28",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e2d0c077cd",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2521,7 +2553,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-proton-conductivity-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/output-ccl-effective-proton-conductivity-359402671b"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2561,7 +2593,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/a6d41f2878",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/5ce0e4c6a5",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2581,7 +2613,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2591,7 +2623,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/3a19caa087",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/dd18df03aa",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2611,7 +2643,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2621,7 +2653,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/8344e026ed",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/383a30a69e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2641,7 +2673,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2651,7 +2683,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/5b3aa60117",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/1782636cbb",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2659,14 +2691,44 @@
         "manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_output_direction"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/c54436eb2b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -2676,7 +2738,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -2711,7 +2773,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/ffb6525fb3",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/5ee8b2b418",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2731,7 +2793,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -2741,7 +2803,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/bb2d64465e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/e80684c202",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2749,14 +2811,44 @@
         "manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_output_direction"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/1c2e7d458e",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -2766,7 +2858,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -2801,7 +2893,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/219b34278f",
+      "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/projection/0ecc9bfd01",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2821,7 +2913,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#CathodeCatalystLayerThickness"
+          "@id": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [

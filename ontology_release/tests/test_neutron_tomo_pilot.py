@@ -58,6 +58,17 @@ def test_neutron_tomo_pilot_package_generates_outputs(tmp_path: Path):
     }
     assert any(identifier.endswith("average-barycenter-metadata") for identifier in metadata_ids)
 
+    flux_record = next(item for item in items if item["@id"].endswith("neutron-flux-setting"))
+    assert "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue" not in flux_record
+    assert not any(item["@id"].endswith("neutron-flux-setting-qv") for item in items)
+    flux_metadata = next(item for item in items if item["@id"].endswith("neutron-flux-setting-metadata"))
+    metadata_text = " ".join(
+        value["@value"]
+        for value in flux_metadata["http://www.w3.org/2000/01/rdf-schema#comment"]
+    )
+    assert "2700000" in metadata_text
+    assert "n/cm2s" in metadata_text
+
 
 def test_neutron_tomo_pilot_package_skips_when_required_terms_are_missing(mini_ontology_file, tmp_path: Path):
     output_root = tmp_path / "output"

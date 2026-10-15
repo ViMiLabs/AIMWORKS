@@ -16,7 +16,8 @@ from rdflib import BNode, Graph, Literal, Namespace, RDF, RDFS, SKOS, URIRef
 from rdflib.compare import isomorphic
 from rdflib.namespace import DCTERMS, OWL, PROV, XSD
 
-from .utils import COMMON_CONTEXT, ensure_dir, write_text
+from .semantic_profiles import build_semantic_profile_release
+from .utils import COMMON_CONTEXT, ensure_dir, legacy_source_identifier, portable_legacy_iri, write_text
 
 
 H2KG_ONTOLOGY = URIRef("https://w3id.org/h2kg/hydrogen-ontology")
@@ -103,7 +104,7 @@ def build_taxonomy_release(
     *,
     auto_harmonization_override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Build the H2KG v2 class taxonomy and its compatibility layer.
+    """Build the H2KG class taxonomy, workflow profiles, and compatibility layer.
 
     The asserted v1 source remains immutable. The clean v2 graph promotes reusable
     vocabulary concepts to OWL classes and keeps legacy role assertions and direct
@@ -140,12 +141,22 @@ def build_taxonomy_release(
             URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl"),
         )
     )
+
     clean.add(
         (
             H2KG_ONTOLOGY,
             RDFS.seeAlso,
             URIRef("https://vimilabs.github.io/AIMWORKS/pages/tib-benchmark.html"),
         )
+    )
+
+    semantic_profiles = build_semantic_profile_release(
+        source,
+        clean,
+        decisions,
+        config,
+        ontology_dir,
+        reports_dir,
     )
 
     clean_ttl = ontology_dir / "h2kg-v2-taxonomy.ttl"
@@ -178,7 +189,7 @@ def build_taxonomy_release(
     registry_payload = {
         "schema_version": "h2kg-taxonomy-registry/v2",
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.0.0")),
+        "version": str(config.get("version", "2.1.0")),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sha256": _sha256(input_path),
         "taxonomy_config_sha256": _sha256(config_path),
@@ -214,6 +225,7 @@ def build_taxonomy_release(
 
     validation = _validate_taxonomy(
         clean,
+        compatibility,
         decisions,
         resources,
         clean_ttl,
@@ -221,6 +233,7 @@ def build_taxonomy_release(
         config,
         bridge,
         competency,
+        semantic_profiles,
         bool(shacl_conforms),
         str(shacl_text),
     )
@@ -231,7 +244,7 @@ def build_taxonomy_release(
 
     return {
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.0.0")),
+        "version": str(config.get("version", "2.1.0")),
         "active_local_classes": validation["counts"]["active_local_classes"],
         "deprecated_compatibility_classes": validation["counts"]["deprecated_compatibility_classes"],
         "new_structural_classes": validation["counts"]["new_structural_classes"],
@@ -246,6 +259,7 @@ def build_taxonomy_release(
         "registry": str(registry_json),
         "resource_registry": str(resource_registry_json),
         "external_bridge": bridge,
+        "semantic_profiles": semantic_profiles,
         "competency_report": str(competency_path),
         "validation": str(validation_path),
         "publication_ready": validation["publication_ready"],
@@ -266,6 +280,10 @@ def _build_graphs(
     structural = config.get("structural_classes", {})
     replacements = {str(key): str(value) for key, value in config.get("duplicate_replacements", {}).items()}
     parent_overrides = {str(key): str(value) for key, value in config.get("parent_overrides", {}).items()}
+    intrinsic_definition_overrides = {
+        str(key): value
+        for key, value in config.get("intrinsic_definition_overrides", {}).items()
+    }
     controlled_corrections = controlled_corrections or {}
     candidates = _class_candidates(source, structural)
     property_resources = _property_resources(source)
@@ -364,8 +382,13 @@ def _build_graphs(
         if local_name == "CatalystLayerThickness":
             label = "Catalyst Layer Thickness"
         corrected_role = _corrected_semantic_role(local_name, parent_by_name)
-        corrected_from_source_role = _needs_corrected_definition(tuple(record["roles"]), corrected_role)
+        corrected_from_source_role = _needs_corrected_definition(
+            tuple(record["roles"]),
+            corrected_role,
+            str(record.get("source_definition", "")),
+        )
         correction = controlled_corrections.get(local_name, {})
+        intrinsic_override = intrinsic_definition_overrides.get(local_name, {})
 
         if local_name in structural:
             definition = str(structural[local_name].get("definition", "")).strip()
@@ -393,6 +416,11 @@ def _build_graphs(
                 definition = replacement_definition
                 definition_status = "curated-controlled-correction"
 
+        intrinsic_definition = str(intrinsic_override.get("definition", "")).strip()
+        if intrinsic_definition:
+            definition = intrinsic_definition
+            definition_status = "curated-intrinsic-definition"
+
         if deprecated:
             replacement = H2KG[replacement_name]
             clean.add((subject, RDF.type, OWL.Class))
@@ -413,9 +441,15 @@ def _build_graphs(
             clean.set((subject, SKOS.prefLabel, Literal(label, lang="en")))
             clean.set((subject, SKOS.definition, Literal(definition, lang="en")))
             _copy_term_annotations(source, subject, clean)
-            if correction.get("definition_override") or correction.get("final_value"):
+            if (
+                correction.get("definition_override")
+                or correction.get("final_value")
+                or intrinsic_definition
+            ):
                 clean.set((subject, DCTERMS.description, Literal(definition, lang="en")))
-            scope_note = str(correction.get("scope_note", "")).strip()
+            scope_note = str(
+                intrinsic_override.get("scope_note") or correction.get("scope_note", "")
+            ).strip()
             if scope_note:
                 clean.set((subject, SKOS.scopeNote, Literal(scope_note, lang="en")))
             for alt_label in record.get("alt_labels", ()):
@@ -650,7 +684,7 @@ def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) 
     for import_iri in sorted(allowed_imports):
         target.add((H2KG_ONTOLOGY, OWL.imports, URIRef(import_iri)))
     target.add((H2KG_ONTOLOGY, RDF.type, OWL.Ontology))
-    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.0.0")))))
+    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
     target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(config.get("version_iri")))))
     target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H2KG Application Ontology for Hydrogen Electrochemical Systems", lang="en")))
     target.set(
@@ -677,6 +711,11 @@ def _copy_properties(source: Graph, target: Graph) -> None:
                 # an electrochemical reference scale. Keep it resolvable, but do
                 # not carry its incompatible range into the clean taxonomy.
                 continue
+            if subject == H2KG.ofProperty and predicate == RDFS.domain:
+                # Parameter records and DataPoint records both identify a
+                # property occurrence.  InformationEntity is their shared
+                # canonical domain.
+                continue
             target.add((subject, predicate, obj))
     target.add((H2KG.hasOutputData, RDFS.subPropertyOf, PROV.generated))
     target.add((H2KG.hasOutputMaterial, RDFS.subPropertyOf, PROV.generated))
@@ -687,6 +726,25 @@ def _copy_properties(source: Graph, target: Graph) -> None:
     target.add((H2KG.referenceElectrode, DCTERMS.isReplacedBy, H2KG.hasReferenceScale))
     target.add((H2KG.hasProperty, OWL.deprecated, Literal(True, datatype=XSD.boolean)))
     target.add((H2KG.hasProperty, DCTERMS.isReplacedBy, H2KG.measures))
+    target.set((H2KG.ofProperty, RDFS.domain, H2KG.InformationEntity))
+    target.set((H2KG.ofProperty, RDFS.range, H2KG.Property))
+    target.set((H2KG.hasQuantityValue, RDFS.domain, H2KG.Property))
+    target.set((H2KG.hasQuantityValue, RDFS.range, QUDT.QuantityValue))
+    canonical_property_definitions = {
+        H2KG.ofProperty: (
+            "Relates an information record, such as a Parameter or DataPoint, to the property occurrence that the record specifies or reports."
+        ),
+        H2KG.hasParameter: (
+            "Relates a process or measurement occurrence to a Parameter record that specifies one selected workflow condition."
+        ),
+        H2KG.hasQuantityValue: (
+            "Relates a property occurrence to its QUDT quantity-value representation."
+        ),
+    }
+    for predicate, definition in canonical_property_definitions.items():
+        value = Literal(definition, lang="en")
+        target.set((predicate, SKOS.definition, value))
+        target.set((predicate, DCTERMS.description, value))
 
 
 def _add_support_properties(target: Graph) -> None:
@@ -807,7 +865,13 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
             continue
         if predicate == OWL.inverseOf and subject in {H2KG.hasOutputData, H2KG.hasOutputMaterial} and obj == PROV.wasGeneratedBy:
             continue
-        target.add((subject, predicate, obj))
+        portable_subject = _portable_legacy_term(subject)
+        portable_predicate = _portable_legacy_term(predicate)
+        portable_object = _portable_legacy_term(obj)
+        target.add((portable_subject, portable_predicate, portable_object))
+        for original, portable in ((subject, portable_subject), (obj, portable_object)):
+            if isinstance(original, URIRef) and str(original).startswith("file:"):
+                target.add((portable, DCTERMS.identifier, Literal(legacy_source_identifier(str(original)))))
 
     # Preserve every source workflow assertion and add an explicit corrected
     # projection where a legacy relation encoded a contextual role too broadly.
@@ -826,18 +890,24 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
 
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
-    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.0.0")))))
-    target.add((compatibility_iri, DCTERMS.title, Literal("H2KG v1 Compatibility and Profile-Relation Layer", lang="en")))
+    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
+    target.add((compatibility_iri, DCTERMS.title, Literal("H2KG 2.1 Legacy Compatibility Layer", lang="en")))
     target.add(
         (
             compatibility_iri,
             DCTERMS.description,
             Literal(
-                "A compatibility layer preserving legacy H2KG role assertions and direct workflow-neighborhood relations while consumers migrate to the v2 class taxonomy and profiles.",
+                "A download-only migration artifact preserving legacy H2KG role assertions and direct workflow-neighborhood relations. It is not part of the canonical ontology distribution and does not drive Explore.",
                 lang="en",
             ),
         )
     )
+
+
+def _portable_legacy_term(term: Any) -> Any:
+    if isinstance(term, URIRef):
+        return URIRef(portable_legacy_iri(str(term)))
+    return term
 
 
 def _bind_namespaces(target: Graph, source: Graph) -> None:
@@ -1046,7 +1116,11 @@ def _corrected_semantic_role(local_name: str, parents: dict[str, str]) -> str:
     return "Class"
 
 
-def _needs_corrected_definition(source_roles: tuple[str, ...], corrected_role: str) -> bool:
+def _needs_corrected_definition(
+    source_roles: tuple[str, ...],
+    corrected_role: str,
+    source_definition: str = "",
+) -> bool:
     if not source_roles:
         return False
     expected_roles = {
@@ -1063,11 +1137,27 @@ def _needs_corrected_definition(source_roles: tuple[str, ...], corrected_role: s
         "ModelArtifact": set(),
         "WorkflowProfile": set(),
         "Specification": set(),
-        "Characteristic": {"Parameter", "Property"},
+        "Characteristic": {"Property"},
         "NormalizationBasis": {"NormalizationBasis"},
         "Unit": {"Unit"},
         "Agent": {"Agent"},
     }
+    if corrected_role == "Characteristic" and "Parameter" in source_roles:
+        definition = source_definition.casefold()
+        role_markers = (
+            "parameter specifying",
+            "input parameter",
+            "workflow parameter",
+            "measurement setting",
+            "model setting",
+            "acquisition setting",
+            "used as a parameter",
+        )
+        if not definition or any(marker in definition for marker in role_markers):
+            return True
+        # A source definition that already defines the scientific quantity can
+        # be retained even though the v1 source happened to type it Parameter.
+        return False
     return not bool(set(source_roles) & expected_roles.get(corrected_role, set()))
 
 
@@ -1312,7 +1402,7 @@ def _build_external_bridge(
     snapshot_sha256 = str((auto_harmonization or {}).get("snapshot_sha256") or _json_payload_sha256(snapshot))
     snapshot_date = str(snapshot.get("retrieved_at", "snapshot-not-available"))
     snapshot_slug = re.sub(r"[^0-9]", "", snapshot_date[:10]) or "undated"
-    version = str(config.get("version", "2.0.0"))
+    version = str(config.get("version", "2.1.0"))
     immutable_stem = f"h2kg-external-bridge-{snapshot_slug}-{snapshot_sha256[:12]}"
     bridge_iri = URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl")
     version_iri = URIRef(
@@ -2119,6 +2209,7 @@ def _run_competency_checks(
 
 def _validate_taxonomy(
     graph: Graph,
+    compatibility: Graph,
     decisions: list[TaxonomyDecision],
     resources: list[dict[str, Any]],
     ttl_path: Path,
@@ -2126,6 +2217,7 @@ def _validate_taxonomy(
     config: dict[str, Any],
     bridge: dict[str, Any],
     competency: dict[str, Any],
+    semantic_profiles: dict[str, Any],
     shacl_conforms: bool,
     shacl_report: str,
 ) -> dict[str, Any]:
@@ -2148,6 +2240,14 @@ def _validate_taxonomy(
         active_labels[_normalized_label(item.label)].append(item.iri)
     duplicate_labels = {label: iris for label, iris in active_labels.items() if len(iris) > 1}
     file_uris = sorted({str(value) for triple in graph for value in triple if isinstance(value, URIRef) and str(value).startswith("file:")})
+    compatibility_file_uris = sorted(
+        {
+            str(value)
+            for triple in compatibility
+            for value in triple
+            if isinstance(value, URIRef) and str(value).startswith("file:")
+        }
+    )
     unclassified_resources = [row["iri"] for row in resources if not row.get("disposition")]
     source_resources = [row for row in resources if row.get("source_exists")]
     source_resources_without_disposition = [row["iri"] for row in source_resources if not row.get("disposition")]
@@ -2180,6 +2280,8 @@ def _validate_taxonomy(
         errors.append(f"{len(duplicate_labels)} normalized preferred-label collisions remain active.")
     if file_uris:
         errors.append(f"{len(file_uris)} local file IRIs occur in the clean taxonomy graph.")
+    if compatibility_file_uris:
+        errors.append(f"{len(compatibility_file_uris)} local file IRIs occur in the legacy compatibility graph.")
     if unclassified_resources or source_resources_without_disposition:
         errors.append("One or more local resources lack an explicit release disposition.")
     if missing_governance:
@@ -2205,6 +2307,8 @@ def _validate_taxonomy(
     if not competency.get("all_passed", False):
         failed = [str(item.get("id")) for item in competency.get("checks", []) if not item.get("passed")]
         errors.append(f"{len(failed)} taxonomy competency checks failed: {', '.join(failed)}.")
+    if not semantic_profiles.get("conforms", False):
+        errors.append("The parameter-property semantic-role migration did not conform.")
 
     ttl_graph = Graph().parse(ttl_path, format="turtle")
     json_graph = Graph().parse(jsonld_path, format="json-ld")
@@ -2252,6 +2356,9 @@ def _validate_taxonomy(
             "external_mappings": int(bridge.get("mapping_count", 0)),
             "competency_checks": int(competency.get("total", 0)),
             "competency_checks_passed": int(competency.get("passed", 0)),
+            "legacy_workflow_assertions": int(semantic_profiles.get("legacy_assertion_count", 0)),
+            "workflow_profile_usages": int(semantic_profiles.get("workflow_usage_count", 0)),
+            "parameter_property_paths": int(semantic_profiles.get("parameter_property_path_count", 0)),
         },
         "top_branch_counts": dict(sorted(top_counts.items())),
         "missing_parent_iris": missing_parents,
@@ -2260,6 +2367,7 @@ def _validate_taxonomy(
         "placeholder_definition_iris": placeholder_definitions,
         "duplicate_active_labels": duplicate_labels,
         "file_uris": file_uris,
+        "compatibility_file_uris": compatibility_file_uris,
         "unclassified_resource_iris": unclassified_resources,
         "source_resources_without_disposition": source_resources_without_disposition,
         "subclass_cycles": cycles,
@@ -2314,7 +2422,7 @@ def _taxonomy_cycles(graph: Graph) -> list[list[str]]:
 def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecision]) -> str:
     counts = validation["counts"]
     branches = "\n".join(f"- {branch}: {count}" for branch, count in validation["top_branch_counts"].items())
-    return f"""# H2KG v2 Taxonomy Report
+    return f"""# H2KG 2.1 Taxonomy Report
 
 - Validation conforms: {validation['conforms']}
 - Active local classes: {counts['active_local_classes']}
@@ -2337,7 +2445,7 @@ def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecisio
 
 ## Governance
 
-Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. The H2KG v2 terminology and taxonomy are recorded as domain-expert reviewed. Automated external mappings remain governed separately by conservative publication gates.
+Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. H2KG is presented publicly as a domain-specific ontology; internal governance evidence and automated external-mapping decisions remain recorded separately in machine-readable registries.
 
 The compatibility graph preserves the v1 role-typed and workflow-neighborhood statements. The clean taxonomy contains reusable classes and schema properties only; profile fields and value records are deliberately excluded from its class count.
 

@@ -40,6 +40,15 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert (_iri("FuelCellTestStation"), RDFS.subClassOf, _iri("ElectrochemicalTestInstrument")) in graph
     assert (_iri("FijiImageJSoftware"), RDFS.subClassOf, _iri("ImageAnalysisSoftware")) in graph
     assert (_iri("CatalystLayerThickness"), RDFS.subClassOf, _iri("LayerThickness")) in graph
+    assert str(graph.value(_iri("CatalystLayerThickness"), SKOS.definition)).startswith(
+        "A thickness characteristic representing"
+    )
+    assert str(graph.value(_iri("AFMScanSpeed"), SKOS.definition)).startswith(
+        "A scan-rate characteristic"
+    )
+    assert str(graph.value(_iri("IonomerCatalystDispersionParameter"), SKOS.definition)).startswith(
+        "A dimensionless dispersion characteristic"
+    )
     assert (_iri("DynamicHydrogenElectrode"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
     assert (_iri("SCE"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
     assert (_iri("SHE"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
@@ -68,6 +77,12 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert (_iri("hasOutputData"), RDFS.subPropertyOf, PROV.generated) in graph
     assert (_iri("fromMeasurement"), RDFS.subPropertyOf, PROV.wasDerivedFrom) not in graph
     assert (_iri("usesSoftware"), RDF.type, OWL.ObjectProperty) in graph
+    assert (_iri("ofProperty"), RDFS.domain, _iri("InformationEntity")) in graph
+    assert (_iri("ofProperty"), RDFS.range, _iri("Property")) in graph
+    assert (_iri("hasQuantityValue"), RDFS.domain, _iri("Property")) in graph
+    assert "Parameter or DataPoint" in str(graph.value(_iri("ofProperty"), DCTERMS.description))
+    assert "Parameter record" in str(graph.value(_iri("hasParameter"), DCTERMS.description))
+    assert "property occurrence" in str(graph.value(_iri("hasQuantityValue"), DCTERMS.description))
     assert (_iri("hasProperty"), OWL.deprecated, None) in graph
     assert (_iri("hasProperty"), DCTERMS.isReplacedBy, _iri("measures")) in graph
 
@@ -85,6 +100,32 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     }
     assert validation["publication_status"] == "approved"
     assert not validation["warnings"]
+    assert validation["file_uris"] == []
+    assert validation["compatibility_file_uris"] == []
+
+    compatibility = Graph().parse(result["compatibility_ttl"], format="turtle")
+    assert not any(
+        isinstance(term, URIRef) and str(term).startswith("file:")
+        for triple in compatibility
+        for term in triple
+    )
+    migration_registry = Path(
+        result["semantic_profiles"]["relation_migration_registry"]
+    ).read_text(encoding="utf-8")
+    usage_registry = Path(
+        result["semantic_profiles"]["workflow_usage_registry"]
+    ).read_text(encoding="utf-8")
+    assert "file:///" not in migration_registry
+    assert "file:///" not in usage_registry
+    assert "https://w3id.org/h2kg/hydrogen-ontology/legacy-source/" in migration_registry
+
+    characteristic_definitions = [
+        str(graph.value(_iri(term["local_name"]), SKOS.definition) or "")
+        for term in json.loads(Path(result["registry"]).read_text(encoding="utf-8"))["terms"]
+        if term["top_branch"] == "Characteristic"
+    ]
+    assert not any(definition.startswith("A parameter ") for definition in characteristic_definitions)
+    assert not any(definition.startswith("Parameter describing") for definition in characteristic_definitions)
 
 
 def test_profile_fields_and_duplicate_iris_are_not_active_classes(tmp_path: Path) -> None:

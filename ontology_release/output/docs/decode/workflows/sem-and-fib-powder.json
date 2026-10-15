@@ -40,9 +40,11 @@
       "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "unreviewed",
-      "mapping_evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor."
+      "mapping_evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor.",
+      "workflow_role": "Matter",
+      "intrinsic_semantic_role": "Matter"
     },
     {
       "id": "sem-and-fib-powder::n1",
@@ -62,7 +64,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "sem-and-fib-powder::n2",
@@ -82,7 +85,8 @@
       "semantic_role": "Property",
       "role_assignment": "catalyst_elemental_composition_is_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "sem-and-fib-powder::n3",
@@ -111,9 +115,11 @@
       "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "catalyst_active_particle_diameter_is_property",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "expert_reviewed",
-      "mapping_evidence": "Unambiguous exact-label mapping confirmed by the expert ITC registry for IO_MAT_CatalystActiveParticleDiameter."
+      "mapping_evidence": "Unambiguous exact-label mapping confirmed by the expert ITC registry for IO_MAT_CatalystActiveParticleDiameter.",
+      "workflow_role": "Property",
+      "intrinsic_semantic_role": "Property"
     },
     {
       "id": "sem-and-fib-powder::n4",
@@ -133,7 +139,8 @@
       "semantic_role": "Property",
       "role_assignment": "catalyst_support_particle_diameter_is_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "sem-and-fib-powder::n5",
@@ -153,7 +160,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "sem-and-fib-powder::n6",
@@ -173,7 +181,8 @@
       "semantic_role": "Measurement",
       "role_assignment": "method_visual_default",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Measurement"
     },
     {
       "id": "sem-and-fib-powder::n7",
@@ -202,9 +211,11 @@
       "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "semantic_role": "Process",
-      "role_assignment": "expert_review",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "expert_reviewed",
-      "mapping_evidence": "Expert-reviewed ITC model anchor; the source occurrence remains unchanged."
+      "mapping_evidence": "Expert-reviewed ITC model anchor; the source occurrence remains unchanged.",
+      "workflow_role": "Process",
+      "intrinsic_semantic_role": "Process"
     }
   ],
   "projection_nodes": [
@@ -215,6 +226,7 @@
       "kind": "value_proxy",
       "workflow_id": "sem-and-fib-powder",
       "source_occurrence_id": "sem-and-fib-powder::n3",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/sem-and-fib-powder/node/n3",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
@@ -543,77 +555,77 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e1::47660c456b",
+      "id": "semantic::sem-and-fib-powder::e1::b069e89213",
       "workflow_id": "sem-and-fib-powder",
       "source": "sem-and-fib-powder::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material",
+      "target": "sem-and-fib-powder::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e1",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e2::143eca708f",
+      "id": "semantic::sem-and-fib-powder::e2::f405f15f13",
       "workflow_id": "sem-and-fib-powder",
       "source": "sem-and-fib-powder::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material",
+      "target": "sem-and-fib-powder::n2",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e2",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e3::80e2d9e35e",
+      "id": "semantic::sem-and-fib-powder::e3::970f318cec",
       "workflow_id": "sem-and-fib-powder",
       "source": "sem-and-fib-powder::n6",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target": "sem-and-fib-powder::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e3",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e4::b725c346a5",
+      "id": "semantic::sem-and-fib-powder::e4::010ef1473d",
       "workflow_id": "sem-and-fib-powder",
       "source": "sem-and-fib-powder::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
+      "target": "sem-and-fib-powder::n4",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e4",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e5::cab398463c",
+      "id": "semantic::sem-and-fib-powder::e5::882edeaba4",
       "workflow_id": "sem-and-fib-powder",
       "source": "sem-and-fib-powder::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material",
+      "target": "sem-and-fib-powder::n5",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e5",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -633,17 +645,17 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::sem-and-fib-powder::e6::fab3f11993",
+      "id": "semantic::sem-and-fib-powder::e6::f872a538e2",
       "workflow_id": "sem-and-fib-powder",
       "source": "projection::datapoint::sem-and-fib-powder::n3",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target": "sem-and-fib-powder::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "sem-and-fib-powder::e6",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint is typed by the source property anchor.",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     }
@@ -658,12 +670,14 @@
       "source_graphml_id": "n0",
       "source_label": "Catalyst powder",
       "source_semantic_role": "Matter",
+      "source_workflow_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
       "target_occurrence_id": "sem-and-fib-powder::n6",
       "target_node_id": "n6",
       "target_graphml_id": "n6",
       "target_label": "SEM and FIB (powder)",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -686,24 +700,26 @@
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n1",
       "target_node_id": "n1",
       "target_graphml_id": "n1",
       "target_label": "Catalyst morphology",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-morphology-material",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::sem-and-fib-powder::e1::47660c456b"
+        "semantic::sem-and-fib-powder::e1::b069e89213"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "sem-and-fib-powder::e2",
@@ -714,24 +730,26 @@
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n2",
       "target_node_id": "n2",
       "target_graphml_id": "n2",
       "target_label": "Catalyst elemental composition",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-elemental-composition-material",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::sem-and-fib-powder::e2::143eca708f"
+        "semantic::sem-and-fib-powder::e2::f405f15f13"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "sem-and-fib-powder::e3",
@@ -742,24 +760,26 @@
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n3",
       "target_node_id": "n3",
       "target_graphml_id": "n3",
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::sem-and-fib-powder::e3::80e2d9e35e"
+        "semantic::sem-and-fib-powder::e3::970f318cec"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "sem-and-fib-powder::e4",
@@ -770,24 +790,26 @@
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n4",
       "target_node_id": "n4",
       "target_graphml_id": "n4",
       "target_label": "Catalyst support particle diameter",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-particle-diameter-material",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::sem-and-fib-powder::e4::b725c346a5"
+        "semantic::sem-and-fib-powder::e4::010ef1473d"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "sem-and-fib-powder::e5",
@@ -798,24 +820,26 @@
       "source_graphml_id": "n6",
       "source_label": "SEM and FIB (powder)",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/sem-and-fib-powder-method",
       "target_occurrence_id": "sem-and-fib-powder::n5",
       "target_node_id": "n5",
       "target_graphml_id": "n5",
       "target_label": "Electrocatalyst structure",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrocatalyst-structure-material",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::sem-and-fib-powder::e5::cab398463c"
+        "semantic::sem-and-fib-powder::e5::882edeaba4"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "sem-and-fib-powder::e6",
@@ -826,12 +850,14 @@
       "source_graphml_id": "n3",
       "source_label": "Catalyst active particle diameter",
       "source_semantic_role": "Property",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
       "target_occurrence_id": "sem-and-fib-powder::n7",
       "target_node_id": "n7",
       "target_graphml_id": "n7",
       "target_label": "IET ink to composition model",
       "target_semantic_role": "Process",
+      "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
@@ -839,7 +865,7 @@
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
         "semantic::sem-and-fib-powder::e6::4c8abc5a25",
-        "semantic::sem-and-fib-powder::e6::fab3f11993"
+        "semantic::sem-and-fib-powder::e6::f872a538e2"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",

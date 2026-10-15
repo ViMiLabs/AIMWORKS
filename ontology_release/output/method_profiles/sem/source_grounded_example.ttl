@@ -216,7 +216,7 @@
 <https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "SEM-derived catalyst particle diameter datapoint"@en ;
-  h2kg:ofProperty h2kg:CatalystParticleDiameter ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/sem#sem-measurement-001> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/sem#manual-particle-measurement-step> ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint-metadata> ;
@@ -227,9 +227,9 @@
   rdfs:comment "Worksheet target label: Average size."@en, "No numeric amount target value was provided in the SEM source sheet."@en .
 
 <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting>
-  a h2kg:Parameter, h2kg:AcceleratingVoltage ;
+  a h2kg:Parameter ;
   rdfs:label "SEM accelerating-voltage setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-qv>
   a qudt:QuantityValue ;
@@ -238,9 +238,9 @@
   qudt:quantityKind quantitykind:ElectricPotential .
 
 <https://w3id.org/h2kg/examples/sem#magnification-setting>
-  a h2kg:Parameter, h2kg:Magnification ;
+  a h2kg:Parameter ;
   rdfs:label "SEM magnification setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#magnification-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#magnification-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#magnification-setting-qv>
   a qudt:QuantityValue ;
@@ -249,9 +249,9 @@
   qudt:quantityKind quantitykind:Dimensionless .
 
 <https://w3id.org/h2kg/examples/sem#working-distance-setting>
-  a h2kg:Parameter, h2kg:WorkingDistance ;
+  a h2kg:Parameter ;
   rdfs:label "SEM working-distance setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#working-distance-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#working-distance-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#working-distance-setting-qv>
   a qudt:QuantityValue ;
@@ -260,9 +260,9 @@
   qudt:quantityKind quantitykind:Length .
 
 <https://w3id.org/h2kg/examples/sem#temperature-setting>
-  a h2kg:Parameter, h2kg:Temperature ;
+  a h2kg:Parameter ;
   rdfs:label "SEM acquisition temperature setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#temperature-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#temperature-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#temperature-setting-qv>
   a qudt:QuantityValue ;
@@ -271,9 +271,9 @@
   qudt:quantityKind quantitykind:ThermodynamicTemperature .
 
 <https://w3id.org/h2kg/examples/sem#relative-humidity-setting>
-  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  a h2kg:Parameter ;
   rdfs:label "SEM acquisition relative-humidity setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#relative-humidity-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#relative-humidity-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#relative-humidity-setting-qv>
   a qudt:QuantityValue ;
@@ -282,9 +282,9 @@
   qudt:quantityKind quantitykind:RelativeHumidity .
 
 <https://w3id.org/h2kg/examples/sem#drying-temperature-setting>
-  a h2kg:Parameter, h2kg:DryingTemperature ;
+  a h2kg:Parameter ;
   rdfs:label "Drying temperature setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-temperature-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#drying-temperature-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#drying-temperature-setting-qv>
   a qudt:QuantityValue ;
@@ -293,9 +293,9 @@
   qudt:quantityKind quantitykind:ThermodynamicTemperature .
 
 <https://w3id.org/h2kg/examples/sem#drying-time-setting>
-  a h2kg:Parameter, h2kg:DryingTime ;
+  a h2kg:Parameter ;
   rdfs:label "Drying time setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-time-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/sem#drying-time-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/sem#drying-time-setting-qv>
   a qudt:QuantityValue ;
@@ -306,3 +306,50 @@
 <https://w3id.org/h2kg/examples/sem#sem-acquisition-metadata>
   a h2kg:Metadata ;
   rdfs:comment "Measurement type: ex-situ; specimen: homogeneous powder; atmosphere: air."@en, "Pressure metadata: 1 atm; calibration notes: adjusting lenses and apertures / adjusting the voltage."@en .
+
+<https://w3id.org/h2kg/examples/sem#catalyst-particle-diameter-datapoint-property-occurrence>
+  a h2kg:CatalystParticleDiameter ;
+  rdfs:label "SEM-derived catalyst particle diameter datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en .
+
+<https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-property-occurrence>
+  a h2kg:AcceleratingVoltage ;
+  rdfs:label "SEM accelerating-voltage setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#accelerating-voltage-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#magnification-setting-property-occurrence>
+  a h2kg:Magnification ;
+  rdfs:label "SEM magnification setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#working-distance-setting-property-occurrence>
+  a h2kg:WorkingDistance ;
+  rdfs:label "SEM working-distance setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#working-distance-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#temperature-setting-property-occurrence>
+  a h2kg:Temperature ;
+  rdfs:label "SEM acquisition temperature setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#relative-humidity-setting-property-occurrence>
+  a h2kg:RelativeHumidity ;
+  rdfs:label "SEM acquisition relative-humidity setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#drying-temperature-setting-property-occurrence>
+  a h2kg:DryingTemperature ;
+  rdfs:label "Drying temperature setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/sem#drying-time-setting-property-occurrence>
+  a h2kg:DryingTime ;
+  rdfs:label "Drying time setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/sem#drying-time-setting-qv> .

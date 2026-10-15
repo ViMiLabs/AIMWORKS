@@ -15,6 +15,8 @@ from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree as ET
 
+from rdflib import Graph
+
 from .itc_pilot import validate_review_registry
 from .utils import COMMON_CONTEXT, dump_json, ensure_dir, load_json, write_text
 
@@ -224,19 +226,34 @@ def _index_variables(
             record["label"] = expert["preferred_label"]
             record["reported_unit"] = expert["reported_unit"]
             record["value_shape"] = expert["value_shape"]
-            record["semantic_role"] = expert["semantic_role"]
+            record["semantic_role"] = "Property" if expert["semantic_role"] in {"Parameter", "Property"} else "Data"
+            if expert["semantic_role"] == "Parameter":
+                record["workflow_role"] = "Parameter"
+            elif expert["direction"] == "input" and record["semantic_role"] == "Property":
+                record["workflow_role"] = "InputDataPoint"
+            elif expert["direction"] == "output" and record["semantic_role"] == "Property":
+                record["workflow_role"] = "OutputDataPoint"
+            else:
+                record["workflow_role"] = "Data"
             record["anchor_iri"] = H2KG + expert["h2kg_local_name"]
             record["definition"] = expert["definition"]
             record["notation"] = expert["notation"]
             record["mapping_state"] = "approved_h2kg"
             record["decision"] = expert["decision"]
         else:
-            record["semantic_role"] = "Data" if record["is_model_output"] or record["value_shape"] == "array" else "Parameter"
+            record["semantic_role"] = "Data" if record["value_shape"] == "array" else "Property"
+            record["workflow_role"] = (
+                "Data"
+                if record["semantic_role"] == "Data"
+                else "OutputDataPoint"
+                if record["is_model_output"]
+                else "Parameter"
+            )
             record["anchor_iri"] = f"{DECODE_NS}interface/variable/{record['io_id']}"
             record["mapping_state"] = "reviewed_decode"
             record["decision"] = "reviewed_decode_anchor"
         record["canonical_role_iri"] = H2KG + record["semantic_role"]
-        record["rdf_type"] = H2KG + ("Data" if record["value_shape"] == "array" else ("DataPoint" if record["is_model_output"] else "Parameter"))
+        record["rdf_type"] = H2KG + "Data" if record["semantic_role"] == "Data" else record["anchor_iri"]
         record["iri"] = f"{WORKFLOW_IRI}/variable/{record['io_id']}"
         record["property_iri"] = f"{WORKFLOW_IRI}/property/{record['io_id']}"
     return indexed
@@ -332,6 +349,7 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
                 "decision": record["decision"],
                 "canonical_role_iri": record["canonical_role_iri"],
                 "semantic_role": record["semantic_role"],
+                "workflow_role": record["workflow_role"],
                 "confidence": "expert_reviewed" if record["mapping_state"] == "approved_h2kg" else "reviewed_pdf_schema",
                 "mapping_evidence": "Expert-reviewed ITC field mapped to a public H2KG anchor." if record["mapping_state"] == "approved_h2kg" else "PDF-defined interface field retained as a reviewed DECODE anchor pending a term-specific H2KG vocabulary decision.",
             }
@@ -356,7 +374,11 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
         for occurrence in record["occurrences"]:
             stage = str(occurrence["stage"])
             if occurrence["direction"] == "input":
-                predicate = H2KG + ("hasInputData" if record["semantic_role"] == "Data" else "hasParameter")
+                predicate = H2KG + (
+                    "hasParameter"
+                    if record["workflow_role"] == "Parameter"
+                    else "hasInputData"
+                )
                 source, target = record["node_id"], model_ids[stage]
             else:
                 predicate = H2KG + "hasOutputData"
@@ -496,22 +518,51 @@ def _jsonld_document(manifest: dict[str, Any], variables: dict[str, dict[str, An
     ]
     model_iris = {stage: f"{WORKFLOW_IRI}/model/{stage.lower()}" for stage in STAGES}
     for stage, details in STAGES.items():
-        model = {"@id": model_iris[stage], "@type": ["h2kg:Process", "prov:Activity"], "rdfs:label": details["label"]}
+        model = {
+            "@id": model_iris[stage],
+            "@type": ["h2kg:InkToCompositionModel" if stage == "ITC" else "h2kg:Process", "prov:Activity"],
+            "rdfs:label": details["label"],
+        }
         inputs = [row for row in manifest["variables"] if row["stage"] == stage and row["direction"] == "input"]
         outputs = [row for row in manifest["variables"] if row["stage"] == stage and row["direction"] == "output"]
-        parameter_iris = [variables[row["io_id"]]["iri"] for row in inputs if variables[row["io_id"]]["semantic_role"] == "Parameter"]
-        input_data_iris = [variables[row["io_id"]]["iri"] for row in inputs if variables[row["io_id"]]["semantic_role"] == "Data"]
+        parameter_iris: list[str] = []
+        input_data_iris: list[str] = []
+        output_data_iris: list[str] = []
+        record_items: list[dict[str, Any]] = []
+        for row in inputs:
+            record = variables[row["io_id"]]
+            if record["semantic_role"] == "Data":
+                input_data_iris.append(record["iri"])
+            elif record["workflow_role"] == "Parameter":
+                record_iri = _workflow_record_iri(record, stage, "parameter")
+                parameter_iris.append(record_iri)
+                record_items.append(_value_record(record_iri, "Parameter", record, stage, "input"))
+            else:
+                record_iri = _workflow_record_iri(record, stage, "input-data-point")
+                input_data_iris.append(record_iri)
+                record_items.append(_value_record(record_iri, "DataPoint", record, stage, "input"))
+        for row in outputs:
+            record = variables[row["io_id"]]
+            if record["semantic_role"] == "Data":
+                output_data_iris.append(record["iri"])
+            else:
+                record_iri = _workflow_record_iri(record, stage, "output-data-point")
+                output_data_iris.append(record_iri)
+                value_record = _value_record(record_iri, "DataPoint", record, stage, "output")
+                value_record["prov:wasGeneratedBy"] = [{"@id": model_iris[stage]}]
+                record_items.append(value_record)
         if parameter_iris:
-            model["h2kg:hasParameter"] = parameter_iris
+            model["h2kg:hasParameter"] = [{"@id": iri} for iri in parameter_iris]
         if input_data_iris:
-            model["h2kg:hasInputData"] = input_data_iris
-        if outputs:
-            model["h2kg:hasOutputData"] = [variables[row["io_id"]]["iri"] for row in outputs]
+            model["h2kg:hasInputData"] = [{"@id": iri} for iri in input_data_iris]
+        if output_data_iris:
+            model["h2kg:hasOutputData"] = [{"@id": iri} for iri in output_data_iris]
         graph.append(model)
+        graph.extend(record_items)
     for record in variables.values():
         entry: dict[str, Any] = {
             "@id": record["iri"],
-            "@type": [_compact_iri(record["rdf_type"])],
+            "@type": [record["anchor_iri"]],
             "rdfs:label": record["label"],
             "skos:definition": f"PDF-defined interface field {record['io_id']} for the DECODE IET multiscale model chain.",
             "dcterms:identifier": record["io_id"],
@@ -521,18 +572,15 @@ def _jsonld_document(manifest: dict[str, Any], variables: dict[str, dict[str, An
         }
         qudt_unit = SAFE_QUDT_UNITS.get(record["reported_unit"])
         if qudt_unit:
-            entry["qudt:unit"] = qudt_unit
-        generated_by = [model_iris[row["stage"]] for row in record["occurrences"] if row["direction"] == "output"]
-        if generated_by:
-            entry["prov:wasGeneratedBy"] = generated_by
-        if record["rdf_type"] == H2KG + "DataPoint":
-            entry["h2kg:ofProperty"] = record["property_iri"]
+            entry["decode:expectedUnit"] = [{"@id": qudt_unit}]
+        if record["mapping_state"] == "reviewed_decode":
             graph.append(
                 {
-                    "@id": record["property_iri"],
-                    "@type": ["h2kg:Property"],
+                    "@id": record["anchor_iri"],
+                    "@type": ["owl:Class"],
+                    "rdfs:subClassOf": [{"@id": H2KG + record["semantic_role"]}],
                     "rdfs:label": record["label"],
-                    "skos:definition": f"Property described by PDF interface variable {record['io_id']}.",
+                    "skos:definition": f"Reviewed DECODE interface concept for PDF variable {record['io_id']}.",
                     "decode:reviewStatus": "pending reusable H2KG vocabulary decision",
                 }
             )
@@ -541,50 +589,30 @@ def _jsonld_document(manifest: dict[str, Any], variables: dict[str, dict[str, An
 
 
 def _turtle_document(manifest: dict[str, Any], variables: dict[str, dict[str, Any]], fragment: dict[str, Any]) -> str:
-    lines = [
-        "@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .",
-        "@prefix decode: <https://w3id.org/h2kg/decode/workflow/> .",
-        "@prefix prov: <http://www.w3.org/ns/prov#> .",
-        "@prefix qudt: <http://qudt.org/schema/qudt/> .",
-        "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
-        "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .",
-        "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .",
-        "@prefix dcterms: <http://purl.org/dc/terms/> .",
-        "",
-        f"<{WORKFLOW_IRI}> a prov:Bundle ;",
-        '  rdfs:label "IET multiscale model interface (PDF-derived schema)" ;',
-        '  dcterms:description "Value-free DECODE extraction schema; it does not assert the PDF baseline values." .',
-        "",
-    ]
-    model_iris = {stage: f"{WORKFLOW_IRI}/model/{stage.lower()}" for stage in STAGES}
-    for stage, details in STAGES.items():
-        inputs = [row for row in manifest["variables"] if row["stage"] == stage and row["direction"] == "input"]
-        outputs = [row for row in manifest["variables"] if row["stage"] == stage and row["direction"] == "output"]
-        lines.extend([f"<{model_iris[stage]}> a h2kg:Process, prov:Activity ;", f'  rdfs:label "{_ttl(details["label"])}" ;'])
-        parameter_iris = [variables[row["io_id"]]["iri"] for row in inputs if variables[row["io_id"]]["semantic_role"] == "Parameter"]
-        input_data_iris = [variables[row["io_id"]]["iri"] for row in inputs if variables[row["io_id"]]["semantic_role"] == "Data"]
-        predicates: list[tuple[str, list[str]]] = [("h2kg:hasParameter", parameter_iris), ("h2kg:hasInputData", input_data_iris), ("h2kg:hasOutputData", [variables[row["io_id"]]["iri"] for row in outputs])]
-        predicates = [(predicate, values) for predicate, values in predicates if values]
-        for index, (predicate, values) in enumerate(predicates):
-            separator = " ;" if index < len(predicates) - 1 else " ."
-            lines.append(f"  {predicate} " + ", ".join(f"<{value}>" for value in values) + separator)
-        if not predicates:
-            lines[-1] = lines[-1].rstrip(" ;") + " ."
-        lines.append("")
-    for record in variables.values():
-        statements = [f"a {_compact_iri(record['rdf_type'])}", f'rdfs:label "{_ttl(record["label"])}"', f'dcterms:identifier "{_ttl(record["io_id"])}"', f'decode:expectedValueShape "{_ttl(record["value_shape"])}"', f'decode:reportedUnit "{_ttl(record["reported_unit"])}"']
-        unit = SAFE_QUDT_UNITS.get(record["reported_unit"])
-        if unit:
-            statements.append(f"qudt:unit <{unit}>")
-        if record["rdf_type"] == H2KG + "DataPoint":
-            statements.append(f"h2kg:ofProperty <{record['property_iri']}>")
-        generated_by = [model_iris[row["stage"]] for row in record["occurrences"] if row["direction"] == "output"]
-        if generated_by:
-            statements.append("prov:wasGeneratedBy " + ", ".join(f"<{value}>" for value in generated_by))
-        lines.append(f"<{record['iri']}> " + " ;\n  ".join(statements) + " .\n")
-        if record["rdf_type"] == H2KG + "DataPoint":
-            lines.extend([f"<{record['property_iri']}> a h2kg:Property ;", f'  rdfs:label "{_ttl(record["label"])}" ;', f'  skos:definition "Property described by PDF interface variable {record["io_id"]}." .', ""])
-    return "\n".join(lines)
+    document = _jsonld_document(manifest, variables, fragment)
+    rdf_graph = Graph().parse(data=json.dumps(document), format="json-ld")
+    return str(rdf_graph.serialize(format="turtle"))
+
+
+def _workflow_record_iri(record: dict[str, Any], stage: str, kind: str) -> str:
+    return f"{WORKFLOW_IRI}/{kind}/{stage.lower()}/{record['io_id']}"
+
+
+def _value_record(
+    iri: str,
+    role: str,
+    record: dict[str, Any],
+    stage: str,
+    direction: str,
+) -> dict[str, Any]:
+    return {
+        "@id": iri,
+        "@type": [f"h2kg:{role}"],
+        "rdfs:label": f"{record['label']} {role.lower()} record for {stage}",
+        "h2kg:ofProperty": [{"@id": record["iri"]}],
+        "decode:sourceVariableId": record["io_id"],
+        "decode:workflowRole": direction,
+    }
 
 
 def _shacl_shapes() -> str:
@@ -593,9 +621,9 @@ def _shacl_shapes() -> str:
 @prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
 
 decode:ModelInputParameterShape a sh:NodeShape ;
-  sh:targetClass h2kg:Parameter ;
-  sh:property [ sh:path decode:expectedValueShape ; sh:minCount 1 ] ;
-  sh:property [ sh:path decode:reportedUnit ; sh:minCount 1 ] .
+  sh:targetObjectsOf h2kg:hasParameter ;
+  sh:class h2kg:Parameter ;
+  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:class h2kg:Property ] .
 
 decode:ModelOutputDataShape a sh:NodeShape ;
   sh:targetClass h2kg:Data ;
@@ -603,7 +631,7 @@ decode:ModelOutputDataShape a sh:NodeShape ;
 
 decode:ModelOutputDataPointShape a sh:NodeShape ;
   sh:targetClass h2kg:DataPoint ;
-  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ] .
+  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:class h2kg:Property ] .
 """
 
 

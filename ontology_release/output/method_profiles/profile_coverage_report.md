@@ -7,7 +7,7 @@
 | FIB-SEM tomography | source_grounded | True | required |
 | Ion-cut scanning electron microscopy | source_grounded | True | required |
 | Atomic force microscopy | source_grounded | True | required |
-| Neutron tomography | source_grounded | False | required |
+| Neutron tomography | source_grounded | True | required |
 | Synchrotron X-ray tomography | source_grounded | True | deferred |
 | X-ray diffraction | source_grounded | True | required |
 | X-ray photoelectron spectroscopy | illustrative_existing_pilot | True | required |

@@ -40,9 +40,11 @@
       "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "component_category_default",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "unreviewed",
-      "mapping_evidence": "Reviewed abbreviation mapping to the established H2KG GDL anchor."
+      "mapping_evidence": "Reviewed abbreviation mapping to the established H2KG GDL anchor.",
+      "workflow_role": "Matter",
+      "intrinsic_semantic_role": "Matter"
     },
     {
       "id": "wilhelmy-wettability-measurement::n1",
@@ -62,7 +64,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "wilhelmy-wettability-measurement::n2",
@@ -82,7 +85,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "wilhelmy-wettability-measurement::n3",
@@ -102,7 +106,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "wilhelmy-wettability-measurement::n4",
@@ -122,7 +127,8 @@
       "semantic_role": "Property",
       "role_assignment": "physical_or_derived_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "wilhelmy-wettability-measurement::n5",
@@ -142,7 +148,8 @@
       "semantic_role": "Measurement",
       "role_assignment": "method_visual_default",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Measurement"
     },
     {
       "id": "wilhelmy-wettability-measurement::n6",
@@ -162,7 +169,8 @@
       "semantic_role": "Measurement",
       "role_assignment": "method_visual_default",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Measurement"
     },
     {
       "id": "wilhelmy-wettability-measurement::n7",
@@ -182,7 +190,8 @@
       "semantic_role": "Manufacturing",
       "role_assignment": "physical_manufacturing_workflow",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Manufacturing"
     }
   ],
   "projection_nodes": [],
@@ -525,47 +534,47 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e1::1335e3ad20",
+      "id": "semantic::wilhelmy-wettability-measurement::e1::0724ddb0ce",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/contact-angle-probe-liquid-s-material",
+      "target": "wilhelmy-wettability-measurement::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e1",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e2::8dd37ef900",
+      "id": "semantic::wilhelmy-wettability-measurement::e2::d43e7d0701",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-external-contact-angle-component",
+      "target": "wilhelmy-wettability-measurement::n2",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e2",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e3::0578e26d68",
+      "id": "semantic::wilhelmy-wettability-measurement::e3::9d55430284",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n5",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-external-contact-angle-component",
+      "target": "wilhelmy-wettability-measurement::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e3",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -585,47 +594,47 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e5::5d56473457",
+      "id": "semantic::wilhelmy-wettability-measurement::e5::707d33eaa8",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component",
+      "target": "wilhelmy-wettability-measurement::n4",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e5",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e6::5ae84d6799",
+      "id": "semantic::wilhelmy-wettability-measurement::e6::4ae8c64e83",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/contact-angle-probe-liquid-s-material",
+      "target": "wilhelmy-wettability-measurement::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e6",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::wilhelmy-wettability-measurement::e7::aedfc99ae0",
+      "id": "semantic::wilhelmy-wettability-measurement::e7::0c68d5781a",
       "workflow_id": "wilhelmy-wettability-measurement",
       "source": "wilhelmy-wettability-measurement::n6",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-external-contact-angle-component",
+      "target": "wilhelmy-wettability-measurement::n2",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "wilhelmy-wettability-measurement::e7",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     }
@@ -640,12 +649,14 @@
       "source_graphml_id": "n0",
       "source_label": "GDL",
       "source_semantic_role": "Matter",
+      "source_workflow_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n5",
       "target_node_id": "n5",
       "target_graphml_id": "n5",
       "target_label": "Wilhelmy wettability measurement",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -668,24 +679,26 @@
       "source_graphml_id": "n1",
       "source_label": "Contact angle probe liquid(s)",
       "source_semantic_role": "Property",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-angle-probe-liquid-s-material",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n5",
       "target_node_id": "n5",
       "target_graphml_id": "n5",
       "target_label": "Wilhelmy wettability measurement",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e1::1335e3ad20"
+        "semantic::wilhelmy-wettability-measurement::e1::0724ddb0ce"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "wilhelmy-wettability-measurement::e2",
@@ -696,24 +709,26 @@
       "source_graphml_id": "n5",
       "source_label": "Wilhelmy wettability measurement",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n2",
       "target_node_id": "n2",
       "target_graphml_id": "n2",
       "target_label": "GDL substrate external contact angle",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-external-contact-angle-component",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e2::8dd37ef900"
+        "semantic::wilhelmy-wettability-measurement::e2::d43e7d0701"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "wilhelmy-wettability-measurement::e3",
@@ -724,24 +739,26 @@
       "source_graphml_id": "n5",
       "source_label": "Wilhelmy wettability measurement",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n3",
       "target_node_id": "n3",
       "target_graphml_id": "n3",
       "target_label": "MPL external contact angle",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-external-contact-angle-component",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e3::0578e26d68"
+        "semantic::wilhelmy-wettability-measurement::e3::9d55430284"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "wilhelmy-wettability-measurement::e4",
@@ -752,12 +769,14 @@
       "source_graphml_id": "n7",
       "source_label": "Impregnation by immersion and blade coating",
       "source_semantic_role": "Manufacturing",
+      "source_workflow_role": "Manufacturing",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/impregnation-by-immersion-and-blade-coating-process",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n0",
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "GDL",
       "target_semantic_role": "Matter",
+      "target_workflow_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -780,24 +799,26 @@
       "source_graphml_id": "n4",
       "source_label": "GDL substrate",
       "source_semantic_role": "Property",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-component",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n6",
       "target_node_id": "n6",
       "target_graphml_id": "n6",
       "target_label": "Wilhelmy wettability measurement",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e5::5d56473457"
+        "semantic::wilhelmy-wettability-measurement::e5::707d33eaa8"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "wilhelmy-wettability-measurement::e6",
@@ -808,24 +829,26 @@
       "source_graphml_id": "n1",
       "source_label": "Contact angle probe liquid(s)",
       "source_semantic_role": "Property",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/contact-angle-probe-liquid-s-material",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n6",
       "target_node_id": "n6",
       "target_graphml_id": "n6",
       "target_label": "Wilhelmy wettability measurement",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e6::5ae84d6799"
+        "semantic::wilhelmy-wettability-measurement::e6::4ae8c64e83"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "wilhelmy-wettability-measurement::e7",
@@ -836,24 +859,26 @@
       "source_graphml_id": "n6",
       "source_label": "Wilhelmy wettability measurement",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/wilhelmy-wettability-measurement-method",
       "target_occurrence_id": "wilhelmy-wettability-measurement::n2",
       "target_node_id": "n2",
       "target_graphml_id": "n2",
       "target_label": "GDL substrate external contact angle",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-external-contact-angle-component",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::wilhelmy-wettability-measurement::e7::aedfc99ae0"
+        "semantic::wilhelmy-wettability-measurement::e7::0c68d5781a"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     }
   ],
   "workflow_dependencies": [

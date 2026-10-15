@@ -23,12 +23,43 @@ def test_method_profiles_generate_and_classify_existing_examples(tmp_path):
     coverage = json.loads((tmp_path / "output" / "method_profiles" / "profile_coverage_report.json").read_text(encoding="utf-8"))
     assert len(coverage["profiles"]) == 9
     assert all(row["status"] == "generated" for row in coverage["profiles"])
-    assert all(row["shacl_conforms"] for row in coverage["profiles"] if row["method_profile"] != "neutron_tomography")
+    assert all(row["shacl_conforms"] for row in coverage["profiles"])
     neutron = next(row for row in coverage["profiles"] if row["method_profile"] == "neutron_tomography")
-    assert neutron["shacl_conforms"] is False
-    report = (tmp_path / "output" / "method_profiles" / "neutron_tomography" / "validation_report.json").read_text(encoding="utf-8")
-    assert "neutron-flux-setting-qv" in report
-    assert "quantityKind" in report
+    assert neutron["shacl_conforms"] is True
+    assert neutron["curation_finding_count"] == 1
+    report = json.loads(
+        (tmp_path / "output" / "method_profiles" / "neutron_tomography" / "validation_report.json").read_text(encoding="utf-8")
+    )
+    assert report["curation_findings"] == [
+        {
+            "code": "reported-unit-awaits-qudt-mapping",
+            "field": "NeutronFlux",
+            "severity": "curation_required",
+            "treatment": (
+                "The reported numeric value 2700000 and source unit token n/cm2s "
+                "are retained as Metadata; no QuantityValue is asserted until exact "
+                "QUDT unit and quantity-kind mappings are approved."
+            ),
+        }
+    ]
+    neutron_graph = Graph().parse(
+        tmp_path / "output" / "method_profiles" / "neutron_tomography" / "source_grounded_example.ttl",
+        format="turtle",
+    )
+    record = next(
+        item
+        for item in neutron_graph.subjects(RDF.type, H2KG.Parameter)
+        if (next(neutron_graph.objects(item, H2KG.ofProperty), None), RDF.type, H2KG.NeutronFlux) in neutron_graph
+    )
+    occurrence = next(neutron_graph.objects(record, H2KG.ofProperty))
+    assert list(neutron_graph.objects(occurrence, H2KG.hasQuantityValue)) == []
+    metadata_text = " ".join(
+        str(value)
+        for metadata in neutron_graph.objects(record, H2KG.hasMetadata)
+        for _, value in neutron_graph.predicate_objects(metadata)
+    )
+    assert "2700000" in metadata_text
+    assert "n/cm2s" in metadata_text
     assert "illustrative_existing_pilot" in (tmp_path / "output" / "method_profiles" / "xps" / "README.md").read_text(encoding="utf-8")
 
 
@@ -57,17 +88,42 @@ def test_tem_profile_rejects_incompatible_measurement_and_result_chain(tmp_path)
     assert validate_method_profile_graph(shapes, invalid)["conforms"] is False
 
     graph = Graph().parse(source, format="turtle")
-    result = next(graph.subjects(H2KG.ofProperty, H2KG.PdNanoparticleDiameter))
-    graph.remove((result, H2KG.ofProperty, H2KG.PdNanoparticleDiameter))
-    graph.add((result, H2KG.ofProperty, URIRef("https://example.org/unsupported-property")))
+    result = next(graph.subjects(RDF.type, H2KG.DataPoint))
+    property_occurrence = next(graph.objects(result, H2KG.ofProperty))
+    assert (property_occurrence, RDF.type, H2KG.PdNanoparticleDiameter) in graph
+    graph.remove((property_occurrence, RDF.type, H2KG.PdNanoparticleDiameter))
+    graph.add((property_occurrence, RDF.type, URIRef("https://example.org/unsupported-property")))
     graph.serialize(destination=str(invalid), format="turtle")
     assert validate_method_profile_graph(shapes, invalid)["conforms"] is False
 
     graph = Graph().parse(source, format="turtle")
-    quantity_value = next(graph.objects(result, H2KG.hasQuantityValue))
+    result = next(graph.subjects(RDF.type, H2KG.DataPoint))
+    property_occurrence = next(graph.objects(result, H2KG.ofProperty))
+    quantity_value = next(graph.objects(property_occurrence, H2KG.hasQuantityValue))
     graph.remove((quantity_value, QUDT.unit, None))
     graph.serialize(destination=str(invalid), format="turtle")
     assert validate_method_profile_graph(shapes, invalid)["conforms"] is False
+
+
+def test_tem_profile_separates_parameter_records_from_properties(tmp_path):
+    build_method_data_profiles(
+        ROOT / "input" / "current_ontology.jsonld",
+        tmp_path / "output",
+        ROOT / "output" / "examples",
+    )
+    graph = Graph().parse(
+        tmp_path / "output" / "method_profiles" / "tem" / "source_grounded_example.ttl",
+        format="turtle",
+    )
+    measurement = next(graph.subjects(RDF.type, H2KG.TransmissionElectronMicroscopyImaging))
+    records = list(graph.objects(measurement, H2KG.hasParameter))
+    assert records
+    for record in records:
+        assert (record, RDF.type, H2KG.Parameter) in graph
+        occurrence = next(graph.objects(record, H2KG.ofProperty))
+        occurrence_types = set(graph.objects(occurrence, RDF.type))
+        assert H2KG.Parameter not in occurrence_types
+        assert occurrence_types
 
 
 def test_sem_profile_allows_explicitly_unreported_result(tmp_path):

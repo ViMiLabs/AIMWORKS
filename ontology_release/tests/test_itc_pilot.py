@@ -4,7 +4,7 @@ import json
 import shutil
 from pathlib import Path
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, RDF, URIRef
 
 from aimworks_ontology_release.decode_multiscale_interface import build_decode_multiscale_model_interface
 from aimworks_ontology_release.itc_pilot import (
@@ -38,8 +38,17 @@ def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
     assert package["validation"]["equivalent_rdf_statements"] is True
     graph = Graph().parse(Path(package["output_dir"]) / "itc_h2kg_profile.ttl", format="turtle")
     model = URIRef(H2KG + "InkToCompositionModel")
-    assert (model, URIRef(H2KG + "hasInputData"), URIRef(H2KG + "InkToCompositionModelInputDataset")) in graph
-    assert (model, URIRef(H2KG + "hasOutputData"), URIRef(H2KG + "CCLWaterRetentionCurveDataset")) in graph
+    assert (model, URIRef(H2KG + "hasInputData"), None) not in graph
+    assert (model, URIRef(H2KG + "hasOutputData"), None) not in graph
+    assert (model, URIRef(H2KG + "hasParameter"), None) not in graph
+    assert (URIRef(H2KG + "IonomerToCarbonRatio"), RDF.type, URIRef(H2KG + "Property")) in graph
+    assert (URIRef(H2KG + "IonomerToCarbonRatio"), RDF.type, URIRef(H2KG + "Parameter")) not in graph
+    shapes = Graph().parse(Path(package["output_dir"]) / "itc_h2kg_profile_shapes.ttl", format="turtle")
+    assert (
+        URIRef(H2KG + "InkToCompositionModelProfileShape"),
+        URIRef("http://www.w3.org/ns/shacl#targetClass"),
+        model,
+    ) in shapes
     assert (URIRef(H2KG + "PlatinumParticleRadius"), URIRef("http://www.w3.org/2004/02/skos/core#notation"), None) in graph
     serialized = (Path(package["output_dir"]) / "itc_h2kg_profile.jsonld").read_text(encoding="utf-8")
     assert "catalyst active particle diameter" not in serialized.lower()
@@ -62,7 +71,12 @@ def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Pa
     assert radius["mapping_override"]["anchor_iri"] == H2KG + "PlatinumParticleRadius"
     overlay = build_decode_itc_overlay(review)
     assert overlay["badge"] == "Expert-reviewed ITC profile"
-    assert len(overlay["edges"]) == 71
+    parameter_records = [node for node in overlay["nodes"] if node["semantic_role"] == "Parameter"]
+    parameter_edges = [edge for edge in overlay["edges"] if edge["predicate"] == H2KG + "hasParameter"]
+    property_edges = [edge for edge in overlay["edges"] if edge["predicate"] == H2KG + "ofProperty"]
+    assert len(parameter_records) == 16
+    assert len(parameter_edges) == 16
+    assert len(property_edges) >= 16
 
     interface = build_decode_multiscale_model_interface(
         root / "input" / "decode_multiscale_model_interface.json",

@@ -117,6 +117,79 @@ semantic_projections:
     assert validation["untraceable_semantic_edge_ids"] == []
 
 
+def test_h2kg_property_used_as_decode_parameter_is_reified_as_record(tmp_path: Path) -> None:
+    snapshot = tmp_path / "decode.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "workflows": [
+                    {
+                        "id": "model",
+                        "iri": "https://example.org/model",
+                        "title": "Model",
+                        "source_filename": "model.graphml",
+                        "source_sha256": "model",
+                        "method_family": "modeling",
+                        "nodes": [
+                            {"id": "model::n0", "source_id": "n0", "iri": "https://example.org/model/n0", "label": "Temperature", "native_category": "component", "description": "", "shape": "ellipse"},
+                            {"id": "model::n1", "source_id": "n1", "iri": "https://example.org/model/n1", "label": "Model method", "native_category": "model", "description": "", "shape": "hexagon"},
+                        ],
+                        "edges": [{"id": "model::e0", "source_id": "n0", "target_id": "n1", "source": "model::n0", "target": "model::n1", "description": ""}],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    config = tmp_path / "mappings.yaml"
+    config.write_text(
+        """mappings:
+  - source_label: Temperature
+    state: approved_h2kg
+    anchor_iri: https://w3id.org/h2kg/hydrogen-ontology#Temperature
+    anchor_label: Temperature
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
+    semantic_role: Parameter
+  - source_label: Model method
+    state: reviewed_decode
+    anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/model-method
+    anchor_label: Model method
+    canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
+    semantic_role: Process
+semantic_projections: []
+""",
+        encoding="utf-8",
+    )
+    registry_dir = tmp_path / "output" / "ontology"
+    registry_dir.mkdir(parents=True)
+    (registry_dir / "taxonomy_registry.json").write_text(
+        json.dumps(
+            {
+                "terms": [
+                    {
+                        "iri": "https://w3id.org/h2kg/hydrogen-ontology#Temperature",
+                        "disposition": "active_local_class",
+                        "corrected_semantic_role": "Characteristic",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = build_decode_workflow_release(snapshot, tmp_path / "output", config)
+    assert result["validation_status"] == "passed"
+    graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
+    temperature = next(node for node in graph["nodes"] if node["label"] == "Temperature")
+    assert temperature["semantic_role"] == "Property"
+    assert temperature["workflow_role"] == "Parameter"
+    parameter_record = next(node for node in graph["projection_nodes"] if node["kind"] == "parameter_record_proxy")
+    assert parameter_record["semantic_role"] == "Parameter"
+    predicates = {(edge["source"], edge["predicate"], edge["target"]) for edge in graph["semantic_edges"]}
+    assert ("model::n1", "https://w3id.org/h2kg/hydrogen-ontology#hasParameter", parameter_record["id"]) in predicates
+    assert (parameter_record["id"], "https://w3id.org/h2kg/hydrogen-ontology#ofProperty", temperature["id"]) in predicates
+
+
 def test_decode_registry_resolves_unmapped_concepts_to_reviewed_anchors(tmp_path: Path) -> None:
     snapshot = tmp_path / "decode.json"
     snapshot.write_text(
@@ -264,6 +337,9 @@ def test_all_decode_edges_receive_traceable_semantic_classification(tmp_path: Pa
     assert validation["status"] == "passed"
     assert validation["missing_edge_classifications"] == []
     assert validation["duplicated_edge_classifications"] == []
+    assert validation["invalid_of_property_edge_ids"] == []
+    assert validation["invalid_has_parameter_edge_ids"] == []
+    assert validation["invalid_measures_edge_ids"] == []
 
     fib_input = next(edge for edge in graph["semantic_edges"] if edge["source_dependency_id"] == "fib-sem-on-cl-material::e0")
     assert fib_input["predicate"].endswith("#hasInputMaterial")

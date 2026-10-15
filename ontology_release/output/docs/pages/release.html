@@ -14,7 +14,7 @@
         <div class="hero-copy">
           <p class="eyebrow">H2KG Ontology</p>
           <h1>Release</h1>
-          <p class="subtitle">Domain-expert-reviewed ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
+          <p class="subtitle">Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
         </div>
         <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
       </div>
@@ -66,15 +66,32 @@
     </section>
     <section class="stack">
       <article class="card">
+        <p class="eyebrow">H2KG 2.1</p>
+        <h2>Intrinsic taxonomy and contextual workflow use</h2>
+        <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
+        <p>The compatibility graph is retained only for migration and may contain legacy class-level workflow assertions. It does not drive canonical outputs or Explore.</p>
+        <div class="button-row">
+          <a class="inline-button" href="../ontology/h2kg-v2-complete.ttl" download>Complete TTL</a>
+          <a class="inline-button" href="../ontology/h2kg-v2-complete.jsonld" download>Complete JSON-LD</a>
+          <a class="inline-button" href="../ontology/h2kg-v2-workflow-profiles.ttl" download>Workflow profiles TTL</a>
+          <a class="inline-button" href="../ontology/h2kg-v2-workflow-profiles.jsonld" download>Workflow profiles JSON-LD</a>
+          <a class="inline-button" href="../ontology/semantic_role_audit.csv" download>Semantic-role audit</a>
+          <a class="inline-button" href="../ontology/relation_migration_registry.csv" download>Migration registry</a>
+          <a class="inline-button inline-button--ghost" href="../ontology/h2kg-v2-compatibility.ttl" download>Legacy compatibility TTL</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H2KG 2.0.0 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>265</strong> asserted mappings covering <strong>176</strong> H2KG classes and <strong>32</strong> external ontologies.</p>
+        <p>H2KG 2.1.0 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>268</strong> asserted mappings covering <strong>178</strong> H2KG classes and <strong>32</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> 3 TIB collections, 143 unique ontologies, 165 collection memberships</li>
-          <li><strong>TIB benchmark assertions:</strong> 254 (skos:broadMatch=96, skos:exactMatch=136, skos:narrowMatch=22)</li>
+          <li><strong>TIB benchmark assertions:</strong> 257 (skos:broadMatch=99, skos:exactMatch=136, skos:narrowMatch=22)</li>
           <li><strong>Reviewed foundational mappings:</strong> 11</li>
-          <li><strong>Asserted relations:</strong> rdfs:subClassOf=2, rdfs:subPropertyOf=1, skos:broadMatch=96, skos:exactMatch=144, skos:narrowMatch=22</li>
-          <li><strong>Principal benchmark ontologies:</strong> afo (36), chmo (33), voc4cat (28), kitmtxx (15), sio (15), emmo (13), bao (11), chebi (11)</li>
+          <li><strong>Asserted relations:</strong> rdfs:subClassOf=2, rdfs:subPropertyOf=1, skos:broadMatch=99, skos:exactMatch=144, skos:narrowMatch=22</li>
+          <li><strong>Principal benchmark ontologies:</strong> afo (36), chmo (33), voc4cat (28), sio (16), kitmtxx (15), emmo (14), bao (11), chebi (11)</li>
         </ul>
         <p><strong>Foundational dependencies and reused vocabularies</strong> such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
         <div class="button-row">
@@ -166,7 +183,7 @@
         </div>
       </section>
     
-      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 2.0.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 2.1.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
 </body>

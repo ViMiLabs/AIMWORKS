@@ -1,11 +1,20 @@
 @prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 h2kg:InkToCompositionModelProfileShape a sh:NodeShape ;
-  sh:targetNode h2kg:InkToCompositionModel ;
-  sh:property [ sh:path h2kg:hasParameter ; sh:minCount 16 ] ;
-  sh:property [ sh:path h2kg:hasInputData ; sh:hasValue h2kg:InkToCompositionModelInputDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:InkToCompositionModelScalarResultDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLWaterRetentionCurveDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLRefinedPoreSizeDistributionDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLContactAngleDistributionDataset ] .
+  sh:targetClass h2kg:InkToCompositionModel ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:minCount 16 ; sh:class h2kg:Parameter ] ;
+  sh:property [ sh:path h2kg:hasInputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:InkToCompositionModelInputDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:InkToCompositionModelScalarResultDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLWaterRetentionCurveDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLRefinedPoreSizeDistributionDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLContactAngleDistributionDataset ] ] .
+
+h2kg:InkToCompositionModelParameterRecordShape a sh:NodeShape ;
+  sh:targetObjectsOf h2kg:hasParameter ;
+  sh:class h2kg:Parameter ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( [ sh:class h2kg:PlatinumToCarbonMassRatio ] [ sh:class h2kg:IonomerToCarbonRatio ] [ sh:class h2kg:IonomerCatalystDispersionParameter ] [ sh:class h2kg:CCLPrimaryPoreVolumeFraction ] [ sh:class h2kg:CCLSecondaryPoreVolumeFraction ] [ sh:class h2kg:CCLPrimaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLSecondaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CarbonSupportInducedIonomerAlignmentDegree ] [ sh:class h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree ] [ sh:class h2kg:LimitingIonomerAlignmentDegree ] [ sh:class h2kg:IdealHydrophilicIonomerContactAngle ] [ sh:class h2kg:IdealHydrophobicIonomerContactAngle ] [ sh:class h2kg:InitialIonomerFilmThickness ] [ sh:class h2kg:EquivalentIonomerPatchRadius ] ) ]
+  ] .

@@ -233,9 +233,8 @@
 <https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "Tortuosity-factor datapoint"@en ;
-  h2kg:ofProperty h2kg:TortuosityFactor ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-qv> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
   dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
 
@@ -247,9 +246,8 @@
 <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "Average water droplet area datapoint"@en ;
-  h2kg:ofProperty h2kg:AverageWaterDropletArea ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-qv> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
   dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
 
@@ -262,9 +260,8 @@
 <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "Average water droplet count datapoint"@en ;
-  h2kg:ofProperty h2kg:AverageWaterDropletCount ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/neutron-tomo#neutron-measurement-001> ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-qv> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/neutron-tomo#analysis-step> ;
   dcterms:source <https://w3id.org/h2kg/examples/neutron-tomo#publication-record> .
 
@@ -274,9 +271,9 @@
   qudt:quantityKind quantitykind:Count .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting>
-  a h2kg:Parameter, h2kg:PixelSize ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography pixel-size setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-qv>
   a qudt:QuantityValue ;
@@ -285,9 +282,9 @@
   qudt:quantityKind quantitykind:Length .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting>
-  a h2kg:Parameter, h2kg:ExposureTime ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography exposure-time setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-qv>
   a qudt:QuantityValue ;
@@ -296,9 +293,9 @@
   qudt:quantityKind quantitykind:Time .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting>
-  a h2kg:Parameter, h2kg:ProjectionNumber ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography projection-number setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-qv>
   a qudt:QuantityValue ;
@@ -306,23 +303,19 @@
   qudt:quantityKind quantitykind:Count .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting>
-  a h2kg:Parameter, h2kg:NeutronFlux ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron flux setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv> ;
-  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-metadata> .
-
-<https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv>
-  a qudt:QuantityValue ;
-  qudt:numericValue "2700000"^^xsd:decimal .
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-metadata> ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-metadata>
   a h2kg:Metadata ;
-  rdfs:comment "Sheet unit retained as metadata in round 1: n/cm2s. Exact QUDT specialization is deferred."@en .
+  rdfs:comment "Reported neutron flux retained as metadata: numeric value 2700000; source unit token n/cm2s. No h2kg:hasQuantityValue is asserted because exact QUDT unit and quantity-kind mappings are deferred."@en .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting>
-  a h2kg:Parameter, h2kg:SpatialResolution ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography spatial-resolution setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-qv>
   a qudt:QuantityValue ;
@@ -331,9 +324,9 @@
   qudt:quantityKind quantitykind:Length .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting>
-  a h2kg:Parameter, h2kg:SampleDetectorDistance ;
+  a h2kg:Parameter ;
   rdfs:label "Sample-detector-distance setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-qv>
   a qudt:QuantityValue ;
@@ -342,9 +335,9 @@
   qudt:quantityKind quantitykind:Length .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting>
-  a h2kg:Parameter, h2kg:Temperature ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography acquisition temperature setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-qv>
   a qudt:QuantityValue ;
@@ -353,9 +346,9 @@
   qudt:quantityKind quantitykind:ThermodynamicTemperature .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting>
-  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  a h2kg:Parameter ;
   rdfs:label "Neutron tomography acquisition relative-humidity setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-qv>
   a qudt:QuantityValue ;
@@ -366,3 +359,68 @@
 <https://w3id.org/h2kg/examples/neutron-tomo#neutron-acquisition-metadata>
   a h2kg:Metadata ;
   rdfs:comment "Measurement type: operando; specimen: bulk material."@en, "Atmosphere: air; pressure: 1 atm."@en, "Calibration note: adjusting lenses and apertures; adjusting the voltage."@en, "Additional sheet metadata retained locally: beam size = 30 cm2; L/D value = 500; field of view = 26 mm2; data acquisition rate = 36 s."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-datapoint-property-occurrence>
+  a h2kg:TortuosityFactor ;
+  rdfs:label "Tortuosity-factor datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#tortuosity-factor-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-datapoint-property-occurrence>
+  a h2kg:AverageWaterDropletArea ;
+  rdfs:label "Average water droplet area datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-area-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-datapoint-property-occurrence>
+  a h2kg:AverageWaterDropletCount ;
+  rdfs:label "Average water droplet count datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#average-water-droplet-count-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-property-occurrence>
+  a h2kg:PixelSize ;
+  rdfs:label "Neutron tomography pixel-size setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#pixel-size-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-property-occurrence>
+  a h2kg:ExposureTime ;
+  rdfs:label "Neutron tomography exposure-time setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#exposure-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-property-occurrence>
+  a h2kg:ProjectionNumber ;
+  rdfs:label "Neutron tomography projection-number setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#projection-number-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-property-occurrence>
+  a h2kg:NeutronFlux ;
+  rdfs:label "Neutron flux setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-property-occurrence>
+  a h2kg:SpatialResolution ;
+  rdfs:label "Neutron tomography spatial-resolution setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#spatial-resolution-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-property-occurrence>
+  a h2kg:SampleDetectorDistance ;
+  rdfs:label "Sample-detector-distance setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#sample-detector-distance-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-property-occurrence>
+  a h2kg:Temperature ;
+  rdfs:label "Neutron tomography acquisition temperature setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-property-occurrence>
+  a h2kg:RelativeHumidity ;
+  rdfs:label "Neutron tomography acquisition relative-humidity setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/neutron-tomo#relative-humidity-setting-qv> .

@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from copy import deepcopy
 from datetime import date, datetime, timezone
 from html import escape
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urlsplit
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 SRC_ROOT = Path(__file__).resolve().parents[1]
@@ -58,6 +60,25 @@ QUDT_NUMERIC_VALUE = "http://qudt.org/schema/qudt/numericValue"
 QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
 QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
 H2KG_APPLIES_TO_PROFILE = "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile"
+LEGACY_SOURCE_NAMESPACE = "https://w3id.org/h2kg/hydrogen-ontology/legacy-source/"
+
+
+def legacy_source_identifier(value: str) -> str:
+    """Return the source-relative token behind an RDFLib-resolved file IRI."""
+    if not value.casefold().startswith("file:"):
+        return ""
+    path = unquote(urlsplit(value).path).replace("\\", "/")
+    return path.rsplit("/", 1)[-1] or "resource"
+
+
+def portable_legacy_iri(value: str) -> str:
+    """Replace machine-local file IRIs with reproducible H2KG migration IRIs."""
+    identifier = legacy_source_identifier(value)
+    if not identifier:
+        return value
+    slug = re.sub(r"[^A-Za-z0-9._~-]+", "-", identifier).strip("-._") or "resource"
+    digest = hashlib.sha256(identifier.encode("utf-8")).hexdigest()[:12]
+    return f"{LEGACY_SOURCE_NAMESPACE}{slug[:96]}-{digest}"
 
 
 def package_root() -> Path:
@@ -183,8 +204,8 @@ def default_release_profile() -> dict[str, Any]:
         "project": {
             "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
             "short_title": "H2KG Ontology",
-            "subtitle": "Domain-expert-reviewed ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
-            "description": "Domain-expert-reviewed application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameters, datasets, properties, and FAIR provenance.",
+            "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
+            "description": "Domain-specific application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.",
             "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
             "namespace_prefix": "h2kg",
             "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
@@ -195,10 +216,10 @@ def default_release_profile() -> dict[str, Any]:
             "artifact_publication_status": "published",
             "resolver_status": "established",
             "release_series": 2,
-            "version": "2.0.0",
-            "version_tag": "v2.0.0",
-            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0",
-            "prior_version": "https://w3id.org/h2kg/hydrogen-ontology/releases/1.0.0",
+            "version": "2.1.0",
+            "version_tag": "v2.1.0",
+            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0",
+            "prior_version": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0",
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "acknowledgements": {
                 "support_copy": "Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.",
@@ -326,11 +347,11 @@ def default_metadata_defaults() -> dict[str, Any]:
     return {
         "ontology": {
             "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
-            "subtitle": "Domain-expert-reviewed ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
-            "abstract": "Domain-expert-reviewed application ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, properties, and FAIR provenance.",
+            "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
+            "abstract": "Domain-specific application ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, properties, and FAIR provenance.",
             "description": "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, preserves stable H2KG IRIs, reuses foundational vocabularies, and publishes external SKOS alignments separately.",
             "created": "2026-03-19",
-            "modified": "2026-10-14",
+            "modified": "2026-10-15",
             "language": "en",
             "creators": ["AIMWORKS Maintainers"],
             "contributors": ["Electrochemistry Research Group"],

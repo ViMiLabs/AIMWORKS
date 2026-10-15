@@ -1,6 +1,6 @@
 # AIMWORKS Ontology Release Pipeline
 
-`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats `h2kg` as a domain-expert-reviewed application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and reusable FAIR workflow patterns.
+`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats `h2kg` as a domain-specific application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and reusable FAIR workflow patterns.
 
 The package is designed to:
 

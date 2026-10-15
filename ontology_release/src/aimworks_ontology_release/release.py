@@ -23,6 +23,7 @@ from .normalize_source import normalize_source_document
 from .odk import load_odk_manifest, prepare_odk_shadow
 from .profile_modules import build_profile_modules
 from .sem_pilot import build_sem_pilot_package
+from .semantic_instances import normalize_generated_example_instances
 from .split import split_ontology
 from .synchrotron_xray_tomo_pilot import build_synchrotron_xray_tomo_pilot_package
 from .taxonomy import build_taxonomy_release
@@ -83,6 +84,10 @@ def run_release(
     synchrotron_xray_tomo_pilot = build_synchrotron_xray_tomo_pilot_package(input_path, output_root)
     xrd_pilot = build_xrd_pilot_package(input_path, output_root)
     xps_pilot = build_xps_pilot_package(input_path, output_root)
+    semantic_instances = normalize_generated_example_instances(
+        output_root,
+        output_root / "ontology" / "taxonomy_registry.json",
+    )
     itc_pilot = build_itc_pilot_package(
         input_path,
         output_root,
@@ -163,6 +168,7 @@ def run_release(
         "synchrotron_xray_tomo_pilot": synchrotron_xray_tomo_pilot,
         "xrd_pilot": xrd_pilot,
         "xps_pilot": xps_pilot,
+        "semantic_instances": semantic_instances,
         "itc_pilot": itc_pilot,
         "method_data_profiles": method_data_profiles,
         "decode_workflows": decode_workflows,
@@ -193,9 +199,12 @@ def build_release_bundle(project_root: str | Path) -> Path:
 
 
 def _release_notes() -> str:
-    return """# Release Notes Template
+    return """# H2KG 2.1.0 Release Notes
 
-- Release title: H2KG Application Ontology for Hydrogen Electrochemical Systems
-- Namespace policy: preserve existing h2kg hash IRIs
-- Major release focus: metadata enrichment, schema/example separation, alignment review, static documentation, and FAIR readiness
+- Release title: H2KG Domain-Specific Ontology for Hydrogen Electrochemical Systems
+- Namespace policy: existing H2KG hash IRIs are preserved
+- Semantic correction: scientific characteristics retain intrinsic Property identity while Parameter and DataPoint records express contextual workflow roles
+- Workflow profiles: class-level workflow assertions are migrated to value-free SHACL profiles with complete provenance
+- Compatibility: legacy assertions remain available only in the versioned compatibility artifact
+- External alignment: conservative SKOS mappings are published separately from the H2KG taxonomy
 """

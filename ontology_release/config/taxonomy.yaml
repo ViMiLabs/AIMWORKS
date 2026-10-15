@@ -1,5 +1,5 @@
-version: 2.0.0
-version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
+version: 2.1.0
+version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0
 review_status: domain-expert-reviewed
 reviewer_decision: approved-domain-expert-review
 governance:
@@ -8,6 +8,51 @@ governance:
   require_external_reasoner_for_publication: true
   external_reasoner_status: passed
   publication_status: published
+
+# Curated definitions describe a concept's intrinsic scientific identity.
+# Contextual use as an input, setting, or reported result is represented in
+# workflow profiles and scope notes rather than in these class definitions.
+intrinsic_definition_overrides:
+  AFMScanSpeed:
+    definition: A scan-rate characteristic specifying the spatial or linewise rate at which an atomic-force-microscopy probe traverses a specimen during acquisition.
+  AFMTipNominalRadius:
+    definition: A nominal geometric characteristic specifying the reported radius of curvature of an atomic-force-microscopy probe tip.
+  CatalystLayerThickness:
+    definition: A thickness characteristic representing the distance between the opposing bounding surfaces of a catalyst layer.
+  FittedResistanceFromPolarizationCurve:
+    definition: A fitted electrical-resistance characteristic inferred from a semi-empirical polarization-curve model and representing the resistance contribution defined by that model.
+  GasDiffusionLayerThickness:
+    definition: A thickness characteristic representing the distance between the opposing bounding surfaces of a gas diffusion layer.
+  GraphiticPlaneOrientationOrderParameter:
+    definition: A dimensionless orientational characteristic quantifying the degree of preferred alignment of graphitic planes.
+  HansenSolubilityParameterDispersion:
+    definition: A cohesive-energy-density characteristic representing the dispersion-force contribution to a Hansen solubility parameter.
+  HansenSolubilityParameterHydrogenBonding:
+    definition: A cohesive-energy-density characteristic representing the hydrogen-bonding contribution to a Hansen solubility parameter.
+  HansenSolubilityParameterPolar:
+    definition: A cohesive-energy-density characteristic representing the polar-interaction contribution to a Hansen solubility parameter.
+  IonomerCatalystDispersionParameter:
+    definition: A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates.
+  LatticeParameter:
+    definition: A geometric characteristic specifying a length or angle that defines the translational unit cell of a crystal lattice.
+  MassTransportLossParameterM:
+    definition: An empirical model coefficient controlling the magnitude of the mass-transport voltage-loss term in the associated polarization model.
+  MassTransportLossParameterN:
+    definition: An empirical model coefficient controlling the current-density dependence of the mass-transport voltage-loss term in the associated polarization model.
+  MembraneThickness:
+    definition: A thickness characteristic representing the distance between the opposing bounding surfaces of an ion-conducting membrane.
+  NafionBackboneSolubilityParameter:
+    definition: A cohesive-energy-density characteristic representing the solvent-affinity contribution associated with the fluorocarbon backbone of Nafion.
+  NafionSideChainSolubilityParameter:
+    definition: A cohesive-energy-density characteristic representing the solvent-affinity contribution associated with the ionic side chains of Nafion.
+  ProbabilityDensityMorphologyParameterK:
+    definition: A morphology coefficient used in a parameterized probability-density representation of material structure.
+  RiOverCdSqrt:
+    definition: A slope-derived electrochemical characteristic obtained from the linear dependence of impedance magnitude on inverse square-root angular frequency and used with double-layer capacitance to estimate ionic resistance.
+  SemiEmpiricalParameterA:
+    definition: A fitted voltage-intercept coefficient in the associated semi-empirical polarization model.
+  SolubilityParameterTotal:
+    definition: A cohesive-energy-density characteristic representing the total solubility parameter obtained from the combined dispersion, polar, and hydrogen-bonding contributions.
 
 allowed_foundational_imports:
   - https://www.w3.org/ns/prov-o
@@ -685,8 +730,12 @@ parent_overrides:
   MembraneElectrodeAssemblyThickness: LayerThickness
   IonomerToCarbonRatio: CompositionCharacteristic
   CurrentDensity: ElectrochemicalCharacteristic
-  CarbonMass: NormalizationBasis
-  SampleMass: NormalizationBasis
+  CarbonMass: QuantitativeCharacteristic
+  SampleMass: QuantitativeCharacteristic
+  CatalystMass: QuantitativeCharacteristic
+  PtMass: QuantitativeCharacteristic
+  GeometricArea: GeometricCharacteristic
+  KitchenBlender: MixingInstrument
   GasDiffusionLayerPorosity: MorphologicalCharacteristic
   TotalPorosity: MorphologicalCharacteristic
   PoreSizeDistribution: MorphologicalCharacteristic

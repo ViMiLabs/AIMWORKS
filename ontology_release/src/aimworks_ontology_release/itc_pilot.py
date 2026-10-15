@@ -36,6 +36,7 @@ HAS_QUANTITY_VALUE = H2KG + "hasQuantityValue"
 QUDT_UNIT = QUDT + "unit"
 QUDT_QUANTITY_KIND = QUDT + "quantityKind"
 QUDT_QUANTITY_VALUE = QUDT + "QuantityValue"
+RDF_TYPE = COMMON_CONTEXT["rdf"] + "type"
 
 MODEL_LOCAL_NAME = "InkToCompositionModel"
 WORKFLOW_ID = "iet-ink-to-composition-model"
@@ -141,10 +142,15 @@ def build_itc_pilot_package(
         raise ValueError(f"ITC terms are not integrated into the H2KG source: {missing[:5]}")
 
     package = ensure_dir(Path(output_root) / "examples" / "itc_pilot")
-    profile_items = [ontology_items[item["@id"]] for item in expected]
+    refreshed_profile_items: list[dict[str, Any]] = []
+    for generated in expected:
+        current = deepcopy(ontology_items[generated["@id"]])
+        _replace_managed_values(current, generated)
+        refreshed_profile_items.append(current)
+    profile_items = _canonical_profile_items(refreshed_profile_items)
     jsonld_path = dump_jsonld_items(package / "itc_h2kg_profile.jsonld", profile_items)
     ttl_path = dump_turtle_items(package / "itc_h2kg_profile.ttl", profile_items)
-    shapes_path = write_text(package / "itc_h2kg_profile_shapes.ttl", _shacl_profile())
+    shapes_path = write_text(package / "itc_h2kg_profile_shapes.ttl", _shacl_profile(review))
     mapping_rows = _mapping_rows(review)
     mapping_csv = _write_csv(package / "itc_mapping_matrix.csv", mapping_rows)
     mapping_md = write_text(package / "itc_mapping_matrix.md", _mapping_markdown(mapping_rows))
@@ -182,7 +188,8 @@ def validate_review_registry(review: dict[str, Any]) -> dict[str, Any]:
     identifiers = [str(field.get("io_id", "")) for field in fields]
     directions = Counter(str(field.get("direction", "")) for field in fields)
     decisions = Counter(str(field.get("decision", "")) for field in fields)
-    roles = Counter(str(field.get("semantic_role", "")) for field in fields)
+    workflow_roles = Counter(_workflow_role(field) for field in fields)
+    intrinsic_roles = Counter(_intrinsic_role(field) for field in fields)
     duplicate_ids = sorted(identifier for identifier, count in Counter(identifiers).items() if count != 1)
     required = {
         "io_id", "direction", "preferred_label", "source_label", "notation", "reported_unit",
@@ -225,7 +232,8 @@ def validate_review_registry(review: dict[str, Any]) -> dict[str, Any]:
         "unique_identifier_count": len(set(identifiers)),
         "new_term_count": decisions["new_h2kg_term"],
         "reused_term_count": decisions["existing_h2kg_mapping"],
-        "role_counts": dict(sorted(roles.items())),
+        "workflow_role_counts": dict(sorted(workflow_roles.items())),
+        "intrinsic_role_counts": dict(sorted(intrinsic_roles.items())),
         "symbols_used_as_alt_labels": symbols_as_aliases,
         "rejected_legacy_labels_used_as_alt_labels": rejected_as_aliases,
         "source_sha256": review["source"]["sha256"],
@@ -265,13 +273,22 @@ def build_decode_itc_overlay(review: dict[str, Any]) -> dict[str, Any]:
         add_node(H2KG + local_name, label, "Data", definition)
     for field in review["fields"]:
         iri = H2KG + field["h2kg_local_name"]
-        add_node(iri, field["preferred_label"], field["semantic_role"], field["definition"], field["io_id"])
+        add_node(iri, field["preferred_label"], _intrinsic_role(field), field["definition"], field["io_id"])
     for field in review["fields"]:
         iri = H2KG + field["h2kg_local_name"]
-        if field["direction"] == "input" and field["semantic_role"] == "Parameter":
-            add_edge(model_iri, HAS_PARAMETER, iri)
-    input_properties = [field for field in review["fields"] if field["direction"] == "input" and field["semantic_role"] == "Property"]
-    result_properties = [field for field in review["fields"] if field["direction"] == "output" and field["semantic_role"] == "Property"]
+        if _workflow_role(field) == "Parameter":
+            record_iri = f"https://w3id.org/h2kg/profiles/itc/parameter/{field['io_id']}"
+            add_node(
+                record_iri,
+                f"{field['preferred_label']} parameter record",
+                "Parameter",
+                "A value-free ITC profile record that gives this property a contextual model-input role.",
+                field["io_id"],
+            )
+            add_edge(model_iri, HAS_PARAMETER, record_iri)
+            add_edge(record_iri, OF_PROPERTY, iri)
+    input_properties = [field for field in review["fields"] if field["direction"] == "input" and _workflow_role(field) == "InputDataPoint"]
+    result_properties = [field for field in review["fields"] if field["direction"] == "output" and _intrinsic_role(field) == "Property"]
     input_dataset = H2KG + "InkToCompositionModelInputDataset"
     result_dataset = H2KG + "InkToCompositionModelScalarResultDataset"
     add_edge(model_iri, HAS_INPUT_DATA, input_dataset)
@@ -339,7 +356,7 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                 node["mapping_override"] = _mapping_override(
                     H2KG + exact_field["h2kg_local_name"],
                     exact_field["preferred_label"],
-                    exact_field["semantic_role"],
+                    _intrinsic_role(exact_field),
                     f"Unambiguous exact-label mapping confirmed by the expert ITC registry for {exact_field['io_id']}.",
                 )
             if str(node.get("label", "")).strip().casefold() in {
@@ -372,7 +389,7 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                 node["mapping_override"] = _mapping_override(
                     H2KG + field["h2kg_local_name"],
                     field["preferred_label"],
-                    field["semantic_role"],
+                    _intrinsic_role(field),
                     f"Expert-reviewed mapping for stable identifier {field['io_id']}.{correction}",
                 )
     return snapshot
@@ -419,7 +436,7 @@ def _profile_items(review: dict[str, Any]) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = []
     model = review["model"]
     model_item = _term_item(model["iri"], model["preferred_label"], model["definition"], "Process", source_iri, model["alternate_labels"])
-    parameters = [field for field in fields if field["direction"] == "input" and field["semantic_role"] == "Parameter"]
+    parameters = [field for field in fields if _workflow_role(field) == "Parameter"]
     model_item[HAS_PARAMETER] = [{"@id": H2KG + field["h2kg_local_name"]} for field in parameters]
     model_item[HAS_INPUT_DATA] = [{"@id": H2KG + "InkToCompositionModelInputDataset"}]
     model_item[HAS_OUTPUT_DATA] = [
@@ -432,7 +449,7 @@ def _profile_items(review: dict[str, Any]) -> list[dict[str, Any]]:
 
     for field in fields:
         iri = H2KG + field["h2kg_local_name"]
-        item = _term_item(iri, field["preferred_label"], field["definition"], field["semantic_role"], source_iri, field["alternate_labels"])
+        item = _term_item(iri, field["preferred_label"], field["definition"], _intrinsic_role(field), source_iri, field["alternate_labels"])
         item[NOTATION] = [{"@value": field["notation"]}]
         item[IDENTIFIER] = [{"@value": field["io_id"]}]
         item[HAS_QUANTITY_VALUE] = [{"@id": _guidance_iri(field)}]
@@ -447,8 +464,8 @@ def _profile_items(review: dict[str, Any]) -> list[dict[str, Any]]:
         }
         items.append(guidance)
 
-    input_properties = [field for field in fields if field["direction"] == "input" and field["semantic_role"] == "Property"]
-    result_properties = [field for field in fields if field["direction"] == "output" and field["semantic_role"] == "Property"]
+    input_properties = [field for field in fields if field["direction"] == "input" and _workflow_role(field) == "InputDataPoint"]
+    result_properties = [field for field in fields if field["direction"] == "output" and _intrinsic_role(field) == "Property"]
     field_items: list[dict[str, Any]] = []
     group_parts: dict[str, list[str]] = {key: [] for key in GROUPS}
     for field, suffix, group in [
@@ -491,6 +508,43 @@ def _term_item(iri: str, label: str, definition: str, role: str, source: str, al
     return item
 
 
+def _intrinsic_role(field: dict[str, Any]) -> str:
+    """All scalar scientific quantities are Properties, regardless of use."""
+
+    return "Property" if field.get("semantic_role") == "Parameter" else str(field.get("semantic_role", ""))
+
+
+def _workflow_role(field: dict[str, Any]) -> str:
+    if field.get("direction") == "input" and field.get("semantic_role") == "Parameter":
+        return "Parameter"
+    if field.get("direction") == "input" and _intrinsic_role(field) == "Property":
+        return "InputDataPoint"
+    if field.get("direction") == "output" and _intrinsic_role(field) == "Property":
+        return "OutputDataPoint"
+    return "InputData" if field.get("direction") == "input" else "OutputData"
+
+
+def _canonical_profile_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove legacy class-to-class workflow assertions from the profile module."""
+
+    result = deepcopy(items)
+    workflow_predicates = {
+        HAS_PARAMETER,
+        HAS_INPUT_DATA,
+        HAS_OUTPUT_DATA,
+        HAS_PART,
+        OF_PROPERTY,
+    }
+    relation = DCTERMS + "relation"
+    for item in result:
+        quantity_guidance = item.pop(HAS_QUANTITY_VALUE, None)
+        for predicate in workflow_predicates:
+            item.pop(predicate, None)
+        if quantity_guidance:
+            item[relation] = quantity_guidance
+    return result
+
+
 def _replace_managed_values(current: dict[str, Any], generated: dict[str, Any]) -> None:
     managed = {"@type", PREF_LABEL, ALT_LABEL, RDFS + "label", DESCRIPTION, SOURCE, NOTATION, IDENTIFIER, HAS_QUANTITY_VALUE, HAS_PARAMETER, HAS_INPUT_DATA, HAS_OUTPUT_DATA, HAS_PART, OF_PROPERTY, QUDT_UNIT, QUDT_QUANTITY_KIND}
     for key in managed:
@@ -514,7 +568,8 @@ def _mapping_rows(review: dict[str, Any]) -> list[dict[str, Any]]:
         "source_label": field["source_label"],
         "preferred_label": field["preferred_label"],
         "symbol": field["notation"],
-        "semantic_role": field["semantic_role"],
+        "intrinsic_role": _intrinsic_role(field),
+        "workflow_role": _workflow_role(field),
         "decision": field["decision"],
         "h2kg_iri": H2KG + field["h2kg_local_name"],
         "reported_unit": field["reported_unit"],
@@ -547,8 +602,8 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> Path:
 
 
 def _mapping_markdown(rows: list[dict[str, Any]]) -> str:
-    lines = ["# ITC expert-review mapping matrix", "", "| IO identifier | Direction | Preferred term | Role | Outcome | H2KG IRI |", "|---|---|---|---|---|---|"]
-    lines.extend(f"| `{row['io_id']}` | {row['direction']} | {row['preferred_label']} | {row['semantic_role']} | {row['decision']} | `{row['h2kg_iri']}` |" for row in rows)
+    lines = ["# ITC expert-review mapping matrix", "", "| IO identifier | Direction | Preferred term | Intrinsic role | Workflow role | Outcome | H2KG IRI |", "|---|---|---|---|---|---|---|"]
+    lines.extend(f"| `{row['io_id']}` | {row['direction']} | {row['preferred_label']} | {row['intrinsic_role']} | {row['workflow_role']} | {row['decision']} | `{row['h2kg_iri']}` |" for row in rows)
     return "\n".join(lines) + "\n"
 
 
@@ -566,18 +621,31 @@ def _validate_serializations(jsonld_path: Path, ttl_path: Path) -> dict[str, Any
         return {"jsonld_triple_count": 0, "turtle_triple_count": 0, "equivalent_rdf_statements": False, "rdf_error": str(exc)}
 
 
-def _shacl_profile() -> str:
+def _shacl_profile(review: dict[str, Any]) -> str:
+    parameters = [field for field in review["fields"] if _workflow_role(field) == "Parameter"]
+    parameter_shapes = " ".join(
+        f"[ sh:class h2kg:{field['h2kg_local_name']} ]" for field in parameters
+    )
     return f"""@prefix h2kg: <{H2KG}> .
+@prefix rdf: <{COMMON_CONTEXT['rdf']}> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 h2kg:InkToCompositionModelProfileShape a sh:NodeShape ;
-  sh:targetNode h2kg:InkToCompositionModel ;
-  sh:property [ sh:path h2kg:hasParameter ; sh:minCount 16 ] ;
-  sh:property [ sh:path h2kg:hasInputData ; sh:hasValue h2kg:InkToCompositionModelInputDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:InkToCompositionModelScalarResultDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLWaterRetentionCurveDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLRefinedPoreSizeDistributionDataset ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:hasValue h2kg:CCLContactAngleDistributionDataset ] .
+  sh:targetClass h2kg:InkToCompositionModel ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:minCount 16 ; sh:class h2kg:Parameter ] ;
+  sh:property [ sh:path h2kg:hasInputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:InkToCompositionModelInputDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:InkToCompositionModelScalarResultDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLWaterRetentionCurveDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLRefinedPoreSizeDistributionDataset ] ] ;
+  sh:property [ sh:path h2kg:hasOutputData ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLContactAngleDistributionDataset ] ] .
+
+h2kg:InkToCompositionModelParameterRecordShape a sh:NodeShape ;
+  sh:targetObjectsOf h2kg:hasParameter ;
+  sh:class h2kg:Parameter ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( {parameter_shapes} ) ]
+  ] .
 """
 
 
@@ -592,5 +660,5 @@ Source fingerprint: `{review['source']['sha256']}`. The reviewed PDF is not redi
 
 Explore: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?iri={H2KG}{MODEL_LOCAL_NAME}`
 
-Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The profile fields are schema templates and do not assert numerical observations.
+Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The Turtle and JSON-LD files contain the reviewed vocabulary module and quantity guidance. Contextual model-input and output expectations are expressed in SHACL, so no scientific Property class is reclassified as a Parameter.
 """

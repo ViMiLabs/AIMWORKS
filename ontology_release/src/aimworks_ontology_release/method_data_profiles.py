@@ -20,7 +20,8 @@ from rdflib import Graph, Namespace, RDF, RDFS, SKOS, URIRef
 from pyshacl import validate
 
 from .io import load_json_document, merge_document_items
-from .utils import COMMON_CONTEXT, dump_json, ensure_dir, write_text
+from .semantic_instances import normalize_example_pair
+from .utils import COMMON_CONTEXT, dump_json, ensure_dir, load_json, write_text
 
 
 H2KG = Namespace(COMMON_CONTEXT["h2kg"])
@@ -83,9 +84,11 @@ def build_method_data_profiles(
         return {"status": "skipped_missing_terms", "missing_terms": missing, "output_dir": str(target)}
 
     labels = _term_labels(source_items)
+    taxonomy_registry_path = pilot_root.parent / "ontology" / "taxonomy_registry.json"
+    characteristic_iris = _characteristic_iris(taxonomy_registry_path)
     reports: list[dict[str, Any]] = []
     for spec in PROFILES:
-        reports.append(_build_one(spec, target, pilot_root, labels))
+        reports.append(_build_one(spec, target, pilot_root, labels, characteristic_iris))
     coverage = _coverage_rows(reports)
     _write_csv(target / "profile_coverage_report.csv", coverage)
     dump_json(target / "profile_coverage_report.json", {"profile_count": len(PROFILES), "profiles": coverage})
@@ -109,7 +112,13 @@ def validate_method_profile_graph(shapes_path: str | Path, data_path: str | Path
     return {"conforms": bool(conforms), "report": str(report)}
 
 
-def _build_one(spec: MethodProfile, target: Path, pilot_root: Path, labels: dict[str, dict[str, list[str]]]) -> dict[str, Any]:
+def _build_one(
+    spec: MethodProfile,
+    target: Path,
+    pilot_root: Path,
+    labels: dict[str, dict[str, list[str]]],
+    characteristic_iris: set[str],
+) -> dict[str, Any]:
     folder = ensure_dir(target / spec.key)
     source_folder = pilot_root / spec.pilot_dir
     source_ttl = source_folder / f"{spec.example_stem}.ttl"
@@ -121,19 +130,40 @@ def _build_one(spec: MethodProfile, target: Path, pilot_root: Path, labels: dict
     copied_json = folder / "source_grounded_example.jsonld"
     shutil.copyfile(source_ttl, copied_ttl)
     shutil.copyfile(source_json, copied_json)
+    normalize_example_pair(copied_json, copied_ttl, characteristic_iris)
     shapes = folder / f"{spec.key}_profile_shapes.ttl"
     write_text(shapes, _shape_turtle(spec))
     validation = validate_method_profile_graph(shapes, copied_ttl)
+    curation_findings = _curation_findings(spec, copied_ttl)
     template = folder / f"{spec.key}_capture_template.jsonld"
     dump_json(template, _capture_template(spec))
     fields = _field_rows(spec, labels, copied_ttl)
     _write_csv(folder / f"{spec.key}_field_dictionary.csv", fields)
     _write_field_markdown(folder / f"{spec.key}_field_dictionary.md", fields)
     scenario = _scenario(spec, copied_ttl, labels)
-    report = {"profile": spec.key, "title": spec.title, "conforms": validation["conforms"], "evidence_status": spec.evidence_status, "require_result": spec.require_result, "scenario": scenario, "shacl_report": validation["report"]}
+    report = {
+        "profile": spec.key,
+        "title": spec.title,
+        "conforms": validation["conforms"],
+        "evidence_status": spec.evidence_status,
+        "require_result": spec.require_result,
+        "scenario": scenario,
+        "curation_findings": curation_findings,
+        "shacl_report": validation["report"],
+    }
     dump_json(folder / "validation_report.json", report)
     write_text(folder / "README.md", _profile_readme(spec, report))
-    return {"key": spec.key, "title": spec.title, "status": "generated", "evidence_status": spec.evidence_status, "conforms": validation["conforms"], "field_count": len(fields), "scenario": scenario, "folder": str(folder)}
+    return {
+        "key": spec.key,
+        "title": spec.title,
+        "status": "generated",
+        "evidence_status": spec.evidence_status,
+        "conforms": validation["conforms"],
+        "field_count": len(fields),
+        "curation_finding_count": len(curation_findings),
+        "scenario": scenario,
+        "folder": str(folder),
+    }
 
 
 def _all_required_terms() -> set[str]:
@@ -168,11 +198,26 @@ def _values(value: Any) -> list[str]:
 
 
 def _shape_turtle(spec: MethodProfile) -> str:
-    property_values = " ".join(f"h2kg:{item}" for item in spec.properties) or "h2kg:Property"
-    result_rule = "." if not spec.require_result else """
+    property_shapes = _class_shape_list(spec.properties or ("Property",))
+    parameter_shapes = _class_shape_list(spec.parameters or ("Property",))
+    result_rule = "." if not spec.require_result else """;
   sh:property [
     sh:path [ sh:inversePath h2kg:fromMeasurement ] ; sh:minCount 1 ; sh:class h2kg:DataPoint
   ] ."""
+    data_point_shape = "" if not spec.require_result else f"""
+<{PROFILE}{spec.key}/DataPointShape> a sh:NodeShape ;
+  sh:targetSubjectsOf h2kg:fromMeasurement ;
+  sh:property [ sh:path h2kg:fromMeasurement ; sh:node [ sh:class h2kg:{spec.measurement} ] ] ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( {property_shapes} ) ]
+  ] ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class h2kg:Process ] ;
+  sh:or (
+    [ sh:property [ sh:path ( h2kg:ofProperty h2kg:hasQuantityValue ) ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path h2kg:hasMetadata ; sh:minCount 1 ] ]
+  ) .
+"""
     return f'''@prefix h2kg: <{H2KG}> .
 @prefix prov: <{PROV}> .
 @prefix qudt: <{QUDT}> .
@@ -184,17 +229,17 @@ def _shape_turtle(spec: MethodProfile) -> str:
   sh:class h2kg:Measurement ;
   sh:property [ sh:path h2kg:hasInputMaterial ; sh:minCount 1 ; sh:class h2kg:Matter ] ;
   sh:property [ sh:path h2kg:usesInstrument ; sh:minCount 1 ; sh:class h2kg:Instrument ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;{result_rule}
+  sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:node <{PROFILE}{spec.key}/ParameterRecordShape> ] {result_rule}
 
-<{PROFILE}{spec.key}/DataPointShape> a sh:NodeShape ;
-  sh:targetSubjectsOf h2kg:fromMeasurement ;
-  sh:property [ sh:path h2kg:fromMeasurement ; sh:node [ sh:class h2kg:{spec.measurement} ] ] ;
-  sh:property [ sh:path h2kg:ofProperty ; sh:in ( {property_values} ) ] ;
-  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class h2kg:Process ] ;
-  sh:or (
-    [ sh:property [ sh:path h2kg:hasQuantityValue ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path h2kg:hasMetadata ; sh:minCount 1 ] ]
-  ) .
+<{PROFILE}{spec.key}/ParameterRecordShape> a sh:NodeShape ;
+  sh:class h2kg:Parameter ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( {parameter_shapes} ) ]
+  ] .
+
+{data_point_shape}
 
 <{PROFILE}{spec.key}/QuantityValueShape> a sh:NodeShape ;
   sh:targetObjectsOf h2kg:hasQuantityValue ;
@@ -208,6 +253,10 @@ def _shape_turtle(spec: MethodProfile) -> str:
 '''
 
 
+def _class_shape_list(local_names: tuple[str, ...]) -> str:
+    return " ".join(f"[ sh:class h2kg:{local_name} ]" for local_name in local_names)
+
+
 def _capture_template(spec: MethodProfile) -> dict[str, Any]:
     namespace = f"https://w3id.org/h2kg/profiles/examples/{spec.key}/"
     graph: list[dict[str, Any]] = [
@@ -218,12 +267,16 @@ def _capture_template(spec: MethodProfile) -> dict[str, Any]:
         {"@id": f"{namespace}measurement-metadata", "@type": ["h2kg:Metadata"], "rdfs:comment": "Record source evidence, file details, and method-specific context here."},
     ]
     for index, param in enumerate(spec.parameters, start=1):
-        graph.append({"@id": f"{namespace}parameter-{index}", "@type": ["h2kg:Parameter", f"h2kg:{param}"], "rdfs:comment": "Conditional: add a quantity value only when reported."})
+        property_id = f"{namespace}parameter-{index}-property-occurrence"
+        graph.append({"@id": f"{namespace}parameter-{index}", "@type": ["h2kg:Parameter"], "h2kg:ofProperty": [{"@id": property_id}], "rdfs:comment": "Conditional parameter record; link source evidence here when the setting is reported."})
+        graph.append({"@id": property_id, "@type": [f"h2kg:{param}"], "rdfs:comment": "Intrinsic property occurrence. Add a QUDT quantity value here when a numeric setting is reported."})
         graph[0].setdefault("h2kg:hasParameter", []).append({"@id": f"{namespace}parameter-{index}"})
     if spec.require_result:
+        result_property_id = f"{namespace}result-property-occurrence"
         graph.extend([
             {"@id": f"{namespace}analysis", "@type": ["h2kg:Process"]},
-            {"@id": f"{namespace}result", "@type": ["h2kg:DataPoint"], "h2kg:fromMeasurement": [{"@id": f"{namespace}measurement"}], "h2kg:ofProperty": [{"@id": f"h2kg:{spec.properties[0]}"}], "prov:wasGeneratedBy": [{"@id": f"{namespace}analysis"}], "h2kg:hasMetadata": [{"@id": f"{namespace}result-metadata"}]},
+            {"@id": f"{namespace}result", "@type": ["h2kg:DataPoint"], "h2kg:fromMeasurement": [{"@id": f"{namespace}measurement"}], "h2kg:ofProperty": [{"@id": result_property_id}], "prov:wasGeneratedBy": [{"@id": f"{namespace}analysis"}], "h2kg:hasMetadata": [{"@id": f"{namespace}result-metadata"}]},
+            {"@id": result_property_id, "@type": [f"h2kg:{spec.properties[0]}"], "rdfs:comment": "Intrinsic result-property occurrence. Add h2kg:hasQuantityValue here when a numeric result is reported."},
             {"@id": f"{namespace}result-metadata", "@type": ["h2kg:Metadata"], "rdfs:comment": "Use this explicit statement when no numeric value was reported; otherwise add h2kg:hasQuantityValue with QUDT numericValue, unit, and quantity kind."},
         ])
     return {"@context": {**COMMON_CONTEXT, "rdfs": str(RDFS)}, "@graph": graph}
@@ -248,8 +301,11 @@ def _observed_units(path: Path) -> dict[str, str]:
     graph = Graph().parse(str(path), format="turtle")
     output: dict[str, str] = {}
     for param in graph.subjects(RDF.type, H2KG.Parameter):
-        types = [str(value) for value in graph.objects(param, RDF.type) if value != H2KG.Parameter]
-        qvs = list(graph.objects(param, H2KG.hasQuantityValue))
+        property_occurrence = next(graph.objects(param, H2KG.ofProperty), None)
+        if property_occurrence is None:
+            continue
+        types = [str(value) for value in graph.objects(property_occurrence, RDF.type)]
+        qvs = list(graph.objects(property_occurrence, H2KG.hasQuantityValue))
         if not qvs: continue
         values: list[str] = []
         for qv in qvs:
@@ -273,15 +329,63 @@ def _scenario(spec: MethodProfile, path: Path, labels: dict[str, dict[str, list[
         producing_measurements = list(graph.objects(point, H2KG.fromMeasurement))
         if not any(measurement in set(graph.objects(item, RDF.type)) for item in producing_measurements):
             continue
-        prop = next(graph.objects(point, H2KG.ofProperty), None)
+        prop_occurrence = next(graph.objects(point, H2KG.ofProperty), None)
+        prop = next(graph.objects(prop_occurrence, RDF.type), None) if prop_occurrence else None
         prop_label = labels.get(str(prop), {}).get("label", [str(prop).split("#")[-1]])[0]
-        qv = next(graph.objects(point, H2KG.hasQuantityValue), None)
+        qv = next(graph.objects(prop_occurrence, H2KG.hasQuantityValue), None) if prop_occurrence else None
         if qv:
             number = next(graph.objects(qv, QUDT.numericValue), None); unit = next(graph.objects(qv, QUDT.unit), None)
             values.append({"property": prop_label, "value": f"{number} {str(unit).split('/')[-1] if unit else ''}".strip(), "status": "reported"})
         else:
             values.append({"property": prop_label, "value": "not reported", "status": "explicitly unreported or metadata-only"})
     return {"note": spec.scenario_note, "evidence_status": spec.evidence_status, "results": values}
+
+
+def _curation_findings(spec: MethodProfile, path: Path) -> list[dict[str, str]]:
+    """Report source-faithful values deliberately kept outside QUDT assertions."""
+    if spec.key != "neutron_tomography":
+        return []
+    graph = Graph().parse(str(path), format="turtle")
+    for record in graph.subjects(RDF.type, H2KG.Parameter):
+        occurrence = next(graph.objects(record, H2KG.ofProperty), None)
+        if occurrence is None or (occurrence, RDF.type, H2KG.NeutronFlux) not in graph:
+            continue
+        metadata = list(graph.objects(record, H2KG.hasMetadata))
+        evidence = " ".join(
+            str(value)
+            for node in metadata
+            for _, value in graph.predicate_objects(node)
+        )
+        if list(graph.objects(occurrence, H2KG.hasQuantityValue)):
+            return []
+        if "2700000" in evidence and "n/cm2s" in evidence:
+            return [
+                {
+                    "code": "reported-unit-awaits-qudt-mapping",
+                    "field": "NeutronFlux",
+                    "severity": "curation_required",
+                    "treatment": (
+                        "The reported numeric value 2700000 and source unit token n/cm2s "
+                        "are retained as Metadata; no QuantityValue is asserted until exact "
+                        "QUDT unit and quantity-kind mappings are approved."
+                    ),
+                }
+            ]
+    return []
+
+
+def _characteristic_iris(path: Path) -> set[str]:
+    if not path.exists():
+        return {str(H2KG.Property)}
+    registry = load_json(path)
+    values = {
+        str(row.get("iri"))
+        for row in registry.get("terms", [])
+        if row.get("disposition", "active_local_class") == "active_local_class"
+        and row.get("corrected_semantic_role") == "Characteristic"
+    }
+    values.add(str(H2KG.Property))
+    return values
 
 
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> Path:
@@ -299,7 +403,23 @@ def _write_field_markdown(path: Path, rows: list[dict[str, str]]) -> None:
 
 
 def _coverage_rows(reports: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    return [{"method_profile": report["key"], "title": report["title"], "status": report["status"], "evidence_status": report["evidence_status"], "shacl_conforms": report.get("conforms", False), "field_count": report.get("field_count", 0), "result_requirement": "required" if next(item for item in PROFILES if item.key == report["key"]).require_result else "deferred"} for report in reports]
+    return [
+        {
+            "method_profile": report["key"],
+            "title": report["title"],
+            "status": report["status"],
+            "evidence_status": report["evidence_status"],
+            "shacl_conforms": report.get("conforms", False),
+            "field_count": report.get("field_count", 0),
+            "curation_finding_count": report.get("curation_finding_count", 0),
+            "result_requirement": (
+                "required"
+                if next(item for item in PROFILES if item.key == report["key"]).require_result
+                else "deferred"
+            ),
+        }
+        for report in reports
+    ]
 
 
 def _coverage_markdown(rows: list[dict[str, Any]]) -> str:
@@ -317,7 +437,14 @@ def _supplementary_tables(reports: list[dict[str, Any]]) -> str:
 
 
 def _profile_readme(spec: MethodProfile, report: dict[str, Any]) -> str:
-    return f"# {spec.title} H2KG Method Data Profile\n\nThis profile is an H2KG-aligned capture and validation artifact, not a second ontology. SHACL conformance for the included pilot record: `{report['conforms']}`. Evidence status: `{spec.evidence_status}`.\n\n{spec.scenario_note}\n"
+    findings = report.get("curation_findings", [])
+    finding_note = (
+        f" The validation report records {len(findings)} source-data curation finding(s) "
+        "without weakening profile conformance."
+        if findings
+        else ""
+    )
+    return f"# {spec.title} H2KG Method Data Profile\n\nThis profile is an H2KG-aligned capture and validation artifact, not a second ontology. SHACL conformance for the included pilot record: `{report['conforms']}`. Evidence status: `{spec.evidence_status}`.{finding_note}\n\n{spec.scenario_note}\n"
 
 
 def _root_readme(rows: list[dict[str, Any]]) -> str:

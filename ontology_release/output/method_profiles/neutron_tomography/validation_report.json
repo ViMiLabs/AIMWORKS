@@ -1,7 +1,7 @@
 {
   "profile": "neutron_tomography",
   "title": "Neutron tomography",
-  "conforms": false,
+  "conforms": true,
   "evidence_status": "source_grounded",
   "require_result": true,
   "scenario": {
@@ -25,5 +25,13 @@
       }
     ]
   },
-  "shacl_report": "Validation Report\nConforms: False\nResults (1):\nConstraint Violation in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):\n\tSeverity: sh:Violation\n\tSource Shape: <https://w3id.org/h2kg/profiles/neutron_tomography/QuantityValueShape>\n\tFocus Node: <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv>\n\tValue Node: <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv>\n\tMessage: Node <https://w3id.org/h2kg/examples/neutron-tomo#neutron-flux-setting-qv> must conform to one or more shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path qudt:quantityKind ], [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path qudt:unit ] ] , [ sh:property [ sh:hasValue quantitykind:Count ; sh:path qudt:quantityKind ] ] , [ sh:property [ sh:hasValue quantitykind:Dimensionless ; sh:path qudt:quantityKind ] ]\n"
+  "curation_findings": [
+    {
+      "code": "reported-unit-awaits-qudt-mapping",
+      "field": "NeutronFlux",
+      "severity": "curation_required",
+      "treatment": "The reported numeric value 2700000 and source unit token n/cm2s are retained as Metadata; no QuantityValue is asserted until exact QUDT unit and quantity-kind mappings are approved."
+    }
+  ],
+  "shacl_report": "Validation Report\nConforms: True\n"
 }

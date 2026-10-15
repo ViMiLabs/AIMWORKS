@@ -37,6 +37,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -63,6 +64,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n1",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Electrolyte",
         "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -89,6 +91,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n2",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cl-on-glassy-carbon-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Matter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -115,7 +118,8 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "Catalyst loading"
@@ -141,7 +145,8 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "I/C-ratio"
@@ -164,6 +169,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -183,6 +189,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n6",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -202,6 +209,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n7",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/rde-cv-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Data"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -221,6 +229,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component",
         "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -240,6 +249,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n9",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/monomer-concentration-in-the-electrolyte-material",
         "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -263,6 +273,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n10",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -293,6 +304,9 @@
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0/data-point"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4/data-point"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial": [
@@ -305,10 +319,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
@@ -330,6 +341,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n11",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/model-electrochemistry-in-a-rde-cell-model",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -372,7 +384,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n9"
@@ -397,6 +409,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n12",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/image-parameter-extraction-2d-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -417,7 +430,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ]
     },
@@ -425,6 +438,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n13",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data",
         "https://w3id.org/h2kg/hydrogen-ontology#Process"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -445,7 +459,7 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ]
     },
@@ -453,6 +467,7 @@
       "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n14",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/decode/workflow/anchor/cl-for-rde-method",
         "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
@@ -493,13 +508,30 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
-        },
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "I/C-ratio value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4"
         }
       ]
     },
@@ -519,13 +551,10 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5"
         }
       ]
     },
@@ -545,13 +574,10 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n6"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n6"
         }
       ]
     },
@@ -571,13 +597,39 @@
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst loading parameter record"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
         },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
         }
       ]
     },
@@ -711,7 +763,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/43df134d44",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/cf4cf52ea7",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -731,7 +783,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -801,7 +853,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/50b9073d6d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/6bc2024956",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -809,10 +861,10 @@
         "model-electrochemistry-in-a-rde-cell::e3"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -821,7 +873,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -831,7 +883,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/40df351020",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/4180827ada",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e3"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/cf55bfca86",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -839,14 +921,44 @@
         "model-electrochemistry-in-a-rde-cell::e4"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n10"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/fcbd417af6",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e4"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n4/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -856,7 +968,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -891,7 +1003,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/04b25205b3",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/4882aa92b0",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -911,7 +1023,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -951,7 +1063,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/8ab261762d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/78b82b9537",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -971,7 +1083,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n6"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1041,7 +1153,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/7fba5ceac4",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/413768a826",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1061,7 +1173,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1071,7 +1183,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/14ab01b39a",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/ec3f952a7f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1079,10 +1191,10 @@
         "model-electrochemistry-in-a-rde-cell::e9"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_output_direction"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1091,7 +1203,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1101,22 +1213,22 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/e2fd59ec62",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/0923c5446a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
       "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
-        "model-electrochemistry-in-a-rde-cell::e10"
+        "model-electrochemistry-in-a-rde-cell::e9"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_property"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n13"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -1126,7 +1238,67 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/c7b30b238c",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_output_direction"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n13"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
           "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/5079ad6127",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e10"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1191,7 +1363,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/af8d291e17",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/531431f29c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1211,7 +1383,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n0"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1281,7 +1453,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/601a04c501",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/3b9a9681ce",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1289,14 +1461,44 @@
         "model-electrochemistry-in-a-rde-cell::e15"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "parameter_record_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n11"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/5d6c27a087",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "model-electrochemistry-in-a-rde-cell::e15"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "parameter_record_property"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n3/parameter-record"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -1306,7 +1508,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },
@@ -1371,7 +1573,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/f937d8590b",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/3ce946461a",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1391,7 +1593,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-kinetic-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n5"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1431,7 +1633,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/81f821070e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/7983a666d8",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1451,7 +1653,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-diffusion-current-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n6"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
@@ -1521,7 +1723,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/ce2938100f",
+      "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/projection/d5aa56138d",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1541,7 +1743,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-ecsa-component"
+          "@id": "https://w3id.org/h2kg/decode/workflow/model-electrochemistry-in-a-rde-cell/node/n8"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [

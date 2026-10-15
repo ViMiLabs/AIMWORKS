@@ -38,7 +38,7 @@ def generate_w3id_artifacts(
         "v2_compatibility_jsonld": f"{rdf_base}h2kg-v2-compatibility.jsonld",
     }
 
-    htaccess = _htaccess(html_targets, rdf_targets)
+    htaccess = _htaccess(html_targets, rdf_targets, profile)
     readme = _w3id_readme(strategy, profile, html_targets, rdf_targets)
 
     # These files document the established H2KG resolver configuration. The
@@ -47,7 +47,7 @@ def generate_w3id_artifacts(
     write_text(output_dir / ".htaccess", htaccess)
     write_text(output_dir / "README.md", _root_readme())
     write_text(output_dir / "publishing_notes.md", _publishing_notes(strategy, profile, html_targets, rdf_targets))
-    write_text(output_dir / "curl_tests.sh", _curl_tests())
+    write_text(output_dir / "curl_tests.sh", _curl_tests(profile))
 
     write_text(w3id_root / ".htaccess", htaccess)
     write_text(w3id_root / "README.md", readme)
@@ -62,7 +62,13 @@ def generate_w3id_artifacts(
     }
 
 
-def _htaccess(html_targets: dict[str, str], rdf_targets: dict[str, str]) -> str:
+def _htaccess(
+    html_targets: dict[str, str],
+    rdf_targets: dict[str, str],
+    profile: dict[str, Any],
+) -> str:
+    version = str(profile.get("version", "2.1.0"))
+    escaped_version = version.replace(".", r"\.")
     return f"""Options +FollowSymLinks
 RewriteEngine On
 
@@ -85,13 +91,13 @@ RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
 # Published H2KG v2 taxonomy
 RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
-RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
 
 RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
-RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {rdf_targets['v2_taxonomy_jsonld']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {rdf_targets['v2_taxonomy_jsonld']} [R=302,L]
 
-RewriteRule ^hydrogen-ontology/releases/2\.0\.0$ {html_targets['v2_taxonomy']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {html_targets['v2_taxonomy']} [R=302,L]
 
 RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
@@ -186,7 +192,7 @@ current H2KG release targets.
 
 ### H2KG v2 taxonomy release
 
-- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0`
+- Version IRI: `{profile['version_iri']}`
 - Browser / HTML: `{html_targets['v2_taxonomy']}`
 - Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
 - JSON-LD: `{rdf_targets['v2_taxonomy_jsonld']}`
@@ -239,7 +245,8 @@ reference for resolver maintenance and does not require a new W3ID registration.
 """
 
 
-def _curl_tests() -> str:
+def _curl_tests(profile: dict[str, Any]) -> str:
+    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0"))
     return f"""#!/usr/bin/env sh
 set -eu
 
@@ -253,7 +260,7 @@ curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/pemfc/hydrogen-ontology
 curl -I -H "Accept: text/html" https://w3id.org/h2kg/pemwe/hydrogen-ontology
 curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/pemwe/hydrogen-ontology
 
-curl -I -H "Accept: text/html" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
-curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
-curl -I -H "Accept: application/ld+json" https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0
+curl -I -H "Accept: text/html" {version_iri}
+curl -I -H "Accept: text/turtle" {version_iri}
+curl -I -H "Accept: application/ld+json" {version_iri}
 """

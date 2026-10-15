@@ -133,7 +133,12 @@ def build_decode_workflow_release(
             itc_review_path,
         )
         append_multiscale_interface(graph, interface)
-        _canonicalize_duplicate_anchors(graph, matrix_rows)
+    _apply_intrinsic_h2kg_roles(
+        graph,
+        matrix_rows,
+        output_root / "ontology" / "taxonomy_registry.json",
+    )
+    _canonicalize_duplicate_anchors(graph, matrix_rows)
     if itc_review is not None:
         attach_itc_profile_overlay(graph, itc_review)
     graph["counts"]["workflow_count"] = len(graph["workflows"])
@@ -144,6 +149,8 @@ def build_decode_workflow_release(
     graph["counts"]["manual_workflow_count"] = sum(
         workflow.get("source_kind") == "source_manual_json" for workflow in graph["workflows"]
     )
+    graph["counts"]["source_node_count"] = len(graph["nodes"])
+    graph["counts"]["source_edge_count"] = len(graph["source_edges"])
     _build_edge_alignment(graph, semantic_projections)
     semantic_overview = _build_semantic_overview(graph)
     role_conflicts = semantic_overview["role_conflicts"]
@@ -621,6 +628,82 @@ def _canonicalize_duplicate_anchors(
         )
 
 
+def _apply_intrinsic_h2kg_roles(
+    graph: dict[str, Any],
+    matrix_rows: list[dict[str, str]],
+    taxonomy_registry_path: Path,
+) -> None:
+    """Use the H2KG taxonomy as the authority for mapped occurrence roles."""
+
+    if not taxonomy_registry_path.exists():
+        graph["counts"]["intrinsic_role_correction_count"] = 0
+        return
+    registry = load_json(taxonomy_registry_path)
+    terms = {
+        str(row.get("iri")): row
+        for row in registry.get("terms", [])
+        if row.get("disposition", "active_local_class") == "active_local_class"
+    }
+    role_aliases = {
+        "Characteristic": "Property",
+        "ParameterRecord": "Parameter",
+    }
+    role_iris = {
+        "Property": H2KG + "Property",
+        "Parameter": H2KG + "Parameter",
+        "SoftwareArtifact": H2KG + "SoftwareArtifact",
+        "NormalizationBasis": H2KG + "NormalizationBasis",
+        "ReferenceScale": H2KG + "ReferenceScale",
+        "Specification": H2KG + "Specification",
+    }
+    corrections = 0
+    node_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    for node in graph.get("nodes", []):
+        node_by_key[(str(node.get("workflow_id", "")), str(node.get("source_id", "")))] = node
+        anchor_iri = str(node.get("anchor_id", ""))
+        term = terms.get(anchor_iri)
+        if term is None:
+            node.setdefault("workflow_role", str(node.get("semantic_role", "")))
+            continue
+        intrinsic = role_aliases.get(
+            str(term.get("corrected_semantic_role", "")),
+            str(term.get("corrected_semantic_role", "")),
+        )
+        if not intrinsic:
+            continue
+        previous = str(node.get("semantic_role", ""))
+        node["workflow_role"] = previous
+        node["intrinsic_semantic_role"] = intrinsic
+        node["semantic_role"] = intrinsic
+        node["canonical_role_iri"] = role_iris.get(intrinsic, H2KG + intrinsic)
+        node["role_assignment"] = "h2kg_taxonomy_2_1"
+        if previous != intrinsic:
+            corrections += 1
+
+    for row in matrix_rows:
+        node = node_by_key.get((row.get("workflow_id", ""), row.get("source_node_id", "")))
+        if node is None:
+            continue
+        row["workflow_role"] = str(node.get("workflow_role", ""))
+        row["semantic_role"] = str(node.get("semantic_role", ""))
+        row["canonical_role_iri"] = str(node.get("canonical_role_iri", ""))
+        row["role_assignment"] = str(node.get("role_assignment", ""))
+
+    nodes_by_anchor: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for node in graph.get("nodes", []):
+        if node.get("anchor_id"):
+            nodes_by_anchor[str(node["anchor_id"])].append(node)
+    for anchor in graph.get("anchors", []):
+        occurrences = nodes_by_anchor.get(str(anchor.get("id", "")), [])
+        roles = sorted({str(node.get("semantic_role", "")) for node in occurrences if node.get("semantic_role")})
+        role_iri_values = sorted({str(node.get("canonical_role_iri", "")) for node in occurrences if node.get("canonical_role_iri")})
+        if len(roles) == 1:
+            anchor["semantic_role"] = roles[0]
+        if len(role_iri_values) == 1:
+            anchor["canonical_role_iri"] = role_iri_values[0]
+    graph["counts"]["intrinsic_role_correction_count"] = corrections
+
+
 def _build_edge_alignment(
     graph: dict[str, Any],
     explicit_projections: dict[tuple[str, str, str], dict[str, Any]],
@@ -659,7 +742,12 @@ def _build_edge_alignment(
             "semantic_projection_count": len(semantic_edges),
             "edge_classification_count": len(registry),
             "edge_outcome_counts": dict(sorted(outcome_counts.items())),
-            "property_value_proxy_count": len(projection_nodes),
+            "property_value_proxy_count": sum(
+                node.get("kind") == "value_proxy" for node in projection_nodes.values()
+            ),
+            "parameter_record_proxy_count": sum(
+                node.get("kind") == "parameter_record_proxy" for node in projection_nodes.values()
+            ),
         }
     )
 
@@ -717,9 +805,9 @@ def _classify_decode_edge(
             "reviewed",
         )
     elif source_role == "Measurement" and target_role == "Property":
-        direct(H2KG + "measures", source["id"], target["anchor_id"], "h2kg_direct", "measurement_property", "Measurement occurrence measures the mapped property.")
+        direct(H2KG + "measures", source["id"], target["id"], "h2kg_direct", "measurement_property", "Measurement occurrence measures the preserved property occurrence.")
     elif source_role == "Property" and target_role == "Measurement":
-        direct(H2KG + "measures", target["id"], source["anchor_id"], "h2kg_direct", "measurement_property_reversed", "Source property is a measured outcome; H2KG direction is measurement to property.")
+        direct(H2KG + "measures", target["id"], source["id"], "h2kg_direct", "measurement_property_reversed", "Source property occurrence is a measured outcome; H2KG direction is measurement to property.")
     elif _is_activity(source) and _is_activity(target):
         direct(PROV_WAS_INFORMED_BY, target["id"], source["id"], "prov_derivation", "activity_sequence", "Target activity follows the source activity in the preserved workflow.")
     elif _is_activity(target):
@@ -727,8 +815,14 @@ def _classify_decode_edge(
             direct(H2KG + "hasInputMaterial", target["id"], source["id"], "h2kg_direct", "activity_input_material", "Activity consumes the source material; H2KG direction is activity to material.")
         elif source_role == "Parameter":
             direct(H2KG + "hasParameter", target["id"], source["id"], "h2kg_direct", "activity_parameter", "Activity uses the source parameter; H2KG direction is activity to parameter.")
+        elif source_role == "Property" and _is_parameter_use(source):
+            proxy = _parameter_record_proxy(source, projection_nodes)
+            direct(H2KG + "hasParameter", target["id"], proxy["id"], "h2kg_reified", "parameter_record_input", "The activity uses a Parameter record that refers to the preserved property occurrence.")
+            direct(H2KG + "ofProperty", proxy["id"], source["id"], "h2kg_reified", "parameter_record_property", "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.")
         elif source_role == "Instrument":
             direct(H2KG + "usesInstrument", target["id"], source["id"], "h2kg_direct", "activity_instrument", "Activity uses the source instrument; H2KG direction is activity to instrument.")
+        elif source_role == "SoftwareArtifact":
+            direct(H2KG + "usesSoftware", target["id"], source["id"], "h2kg_direct", "activity_software", "Activity uses the source software artifact.")
         elif source_role == "Data":
             direct(H2KG + "hasInputData", target["id"], source["id"], "h2kg_direct", "activity_input_data", "Activity consumes the source data; H2KG direction is activity to data.")
         elif source_role == "Metadata":
@@ -736,14 +830,20 @@ def _classify_decode_edge(
         elif source_role == "Property":
             proxy = _property_value_proxy(source, projection_nodes)
             direct(H2KG + "hasInputData", target["id"], proxy["id"], "h2kg_reified", "property_value_input", "Property-valued source is reified as a DataPoint consumed by the activity.")
-            direct(H2KG + "ofProperty", proxy["id"], source["anchor_id"], "h2kg_reified", "property_value_type", "Reified DataPoint is typed by the source property anchor.")
+            direct(H2KG + "ofProperty", proxy["id"], source["id"], "h2kg_reified", "property_value_type", "Reified DataPoint refers to the preserved source property occurrence.")
     elif _is_activity(source):
         if target_role == "Matter":
             direct(H2KG + "hasOutputMaterial", source["id"], target["id"], "h2kg_direct", "activity_output_material", "Activity produces the target material.")
         elif target_role == "Parameter":
             direct(H2KG + "hasParameter", source["id"], target["id"], "h2kg_direct", "activity_parameter", "Target parameter describes the activity.")
+        elif target_role == "Property" and _is_parameter_use(target):
+            proxy = _parameter_record_proxy(target, projection_nodes)
+            direct(H2KG + "hasParameter", source["id"], proxy["id"], "h2kg_reified", "parameter_record_output_direction", "The property is represented through a Parameter record; the preserved source direction remains separately available.")
+            direct(H2KG + "ofProperty", proxy["id"], target["id"], "h2kg_reified", "parameter_record_property", "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.")
         elif target_role == "Instrument":
             direct(H2KG + "usesInstrument", source["id"], target["id"], "h2kg_direct", "activity_instrument", "Target instrument is used by the activity.")
+        elif target_role == "SoftwareArtifact":
+            direct(H2KG + "usesSoftware", source["id"], target["id"], "h2kg_direct", "activity_software", "The activity uses the target software artifact.")
         elif target_role == "Data":
             direct(H2KG + "hasOutputData", source["id"], target["id"], "h2kg_direct", "activity_output_data", "Activity produces the target data.")
         elif target_role == "Metadata":
@@ -751,23 +851,23 @@ def _classify_decode_edge(
         elif target_role == "Property":
             proxy = _property_value_proxy(target, projection_nodes)
             direct(H2KG + "hasOutputData", source["id"], proxy["id"], "h2kg_reified", "property_value_output", "Activity produces a DataPoint representing the target property.")
-            direct(H2KG + "ofProperty", proxy["id"], target["anchor_id"], "h2kg_reified", "property_value_type", "Reified DataPoint is typed by the target property anchor.")
+            direct(H2KG + "ofProperty", proxy["id"], target["id"], "h2kg_reified", "property_value_type", "Reified DataPoint refers to the preserved target property occurrence.")
     elif source_role == "Data" and target_role == "Data":
         direct(PROV_WAS_DERIVED_FROM, target["id"], source["id"], "prov_derivation", "data_derivation", "Target data is derived from source data in the preserved workflow.")
     elif source_role == "Property" and target_role == "Property":
         source_proxy = _property_value_proxy(source, projection_nodes)
         target_proxy = _property_value_proxy(target, projection_nodes)
         direct(PROV_WAS_DERIVED_FROM, target_proxy["id"], source_proxy["id"], "h2kg_reified", "property_value_derivation", "Property-valued workflow dependency is represented as provenance between DataPoint proxies.")
-        direct(H2KG + "ofProperty", source_proxy["id"], source["anchor_id"], "h2kg_reified", "property_value_type", "Source DataPoint proxy is typed by its property anchor.")
-        direct(H2KG + "ofProperty", target_proxy["id"], target["anchor_id"], "h2kg_reified", "property_value_type", "Target DataPoint proxy is typed by its property anchor.")
+        direct(H2KG + "ofProperty", source_proxy["id"], source["id"], "h2kg_reified", "property_value_type", "Source DataPoint proxy refers to its property occurrence.")
+        direct(H2KG + "ofProperty", target_proxy["id"], target["id"], "h2kg_reified", "property_value_type", "Target DataPoint proxy refers to its property occurrence.")
     elif source_role == "Data" and target_role == "Property":
         proxy = _property_value_proxy(target, projection_nodes)
         direct(PROV_WAS_DERIVED_FROM, proxy["id"], source["id"], "h2kg_reified", "data_to_property_value", "Property-valued result is reified as a DataPoint derived from source data.")
-        direct(H2KG + "ofProperty", proxy["id"], target["anchor_id"], "h2kg_reified", "property_value_type", "Reified DataPoint is typed by the target property anchor.")
+        direct(H2KG + "ofProperty", proxy["id"], target["id"], "h2kg_reified", "property_value_type", "Reified DataPoint refers to the target property occurrence.")
     elif source_role == "Property" and target_role == "Data":
         proxy = _property_value_proxy(source, projection_nodes)
         direct(PROV_WAS_DERIVED_FROM, target["id"], proxy["id"], "h2kg_reified", "property_value_to_data", "Target data is derived from a reified property-valued source.")
-        direct(H2KG + "ofProperty", proxy["id"], source["anchor_id"], "h2kg_reified", "property_value_type", "Reified DataPoint is typed by the source property anchor.")
+        direct(H2KG + "ofProperty", proxy["id"], source["id"], "h2kg_reified", "property_value_type", "Reified DataPoint refers to the source property occurrence.")
 
     if not semantic_edges:
         rationale = "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
@@ -789,12 +889,14 @@ def _classify_decode_edge(
             "source_graphml_id": source["source_id"],
             "source_label": source["label"],
             "source_semantic_role": source_role,
+            "source_workflow_role": str(source.get("workflow_role", source_role)),
             "source_anchor_iri": source.get("anchor_id", ""),
             "target_occurrence_id": target["id"],
             "target_node_id": target["source_id"],
             "target_graphml_id": target["source_id"],
             "target_label": target["label"],
             "target_semantic_role": target_role,
+            "target_workflow_role": str(target.get("workflow_role", target_role)),
             "target_anchor_iri": target.get("anchor_id", ""),
             "source_description": edge.get("description", ""),
             "projection_outcome": outcome,
@@ -813,6 +915,10 @@ def _is_activity(node: dict[str, Any]) -> bool:
     return str(node.get("semantic_role", "")) in ACTIVITY_ROLES
 
 
+def _is_parameter_use(node: dict[str, Any]) -> bool:
+    return str(node.get("workflow_role", "")) in {"Parameter", "ParameterRecord"}
+
+
 def _normalise_predicate_direction(
     predicate: str,
     semantic_source: str,
@@ -826,11 +932,14 @@ def _normalise_predicate_direction(
         ("hasInputMaterial", "Matter"),
         ("hasParameter", "Parameter"),
         ("usesInstrument", "Instrument"),
+        ("usesSoftware", "SoftwareArtifact"),
         ("hasInputData", "Data"),
         ("hasMetadata", "Metadata"),
         ("measures", "Property"),
     }
     if (local_name, str(source.get("semantic_role", ""))) in reversible_inputs and _is_activity(target):
+        return semantic_target, semantic_source
+    if local_name == "hasParameter" and _is_parameter_use(source) and _is_activity(target):
         return semantic_target, semantic_source
     return semantic_source, semantic_target
 
@@ -846,11 +955,33 @@ def _property_value_proxy(node: dict[str, Any], projection_nodes: dict[str, dict
             "kind": "value_proxy",
             "workflow_id": node["workflow_id"],
             "source_occurrence_id": node["id"],
+            "source_occurrence_iri": node["iri"],
             "source_anchor_iri": node.get("anchor_id", ""),
             "canonical_role_iri": H2KG + "DataPoint",
             "semantic_role": "DataPoint",
             "rdf_type": H2KG + "DataPoint",
             "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node.",
+        },
+    )
+
+
+def _parameter_record_proxy(node: dict[str, Any], projection_nodes: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    proxy_id = f"projection::parameter::{node['id']}"
+    return projection_nodes.setdefault(
+        proxy_id,
+        {
+            "id": proxy_id,
+            "iri": f"{node['iri']}/parameter-record",
+            "label": f"{node['label']} parameter record",
+            "kind": "parameter_record_proxy",
+            "workflow_id": node["workflow_id"],
+            "source_occurrence_id": node["id"],
+            "source_occurrence_iri": node["iri"],
+            "source_anchor_iri": node.get("anchor_id", ""),
+            "canonical_role_iri": H2KG + "Parameter",
+            "semantic_role": "Parameter",
+            "rdf_type": H2KG + "Parameter",
+            "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty.",
         },
     )
 
@@ -1053,6 +1184,28 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         for edge in graph["semantic_edges"]
         if edge.get("source_dependency_id") not in source_dependency_ids
     ]
+    endpoint_roles = {
+        node["id"]: str(node.get("semantic_role", ""))
+        for node in [*graph["nodes"], *graph.get("projection_nodes", [])]
+    }
+    invalid_of_property_edges = sorted(
+        edge["id"]
+        for edge in graph["semantic_edges"]
+        if edge.get("predicate") == H2KG + "ofProperty"
+        and endpoint_roles.get(edge.get("target")) != "Property"
+    )
+    invalid_has_parameter_edges = sorted(
+        edge["id"]
+        for edge in graph["semantic_edges"]
+        if edge.get("predicate") == H2KG + "hasParameter"
+        and endpoint_roles.get(edge.get("target")) != "Parameter"
+    )
+    invalid_measures_edges = sorted(
+        edge["id"]
+        for edge in graph["semantic_edges"]
+        if edge.get("predicate") == H2KG + "measures"
+        and endpoint_roles.get(edge.get("target")) != "Property"
+    )
     unexpected_cross_links = [
         edge["id"]
         for edge in graph["source_edges"]
@@ -1117,11 +1270,19 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         and base_graphml_node_count == 2951
         and base_graphml_edge_count == 3986
     ) if snapshot.get("manual_overlay") else True
+    full_catalogue_parity = (
+        len(graph.get("workflows", [])) == 137
+        and len(graph.get("nodes", [])) == 3307
+        and len(graph.get("source_edges", [])) == 4463
+    ) if snapshot.get("manual_overlay") and graph.get("derived_interfaces") else True
     status = "passed" if (
         source_pairs == preserved_pairs
         and not invalid_edges
         and not invalid_semantic_edges
         and not untraceable_semantic_edges
+        and not invalid_of_property_edges
+        and not invalid_has_parameter_edges
+        and not invalid_measures_edges
         and not unexpected_cross_links
         and not missing_overview_occurrence_ids
         and not unexpected_overview_occurrence_ids
@@ -1134,6 +1295,7 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         and not unregistered_semantic_edge_ids
         and not invalid_published_dependency_ids
         and base_graphml_parity
+        and full_catalogue_parity
     ) else "failed"
     return {
         "status": status,
@@ -1145,11 +1307,18 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         "base_graphml_node_count": base_graphml_node_count,
         "base_graphml_edge_count": base_graphml_edge_count,
         "base_graphml_parity": base_graphml_parity,
+        "catalogue_entry_count": len(graph.get("workflows", [])),
+        "federated_occurrence_count": len(graph.get("nodes", [])),
+        "federated_source_dependency_count": len(graph.get("source_edges", [])),
+        "full_catalogue_parity": full_catalogue_parity,
         "missing_source_pairs": sorted(source_pairs - preserved_pairs),
         "unexpected_source_pairs": sorted(preserved_pairs - source_pairs),
         "invalid_source_edge_ids": invalid_edges,
         "invalid_semantic_edge_ids": invalid_semantic_edges,
         "untraceable_semantic_edge_ids": untraceable_semantic_edges,
+        "invalid_of_property_edge_ids": invalid_of_property_edges,
+        "invalid_has_parameter_edge_ids": invalid_has_parameter_edges,
+        "invalid_measures_edge_ids": invalid_measures_edges,
         "unexpected_cross_workflow_source_edge_ids": unexpected_cross_links,
         "missing_semantic_overview_occurrence_ids": missing_overview_occurrence_ids,
         "unexpected_semantic_overview_occurrence_ids": unexpected_overview_occurrence_ids,
@@ -1802,7 +1971,7 @@ def _write_mapping_matrix(path: Path, rows: list[dict[str, str]]) -> Path:
     fields = [
         "workflow_id", "source_filename", "source_node_id", "source_label", "native_category",
         "mapping_state", "decision", "anchor_iri", "anchor_label", "canonical_role_iri",
-        "semantic_role", "role_assignment", "confidence", "evidence",
+        "semantic_role", "workflow_role", "role_assignment", "confidence", "evidence",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -1958,8 +2127,8 @@ def _write_edge_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
     """Write a one-row-per-source-edge semantic decision register."""
     fields = [
         "source_dependency_id", "workflow_id", "source_kind", "source_occurrence_id",
-        "source_node_id", "source_graphml_id", "source_label", "source_semantic_role", "source_anchor_iri",
-        "target_occurrence_id", "target_node_id", "target_graphml_id", "target_label", "target_semantic_role",
+        "source_node_id", "source_graphml_id", "source_label", "source_semantic_role", "source_workflow_role", "source_anchor_iri",
+        "target_occurrence_id", "target_node_id", "target_graphml_id", "target_label", "target_semantic_role", "target_workflow_role",
         "target_anchor_iri", "source_description", "projection_outcome", "projection_pattern",
         "semantic_predicates", "semantic_edge_ids", "semantic_direction", "confidence",
         "review_status", "rationale",
@@ -1982,6 +2151,8 @@ def _workflow_jsonld(structural: dict[str, Any]) -> dict[str, Any]:
     iri_by_id.update({anchor["id"]: anchor["id"] for anchor in structural.get("anchors", [])})
     for node in structural["nodes"]:
         types = [PROV + "Entity"]
+        if node.get("anchor_id"):
+            types.append(node["anchor_id"])
         if node.get("canonical_role_iri"):
             types.append(node["canonical_role_iri"])
         item = {
@@ -1997,12 +2168,10 @@ def _workflow_jsonld(structural: dict[str, Any]) -> dict[str, Any]:
     for proxy in structural.get("projection_nodes", []):
         item = {
             "@id": proxy["iri"],
-            "@type": [PROV + "Entity", H2KG + "DataPoint"],
+            "@type": [PROV + "Entity", proxy.get("rdf_type", H2KG + "DataPoint")],
             RDFS_LABEL: [proxy["label"]],
             DECODE_DERIVED_FROM_OCCURRENCE: [{"@id": iri_by_id[proxy["source_occurrence_id"]]}],
         }
-        if proxy.get("source_anchor_iri"):
-            item[H2KG + "ofProperty"] = [{"@id": proxy["source_anchor_iri"]}]
         items.append(item)
     for anchor in structural.get("anchors", []):
         if anchor["id"].startswith(H2KG):
@@ -2049,16 +2218,16 @@ def _workflow_turtle(structural: dict[str, Any]) -> str:
     iri_by_id.update({anchor["id"]: anchor["id"] for anchor in structural.get("anchors", [])})
     for node in structural["nodes"]:
         types = ["prov:Entity"]
+        if node.get("anchor_id"):
+            types.append(f"<{node['anchor_id']}>")
         if node.get("canonical_role_iri"):
             types.append(f"<{node['canonical_role_iri']}>")
         lines.append(f"<{node['iri']}> a {', '.join(types)} ; rdfs:label {_ttl_literal(node['label'])} .")
         if node.get("anchor_id"):
             lines.append(f"<{node['iri']}> decode:mappedToAnchor <{node['anchor_id']}> .")
     for proxy in structural.get("projection_nodes", []):
-        lines.append(f"<{proxy['iri']}> a h2kg:DataPoint, prov:Entity ; rdfs:label {_ttl_literal(proxy['label'])} .")
+        lines.append(f"<{proxy['iri']}> a <{proxy.get('rdf_type', H2KG + 'DataPoint')}>, prov:Entity ; rdfs:label {_ttl_literal(proxy['label'])} .")
         lines.append(f"<{proxy['iri']}> decode:derivedFromOccurrence <{iri_by_id[proxy['source_occurrence_id']]}> .")
-        if proxy.get("source_anchor_iri"):
-            lines.append(f"<{proxy['iri']}> h2kg:ofProperty <{proxy['source_anchor_iri']}> .")
     for anchor in structural.get("anchors", []):
         if not anchor["id"].startswith(H2KG) and anchor.get("canonical_role_iri"):
             lines.append(f"<{anchor['id']}> a <{anchor['canonical_role_iri']}> ; rdfs:label {_ttl_literal(anchor['label'])} .")
@@ -2098,6 +2267,7 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - Classified source dependencies: {graph['counts'].get('edge_classification_count', 0)}
 - H2KG/PROV semantic projection triples: {graph['counts'].get('semantic_projection_count', 0)}
 - Derived property-value DataPoint proxies: {graph['counts'].get('property_value_proxy_count', 0)}
+- Derived contextual Parameter-record proxies: {graph['counts'].get('parameter_record_proxy_count', 0)}
 - Reviewed workflow dependencies: {graph['counts'].get('workflow_dependency_count', 0)}
 - Published workflow dependencies: {graph['counts'].get('published_workflow_dependency_count', 0)}
 - Structural validation: {validation['status']}
@@ -2114,7 +2284,7 @@ Raw GraphML files and the original attached manual JSON are not redistributed in
 
 `decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 
-`decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.
+`decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG. Property-valued inputs use contextual `Parameter`-record proxies linked to preserved property occurrences through `ofProperty`; calculated values use `DataPoint` proxies with the same intrinsic-property pattern.
 
 `decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
 

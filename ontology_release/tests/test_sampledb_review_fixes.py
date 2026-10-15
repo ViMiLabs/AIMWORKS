@@ -254,25 +254,33 @@ def test_sampledb_review_public_anchors_and_explorer_links_exist() -> None:
     ]:
         assert f"{H2KG}{local}" in node_ids
 
-    links = {
-        (link["source"], link["target"], link["predicate"])
+    workflow_links = {
+        (
+            link["source"],
+            link["target"],
+            link.get("edgeFamily", ""),
+            link.get("profilePath", ""),
+        )
         for link in explorer["links"]
     }
     assert (
         f"{H2KG}FuelCellPolarizationMeasurement",
         f"{H2KG}PolarizationCurveAnalysis",
-        f"{H2KG}hasSubProcess",
-    ) in links
+        "workflow_usage",
+        "hasSubProcess",
+    ) in workflow_links
     assert (
         f"{H2KG}PolarizationCurveAnalysis",
         f"{H2KG}MEAPolarization",
-        f"{H2KG}isSubProcessOf",
-    ) not in links
+        "workflow_usage",
+        "isSubProcessOf",
+    ) not in workflow_links
     assert (
         f"{H2KG}FuelCellTestStation",
         f"{H2KG}FuelCellTestCell",
-        f"{H2KG}hasPart",
-    ) in links
+        "workflow_usage",
+        "hasPart",
+    ) in workflow_links
 
 
 def test_sampledb_review_tbox_process_relations_are_disciplined() -> None:

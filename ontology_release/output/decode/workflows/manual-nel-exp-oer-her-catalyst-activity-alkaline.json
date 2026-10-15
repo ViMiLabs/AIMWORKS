@@ -72,7 +72,8 @@
       "semantic_role": "Measurement",
       "role_assignment": "explicit_mapping",
       "confidence": "reviewed",
-      "mapping_evidence": "Reviewed manual DECODE method role; public vocabulary promotion is deferred."
+      "mapping_evidence": "Reviewed manual DECODE method role; public vocabulary promotion is deferred.",
+      "workflow_role": "Measurement"
     },
     {
       "id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-catalyst-powder-ceb45b3b74",
@@ -97,9 +98,11 @@
       "decision": "existing_h2kg_mapping",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "material_category_default",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "unreviewed",
-      "mapping_evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor."
+      "mapping_evidence": "Reviewed exact domain concept mapping to the public H2KG catalyst-powder anchor.",
+      "workflow_role": "Matter",
+      "intrinsic_semantic_role": "Matter"
     },
     {
       "id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
@@ -126,7 +129,8 @@
       "semantic_role": "Property",
       "role_assignment": "electrolyte_composition_is_property",
       "confidence": "unreviewed",
-      "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision."
+      "mapping_evidence": "Reviewed recurring DECODE material descriptor anchor pending a domain-specific H2KG alignment decision.",
+      "workflow_role": "Property"
     },
     {
       "id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::output-cell-tafel-slope-6590d9a40f",
@@ -153,7 +157,8 @@
       "semantic_role": "Property",
       "role_assignment": "cell_tafel_slope_is_property",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::output-linear-sweep-voltammetry-378906e6e6",
@@ -190,7 +195,8 @@
       "semantic_role": "Data",
       "role_assignment": "explicit_mapping",
       "confidence": "reviewed",
-      "mapping_evidence": "Reviewed DECODE anchor pending controlled H2KG vocabulary review."
+      "mapping_evidence": "Reviewed DECODE anchor pending controlled H2KG vocabulary review.",
+      "workflow_role": "Data"
     }
   ],
   "projection_nodes": [],
@@ -399,32 +405,32 @@
       "review_status": "classified"
     },
     {
-      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::ce1e18f57c",
+      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::6934512cf6",
       "workflow_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline",
       "source": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
+      "target": "manual-nel-exp-oer-her-catalyst-activity-alkaline::input-electrolyte-composition-e69e18ddfd",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
-      "evidence": "Source property is a measured outcome; H2KG direction is measurement to property.",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
     {
-      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000::80cdc7b63d",
+      "id": "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000::411f536860",
       "workflow_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline",
       "source": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
-      "target": "https://w3id.org/h2kg/decode/workflow/anchor/cell-tafel-slope-device",
+      "target": "manual-nel-exp-oer-her-catalyst-activity-alkaline::output-cell-tafel-slope-6590d9a40f",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
-      "evidence": "Measurement occurrence measures the mapped property.",
+      "evidence": "Measurement occurrence measures the preserved property occurrence.",
       "confidence": "rule_curated",
       "review_status": "classified"
     },
@@ -454,12 +460,14 @@
       "source_graphml_id": "input-catalyst-powder-ceb45b3b74",
       "source_label": "Catalyst powder",
       "source_semantic_role": "Matter",
+      "source_workflow_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystPowder",
       "target_occurrence_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "OER/HER Catalyst Activity in Alkaline Conditions",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/oer-her-catalyst-activity-in-alkaline-conditions-bb7f4ca70f",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
@@ -482,24 +490,26 @@
       "source_graphml_id": "input-electrolyte-composition-e69e18ddfd",
       "source_label": "Electrolyte composition",
       "source_semantic_role": "Property",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/electrolyte-composition",
       "target_occurrence_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "OER/HER Catalyst Activity in Alkaline Conditions",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/oer-her-catalyst-activity-in-alkaline-conditions-bb7f4ca70f",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property_reversed",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::ce1e18f57c"
+        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-input-001::6934512cf6"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Source property is a measured outcome; H2KG direction is measurement to property."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000",
@@ -510,24 +520,26 @@
       "source_graphml_id": "method",
       "source_label": "OER/HER Catalyst Activity in Alkaline Conditions",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/oer-her-catalyst-activity-in-alkaline-conditions-bb7f4ca70f",
       "target_occurrence_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::output-cell-tafel-slope-6590d9a40f",
       "target_node_id": "output-cell-tafel-slope-6590d9a40f",
       "target_graphml_id": "output-cell-tafel-slope-6590d9a40f",
       "target_label": "Cell Tafel slope",
       "target_semantic_role": "Property",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cell-tafel-slope-device",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
       "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000::80cdc7b63d"
+        "semantic::manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-000::411f536860"
       ],
-      "semantic_direction": "derived_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "review_status": "classified",
-      "rationale": "Measurement occurrence measures the mapped property."
+      "rationale": "Measurement occurrence measures the preserved property occurrence."
     },
     {
       "source_dependency_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::core-output-001",
@@ -538,12 +550,14 @@
       "source_graphml_id": "method",
       "source_label": "OER/HER Catalyst Activity in Alkaline Conditions",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/oer-her-catalyst-activity-in-alkaline-conditions-bb7f4ca70f",
       "target_occurrence_id": "manual-nel-exp-oer-her-catalyst-activity-alkaline::output-linear-sweep-voltammetry-378906e6e6",
       "target_node_id": "output-linear-sweep-voltammetry-378906e6e6",
       "target_graphml_id": "output-linear-sweep-voltammetry-378906e6e6",
       "target_label": "Linear Sweep Voltammetry",
       "target_semantic_role": "Data",
+      "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/linear-sweep-voltammetry-1fe3f3319d",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_direct",

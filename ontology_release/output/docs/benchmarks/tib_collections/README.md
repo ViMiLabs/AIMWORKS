@@ -24,4 +24,4 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `imported_availability.csv`: secondary import-inclusive evidence.
 - `automatic_harmonization_registry.json`: exact, machine-safe mappings and non-destructive label actions.
 
-Frozen inputs: `input\tib_collection_snapshot.json` and `input\tib_collection_candidate_cache.json`.
+Frozen inputs: `..\input\tib_collection_snapshot.json` and `..\input\tib_collection_candidate_cache.json`.

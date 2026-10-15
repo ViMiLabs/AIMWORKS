@@ -6,9 +6,9 @@ TIB catalogue snapshot: `2026-10-14T07:32:20+00:00`. Percentages use `2360` acti
 
 | Collection | Member ontologies | H2KG classes | exact iri reuse (%) | machine exact equivalent (%) | h2kg narrower (%) | h2kg broader (%) | related non equivalent (%) | ambiguous abstained (%) | unmatched (%) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| NFDI4Cat | 24 | 2360 | 0.00 | 3.56 | 4.53 | 3.90 | 27.03 | 0.00 | 60.97 |
+| NFDI4Cat | 24 | 2360 | 0.00 | 3.56 | 4.58 | 3.90 | 26.99 | 0.00 | 60.97 |
 | NFDI4Energy | 27 | 2360 | 0.00 | 0.25 | 0.76 | 0.51 | 8.90 | 0.00 | 89.58 |
-| NFDI4Ing | 114 | 2360 | 0.00 | 2.16 | 4.66 | 1.91 | 23.31 | 0.00 | 67.97 |
+| NFDI4Ing | 114 | 2360 | 0.00 | 2.16 | 4.70 | 1.91 | 23.26 | 0.00 | 67.97 |
 
 ## Ontology-level supplementary table
 
@@ -23,7 +23,7 @@ TIB catalogue snapshot: `2026-10-14T07:32:20+00:00`. Percentages use `2360` acti
 | NFDI4Cat | chmo - Chemical Methods Ontology | 3263 | 2360 | 0.00 | 1.27 | 0.72 | 1.31 | 11.10 | 0.00 | 85.59 |
 | NFDI4Cat | cif - Crystallography domain ontology | 1804 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.08 | 0.00 | 99.92 |
 | NFDI4Cat | edam - EDAM - The ontology of data analysis and management | 3539 | 2360 | 0.00 | 0.00 | 0.38 | 0.30 | 4.32 | 0.00 | 95.00 |
-| NFDI4Cat | emmo - The European Materials Modelling Ontology | 1191 | 2360 | 0.00 | 0.13 | 0.76 | 0.00 | 3.35 | 0.00 | 95.76 |
+| NFDI4Cat | emmo - The European Materials Modelling Ontology | 1191 | 2360 | 0.00 | 0.13 | 0.81 | 0.00 | 3.31 | 0.00 | 95.76 |
 | NFDI4Cat | envo - The Environment Ontology | 6936 | 2360 | 0.00 | 0.08 | 0.72 | 0.55 | 5.13 | 0.00 | 93.52 |
 | NFDI4Cat | envo2023 - The Environment Ontology | 6996 | 2360 | 0.00 | 0.08 | 0.25 | 0.25 | 2.71 | 0.00 | 96.69 |
 | NFDI4Cat | m4i - Metadata4Ing: An ontology for describing the generation of research data within a scientific activity | 52 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.13 | 0.00 | 99.87 |
@@ -98,7 +98,7 @@ TIB catalogue snapshot: `2026-10-14T07:32:20+00:00`. Percentages use `2360` acti
 | NFDI4Ing | dr - Digital Reference | 1238 | 2360 | 0.00 | 0.04 | 0.04 | 0.13 | 3.26 | 0.00 | 96.53 |
 | NFDI4Ing | duo - The Data Use Ontology | 308 | 2360 | 0.00 | 0.04 | 0.00 | 0.00 | 0.08 | 0.00 | 99.87 |
 | NFDI4Ing | edam - EDAM - The ontology of data analysis and management | 3539 | 2360 | 0.00 | 0.00 | 0.38 | 0.30 | 4.32 | 0.00 | 95.00 |
-| NFDI4Ing | emmo - The European Materials Modelling Ontology | 1191 | 2360 | 0.00 | 0.13 | 0.76 | 0.00 | 3.35 | 0.00 | 95.76 |
+| NFDI4Ing | emmo - The European Materials Modelling Ontology | 1191 | 2360 | 0.00 | 0.13 | 0.81 | 0.00 | 3.31 | 0.00 | 95.76 |
 | NFDI4Ing | fabio - The FRBR-aligned Bibliographic Ontology (FaBiO) | 274 | 2360 | 0.00 | 0.00 | 0.17 | 0.08 | 0.81 | 0.00 | 98.94 |
 | NFDI4Ing | fair - FAIR Vocabulary | 5 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 100.00 |
 | NFDI4Ing | fiestaiot - FIESTA-IoT Ontology | 483 | 2360 | 0.00 | 0.00 | 0.00 | 0.13 | 1.27 | 0.00 | 98.60 |
@@ -153,7 +153,7 @@ TIB catalogue snapshot: `2026-10-14T07:32:20+00:00`. Percentages use `2360` acti
 | NFDI4Ing | s4ehaw - SAREF4EHAW: an extension of SAREF for eHealth Ageing Well domain | 112 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.04 | 0.00 | 99.96 |
 | NFDI4Ing | s4ener - SAREF for Energy Flexibility | 112 | 2360 | 0.00 | 0.04 | 0.00 | 0.00 | 0.17 | 0.00 | 99.79 |
 | NFDI4Ing | s4envi - SAREF4ENVI: an extension of SAREF for the Environment domain | 107 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.17 | 0.00 | 99.83 |
-| NFDI4Ing | s4inma - SAREF4INMA: an extension of SAREF for the industry and manufacturing domain | 122 | 2360 | 0.00 | 0.00 | 0.34 | 0.00 | 0.17 | 0.00 | 99.49 |
+| NFDI4Ing | s4inma - SAREF4INMA: an extension of SAREF for the industry and manufacturing domain | 122 | 2360 | 0.00 | 0.00 | 0.38 | 0.00 | 0.13 | 0.00 | 99.49 |
 | NFDI4Ing | s4lift - SAREF4LIFT: an extension of SAREF for the Smart Lifts domain | 128 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.04 | 0.00 | 99.96 |
 | NFDI4Ing | s4syst - SAREF4SYST: an extension of SAREF for typology of systems and their inter-connections | 3 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 100.00 |
 | NFDI4Ing | s4watr - SAREF4WATR: an extension of SAREF for the water domain | 114 | 2360 | 0.00 | 0.00 | 0.13 | 0.00 | 0.25 | 0.00 | 99.62 |
@@ -162,7 +162,7 @@ TIB catalogue snapshot: `2026-10-14T07:32:20+00:00`. Percentages use `2360` acti
 | NFDI4Ing | sd - The Software Description Ontology | 33 | 2360 | 0.00 | 0.00 | 0.00 | 0.08 | 0.47 | 0.00 | 99.45 |
 | NFDI4Ing | sepio - Ontology for Scientific Evidence and Provenance Information | 125 | 2360 | 0.00 | 0.04 | 0.00 | 0.00 | 0.25 | 0.00 | 99.70 |
 | NFDI4Ing | sh - W3C Shapes Constraint Language (SHACL) Vocabulary | 40 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.34 | 0.00 | 99.66 |
-| NFDI4Ing | sio - Semanticscience Integrated Ontology (SIO) | 1585 | 2360 | 0.00 | 0.04 | 1.23 | 0.13 | 4.28 | 0.00 | 94.32 |
+| NFDI4Ing | sio - Semanticscience Integrated Ontology (SIO) | 1585 | 2360 | 0.00 | 0.04 | 1.27 | 0.13 | 4.24 | 0.00 | 94.32 |
 | NFDI4Ing | soqk - QUDT VOCAB Systems of Quantity Kinds Release 3.2.1 | 75 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 100.00 |
 | NFDI4Ing | sosa - Sensor, Observation, Sample, and Actuator (SOSA) Ontology | 16 | 2360 | 0.00 | 0.00 | 0.04 | 0.00 | 0.04 | 0.00 | 99.92 |
 | NFDI4Ing | sou - QUDT VOCAB Systems of Units Release 3.2.1 | 75 | 2360 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 100.00 |

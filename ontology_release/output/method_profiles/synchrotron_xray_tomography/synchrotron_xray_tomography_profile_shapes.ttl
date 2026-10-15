@@ -9,17 +9,17 @@
   sh:class h2kg:Measurement ;
   sh:property [ sh:path h2kg:hasInputMaterial ; sh:minCount 1 ; sh:class h2kg:Matter ] ;
   sh:property [ sh:path h2kg:usesInstrument ; sh:minCount 1 ; sh:class h2kg:Instrument ] ;
-  sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;.
+  sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:node <https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/ParameterRecordShape> ] .
 
-<https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/DataPointShape> a sh:NodeShape ;
-  sh:targetSubjectsOf h2kg:fromMeasurement ;
-  sh:property [ sh:path h2kg:fromMeasurement ; sh:node [ sh:class h2kg:XRayComputedTomographyMeasurement ] ] ;
-  sh:property [ sh:path h2kg:ofProperty ; sh:in ( h2kg:Property ) ] ;
-  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class h2kg:Process ] ;
-  sh:or (
-    [ sh:property [ sh:path h2kg:hasQuantityValue ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path h2kg:hasMetadata ; sh:minCount 1 ] ]
-  ) .
+<https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/ParameterRecordShape> a sh:NodeShape ;
+  sh:class h2kg:Parameter ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( [ sh:class h2kg:XRayBeamEnergy ] [ sh:class h2kg:ExposureTime ] [ sh:class h2kg:PixelSize ] [ sh:class h2kg:ProjectionNumber ] [ sh:class h2kg:SpatialResolution ] [ sh:class h2kg:SampleDetectorDistance ] [ sh:class h2kg:Temperature ] [ sh:class h2kg:RelativeHumidity ] [ sh:class h2kg:Magnification ] ) ]
+  ] .
+
+
 
 <https://w3id.org/h2kg/profiles/synchrotron_xray_tomography/QuantityValueShape> a sh:NodeShape ;
   sh:targetObjectsOf h2kg:hasQuantityValue ;

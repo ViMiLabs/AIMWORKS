@@ -1,6 +1,6 @@
 # H2KG Overview
 
-H2KG is a domain-expert-reviewed ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment. It reuses selected concepts from HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS while preserving its hydrogen-domain scope.
+H2KG is a domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment. It reuses selected concepts from HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS while preserving its hydrogen-domain scope.
 
 ## In Scope
 

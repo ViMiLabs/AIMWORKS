@@ -10,19 +10,32 @@
   sh:property [ sh:path h2kg:hasInputMaterial ; sh:minCount 1 ; sh:class h2kg:Matter ] ;
   sh:property [ sh:path h2kg:usesInstrument ; sh:minCount 1 ; sh:class h2kg:Instrument ] ;
   sh:property [ sh:path h2kg:hasOutputData ; sh:minCount 1 ; sh:class h2kg:Data ] ;
+  sh:property [ sh:path h2kg:hasParameter ; sh:node <https://w3id.org/h2kg/profiles/ic_sem/ParameterRecordShape> ] ;
   sh:property [
     sh:path [ sh:inversePath h2kg:fromMeasurement ] ; sh:minCount 1 ; sh:class h2kg:DataPoint
   ] .
 
+<https://w3id.org/h2kg/profiles/ic_sem/ParameterRecordShape> a sh:NodeShape ;
+  sh:class h2kg:Parameter ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( [ sh:class h2kg:IonBeamEnergy ] [ sh:class h2kg:IonBeamCurrent ] [ sh:class h2kg:ElectronBeamEnergy ] [ sh:class h2kg:ElectronCurrent ] [ sh:class h2kg:PixelSize ] [ sh:class h2kg:CutThickness ] [ sh:class h2kg:DwellTime ] [ sh:class h2kg:ExposureTime ] [ sh:class h2kg:Magnification ] [ sh:class h2kg:MicroscopyMeasuredArea ] [ sh:class h2kg:Temperature ] [ sh:class h2kg:RelativeHumidity ] [ sh:class h2kg:VacuumChamberPressure ] [ sh:class h2kg:TotalAcquisitionTime ] ) ]
+  ] .
+
+
 <https://w3id.org/h2kg/profiles/ic_sem/DataPointShape> a sh:NodeShape ;
   sh:targetSubjectsOf h2kg:fromMeasurement ;
   sh:property [ sh:path h2kg:fromMeasurement ; sh:node [ sh:class h2kg:ICSEMImagingMeasurement ] ] ;
-  sh:property [ sh:path h2kg:ofProperty ; sh:in ( h2kg:MembraneElectrodeAssemblyThickness h2kg:GasDiffusionLayerThickness h2kg:TotalPorosity ) ] ;
+  sh:property [
+    sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node [ sh:or ( [ sh:class h2kg:MembraneElectrodeAssemblyThickness ] [ sh:class h2kg:GasDiffusionLayerThickness ] [ sh:class h2kg:TotalPorosity ] ) ]
+  ] ;
   sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:class h2kg:Process ] ;
   sh:or (
-    [ sh:property [ sh:path h2kg:hasQuantityValue ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path ( h2kg:ofProperty h2kg:hasQuantityValue ) ; sh:minCount 1 ] ]
     [ sh:property [ sh:path h2kg:hasMetadata ; sh:minCount 1 ] ]
   ) .
+
 
 <https://w3id.org/h2kg/profiles/ic_sem/QuantityValueShape> a sh:NodeShape ;
   sh:targetObjectsOf h2kg:hasQuantityValue ;

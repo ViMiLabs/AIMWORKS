@@ -6,16 +6,17 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - Immutable GraphML workflows: 120
 - Manual-JSON source workflows: 16
 - Derived interface schemas: 1
-- Preserved source occurrences: 3134
-- Preserved directed source dependencies: 4173
+- Preserved source occurrences: 3307
+- Preserved directed source dependencies: 4463
 - Explicitly mapped occurrences: 3134
 - Shared reviewed anchors: 709
 - Semantic-overview nodes: 709
 - Repeated source-concept groups: 294
 - Semantic role conflicts: 0
 - Classified source dependencies: 4463
-- H2KG/PROV semantic projection triples: 6050
-- Derived property-value DataPoint proxies: 619
+- H2KG/PROV semantic projection triples: 6568
+- Derived property-value DataPoint proxies: 691
+- Derived contextual Parameter-record proxies: 130
 - Reviewed workflow dependencies: 623
 - Published workflow dependencies: 572
 - Structural validation: passed
@@ -32,7 +33,7 @@ Raw GraphML files and the original attached manual JSON are not redistributed in
 
 `decode_duplicate_occurrence_audit.csv` documents every repeated source label within a workflow. `decode_semantic_role_conflicts.csv` records any incompatible roles assigned to a shared anchor and causes validation to fail. The semantic overview is a derived visualization only: every aggregate edge records the exact preserved source-dependency IDs it represents.
 
-`decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG, and `DataPoint` proxies are created only for property-valued workflow variables.
+`decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG. Property-valued inputs use contextual `Parameter`-record proxies linked to preserved property occurrences through `ofProperty`; calculated values use `DataPoint` proxies with the same intrinsic-property pattern.
 
 `decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
 

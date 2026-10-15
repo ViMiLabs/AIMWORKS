@@ -33,6 +33,7 @@ from .utils import (
     ensure_dir,
     html_paragraphs,
     load_json,
+    portable_legacy_iri,
     short_text,
     try_load_yaml,
     write_text,
@@ -94,8 +95,14 @@ def build_docs(
         lambda iri, item: iri == H2KG_ONTOLOGY_IRI or iri.startswith(H2KG_NS),
     )
     taxonomy_registry_path = output_dir.parent / "ontology" / "taxonomy_registry.json"
+    workflow_usage_registry_path = output_dir.parent / "ontology" / "workflow_usage_registry.json"
     taxonomy_artifact_path = output_dir.parent / "ontology" / "h2kg-v2-taxonomy.ttl"
     taxonomy_registry = load_json(taxonomy_registry_path) if taxonomy_registry_path.exists() else {}
+    workflow_usage_registry = (
+        load_json(workflow_usage_registry_path)
+        if workflow_usage_registry_path.exists()
+        else {}
+    )
     if taxonomy_registry:
         namespace_terms = _merge_taxonomy_reference_terms(namespace_terms, taxonomy_registry, mappings)
         classes = [
@@ -169,7 +176,12 @@ def build_docs(
             if term.get("disposition") == "active_local_class"
         ),
     }
-    explorer = _build_explorer_dataset(namespace_terms, items, taxonomy_registry)
+    explorer = _build_explorer_dataset(
+        namespace_terms,
+        items,
+        taxonomy_registry,
+        workflow_usage_registry,
+    )
     alignment_evidence = _build_external_alignment_evidence(
         output_dir.parent / "benchmarks" / "tib_collections" / "h2kg_collection_coverage.csv",
         mappings,
@@ -263,13 +275,13 @@ def build_docs(
 def _modernize_legacy_profile_content(output_dir: Path) -> None:
     """Preserve established profile pages while removing superseded v1 wording."""
     replacements = {
-        "FAIR, EMMO-aligned documentation": "Domain-expert-reviewed H2KG v2 documentation",
-        "An EMMO-aligned application ontology release profile": "A domain-expert-reviewed H2KG v2 ontology profile",
-        "A release-ready, FAIR-oriented, EMMO-aligned application ontology": "A domain-expert-reviewed H2KG v2 application ontology",
-        "EMMO-aligned ontology": "Domain-expert-reviewed H2KG v2 ontology",
-        "EMMO-aligned": "domain-expert-reviewed H2KG v2",
-        "domain-review-required": "domain-expert-reviewed",
-        "pending-domain-review": "domain-expert-reviewed",
+        "FAIR, EMMO-aligned documentation": "Domain-specific H2KG documentation",
+        "An EMMO-aligned application ontology release profile": "A domain-specific H2KG ontology profile",
+        "A release-ready, FAIR-oriented, EMMO-aligned application ontology": "A domain-specific H2KG application ontology",
+        "EMMO-aligned ontology": "domain-specific ontology",
+        "EMMO-aligned": "domain-specific",
+        "domain-review-required": "approved",
+        "pending-domain-review": "approved",
         "release candidate": "release",
         "release-candidate": "release",
     }
@@ -277,9 +289,16 @@ def _modernize_legacy_profile_content(output_dir: Path) -> None:
         profile_root = output_dir / profile_key
         candidates = list((profile_root / "pages").glob("*.html"))
         candidates.extend((profile_root / "data").glob("*.json"))
+        candidates.extend((profile_root / "assets").glob("*.js"))
         for path in candidates:
             content = path.read_text(encoding="utf-8")
-            updated = content
+            updated = re.sub(
+                r"file:///[A-Za-z]:/[A-Za-z0-9._~%+:/-]*",
+                lambda match: portable_legacy_iri(match.group(0)),
+                content,
+            )
+            if path.suffix == ".js":
+                updated = updated.replace('"file:///"', '"file:" + "///"')
             for old, new in replacements.items():
                 updated = updated.replace(old, new)
             if updated != content:
@@ -1189,7 +1208,7 @@ def _decode_workflows_js() -> str:
   function visibleAnchorIds(nodes) { return new Set([...nodes].map((id) => data.nodeById[id]?.anchor_id).filter(Boolean)); }
   function semanticRoleKey(node) {
     if (node.role_conflict) return 'mixed';
-    return ({ Matter:'matter', Manufacturing:'manufacturing', Process:'process', Measurement:'measurement', Instrument:'instrument', Parameter:'parameter', Data:'data', Property:'property', Metadata:'metadata' })[node.semantic_role] || 'unknown';
+    return ({ Matter:'matter', Manufacturing:'manufacturing', Process:'process', Measurement:'measurement', Instrument:'instrument', SoftwareArtifact:'instrument', Parameter:'parameter', Data:'data', DataPoint:'data', Property:'property', Characteristic:'property', Metadata:'metadata' })[node.semantic_role] || 'unknown';
   }
   function semanticRoleText(node) {
     return node.role_conflict ? `Mixed role: ${(node.semantic_roles || []).join(', ') || 'unresolved'}` : (node.semantic_role || 'Missing role');
@@ -1219,7 +1238,7 @@ def _decode_workflows_js() -> str:
     const semantic = semanticToggle.checked ? data.semantic_edges.filter((edge) => shownWorkflows.has(edge.workflow_id) && projectionVisible(edge)) : [];
     const semanticAnchorIds = new Set(semantic.flatMap((edge) => [edge.source, edge.target]).filter((id) => data.anchorById[id]));
     const proxyIds = new Set(semantic.flatMap((edge) => [edge.source, edge.target]).filter((id) => data.projectionNodeById[id]));
-    [...proxyIds].forEach((id) => { const node = data.projectionNodeById[id]; output.push({ group:'nodes', data:{ id, label:node.label, kind:'value-proxy', state:'derived', role:'data', workflow:node.workflow_id } }); });
+    [...proxyIds].forEach((id) => { const node = data.projectionNodeById[id]; output.push({ group:'nodes', data:{ id, label:node.label, kind:node.kind || 'value_proxy', state:'derived', role:semanticRoleKey(node), workflow:node.workflow_id } }); });
     const anchorNodeIds = new Set([...anchors, ...semanticAnchorIds]);
     if (anchorToggle.checked || semanticAnchorIds.size) {
       [...anchorNodeIds].forEach((id) => { const anchor = data.anchorById[id]; if (anchor) output.push({ group:'nodes', data:{ id, label:anchor.label, kind:'source-anchor', state:anchor.state, role:semanticRoleKey(anchor), anchorId:id } }); });
@@ -1267,6 +1286,8 @@ def _decode_workflows_js() -> str:
       { selector:'node[kind = "occurrence"][role = "metadata"]', style:{ 'background-color':'#98a3aa', 'color':'#183139' } },
       { selector:'node[kind = "occurrence"][role = "mixed"], node[kind = "occurrence"][role = "unknown"]', style:{ 'background-color':'#adb8bd', 'color':'#183139' } },
       { selector:'node[kind = "value-proxy"]', style:{ 'shape':'diamond', 'background-color':'#64b4d5', 'border-color':'#087f71', 'border-width':3, 'color':'#183139', 'width':52, 'height':52, 'font-size':9 } },
+      { selector:'node[kind = "value_proxy"]', style:{ 'shape':'diamond', 'background-color':'#64b4d5', 'border-color':'#087f71', 'border-width':3, 'color':'#183139', 'width':52, 'height':52, 'font-size':9 } },
+      { selector:'node[kind = "parameter_record_proxy"]', style:{ 'shape':'round-diamond', 'background-color':'#5d66a6', 'border-color':'#343a73', 'border-width':3, 'color':'#fff', 'width':58, 'height':58, 'font-size':9 } },
       { selector:'node[kind = "profile-anchor"]', style:{ 'shape':'round-rectangle', 'width':124, 'height':50, 'font-weight':700, 'border-color':'#006f73', 'border-width':4 } },
       { selector:'node[kind = "profile-anchor"][role = "process"]', style:{ 'background-color':'#d49118', 'color':'#183139' } },
       { selector:'node[kind = "profile-anchor"][role = "parameter"]', style:{ 'background-color':'#5d66a6', 'color':'#fff' } },
@@ -1297,8 +1318,8 @@ def _decode_workflows_js() -> str:
       { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } }
       ,{ selector:'edge[kind = "profile"]', style:{ 'width':2.8, 'line-color':'#b45309', 'target-arrow-color':'#b45309', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff7ed', 'text-background-opacity':.95, 'text-background-padding':2 } }
     ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:105, nodeRepulsion:520000 } });
-    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') return showProfileNodeDetails(item.id); const anchorId = item.anchorId || (item.kind === 'source-anchor' ? item.id : data.nodeById[item.id]?.anchor_id); if (anchorId) expandAnchor(anchorId); else if (item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
-    cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') showProfileNodeDetails(item.id); else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'source-anchor') showAnchorDetails(item.id); else if (item.kind === 'value-proxy') showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
+    cy.on('dbltap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') return showProfileNodeDetails(item.id); const anchorId = item.anchorId || (item.kind === 'source-anchor' ? item.id : data.nodeById[item.id]?.anchor_id); if (anchorId) expandAnchor(anchorId); else if (item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (data.projectionNodeById[item.id]) showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
+    cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'profile-anchor') showProfileNodeDetails(item.id); else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') showSemanticNodeDetails(item.id); else if (item.kind === 'source-anchor') showAnchorDetails(item.id); else if (data.projectionNodeById[item.id]) showProjectionNodeDetails(item.id); else showOccurrenceDetails(item.id); });
     cy.on('tap', 'edge', (event) => showEdgeDetails(event.target.data()));
     cy.on('mouseover', 'node, edge', (event) => { event.target.addClass('hovered'); showHover(event.target, event.originalEvent); });
     cy.on('mousemove', 'node, edge', (event) => moveHover(event.originalEvent));
@@ -1316,8 +1337,8 @@ def _decode_workflows_js() -> str:
 
   function downloads(workflow) { const standard = `<a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.validation.json" download>Download workflow validation</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_edge_registry.csv" download>Download edge-alignment registry</a><a href="../decode/decode_workflow_dependencies.csv" download>Download workflow dependencies</a><a href="../decode/decode_duplicate_occurrence_audit.csv" download>Download duplicate-occurrence audit</a><a href="../decode/decode_validation_report.json" download>Download release validation</a>`; const extras = (workflow.downloads || []).map((item) => `<a href="${esc(item.href)}" download>${esc(item.label)}</a>`).join(''); return `<div class="decode-downloads">${standard}${extras}</div>`; }
   function showWorkflowDetails(workflow) { const semanticCount = new Set((data.nodesByWorkflow[workflow.id] || []).map(overviewId)).size; const sourceStatus = workflow.is_derived ? 'PDF-derived interface schema; the source workflows are unchanged.' : (viewMode === 'semantic' ? 'Select a canonical node to inspect its source occurrences and branch contexts.' : 'The complete source workflow is visible. Double-click an occurrence or anchor to traverse reviewed cross-workflow connections.'); const profileBadge = workflow.expert_profile ? `<span class="decode-status approved_h2kg">${esc(workflow.expert_profile.badge)}</span>` : ''; details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">${esc(sourceLabel(workflow))}</span> ${profileBadge}</p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method ID:</strong> ${esc(workflow.external_method_id || 'not supplied')}<br><strong>Partner:</strong> ${esc((workflow.partner_organization || []).join('; ') || 'not supplied')}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.<br><strong>Semantic overview:</strong> ${semanticCount} canonical nodes.</p><p>${sourceStatus}</p>${workflow.expert_profile ? `<p>The expert profile is a derived semantic overlay and does not add source nodes or edges.</p>` : ''}${downloads(workflow)}`; }
-  function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; const role = node.canonical_role_iri ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(node.semantic_role || node.canonical_role_iri)}</a></p>` : ''; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Decision:</strong> ${esc(node.decision || 'unresolved')}<br><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}${role}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; if (cy) { const selected = cy.$id(id); selected.addClass('focused'); cy.center(selected); } }
-  function showProjectionNodeDetails(id) { const node = data.projectionNodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], source = data.nodeById[node.source_occurrence_id]; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status">derived semantic projection</span></p><p><strong>H2KG type:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">DataPoint</a><br><strong>Source occurrence:</strong> <code>${esc(source.source_id)}</code> ${esc(source.label)}<br><strong>Workflow:</strong> ${esc(workflow.title)}</p><p>${esc(node.description)}</p>`; }
+  function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; const role = node.canonical_role_iri ? `<p><strong>Intrinsic H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(node.semantic_role || node.canonical_role_iri)}</a>${node.workflow_role && node.workflow_role !== node.semantic_role ? `<br><strong>Source workflow role:</strong> ${esc(node.workflow_role)}` : ''}</p>` : ''; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Decision:</strong> ${esc(node.decision || 'unresolved')}<br><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}${role}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; if (cy) { const selected = cy.$id(id); selected.addClass('focused'); cy.center(selected); } }
+  function showProjectionNodeDetails(id) { const node = data.projectionNodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], source = data.nodeById[node.source_occurrence_id], typeLabel = node.semantic_role || (node.kind === 'parameter_record_proxy' ? 'Parameter' : 'DataPoint'); details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status">derived semantic projection</span></p><p><strong>H2KG type:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(typeLabel)}</a><br><strong>Source occurrence:</strong> <code>${esc(source.source_id)}</code> ${esc(source.label)}<br><strong>Workflow:</strong> ${esc(workflow.title)}</p><p>${esc(node.description)}</p>`; }
   function showProfileNodeDetails(id) { const node = data.profileNodeById[id]; if (!node) return; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}${node.io_id ? `<br><strong>Stable IO identifier:</strong> <code>${esc(node.io_id)}</code>` : ''}</p><p>${esc(node.description)}</p><p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.id)}">Inspect this public term in H2KG Explore</a></p>`; }
   function showSemanticNodeDetails(id) { const node = data.overviewNodeById[id]; if (!node) return; const visible = visibleNodeIds(), occurrences = node.occurrence_ids.filter((occurrenceId) => visible.has(occurrenceId)); const anchor = data.anchorById[id]; const h2kg = anchor?.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = node.canonical_role_iri && !node.role_conflict ? `<p><strong>Semantic role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(semanticRoleText(node))}</a></p>` : `<p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p>`; const list = occurrences.map((occurrenceId) => { const occurrence = data.nodeById[occurrenceId], workflow = data.workflowById[occurrence.workflow_id]; return `<li><button class="decode-add-workflow" data-inspect-occurrence="${esc(occurrenceId)}"><code>${esc(occurrence.source_id)}</code> in ${esc(workflow.title)}</button></li>`; }).join(''); details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span> ${esc(node.decision || '')}</p>${role}<p><strong>Semantic overview:</strong> ${occurrences.length} visible source occurrence${occurrences.length === 1 ? '' : 's'} represented by one canonical node.</p><p>${esc(node.evidence || '')}</p>${h2kg}<h3>Inspect preserved source occurrences</h3><ul>${list || '<li>No occurrence is visible.</li>'}</ul>${anchor ? `<p>Double-click this node to add one complete connected workflow through the shared anchor.</p>` : ''}`; document.querySelectorAll('[data-inspect-occurrence]').forEach((button) => button.addEventListener('click', () => { viewMode = 'source'; syncViewControls(); renderGraph(); showOccurrenceDetails(button.dataset.inspectOccurrence); })); }
   function showAnchorDetails(anchorId) { const anchor = data.anchorById[anchorId]; if (!anchor) return; const workflows = [...new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))].map((id) => data.workflowById[id]); const candidates = rankedConnectedWorkflows(anchorId); const h2kg = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = anchor.canonical_role_iri && anchor.state !== 'approved_h2kg' ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.canonical_role_iri)}">${esc(anchor.semantic_role || anchor.canonical_role_iri)}</a></p>` : ''; const cards = candidates.slice(0,8).map((workflow) => `<button class="decode-add-workflow" data-add-workflow="${esc(workflow.id)}">Add full workflow: ${esc(workflow.title)}</button>`).join(''); details.innerHTML = `<h2>${esc(anchor.label)}</h2><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span> ${esc(anchor.decision || '')}</p><p><code>${esc(anchor.id)}</code></p><p>${esc(anchor.evidence)}</p>${h2kg}${role}<h3>Linked workflows (${workflows.length})</h3><ul>${workflows.map((workflow) => `<li>${esc(workflow.title)}</li>`).join('')}</ul>${cards ? `<h3>Expand a connected workflow</h3>${cards}` : '<p>All linked workflows are visible.</p>'}`; document.querySelectorAll('[data-add-workflow]').forEach((button) => button.addEventListener('click', () => { shownWorkflows.add(button.dataset.addWorkflow); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); })); }
@@ -1325,7 +1346,7 @@ def _decode_workflows_js() -> str:
   function edgeDecision(item) { return data.edgeRegistryBySource[item.sourceDependencyId || item.id]; }
   function edgeDecisionHtml(item) { if (item.kind === 'dependency') { const decision = data.workflowDependencyById[item.dependencyId]; if (!decision) return ''; return `<p><strong>Status:</strong> ${esc(decision.publication_status)}<br><strong>Declarations:</strong> ${esc((decision.declarations || []).join(', '))}<br><strong>Handoff concepts:</strong> ${esc((decision.handoff_labels || []).join('; ') || 'none identified')}<br><strong>Handoff anchors:</strong> ${esc((decision.handoff_anchor_iris || []).join('; ') || 'none')}<br><strong>Evidence:</strong> ${esc(decision.review_rationale)}</p>`; } const decision = edgeDecision(item); if (!decision) return ''; return `<p><strong>Classification:</strong> ${esc(decision.projection_outcome)}<br><strong>Pattern:</strong> ${esc(decision.projection_pattern)}<br><strong>Semantic direction:</strong> ${esc(decision.semantic_direction)}<br><strong>Predicate(s):</strong> ${esc(decision.semantic_predicates || 'none')}<br><strong>Confidence:</strong> ${esc(decision.confidence)}<br><strong>Rationale:</strong> ${esc(decision.rationale)}</p>`; }
   function showEdgeDetails(item) { const relationId = item.kind === 'dependency' ? item.dependencyId : (item.sourceDependencyId || item.id); details.innerHTML = `<h2>${esc(item.label || 'Source dependency')}</h2><p><strong>Relation layer:</strong> ${esc(item.kind)}<br><strong>Display direction:</strong> <code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code><br><strong>Relation ID:</strong> <code>${esc(relationId)}</code></p>${edgeDecisionHtml(item)}`; }
-  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'profile-anchor') { const node = data.profileNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}</p><p>${esc(node.description)}</p>`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (item.kind === 'value-proxy') { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG DataPoint proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
+  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'profile-anchor') { const node = data.profileNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}</p><p>${esc(node.description)}</p>`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (data.projectionNodeById[item.id]) { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG ${esc(node.semantic_role || 'record')} proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Intrinsic semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}${node.workflow_role && node.workflow_role !== node.semantic_role ? `<br><strong>Source workflow role:</strong> ${esc(node.workflow_role)}` : ''}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
   function moveHover(event) { if (!event || hover.classList.contains('is-hidden')) return; hover.style.left = `${Math.min((event.clientX || 0) + 14, window.innerWidth - hover.offsetWidth - 10)}px`; hover.style.top = `${Math.min((event.clientY || 0) + 14, window.innerHeight - hover.offsetHeight - 10)}px`; }
   function hideHover() { hover.classList.add('is-hidden'); }
 })();
@@ -1537,7 +1558,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
         if iri:
             profile_lines.append(f"{key.upper()} ontology IRI: {iri}")
     paragraphs = [
-        f"{project['title']} is a domain-expert-reviewed application ontology focused on hydrogen electrochemical systems rather than the full hydrogen economy.",
+        f"{project['title']} is a domain-specific application ontology focused on hydrogen electrochemical systems rather than the full hydrogen economy.",
         "Its primary scope is hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, data, and provenance.",
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
         *profile_lines,
@@ -1655,7 +1676,15 @@ def _external_node_record(iri: str, label: str = "", description: str = "") -> d
     }
 
 
-def _link_record(source: str, target: str, predicate: str, value: str, module: str, edge_family: str) -> dict[str, Any]:
+def _link_record(
+    source: str,
+    target: str,
+    predicate: str,
+    value: str,
+    module: str,
+    edge_family: str,
+    **metadata: Any,
+) -> dict[str, Any]:
     return {
         "source": source,
         "target": target,
@@ -1663,6 +1692,7 @@ def _link_record(source: str, target: str, predicate: str, value: str, module: s
         "value": value,
         "module": module,
         "edgeFamily": edge_family,
+        **metadata,
     }
 
 
@@ -1670,6 +1700,7 @@ def _build_explorer_dataset(
     terms: list[dict[str, Any]],
     items: dict[str, dict[str, Any]],
     taxonomy_registry: dict[str, Any] | None = None,
+    workflow_usage_registry: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     local_records = {term["iri"]: term for term in terms}
     nodes: dict[str, dict[str, Any]] = {}
@@ -1713,6 +1744,8 @@ def _build_explorer_dataset(
             "deprecated": _deprecated_status(item),
             "mapping_labels": [str(mapping.get("target_label", "")).strip() for mapping in record.get("mappings", []) if str(mapping.get("target_label", "")).strip()],
             "external_alignments": record.get("mappings", []),
+            "workflow_usages": [],
+            "workflow_badges": [],
         }
         nodes[iri]["search_text"] = _node_search_text(record, item)
 
@@ -1740,6 +1773,9 @@ def _build_explorer_dataset(
         }
         if iri in nodes:
             nodes[iri].update(taxonomy_payload)
+            nodes[iri]["display_class"] = str(term.get("corrected_semantic_role") or "Class")
+            nodes[iri]["category"] = "Classes"
+            nodes[iri]["type_labels"] = ["Class"]
             nodes[iri]["modules"] = sorted(modules)
             nodes[iri]["description"] = term.get("definition") or nodes[iri].get("description", "")
             nodes[iri]["alt_labels"] = sorted(set(nodes[iri].get("alt_labels", [])) | set(term.get("alt_labels", [])))
@@ -1780,6 +1816,8 @@ def _build_explorer_dataset(
             "deprecated": "Deprecated" if term.get("disposition") == "deprecated_compatibility_class" else "Active",
             "mapping_labels": [],
             "external_alignments": [],
+            "workflow_usages": [],
+            "workflow_badges": [],
             "search_text": " ".join(
                 str(value)
                 for value in [
@@ -1802,12 +1840,28 @@ def _build_explorer_dataset(
             return
         nodes[iri] = _external_node_record(iri, label=label, description=description)
 
-    def add_link(source: str, target: str, predicate: str, value: str, module: str, edge_family: str) -> None:
+    def add_link(
+        source: str,
+        target: str,
+        predicate: str,
+        value: str,
+        module: str,
+        edge_family: str,
+        **metadata: Any,
+    ) -> None:
         if not source or not target or source == target:
             return
         key = (source, target, predicate, module)
         if key not in links:
-            links[key] = _link_record(source, target, predicate, value, module, edge_family)
+            links[key] = _link_record(
+                source,
+                target,
+                predicate,
+                value,
+                module,
+                edge_family,
+                **metadata,
+            )
 
     for iri, term in taxonomy_terms.items():
         parent_iri = str(term.get("parent_iri", "")).strip()
@@ -1847,6 +1901,10 @@ def _build_explorer_dataset(
         for type_iri in types:
             if not isinstance(type_iri, str) or type_iri in ignored_type_iris:
                 continue
+            if iri in taxonomy_terms and type_iri.startswith(H2KG_NS):
+                # Local role typing belongs to the legacy compatibility graph,
+                # not the canonical class explorer.
+                continue
             ensure_external(type_iri, _short_label(type_iri))
             add_link(iri, type_iri, "type", "type", "vocabulary", "type")
         for predicate, value in item.items():
@@ -1854,6 +1912,10 @@ def _build_explorer_dataset(
                 continue
             for relation in _iri_values(value):
                 target_iri = relation.get("iri", "")
+                if iri in taxonomy_terms and target_iri in taxonomy_terms:
+                    # Canonical workflow-use links are regenerated from SHACL
+                    # profiles below.  Never render legacy class assertions.
+                    continue
                 ensure_external(target_iri, relation.get("label", ""))
                 add_link(
                     iri,
@@ -1863,6 +1925,62 @@ def _build_explorer_dataset(
                     "vocabulary",
                     "object_property",
                 )
+
+    badge_labels = {
+        "uses as parameter": "Used as parameter",
+        "measures property": "Measured property",
+        "has output data": "Workflow output",
+        "has output material": "Workflow output",
+        "uses input data": "Workflow input",
+        "uses input material": "Workflow input",
+        "normalizes to property": "Normalization property",
+        "uses reference scale": "Reference-scale use",
+    }
+    for usage in (workflow_usage_registry or {}).get("usage_edges", []):
+        if usage.get("status") != "migrated-profile":
+            continue
+        if usage.get("migration_outcome") == "quantity_value_guidance":
+            continue
+        source_iri = str(usage.get("canonical_source_iri", "")).strip()
+        target_iri = str(usage.get("canonical_target_iri", "")).strip()
+        if not source_iri or source_iri not in nodes or not target_iri:
+            continue
+        ensure_external(target_iri, str(usage.get("target_label", "")))
+        if target_iri not in nodes:
+            continue
+        display_relation = str(usage.get("display_relation", "workflow use"))
+        path_label = str(usage.get("path_label", ""))
+        predicate = f"profile:{usage.get('migration_outcome', 'workflow-use')}:{path_label}"
+        add_link(
+            source_iri,
+            target_iri,
+            predicate,
+            display_relation,
+            "profiles",
+            "workflow_usage",
+            profilePath=path_label,
+            migrationOutcome=str(usage.get("migration_outcome", "")),
+            rationale=str(usage.get("rationale", "")),
+        )
+        usage_record = {
+            "source_iri": source_iri,
+            "source_label": str(usage.get("source_label", "")),
+            "target_iri": target_iri,
+            "target_label": str(usage.get("target_label", "")),
+            "relation": display_relation,
+            "path": path_label,
+            "outcome": str(usage.get("migration_outcome", "")),
+            "rationale": str(usage.get("rationale", "")),
+        }
+        for node_iri in (source_iri, target_iri):
+            nodes[node_iri].setdefault("workflow_usages", []).append(usage_record)
+            modules = set(nodes[node_iri].get("modules", []))
+            modules.add("profiles")
+            nodes[node_iri]["modules"] = sorted(modules)
+        badge = badge_labels.get(display_relation, display_relation.capitalize())
+        badges = set(nodes[target_iri].get("workflow_badges", []))
+        badges.add(badge)
+        nodes[target_iri]["workflow_badges"] = sorted(badges)
 
     degrees: dict[str, int] = {iri: 0 for iri in nodes}
     for link in links.values():
@@ -1895,10 +2013,17 @@ def _build_explorer_dataset(
         },
         "taxonomy": {
             "id": "taxonomy",
-            "label": "H2KG v2 taxonomy",
-            "description": "The complete class hierarchy generated from the reviewed taxonomy registry.",
+            "label": "H2KG 2.1 taxonomy",
+            "description": "The complete class hierarchy generated from the approved taxonomy registry.",
             "nodeCount": sum(1 for node in nodes.values() if "taxonomy" in node.get("modules", [])),
             "edgeCount": sum(1 for link in links.values() if link["module"] == "taxonomy"),
+        },
+        "profiles": {
+            "id": "profiles",
+            "label": "Workflow use",
+            "description": "Contextual use derived from value-free SHACL profiles; it does not change intrinsic taxonomy placement.",
+            "nodeCount": sum(1 for node in nodes.values() if "profiles" in node.get("modules", [])),
+            "edgeCount": sum(1 for link in links.values() if link["module"] == "profiles"),
         },
     }
 
@@ -1911,7 +2036,8 @@ def _build_explorer_dataset(
             "edgeCount": len(links),
             "activeClassCount": sum(1 for term in taxonomy_terms.values() if term.get("disposition") == "active_local_class"),
             "taxonomyVersion": (taxonomy_registry or {}).get("version", "not generated"),
-            "taxonomyReviewStatus": (taxonomy_registry or {}).get("review_status", "not generated"),
+            "taxonomyGovernanceStatus": "approved" if taxonomy_registry else "not generated",
+            "workflowUsageCount": len((workflow_usage_registry or {}).get("usage_edges", [])),
         },
         "modules": list(module_map.values()),
         "nodes": sorted(nodes.values(), key=lambda node: (not bool(node.get("local")), str(node.get("label", "")).lower())),
@@ -1926,7 +2052,10 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
     alignment_evidence_href = _relative_href(page_path, docs_root / "data" / "external_alignment_evidence.json")
     taxonomy_ttl = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.ttl")
     taxonomy_jsonld = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.jsonld")
+    complete_ttl = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-complete.ttl")
+    complete_jsonld = _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-complete.jsonld")
     taxonomy_registry = _relative_href(page_path, docs_root / "ontology" / "taxonomy_registry.csv")
+    migration_registry = _relative_href(page_path, docs_root / "ontology" / "relation_migration_registry.csv")
     modules = explorer.get("modules", [])
     module_html = "".join(
         f"""
@@ -1947,13 +2076,16 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
       <article class="card">
         <p class="eyebrow">Explore</p>
         <h2>Whole-Ontology Search</h2>
-        <p>Search the published H2KG namespace with precise ranked suggestions, confirm whether a term exists, and inspect its directly connected graph context without leaving the release package.</p>
+        <p>Search the published H2KG namespace, inspect intrinsic taxonomy placement, and switch to profile-derived workflow use without conflating scientific properties with parameter records.</p>
         <div class="button-row">
           <a class="inline-button" href="{reference_link}">Open full reference</a>
           <a class="inline-button" href="{release_link}">Release context</a>
           <a class="inline-button" href="{taxonomy_ttl}" download>Taxonomy TTL</a>
           <a class="inline-button" href="{taxonomy_jsonld}" download>Taxonomy JSON-LD</a>
           <a class="inline-button" href="{taxonomy_registry}" download>Taxonomy registry</a>
+          <a class="inline-button" href="{complete_ttl}" download>Complete TTL</a>
+          <a class="inline-button" href="{complete_jsonld}" download>Complete JSON-LD</a>
+          <a class="inline-button" href="{migration_registry}" download>Migration registry</a>
         </div>
       </article>
       <article class="card">
@@ -1965,7 +2097,8 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
           <li><strong>Visible link surface:</strong> {overview.get('edgeCount', 0)}</li>
           <li><strong>Active v2 classes:</strong> {overview.get('activeClassCount', 0)}</li>
           <li><strong>Taxonomy version:</strong> {escape(str(overview.get('taxonomyVersion', 'not generated')))}</li>
-          <li><strong>Taxonomy governance:</strong> {escape(str(overview.get('taxonomyReviewStatus', 'not generated')).replace('-', ' '))}</li>
+          <li><strong>Governance status:</strong> {escape(str(overview.get('taxonomyGovernanceStatus', 'not generated')).replace('-', ' '))}</li>
+          <li><strong>Profile-derived workflow uses:</strong> {overview.get('workflowUsageCount', 0)}</li>
         </ul>
         <p class="muted">The graph starts with the selected term and its direct visible neighborhood. Expansion is progressive and reversible.</p>
       </article>
@@ -1997,8 +2130,8 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
           <p class="eyebrow">Graph filters</p>
           <h3>View</h3>
           <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
-            <label><input type="radio" name="explorer-view" value="relations" data-explorer-view checked> Relations</label>
-            <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view> Taxonomy</label>
+            <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view checked> Taxonomy</label>
+            <label><input type="radio" name="explorer-view" value="relations" data-explorer-view> Workflow use</label>
             <label><input type="radio" name="explorer-view" value="combined" data-explorer-view> Combined</label>
           </div>
           <div class="explorer-field">
@@ -2019,6 +2152,7 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
             <span data-branch="Characteristic">Characteristic</span>
             <span data-branch="Agent">Agent</span>
           </div>
+          <p class="muted">Node color and shape always represent intrinsic taxonomy. Workflow-use badges and edges describe contextual roles only.</p>
           <h3>Release modules</h3>
           <div class="explorer-module-grid">{module_html}</div>
           <div class="explorer-toolbar">
@@ -2572,6 +2706,15 @@ def _release_body(
         "page": _relative_href(page_path, docs_root / "pages" / "alignment.html"),
         "benchmark": _relative_href(page_path, docs_root / "pages" / "tib-benchmark.html"),
     }
+    semantic_links = {
+        "complete_ttl": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-complete.ttl"),
+        "complete_jsonld": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-complete.jsonld"),
+        "profiles_ttl": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-workflow-profiles.ttl"),
+        "profiles_jsonld": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-workflow-profiles.jsonld"),
+        "audit": _relative_href(page_path, docs_root / "ontology" / "semantic_role_audit.csv"),
+        "migration": _relative_href(page_path, docs_root / "ontology" / "relation_migration_registry.csv"),
+        "compatibility": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-compatibility.ttl"),
+    }
     principal_sources = sorted(
         alignment.get("tib_benchmark_sources", alignment.get("sources", {})).items(),
         key=lambda item: (-int(item[1]), str(item[0]).casefold()),
@@ -2611,9 +2754,26 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
+        <p class="eyebrow">H2KG 2.1</p>
+        <h2>Intrinsic taxonomy and contextual workflow use</h2>
+        <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
+        <p>The compatibility graph is retained only for migration and may contain legacy class-level workflow assertions. It does not drive canonical outputs or Explore.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{semantic_links['complete_ttl']}" download>Complete TTL</a>
+          <a class="inline-button" href="{semantic_links['complete_jsonld']}" download>Complete JSON-LD</a>
+          <a class="inline-button" href="{semantic_links['profiles_ttl']}" download>Workflow profiles TTL</a>
+          <a class="inline-button" href="{semantic_links['profiles_jsonld']}" download>Workflow profiles JSON-LD</a>
+          <a class="inline-button" href="{semantic_links['audit']}" download>Semantic-role audit</a>
+          <a class="inline-button" href="{semantic_links['migration']}" download>Migration registry</a>
+          <a class="inline-button inline-button--ghost" href="{semantic_links['compatibility']}" download>Legacy compatibility TTL</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H2KG {escape(str(alignment.get('h2kg_version', '2.0.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H2KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
+        <p>H2KG {escape(str(alignment.get('h2kg_version', '2.1.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H2KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> {alignment.get('tib_collection_count', 0)} TIB collections, {alignment.get('tib_unique_ontology_count', 0)} unique ontologies, {alignment.get('tib_collection_membership_count', 0)} collection memberships</li>
           <li><strong>TIB benchmark assertions:</strong> {alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} ({escape(', '.join(f'{key}={value}' for key, value in alignment.get('tib_asserted_mapping_counts', {}).items()) or 'none')})</li>
@@ -2682,6 +2842,8 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
     explanations = release.get("section_explanations", {})
     freshness = release.get("freshness", {})
     publication = release.get("publication_evidence", {})
+    semantic_validation = release.get("semantic_role_validation", {})
+    semantic_metrics = semantic_validation.get("metrics", {})
     current_status_rows = [
         {
             "label": "Overall validation",
@@ -2712,6 +2874,18 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
             "status": freshness.get("status", "watch"),
             "value": freshness.get("value", "unknown"),
             "detail": freshness.get("detail", "Report freshness has not been computed."),
+        },
+        {
+            "label": "Parameter-property role separation",
+            "status": "good" if semantic_validation.get("conforms") else "action",
+            "value": f"{semantic_metrics.get('migration_coverage_percent', 0)}% migrated",
+            "detail": f"{semantic_metrics.get('migrated_legacy_assertion_count', 0)} of {semantic_metrics.get('legacy_assertion_count', 0)} legacy workflow assertions have documented outcomes; canonical conflations: {semantic_metrics.get('characteristic_parameter_conflation_count', 0)}.",
+        },
+        {
+            "label": "Canonical class-to-class workflow assertions",
+            "status": "good" if semantic_metrics.get("canonical_class_object_assertion_count", 1) == 0 else "action",
+            "value": str(semantic_metrics.get("canonical_class_object_assertion_count", "not assessed")),
+            "detail": "Canonical workflow use is expressed through SHACL paths and occurrence records rather than object-property assertions between OWL classes.",
         },
     ]
     odk_rows = [
@@ -3086,6 +3260,12 @@ def _release_snapshot_for_docs(output_dir: Path, fair_snapshot: dict[str, Any] |
             asset["value"] = "published" if release.get("publication_evidence", {}).get("artifacts_published") else "prepared"
             asset["status"] = "good" if asset["value"] == "published" else "watch"
     release["publication_assets"] = publication_assets
+    semantic_validation_path = output_dir.parent / "reports" / "semantic_role_validation.json"
+    release["semantic_role_validation"] = (
+        load_json(semantic_validation_path)
+        if semantic_validation_path.exists()
+        else {}
+    )
     release["freshness"] = _report_freshness(output_dir, release, odk)
     return release
 
@@ -3184,11 +3364,13 @@ def _report_freshness(output_dir: Path, release: dict[str, Any], odk: dict[str, 
     fair_report = output_dir.parent / "reports" / "fair_readiness_report.json"
     validation_report = output_dir.parent / "reports" / "validation_report.json"
     hdo_report = output_dir.parent / "reports" / "hdo_alignment_report.json"
+    semantic_report = output_dir.parent / "reports" / "semantic_role_validation.json"
     odk_manifest = output_dir.parent / "odk" / "manifest.json"
     tracked = [
         ("FAIR snapshot", fair_report),
         ("Validation snapshot", validation_report),
         ("HDO snapshot", hdo_report),
+        ("Semantic-role migration", semantic_report),
         ("ODK snapshot", odk_manifest),
     ]
     rows: list[dict[str, Any]] = []
@@ -3216,14 +3398,16 @@ def _report_freshness(output_dir: Path, release: dict[str, Any], odk: dict[str, 
                     "detail": f"Expected file {path.relative_to(output_dir.parent)} was not found during docs generation.",
                 }
             )
-    if missing:
-        status = "action"
-        value = "missing inputs"
-        detail = f"One or more report inputs are missing: {', '.join(missing)}."
-    elif timestamps and max(timestamps) - min(timestamps) > 300:
+    if timestamps and max(timestamps) - min(timestamps) > 300:
         status = "watch"
         value = "out of sync"
         detail = "Report timestamps differ by more than five minutes, so the page may be mixing build generations."
+        if missing:
+            detail += f" Missing report inputs: {', '.join(missing)}."
+    elif missing:
+        status = "action"
+        value = "missing inputs"
+        detail = f"One or more report inputs are missing: {', '.join(missing)}."
     else:
         status = "good"
         value = "in sync"
@@ -3389,6 +3573,10 @@ def _copy_taxonomy_artifacts(output_dir: Path) -> None:
     filenames = (
         "h2kg-v2-taxonomy.ttl",
         "h2kg-v2-taxonomy.jsonld",
+        "h2kg-v2-workflow-profiles.ttl",
+        "h2kg-v2-workflow-profiles.jsonld",
+        "h2kg-v2-complete.ttl",
+        "h2kg-v2-complete.jsonld",
         "h2kg-v2-compatibility.ttl",
         "h2kg-v2-compatibility.jsonld",
         "h2kg-v2-taxonomy-shapes.ttl",
@@ -3400,6 +3588,12 @@ def _copy_taxonomy_artifacts(output_dir: Path) -> None:
         "taxonomy_registry.csv",
         "resource_disposition_registry.json",
         "resource_disposition_registry.csv",
+        "semantic_role_audit.json",
+        "semantic_role_audit.csv",
+        "relation_migration_registry.json",
+        "relation_migration_registry.csv",
+        "workflow_usage_registry.json",
+        "workflow_usage_registry.csv",
         "external_alignment_registry.json",
         "external_alignment_registry.csv",
     )
@@ -3829,7 +4023,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentGraph: null,
       currentRelations: [],
       hoverCardEl: null,
-      viewMode: "relations"
+      viewMode: "taxonomy"
     };
 
   const escapeHtml = (value) => String(value ?? "")
@@ -3841,7 +4035,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const stripKey = (value) => normalize(value).replace(/[^a-z0-9]+/g, "");
   const activeModules = () => Array.from(root.querySelectorAll("[data-explorer-module]:checked")).map((input) => input.value);
-  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "relations";
+  const activeView = () => root.querySelector("[data-explorer-view]:checked")?.value || "taxonomy";
   const activeBranch = () => branchEl?.value || "";
   const toggleEnabled = (name) => Boolean(root.querySelector(`[data-explorer-toggle="${name}"]`)?.checked);
     const branchColor = (branch) => ({
@@ -4028,7 +4222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     root.querySelectorAll("[data-explorer-toggle]").forEach((input) => {
       input.checked = Boolean(snapshot.toggles?.[input.dataset.explorerToggle]);
     });
-    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "relations"}"]`);
+    const viewInput = root.querySelector(`[data-explorer-view][value="${snapshot.viewMode || "taxonomy"}"]`);
     if (viewInput) viewInput.checked = true;
     if (branchEl) branchEl.value = snapshot.branch || "";
     state.selectedId = snapshot.selectedId || null;
@@ -4079,7 +4273,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!selectedModules.has(link.module) || !nodeMap.has(link.source) || !nodeMap.has(link.target)) return false;
       const isTaxonomy = link.module === "taxonomy" || link.edgeFamily === "taxonomy" || link.predicate === "subclassOf";
       if (viewMode === "taxonomy") return isTaxonomy;
-      if (viewMode === "relations") return !isTaxonomy;
+      if (viewMode === "relations") return link.module === "profiles" || link.edgeFamily === "workflow_usage";
       return true;
     });
     const adjacency = new Map();
@@ -4135,10 +4329,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           selector: "node",
           style: {
-            "background-color": (ele) => ele.data("viewMode") === "relations"
-              ? (ele.data("isLocal") ? "#0f6d7a" : "#9a6d4f")
-              : branchColor(ele.data("topBranch")),
-            "shape": (ele) => ele.data("viewMode") === "relations" ? "ellipse" : branchShape(ele.data("topBranch")),
+            "background-color": (ele) => branchColor(ele.data("topBranch")),
+            "shape": (ele) => branchShape(ele.data("topBranch")),
             "label": "data(label)",
             "font-size": 11,
             "text-wrap": "wrap",
@@ -4297,7 +4489,9 @@ document.addEventListener("DOMContentLoaded", () => {
         predicate: String(link.value || link.predicate || ""),
         target: graph.nodeMap.get(link.target)?.label || link.target,
         module: link.module,
-        kind: link.edgeFamily
+        kind: link.edgeFamily,
+        path: link.profilePath || "",
+        rationale: link.rationale || ""
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
   }
@@ -4315,7 +4509,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${preview.length ? preview.map((row) => `
           <div class="explorer-hovercard__triple">
             <div class="explorer-hovercard__spo"><strong>${escapeHtml(row.source)}</strong> <code>${escapeHtml(row.predicate)}</code> <strong>${escapeHtml(row.target)}</strong></div>
-            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}</div>
+            <div class="explorer-hovercard__meta">${escapeHtml(row.module)}${row.kind ? ` | ${escapeHtml(row.kind)}` : ""}${row.path ? ` | path: ${escapeHtml(row.path)}` : ""}</div>
+            ${row.rationale ? `<div class="explorer-hovercard__meta">${escapeHtml(row.rationale)}</div>` : ""}
           </div>
         `).join("") : '<div class="explorer-empty">No visible SPO relations for this selection.</div>'}
         ${rows.length > preview.length ? `<div class="explorer-hovercard__meta">Showing ${preview.length} of ${rows.length} visible relations.</div>` : ""}
@@ -4351,7 +4546,9 @@ document.addEventListener("DOMContentLoaded", () => {
       predicate: String(link.value || link.predicate || ""),
       target: graph.nodeMap.get(link.target)?.label || link.target,
       module: link.module,
-      kind: link.edgeFamily
+      kind: link.edgeFamily,
+      path: link.profilePath || "",
+      rationale: link.rationale || ""
     };
     renderHoverCard(row.predicate, "Edge relation", [row]);
     positionHoverCard(event);
@@ -4529,6 +4726,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function workflowUsageHtml(node) {
+    const rows = node.workflow_usages || [];
+    if (!rows.length) return '<p>No contextual workflow use is asserted for this class.</p>';
+    const unique = new Map();
+    rows.forEach((row) => {
+      const key = `${row.source_iri}|${row.relation}|${row.target_iri}|${row.path}`;
+      unique.set(key, row);
+    });
+    return Array.from(unique.values()).slice(0, 24).map((row) => `
+      <p><strong>${escapeHtml(row.source_label || row.source_iri)}</strong>
+      ${escapeHtml(row.relation)}
+      <strong>${escapeHtml(row.target_label || row.target_iri)}</strong>
+      ${row.path ? `<br>Path: <code>${escapeHtml(row.path)}</code>` : ""}
+      ${row.rationale ? `<br>${escapeHtml(row.rationale)}` : ""}</p>
+    `).join("");
+  }
+
   function renderInspector(node, graph) {
     if (!node) {
       inspectorEl.innerHTML = '<div class="explorer-empty">Pick a term to inspect its stable IRI, definition, and graph role.</div>';
@@ -4544,7 +4758,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="explorer-chip">${escapeHtml(node.display_class || node.category)}</span>
             <span class="explorer-chip">${escapeHtml(node.deprecated || "Active")}</span>
             ${node.taxonomy_top_branch ? `<span class="explorer-chip">${escapeHtml(node.taxonomy_top_branch)}</span>` : ""}
-            ${node.review_status ? `<span class="explorer-chip">${escapeHtml(node.review_status)}</span>` : ""}
+            ${(node.workflow_badges || []).map((badge) => `<span class="explorer-chip">${escapeHtml(badge)}</span>`).join("")}
           </div>
         </div>
         <div class="explorer-inspector__section">
@@ -4561,13 +4775,14 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         ${assertedAlignmentHtml(node)}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
-        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Taxonomy placement</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Canonical role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
-        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Definition: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}<br>Review: ${escapeHtml(node.review_status || "not recorded")}</p></div>` : ""}
+        ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Intrinsic classification</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Semantic role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
+        ${node.local ? `<div class="explorer-inspector__section"><strong>Workflow usage</strong>${workflowUsageHtml(node)}</div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: approved<br>Definition status: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
-        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>QUDT value guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
+        ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>Quantity guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
         <div class="explorer-inspector__section">
-          <strong>Graph role</strong>
+          <strong>Visualization context</strong>
           <p>${escapeHtml(node.id === graph.center?.id ? "Current focus term." : "Visible through the current expanded neighborhood.")} Direct links in the explorer dataset: ${escapeHtml(String(node.degree || 0))}. Modules: ${escapeHtml((node.modules || []).join(", "))}.</p>
         </div>
       </div>
@@ -4599,7 +4814,9 @@ document.addEventListener("DOMContentLoaded", () => {
         predicate: String(link.value || link.predicate || ""),
         target: graph.nodeMap.get(link.target)?.label || link.target,
         module: link.module,
-        kind: link.edgeFamily
+        kind: link.edgeFamily,
+        path: link.profilePath || "",
+        rationale: link.rationale || ""
       }))
       .sort((left, right) => left.predicate.localeCompare(right.predicate) || left.target.localeCompare(right.target));
     state.currentRelations = rows;
@@ -4611,7 +4828,7 @@ document.addEventListener("DOMContentLoaded", () => {
     relationsEl.innerHTML = `
       <table class="explorer-relations">
         <thead>
-          <tr><th>Source</th><th>Predicate</th><th>Target</th><th>Module</th></tr>
+          <tr><th>Source</th><th>Predicate</th><th>Target</th><th>Path</th><th>Module</th></tr>
         </thead>
         <tbody>
           ${rows.map((row) => `
@@ -4619,6 +4836,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${escapeHtml(row.source)}</td>
               <td><code>${escapeHtml(row.predicate)}</code></td>
               <td>${escapeHtml(row.target)}</td>
+              <td>${row.path ? `<code>${escapeHtml(row.path)}</code>` : "-"}</td>
               <td>${escapeHtml(row.module)}</td>
             </tr>
           `).join("")}
@@ -4639,7 +4857,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cy) cy.elements().remove();
       return;
     }
-    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and relation neighborhood" : "relation neighborhood";
+    const viewLabel = state.viewMode === "taxonomy" ? "taxonomy hierarchy" : state.viewMode === "combined" ? "combined taxonomy and workflow-use neighborhood" : "workflow-use neighborhood";
     graphNoteEl.textContent = `Showing the direct ${viewLabel} for ${graph.center.label}. Click a visible node to recenter and expand the exploration trail.`;
     const instance = ensureCy();
     instance.elements().remove();

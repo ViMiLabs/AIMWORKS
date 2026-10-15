@@ -76,7 +76,8 @@
       "semantic_role": "Measurement",
       "role_assignment": "explicit_mapping",
       "confidence": "reviewed",
-      "mapping_evidence": "Reviewed manual DECODE method role; public vocabulary promotion is deferred."
+      "mapping_evidence": "Reviewed manual DECODE method role; public vocabulary promotion is deferred.",
+      "workflow_role": "Measurement"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-clsm-electrochemical-protocol-48cc39f846",
@@ -103,7 +104,8 @@
       "semantic_role": "Process",
       "role_assignment": "workflow_or_analysis",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Process"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-clsm-temperature-af88d2f15c",
@@ -130,7 +132,8 @@
       "semantic_role": "Parameter",
       "role_assignment": "clsm_temperature_is_parameter",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Parameter"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-electrolyte-9d155cfe07",
@@ -155,9 +158,11 @@
       "decision": "new_h2kg_term",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "explicit_mapping",
+      "role_assignment": "h2kg_taxonomy_2_1",
       "confidence": "high",
-      "mapping_evidence": "Reusable electrochemical material category promoted after DECODE recurrence review."
+      "mapping_evidence": "Reusable electrochemical material category promoted after DECODE recurrence review.",
+      "workflow_role": "Matter",
+      "intrinsic_semantic_role": "Matter"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-molecular-fluorescent-probe-acidic-56d99d65a3",
@@ -184,7 +189,8 @@
       "semantic_role": "Matter",
       "role_assignment": "material_category_default",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Matter"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::input-rde-polycrystalline-electrode-e32e79eaaa",
@@ -211,7 +217,8 @@
       "semantic_role": "Instrument",
       "role_assignment": "apparatus_or_electrode",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Instrument"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-clsm-electrochemical-response-idealized-47b2dbc93e",
@@ -238,7 +245,8 @@
       "semantic_role": "Data",
       "role_assignment": "data_product",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Data"
     },
     {
       "id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89",
@@ -265,7 +273,8 @@
       "semantic_role": "Data",
       "role_assignment": "lre_ph_distribution_idealized_is_data",
       "confidence": "reviewed_structural",
-      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted."
+      "mapping_evidence": "DECODE-specific concept retained as a stable reviewed anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Data"
     }
   ],
   "projection_nodes": [],
@@ -687,12 +696,14 @@
       "source_graphml_id": "input-clsm-electrochemical-protocol-48cc39f846",
       "source_label": "CLSM electrochemical protocol",
       "source_semantic_role": "Process",
+      "source_workflow_role": "Process",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/clsm-electrochemical-protocol-component",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "prov_derivation",
@@ -715,12 +726,14 @@
       "source_graphml_id": "input-clsm-temperature-af88d2f15c",
       "source_label": "CLSM temperature",
       "source_semantic_role": "Parameter",
+      "source_workflow_role": "Parameter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/clsm-temperature-component",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
@@ -743,12 +756,14 @@
       "source_graphml_id": "input-electrolyte-9d155cfe07",
       "source_label": "Electrolyte",
       "source_semantic_role": "Matter",
+      "source_workflow_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#Electrolyte",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
@@ -771,12 +786,14 @@
       "source_graphml_id": "input-molecular-fluorescent-probe-acidic-56d99d65a3",
       "source_label": "Molecular fluorescent probe (acidic)",
       "source_semantic_role": "Matter",
+      "source_workflow_role": "Matter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/molecular-fluorescent-probe-acidic-material",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
@@ -799,12 +816,14 @@
       "source_graphml_id": "input-rde-polycrystalline-electrode-e32e79eaaa",
       "source_label": "RDE polycrystalline electrode",
       "source_semantic_role": "Instrument",
+      "source_workflow_role": "Instrument",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-polycrystalline-electrode-material",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::method",
       "target_node_id": "method",
       "target_graphml_id": "method",
       "target_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "source_description": "Manual JSON input dependency.",
       "projection_outcome": "h2kg_direct",
@@ -827,12 +846,14 @@
       "source_graphml_id": "method",
       "source_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-clsm-electrochemical-response-idealized-47b2dbc93e",
       "target_node_id": "output-clsm-electrochemical-response-idealized-47b2dbc93e",
       "target_graphml_id": "output-clsm-electrochemical-response-idealized-47b2dbc93e",
       "target_label": "CLSM electrochemical response (idealized)",
       "target_semantic_role": "Data",
+      "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/clsm-electrochemical-response-idealized-lre",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_direct",
@@ -855,12 +876,14 @@
       "source_graphml_id": "method",
       "source_label": "Confocal Laser Scanning Microscope (CLSM) + fluorescent probes for local pH assessment in acidic media on model electrodes",
       "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/confocal-laser-scanning-microscope-clsm-fluorescent-probes-for-local-ph-assessment-in-acidic-media-on-model-electrodes-814e3fe98a",
       "target_occurrence_id": "manual-icpees-cnrs-unistra-exp-clsm-acidic-supported-electrodes::output-lre-ph-distribution-idealized-f9806c5a89",
       "target_node_id": "output-lre-ph-distribution-idealized-f9806c5a89",
       "target_graphml_id": "output-lre-ph-distribution-idealized-f9806c5a89",
       "target_label": "LRE pH distribution (idealized)",
       "target_semantic_role": "Data",
+      "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/lre-ph-distribution-idealized-lre",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_direct",

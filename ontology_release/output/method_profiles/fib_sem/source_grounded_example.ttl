@@ -470,7 +470,7 @@
 <https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "FIB-SEM derived total porosity datapoint"@en ;
-  h2kg:ofProperty h2kg:TotalPorosity ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#surface-calculation-step> ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint-metadata> ;
@@ -483,7 +483,7 @@
 <https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "FIB-SEM derived constrictivity datapoint"@en ;
-  h2kg:ofProperty h2kg:Constrictivity ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#constrictivity-step> ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint-metadata> ;
@@ -496,7 +496,7 @@
 <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint>
   a h2kg:DataPoint ;
   rdfs:label "FIB-SEM derived geodesic tortuosity datapoint"@en ;
-  h2kg:ofProperty h2kg:GeodesicTortuosity ;
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/fib-sem#fib-sem-measurement-001> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-step> ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint-metadata> ;
@@ -507,9 +507,9 @@
   rdfs:comment "Worksheet amount target retained as source metadata: 9 pu."@en .
 
 <https://w3id.org/h2kg/examples/fib-sem#temperature-setting>
-  a h2kg:Parameter, h2kg:Temperature ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM acquisition temperature setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#temperature-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#temperature-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#temperature-setting-qv>
   a qudt:QuantityValue ;
@@ -518,9 +518,9 @@
   qudt:unit unit:DEG_C .
 
 <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting>
-  a h2kg:Parameter, h2kg:RelativeHumidity ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM acquisition relative-humidity setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-qv>
   a qudt:QuantityValue ;
@@ -529,9 +529,9 @@
   qudt:unit unit:PERCENT .
 
 <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting>
-  a h2kg:Parameter, h2kg:VacuumChamberPressure ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM vacuum pressure setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-qv>
   a qudt:QuantityValue ;
@@ -540,9 +540,9 @@
   qudt:unit unit:ATM .
 
 <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting>
-  a h2kg:Parameter, h2kg:IonBeamCurrent ;
+  a h2kg:Parameter ;
   rdfs:label "FIB ion-beam current setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-qv>
   a qudt:QuantityValue ;
@@ -551,9 +551,9 @@
   qudt:unit unit:PicoA .
 
 <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting>
-  a h2kg:Parameter, h2kg:IonBeamEnergy ;
+  a h2kg:Parameter ;
   rdfs:label "FIB ion-beam energy setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-qv>
   a qudt:QuantityValue ;
@@ -562,9 +562,9 @@
   qudt:unit unit:KiloEV .
 
 <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting>
-  a h2kg:Parameter, h2kg:ElectronCurrent ;
+  a h2kg:Parameter ;
   rdfs:label "SEM electron-current setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-qv>
   a qudt:QuantityValue ;
@@ -573,9 +573,9 @@
   qudt:unit unit:PicoA .
 
 <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting>
-  a h2kg:Parameter, h2kg:ElectronBeamEnergy ;
+  a h2kg:Parameter ;
   rdfs:label "SEM electron-beam energy setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-qv>
   a qudt:QuantityValue ;
@@ -584,9 +584,9 @@
   qudt:unit unit:KiloEV .
 
 <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting>
-  a h2kg:Parameter, h2kg:MicroscopyMeasuredArea ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM measured-area setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-qv>
   a qudt:QuantityValue ;
@@ -595,9 +595,9 @@
   qudt:unit unit:MicroM2 .
 
 <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting>
-  a h2kg:Parameter, h2kg:CutThickness ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM cut-thickness setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-qv>
   a qudt:QuantityValue ;
@@ -606,9 +606,9 @@
   qudt:unit unit:NanoM .
 
 <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting>
-  a h2kg:Parameter, h2kg:SliceNumber ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM slice-number setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-qv>
   a qudt:QuantityValue ;
@@ -616,9 +616,9 @@
   qudt:quantityKind quantitykind:Count .
 
 <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting>
-  a h2kg:Parameter, h2kg:DwellTime ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM dwell-time setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-qv>
   a qudt:QuantityValue ;
@@ -627,9 +627,9 @@
   qudt:unit unit:HR .
 
 <https://w3id.org/h2kg/examples/fib-sem#magnification-setting>
-  a h2kg:Parameter, h2kg:Magnification ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM magnification setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#magnification-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#magnification-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#magnification-setting-qv>
   a qudt:QuantityValue ;
@@ -638,9 +638,9 @@
   qudt:unit unit:UNITLESS .
 
 <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting>
-  a h2kg:Parameter, h2kg:StageTilt ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM stage-tilt setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-qv>
   a qudt:QuantityValue ;
@@ -649,9 +649,9 @@
   qudt:unit unit:DEG .
 
 <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting>
-  a h2kg:Parameter, h2kg:ExposureTime ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM image-acquisition time setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-qv>
   a qudt:QuantityValue ;
@@ -660,9 +660,9 @@
   qudt:unit unit:SEC .
 
 <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting>
-  a h2kg:Parameter, h2kg:TotalAcquisitionTime ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM total-acquisition-time setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-qv>
   a qudt:QuantityValue ;
@@ -671,9 +671,9 @@
   qudt:unit unit:HR .
 
 <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting>
-  a h2kg:Parameter, h2kg:VoxelSize ;
+  a h2kg:Parameter ;
   rdfs:label "FIB-SEM voxel-size setting"@en ;
-  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-qv> .
+  h2kg:ofProperty <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-property-occurrence> .
 
 <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-qv>
   a qudt:QuantityValue ;
@@ -684,3 +684,114 @@
 <https://w3id.org/h2kg/examples/fib-sem#fib-sem-acquisition-metadata>
   a h2kg:Metadata ;
   rdfs:comment "Measurement type: ex-situ; specimen: highly porous bulk material; atmosphere: vacuum."@en, "Calibration notes: adjusting lenses and apertures; adjusting the voltage."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-porosity-datapoint-property-occurrence>
+  a h2kg:TotalPorosity ;
+  rdfs:label "FIB-SEM derived total porosity datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#constrictivity-datapoint-property-occurrence>
+  a h2kg:Constrictivity ;
+  rdfs:label "FIB-SEM derived constrictivity datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#geodesic-tortuosity-datapoint-property-occurrence>
+  a h2kg:GeodesicTortuosity ;
+  rdfs:label "FIB-SEM derived geodesic tortuosity datapoint property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the result record; its type denotes intrinsic scientific identity rather than workflow role."@en .
+
+<https://w3id.org/h2kg/examples/fib-sem#temperature-setting-property-occurrence>
+  a h2kg:Temperature ;
+  rdfs:label "FIB-SEM acquisition temperature setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#temperature-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-property-occurrence>
+  a h2kg:RelativeHumidity ;
+  rdfs:label "FIB-SEM acquisition relative-humidity setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#relative-humidity-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-property-occurrence>
+  a h2kg:VacuumChamberPressure ;
+  rdfs:label "FIB-SEM vacuum pressure setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#vacuum-pressure-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-property-occurrence>
+  a h2kg:IonBeamCurrent ;
+  rdfs:label "FIB ion-beam current setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-property-occurrence>
+  a h2kg:IonBeamEnergy ;
+  rdfs:label "FIB ion-beam energy setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#ion-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-property-occurrence>
+  a h2kg:ElectronCurrent ;
+  rdfs:label "SEM electron-current setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-current-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-property-occurrence>
+  a h2kg:ElectronBeamEnergy ;
+  rdfs:label "SEM electron-beam energy setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#electron-beam-energy-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-property-occurrence>
+  a h2kg:MicroscopyMeasuredArea ;
+  rdfs:label "FIB-SEM measured-area setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#measured-area-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-property-occurrence>
+  a h2kg:CutThickness ;
+  rdfs:label "FIB-SEM cut-thickness setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#cut-thickness-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-property-occurrence>
+  a h2kg:SliceNumber ;
+  rdfs:label "FIB-SEM slice-number setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#slice-number-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-property-occurrence>
+  a h2kg:DwellTime ;
+  rdfs:label "FIB-SEM dwell-time setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#dwell-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#magnification-setting-property-occurrence>
+  a h2kg:Magnification ;
+  rdfs:label "FIB-SEM magnification setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#magnification-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-property-occurrence>
+  a h2kg:StageTilt ;
+  rdfs:label "FIB-SEM stage-tilt setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#stage-tilt-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-property-occurrence>
+  a h2kg:ExposureTime ;
+  rdfs:label "FIB-SEM image-acquisition time setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#exposure-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-property-occurrence>
+  a h2kg:TotalAcquisitionTime ;
+  rdfs:label "FIB-SEM total-acquisition-time setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#total-acquisition-time-setting-qv> .
+
+<https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-property-occurrence>
+  a h2kg:VoxelSize ;
+  rdfs:label "FIB-SEM voxel-size setting property occurrence"@en ;
+  dcterms:description "A scientific property occurrence referenced by the parameter record; its type denotes intrinsic scientific identity rather than workflow role."@en ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/fib-sem#voxel-size-setting-qv> .

@@ -3,9 +3,9 @@
 @prefix decode: <https://w3id.org/h2kg/decode/workflow/> .
 
 decode:ModelInputParameterShape a sh:NodeShape ;
-  sh:targetClass h2kg:Parameter ;
-  sh:property [ sh:path decode:expectedValueShape ; sh:minCount 1 ] ;
-  sh:property [ sh:path decode:reportedUnit ; sh:minCount 1 ] .
+  sh:targetObjectsOf h2kg:hasParameter ;
+  sh:class h2kg:Parameter ;
+  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:class h2kg:Property ] .
 
 decode:ModelOutputDataShape a sh:NodeShape ;
   sh:targetClass h2kg:Data ;
@@ -13,4 +13,4 @@ decode:ModelOutputDataShape a sh:NodeShape ;
 
 decode:ModelOutputDataPointShape a sh:NodeShape ;
   sh:targetClass h2kg:DataPoint ;
-  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ] .
+  sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:class h2kg:Property ] .

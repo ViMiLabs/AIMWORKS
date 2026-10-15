@@ -15,9 +15,13 @@ def test_docs_generation(mini_ontology_file, output_dir):
     legacy_data = output_dir / "docs" / "pemfc" / "data" / "graph_explorer.json"
     legacy_data.parent.mkdir(parents=True)
     legacy_data.write_text(
-        '{"description": "A release-ready, FAIR-oriented, EMMO-aligned application ontology"}',
+        '{"description": "A release-ready, FAIR-oriented, EMMO-aligned application ontology", '
+        '"legacy_value": "file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_Example_QV"}',
         encoding="utf-8",
     )
+    legacy_js = output_dir / "docs" / "pemfc" / "assets" / "visuals.js"
+    legacy_js.parent.mkdir(parents=True)
+    legacy_js.write_text('if (iri.startsWith("file:///")) return false;', encoding="utf-8")
     fair_snapshot = {
         "generated_at": "2026-04-13T10:00:00+00:00",
         "findable": 78,
@@ -72,11 +76,22 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").exists()
     assert (output_dir / "docs" / "pemwe" / "index.html").exists()
     assert (output_dir / "docs" / "pemwe" / "hydrogen-ontology.html").exists()
-    assert "domain-expert-reviewed H2KG v2" in legacy_page.read_text(encoding="utf-8")
+    assert "domain-specific" in legacy_page.read_text(encoding="utf-8")
     assert "EMMO-aligned" not in legacy_page.read_text(encoding="utf-8")
     assert legacy_data.exists()
-    assert "domain-expert-reviewed H2KG v2" in legacy_data.read_text(encoding="utf-8")
+    assert "domain-specific" in legacy_data.read_text(encoding="utf-8")
     assert "EMMO-aligned" not in legacy_data.read_text(encoding="utf-8")
+    assert "file:///" not in legacy_data.read_text(encoding="utf-8")
+    assert "hydrogen-ontology/legacy-source/Example_QV-" in legacy_data.read_text(encoding="utf-8")
+    assert "file:///" not in legacy_js.read_text(encoding="utf-8")
+    assert not any(
+        "domain-expert-reviewed" in path.read_text(encoding="utf-8").lower()
+        for path in (output_dir / "docs").rglob("*.html")
+    )
+    assert not any(
+        "domain-expert-reviewed" in path.read_text(encoding="utf-8").lower()
+        for path in (output_dir / "docs").rglob("*.json")
+    )
     assert (output_dir / "docs" / "pages" / "import-guide.html").exists()
     assert (output_dir / "docs" / "pages" / "import-catalog.html").exists()
     assert (output_dir / "docs" / "pages" / "developer-guide.html").exists()
@@ -120,8 +135,8 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert 'data-explorer-root' in explore_page
     assert "Search the ontology" in explore_page
     assert "Download Excel (.xls)" in explore_page
-    assert 'value="relations" data-explorer-view checked' in explore_page
-    assert 'value="taxonomy" data-explorer-view' in explore_page
+    assert 'value="relations" data-explorer-view' in explore_page
+    assert 'value="taxonomy" data-explorer-view checked' in explore_page
     assert 'value="combined" data-explorer-view' in explore_page
     assert "data-alignment-evidence" in explore_page
     explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))

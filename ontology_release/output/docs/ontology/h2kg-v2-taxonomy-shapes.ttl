@@ -7,26 +7,6 @@
 
 h2kg:TaxonomyClassShape a sh:NodeShape ;
     sh:property [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one definition status." ;
-            sh:minCount 1 ;
-            sh:path h2kg:definitionStatus ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one review status." ;
-            sh:minCount 1 ;
-            sh:path h2kg:reviewStatus ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one taxonomy module." ;
-            sh:minCount 1 ;
-            sh:path h2kg:taxonomyModule ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one canonical semantic role." ;
-            sh:minCount 1 ;
-            sh:path h2kg:canonicalSemanticRole ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one reviewer decision." ;
-            sh:minCount 1 ;
-            sh:path h2kg:reviewerDecision ],
-        [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have exactly one preferred label." ;
             sh:minCount 1 ;
             sh:path skos:prefLabel ],
@@ -35,9 +15,29 @@ h2kg:TaxonomyClassShape a sh:NodeShape ;
             sh:minCount 1 ;
             sh:path h2kg:taxonomyTopBranch ],
         [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one definition status." ;
+            sh:minCount 1 ;
+            sh:path h2kg:definitionStatus ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one taxonomy module." ;
+            sh:minCount 1 ;
+            sh:path h2kg:taxonomyModule ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one review status." ;
+            sh:minCount 1 ;
+            sh:path h2kg:reviewStatus ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one canonical semantic role." ;
+            sh:minCount 1 ;
+            sh:path h2kg:canonicalSemanticRole ],
+        [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have exactly one migration action." ;
             sh:minCount 1 ;
             sh:path h2kg:migrationAction ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one reviewer decision." ;
+            sh:minCount 1 ;
+            sh:path h2kg:reviewerDecision ],
         [ sh:maxCount 1 ;
             sh:message "Every H2KG class must record migration provenance." ;
             sh:minCount 1 ;
