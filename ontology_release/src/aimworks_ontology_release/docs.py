@@ -2104,8 +2104,69 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
       </article>
     </section>
     <section class="explorer-shell" data-explorer-root data-explorer-data="{data_href}" data-alignment-evidence="{alignment_evidence_href}" data-reference-page="{reference_link}">
+      <article class="card explorer-command-bar" aria-label="Graph workspace controls">
+        <div class="explorer-command-bar__head">
+          <div>
+            <p class="eyebrow">Graph workspace</p>
+            <h2>View and filter</h2>
+            <p class="explorer-command-bar__copy">Choose the semantic perspective before selecting a term. The graph remains centered in the workspace while filters stay available above it.</p>
+          </div>
+          <div class="explorer-toolbar" aria-label="Graph actions">
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
+          </div>
+        </div>
+        <div class="explorer-command-bar__controls">
+          <fieldset class="explorer-control-group">
+            <legend>View mode</legend>
+            <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
+              <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view checked><span>Taxonomy</span></label>
+              <label><input type="radio" name="explorer-view" value="relations" data-explorer-view><span>Workflow use</span></label>
+              <label><input type="radio" name="explorer-view" value="combined" data-explorer-view><span>Combined</span></label>
+            </div>
+          </fieldset>
+          <label class="explorer-branch-control" for="explorer-taxonomy-branch">
+            <span>Taxonomy branch</span>
+            <select id="explorer-taxonomy-branch" data-explorer-branch>
+              <option value="">All branches</option>
+              <option value="Matter">Matter</option>
+              <option value="Process">Process</option>
+              <option value="InformationEntity">Information entity</option>
+              <option value="Characteristic">Characteristic</option>
+              <option value="Agent">Agent</option>
+            </select>
+          </label>
+          <details class="explorer-layer-menu">
+            <summary>
+              <span><small>Data layers</small><strong data-explorer-layer-count>{len(modules)} of {len(modules)} enabled</strong></span>
+              <span class="explorer-layer-menu__chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="explorer-layer-popover">
+              <div class="explorer-layer-popover__head">
+                <div>
+                  <p class="eyebrow">Graph content</p>
+                  <strong>Visible release modules</strong>
+                </div>
+                <span>All enabled by default</span>
+              </div>
+              <div class="explorer-module-grid">{module_html}</div>
+            </div>
+          </details>
+        </div>
+        <div class="explorer-command-bar__foot">
+          <div class="explorer-taxonomy-legend" aria-label="Taxonomy color legend">
+            <span data-branch="Matter">Matter</span>
+            <span data-branch="Process">Process</span>
+            <span data-branch="InformationEntity">Information</span>
+            <span data-branch="Characteristic">Characteristic</span>
+            <span data-branch="Agent">Agent</span>
+          </div>
+          <p>Color and shape show intrinsic taxonomy; badges and workflow edges show contextual use.</p>
+        </div>
+      </article>
       <aside class="explorer-sidebar">
-        <article class="card explorer-panel">
+        <article class="card explorer-panel explorer-search-panel">
           <p class="eyebrow">Find a term</p>
           <h2>Search</h2>
           <p class="muted">Results prioritize exact ontology term matches, canonical local names, qnames, and curated descriptions before broader descriptive matches.</p>
@@ -2127,41 +2188,6 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
           </div>
         </article>
         <article class="card explorer-panel">
-          <p class="eyebrow">Graph filters</p>
-          <h3>View</h3>
-          <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
-            <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view checked> Taxonomy</label>
-            <label><input type="radio" name="explorer-view" value="relations" data-explorer-view> Workflow use</label>
-            <label><input type="radio" name="explorer-view" value="combined" data-explorer-view> Combined</label>
-          </div>
-          <div class="explorer-field">
-            <label for="explorer-taxonomy-branch">Taxonomy branch</label>
-            <select id="explorer-taxonomy-branch" data-explorer-branch>
-              <option value="">All branches</option>
-              <option value="Matter">Matter</option>
-              <option value="Process">Process</option>
-              <option value="InformationEntity">Information entity</option>
-              <option value="Characteristic">Characteristic</option>
-              <option value="Agent">Agent</option>
-            </select>
-          </div>
-          <div class="explorer-taxonomy-legend" aria-label="Taxonomy color legend">
-            <span data-branch="Matter">Matter</span>
-            <span data-branch="Process">Process</span>
-            <span data-branch="InformationEntity">Information</span>
-            <span data-branch="Characteristic">Characteristic</span>
-            <span data-branch="Agent">Agent</span>
-          </div>
-          <p class="muted">Node color and shape always represent intrinsic taxonomy. Workflow-use badges and edges describe contextual roles only.</p>
-          <h3>Release modules</h3>
-          <div class="explorer-module-grid">{module_html}</div>
-          <div class="explorer-toolbar">
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
-          </div>
-        </article>
-        <article class="card explorer-panel">
           <p class="eyebrow">Traversal</p>
           <h3>History</h3>
           <div class="explorer-trail" data-explorer-trail>
@@ -2170,7 +2196,7 @@ def _explore_body(project: dict[str, Any], explorer: dict[str, Any], page_path: 
         </article>
       </aside>
       <section class="explorer-main">
-        <article class="card explorer-panel">
+        <article class="card explorer-panel explorer-graph-panel">
           <div class="explorer-panel__head">
             <div>
               <p class="eyebrow">Graph</p>
@@ -3688,11 +3714,164 @@ def _explorer_css() -> str:
 }
 .explorer-shell {
   display: grid;
-  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  grid-template-columns: minmax(290px, 340px) minmax(0, 1fr);
+  grid-template-areas:
+    "toolbar toolbar"
+    "sidebar main";
   gap: 1rem;
   align-items: start;
+  width: min(1440px, calc(100vw - 2rem));
+  margin-top: 1.35rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
+.explorer-shell > * { min-width: 0; }
+.explorer-command-bar {
+  grid-area: toolbar;
+  position: sticky;
+  top: 0.75rem;
+  z-index: 12;
+  padding: 1.05rem 1.2rem;
+  border-color: rgba(15,109,122,0.2);
+  background:
+    linear-gradient(105deg, rgba(239,250,249,0.97), rgba(255,250,242,0.97)),
+    var(--panel-strong);
+  box-shadow: 0 22px 58px rgba(17,29,36,0.13);
+}
+.explorer-command-bar__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.explorer-command-bar__head .eyebrow { margin-bottom: 0.35rem; }
+.explorer-command-bar__head h2 { margin: 0; }
+.explorer-command-bar__copy {
+  max-width: 52rem;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.explorer-command-bar__controls {
+  display: grid;
+  grid-template-columns: minmax(390px, 1.45fr) minmax(190px, 0.65fr) minmax(210px, 0.7fr);
+  gap: 0.75rem;
+  align-items: end;
+  margin-top: 0.9rem;
+}
+.explorer-control-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.explorer-control-group legend,
+.explorer-branch-control > span {
+  display: block;
+  margin-bottom: 0.38rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.explorer-branch-control { display: grid; gap: 0; }
+.explorer-branch-control select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(19,33,41,0.14);
+  border-radius: 13px;
+  padding: 0.68rem 0.8rem;
+  background: rgba(255,255,255,0.9);
+  color: var(--ink);
+  font: inherit;
+}
+.explorer-layer-menu { position: relative; }
+.explorer-layer-menu summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-height: 46px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(19,33,41,0.14);
+  border-radius: 13px;
+  background: rgba(255,255,255,0.9);
+  cursor: pointer;
+  list-style: none;
+}
+.explorer-layer-menu summary::-webkit-details-marker { display: none; }
+.explorer-layer-menu summary small,
+.explorer-layer-menu summary strong { display: block; }
+.explorer-layer-menu summary small {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.explorer-layer-menu summary strong { margin-top: 0.08rem; font-size: 0.9rem; }
+.explorer-layer-menu__chevron {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(15,109,122,0.1);
+  color: var(--accent);
+  font-size: 1.15rem;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.explorer-layer-menu[open] .explorer-layer-menu__chevron {
+  transform: rotate(45deg);
+  background: rgba(200,106,43,0.14);
+  color: var(--accent-2);
+}
+.explorer-layer-popover {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  z-index: 20;
+  width: min(430px, calc(100vw - 2.5rem));
+  max-height: min(620px, calc(100vh - 11rem));
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid rgba(19,33,41,0.13);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 24px 64px rgba(17,29,36,0.2);
+}
+.explorer-layer-popover__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+}
+.explorer-layer-popover__head .eyebrow { margin-bottom: 0.2rem; }
+.explorer-layer-popover__head > span { color: var(--muted); font-size: 0.74rem; }
+.explorer-command-bar__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(19,33,41,0.08);
+}
+.explorer-command-bar__foot p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: right;
+}
+.explorer-sidebar { grid-area: sidebar; }
+.explorer-main { grid-area: main; }
 .explorer-sidebar, .explorer-main, .explorer-detail-grid { display: grid; gap: 1rem; }
+.explorer-search-panel { align-self: start; }
+.explorer-graph-panel { min-height: 760px; }
 .explorer-panel h2, .explorer-panel h3 { margin: 0; }
   .explorer-panel__head {
     display: flex;
@@ -3742,25 +3921,44 @@ def _explorer_css() -> str:
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.4rem;
-  margin: 0.7rem 0 0.9rem;
+  margin: 0;
 }
 .explorer-view-switch label {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0.55rem 0.45rem;
-  background: rgba(255,255,255,0.72);
+  min-height: 46px;
+  border: 1px solid rgba(19,33,41,0.14);
+  border-radius: 13px;
+  padding: 0.58rem 0.5rem;
+  background: rgba(255,255,255,0.88);
   cursor: pointer;
   font-size: 0.88rem;
+  font-weight: 750;
+  transition: color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
+.explorer-view-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.explorer-view-switch label:hover { transform: translateY(-1px); }
+.explorer-view-switch label:has(input:checked) {
+  border-color: #0f6d7a;
+  background: linear-gradient(135deg, #0f6d7a, #175765);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15,109,122,0.22);
+}
+.explorer-view-switch label:focus-within { outline: 3px solid rgba(15,109,122,0.22); outline-offset: 2px; }
 .explorer-taxonomy-legend {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 0.65rem 0 1rem;
+  margin: 0;
 }
 .explorer-taxonomy-legend span {
   border: 1px solid rgba(19,33,41,0.14);
@@ -3788,7 +3986,15 @@ def _explorer_css() -> str:
   margin-top: 0.8rem;
   color: var(--ink);
 }
-.explorer-results { display: grid; gap: 0.55rem; margin-top: 0.9rem; }
+.explorer-results {
+  display: grid;
+  gap: 0.55rem;
+  max-height: 560px;
+  margin-top: 0.9rem;
+  padding-right: 0.25rem;
+  overflow: auto;
+  scrollbar-color: rgba(15,109,122,0.34) transparent;
+}
 .explorer-result {
   width: 100%;
   border: 1px solid var(--line);
@@ -3839,7 +4045,7 @@ def _explorer_css() -> str:
 .explorer-relations th,
 .explorer-relations td:first-child { color: var(--ink); }
 .explorer-module small { display: block; margin-top: 0.15rem; color: var(--muted); line-height: 1.45; }
-.explorer-toolbar { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+.explorer-toolbar { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; margin: 0; }
 .explorer-toolbar button[disabled] { opacity: 0.55; cursor: not-allowed; transform: none; }
 .explorer-trail { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 .explorer-trail button {
@@ -3852,10 +4058,14 @@ def _explorer_css() -> str:
   color: var(--ink);
 }
   .explorer-chart {
-    min-height: 520px;
+    min-height: 620px;
     border: 1px solid rgba(19,33,41,0.08);
     border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,244,237,0.72));
+    background:
+      linear-gradient(rgba(15,109,122,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,109,122,0.035) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,244,237,0.76));
+    background-size: 28px 28px, 28px 28px, auto;
   }
   .explorer-chart-wrap {
     position: relative;
@@ -3951,15 +4161,39 @@ def _explorer_css() -> str:
   .explorer-relations th,
   .explorer-relations td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid rgba(19,33,41,0.08); vertical-align: top; }
   .explorer-relations th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-  @media (max-width: 1100px) {
-    .explorer-shell,
-    .explorer-detail-grid { grid-template-columns: 1fr; }
+@media (max-width: 1180px) {
+  .explorer-command-bar__controls {
+    grid-template-columns: minmax(380px, 1.25fr) minmax(190px, 0.75fr) minmax(190px, 0.7fr);
+  }
+}
+@media (max-width: 980px) {
+  .explorer-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "toolbar"
+      "sidebar"
+      "main";
+  }
+  .explorer-detail-grid { grid-template-columns: 1fr; }
+  .explorer-command-bar { position: relative; top: auto; }
+  .explorer-command-bar__controls { grid-template-columns: 1fr 1fr; }
+  .explorer-control-group { grid-column: 1 / -1; }
   .explorer-kpis { min-width: 0; }
+  .explorer-results { max-height: 360px; }
 }
 @media (max-width: 760px) {
+    .explorer-command-bar__head,
+    .explorer-command-bar__foot { align-items: stretch; flex-direction: column; }
+    .explorer-command-bar__controls { grid-template-columns: 1fr; }
+    .explorer-control-group { grid-column: auto; }
+    .explorer-toolbar { justify-content: flex-start; }
+    .explorer-command-bar__foot p { text-align: left; }
+    .explorer-layer-popover { position: static; width: 100%; max-height: none; margin-top: 0.55rem; }
+    .explorer-view-switch { grid-template-columns: 1fr; }
     .explorer-panel__head { flex-direction: column; }
     .explorer-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
-    .explorer-chart { min-height: 420px; }
+    .explorer-graph-panel { min-height: 0; }
+    .explorer-chart { min-height: 520px; }
     .explorer-hovercard {
       width: calc(100% - 1.2rem);
       top: 0.6rem;
@@ -3993,6 +4227,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const countEdgesEl = root.querySelector('[data-explorer-count="edges"]');
   const countExpandedEl = root.querySelector('[data-explorer-count="expanded"]');
   const undoButtonEl = root.querySelector('[data-explorer-action="undo"]');
+  const layerMenuEl = root.querySelector(".explorer-layer-menu");
+  const layerCountEl = root.querySelector("[data-explorer-layer-count]");
 
   const STARTER_LABELS = [
     "measurement",
@@ -4928,6 +5164,13 @@ document.addEventListener("DOMContentLoaded", () => {
     selectNode(match.id, { reset: true });
   }
 
+  function syncLayerCount() {
+    if (!layerCountEl) return;
+    const modules = Array.from(root.querySelectorAll("[data-explorer-module]"));
+    const enabled = modules.filter((input) => input.checked).length;
+    layerCountEl.textContent = `${enabled} of ${modules.length} enabled`;
+  }
+
   searchInputEl.addEventListener("input", () => {
     state.highlightedIndex = 0;
     renderAll();
@@ -4956,7 +5199,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   root.querySelectorAll("[data-explorer-module], [data-explorer-toggle], [data-explorer-view], [data-explorer-branch]").forEach((input) => {
-    input.addEventListener("change", renderAll);
+    input.addEventListener("change", () => {
+      syncLayerCount();
+      renderAll();
+    });
+  });
+  document.addEventListener("click", (event) => {
+    if (layerMenuEl?.open && !layerMenuEl.contains(event.target)) layerMenuEl.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && layerMenuEl?.open) {
+      layerMenuEl.open = false;
+      layerMenuEl.querySelector("summary")?.focus();
+    }
   });
     root.querySelectorAll("[data-explorer-action]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -4990,6 +5245,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    syncLayerCount();
     fetch(dataPath)
     .then((response) => response.json())
     .then((data) => {

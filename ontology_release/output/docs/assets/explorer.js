@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const countEdgesEl = root.querySelector('[data-explorer-count="edges"]');
   const countExpandedEl = root.querySelector('[data-explorer-count="expanded"]');
   const undoButtonEl = root.querySelector('[data-explorer-action="undo"]');
+  const layerMenuEl = root.querySelector(".explorer-layer-menu");
+  const layerCountEl = root.querySelector("[data-explorer-layer-count]");
 
   const STARTER_LABELS = [
     "measurement",
@@ -956,6 +958,13 @@ document.addEventListener("DOMContentLoaded", () => {
     selectNode(match.id, { reset: true });
   }
 
+  function syncLayerCount() {
+    if (!layerCountEl) return;
+    const modules = Array.from(root.querySelectorAll("[data-explorer-module]"));
+    const enabled = modules.filter((input) => input.checked).length;
+    layerCountEl.textContent = `${enabled} of ${modules.length} enabled`;
+  }
+
   searchInputEl.addEventListener("input", () => {
     state.highlightedIndex = 0;
     renderAll();
@@ -984,7 +993,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   root.querySelectorAll("[data-explorer-module], [data-explorer-toggle], [data-explorer-view], [data-explorer-branch]").forEach((input) => {
-    input.addEventListener("change", renderAll);
+    input.addEventListener("change", () => {
+      syncLayerCount();
+      renderAll();
+    });
+  });
+  document.addEventListener("click", (event) => {
+    if (layerMenuEl?.open && !layerMenuEl.contains(event.target)) layerMenuEl.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && layerMenuEl?.open) {
+      layerMenuEl.open = false;
+      layerMenuEl.querySelector("summary")?.focus();
+    }
   });
     root.querySelectorAll("[data-explorer-action]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -1018,6 +1039,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    syncLayerCount();
     fetch(dataPath)
     .then((response) => response.json())
     .then((data) => {

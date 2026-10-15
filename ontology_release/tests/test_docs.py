@@ -138,6 +138,12 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert 'value="relations" data-explorer-view' in explore_page
     assert 'value="taxonomy" data-explorer-view checked' in explore_page
     assert 'value="combined" data-explorer-view' in explore_page
+    assert 'class="card explorer-command-bar"' in explore_page
+    assert 'class="explorer-layer-menu"' in explore_page
+    assert 'data-explorer-layer-count' in explore_page
+    assert explore_page.index('class="card explorer-command-bar"') < explore_page.index('class="explorer-sidebar"')
+    assert explore_page.index('class="card explorer-command-bar"') < explore_page.index('class="explorer-main"')
+    assert '<p class="eyebrow">Graph filters</p>' not in explore_page
     assert "data-alignment-evidence" in explore_page
     explorer_data = json.loads((output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8"))
     local_nodes = {item["iri"]: item for item in explorer_data["nodes"] if item.get("local")}
@@ -146,8 +152,13 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert any(link["predicate"] == "range" for link in explorer_data["links"])
     assert any(module["id"] == "schema" for module in explorer_data["modules"])
     explorer_js = (output_dir / "docs" / "assets" / "explorer.js").read_text(encoding="utf-8")
+    explorer_css = (output_dir / "docs" / "assets" / "explorer.css").read_text(encoding="utf-8")
+    assert 'grid-template-areas:' in explorer_css
+    assert '.explorer-command-bar' in explorer_css
+    assert '.explorer-graph-panel { min-height: 760px; }' in explorer_css
     assert "downloadRelationsAsExcel" in explorer_js
     assert "showHoverCardForNode" in explorer_js
+    assert "syncLayerCount" in explorer_js
     assert 'state.viewMode = viewMode' in explorer_js
     assert 'link.module === "taxonomy"' in explorer_js
     assert "External alignments" in explorer_js

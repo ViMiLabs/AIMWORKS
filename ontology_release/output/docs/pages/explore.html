@@ -78,38 +78,30 @@
       </article>
     </section>
     <section class="explorer-shell" data-explorer-root data-explorer-data="../data/explorer.json" data-alignment-evidence="../data/external_alignment_evidence.json" data-reference-page="../hydrogen-ontology.html">
-      <aside class="explorer-sidebar">
-        <article class="card explorer-panel">
-          <p class="eyebrow">Find a term</p>
-          <h2>Search</h2>
-          <p class="muted">Results prioritize exact ontology term matches, canonical local names, qnames, and curated descriptions before broader descriptive matches.</p>
-          <div class="explorer-field">
-            <label for="explorer-search-input">Search the ontology</label>
-            <input id="explorer-search-input" type="search" data-explorer-search placeholder="e.g., ionomer, FixedBedReactor, acid base titration measurement">
+      <article class="card explorer-command-bar" aria-label="Graph workspace controls">
+        <div class="explorer-command-bar__head">
+          <div>
+            <p class="eyebrow">Graph workspace</p>
+            <h2>View and filter</h2>
+            <p class="explorer-command-bar__copy">Choose the semantic perspective before selecting a term. The graph remains centered in the workspace while filters stay available above it.</p>
           </div>
-          <div class="explorer-note" data-explorer-search-status>Suggested starting points appear here when the search box is empty.</div>
-          <label class="explorer-toggle">
-            <input type="checkbox" data-explorer-toggle="includeExternalSearch">
-            Include aligned external terms in suggestions
-          </label>
-          <label class="explorer-toggle">
-            <input type="checkbox" data-explorer-toggle="showExternalNeighbors">
-            Show directly linked external terms in the graph
-          </label>
-          <div class="explorer-results" data-explorer-results>
-            <div class="explorer-empty">Start typing to search the published ontology.</div>
+          <div class="explorer-toolbar" aria-label="Graph actions">
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
+            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
           </div>
-        </article>
-        <article class="card explorer-panel">
-          <p class="eyebrow">Graph filters</p>
-          <h3>View</h3>
-          <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
-            <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view checked> Taxonomy</label>
-            <label><input type="radio" name="explorer-view" value="relations" data-explorer-view> Workflow use</label>
-            <label><input type="radio" name="explorer-view" value="combined" data-explorer-view> Combined</label>
-          </div>
-          <div class="explorer-field">
-            <label for="explorer-taxonomy-branch">Taxonomy branch</label>
+        </div>
+        <div class="explorer-command-bar__controls">
+          <fieldset class="explorer-control-group">
+            <legend>View mode</legend>
+            <div class="explorer-view-switch" role="radiogroup" aria-label="Explorer view">
+              <label><input type="radio" name="explorer-view" value="taxonomy" data-explorer-view checked><span>Taxonomy</span></label>
+              <label><input type="radio" name="explorer-view" value="relations" data-explorer-view><span>Workflow use</span></label>
+              <label><input type="radio" name="explorer-view" value="combined" data-explorer-view><span>Combined</span></label>
+            </div>
+          </fieldset>
+          <label class="explorer-branch-control" for="explorer-taxonomy-branch">
+            <span>Taxonomy branch</span>
             <select id="explorer-taxonomy-branch" data-explorer-branch>
               <option value="">All branches</option>
               <option value="Matter">Matter</option>
@@ -118,17 +110,21 @@
               <option value="Characteristic">Characteristic</option>
               <option value="Agent">Agent</option>
             </select>
-          </div>
-          <div class="explorer-taxonomy-legend" aria-label="Taxonomy color legend">
-            <span data-branch="Matter">Matter</span>
-            <span data-branch="Process">Process</span>
-            <span data-branch="InformationEntity">Information</span>
-            <span data-branch="Characteristic">Characteristic</span>
-            <span data-branch="Agent">Agent</span>
-          </div>
-          <p class="muted">Node color and shape always represent intrinsic taxonomy. Workflow-use badges and edges describe contextual roles only.</p>
-          <h3>Release modules</h3>
-          <div class="explorer-module-grid">
+          </label>
+          <details class="explorer-layer-menu">
+            <summary>
+              <span><small>Data layers</small><strong data-explorer-layer-count>5 of 5 enabled</strong></span>
+              <span class="explorer-layer-menu__chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="explorer-layer-popover">
+              <div class="explorer-layer-popover__head">
+                <div>
+                  <p class="eyebrow">Graph content</p>
+                  <strong>Visible release modules</strong>
+                </div>
+                <span>All enabled by default</span>
+              </div>
+              <div class="explorer-module-grid">
         <label class="explorer-module">
           <input type="checkbox" data-explorer-module value="schema" checked>
           <span>
@@ -174,10 +170,40 @@
           <span class="explorer-module__meta">3236 links</span>
         </label>
         </div>
-          <div class="explorer-toolbar">
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="undo" disabled>Undo</button>
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="reset">Reset graph</button>
-            <button type="button" class="inline-button inline-button--ghost" data-explorer-action="clear">Clear</button>
+            </div>
+          </details>
+        </div>
+        <div class="explorer-command-bar__foot">
+          <div class="explorer-taxonomy-legend" aria-label="Taxonomy color legend">
+            <span data-branch="Matter">Matter</span>
+            <span data-branch="Process">Process</span>
+            <span data-branch="InformationEntity">Information</span>
+            <span data-branch="Characteristic">Characteristic</span>
+            <span data-branch="Agent">Agent</span>
+          </div>
+          <p>Color and shape show intrinsic taxonomy; badges and workflow edges show contextual use.</p>
+        </div>
+      </article>
+      <aside class="explorer-sidebar">
+        <article class="card explorer-panel explorer-search-panel">
+          <p class="eyebrow">Find a term</p>
+          <h2>Search</h2>
+          <p class="muted">Results prioritize exact ontology term matches, canonical local names, qnames, and curated descriptions before broader descriptive matches.</p>
+          <div class="explorer-field">
+            <label for="explorer-search-input">Search the ontology</label>
+            <input id="explorer-search-input" type="search" data-explorer-search placeholder="e.g., ionomer, FixedBedReactor, acid base titration measurement">
+          </div>
+          <div class="explorer-note" data-explorer-search-status>Suggested starting points appear here when the search box is empty.</div>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="includeExternalSearch">
+            Include aligned external terms in suggestions
+          </label>
+          <label class="explorer-toggle">
+            <input type="checkbox" data-explorer-toggle="showExternalNeighbors">
+            Show directly linked external terms in the graph
+          </label>
+          <div class="explorer-results" data-explorer-results>
+            <div class="explorer-empty">Start typing to search the published ontology.</div>
           </div>
         </article>
         <article class="card explorer-panel">
@@ -189,7 +215,7 @@
         </article>
       </aside>
       <section class="explorer-main">
-        <article class="card explorer-panel">
+        <article class="card explorer-panel explorer-graph-panel">
           <div class="explorer-panel__head">
             <div>
               <p class="eyebrow">Graph</p>
