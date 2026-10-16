@@ -33,6 +33,10 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert result["publication_ready"] is True
 
     graph = Graph().parse(result["taxonomy_ttl"], format="turtle")
+    ontology_iri = URIRef("https://w3id.org/h2kg/hydrogen-ontology")
+    assert str(graph.value(ontology_iri, DCTERMS.title)) == (
+        "H₂KG Domain Ontology for Hydrogen Electrochemical Systems"
+    )
     assert (_iri("Matter"), RDF.type, OWL.Class) in graph
     assert (_iri("Parameter"), RDFS.subClassOf, _iri("ParameterRecord")) in graph
     assert (_iri("Instrument"), RDFS.subClassOf, _iri("Device")) in graph

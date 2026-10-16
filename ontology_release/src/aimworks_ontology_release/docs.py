@@ -56,6 +56,43 @@ H2KG_HAS_QUANTITY_VALUE = H2KG_NS + "hasQuantityValue"
 QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
 QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
 
+_VISIBLE_BRAND_PATTERN = re.compile(r"\bH2KG\b")
+_PROTECTED_HTML_BLOCK_PATTERN = re.compile(
+    r"<(?P<protected_tag>code|pre|script|style)\b[^>]*>.*?</(?P=protected_tag)\s*>",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+_HTML_TAG_PATTERN = re.compile(r"(<[^>]+>)")
+_VISIBLE_BRAND_RUNTIME = """
+<script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\\bH2KG\\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+""".strip()
+
 
 def build_docs(
     input_path: str | Path,
@@ -269,7 +306,37 @@ def build_docs(
         dump_json(output_dir / "data" / "decode_workflow_catalog.json", decode.get("workflows", []))
         dump_json(output_dir / "data" / "decode_workflows.json", decode)
     _modernize_legacy_profile_content(output_dir)
+    _normalize_visible_branding(output_dir)
     return summary
+
+
+def _normalize_visible_branding(output_dir: Path) -> None:
+    """Use H₂KG in rendered text without modifying code, paths, or IRIs."""
+
+    for path in output_dir.rglob("*.html"):
+        content = path.read_text(encoding="utf-8")
+        if "data-h2kg-branding" not in content and "</body>" in content:
+            content = content.replace("</body>", f"  {_VISIBLE_BRAND_RUNTIME}\n</body>")
+        write_text(path, _subscript_visible_brand_text(content))
+
+
+def _subscript_visible_brand_text(content: str) -> str:
+    chunks: list[str] = []
+    cursor = 0
+    for match in _PROTECTED_HTML_BLOCK_PATTERN.finditer(content):
+        chunks.append(_replace_brand_in_html_text_nodes(content[cursor : match.start()]))
+        chunks.append(match.group(0))
+        cursor = match.end()
+    chunks.append(_replace_brand_in_html_text_nodes(content[cursor:]))
+    return "".join(chunks)
+
+
+def _replace_brand_in_html_text_nodes(content: str) -> str:
+    parts = _HTML_TAG_PATTERN.split(content)
+    return "".join(
+        part if part.startswith("<") else _VISIBLE_BRAND_PATTERN.sub("H₂KG", part)
+        for part in parts
+    )
 
 
 def _modernize_legacy_profile_content(output_dir: Path) -> None:
@@ -1542,7 +1609,7 @@ def _legacy_profile_home() -> str:
 def _user_guide_body() -> str:
     return """
     <section class="prose">
-      <p>The H2KG application ontology is published conservatively. The recommended maintenance workflow is inspect, split, review mappings, enrich metadata, validate, build docs, then publish.</p>
+      <p>The H2KG domain ontology is published conservatively. The recommended maintenance workflow is inspect, split, review mappings, enrich metadata, validate, build docs, then publish.</p>
       <p>Maintain local H2KG terms under the <code>h2kg</code> namespace unless a future migration policy is approved and redirect artifacts are prepared.</p>
       <p>Use QUDT for quantity kinds and units, ChEBI for chemicals when resolvable, and PROV-O plus DCTERMS for release metadata and provenance.</p>
     </section>
@@ -1558,7 +1625,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
         if iri:
             profile_lines.append(f"{key.upper()} ontology IRI: {iri}")
     paragraphs = [
-        f"{project['title']} is a domain-specific application ontology focused on hydrogen electrochemical systems rather than the full hydrogen economy.",
+        f"{project['title']} is a domain ontology focused on hydrogen electrochemical systems rather than the full hydrogen economy.",
         "Its primary scope is hydrogen electrochemical systems, including PEMFC and PEMWE experiments, materials, processes, measurements, data, and provenance.",
         f"The current release snapshot contains {summary['schema_count']} schema terms and preserves the original h2kg identifiers by default.",
         *profile_lines,

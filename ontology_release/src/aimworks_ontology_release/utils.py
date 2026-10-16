@@ -202,8 +202,8 @@ def deep_get(data: dict[str, Any], *keys: str, default: Any = None) -> Any:
 def default_release_profile() -> dict[str, Any]:
     return {
         "project": {
-            "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
-            "short_title": "H2KG Ontology",
+            "title": "H₂KG Domain Ontology for Hydrogen Electrochemical Systems",
+            "short_title": "H₂KG Ontology",
             "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
             "description": "Domain-specific application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.",
             "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
@@ -243,12 +243,12 @@ def default_release_profile() -> dict[str, Any]:
             },
             "profiles": {
                 "core": {
-                    "title": "H2KG Shared Core Ontology",
+                    "title": "H₂KG Shared Core Ontology",
                     "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
                     "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
                 },
                 "pemfc": {
-                    "title": "H2KG PEMFC Profile",
+                    "title": "H₂KG PEMFC Profile",
                     "subtitle": "Proton exchange membrane fuel cell profile for experiments, materials, processes, and measurements",
                     "ontology_iri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology",
                     "namespace_uri": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
@@ -263,7 +263,7 @@ def default_release_profile() -> dict[str, Any]:
                     ],
                 },
                 "pemwe": {
-                    "title": "H2KG PEMWE Profile",
+                    "title": "H₂KG PEMWE Profile",
                     "subtitle": "Proton exchange membrane water electrolysis profile for experiments, materials, processes, and measurements",
                     "ontology_iri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology",
                     "namespace_uri": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
@@ -346,9 +346,9 @@ def profile_registry(release_profile: dict[str, Any]) -> dict[str, dict[str, Any
 def default_metadata_defaults() -> dict[str, Any]:
     return {
         "ontology": {
-            "title": "H2KG Application Ontology for Hydrogen Electrochemical Systems",
+            "title": "H₂KG Domain Ontology for Hydrogen Electrochemical Systems",
             "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
-            "abstract": "Domain-specific application ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, properties, and FAIR provenance.",
+            "abstract": "Domain-specific ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, properties, and FAIR provenance.",
             "description": "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, preserves stable H2KG IRIs, reuses foundational vocabularies, and publishes external SKOS alignments separately.",
             "created": "2026-03-19",
             "modified": "2026-10-15",

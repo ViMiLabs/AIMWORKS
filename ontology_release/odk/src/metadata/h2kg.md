@@ -1,7 +1,7 @@
 ---
 layout: ontology_detail
 id: h2kg
-title: H2KG PEMFC Catalyst Layer Application Ontology
+title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems
 jobs:
   - id: https://travis-ci.org/ViMiLabs/AIMWORKS
     type: travis-ci
@@ -13,22 +13,22 @@ contact:
   email: 
   label: 
   github: 
-description: H2KG PEMFC Catalyst Layer Application Ontology is an ontology...
+description: H₂KG is a domain ontology for hydrogen electrochemical systems...
 domain: stuff
 homepage: https://github.com/ViMiLabs/AIMWORKS
 products:
   - id: h2kg.owl
-    name: "H2KG PEMFC Catalyst Layer Application Ontology main release in OWL format"
+    name: "H₂KG Domain Ontology main release in OWL format"
   - id: h2kg.obo
-    name: "H2KG PEMFC Catalyst Layer Application Ontology additional release in OBO format"
+    name: "H₂KG Domain Ontology additional release in OBO format"
   - id: h2kg.json
-    name: "H2KG PEMFC Catalyst Layer Application Ontology additional release in OBOJSon format"
+    name: "H₂KG Domain Ontology additional release in OBOJSON format"
   - id: h2kg/h2kg-base.owl
-    name: "H2KG PEMFC Catalyst Layer Application Ontology main release in OWL format"
+    name: "H₂KG Domain Ontology main release in OWL format"
   - id: h2kg/h2kg-base.obo
-    name: "H2KG PEMFC Catalyst Layer Application Ontology additional release in OBO format"
+    name: "H₂KG Domain Ontology additional release in OBO format"
   - id: h2kg/h2kg-base.json
-    name: "H2KG PEMFC Catalyst Layer Application Ontology additional release in OBOJSon format"
+    name: "H₂KG Domain Ontology additional release in OBOJSON format"
 dependencies:
 - id: emmo-core
 - id: emmo-electrochemistry

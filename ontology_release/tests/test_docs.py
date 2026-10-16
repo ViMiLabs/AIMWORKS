@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import os
 
-from aimworks_ontology_release.docs import build_docs
+from aimworks_ontology_release.docs import _subscript_visible_brand_text, build_docs
 
 
 def test_docs_generation(mini_ontology_file, output_dir):
@@ -72,6 +72,9 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "External alignment" in home_page
     assert "NFDI4Cat, NFDI4Energy, and NFDI4Ing" in home_page
     assert "Standards-aligned" not in home_page
+    assert "<h1>H₂KG for hydrogen electrochemical systems</h1>" in home_page
+    assert "data-h2kg-branding" in home_page
+    assert "replace(/\\bH2KG\\b/g, 'H₂KG')" in home_page
     assert (output_dir / "docs" / "pemfc" / "index.html").exists()
     assert (output_dir / "docs" / "pemfc" / "hydrogen-ontology.html").exists()
     assert (output_dir / "docs" / "pemwe" / "index.html").exists()
@@ -122,13 +125,13 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "Confidence" in alignment_page
     assert "Category" in alignment_page
     namespace_page = (output_dir / "docs" / "hydrogen-ontology.html").read_text(encoding="utf-8")
-    assert "H2KG Namespace Reference" in namespace_page
+    assert "H₂KG Namespace Reference" in namespace_page
     assert 'id="Parameter"' in namespace_page
     assert "Open in Explorer" in namespace_page
     reference_page = (output_dir / "docs" / "pages" / "reference.html").read_text(encoding="utf-8")
-    assert "H2KG Namespace Reference" in reference_page
+    assert "H₂KG Namespace Reference" in reference_page
     core_reference_page = (output_dir / "docs" / "pages" / "core-reference.html").read_text(encoding="utf-8")
-    assert "Core H2KG Reference" in core_reference_page
+    assert "Core H₂KG Reference" in core_reference_page
     assert "Full namespace" in core_reference_page
     explore_page = (output_dir / "docs" / "pages" / "explore.html").read_text(encoding="utf-8")
     assert "Whole-Ontology Search" in explore_page
@@ -174,6 +177,17 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "ontology_release/odk/src/ontology/run.bat make prepare_release" in developer_page
     assert "When to Use HDO vs EMMO vs PROV / DCTERMS" in developer_page
     assert "Optional Local QC Hooks" in developer_page
+
+
+def test_visible_branding_uses_subscript_without_rewriting_code_or_iris() -> None:
+    source = (
+        "<title>Explore H2KG</title><p>H2KG domain ontology</p>"
+        "<code>H2KG_NS https://w3id.org/h2kg/hydrogen-ontology</code>"
+    )
+    rendered = _subscript_visible_brand_text(source)
+    assert "<title>Explore H₂KG</title>" in rendered
+    assert "<p>H₂KG domain ontology</p>" in rendered
+    assert "<code>H2KG_NS https://w3id.org/h2kg/hydrogen-ontology</code>" in rendered
 
 
 def test_docs_quality_dashboard_flags_stale_report_inputs(mini_ontology_file, output_dir):

@@ -1,6 +1,6 @@
 # AIMWORKS Ontology Release Pipeline
 
-`ontology_release/` is a self-contained release-preparation package for the H2KG Application Ontology for Hydrogen Electrochemical Systems. It treats `h2kg` as a domain-specific application ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and reusable FAIR workflow patterns.
+`ontology_release/` is a self-contained release-preparation package for the H₂KG Domain Ontology for Hydrogen Electrochemical Systems. It treats `h2kg` as a domain-specific ontology spanning PEMFC and PEMWE experiments, measurements, materials, processes, data, provenance, and reusable FAIR workflow patterns.
 
 The package is designed to:
 
@@ -21,7 +21,7 @@ This pipeline is intentionally conservative:
 
 - the ontology IRI remains `https://w3id.org/h2kg/hydrogen-ontology` by default
 - hash-style term IRIs are preserved by default for backward compatibility
-- local H2KG terms remain in the `h2kg` namespace unless an explicit migration policy is enabled
+- local H₂KG terms remain in the `h2kg` namespace unless an explicit migration policy is enabled
 - the pipeline does not silently delete terms or rewrite unrelated repository content
 
 ## Quick Start
@@ -78,7 +78,7 @@ Apply the machine-safe terminology corrections and exact or directional alignmen
 python -m aimworks_ontology_release.cli --project-root . tib-harmonize
 ```
 
-The benchmark reports NFDI4Cat, NFDI4Energy, and NFDI4Ing separately and produces collection-, ontology-, branch-, and class-level evidence. A publishable build requires complete TIB retrieval and zero `ambiguous_abstained` outcomes; a failed request blocks publication rather than being counted as scientific non-overlap. The benchmark does not add collection-wide `owl:imports` or replace H2KG IRIs. The external bridge publishes only high-confidence `skos:exactMatch`, `skos:broadMatch`, and `skos:narrowMatch` assertions; related and unmatched candidates remain non-asserted audit evidence. Normal release builds use the local snapshot and never refresh TIB implicitly.
+The benchmark reports NFDI4Cat, NFDI4Energy, and NFDI4Ing separately and produces collection-, ontology-, branch-, and class-level evidence. A publishable build requires complete TIB retrieval and zero `ambiguous_abstained` outcomes; a failed request blocks publication rather than being counted as scientific non-overlap. The benchmark does not add collection-wide `owl:imports` or replace H₂KG IRIs. The external bridge publishes only high-confidence `skos:exactMatch`, `skos:broadMatch`, and `skos:narrowMatch` assertions; related and unmatched candidates remain non-asserted audit evidence. Normal release builds use the local snapshot and never refresh TIB implicitly.
 
 ## Detailed Coding Plan
 

@@ -686,7 +686,7 @@ def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) 
     target.add((H2KG_ONTOLOGY, RDF.type, OWL.Ontology))
     target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
     target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(config.get("version_iri")))))
-    target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H2KG Application Ontology for Hydrogen Electrochemical Systems", lang="en")))
+    target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H₂KG Domain Ontology for Hydrogen Electrochemical Systems", lang="en")))
     target.set(
         (
             H2KG_ONTOLOGY,
@@ -891,7 +891,7 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
     target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
-    target.add((compatibility_iri, DCTERMS.title, Literal("H2KG 2.1 Legacy Compatibility Layer", lang="en")))
+    target.add((compatibility_iri, DCTERMS.title, Literal("H₂KG 2.1 Legacy Compatibility Layer", lang="en")))
     target.add(
         (
             compatibility_iri,
@@ -1414,7 +1414,7 @@ def _build_external_bridge(
     graph.add((bridge_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
     graph.add((bridge_iri, OWL.versionIRI, version_iri))
     graph.add((bridge_iri, OWL.versionInfo, Literal(version)))
-    graph.add((bridge_iri, DCTERMS.title, Literal("H2KG External Semantic Alignment Bridge", lang="en")))
+    graph.add((bridge_iri, DCTERMS.title, Literal("H₂KG External Semantic Alignment Bridge", lang="en")))
     graph.add((bridge_iri, DCTERMS.created, Literal(datetime.now(timezone.utc).replace(microsecond=0).isoformat(), datatype=XSD.dateTime)))
     graph.add((bridge_iri, DCTERMS.identifier, Literal(snapshot_sha256)))
     graph.add((bridge_iri, DCTERMS.source, URIRef("https://api.terminology.tib.eu/api")))

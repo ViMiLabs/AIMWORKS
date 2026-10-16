@@ -199,9 +199,9 @@ def build_release_bundle(project_root: str | Path) -> Path:
 
 
 def _release_notes() -> str:
-    return """# H2KG 2.1.0 Release Notes
+    return """# H₂KG 2.1.0 Release Notes
 
-- Release title: H2KG Domain-Specific Ontology for Hydrogen Electrochemical Systems
+- Release title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems
 - Namespace policy: existing H2KG hash IRIs are preserved
 - Semantic correction: scientific characteristics retain intrinsic Property identity while Parameter and DataPoint records express contextual workflow roles
 - Workflow profiles: class-level workflow assertions are migrated to value-free SHACL profiles with complete provenance

@@ -4,7 +4,7 @@
   <img src="./docs/assets/AIMWORKS_Logo.png" alt="AIMWORKS logo" width="320">
 </p>
 
-AIMWORKS is the source repository for the H2KG ontology engineering and publication workflow for hydrogen electrochemical systems. It combines ontology source material, release automation, standards alignment, quality control, and GitHub Pages publication for profile-specific H2KG releases.
+AIMWORKS is the source repository for the H₂KG ontology engineering and publication workflow for hydrogen electrochemical systems. It combines ontology source material, release automation, standards alignment, quality control, and GitHub Pages publication for profile-specific H₂KG releases.
 
 The repository currently publishes two application profiles:
 
@@ -100,7 +100,7 @@ The GitHub Pages workflow publishes the generated documentation from `ontology_r
 
 ## Standards and Dependencies
 
-H2KG is engineered conservatively and reuses external ontologies where appropriate:
+H₂KG is engineered conservatively and reuses external ontologies where appropriate:
 
 - `EMMO` and electrochemistry-aligned imports for scientific and process semantics
 - `HDO` for data, metadata, and digital-object concepts

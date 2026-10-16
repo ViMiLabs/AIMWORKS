@@ -1215,7 +1215,7 @@ def _odk_yaml(profile: dict[str, Any], source_registry: dict[str, Any]) -> str:
     project = profile.get("project", {})
     lines = [
         "id: h2kg",
-        f'title: "{project.get("title", "H2KG - Ontology for Hydrogen Electrochemical Systems")}"',
+        f'title: "{project.get("title", "H₂KG Domain Ontology for Hydrogen Electrochemical Systems")}"',
         "github_org: ViMiLabs",
         "repo: AIMWORKS",
         "git_main_branch: main",
@@ -1290,7 +1290,7 @@ def _catalog_xml() -> str:
 def _minimal_edit_file(profile: dict[str, Any]) -> str:
     project = profile.get("project", {})
     ontology_iri = project.get("ontology_iri", "https://w3id.org/h2kg/hydrogen-ontology")
-    title = project.get("title", "H2KG - Ontology for Hydrogen Electrochemical Systems")
+    title = project.get("title", "H₂KG Domain Ontology for Hydrogen Electrochemical Systems")
     return textwrap.dedent(
         f"""\
         <?xml version="1.0"?>
