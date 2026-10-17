@@ -65,7 +65,7 @@ DATATYPE_PROPERTIES = {
     "projectionPattern": XSD.string,
     "publicationStatus": XSD.string,
     "definitionStatus": XSD.string,
-    "reviewStatus": XSD.string,
+    "governanceStatus": XSD.string,
     "confidence": XSD.string,
     "reciprocityState": XSD.string,
     "semanticDependencyAsserted": XSD.boolean,
@@ -85,7 +85,7 @@ def build_decode_ontology(
         resolved_config_path,
         {"ontology": {}, "definition_overrides": {}},
     )
-    definition_candidates = _load_definition_candidates(config, resolved_config_path)
+    definition_records = _load_definition_registry(config, resolved_config_path)
     rdf_graph = _new_graph()
     _add_header(rdf_graph, graph_data, config)
     _declare_support_vocabulary(rdf_graph)
@@ -97,7 +97,7 @@ def build_decode_ontology(
             concepts_by_anchor[anchor].append(concept)
 
     _add_decode_classes(
-        rdf_graph, graph_data, concepts_by_anchor, config, definition_candidates
+        rdf_graph, graph_data, concepts_by_anchor, config, definition_records
     )
     workflow_iris = _add_workflows(rdf_graph, graph_data)
     resource_iris = _add_occurrences(rdf_graph, graph_data, workflow_iris)
@@ -135,17 +135,17 @@ def build_decode_ontology(
         jsonld_path,
     )
     definition_registry = _definition_registry(
-        graph_data, concepts_by_anchor, config, definition_candidates
+        graph_data, concepts_by_anchor, config, definition_records
     )
     definition_registry_path = dump_json(
         target / "decode_ontology_definition_registry.json", definition_registry
     )
-    validation["definition_candidate_source_record_count"] = int(
-        config.get("_definition_candidate_registry_meta", {}).get(
-            "source_record_count", len(definition_candidates)
+    validation["definition_source_record_count"] = int(
+        config.get("_definition_registry_meta", {}).get(
+            "source_record_count", len(definition_records)
         )
     )
-    validation["definition_candidate_unique_label_count"] = len(definition_candidates)
+    validation["definition_source_unique_label_count"] = len(definition_records)
     validation["definition_override_count"] = len(config.get("definition_overrides", {}))
     validation["definition_registry_counts"] = definition_registry["counts"]
     validation_path = dump_json(target / "decode_ontology_validation_report.json", validation)
@@ -230,7 +230,13 @@ def _add_header(graph: Graph, graph_data: dict[str, Any], config: dict[str, Any]
     graph.add((ONTOLOGY_IRI, DCTERMS.rights, Literal(RIGHTS_NOTICE, lang="en")))
     graph.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("DECODE consortium")))
     graph.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("H2KG development team")))
-    graph.add((ONTOLOGY_IRI, DECODE.definitionStatus, Literal("expert-draft")))
+    graph.add(
+        (
+            ONTOLOGY_IRI,
+            DECODE.definitionStatus,
+            Literal(str(metadata.get("definition_status", "decode-local"))),
+        )
+    )
     seed = str(metadata.get("definition_seed_sha256", "")).strip()
     if seed:
         graph.add((ONTOLOGY_IRI, DECODE.definitionSeedSha256, Literal(seed)))
@@ -280,10 +286,10 @@ def _add_decode_classes(
     graph_data: dict[str, Any],
     concepts_by_anchor: dict[str, list[dict[str, Any]]],
     config: dict[str, Any],
-    definition_candidates: dict[str, dict[str, Any]],
+    definition_records: dict[str, dict[str, Any]],
 ) -> None:
     for anchor in graph_data.get("anchors", []):
-        if anchor.get("state") != "reviewed_decode":
+        if anchor.get("state") != "decode_local":
             continue
         iri = URIRef(anchor["id"])
         label = str(anchor.get("label", "DECODE concept"))
@@ -294,9 +300,9 @@ def _add_decode_classes(
         if role_iri:
             graph.add((iri, RDFS.subClassOf, URIRef(role_iri)))
         graph.add((iri, RDFS.isDefinedBy, ONTOLOGY_IRI))
-        graph.add((iri, DECODE.definitionStatus, Literal("expert-draft")))
+        graph.add((iri, DECODE.definitionStatus, Literal("decode-local")))
         concepts = concepts_by_anchor.get(anchor["id"], [])
-        definition = _definition_for_anchor(anchor, concepts, config, definition_candidates)
+        definition = _definition_for_anchor(anchor, concepts, config, definition_records)
         graph.add((iri, SKOS.definition, Literal(definition, lang="en")))
         for concept in concepts:
             source_label = str(concept.get("source_label", "")).strip()
@@ -413,7 +419,13 @@ def _add_semantic_projections(
         graph.add((projection, DECODE.projectionOutcome, Literal(edge.get("projection_outcome", ""))))
         graph.add((projection, DECODE.projectionPattern, Literal(edge.get("projection_pattern", ""))))
         graph.add((projection, DECODE.confidence, Literal(edge.get("confidence", ""))))
-        graph.add((projection, DECODE.reviewStatus, Literal(edge.get("review_status", ""))))
+        graph.add(
+            (
+                projection,
+                DECODE.governanceStatus,
+                Literal(edge.get("governance_status", "")),
+            )
+        )
         workflow = workflow_iris.get(edge.get("workflow_id", ""))
         if workflow:
             graph.add((workflow, DECODE.hasSemanticProjection, projection))
@@ -433,7 +445,13 @@ def _add_workflow_dependencies(
         graph.add((dependency, DCTERMS.identifier, Literal(row["id"])))
         graph.add((dependency, DECODE.publicationStatus, Literal(row.get("publication_status", ""))))
         graph.add((dependency, DECODE.reciprocityState, Literal(row.get("reciprocity_state", ""))))
-        graph.add((dependency, DCTERMS.description, Literal(row.get("review_rationale", ""), lang="en")))
+        graph.add(
+            (
+                dependency,
+                DCTERMS.description,
+                Literal(row.get("rationale", row.get("rationale", "")), lang="en"),
+            )
+        )
         if upstream:
             graph.add((dependency, DECODE.upstreamWorkflow, upstream))
         if downstream:
@@ -500,7 +518,7 @@ def validate_decode_ontology(
         errors.append("Audit-only dependencies produced prov:wasInformedBy assertions")
     active_classes = {
         URIRef(anchor["id"]) for anchor in graph_data.get("anchors", [])
-        if anchor.get("state") == "reviewed_decode"
+        if anchor.get("state") == "decode_local"
     }
     missing_definitions = [str(iri) for iri in active_classes if not any(graph.objects(iri, SKOS.definition))]
     placeholder_definitions = [
@@ -539,14 +557,14 @@ def _definition_registry(
     graph_data: dict[str, Any],
     concepts_by_anchor: dict[str, list[dict[str, Any]]],
     config: dict[str, Any],
-    definition_candidates: dict[str, dict[str, Any]],
+    definition_records: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     rows = []
     for anchor in graph_data.get("anchors", []):
-        if anchor.get("state") != "reviewed_decode":
+        if anchor.get("state") != "decode_local":
             continue
         concepts = concepts_by_anchor.get(anchor["id"], [])
-        candidate = definition_candidates.get(_normal(str(anchor.get("label", ""))))
+        source_record = definition_records.get(_normal(str(anchor.get("label", ""))))
         rows.append(
             {
                 "anchor_iri": anchor["id"],
@@ -554,22 +572,22 @@ def _definition_registry(
                 "semantic_role": anchor.get("semantic_role", ""),
                 "canonical_role_iri": anchor.get("canonical_role_iri", ""),
                 "definition": _definition_for_anchor(
-                    anchor, concepts, config, definition_candidates
+                    anchor, concepts, config, definition_records
                 ),
-                "definition_status": "expert-draft",
-                "candidate_definition_status": (
-                    candidate.get("candidate_status", "")
-                    if candidate
-                    else "not-in-supplied-draft"
+                "definition_status": "decode-local",
+                "source_definition_status": (
+                    source_record.get("source_definition_status", "")
+                    if source_record
+                    else "not-in-source-registry"
                 ),
-                "candidate_supplied_role": candidate.get("supplied_role", "") if candidate else "",
-                "candidate_role_compatible": (
-                    _normal(str(candidate.get("supplied_role", "")))
+                "source_supplied_role": source_record.get("supplied_role", "") if source_record else "",
+                "source_role_compatible": (
+                    _normal(str(source_record.get("supplied_role", "")))
                     == _normal(str(anchor.get("semantic_role", "")))
-                    if candidate
+                    if source_record
                     else None
                 ),
-                "candidate_definition": candidate.get("candidate_definition", "") if candidate else "",
+                "source_definition": source_record.get("source_definition", "") if source_record else "",
                 "workflow_ids": sorted({wid for concept in concepts for wid in concept.get("workflow_ids", [])}),
                 "source_labels": sorted({concept.get("source_label", "") for concept in concepts}),
             }
@@ -578,18 +596,18 @@ def _definition_registry(
         "schema_version": "1.0",
         "generated_on": date.today().isoformat(),
         "ontology_iri": str(ONTOLOGY_IRI),
-        "definition_status": "expert-draft",
+        "definition_status": "decode-local",
         "definition_seed_sha256": config.get("ontology", {}).get("definition_seed_sha256", ""),
         "counts": {
             "active_decode_class_count": len(rows),
-            "classes_with_supplied_candidate": sum(
-                row["candidate_definition_status"] != "not-in-supplied-draft" for row in rows
+            "classes_with_source_definition": sum(
+                row["source_definition_status"] != "not-in-source-registry" for row in rows
             ),
-            "classes_without_supplied_candidate": sum(
-                row["candidate_definition_status"] == "not-in-supplied-draft" for row in rows
+            "classes_without_source_definition": sum(
+                row["source_definition_status"] == "not-in-source-registry" for row in rows
             ),
-            "candidate_role_conflict_count": sum(
-                row["candidate_role_compatible"] is False for row in rows
+            "source_role_conflict_count": sum(
+                row["source_role_compatible"] is False for row in rows
             ),
         },
         "definitions": rows,
@@ -600,7 +618,7 @@ def _definition_for_anchor(
     anchor: dict[str, Any],
     concepts: list[dict[str, Any]],
     config: dict[str, Any],
-    definition_candidates: dict[str, dict[str, Any]],
+    definition_records: dict[str, dict[str, Any]],
 ) -> str:
     label = str(anchor.get("label", "DECODE concept")).strip()
     overrides = config.get("definition_overrides", {})
@@ -609,20 +627,20 @@ def _definition_for_anchor(
         return str(override).strip()
     role = str(anchor.get("semantic_role", "Metadata"))
     context = []
-    candidate = definition_candidates.get(_normal(label))
-    if candidate and candidate.get("source_context"):
-        context.append(str(candidate["source_context"]))
+    source_record = definition_records.get(_normal(label))
+    if source_record and source_record.get("source_context"):
+        context.append(str(source_record["source_context"]))
     for concept in concepts:
         context.extend(concept.get("neighbor_context", []))
-    return _expert_definition(label, role, context)
+    return _contextual_definition(label, role, context)
 
 
-def _load_definition_candidates(
+def _load_definition_registry(
     config: dict[str, Any],
     config_path: Path,
 ) -> dict[str, dict[str, Any]]:
-    """Load supplied definition candidates without trusting their proposed roles."""
-    configured = str(config.get("definition_candidate_registry", "")).strip()
+    """Load source definitions while deriving semantic roles independently."""
+    configured = str(config.get("definition_registry", "")).strip()
     if not configured:
         return {}
     path = Path(configured)
@@ -633,9 +651,9 @@ def _load_definition_candidates(
     actual_hash = str(payload.get("source_sha256", "")).strip()
     if expected_hash and actual_hash != expected_hash:
         raise ValueError(
-            "DECODE definition candidate registry does not match the configured source fingerprint"
+            "DECODE definition registry does not match the configured source fingerprint"
         )
-    config["_definition_candidate_registry_meta"] = {
+    config["_definition_registry_meta"] = {
         "source_record_count": int(payload.get("source_record_count", 0)),
         "source_sha256": actual_hash,
     }
@@ -646,7 +664,7 @@ def _load_definition_candidates(
     }
 
 
-def _expert_definition(label: str, role: str, context: list[str]) -> str:
+def _contextual_definition(label: str, role: str, context: list[str]) -> str:
     subject = _clean_definition_subject(label)
     lower = subject[:1].lower() + subject[1:] if subject else "the represented concept"
     if role == "Measurement":
@@ -680,7 +698,7 @@ def _workflow_definition(workflow: dict[str, Any]) -> str:
     title = str(workflow.get("title", "workflow"))
     source_kind = str(workflow.get("source_kind", "source_graphml"))
     if source_kind == "derived_schema":
-        return f"A derived DECODE workflow plan for {title}, preserving the reviewed model-stage input and output interfaces."
+        return f"A derived DECODE workflow plan for {title}, preserving the declared model-stage input and output interfaces."
     if source_kind == "source_manual_json":
         return f"A DECODE workflow plan for {title}, normalized from the sanitized manual workflow overlay while preserving its declared inputs and outputs."
     return f"A DECODE workflow plan for {title}, preserving the nodes and directed dependencies of the source GraphML workflow."

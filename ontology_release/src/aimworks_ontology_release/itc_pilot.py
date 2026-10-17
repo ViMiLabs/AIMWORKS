@@ -84,10 +84,10 @@ def integrate_itc_terms(
     *,
     write_in_place: bool = False,
 ) -> dict[str, Any]:
-    """Add or update the reviewed ITC terms without changing H2KG properties."""
+    """Add or update the curated ITC terms without changing H2KG properties."""
     ontology_path = Path(ontology_path)
     review = load_json(Path(review_path))
-    validation = validate_review_registry(review)
+    validation = validate_interface_registry(review)
     document = load_json(ontology_path)
     items = merge_document_items(document)
     existing = {item.get("@id"): item for item in items if isinstance(item.get("@id"), str)}
@@ -121,16 +121,16 @@ def build_itc_pilot_package(
     output_root: str | Path,
     review_path: str | Path | None = None,
 ) -> dict[str, Any]:
-    """Build the public value-free profile and review package from one registry."""
+    """Build the public value-free profile package from one registry."""
     ontology_path = Path(ontology_path)
-    review_path = Path(review_path or ontology_path.parent / "itc_expert_review.json")
+    review_path = Path(review_path or ontology_path.parent / "itc_curated_interface.json")
     if not review_path.exists():
         return {
-            "status": "skipped_missing_review",
-            "review": str(review_path),
+            "status": "skipped_missing_registry",
+            "registry": str(review_path),
         }
     review = load_json(review_path)
-    validation = validate_review_registry(review)
+    validation = validate_interface_registry(review)
     ontology_items = {
         item.get("@id"): item
         for item in merge_document_items(load_json(ontology_path))
@@ -183,7 +183,7 @@ def build_itc_pilot_package(
     }
 
 
-def validate_review_registry(review: dict[str, Any]) -> dict[str, Any]:
+def validate_interface_registry(review: dict[str, Any]) -> dict[str, Any]:
     fields = list(review.get("fields", []))
     identifiers = [str(field.get("io_id", "")) for field in fields]
     directions = Counter(str(field.get("direction", "")) for field in fields)
@@ -221,7 +221,7 @@ def validate_review_registry(review: dict[str, Any]) -> dict[str, Any]:
     )
     if not valid:
         raise ValueError(
-            "Invalid ITC expert registry: "
+            "Invalid ITC curated interface registry: "
             f"fields={len(fields)}, directions={dict(directions)}, decisions={dict(decisions)}, "
             f"duplicates={duplicate_ids}, incomplete={incomplete}, roles={invalid_roles}"
         )
@@ -242,7 +242,7 @@ def validate_review_registry(review: dict[str, Any]) -> dict[str, Any]:
 
 def build_decode_itc_overlay(review: dict[str, Any]) -> dict[str, Any]:
     """Return a derived profile overlay; no source occurrence or edge is added."""
-    validate_review_registry(review)
+    validate_interface_registry(review)
     fields = {field["io_id"]: field for field in review["fields"]}
     model_iri = review["model"]["iri"]
     nodes: list[dict[str, Any]] = []
@@ -309,7 +309,7 @@ def build_decode_itc_overlay(review: dict[str, Any]) -> dict[str, Any]:
     return {
         "profile_id": review["profile_id"],
         "workflow_id": WORKFLOW_ID,
-        "badge": "Expert-reviewed ITC profile",
+        "badge": "Curated ITC profile",
         "source_occurrence_id": MODEL_SOURCE_OCCURRENCE,
         "source_sha256": review["source"]["sha256"],
         "nodes": nodes,
@@ -318,8 +318,8 @@ def build_decode_itc_overlay(review: dict[str, Any]) -> dict[str, Any]:
 
 
 def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]) -> dict[str, Any]:
-    """Apply reviewed mappings without changing source labels, IDs, or edges."""
-    validate_review_registry(review)
+    """Apply curated mappings without changing source labels, IDs, or edges."""
+    validate_interface_registry(review)
     snapshot = deepcopy(snapshot)
     fields = {field["io_id"]: field for field in review["fields"]}
     label_counts = Counter(field["source_label"].strip().casefold() for field in review["fields"])
@@ -357,7 +357,7 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                     H2KG + exact_field["h2kg_local_name"],
                     exact_field["preferred_label"],
                     _intrinsic_role(exact_field),
-                    f"Unambiguous exact-label mapping confirmed by the expert ITC registry for {exact_field['io_id']}.",
+                    f"Unambiguous exact-label mapping established by the curated ITC registry for {exact_field['io_id']}.",
                 )
             if str(node.get("label", "")).strip().casefold() in {
                 review["model"]["preferred_label"].casefold(),
@@ -367,13 +367,13 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                     review["model"]["iri"],
                     review["model"]["preferred_label"],
                     "Process",
-                    "Expert-reviewed ITC model anchor; the source occurrence remains unchanged.",
+                    "Curated ITC model anchor; the source occurrence remains unchanged.",
                 )
             if workflow.get("id") != WORKFLOW_ID:
                 continue
-            workflow["expert_profile"] = {
+            workflow["curated_profile"] = {
                 "id": review["profile_id"],
-                "badge": "Expert-reviewed ITC profile",
+                "badge": "Curated ITC profile",
                 "source_sha256": review["source"]["sha256"],
             }
             if source_id == "n22":
@@ -381,16 +381,16 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                     review["model"]["iri"],
                     review["model"]["preferred_label"],
                     "Process",
-                    "Expert-reviewed ITC model anchor; the original GraphML occurrence remains unchanged.",
+                    "Curated ITC model anchor; the original GraphML occurrence remains unchanged.",
                 )
             elif source_id in node_field_ids:
                 field = fields[node_field_ids[source_id]]
-                correction = " Corrected expert semantics supersede the historical source label for mapping only." if field.get("rejected_legacy_labels") else ""
+                correction = " Corrected curated semantics supersede the historical source label for mapping only." if field.get("rejected_legacy_labels") else ""
                 node["mapping_override"] = _mapping_override(
                     H2KG + field["h2kg_local_name"],
                     field["preferred_label"],
                     _intrinsic_role(field),
-                    f"Expert-reviewed mapping for stable identifier {field['io_id']}.{correction}",
+                    f"Curated mapping for stable identifier {field['io_id']}.{correction}",
                 )
     return snapshot
 
@@ -398,18 +398,18 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
 def attach_itc_profile_overlay(graph: dict[str, Any], review: dict[str, Any]) -> dict[str, Any]:
     """Attach a derived visual overlay while keeping source graph counts fixed."""
     overlay = build_decode_itc_overlay(review)
-    graph.setdefault("expert_profile_overlays", []).append(overlay)
+    graph.setdefault("curated_profile_overlays", []).append(overlay)
     for workflow in graph.get("workflows", []):
         if workflow.get("id") == WORKFLOW_ID:
-            workflow["expert_profile"] = {
+            workflow["curated_profile"] = {
                 "id": review["profile_id"],
                 "badge": overlay["badge"],
                 "field_count": len(review["fields"]),
                 "source_sha256": review["source"]["sha256"],
             }
             workflow.setdefault("downloads", []).extend([
-                {"href": "../examples/itc_pilot/itc_h2kg_profile.jsonld", "label": "Download expert-reviewed ITC JSON-LD profile"},
-                {"href": "../examples/itc_pilot/itc_h2kg_profile.ttl", "label": "Download expert-reviewed ITC Turtle profile"},
+                {"href": "../examples/itc_pilot/itc_h2kg_profile.jsonld", "label": "Download curated ITC JSON-LD profile"},
+                {"href": "../examples/itc_pilot/itc_h2kg_profile.ttl", "label": "Download curated ITC Turtle profile"},
                 {"href": "../examples/itc_pilot/itc_mapping_matrix.csv", "label": "Download ITC mapping matrix"},
                 {"href": "../examples/itc_pilot/itc_validation_report.json", "label": "Download ITC validation report"},
             ])
@@ -424,8 +424,8 @@ def _mapping_override(anchor_iri: str, label: str, role: str, evidence: str) -> 
         "anchor_label": label,
         "canonical_role_iri": H2KG + role,
         "semantic_role": role,
-        "role_assignment": "expert_review",
-        "confidence": "expert_reviewed",
+        "role_assignment": "curated_interface",
+        "confidence": "curated_source",
         "evidence": evidence,
     }
 
@@ -478,7 +478,7 @@ def _profile_items(review: dict[str, Any]) -> list[dict[str, Any]]:
             "@id": field_iri,
             "@type": [H2KG + "DataPoint"],
             PREF_LABEL: [{"@language": "en", "@value": f"ITC {field['preferred_label']} {suffix.replace('Field', ' field').lower()}"}],
-            DESCRIPTION: [{"@language": "en", "@value": "A value-free schema-template field in the expert-reviewed ITC profile; it does not assert an observation or experimental result."}],
+            DESCRIPTION: [{"@language": "en", "@value": "A value-free schema-template field in the curated ITC profile; it does not assert an observation or experimental result."}],
             IDENTIFIER: [{"@value": field["io_id"]}],
             OF_PROPERTY: [{"@id": H2KG + field["h2kg_local_name"]}],
             SOURCE: [{"@id": source_iri}],
@@ -558,7 +558,7 @@ def _guidance_iri(field: dict[str, Any]) -> str:
 
 def _guidance_description(field: dict[str, Any]) -> str:
     suffix = " Values are normalized per unit carbon mass." if field.get("normalization_basis") == "CarbonMass" else ""
-    return f"Value-free QUDT guidance for {field['preferred_label']}; the expert source reports {field['reported_unit']}.{suffix}"
+    return f"Value-free QUDT guidance for {field['preferred_label']}; the curated source reports {field['reported_unit']}.{suffix}"
 
 
 def _mapping_rows(review: dict[str, Any]) -> list[dict[str, Any]]:
@@ -602,7 +602,7 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> Path:
 
 
 def _mapping_markdown(rows: list[dict[str, Any]]) -> str:
-    lines = ["# ITC expert-review mapping matrix", "", "| IO identifier | Direction | Preferred term | Intrinsic role | Workflow role | Outcome | H2KG IRI |", "|---|---|---|---|---|---|---|"]
+    lines = ["# ITC curated-interface mapping matrix", "", "| IO identifier | Direction | Preferred term | Intrinsic role | Workflow role | Outcome | H2KG IRI |", "|---|---|---|---|---|---|---|"]
     lines.extend(f"| `{row['io_id']}` | {row['direction']} | {row['preferred_label']} | {row['intrinsic_role']} | {row['workflow_role']} | {row['decision']} | `{row['h2kg_iri']}` |" for row in rows)
     return "\n".join(lines) + "\n"
 
@@ -650,15 +650,15 @@ h2kg:InkToCompositionModelParameterRecordShape a sh:NodeShape ;
 
 
 def _readme(report: dict[str, Any], review: dict[str, Any]) -> str:
-    return f"""# Expert-reviewed Ink-to-Composition Model profile
+    return f"""# Curated Ink-to-Composition Model profile
 
-This value-free profile integrates {report['unique_identifier_count']} reviewed ITC interface concepts into H2KG while preserving the original DECODE GraphML workflow. It contains {report['input_count']} inputs and {report['output_count']} outputs. Four terms reuse existing H2KG IRIs and 40 terms are controlled additions.
+This value-free profile integrates {report['unique_identifier_count']} curated ITC interface concepts into H2KG while preserving the original DECODE GraphML workflow. It contains {report['input_count']} inputs and {report['output_count']} outputs. Four terms reuse existing H2KG IRIs and 40 terms are controlled additions.
 
 Scientific source: {review['source']['scientific_source']}
 
-Source fingerprint: `{review['source']['sha256']}`. The reviewed PDF is not redistributed.
+Source fingerprint: `{review['source']['sha256']}`. The source PDF is not redistributed.
 
 Explore: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?iri={H2KG}{MODEL_LOCAL_NAME}`
 
-Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The Turtle and JSON-LD files contain the reviewed vocabulary module and quantity guidance. Contextual model-input and output expectations are expressed in SHACL, so no scientific Property class is reclassified as a Parameter.
+Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The Turtle and JSON-LD files contain the curated vocabulary module and quantity guidance. Contextual model-input and output expectations are expressed in SHACL, so no scientific Property class is reclassified as a Parameter.
 """

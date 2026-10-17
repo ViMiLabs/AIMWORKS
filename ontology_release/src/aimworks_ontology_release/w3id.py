@@ -67,7 +67,7 @@ def _htaccess(
     rdf_targets: dict[str, str],
     profile: dict[str, Any],
 ) -> str:
-    version = str(profile.get("version", "2.1.0"))
+    version = str(profile.get("version", "2.2.0"))
     escaped_version = version.replace(".", r"\.")
     return f"""Options +FollowSymLinks
 RewriteEngine On
@@ -246,7 +246,7 @@ reference for resolver maintenance and does not require a new W3ID registration.
 
 
 def _curl_tests(profile: dict[str, Any]) -> str:
-    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0"))
+    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0"))
     return f"""#!/usr/bin/env sh
 set -eu
 

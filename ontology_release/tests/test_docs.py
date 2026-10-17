@@ -296,6 +296,50 @@ h2kg:usesSoftware a owl:ObjectProperty ;
     assert "SoftwareArtifact" in property_page
 
 
+def test_docs_registry_deprecation_overrides_source_graph_status(mini_ontology_file, output_dir):
+    ontology_dir = output_dir / "ontology"
+    ontology_dir.mkdir()
+    process_iri = "https://w3id.org/h2kg/hydrogen-ontology#Process"
+    replacement_iri = "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
+    (ontology_dir / "taxonomy_registry.json").write_text(
+        json.dumps(
+            {
+                "terms": [
+                    {
+                        "iri": process_iri,
+                        "local_name": "Process",
+                        "label": "Process",
+                        "definition": "A deprecated test process.",
+                        "disposition": "deprecated_replaced",
+                        "parent_iri": "",
+                        "parent_label": "",
+                        "ancestor_path": [],
+                        "top_branch": "Compatibility",
+                        "module": "core",
+                        "corrected_semantic_role": "Compatibility",
+                        "definition_status": "legacy",
+                        "governance_status": "legacy",
+                        "migration_action": "replace",
+                        "replacement_iri": replacement_iri,
+                        "migration_target_iris": [replacement_iri],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    build_docs(mini_ontology_file, output_dir / "docs")
+
+    explorer = json.loads(
+        (output_dir / "docs" / "data" / "explorer.json").read_text(encoding="utf-8")
+    )
+    process = next(node for node in explorer["nodes"] if node["iri"] == process_iri)
+    assert process["deprecated"] == "Deprecated"
+    assert process["replacement_iri"] == replacement_iri
+    assert process["migration_target_iris"] == [replacement_iri]
+
+
 def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, output_dir):
     ontology_dir = output_dir / "ontology"
     ontology_dir.mkdir()
@@ -336,11 +380,11 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
                         "target_kind": "class",
                         "source": "emmo-electrochemistry",
                         "status": "manual_override",
-                        "alignment_category": "reviewed_foundational_alignment",
-                        "rationale": "Reviewed test bridge.",
+                        "alignment_category": "foundational_alignment",
+                        "rationale": "Configured test bridge.",
                     }
                 ],
-                "pending_review_mappings": [
+                "evidence_only_mappings": [
                     {
                         "local_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
                         "local_label": "Process",
@@ -351,7 +395,7 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
                         "target_kind": "class",
                         "source": "automatic-test-candidate",
                         "status": "accepted",
-                        "reviewer_decision": "pending-human-review",
+                        "decision_status": "evidence-only",
                         "rationale": "Automatic candidate that must not be published.",
                     }
                 ],
@@ -375,4 +419,4 @@ def test_docs_merge_validated_external_alignment_registry(mini_ontology_file, ou
         for link in explorer["links"]
     )
     local_node = next(node for node in explorer["nodes"] if node["iri"] == local)
-    assert local_node["external_alignments"][0]["alignment_category"] == "reviewed_foundational_alignment"
+    assert local_node["external_alignments"][0]["alignment_category"] == "foundational_alignment"

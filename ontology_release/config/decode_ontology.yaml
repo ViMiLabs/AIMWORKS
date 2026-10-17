@@ -3,17 +3,17 @@ ontology:
   ontology_iri: https://w3id.org/h2kg/decode/ontology
   version: 1.0.0
   issued: 2026-09-23
-  definition_status: expert-draft
+  definition_status: decode-local
   definition_seed_sha256: 1655e3c3724b1318607a16f977aa8cef8408500805f956a68f4ccc4466e9c838
   definition_seed_note: >-
-    Curated from the DECODE concept-definition draft supplied for expert review;
-    generic placeholders and source-category role errors are not authoritative.
+    Curated from the supplied DECODE concept-definition source;
+    generic placeholders and source-category role errors are excluded.
 
-definition_candidate_registry: decode_definition_candidates.json
+definition_registry: decode_definition_registry.json
 
-# These definitions cover source labels absent from the supplied draft and
+# These definitions cover source labels absent from the supplied registry and
 # concepts whose scientific distinction should not be left to a generic rule.
-# All remain expert drafts pending DECODE domain review.
+# They remain DECODE-local definitions unless promoted into H2KG.
 definition_overrides:
   "0D Particle population degradation model coupled with performance model fitting": >-
     A coupled zero-dimensional computational process that estimates catalyst-particle degradation and electrochemical-performance model parameters from observed cell behavior.

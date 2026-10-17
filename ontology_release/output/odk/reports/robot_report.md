@@ -1,9 +1,9 @@
 # ODK / ROBOT Shadow Report
 
-- Status: good
+- Status: watch
 - Errors: 0
-- Warnings: 0
+- Warnings: 1
 - Profile violations: 0
-- Reasoning status: completed
+- Reasoning status: pending nested ODK execution
 
-ROBOT/ODK commands completed and actual ODK artefacts were collected.
+Shadow artefacts were generated successfully. ROBOT profile and reasoner checks still need an explicit ODK run.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Explore DECODE Workflows | H2KG Application Ontology for Hydrogen Electrochemical Systems</title>
+  <title>Explore DECODE Workflows | H₂KG Domain Ontology for Hydrogen Electrochemical Systems</title>
   <link rel="stylesheet" href="../assets/style.css">
   <link rel="stylesheet" href="../assets/decode-workflows.css">
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
@@ -14,14 +14,14 @@
     <div class="wrap">
       <div class="hero-head">
         <div class="hero-copy">
-          <p class="eyebrow">H2KG Ontology</p>
+          <p class="eyebrow">H₂KG Ontology</p>
           <h1>Explore DECODE Workflows</h1>
           <p class="subtitle">Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
         </div>
-        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H₂KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
       </div>
       <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
-      
+
     <nav class="nav">
       <a href="../index.html">Home</a>
       <a href="user-guide.html">User Guide</a>
@@ -41,16 +41,16 @@
       <a href="developer-guide.html">Developer</a>
       <a href="release.html">Release</a>
     </nav>
-    
+
     </div>
   </header>
   <main class="wrap content">
-    
+
 <section class="decode-intro">
   <p class="eyebrow">Separate aligned workflow layer</p>
   <h2>Federated DECODE workflow graph</h2>
-  <p>The 120 original GraphML workflows remain immutable. Sanitized manual-JSON workflows are added as source-backed overlays, and cross-workflow traversal uses reviewed shared anchors plus a separate evidence-bearing method-dependency layer. The H2KG TBox and its Explore page are unchanged.</p>
-  <p>The merged <strong>DECODE H2KG-Aligned Workflow Ontology</strong> publishes the complete catalogue as a provenance-preserving H2KG-aligned graph. DECODE definitions are expert drafts pending human review. The DECODE reuse license is pending governance confirmation; no open license is asserted for these ontology files.</p>
+  <p>The 120 original GraphML workflows remain immutable. Sanitized manual-JSON workflows are added as source-backed overlays, and cross-workflow traversal uses explicit semantic anchors plus a separate evidence-bearing method-dependency layer. The H₂KG TBox and its Explore page are unchanged.</p>
+  <p>The merged <strong>DECODE H₂KG-Aligned Workflow Ontology</strong> publishes the complete catalogue as a provenance-preserving H₂KG-aligned graph. DECODE-local definitions remain separate from the public H₂KG taxonomy. The DECODE reuse license is pending governance confirmation; no open license is asserted for these ontology files.</p>
   <div class="decode-ontology-downloads">
     <a href="../decode/decode-h2kg-aligned-ontology.ttl" download>Download ontology (Turtle)</a>
     <a href="../decode/decode-h2kg-aligned-ontology.jsonld" download>Download ontology (JSON-LD)</a>
@@ -64,7 +64,7 @@
     <span><strong>3307</strong> source occurrences</span>
     <span><strong>4463</strong> preserved dependencies</span>
     <span><strong>4463</strong> classified dependencies</span>
-    <span><strong>709</strong> reviewed shared anchors</span>
+    <span><strong>709</strong> semantic anchors</span>
     <span><strong>572</strong> published method dependencies</span>
   </div>
 </section>
@@ -86,7 +86,7 @@
       <label><input id="decode-show-semantic" type="checkbox" checked> Semantic projections</label>
       <label><input id="decode-show-dependencies" type="checkbox" checked> Workflow dependencies</label>
       <label for="decode-semantic-filter">Projection outcome</label>
-      <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H2KG direct</option><option value="h2kg_reified">H2KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
+      <select id="decode-semantic-filter"><option value="all">All classifications</option><option value="h2kg_direct">H₂KG direct</option><option value="h2kg_reified">H₂KG reified</option><option value="prov_derivation">PROV derivation</option><option value="decode_structural_only">DECODE structural only</option></select>
       <button id="decode-reset" type="button">Reset graph</button>
       <button id="decode-more" type="button" hidden>Add next connected workflow</button>
       </div>
@@ -96,7 +96,7 @@
       </div>
       <p id="decode-legend" class="decode-legend" hidden></p>
     </div>
-    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and reviewed semantic projections will appear in the graph workspace.</p></aside>
+    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and semantic projections will appear in the graph workspace.</p></aside>
   </div>
   <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
 </section>
@@ -104,7 +104,7 @@
   </main>
   <footer class="footer">
     <div class="wrap">
-      
+
       <section class="acknowledgement" aria-labelledby="acknowledgement-title">
         <div class="acknowledgement-brand">
           <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
@@ -114,9 +114,37 @@
           <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
         </div>
       </section>
-    
-      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 2.1.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.2.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>

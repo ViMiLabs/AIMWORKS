@@ -91,9 +91,11 @@ class TaxonomyDecision:
     module: str
     technology_applicability: tuple[str, ...]
     replacement_iri: str
-    review_status: str
+    migration_target_iris: tuple[str, ...]
+    profile_fallback_iri: str
+    governance_status: str
     migration_action: str
-    reviewer_decision: str
+    correction_action: str
     rationale: str
 
 
@@ -119,6 +121,11 @@ def build_taxonomy_release(
     config_path = config_root / "taxonomy.yaml"
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     controlled_corrections = _load_controlled_corrections(config_root / "tib_h2kg_corrections.json")
+    term_registry_path = config_root / "h2kg_term_registry_2_2.json"
+    correction_registry_path = config_root / "h2kg_taxonomy_corrections_2_2.json"
+    term_registry = _load_authoritative_term_registry(term_registry_path)
+    correction_registry = _load_taxonomy_correction_registry(correction_registry_path)
+    config["profile_migrations"] = dict(correction_registry.get("profile_migrations", {}))
 
     source = Graph().parse(input_path, format="json-ld")
     auto_harmonization = (
@@ -131,6 +138,7 @@ def build_taxonomy_release(
         config,
         auto_harmonization,
         controlled_corrections,
+        term_registry,
     )
     resources = _resource_dispositions(source, clean, decisions, config)
 
@@ -187,13 +195,19 @@ def build_taxonomy_release(
         allow_warnings=True,
     )
     registry_payload = {
-        "schema_version": "h2kg-taxonomy-registry/v2",
+        "schema_version": "h2kg-taxonomy-registry/v2.2",
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.1.0")),
+        "version": str(config.get("version", "2.2.0")),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sha256": _sha256(input_path),
         "taxonomy_config_sha256": _sha256(config_path),
-        "review_status": str(config.get("review_status", "domain-expert-reviewed")),
+        "governance_status": str(config.get("governance_status", "approved")),
+        "authoritative_term_registry_sha256": _sha256(term_registry_path),
+        "correction_registry_sha256": _sha256(correction_registry_path),
+        "correction_decision_counts": {
+            key: correction_registry["decision_counts"][key]
+            for key in ("parent", "definition", "total")
+        },
         "top_branches": [str(H2KG[name]) for name in config.get("top_branches", [])],
         "terms": [asdict(decision) for decision in decisions],
     }
@@ -239,12 +253,19 @@ def build_taxonomy_release(
     )
     write_text(validation_path, json.dumps(validation, indent=2, ensure_ascii=False))
     write_text(report_path, _taxonomy_report(validation, decisions))
+    correction_report = _write_h2kg_22_correction_report(
+        reports_dir,
+        correction_registry,
+        decisions,
+        validation,
+        bridge,
+    )
     if not validation["conforms"]:
         raise ValueError("H2KG taxonomy validation failed: " + "; ".join(validation["errors"][:8]))
 
     return {
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.1.0")),
+        "version": str(config.get("version", "2.2.0")),
         "active_local_classes": validation["counts"]["active_local_classes"],
         "deprecated_compatibility_classes": validation["counts"]["deprecated_compatibility_classes"],
         "new_structural_classes": validation["counts"]["new_structural_classes"],
@@ -261,6 +282,7 @@ def build_taxonomy_release(
         "external_bridge": bridge,
         "semantic_profiles": semantic_profiles,
         "competency_report": str(competency_path),
+        "correction_report": correction_report,
         "validation": str(validation_path),
         "publication_ready": validation["publication_ready"],
     }
@@ -271,7 +293,17 @@ def _build_graphs(
     config: dict[str, Any],
     auto_harmonization: dict[str, Any] | None = None,
     controlled_corrections: dict[str, dict[str, Any]] | None = None,
+    term_registry: dict[str, Any] | None = None,
 ) -> tuple[Graph, Graph, list[TaxonomyDecision]]:
+    if term_registry is None:
+        raise ValueError(
+            "H2KG 2.2 requires the authoritative term registry; publication-time "
+            "parent and definition inference is disabled."
+        )
+    return _build_graphs_from_registry(source, config, term_registry)
+
+    # Kept temporarily as unreachable migration history. It is deliberately
+    # bypassed above so no release can infer parents or definitions.
     clean = Graph()
     compatibility = Graph()
     _bind_namespaces(clean, source)
@@ -400,7 +432,7 @@ def _build_graphs(
                 definition_status = "source-curated"
             else:
                 definition = _generated_definition(label, parent_name, record["roles"], structural)
-                definition_status = "expert-draft-role-corrected" if corrected_from_source_role else "expert-draft"
+                definition_status = "curated-role-corrected" if corrected_from_source_role else "curated"
 
         if correction:
             required_parent = str(correction.get("required_parent", ""))
@@ -468,8 +500,7 @@ def _build_graphs(
 
         module, technologies = _module_for(label, local_name, config.get("module_rules", {}))
         migration_action = _migration_action(record, deprecated, local_name in structural)
-        review_status = str(config.get("review_status", "domain-expert-reviewed"))
-        reviewer_decision = str(config.get("reviewer_decision", "approved-domain-expert-review"))
+        governance_status = str(config.get("governance_status", "approved"))
         _add_taxonomy_annotations(
             clean,
             subject,
@@ -478,9 +509,9 @@ def _build_graphs(
             top_branch=top_branch,
             corrected_role=corrected_role,
             definition_status=definition_status,
-            review_status=review_status,
+            governance_status=governance_status,
             migration_action=migration_action,
-            reviewer_decision=reviewer_decision,
+            correction_action="retain",
             source_exists=bool(record.get("source_exists")),
         )
         decisions.append(
@@ -503,9 +534,174 @@ def _build_graphs(
                 module=module,
                 technology_applicability=technologies,
                 replacement_iri=str(H2KG[replacement_name]) if replacement_name else "",
-                review_status=review_status,
+                migration_target_iris=tuple(),
+                profile_fallback_iri="",
+                governance_status=governance_status,
                 migration_action=migration_action,
-                reviewer_decision=reviewer_decision,
+                correction_action="retain",
+                rationale=rationale,
+            )
+        )
+
+    _build_compatibility_graph(source, compatibility, clean, config)
+    return clean, compatibility, decisions
+
+
+def _build_graphs_from_registry(
+    source: Graph,
+    config: dict[str, Any],
+    term_registry: dict[str, Any],
+) -> tuple[Graph, Graph, list[TaxonomyDecision]]:
+    """Build H2KG without publication-time parent or definition inference."""
+
+    clean = Graph()
+    compatibility = Graph()
+    _bind_namespaces(clean, source)
+    _bind_namespaces(compatibility, source)
+    _copy_ontology_header(source, clean, config)
+    _copy_properties(source, clean)
+    _add_support_properties(clean)
+    _add_taxonomy_annotation_properties(clean)
+
+    if str(term_registry.get("version", "")) != str(config.get("version", "")):
+        raise ValueError("The authoritative term registry and taxonomy configuration versions differ.")
+    term_rows = list(term_registry.get("terms", []))
+    terms = {str(row.get("local_name", "")): row for row in term_rows if row.get("local_name")}
+    if len(terms) != len(term_rows):
+        raise ValueError("The authoritative term registry contains duplicate or unnamed terms.")
+
+    source_candidates = _class_candidates(source, config.get("structural_classes", {}))
+    source_by_name = {_local_name(subject): subject for subject in source_candidates}
+    missing = sorted(set(source_by_name) - set(terms))
+    if missing:
+        raise ValueError(
+            "Source classes are missing from the authoritative term registry: "
+            + ", ".join(missing[:12])
+        )
+
+    active_names = {
+        name for name, row in terms.items() if row.get("disposition") == "active_local_class"
+    }
+    parents = {
+        name: str(row.get("primary_parent", "")) if name in active_names else ""
+        for name, row in terms.items()
+    }
+    roots = set(config.get("top_branches", []))
+    for name in sorted(active_names):
+        parent = parents[name]
+        if name not in roots and (not parent or parent not in active_names):
+            raise ValueError(f"Active authoritative term {name} has missing or inactive parent {parent!r}.")
+
+    decisions: list[TaxonomyDecision] = []
+    for name in sorted(terms, key=lambda value: str(terms[value]["label"]).casefold()):
+        row = terms[name]
+        subject = URIRef(str(row.get("iri") or H2KG[name]))
+        if subject != H2KG[name]:
+            raise ValueError(f"Authoritative term {name} does not use its stable H2KG IRI.")
+        source_subject = source_by_name.get(name, subject)
+        source_roles = _source_roles(source, source_subject) if name in source_by_name else tuple()
+        label = str(row.get("label", "")).strip()
+        definition = str(row.get("definition", "")).strip()
+        definition_status = str(row.get("definition_status", "")).strip()
+        disposition = str(row.get("disposition", "")).strip()
+        deprecated = disposition != "active_local_class"
+        parent_name = parents.get(name, "")
+        replacement_name = str(row.get("replacement", "")).strip()
+        migration_names = tuple(str(value) for value in row.get("migration_targets", []))
+        fallback_name = str(row.get("profile_fallback", "")).strip()
+        if not label or not definition:
+            raise ValueError(f"Authoritative term {name} lacks a preferred label or definition.")
+        if not deprecated and definition_status not in {"source", "curated", "structural"}:
+            raise ValueError(f"Active term {name} has invalid definition status {definition_status!r}.")
+
+        clean.add((subject, RDF.type, OWL.Class))
+        clean.set((subject, RDFS.label, Literal(label, lang="en")))
+        clean.set((subject, SKOS.prefLabel, Literal(label, lang="en")))
+        clean.set((subject, SKOS.definition, Literal(definition, lang="en")))
+        for value in row.get("alt_labels", []):
+            if str(value).strip() and str(value).casefold() != label.casefold():
+                clean.add((subject, SKOS.altLabel, Literal(str(value), lang="en")))
+        for value in row.get("notations", []):
+            if str(value).strip():
+                clean.add((subject, SKOS.notation, Literal(str(value))))
+
+        if deprecated:
+            clean.set((subject, OWL.deprecated, Literal(True, datatype=XSD.boolean)))
+            if replacement_name:
+                clean.add((subject, DCTERMS.isReplacedBy, H2KG[replacement_name]))
+            parent_iri = ""
+            parent_label = ""
+            top_branch = "Compatibility"
+            ancestor_path: tuple[str, ...] = tuple()
+            corrected_role = "Compatibility"
+            if replacement_name:
+                rationale = f"Deprecated compatibility class; use {replacement_name}."
+            elif migration_names:
+                rationale = "Deprecated split concept with context-specific migration targets recorded in the registry."
+            else:
+                rationale = "Deprecated safely because the source does not establish one unambiguous scientific identity."
+        else:
+            _copy_term_annotations(source, source_subject, clean)
+            clean.set((subject, DCTERMS.description, Literal(definition, lang="en")))
+            scope_note = str(row.get("scope_note", "")).strip()
+            if scope_note:
+                clean.set((subject, SKOS.scopeNote, Literal(scope_note, lang="en")))
+            if parent_name:
+                clean.add((subject, RDFS.subClassOf, H2KG[parent_name]))
+            _add_upper_alignment(clean, name)
+            parent_iri = str(H2KG[parent_name]) if parent_name else ""
+            parent_label = str(terms[parent_name]["label"]) if parent_name else ""
+            ancestors = _ancestor_names(name, parents, {})
+            top_branch = ancestors[-1] if ancestors else name
+            ancestor_path = tuple(str(H2KG[value]) for value in reversed(ancestors))
+            corrected_role = _corrected_semantic_role(name, parents)
+            rationale = str(row.get("evidence") or "Authoritative H2KG 2.2 term-registry decision.")
+
+        inferred_module, inferred_technologies = _module_for(
+            label, name, config.get("module_rules", {})
+        )
+        module = str(row.get("module") or inferred_module)
+        technologies = tuple(row.get("technology_applicability") or inferred_technologies)
+        governance_status = str(row.get("governance_status") or ("legacy" if deprecated else "approved"))
+        correction_action = str(row.get("correction_action") or "retain")
+        _add_taxonomy_annotations(
+            clean,
+            subject,
+            module=module,
+            technologies=technologies,
+            top_branch=top_branch,
+            corrected_role=corrected_role,
+            definition_status=definition_status,
+            governance_status=governance_status,
+            migration_action=correction_action,
+            correction_action=correction_action,
+            source_exists=name in source_by_name,
+        )
+        decisions.append(
+            TaxonomyDecision(
+                iri=str(subject),
+                local_name=name,
+                label=label,
+                alt_labels=tuple(str(value) for value in row.get("alt_labels", [])),
+                notations=tuple(str(value) for value in row.get("notations", [])),
+                definition=definition,
+                definition_status=definition_status,
+                source_roles=source_roles,
+                corrected_semantic_role=corrected_role,
+                disposition=disposition,
+                parent_iri=parent_iri,
+                parent_label=parent_label,
+                secondary_parent_iris=tuple(),
+                top_branch=top_branch,
+                ancestor_path=ancestor_path,
+                module=module,
+                technology_applicability=technologies,
+                replacement_iri=str(H2KG[replacement_name]) if replacement_name else "",
+                migration_target_iris=tuple(str(H2KG[value]) for value in migration_names),
+                profile_fallback_iri=str(H2KG[fallback_name]) if fallback_name else "",
+                governance_status=governance_status,
+                migration_action=correction_action,
+                correction_action=correction_action,
                 rationale=rationale,
             )
         )
@@ -684,7 +880,7 @@ def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) 
     for import_iri in sorted(allowed_imports):
         target.add((H2KG_ONTOLOGY, OWL.imports, URIRef(import_iri)))
     target.add((H2KG_ONTOLOGY, RDF.type, OWL.Ontology))
-    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
+    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.2.0")))))
     target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(config.get("version_iri")))))
     target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H₂KG Domain Ontology for Hydrogen Electrochemical Systems", lang="en")))
     target.set(
@@ -797,10 +993,10 @@ def _add_taxonomy_annotation_properties(target: Graph) -> None:
             "canonical semantic role",
             "Records the canonical H2KG semantic role assigned after separating scientific identity from a contextual workflow role.",
         ),
-        "definitionStatus": ("definition status", "Records whether a definition is curated, generated as an expert draft, or retained for compatibility."),
-        "reviewStatus": ("review status", "Records the governance review state of an H2KG resource."),
+        "definitionStatus": ("definition status", "Records whether a definition is sourced, curated, structural, or retained as legacy content."),
+        "governanceStatus": ("governance status", "Records the approved or legacy governance state of an H2KG resource."),
         "migrationAction": ("migration action", "Records how a resource is handled during migration to the H2KG v2 taxonomy."),
-        "reviewerDecision": ("reviewer decision", "Records the current domain-review decision for a taxonomy placement."),
+        "correctionAction": ("correction action", "Records the apply, retain, split, replace, or safe-deprecation action used for a taxonomy resource."),
     }
     for local_name, (label, definition) in definitions.items():
         subject = H2KG[local_name]
@@ -818,18 +1014,18 @@ def _add_taxonomy_annotations(
     top_branch: str,
     corrected_role: str,
     definition_status: str,
-    review_status: str,
+    governance_status: str,
     migration_action: str,
-    reviewer_decision: str,
+    correction_action: str,
     source_exists: bool,
 ) -> None:
     target.set((subject, H2KG.taxonomyModule, Literal(module)))
     target.set((subject, H2KG.taxonomyTopBranch, Literal(top_branch)))
     target.set((subject, H2KG.canonicalSemanticRole, Literal(corrected_role)))
     target.set((subject, H2KG.definitionStatus, Literal(definition_status)))
-    target.set((subject, H2KG.reviewStatus, Literal(review_status)))
+    target.set((subject, H2KG.governanceStatus, Literal(governance_status)))
     target.set((subject, H2KG.migrationAction, Literal(migration_action)))
-    target.set((subject, H2KG.reviewerDecision, Literal(reviewer_decision)))
+    target.set((subject, H2KG.correctionAction, Literal(correction_action)))
     for technology in technologies:
         target.add((subject, H2KG.technologyApplicability, Literal(technology)))
     provenance = (
@@ -890,8 +1086,8 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
 
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
-    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.1.0")))))
-    target.add((compatibility_iri, DCTERMS.title, Literal("H₂KG 2.1 Legacy Compatibility Layer", lang="en")))
+    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.2.0")))))
+    target.add((compatibility_iri, DCTERMS.title, Literal("H₂KG 2.2 Legacy Compatibility Layer", lang="en")))
     target.add(
         (
             compatibility_iri,
@@ -949,9 +1145,9 @@ def _taxonomy_shapes_graph() -> Graph:
         H2KG.taxonomyTopBranch: "Every H2KG class must identify exactly one top-level taxonomy branch.",
         H2KG.canonicalSemanticRole: "Every H2KG class must have exactly one canonical semantic role.",
         H2KG.definitionStatus: "Every H2KG class must have exactly one definition status.",
-        H2KG.reviewStatus: "Every H2KG class must have exactly one review status.",
+        H2KG.governanceStatus: "Every H2KG class must have exactly one governance status.",
         H2KG.migrationAction: "Every H2KG class must have exactly one migration action.",
-        H2KG.reviewerDecision: "Every H2KG class must have exactly one reviewer decision.",
+        H2KG.correctionAction: "Every H2KG class must have exactly one correction action.",
         DCTERMS.provenance: "Every H2KG class must record migration provenance.",
     }
     for path, message in required_annotations.items():
@@ -1186,7 +1382,7 @@ def _serialize_graph(graph: Graph, path: Path, format_: str) -> None:
         payload = graph.serialize(format="json-ld", context=COMMON_CONTEXT, auto_compact=True, indent=2)
     else:
         payload = graph.serialize(format=format_)
-    write_text(path, str(payload))
+    write_text(path, str(payload).rstrip() + "\n")
 
 
 def _write_registry_csv(path: Path, decisions: list[TaxonomyDecision]) -> None:
@@ -1202,6 +1398,7 @@ def _write_registry_csv(path: Path, decisions: list[TaxonomyDecision]) -> None:
                 "notations",
                 "source_roles",
                 "secondary_parent_iris",
+                "migration_target_iris",
                 "ancestor_path",
                 "technology_applicability",
             ):
@@ -1266,13 +1463,13 @@ def _resource_dispositions(
             corrected_kind = "owl:Class"
             rationale = decision.rationale
             label = decision.label
-            review_status = decision.review_status
+            governance_status = decision.governance_status
         elif subject == H2KG_ONTOLOGY:
             disposition = "ontology_header"
             corrected_kind = "owl:Ontology"
             rationale = "The stable H2KG ontology identifier and release metadata resource."
             label = _best_label(source, subject, "H2KG")
-            review_status = "schema-reviewed"
+            governance_status = "approved"
         elif subject in source_properties or subject in clean_properties:
             if (subject, RDF.type, OWL.ObjectProperty) in source or (subject, RDF.type, OWL.ObjectProperty) in clean:
                 disposition = "object_property"
@@ -1285,31 +1482,31 @@ def _resource_dispositions(
                 corrected_kind = "owl:AnnotationProperty"
             rationale = "Schema relation retained as a property rather than promoted to a class."
             label = _best_label(clean if any(clean.triples((subject, None, None))) else source, subject, local_name)
-            review_status = "schema-reviewed"
+            governance_status = "approved"
         elif (subject, RDF.type, H2KG.DataPoint) in source or local_name.startswith("ITCQuantityGuidance_"):
             disposition = "profile_or_workflow_field"
             corrected_kind = "profile construct"
             rationale = "Contextual field retained in the profile/compatibility layer and excluded from the reusable class taxonomy."
             label = _best_label(source, subject, local_name)
-            review_status = "compatibility-preserved"
+            governance_status = "legacy"
         elif _is_quantity_value(source, subject) or local_name.startswith("_") or local_name.endswith("_QV"):
             disposition = "named_individual"
             corrected_kind = "qudt:QuantityValue individual"
             rationale = "Quantity-value or generated value record retained as an individual, not an OWL class."
             label = _best_label(source, subject, local_name)
-            review_status = "compatibility-preserved"
+            governance_status = "legacy"
         elif local_name == "UNKNOWN" or subject not in source_subjects:
             disposition = "source_metadata_only"
             corrected_kind = "unresolved source marker"
             rationale = "Legacy source marker is retained only for audit provenance and is excluded from the clean taxonomy."
             label = _best_label(source, subject, local_name)
-            review_status = "deprecated-source-marker"
+            governance_status = "legacy"
         else:
             disposition = "named_individual"
             corrected_kind = "owl:NamedIndividual"
             rationale = "Contextual source resource retained as an individual pending a more specific profile disposition."
             label = _best_label(source, subject, local_name)
-            review_status = str(config.get("review_status", "domain-expert-reviewed"))
+            governance_status = str(config.get("governance_status", "approved"))
 
         rows.append(
             {
@@ -1320,7 +1517,7 @@ def _resource_dispositions(
                 "corrected_kind": corrected_kind,
                 "disposition": disposition,
                 "source_exists": source_exists,
-                "review_status": review_status,
+                "governance_status": governance_status,
                 "rationale": rationale,
             }
         )
@@ -1370,6 +1567,44 @@ def _load_controlled_corrections(path: Path) -> dict[str, dict[str, Any]]:
     return corrections
 
 
+def _load_authoritative_term_registry(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise ValueError(f"Missing authoritative H2KG term registry: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "h2kg-authoritative-term-registry/v2.2":
+        raise ValueError(f"Unsupported authoritative term registry: {payload.get('schema_version')}")
+    if not payload.get("terms"):
+        raise ValueError("The authoritative H2KG term registry is empty.")
+    return payload
+
+
+def _load_taxonomy_correction_registry(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise ValueError(f"Missing H2KG taxonomy correction registry: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "h2kg-taxonomy-corrections/v2.2":
+        raise ValueError(f"Unsupported taxonomy correction registry: {payload.get('schema_version')}")
+    decisions = list(payload.get("decisions", []))
+    identifiers = [str(row.get("decision_id", "")) for row in decisions]
+    counts = payload.get("decision_counts", {})
+    if len(decisions) != 626 or len(set(identifiers)) != 626:
+        raise ValueError("The H2KG 2.2 correction registry must contain 626 unique decisions.")
+    expected_counts = {
+        "parent": 156,
+        "definition": 470,
+        "total": 626,
+        "unique_classes": 544,
+        "source_dependent_classes": 153,
+    }
+    if any(int(counts.get(key, -1)) != value for key, value in expected_counts.items()):
+        raise ValueError("The H2KG 2.2 correction registry decision counts are invalid.")
+    allowed = {"apply", "retain", "split", "replace", "deprecate_source_ambiguous"}
+    invalid = sorted({str(row.get("final_action", "")) for row in decisions} - allowed)
+    if invalid:
+        raise ValueError(f"Unsupported H2KG 2.2 correction actions: {invalid}")
+    return payload
+
+
 def _build_external_bridge(
     output_root: Path,
     config_dir: str | Path,
@@ -1402,7 +1637,7 @@ def _build_external_bridge(
     snapshot_sha256 = str((auto_harmonization or {}).get("snapshot_sha256") or _json_payload_sha256(snapshot))
     snapshot_date = str(snapshot.get("retrieved_at", "snapshot-not-available"))
     snapshot_slug = re.sub(r"[^0-9]", "", snapshot_date[:10]) or "undated"
-    version = str(config.get("version", "2.1.0"))
+    version = str(config.get("version", "2.2.0"))
     immutable_stem = f"h2kg-external-bridge-{snapshot_slug}-{snapshot_sha256[:12]}"
     bridge_iri = URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl")
     version_iri = URIRef(
@@ -1481,10 +1716,10 @@ def _build_external_bridge(
         "skos:relatedMatch": SKOS.relatedMatch,
     }
     registry_rows: list[dict[str, Any]] = []
-    pending_review_rows: list[dict[str, Any]] = []
+    evidence_only_rows: list[dict[str, Any]] = []
     stale_manual_rows: list[dict[str, str]] = []
     invalid_rows: list[dict[str, str]] = []
-    reviewed_statuses = {"manual_override", "human_reviewed", "reviewed", "approved"}
+    assertable_statuses = {"manual_override", "human_reviewed", "reviewed", "approved"}
     review_path = output_root / "review" / "mapping_review.csv"
     if review_path.exists():
         with review_path.open("r", encoding="utf-8", newline="") as handle:
@@ -1535,27 +1770,25 @@ def _build_external_bridge(
                     "tib_catalogue_url": f"https://terminology.tib.eu/ts/ontologies/{tib_id}" if tib_id else "",
                     "collections": _snapshot_collections(snapshot, tib_id),
                     "confidence": "high",
-                    "rule_id": "MANUAL-REVIEWED-MAPPING",
-                    "alignment_category": "reviewed_foundational_alignment",
+                    "rule_id": "CONFIGURED-FOUNDATIONAL-MAPPING",
+                    "alignment_category": "foundational_alignment",
                     "mapping_evidence": row.get("rationale", ""),
-                    "reviewer_decision": (
-                        "accepted-configured-review"
-                        if status == "manual_override"
-                        else "accepted-human-review"
-                        if status in reviewed_statuses
-                        else "pending-human-review"
+                    "decision_status": (
+                        "accepted-configured"
+                        if status in assertable_statuses
+                        else "evidence-only"
                     ),
                 }
-                if status not in reviewed_statuses:
-                    registry_row["publication_status"] = "pending-human-review"
-                    pending_review_rows.append(registry_row)
+                if status not in assertable_statuses:
+                    registry_row["publication_status"] = "evidence-only"
+                    evidence_only_rows.append(registry_row)
                     continue
                 required_values = (
                     registry_row.get("local_iri"),
                     registry_row.get("target_iri"),
                     registry_row.get("relation"),
                     registry_row.get("mapping_evidence"),
-                    registry_row.get("reviewer_decision"),
+                    registry_row.get("decision_status"),
                     registry_row.get("tib_ontology_id"),
                     registry_row.get("tib_ontology_version"),
                     registry_row.get("tib_snapshot_retrieved_at"),
@@ -1566,12 +1799,12 @@ def _build_external_bridge(
                             "local_iri": local_iri,
                             "relation": relation,
                             "target_iri": target_iri,
-                            "reason": "Mapping lacks required review or dated TIB provenance fields.",
+                            "reason": "Mapping lacks a required decision or dated TIB provenance field.",
                         }
                     )
                     continue
                 registry_rows.append(registry_row)
-                registry_row["publication_status"] = "asserted-reviewed"
+                registry_row["publication_status"] = "asserted-configured"
                 graph.add((URIRef(local_iri), predicate, URIRef(target_iri)))
 
     represented_local_names = {
@@ -1611,11 +1844,11 @@ def _build_external_bridge(
             "tib_catalogue_url": f"https://terminology.tib.eu/ts/ontologies/{tib_id}" if tib_id else "",
             "collections": _snapshot_collections(snapshot, tib_id),
             "confidence": "high",
-            "rule_id": "MANUAL-CONFIGURED-MAPPING",
-            "alignment_category": "reviewed_foundational_alignment",
+            "rule_id": "CONFIGURED-FOUNDATIONAL-MAPPING",
+            "alignment_category": "foundational_alignment",
             "mapping_evidence": str(full_spec.get("rationale", "")),
-            "reviewer_decision": "accepted-configured-review",
-            "publication_status": "asserted-reviewed",
+            "decision_status": "accepted-configured",
+            "publication_status": "asserted-configured",
         }
         required_values = (
             registry_row["local_kind"],
@@ -1709,7 +1942,7 @@ def _build_external_bridge(
             "alignment_category": "tib_benchmark_alignment",
             "scope_evidence": str(row.get("scope_evidence", "")),
             "mapping_evidence": str(row.get("decision_basis", "Strict automated publication gates passed.")),
-            "reviewer_decision": "accepted-machine-safe",
+            "decision_status": "accepted-machine-safe",
             "publication_status": "asserted-machine-safe",
         }
         required_values = (
@@ -1799,10 +2032,10 @@ def _build_external_bridge(
                 "h2kg_version": version,
                 "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
                 "tib_snapshot_sha256": snapshot_sha256,
-                "policy": "reviewed mappings plus strict machine-safe SKOS exact/broad/narrow assertions; related evidence is not asserted",
+                "policy": "configured foundational mappings plus strict machine-safe SKOS exact/broad/narrow assertions; related evidence is not asserted",
                 "mappings": registry_rows,
                 "exact_iri_reuse": exact_iri_reuse,
-                "pending_review_mappings": pending_review_rows,
+                "evidence_only_mappings": evidence_only_rows,
                 "excluded_stale_manual_mappings": stale_manual_rows,
                 "invalid_mappings": invalid_rows,
                 "benchmark_evidence": "../benchmarks/tib_collections/candidate_decisions.csv",
@@ -1818,7 +2051,7 @@ def _build_external_bridge(
         sorted(Counter(str(row.get("alignment_category", "unspecified")) for row in registry_rows).items())
     )
     machine_rows = [row for row in registry_rows if row.get("status") == "machine_safe"]
-    reviewed_rows = [row for row in registry_rows if row.get("status") != "machine_safe"]
+    foundational_rows = [row for row in registry_rows if row.get("status") != "machine_safe"]
     tib_asserted_counts = dict(
         sorted(Counter(str(row.get("relation", "")) for row in machine_rows).items())
     )
@@ -1831,11 +2064,11 @@ def _build_external_bridge(
         "tib_asserted_mapping_counts": tib_asserted_counts,
         "alignment_category_counts": category_counts,
         "tib_benchmark_asserted_mapping_count": len(machine_rows),
-        "reviewed_foundational_mapping_count": len(reviewed_rows),
+        "foundational_mapping_count": len(foundational_rows),
         "mapped_h2kg_class_count": len({row.get("local_iri") for row in registry_rows}),
         "external_ontology_count": len({row.get("tib_ontology_id") for row in registry_rows if row.get("tib_ontology_id")}),
         "exact_iri_reuse_count": len(exact_iri_reuse),
-        "pending_review_mapping_count": len(pending_review_rows),
+        "evidence_only_mapping_count": len(evidence_only_rows),
         "excluded_stale_manual_mapping_count": len(stale_manual_rows),
         "invalid_mapping_count": len(invalid_rows),
         "tib_snapshot_retrieved_at": snapshot.get("retrieved_at", "snapshot-not-available"),
@@ -1849,8 +2082,8 @@ def _build_external_bridge(
         "tib_benchmark_sources": dict(
             sorted(Counter(row.get("source", "") for row in machine_rows).items())
         ),
-        "reviewed_foundational_sources": dict(
-            sorted(Counter(row.get("source", "") for row in reviewed_rows).items())
+        "foundational_sources": dict(
+            sorted(Counter(row.get("source", "") for row in foundational_rows).items())
         ),
         "turtle": str(bridge_ttl),
         "jsonld": str(bridge_jsonld),
@@ -2222,7 +2455,7 @@ def _validate_taxonomy(
     shacl_report: str,
 ) -> dict[str, Any]:
     active = [item for item in decisions if item.disposition == "active_local_class"]
-    deprecated = [item for item in decisions if item.disposition == "deprecated_compatibility_class"]
+    deprecated = [item for item in decisions if item.disposition != "active_local_class"]
     errors: list[str] = []
     warnings: list[str] = []
     declared_roots = {"Matter", "Process", "InformationEntity", "Characteristic", "Agent"}
@@ -2233,7 +2466,7 @@ def _validate_taxonomy(
     missing_governance = [
         item.iri
         for item in active
-        if not item.module or not item.review_status or not item.rationale or not item.corrected_semantic_role
+        if not item.module or not item.governance_status or not item.rationale or not item.corrected_semantic_role
     ]
     active_labels: defaultdict[str, list[str]] = defaultdict(list)
     for item in active:
@@ -2316,20 +2549,20 @@ def _validate_taxonomy(
         errors.append("Turtle and JSON-LD taxonomy serializations are not RDF-isomorphic.")
 
     top_counts = Counter(item.top_branch for item in active)
-    structural_count = sum(1 for item in active if item.migration_action == "add-taxonomy-scaffold-class")
+    structural_count = sum(1 for item in active if item.definition_status == "structural")
     governance = config.get("governance", {})
-    reviewer_signed = str(governance.get("domain_reviewer_status", "pending")).casefold() == "approved"
+    approval_recorded = str(governance.get("approval_status", "pending")).casefold() == "approved"
     reasoner_passed = str(governance.get("external_reasoner_status", "pending")).casefold() == "passed"
-    if not reviewer_signed:
-        warnings.append("Domain-expert approval is not recorded; publication is blocked.")
+    if not approval_recorded:
+        warnings.append("Governance approval is not recorded; publication is blocked.")
     if not reasoner_passed:
         warnings.append("External OWL reasoner validation is not recorded as passed; publication is blocked.")
     if int(bridge.get("excluded_stale_manual_mapping_count", 0)):
         warnings.append(
-            f"{bridge['excluded_stale_manual_mapping_count']} stale manual external mapping was excluded because it no longer matches the reviewed mapping configuration."
+            f"{bridge['excluded_stale_manual_mapping_count']} stale manual external mapping was excluded because it no longer matches the approved mapping configuration."
         )
     publication_ready = not errors and (
-        reviewer_signed or not governance.get("require_domain_reviewer_signoff", True)
+        approval_recorded or not governance.get("require_approval", True)
     ) and (
         reasoner_passed or not governance.get("require_external_reasoner_for_publication", True)
     )
@@ -2377,7 +2610,7 @@ def _validate_taxonomy(
         "unapproved_imports": unapproved_imports,
         "resolved_legacy_multi_role_classes": [item.iri for item in active if len(item.source_roles) > 1],
         "governance": {
-            "domain_reviewer_status": governance.get("domain_reviewer_status", "pending"),
+            "approval_status": governance.get("approval_status", "pending"),
             "external_reasoner_status": governance.get("external_reasoner_status", "pending"),
             "technical_validation": "passed" if not errors else "failed",
         },
@@ -2422,7 +2655,7 @@ def _taxonomy_cycles(graph: Graph) -> list[list[str]]:
 def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecision]) -> str:
     counts = validation["counts"]
     branches = "\n".join(f"- {branch}: {count}" for branch, count in validation["top_branch_counts"].items())
-    return f"""# H2KG 2.1 Taxonomy Report
+    return f"""# H₂KG 2.2 Taxonomy Report
 
 - Validation conforms: {validation['conforms']}
 - Active local classes: {counts['active_local_classes']}
@@ -2445,14 +2678,14 @@ def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecisio
 
 ## Governance
 
-Every active class has a generated registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. H2KG is presented publicly as a domain-specific ontology; internal governance evidence and automated external-mapping decisions remain recorded separately in machine-readable registries.
+Every active class has an authoritative registry row containing its source roles, primary parent, path to a top-level branch, definition status, module, and migration rationale. H₂KG is presented publicly as a domain-specific ontology; governance evidence and automated external-mapping decisions remain recorded separately in machine-readable registries.
 
 The compatibility graph preserves the v1 role-typed and workflow-neighborhood statements. The clean taxonomy contains reusable classes and schema properties only; profile fields and value records are deliberately excluded from its class count.
 
 ## Publication Gates
 
 - Technical validation: {validation['governance']['technical_validation']}
-- Domain reviewer: {validation['governance']['domain_reviewer_status']}
+- Governance approval: {validation['governance']['approval_status']}
 - External OWL reasoner: {validation['governance']['external_reasoner_status']}
 
 {chr(10).join(f'- {warning}' for warning in validation['warnings']) or '- No pending gates.'}
@@ -2461,6 +2694,146 @@ The compatibility graph preserves the v1 role-typed and workflow-neighborhood st
 
 {chr(10).join(f'- {error}' for error in validation['errors']) or '- None'}
 """
+
+
+def _write_h2kg_22_correction_report(
+    reports_dir: Path,
+    correction_registry: dict[str, Any],
+    decisions: list[TaxonomyDecision],
+    validation: dict[str, Any],
+    bridge: dict[str, Any],
+) -> dict[str, Any]:
+    """Write the complete decision ledger and release-level pre/post summary."""
+
+    source_rows = list(correction_registry.get("decisions", []))
+    decision_ids = [str(row.get("decision_id", "")) for row in source_rows]
+    dimension_counts = Counter(str(row.get("dimension", "")) for row in source_rows)
+    if len(source_rows) != 626 or len(set(decision_ids)) != 626:
+        raise ValueError("The H2KG 2.2 report requires exactly 626 unique correction decisions.")
+    if dimension_counts != Counter({"definition": 470, "parent": 156}):
+        raise ValueError(f"Unexpected H2KG 2.2 correction dimensions: {dict(dimension_counts)}")
+
+    decision_by_name = {decision.local_name: decision for decision in decisions}
+    ledger: list[dict[str, Any]] = []
+    for source_row in sorted(source_rows, key=lambda row: str(row.get("decision_id", ""))):
+        local_name = str(source_row.get("local_name", ""))
+        final_term = decision_by_name.get(local_name)
+        if final_term is None:
+            raise ValueError(f"Correction decision has no taxonomy registry term: {local_name}")
+        dimension = str(source_row.get("dimension", ""))
+        released_value = final_term.parent_iri if dimension == "parent" else final_term.definition
+        ledger.append(
+            {
+                "decision_id": source_row.get("decision_id", ""),
+                "local_name": local_name,
+                "class_iri": final_term.iri,
+                "dimension": dimension,
+                "document_status": source_row.get("document_status", ""),
+                "final_action": source_row.get("final_action", ""),
+                "current_value": source_row.get("current_value", ""),
+                "recommended_value": source_row.get("recommended_value", ""),
+                "registry_final_value": source_row.get("final_value", ""),
+                "released_value": released_value,
+                "released_disposition": final_term.disposition,
+                "released_parent_iri": final_term.parent_iri,
+                "replacement_iri": final_term.replacement_iri,
+                "migration_target_iris": list(final_term.migration_target_iris),
+                "profile_fallback_iri": final_term.profile_fallback_iri,
+                "rationale": source_row.get("rationale", ""),
+                "implementation": source_row.get("implementation", ""),
+            }
+        )
+
+    final_action_counts = Counter(str(row.get("final_action", "")) for row in source_rows)
+    source_dependent_names = {
+        str(row.get("local_name", ""))
+        for row in source_rows
+        if str(row.get("document_status", ""))
+        in {"Confirm scope before applying", "Source information required"}
+    }
+    source_ambiguous_names = {
+        decision.local_name
+        for decision in decisions
+        if decision.disposition == "deprecated_source_ambiguous"
+    }
+    baseline = dict(correction_registry.get("baseline_counts", {}))
+    post_counts = validation.get("counts", {})
+    summary = {
+        "schema_version": "h2kg-2.2-correction-report/v1",
+        "release_version": "2.2.0",
+        "source_provenance": correction_registry.get("source_provenance", {}),
+        "decision_counts": {
+            "total": len(source_rows),
+            "parent": dimension_counts["parent"],
+            "definition": dimension_counts["definition"],
+            "unique_classes": len({str(row.get("local_name", "")) for row in source_rows}),
+            "by_final_action": dict(sorted(final_action_counts.items())),
+        },
+        "source_dependent_classes_assessed": len(source_dependent_names),
+        "source_ambiguous_classes_deprecated": len(source_ambiguous_names),
+        "source_dependent_classes_resolved": len(source_dependent_names - source_ambiguous_names),
+        "baseline_counts": baseline,
+        "released_counts": {
+            "active_classes": int(post_counts.get("active_local_classes", 0)),
+            "deprecated_classes": int(post_counts.get("deprecated_compatibility_classes", 0)),
+            "subclass_axioms": int(post_counts.get("subclass_axioms", 0)),
+            "definitions": int(post_counts.get("definitions", 0)),
+        },
+        "profile_migrations": correction_registry.get("profile_migrations", {}),
+        "external_alignment": {
+            "mapping_count": int(bridge.get("mapping_count", 0)),
+            "asserted_mapping_counts": bridge.get("asserted_mapping_counts", {}),
+            "mapped_h2kg_class_count": int(bridge.get("mapped_h2kg_class_count", 0)),
+            "changelog": bridge.get("changelog", ""),
+        },
+        "validation": {
+            "taxonomy_conforms": bool(validation.get("conforms", False)),
+            "publication_ready": bool(validation.get("publication_ready", False)),
+            "serialization_parity": bool(validation.get("serialization_parity", False)),
+            "shacl_conforms": bool(validation.get("shacl_conforms", False)),
+            "competency_checks_passed": int(post_counts.get("competency_checks_passed", 0)),
+            "competency_checks": int(post_counts.get("competency_checks", 0)),
+        },
+        "decisions": ledger,
+    }
+
+    json_path = reports_dir / "h2kg_2_2_correction_report.json"
+    csv_path = reports_dir / "h2kg_2_2_correction_decisions.csv"
+    markdown_path = reports_dir / "h2kg_2_2_correction_report.md"
+    write_text(json_path, json.dumps(summary, indent=2, ensure_ascii=False))
+    _write_dict_csv(csv_path, ledger)
+    markdown = f"""# H₂KG 2.2 Taxonomy and Definition Correction Report
+
+- Source fingerprint: `{summary['source_provenance'].get('sha256', '')}`
+- Decisions: {len(source_rows)} ({dimension_counts['parent']} parent; {dimension_counts['definition']} definition)
+- Unique classes covered: {summary['decision_counts']['unique_classes']}
+- Source-dependent classes assessed: {len(source_dependent_names)}
+- Source-ambiguous classes deprecated: {len(source_ambiguous_names)}
+- Source-dependent classes resolved: {len(source_dependent_names - source_ambiguous_names)}
+- Active classes: {baseline.get('active_classes', 0)} -> {summary['released_counts']['active_classes']}
+- Deprecated compatibility classes: {baseline.get('deprecated_classes', 0)} -> {summary['released_counts']['deprecated_classes']}
+- Validation conforms: {validation.get('conforms', False)}
+- Competency checks: {post_counts.get('competency_checks_passed', 0)} / {post_counts.get('competency_checks', 0)}
+
+## Final Actions
+
+{chr(10).join(f'- {key}: {value}' for key, value in sorted(final_action_counts.items()))}
+
+## Interpretation
+
+The canonical release applies only registry-backed parent and definition decisions. Scientifically underdetermined terms are retained as deprecated compatibility resources rather than assigned a guessed identity. Stable H₂KG IRIs remain resolvable, and profile-specific identity changes are recorded in the migration registry.
+
+The complete 626-row decision ledger is available in `h2kg_2_2_correction_decisions.csv` and in the JSON report.
+"""
+    write_text(markdown_path, markdown)
+    return {
+        "json": str(json_path),
+        "csv": str(csv_path),
+        "markdown": str(markdown_path),
+        "decision_count": len(ledger),
+        "source_dependent_classes_assessed": len(source_dependent_names),
+        "source_ambiguous_classes_deprecated": len(source_ambiguous_names),
+    }
 
 
 def _local_name(value: URIRef | str) -> str:

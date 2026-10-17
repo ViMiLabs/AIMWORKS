@@ -8,15 +8,15 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl> a owl:Ontology ;
-    dcterms:created "2026-10-15T11:25:43+00:00"^^xsd:dateTime ;
+    dcterms:created "2026-10-16T23:49:38+00:00"^^xsd:dateTime ;
     dcterms:description "Versioned exact, broader, and narrower mappings from H2KG to original ontology IRIs discovered through the TIB Terminology Service. Related benchmark evidence is published separately and no external ontology collection is imported wholesale."@en ;
     dcterms:identifier "893308FFCA8F58F19CD69B461397654DE290F67421B344D93D78B503E8061D53" ;
     dcterms:source <https://api.terminology.tib.eu/api> ;
-    dcterms:title "H2KG External Semantic Alignment Bridge"@en ;
+    dcterms:title "H₂KG External Semantic Alignment Bridge"@en ;
     rdfs:seeAlso <https://vimilabs.github.io/AIMWORKS/pages/tib-benchmark.html> ;
-    owl:imports <https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0> ;
-    owl:versionIRI <https://vimilabs.github.io/AIMWORKS/ontology/releases/2.1.0/h2kg-external-bridge-20261014-893308FFCA8F.ttl> ;
-    owl:versionInfo "2.1.0" .
+    owl:imports <https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0> ;
+    owl:versionIRI <https://vimilabs.github.io/AIMWORKS/ontology/releases/2.2.0/h2kg-external-bridge-20261014-893308FFCA8F.ttl> ;
+    owl:versionInfo "2.2.0" .
 
 h2kg:AFMInstrument skos:broadMatch <http://purl.obolibrary.org/obo/MS_1000463>,
         <https://w3id.org/polymat/Instrument>,
@@ -30,8 +30,7 @@ h2kg:ASTDataset skos:broadMatch <http://purl.obolibrary.org/obo/T4FS_0000347>,
 
 h2kg:AbsorptionPeakWavelength skos:broadMatch <http://www.bioassayontology.org/bao#BAO_0000565> .
 
-h2kg:AcceleratingVoltage skos:broadMatch <http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee>,
-        <https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage> .
+h2kg:Acetonitrile skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_38472> .
 
 h2kg:AcidBaseTitrationMeasurement skos:exactMatch <http://purl.allotrope.org/ontologies/process#AFP_0001510> .
 
@@ -49,8 +48,6 @@ h2kg:ActivatedSludge skos:broadMatch <http://purl.obolibrary.org/obo/ENVO_000020
 h2kg:AdsorbedAggregateLateralSize skos:broadMatch <https://openenergyplatform.org/ontology/oeo/OEO_00340068>,
         <https://saref.etsi.org/saref4inma/Size> .
 
-h2kg:AgNWSurfaceDensity skos:broadMatch <http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044> .
-
 h2kg:Agent rdfs:subClassOf prov:Agent .
 
 h2kg:AgglomerateDiameter skos:broadMatch <https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dia_xxx_xxx-bb6404c75508494a93ef3ae2ad7f72ff-vp> .
@@ -67,14 +64,7 @@ h2kg:AggregateAspectRatio skos:broadMatch <http://semanticscience.org/resource/S
 
 h2kg:AirBreathingCathodeFabrication skos:broadMatch <http://www.w3id.org/ecsel-dr-SO#Fab> .
 
-h2kg:AluminumLayerThickness skos:broadMatch <http://semanticscience.org/resource/SIO_000043>,
-        <https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp> .
-
 h2kg:AluminumNitrateAdditive skos:broadMatch <https://w3id.org/nfdi4cat/voc4cat_0007793> .
-
-h2kg:AluminumNitrateMolarConcentration skos:broadMatch <http://edamontology.org/data_2140>,
-        <http://purl.obolibrary.org/obo/CHMO_0002820>,
-        <https://w3id.org/nfdi4cat/voc4cat_0007244> .
 
 h2kg:Ammonia skos:narrowMatch <http://purl.allotrope.org/ontologies/material#AFM_0001117> .
 
@@ -98,13 +88,15 @@ h2kg:AveragePoreDiameter skos:broadMatch <http://purl.allotrope.org/ontologies/r
 h2kg:AveragePoreSize skos:broadMatch <http://purl.allotrope.org/ontologies/quality#AFQ_0000244>,
         <http://purl.obolibrary.org/obo/MS_1003924> .
 
+h2kg:BallMilling skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001654> .
+
 h2kg:BulkDensity skos:exactMatch <http://purl.allotrope.org/ontologies/process#AFP_0003781> .
 
 h2kg:CarbonDioxide skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_16526>,
         <https://openenergyplatform.org/ontology/oeo/OEO_00000006> ;
     skos:narrowMatch <http://purl.allotrope.org/ontologies/material#AFM_0001116> .
 
-h2kg:CarrierGasFlow skos:broadMatch <https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow> .
+h2kg:CarbonNanotube skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_50594> .
 
 h2kg:CastorOil skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_140618> .
 
@@ -148,6 +140,8 @@ h2kg:DeflectionPercentOfFilamentDiameter skos:broadMatch <https://purls.helmholt
 h2kg:DetectionArea skos:broadMatch <http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890>,
         <http://semanticscience.org/resource/SIO_000045>,
         <https://saref.etsi.org/saref4inma/Area> .
+
+h2kg:DiacetoneAlcohol skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_55381> .
 
 h2kg:DifferentialScanningCalorimetryMeasurement skos:exactMatch <http://purl.allotrope.org/ontologies/process#AFP_0002124>,
         <https://w3id.org/emmo/domain/characterisation-methodology/chameo#DifferentialScanningCalorimetry>,
@@ -208,8 +202,6 @@ h2kg:FTIRDataset skos:broadMatch <http://purl.obolibrary.org/obo/T4FS_0000347>,
         <http://purl.org/spar/fabio/Dataset>,
         <http://semanticscience.org/resource/SIO_000089> .
 
-h2kg:FeN4SiteDensity skos:broadMatch <http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044> .
-
 h2kg:FilmThickness skos:narrowMatch <http://purl.allotrope.org/ontologies/result#AFR_0002609> .
 
 h2kg:FluorescenceMicroscope skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001095> .
@@ -226,13 +218,9 @@ h2kg:GasChromatographyMeasurement skos:exactMatch <http://purl.allotrope.org/ont
         <https://w3id.org/nfdi4cat/voc4cat_0000130>,
         <https://w3id.org/pmd/co/PMD_0000656> .
 
-h2kg:GasFlowRate skos:broadMatch <http://purl.obolibrary.org/obo/PATO_0001574> .
-
 h2kg:GeometricArea skos:broadMatch <http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890>,
         <http://semanticscience.org/resource/SIO_000045>,
         <https://saref.etsi.org/saref4inma/Area> .
-
-h2kg:GrainSize skos:exactMatch <https://w3id.org/pmd/co/PMD_0020243> .
 
 h2kg:GrapheneOxide skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_132889> .
 
@@ -251,7 +239,7 @@ h2kg:HydrofluoricAcid skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_2924
 h2kg:Hydrogen skos:exactMatch <https://openenergyplatform.org/ontology/oeo/OEO_00000220> ;
     skos:narrowMatch <http://purl.allotrope.org/ontologies/material#AFM_0001112> .
 
-h2kg:HydrogenVolumetricFlowRate skos:broadMatch <http://purl.obolibrary.org/obo/PATO_0001574> .
+h2kg:HydrogenPeroxide skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_16240> .
 
 h2kg:HydrothermalSynthesisProcess skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001377> .
 
@@ -269,19 +257,13 @@ h2kg:IonomerAdsorptionRatio skos:broadMatch <http://semanticscience.org/resource
 
 h2kg:IonomerAggregateDiameter skos:broadMatch <https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/dia_xxx_xxx-bb6404c75508494a93ef3ae2ad7f72ff-vp> .
 
-h2kg:IonomerThinFilmThickness skos:broadMatch <https://w3id.org/nfdi4cat/voc4cat_0000042> .
-
 h2kg:KnudsenNumber skos:exactMatch <http://www.ontology-of-units-of-measure.org/resource/om-2/KnudsenNumber> .
 
 h2kg:LinearSweepVoltammetry skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0000028> .
 
-h2kg:LiquidFlowRate skos:broadMatch <http://purl.obolibrary.org/obo/PATO_0001574> .
-
 h2kg:MESBuffer skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001760> .
 
 h2kg:MagneticStirrer skos:exactMatch <http://purl.allotrope.org/ontologies/equipment#AFE_0000374> .
-
-h2kg:MassFlowRate skos:broadMatch <http://purl.obolibrary.org/obo/PATO_0001574> .
 
 h2kg:MaterialEntity skos:exactMatch <http://biomodels.net/SBO/SBO_0000240>,
         <http://purl.obolibrary.org/obo/BFO_0000040> .
@@ -309,8 +291,6 @@ h2kg:MolecularDynamicsSimulation skos:exactMatch <http://www.bioassayontology.or
 
 h2kg:Nitrogen skos:narrowMatch <http://purl.allotrope.org/ontologies/material#AFM_0001131> .
 
-h2kg:NitrogenVolumetricFlowRate skos:broadMatch <http://purl.obolibrary.org/obo/PATO_0001574> .
-
 h2kg:OpenCircuitVoltage skos:exactMatch <https://w3id.org/nfdi4cat/voc4cat_0007210> .
 
 h2kg:OpticalMicroscope skos:exactMatch <http://purl.allotrope.org/ontologies/equipment#AFE_0000129>,
@@ -321,7 +301,9 @@ h2kg:OpticalMicroscopyImagingMeasurement skos:exactMatch <http://purl.allotrope.
         <http://www.bioassayontology.org/bao#BAO_0000451>,
         <https://w3id.org/emmo/domain/characterisation-methodology/chameo#OpticalMicroscopy> .
 
-h2kg:Organization skos:exactMatch prov:Organization .
+h2kg:Organization skos:exactMatch <http://purl.obolibrary.org/obo/OBI_0000245>,
+        <http://semanticscience.org/resource/SIO_000012>,
+        prov:Organization .
 
 h2kg:Oxygen skos:narrowMatch <http://purl.allotrope.org/ontologies/material#AFM_0001113> .
 
@@ -345,6 +327,8 @@ h2kg:ProtonConductLayer skos:broadMatch <http://purl.obolibrary.org/obo/ENVO_010
 
 h2kg:PulsedLaserDepositionProcess skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001363> .
 
+h2kg:QuantumDot skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_50853> .
+
 h2kg:QuartzCrystalMicrobalance skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0001077> .
 
 h2kg:QuartzCrystalMicrobalanceMeasurement skos:exactMatch <http://www.bioassayontology.org/bao#BAO_0000456> .
@@ -367,8 +351,6 @@ h2kg:RelativeHumidity skos:broadMatch <http://astrothesaurus.org/uat/764> ;
 
 h2kg:RhodamineB skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_52334> .
 
-h2kg:ScanRate skos:exactMatch <http://purl.obolibrary.org/obo/MS_1000015> .
-
 h2kg:ScanningElectronMicroscopyImaging skos:broadMatch <http://edamontology.org/topic_0611> ;
     skos:exactMatch <https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/sem_xxx_xxx-a7b1177950514f9c9de50af6b8252a9e-vp>,
         <https://w3id.org/nfdi4cat/voc4cat_0000075> .
@@ -384,8 +366,6 @@ h2kg:SodiumDodecylSulfate skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_
 h2kg:SodiumSilicate skos:exactMatch <http://purl.obolibrary.org/obo/CHEBI_60720> .
 
 h2kg:Solvent skos:exactMatch <https://w3id.org/nfdi4cat/voc4cat_0007246> .
-
-h2kg:SpecificActivity skos:exactMatch <http://biomodels.net/SBO/SBO_0000558> .
 
 h2kg:SpectroscopicEllipsometer skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0002683> .
 
@@ -456,11 +436,8 @@ h2kg:XRayDiffractionMeasurement skos:exactMatch <http://purl.obolibrary.org/obo/
 
 h2kg:XRayDiffractometer skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0002105> .
 
-h2kg:XRayPhotoelectronSpectrometer skos:exactMatch <http://purl.obolibrary.org/obo/CHMO_0002648> .
-
 h2kg:XRayPhotoelectronSpectroscopyMeasurement skos:exactMatch <https://w3id.org/nfdi4cat/voc4cat_0000076> .
 
 h2kg:YieldStress skos:exactMatch <https://w3id.org/pmd/co/PMD_0080171> .
 
 h2kg:hasQuantityValue rdfs:subPropertyOf qudt:quantityValue .
-

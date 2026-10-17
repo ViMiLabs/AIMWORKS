@@ -1,6 +1,6 @@
 # H2KG--TIB Collection Benchmark
 
-This package benchmarks `2360` active local H2KG classes against the ontologies assigned to NFDI4Cat, NFDI4Energy, and NFDI4Ing in the TIB catalogue snapshot retrieved at `2026-10-14T07:32:20+00:00`.
+This package benchmarks `2221` active local H2KG classes against the ontologies assigned to NFDI4Cat, NFDI4Energy, and NFDI4Ing in the TIB catalogue snapshot retrieved at `2026-10-14T07:32:20+00:00`.
 
 Primary percentages use native classes only. Imported availability is documented separately. Each collection and ontology row assigns every H2KG class to exactly one of seven outcomes, so the outcome percentages total 100% subject only to decimal rounding.
 
@@ -24,4 +24,4 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `imported_availability.csv`: secondary import-inclusive evidence.
 - `automatic_harmonization_registry.json`: exact, machine-safe mappings and non-destructive label actions.
 
-Frozen inputs: `..\input\tib_collection_snapshot.json` and `..\input\tib_collection_candidate_cache.json`.
+Frozen inputs: `input\tib_collection_snapshot.json` and `input\tib_collection_candidate_cache.json`.

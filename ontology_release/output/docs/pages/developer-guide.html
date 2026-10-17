@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Developer Guide | H2KG Application Ontology for Hydrogen Electrochemical Systems</title>
+  <title>Developer Guide | H₂KG Domain Ontology for Hydrogen Electrochemical Systems</title>
   <link rel="stylesheet" href="../assets/style.css">
-  
+
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
       <div class="hero-head">
         <div class="hero-copy">
-          <p class="eyebrow">H2KG Ontology</p>
+          <p class="eyebrow">H₂KG Ontology</p>
           <h1>Developer Guide</h1>
           <p class="subtitle">Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
         </div>
-        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H2KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H₂KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
       </div>
       <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
-      
+
     <nav class="nav">
       <a href="../index.html">Home</a>
       <a href="user-guide.html">User Guide</a>
@@ -39,16 +39,16 @@
       <a href="developer-guide.html">Developer</a>
       <a href="release.html">Release</a>
     </nav>
-    
+
     </div>
   </header>
   <main class="wrap content">
-    
+
     <section class="grid">
       <article class="card">
         <h2>ODK Operations</h2>
         <p>The nested ODK project lives under <code>ontology_release/odk/</code>. Its outputs are copied into <code>ontology_release/output/odk/</code> and then rendered through the AIMWORKS docs site.</p>
-        
+
     <ul class="command-list">
       <li><code>ontology_release/odk/src/ontology/run.bat make odkversion</code></li>
       <li><code>ontology_release/odk/src/ontology/run.bat make test</code></li>
@@ -56,7 +56,7 @@
       <li><code>ontology_release/odk/src/ontology/run.bat make prepare_release</code></li>
       <li><code>ontology_release/odk/src/ontology/run.bat make validate_profile_h2kg-edit.owl</code></li>
     </ul>
-    
+
       </article>
       <article class="card">
         <h2>Ownership Boundary</h2>
@@ -66,7 +66,7 @@
       <article class="card">
         <h2>Current ODK Status</h2>
         <p>Status: <strong>enabled</strong></p>
-        <p>Last built: <strong>2026-10-14T13:57:33+00:00</strong></p>
+        <p>Last built: <strong>2026-10-16T23:50:24+00:00</strong></p>
       </article>
       <article class="card">
         <h2>When to Use HDO vs EMMO vs PROV / DCTERMS</h2>
@@ -89,11 +89,11 @@
         </ul>
       </article>
     </section>
-    
+
   </main>
   <footer class="footer">
     <div class="wrap">
-      
+
       <section class="acknowledgement" aria-labelledby="acknowledgement-title">
         <div class="acknowledgement-brand">
           <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
@@ -103,9 +103,37 @@
           <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
         </div>
       </section>
-    
-      <p>H2KG Application Ontology for Hydrogen Electrochemical Systems | Version 2.1.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.2.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>

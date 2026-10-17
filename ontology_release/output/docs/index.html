@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>H2KG - Ontology for Hydrogen Electrochemical Systems</title>
+  <title>H₂KG - Ontology for Hydrogen Electrochemical Systems</title>
   <style>
     :root {
       --ink: #10242d;
@@ -65,10 +65,10 @@
           <img src="./pemfc/assets/h2kg-logo.png" alt="H2KG logo">
           <span class="eyebrow">AIMWORKS ontology release</span>
         </div>
-        <h1>H2KG for hydrogen electrochemical systems</h1>
+        <h1>H₂KG for hydrogen electrochemical systems</h1>
         <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
         <div class="links">
-          <a href="./pages/explore.html">Explore H2KG</a>
+          <a href="./pages/explore.html">Explore H₂KG</a>
           <a href="./hydrogen-ontology.html">Open full reference</a>
           <a href="./pemfc/index.html">Explore PEMFC</a>
           <a href="./pemwe/index.html">Explore PEMWE</a>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <aside class="hero-card hero-metrics">
-        <div class="metric"><strong>Shared core</strong><span>Stable H2KG namespace with profile-specific PEMFC and PEMWE views.</span></div>
+        <div class="metric"><strong>Shared core</strong><span>Stable H₂KG namespace with profile-specific PEMFC and PEMWE views.</span></div>
         <div class="metric"><strong>Foundational reuse</strong><span>HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS support shared quantities, chemicals, provenance, and metadata.</span></div>
         <div class="metric"><strong>External alignment</strong><span>Exact, broader, and narrower SKOS mappings point to original ontology IRIs discovered across NFDI4Cat, NFDI4Energy, and NFDI4Ing in TIB.</span></div>
         <div class="metric"><strong>Publication-ready</strong><span>GitHub Pages documentation, downloadable ontology artefacts, mappings, and quality reports.</span></div>
@@ -105,5 +105,33 @@
       </article>
     </div>
   </main>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>

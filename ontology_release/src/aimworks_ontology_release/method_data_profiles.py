@@ -12,7 +12,7 @@ import hashlib
 import io
 import json
 import shutil
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -77,23 +77,35 @@ def build_method_data_profiles(
     pilot_root = Path(pilot_examples_root) if pilot_examples_root else output_root / "examples"
     source_items = merge_document_items(load_json_document(input_path))
     source_ids = {str(item.get("@id")) for item in source_items if item.get("@id")}
-    required = _all_required_terms()
-    missing = sorted(required - source_ids)
+    taxonomy_registry_path = pilot_root.parent / "ontology" / "taxonomy_registry.json"
+    characteristic_iris, profile_fallbacks, taxonomy_iris = _taxonomy_semantics(
+        taxonomy_registry_path
+    )
+    profiles = tuple(_resolve_profile(spec, profile_fallbacks) for spec in PROFILES)
+    required = _all_required_terms(profiles)
+    missing = sorted(required - (source_ids | taxonomy_iris))
     if missing:
         write_text(target / "README.md", _missing_note(missing))
         return {"status": "skipped_missing_terms", "missing_terms": missing, "output_dir": str(target)}
 
     labels = _term_labels(source_items)
-    taxonomy_registry_path = pilot_root.parent / "ontology" / "taxonomy_registry.json"
-    characteristic_iris = _characteristic_iris(taxonomy_registry_path)
     reports: list[dict[str, Any]] = []
-    for spec in PROFILES:
-        reports.append(_build_one(spec, target, pilot_root, labels, characteristic_iris))
-    coverage = _coverage_rows(reports)
+    for spec in profiles:
+        reports.append(
+            _build_one(
+                spec,
+                target,
+                pilot_root,
+                labels,
+                characteristic_iris,
+                profile_fallbacks,
+            )
+        )
+    coverage = _coverage_rows(reports, profiles)
     _write_csv(target / "profile_coverage_report.csv", coverage)
     dump_json(target / "profile_coverage_report.json", {"profile_count": len(PROFILES), "profiles": coverage})
     write_text(target / "profile_coverage_report.md", _coverage_markdown(coverage))
-    write_text(target / "supplementary_tables.md", _supplementary_tables(reports))
+    write_text(target / "supplementary_tables.md", _supplementary_tables(reports, profiles))
     write_text(target / "README.md", _root_readme(coverage))
     return {
         "status": "generated",
@@ -118,6 +130,7 @@ def _build_one(
     pilot_root: Path,
     labels: dict[str, dict[str, list[str]]],
     characteristic_iris: set[str],
+    profile_fallbacks: dict[str, str],
 ) -> dict[str, Any]:
     folder = ensure_dir(target / spec.key)
     source_folder = pilot_root / spec.pilot_dir
@@ -130,7 +143,12 @@ def _build_one(
     copied_json = folder / "source_grounded_example.jsonld"
     shutil.copyfile(source_ttl, copied_ttl)
     shutil.copyfile(source_json, copied_json)
-    normalize_example_pair(copied_json, copied_ttl, characteristic_iris)
+    normalize_example_pair(
+        copied_json,
+        copied_ttl,
+        characteristic_iris,
+        profile_fallbacks,
+    )
     shapes = folder / f"{spec.key}_profile_shapes.ttl"
     write_text(shapes, _shape_turtle(spec))
     validation = validate_method_profile_graph(shapes, copied_ttl)
@@ -166,10 +184,10 @@ def _build_one(
     }
 
 
-def _all_required_terms() -> set[str]:
+def _all_required_terms(profiles: tuple[MethodProfile, ...] = PROFILES) -> set[str]:
     common = {"Measurement", "Instrument", "Matter", "Data", "DataPoint", "Process", "Metadata", "hasInputMaterial", "usesInstrument", "hasOutputData", "hasInputData", "hasParameter", "hasMetadata", "fromMeasurement", "ofProperty", "hasQuantityValue"}
     terms = {_iri(term) for term in common}
-    for spec in PROFILES:
+    for spec in profiles:
         terms.add(_iri(spec.measurement)); terms.add(_iri(spec.instrument))
         terms.update(_iri(item) for item in spec.datasets + spec.parameters + spec.properties)
     return terms
@@ -374,9 +392,11 @@ def _curation_findings(spec: MethodProfile, path: Path) -> list[dict[str, str]]:
     return []
 
 
-def _characteristic_iris(path: Path) -> set[str]:
+def _taxonomy_semantics(
+    path: Path,
+) -> tuple[set[str], dict[str, str], set[str]]:
     if not path.exists():
-        return {str(H2KG.Property)}
+        return {str(H2KG.Property)}, {}, set()
     registry = load_json(path)
     values = {
         str(row.get("iri"))
@@ -385,7 +405,43 @@ def _characteristic_iris(path: Path) -> set[str]:
         and row.get("corrected_semantic_role") == "Characteristic"
     }
     values.add(str(H2KG.Property))
-    return values
+    fallbacks = {
+        str(row.get("iri")): str(row.get("profile_fallback_iri"))
+        for row in registry.get("terms", [])
+        if row.get("disposition") != "active_local_class"
+        and row.get("profile_fallback_iri")
+    }
+    taxonomy_iris = {
+        str(row.get("iri"))
+        for row in registry.get("terms", [])
+        if row.get("disposition") == "active_local_class" and row.get("iri")
+    }
+    return values, fallbacks, taxonomy_iris
+
+
+def _resolve_profile(
+    spec: MethodProfile,
+    profile_fallbacks: dict[str, str],
+) -> MethodProfile:
+    """Replace deprecated profile terms with their explicit generic fallbacks."""
+
+    def resolve(local_name: str) -> str:
+        target = profile_fallbacks.get(_iri(local_name), "")
+        if target.startswith(str(H2KG)):
+            return target.removeprefix(str(H2KG))
+        return local_name
+
+    def resolve_many(local_names: tuple[str, ...]) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(resolve(local_name) for local_name in local_names))
+
+    return replace(
+        spec,
+        measurement=resolve(spec.measurement),
+        instrument=resolve(spec.instrument),
+        datasets=resolve_many(spec.datasets),
+        parameters=resolve_many(spec.parameters),
+        properties=resolve_many(spec.properties),
+    )
 
 
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> Path:
@@ -402,7 +458,10 @@ def _write_field_markdown(path: Path, rows: list[dict[str, str]]) -> None:
     write_text(path, "\n".join(lines) + "\n")
 
 
-def _coverage_rows(reports: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _coverage_rows(
+    reports: list[dict[str, Any]],
+    profiles: tuple[MethodProfile, ...] = PROFILES,
+) -> list[dict[str, Any]]:
     return [
         {
             "method_profile": report["key"],
@@ -414,7 +473,7 @@ def _coverage_rows(reports: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "curation_finding_count": report.get("curation_finding_count", 0),
             "result_requirement": (
                 "required"
-                if next(item for item in PROFILES if item.key == report["key"]).require_result
+                if next(item for item in profiles if item.key == report["key"]).require_result
                 else "deferred"
             ),
         }
@@ -428,10 +487,13 @@ def _coverage_markdown(rows: list[dict[str, Any]]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def _supplementary_tables(reports: list[dict[str, Any]]) -> str:
+def _supplementary_tables(
+    reports: list[dict[str, Any]],
+    profiles: tuple[MethodProfile, ...] = PROFILES,
+) -> str:
     lines = ["# Supplementary Tables S1-S9: H2KG Method Data Profiles", "", "Each profile consists of a SHACL constraint file, value-free JSON-LD capture template, field dictionary, copied pilot record, and validation report. `source_grounded` means the example originates from the integrated pilot material. The XPS profile is structurally validated but its existing pilot is illustrative.", ""]
     for index, report in enumerate(reports, start=1):
-        spec = next(item for item in PROFILES if item.key == report["key"])
+        spec = next(item for item in profiles if item.key == report["key"])
         lines.extend([f"## Table S{index}. {spec.title}", "", "| Element | H2KG anchor(s) | Rule |", "| --- | --- | --- |", f"| Measurement | `h2kg:{spec.measurement}` | One typed measurement occurrence. |", f"| Instrument | `h2kg:{spec.instrument}` | At least one linked instrument. |", f"| Dataset chain | `{', '.join('h2kg:' + item for item in spec.datasets)}` | At least one raw output dataset. |", f"| Conditional parameters | `{', '.join('h2kg:' + item for item in spec.parameters)}` | Capture only when reported or method-defining; numeric values require QUDT quantity values. |", f"| Results | `{', '.join('h2kg:' + item for item in spec.properties) or 'Deferred'}` | {'At least one DataPoint or explicit missing-value metadata.' if spec.require_result else 'Output property semantics deferred in this profile.'} |", f"| Evidence boundary | Metadata | {spec.metadata_boundary} |", ""])
     return "\n".join(lines)
 

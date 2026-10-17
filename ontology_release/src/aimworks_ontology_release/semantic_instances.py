@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Normalize generated example records to the H2KG 2.1 role model."""
+"""Normalize generated example records to the H2KG 2.2 role model."""
 
 import json
 from pathlib import Path
@@ -53,7 +53,7 @@ def normalize_generated_example_instances(
     if not taxonomy_registry_path.exists():
         report = {
             "schema_version": "h2kg-instance-role-normalization/v1",
-            "profile_version": "2.1.0",
+            "profile_version": "2.2.0",
             "status": "skipped_missing_taxonomy_registry",
             "taxonomy_registry": str(taxonomy_registry_path),
             "file_pair_count": 0,
@@ -75,6 +75,12 @@ def normalize_generated_example_instances(
         if row.get("disposition", "active_local_class") == "active_local_class"
         and row.get("corrected_semantic_role") == "Characteristic"
     }
+    profile_fallbacks = {
+        str(row["iri"]): str(row["profile_fallback_iri"])
+        for row in registry.get("terms", [])
+        if row.get("disposition") != "active_local_class"
+        and row.get("profile_fallback_iri")
+    }
     # Generic Property is accepted for deliberately generic capture templates.
     characteristic_iris.add(H2KG + "Property")
 
@@ -87,18 +93,24 @@ def normalize_generated_example_instances(
         if not ttl_path.exists():
             continue
         rows.append(
-            normalize_example_pair(jsonld_path, ttl_path, characteristic_iris)
+            normalize_example_pair(
+                jsonld_path,
+                ttl_path,
+                characteristic_iris,
+                profile_fallbacks,
+            )
         )
 
     report = {
         "schema_version": "h2kg-instance-role-normalization/v1",
-        "profile_version": "2.1.0",
+        "profile_version": "2.2.0",
         "status": "passed" if all(row["conforms"] for row in rows) else "failed",
         "file_pair_count": len(rows),
         "parameter_record_count": sum(row["parameter_record_count"] for row in rows),
         "result_record_count": sum(row["result_record_count"] for row in rows),
         "property_occurrence_count": sum(row["property_occurrence_count"] for row in rows),
         "moved_quantity_value_count": sum(row["moved_quantity_value_count"] for row in rows),
+        "profile_fallback_count": sum(row["profile_fallback_count"] for row in rows),
         "files": rows,
     }
     report_path = ensure_dir(output_root / "reports") / "example_instance_role_normalization.json"
@@ -112,6 +124,7 @@ def normalize_example_pair(
     jsonld_path: Path,
     ttl_path: Path,
     characteristic_iris: set[str],
+    profile_fallbacks: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     document = load_json(jsonld_path)
     items = iter_document_items(document)
@@ -119,12 +132,18 @@ def normalize_example_pair(
     parameter_records = 0
     result_records = 0
     moved_values = 0
+    fallback_count = 0
+    profile_fallbacks = profile_fallbacks or {}
 
     for item in items:
         identifier = item.get("@id")
         if not isinstance(identifier, str):
             continue
-        types = _string_values(item.get("@type"))
+        source_types = _string_values(item.get("@type"))
+        types = [profile_fallbacks.get(value, value) for value in source_types]
+        fallback_count += sum(
+            1 for value in source_types if profile_fallbacks.get(value, value) != value
+        )
         characteristic_types = sorted(set(types) & characteristic_iris)
 
         if PARAMETER in types and characteristic_types:
@@ -138,10 +157,11 @@ def normalize_example_pair(
         if DATA_POINT not in types:
             continue
         direct_targets = [
-            str(value.get("@id"))
+            profile_fallbacks.get(str(value.get("@id")), str(value.get("@id")))
             for value in _object_values(item.get(OF_PROPERTY))
             if isinstance(value.get("@id"), str)
-            and str(value.get("@id")) in characteristic_iris
+            and profile_fallbacks.get(str(value.get("@id")), str(value.get("@id")))
+            in characteristic_iris
         ]
         if not direct_targets:
             continue
@@ -189,6 +209,7 @@ def normalize_example_pair(
         "result_record_count": result_records,
         "property_occurrence_count": len(additions),
         "moved_quantity_value_count": moved_values,
+        "profile_fallback_count": fallback_count,
         "rdf_statement_count": len(json_graph),
         "direct_parameter_characteristic_count": len(direct_parameter_characteristics),
         "direct_datapoint_class_target_count": len(direct_result_classes),

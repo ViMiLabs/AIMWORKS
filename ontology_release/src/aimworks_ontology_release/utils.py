@@ -94,9 +94,17 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _clean_generated_text(content: str) -> str:
+    """Remove line-end padding while preserving the caller's line endings."""
+    return re.sub(r"[ \t]+(?=\r?$)", "", content, flags=re.MULTILINE)
+
+
 def write_text(path: Path, content: str) -> Path:
     ensure_dir(path.parent)
-    path.write_text(content, encoding="utf-8")
+    # Keep generated artifacts byte-stable across operating systems. In
+    # particular, csv.writer already emits CRLF and must not be translated to
+    # CRCRLF on Windows.
+    path.write_text(_clean_generated_text(content), encoding="utf-8", newline="\n")
     return path
 
 
@@ -106,7 +114,11 @@ def load_json(path: Path) -> Any:
 
 def dump_json(path: Path, data: Any) -> Path:
     ensure_dir(path.parent)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    path.write_text(
+        _clean_generated_text(json.dumps(data, indent=2, ensure_ascii=False, default=str)),
+        encoding="utf-8",
+        newline="\n",
+    )
     return path
 
 
@@ -216,9 +228,9 @@ def default_release_profile() -> dict[str, Any]:
             "artifact_publication_status": "published",
             "resolver_status": "established",
             "release_series": 2,
-            "version": "2.1.0",
-            "version_tag": "v2.1.0",
-            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0",
+            "version": "2.2.0",
+            "version_tag": "v2.2.0",
+            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0",
             "prior_version": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.0.0",
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "acknowledgements": {

@@ -9,25 +9,25 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - Preserved source occurrences: 3307
 - Preserved directed source dependencies: 4463
 - Explicitly mapped occurrences: 3134
-- Shared reviewed anchors: 709
+- Shared semantic anchors: 709
 - Semantic-overview nodes: 709
 - Repeated source-concept groups: 294
 - Semantic role conflicts: 0
 - Classified source dependencies: 4463
 - H2KG/PROV semantic projection triples: 6568
-- Derived property-value DataPoint proxies: 691
-- Derived contextual Parameter-record proxies: 130
-- Reviewed workflow dependencies: 623
+- Derived property-value DataPoint proxies: 687
+- Derived contextual Parameter-record proxies: 134
+- Declared workflow dependencies: 623
 - Published workflow dependencies: 572
 - Structural validation: passed
 
 ## Mapping states
 
-- `approved_h2kg`: an explicit reviewed mapping to an existing H2KG IRI.
-- `reviewed_decode`: a reviewed DECODE anchor pending a future H2KG vocabulary decision.
+- `approved_h2kg`: an explicit mapping to an existing H2KG IRI.
+- `decode_local`: a stable DECODE-local anchor that is not part of H2KG.
 - `unresolved`: retained without cross-workflow merging.
 
-Raw GraphML files and the original attached manual JSON are not redistributed in this package. The sanitized overlay excludes personal names and email addresses. Normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+Raw GraphML files and the original attached manual JSON are not redistributed in this package. The sanitized overlay excludes personal names and email addresses. Normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for inspection and reuse.
 
 `decode_manual_reconciliation.json` and `.csv` document duplicate handling, identifier correction, existing-workflow reconciliation, retained GraphML workflows, and the 16 new manual-source workflows. `decode_workflow_dependencies.*` publishes only reciprocal or exact-handoff-grounded method dependencies; unsupported one-sided declarations remain audit-only.
 
@@ -35,6 +35,6 @@ Raw GraphML files and the original attached manual JSON are not redistributed in
 
 `decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG. Property-valued inputs use contextual `Parameter`-record proxies linked to preserved property occurrences through `ofProperty`; calculated values use `DataPoint` proxies with the same intrinsic-property pattern.
 
-`decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
+`decode_definition_registry.csv`, `.json`, and `.md` provide domain-aware DECODE-local definitions for every distinct source concept. Entries marked `not_in_h2kg` remain outside the public H2KG taxonomy.
 
-`decode-h2kg-aligned-ontology.ttl` and `.jsonld` contain the complete merged DECODE vocabulary and workflow occurrence graph. Reviewed DECODE anchors are OWL classes under compatible H2KG roles, while source occurrences and reified source edges preserve the original workflow topology. Definitions in this module are marked `expert-draft`. DECODE licensing remains pending governance confirmation, so no open reuse license is asserted for these files.
+`decode-h2kg-aligned-ontology.ttl` and `.jsonld` contain the complete merged DECODE vocabulary and workflow occurrence graph. DECODE-local anchors are OWL classes under compatible H2KG roles, while source occurrences and reified source edges preserve the original workflow topology. DECODE-local terms remain separate from H2KG. DECODE licensing remains pending governance confirmation, so no open reuse license is asserted for these files.

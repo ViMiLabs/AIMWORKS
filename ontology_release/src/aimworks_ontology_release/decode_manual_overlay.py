@@ -38,7 +38,7 @@ NEW_METHOD_IDS = {
     "NEL-Exp-ptl-porosity-contact-angle",
 }
 
-# Reviewed punctuation/truncation reconciliations. Other existing records must
+# Explicit punctuation/truncation reconciliations. Other existing records must
 # match a GraphML workflow title after deterministic normalization.
 EXISTING_WORKFLOW_OVERRIDES = {
     "HZB-Exp-fib-gdl-mpl-catalyst": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials",
@@ -148,7 +148,7 @@ def ingest_decode_manual_json(
             if not workflow_id or workflow_id not in existing_by_id:
                 raise ValueError(f"No explicit existing-workflow reconciliation for {method_id}")
             outcome = "matched_graphml_workflow"
-            evidence = "Method name or reviewed spelling/truncation override identifies the preserved GraphML workflow."
+            evidence = "Method name or configured spelling/truncation override identifies the preserved GraphML workflow."
         method_to_workflow[method_id] = workflow_id
         reconciliation.append(
             {
@@ -222,8 +222,8 @@ def ingest_decode_manual_json(
             {
                 "label": label,
                 "recommended_role": NOVEL_IO_MAPPINGS[_normal(label)][0],
-                "current_decision": "reviewed_decode_anchor",
-                "review_status": "candidate_for_later_controlled_vocabulary_review",
+                "mapping_decision": "decode_local_anchor",
+                "governance_status": "not_in_h2kg",
             }
             for label in novel_concepts
         ],
@@ -271,14 +271,21 @@ def merge_manual_overlay(snapshot: dict[str, Any], overlay: dict[str, Any]) -> d
 
 
 def write_manual_overlay_release(target: Path, overlay: dict[str, Any]) -> list[Path]:
+    integration_registry = overlay.get("promotion_candidates", [])
+    public_overlay = {
+        key: value
+        for key, value in overlay.items()
+        if key != "promotion_candidates"
+    }
+    public_overlay["h2kg_integration_registry"] = integration_registry
     files = [
-        dump_json(target / "decode_manual_overlay.json", overlay),
+        dump_json(target / "decode_manual_overlay.json", public_overlay),
         dump_json(target / "decode_manual_reconciliation.json", overlay.get("reconciliation", {})),
-        dump_json(target / "decode_promotion_candidates.json", overlay.get("promotion_candidates", [])),
+        dump_json(target / "decode_h2kg_integration_registry.json", integration_registry),
     ]
     files.append(_write_rows(target / "decode_manual_reconciliation.csv", overlay.get("reconciliation", {}).get("methods", [])))
     files.append(_write_rows(target / "decode_manual_reference_resolution.csv", overlay.get("reconciliation", {}).get("reference_resolution", [])))
-    files.append(_write_rows(target / "decode_promotion_candidates.csv", overlay.get("promotion_candidates", [])))
+    files.append(_write_rows(target / "decode_h2kg_integration_registry.csv", integration_registry))
     return files
 
 
@@ -317,7 +324,7 @@ def _deduplicate_methods(records: list[dict[str, Any]]) -> tuple[list[dict[str, 
                 {
                     "method_id": method_id,
                     "source_record_count": len(group),
-                    "outcome": "exact_duplicate_collapsed" if exact else "reviewed_union_merge",
+                    "outcome": "exact_duplicate_collapsed" if exact else "explicit_union_merge",
                     "canonical_name": canonical_name,
                     "original_names": original_names,
                     "retained_tasks": method["decode_tasks"],
@@ -369,10 +376,10 @@ def _resolve_references(
         canonical_method_id = REFERENCE_TITLE_ALIASES.get(value, value)
         if canonical_method_id in method_ids:
             workflow_id = method_to_workflow[canonical_method_id]
-            resolution = "manual_method_identifier" if canonical_method_id == value else "reviewed_title_alias"
+            resolution = "manual_method_identifier" if canonical_method_id == value else "configured_title_alias"
         else:
             workflow_id = REFERENCE_WORKFLOW_ALIASES.get(value, "")
-            resolution = "reviewed_graphml_identifier_alias"
+            resolution = "configured_graphml_identifier_alias"
         resolved = bool(workflow_id and (workflow_id in existing_by_id or workflow_id.startswith("manual-")))
         rows.append(
             {
@@ -425,7 +432,7 @@ def _build_dependencies(
             publication_status = "published_confirmed"
             state = "confirmed_reciprocal" if handoffs else "confirmed_dependency_without_exact_handoff"
         elif handoffs:
-            publication_status = "published_pending_review"
+            publication_status = "published_grounded_one_sided"
             state = "grounded_one_sided"
         else:
             publication_status = "audit_only"
@@ -443,7 +450,7 @@ def _build_dependencies(
                 "predicate": PROV_WAS_INFORMED_BY,
                 "publication_status": publication_status,
                 "source_records": source_records[(upstream, downstream)],
-                "review_rationale": _dependency_rationale(state),
+                "rationale": _dependency_rationale(state),
                 "both_methods_in_manual_json": (
                     upstream in methods_by_id
                     and downstream in methods_by_id
@@ -496,12 +503,12 @@ def _key_workflow(key: str, method_to_workflow: dict[str, str]) -> str:
 
 def _dependency_rationale(state: str) -> str:
     if state == "confirmed_reciprocal":
-        return "Both method records declare the dependency and exact reviewed input/output handoff labels are shared."
+        return "Both method records declare the dependency and exact declared input/output handoff labels are shared."
     if state == "confirmed_dependency_without_exact_handoff":
         return "Both records declare the dependency; no exact handoff is asserted, so only PROV dependency is published."
     if state == "grounded_one_sided":
-        return "One record declares the dependency and an exact reviewed handoff grounds a pending-review link."
-    return "One-sided declaration lacks an exact reviewed handoff and is retained for audit only."
+        return "One record declares the dependency and an exact declared handoff grounds a grounded one-sided link."
+    return "One-sided declaration lacks an exact declared handoff and is retained for audit only."
 
 
 def _manual_workflow(
@@ -649,12 +656,12 @@ def _linked_method_node(
         "source_label": label,
         "original_labels": [label],
         "native_category": "model" if role == "Process" else ("process" if role == "Manufacturing" else "method"),
-        "description": f"Linked {direction} method from a reviewed manual JSON handoff declaration.",
+        "description": f"Linked {direction} method from an explicit manual JSON handoff declaration.",
         "shape": "hexagon",
         "source_kind": "source_manual_json_context",
         "source_field": f"linked_{direction}_method",
         "is_linked_context": True,
-        "mapping_override": _reviewed_mapping(label, role, "Manual method dependency context."),
+        "mapping_override": _configured_mapping(label, role, "Manual method dependency context."),
     }
     workflow["nodes"].append(node)
     return node
@@ -677,7 +684,7 @@ def _append_context_edge(
             "target_id": target["source_id"],
             "source": source["id"],
             "target": target["id"],
-            "description": f"Reviewed linked-method context through {', '.join(dependency['handoff_labels'])}.",
+            "description": f"Declared linked-method context through {', '.join(dependency['handoff_labels'])}.",
             "source_kind": "source_manual_json_context",
             "source_field": pattern,
             "workflow_dependency_id": dependency["id"],
@@ -701,13 +708,13 @@ def _method_mapping(method: dict[str, Any]) -> dict[str, Any]:
             "canonical_role_iri": H2KG + "Measurement",
             "semantic_role": "Measurement",
             "decision": "existing_h2kg_mapping",
-            "confidence": "reviewed",
-            "evidence": "Reviewed mapping to the existing public H2KG nitrogen-physisorption measurement class.",
+            "confidence": "curated",
+            "evidence": "Configured mapping to the existing public H2KG nitrogen-physisorption measurement class.",
         }
-    return _reviewed_mapping(
+    return _configured_mapping(
         method["name"],
         _method_role(method),
-        "Reviewed manual DECODE method role; public vocabulary promotion is deferred.",
+        "Configured manual DECODE method role; the concept remains outside H2KG.",
     )
 
 
@@ -724,29 +731,29 @@ def _io_mapping(label: str, existing_concepts: dict[str, list[dict[str, Any]]]) 
                 "canonical_role_iri": H2KG + role,
                 "semantic_role": role,
                 "decision": "existing_h2kg_mapping",
-                "confidence": "reviewed",
-                "evidence": "Reviewed existing H2KG mapping for the manual JSON field.",
+                "confidence": "curated",
+                "evidence": "Configured existing H2KG mapping for the manual JSON field.",
             }, category
-        return _reviewed_mapping(
+        return _configured_mapping(
             label,
             role,
-            "Reviewed DECODE anchor pending controlled H2KG vocabulary review.",
+            "DECODE-local anchor not included in H2KG.",
         ), category
     matches = existing_concepts.get(key, [])
     if not matches:
-        raise ValueError(f"Manual I/O concept has no reviewed existing or novel mapping decision: {label}")
+        raise ValueError(f"Manual I/O concept has no explicit existing or local mapping decision: {label}")
     return None, str(matches[0].get("native_category", "other"))
 
 
-def _reviewed_mapping(label: str, role: str, evidence: str) -> dict[str, Any]:
+def _configured_mapping(label: str, role: str, evidence: str) -> dict[str, Any]:
     return {
-        "state": "reviewed_decode",
+        "state": "decode_local",
         "anchor_iri": f"{DECODE_NS}anchor/{_slug(label)}-{_short_hash(_normal(label) + '|' + role)}",
         "anchor_label": label,
         "canonical_role_iri": H2KG + role,
         "semantic_role": role,
-        "decision": "reviewed_decode_anchor",
-        "confidence": "reviewed",
+        "decision": "decode_local_anchor",
+        "confidence": "curated",
         "evidence": evidence,
     }
 

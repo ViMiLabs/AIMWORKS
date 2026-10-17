@@ -74,7 +74,7 @@ semantic_projections: []
     ccm_occurrence = next(node for node in graph["nodes"] if node["id"] == "prep::n1")
     assert ccm_occurrence["visual_category"] == "component"
     assert not graph["semantic_edges"]
-    candidates = (tmp_path / "output" / "decode" / "decode_anchor_candidates.csv").read_text(encoding="utf-8")
+    candidates = (tmp_path / "output" / "decode" / "decode_anchor_discovery.csv").read_text(encoding="utf-8")
     assert "recommended_state" in candidates
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.jsonld").exists()
     assert (tmp_path / "output" / "decode" / "workflows" / "prep.ttl").exists()
@@ -151,7 +151,7 @@ def test_h2kg_property_used_as_decode_parameter_is_reified_as_record(tmp_path: P
     canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Parameter
     semantic_role: Parameter
   - source_label: Model method
-    state: reviewed_decode
+    state: decode_local
     anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/model-method
     anchor_label: Model method
     canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Process
@@ -222,19 +222,19 @@ semantic_projections: []
     )
     build_decode_workflow_release(snapshot, tmp_path / "output", config)
     graph = json.loads((tmp_path / "output" / "decode" / "decode_federated_graph.json").read_text(encoding="utf-8"))
-    assert {node["decision"] for node in graph["nodes"]} == {"reviewed_decode_anchor"}
+    assert {node["decision"] for node in graph["nodes"]} == {"decode_local_anchor"}
     assert graph["nodes"][0]["canonical_role_iri"].endswith("#Matter")
     registry = json.loads((tmp_path / "output" / "decode" / "decode_concept_registry.json").read_text(encoding="utf-8"))
     assert registry["counts"]["concept_count"] == 1
     assert registry["concepts"][0]["occurrence_count"] == 2
-    definitions = json.loads((tmp_path / "output" / "decode" / "decode_definition_drafts.json").read_text(encoding="utf-8"))
-    assert definitions["counts"] == {"concept_count": 1, "needs_human_review": 1}
+    definitions = json.loads((tmp_path / "output" / "decode" / "decode_definition_registry.json").read_text(encoding="utf-8"))
+    assert definitions["counts"] == {"concept_count": 1, "not_in_h2kg": 1}
     draft = definitions["definitions"][0]
-    assert draft["proposed_definition"].startswith('A material, component')
-    assert draft["definition_status"] == "needs_human_review"
-    assert "retain reviewed DECODE anchor" in draft["recommended_review_action"]
-    assert (tmp_path / "output" / "decode" / "decode_definition_drafts.csv").exists()
-    assert (tmp_path / "output" / "decode" / "decode_definition_drafts.md").exists()
+    assert draft["definition"].startswith('A material, component')
+    assert draft["definition_status"] == "not_in_h2kg"
+    assert "retained DECODE-local anchor" in draft["integration_guidance"]
+    assert (tmp_path / "output" / "decode" / "decode_definition_registry.csv").exists()
+    assert (tmp_path / "output" / "decode" / "decode_definition_registry.md").exists()
 
 
 def test_decode_alias_curation_updates_only_explicit_target(tmp_path: Path) -> None:
@@ -380,13 +380,13 @@ def test_semantic_role_conflicts_are_audited_and_fail_validation(tmp_path: Path)
     config.write_text(
         """mappings:
   - source_label: Shared material
-    state: reviewed_decode
+    state: decode_local
     anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/conflict
     anchor_label: Deliberate conflict fixture
     canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Matter
     semantic_role: Matter
   - source_label: Shared method
-    state: reviewed_decode
+    state: decode_local
     anchor_iri: https://w3id.org/h2kg/decode/workflow/anchor/conflict
     anchor_label: Deliberate conflict fixture
     canonical_role_iri: https://w3id.org/h2kg/hydrogen-ontology#Measurement
@@ -481,7 +481,7 @@ def test_manual_dependency_and_mapping_decisions_are_traceable() -> None:
         and row["downstream_method_id"] == "CEA-Exp-tem-eds-analysis-CL"
     )
     assert tem["handoff_labels"] == ["CCM"]
-    assert tem["publication_status"] == "published_pending_review"
+    assert tem["publication_status"] == "published_grounded_one_sided"
     n2 = next(
         row for row in dependencies
         if row["upstream_method_id"] == "ICPEES-CNRS-Unistra-Exp-n2-adsorption-ex-situ"

@@ -2,10 +2,10 @@
 
 ## Summary
 
-- Reviewed against HDO: 141
+- Assessed against HDO: 141
 - Aligned to HDO: 8
 - Reused directly from HDO: 8
-- Kept local after HDO review: 135
+- Kept local after HDO comparison: 135
 - Overlap with PROV-O / DCTERMS / EMMO anchors: 2
 
 ## HDO-Aligned Terms

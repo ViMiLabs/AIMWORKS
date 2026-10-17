@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import json
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 from .io import iter_document_items, load_json_document, merge_document_items
-from .utils import ensure_dir
+from .utils import dump_json, ensure_dir
 
 DCTERMS_DESCRIPTION = "http://purl.org/dc/terms/description"
 RDFS_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"
@@ -39,7 +38,7 @@ def normalize_source_document(
     repairs = _apply_targeted_repairs(normalized_items)
 
     target_path = input_path if write_in_place else output_dir / input_path.name
-    target_path.write_text(json.dumps(normalized_items, indent=2, ensure_ascii=False), encoding="utf-8")
+    dump_json(target_path, normalized_items)
 
     report = {
         "target_path": str(target_path),
@@ -49,10 +48,7 @@ def normalize_source_document(
         "duplicate_ids": duplicate_ids,
         "repairs": repairs,
     }
-    (output_dir / "source_normalization_report.json").write_text(
-        json.dumps(report, indent=2, ensure_ascii=False),
-        encoding="utf-8",
-    )
+    dump_json(output_dir / "source_normalization_report.json", report)
     return report
 
 

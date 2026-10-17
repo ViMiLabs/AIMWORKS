@@ -1,6 +1,6 @@
 # H2KG w3id Redirect Configuration
 
-Project: `H2KG Application Ontology for Hydrogen Electrochemical Systems`
+Project: `H₂KG Domain Ontology for Hydrogen Electrochemical Systems`
 
 This file documents the established `https://w3id.org/h2kg/` namespace and its
 current H2KG release targets.
@@ -34,7 +34,7 @@ current H2KG release targets.
 
 ### H2KG v2 taxonomy release
 
-- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.1.0`
+- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0`
 - Browser / HTML: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?view=taxonomy`
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`

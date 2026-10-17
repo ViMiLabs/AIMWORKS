@@ -285,7 +285,7 @@ $(IMPORTDIR)/qudt-quantitykinds_import.owl: $(MIRRORDIR)/qudt-quantitykinds.owl 
 	fi
 
 CHEBI_CACHE := ../../../cache/sources/chebi.tsv
-CHEBI_URL := 
+CHEBI_URL :=
 CHEBI_REQUIRED := false
 
 .PHONY: mirror-chebi

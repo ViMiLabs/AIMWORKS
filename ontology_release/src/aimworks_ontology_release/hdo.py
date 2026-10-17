@@ -133,10 +133,10 @@ def _report_markdown(report: dict[str, Any]) -> str:
 
 ## Summary
 
-- Reviewed against HDO: {summary['reviewed_against_hdo']}
+- Assessed against HDO: {summary['reviewed_against_hdo']}
 - Aligned to HDO: {summary['aligned_to_hdo']}
 - Reused directly from HDO: {summary['reused_from_hdo']}
-- Kept local after HDO review: {summary['stayed_local']}
+- Kept local after HDO comparison: {summary['stayed_local']}
 - Overlap with PROV-O / DCTERMS / EMMO anchors: {summary['overlap_with_other_standards']}
 
 ## HDO-Aligned Terms

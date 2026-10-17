@@ -887,13 +887,13 @@ def classify_candidates(
 
     # Previously generated machine mappings are deliberately not fed back as
     # evidence.  Otherwise a weak mapping from an earlier release can make
-    # itself authoritative forever.  Explicitly reviewed mappings remain
+    # itself authoritative forever. Explicitly configured mappings remain
     # eligible evidence and take precedence for their exact IRI pair.
     manual_pairs: set[tuple[str, str]] = set()
     for mapping in existing_mappings or []:
         mapping_status = str(mapping.get("status", "")).casefold()
-        reviewer_decision = str(mapping.get("reviewer_decision", "")).casefold()
-        if mapping_status == "machine_safe" or reviewer_decision == "accepted-machine-safe":
+        decision_status = str(mapping.get("decision_status", "")).casefold()
+        if mapping_status == "machine_safe" or decision_status == "accepted-machine-safe":
             continue
         term = terms_by_iri.get(str(mapping.get("local_iri", "")))
         ontology_id = str(mapping.get("tib_ontology_id") or mapping.get("source") or "").casefold()
@@ -1205,7 +1205,7 @@ def build_harmonization_registry(
             "rule_id": row["rule_id"],
             "status": "machine_safe",
             "publication_status": "asserted" if row["outcome"] != "exact_iri_reuse" else "iri-reused-no-triple",
-            "review_status": "automated-strict-gate",
+            "decision_status": "automated-strict-gate",
             "decision_basis": row["decision_basis"],
             "scope_evidence": row.get("scope_evidence", ""),
             "snapshot_retrieved_at": snapshot.get("retrieved_at"),
@@ -2654,7 +2654,13 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], columns: list[str]) -> No
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows(
+            {
+                column: re.sub(r"[ \t]+(?=\r?\n|$)", "", value) if isinstance(value, str) else value
+                for column, value in row.items()
+            }
+            for row in rows
+        )
 
 
 def _write_missing_collection_cache(target: Path, snapshot_path: Path, candidate_path: Path) -> dict[str, Any]:

@@ -64,6 +64,15 @@ def build_semantic_profile_release(
         for iri, decision in decision_by_iri.items()
         if decision.replacement_iri
     }
+    fallbacks = {
+        iri: str(decision.profile_fallback_iri)
+        for iri, decision in decision_by_iri.items()
+        if decision.profile_fallback_iri
+    }
+    contextual_migrations = {
+        str(key): str(value)
+        for key, value in config.get("profile_migrations", {}).items()
+    }
     object_properties = {
         predicate
         for predicate in source.subjects(RDF.type, OWL.ObjectProperty)
@@ -114,11 +123,18 @@ def build_semantic_profile_release(
         and isinstance(obj, (URIRef, BNode))
     )
     for subject, predicate, obj in assertions:
-        source_iri = replacements.get(str(subject), str(subject))
+        source_iri = replacements.get(str(subject), fallbacks.get(str(subject), str(subject)))
         source_decision = decision_by_iri.get(source_iri, decision_by_iri[str(subject)])
         raw_target_iri = str(obj)
+        context_key = f"{_fragment(str(subject))}|{_fragment(raw_target_iri)}"
+        contextual_target = contextual_migrations.get(context_key, "")
         target_iri = (
-            replacements.get(raw_target_iri, portable_legacy_iri(raw_target_iri))
+            str(H2KG[contextual_target])
+            if contextual_target
+            else replacements.get(
+                raw_target_iri,
+                fallbacks.get(raw_target_iri, portable_legacy_iri(raw_target_iri)),
+            )
             if isinstance(obj, URIRef)
             else str(obj)
         )

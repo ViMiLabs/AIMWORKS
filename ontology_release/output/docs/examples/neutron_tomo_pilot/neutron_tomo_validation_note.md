@@ -44,4 +44,4 @@ What was intentionally deferred:
 - a public TBox term for `AverageBaryCenter`
 - public TBox terms for worksheet preprocessing labels such as `Reconstruct`, `DarkFieldCorrect`, `3DReconstruct`, and `Threshold`
 - public TBox terms for facility-specific hardware details
-- exact QUDT specialization of neutron flux beyond the reusable public parameter anchor
+- exact QUDT specialization of neutron flux; its reported numeric value and raw unit remain metadata until both the unit and quantity kind can be represented without approximation

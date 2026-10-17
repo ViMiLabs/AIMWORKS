@@ -10,6 +10,7 @@ from aimworks_ontology_release.tib_collections import (
     OUTCOMES,
     _assess_candidate,
     _external_role_evidence,
+    _write_csv,
     apply_harmonization_registry,
     build_harmonization_registry,
     build_collection_benchmark,
@@ -18,6 +19,16 @@ from aimworks_ontology_release.tib_collections import (
 
 
 H2KG = "https://w3id.org/h2kg/hydrogen-ontology#"
+
+
+def test_write_csv_removes_trailing_whitespace_from_embedded_lines(tmp_path: Path) -> None:
+    target = tmp_path / "evidence.csv"
+    _write_csv(target, [{"definition": "first line  \nsecond line \t"}], ["definition"])
+
+    content = target.read_text(encoding="utf-8")
+    assert "first line  \n" not in content
+    assert "second line \t" not in content
+    assert "first line\nsecond line" in content
 
 
 class FakeResponse:

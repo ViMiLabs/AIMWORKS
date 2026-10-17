@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 
 from aimworks_ontology_release.normalize_source import normalize_source_document
-from aimworks_ontology_release.release import run_release
+import pytest
+
+from aimworks_ontology_release.release import _validate_public_release_content, run_release
 
 
 def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
@@ -23,7 +25,7 @@ def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
     assert summary["synchrotron_xray_tomo_pilot"]["status"] == "skipped_missing_terms"
     assert summary["xrd_pilot"]["status"] == "skipped_missing_terms"
     assert summary["xps_pilot"]["status"] == "skipped_missing_terms"
-    assert summary["itc_pilot"]["status"] == "skipped_missing_review"
+    assert summary["itc_pilot"]["status"] == "skipped_missing_registry"
     assert summary["method_data_profiles"]["status"] == "skipped_missing_terms"
     assert (project_root / "output" / "docs" / "index.html").exists()
     assert (project_root / "output" / "docs" / "hydrogen-ontology.html").exists()
@@ -41,6 +43,22 @@ def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
     assert "core_schema.ttl" in htaccess
     assert "pemfc_schema.ttl" in htaccess
     assert (project_root / "output" / "release_bundle" / "odk" / "manifest.json").exists()
+
+
+def test_public_release_language_gate_is_recursive_and_allows_scientific_ai(tmp_path):
+    bundle = tmp_path / "release_bundle"
+    nested = bundle / "decode" / "workflows"
+    nested.mkdir(parents=True)
+    (nested / "scientific-method.json").write_text(
+        '{"label": "AI-based generation of structural digital twins"}',
+        encoding="utf-8",
+    )
+    _validate_public_release_content(bundle)
+
+    prohibited = nested / "legacy-status.json"
+    prohibited.write_text('{"status": "needs_human_review"}', encoding="utf-8")
+    with pytest.raises(ValueError, match="prohibited reviewer-origin language"):
+        _validate_public_release_content(bundle)
 
 
 def test_normalize_source_repairs_legacy_h2kg_refs(tmp_path):

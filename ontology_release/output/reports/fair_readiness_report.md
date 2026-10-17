@@ -5,12 +5,12 @@
 - F / Findable: 100 / 100 (good)
 - A / Accessible: 100 / 100 (good)
 - I / Interoperable: 100 / 100 (good)
-- R / Reusable: 100 / 100 (good)
+- R / Reusable: 90 / 100 (good)
 
 ## Transparency Hooks
 
 - OOPS! ontology pitfall scan: external service unreachable (unavailable)
-- FOOPS! FAIR assessment: 89.4 / 100 (good)
+- FOOPS! FAIR assessment: external service unreachable (unavailable)
 
 ## Summary
 

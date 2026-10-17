@@ -53,7 +53,7 @@ Each profile consists of a SHACL constraint file, value-free JSON-LD capture tem
 | Measurement | `h2kg:AtomicForceMicroscopyMeasurement` | One typed measurement occurrence. |
 | Instrument | `h2kg:AFMInstrument` | At least one linked instrument. |
 | Dataset chain | `h2kg:MicrostructureImageDataset, h2kg:SurfaceTopographyDataset` | At least one raw output dataset. |
-| Conditional parameters | `h2kg:AFMScanSpeed, h2kg:AFMTipNominalRadius, h2kg:MicroscopyMeasuredArea, h2kg:Temperature, h2kg:RelativeHumidity, h2kg:CantileverSpringConstant, h2kg:CantileverResonanceFrequency` | Capture only when reported or method-defining; numeric values require QUDT quantity values. |
+| Conditional parameters | `h2kg:QuantitativeCharacteristic, h2kg:AFMTipNominalRadius, h2kg:MicroscopyMeasuredArea, h2kg:Temperature, h2kg:RelativeHumidity, h2kg:CantileverSpringConstant, h2kg:CantileverResonanceFrequency` | Capture only when reported or method-defining; numeric values require QUDT quantity values. |
 | Results | `h2kg:MeanParticleSize` | At least one DataPoint or explicit missing-value metadata. |
 | Evidence boundary | Metadata | AFM mode, tip model, sensitivity, resolution, and local file details remain metadata unless reusable across cases. |
 

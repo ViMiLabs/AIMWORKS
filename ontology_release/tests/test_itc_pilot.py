@@ -13,15 +13,15 @@ from aimworks_ontology_release.itc_pilot import (
     build_decode_itc_overlay,
     build_itc_pilot_package,
     integrate_itc_terms,
-    validate_review_registry,
+    validate_interface_registry,
 )
 
 
 def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
     root = Path(__file__).resolve().parents[1]
-    review_path = root / "input" / "itc_expert_review.json"
+    review_path = root / "input" / "itc_curated_interface.json"
     review = json.loads(review_path.read_text(encoding="utf-8"))
-    validation = validate_review_registry(review)
+    validation = validate_interface_registry(review)
     assert validation["input_count"] == 24
     assert validation["output_count"] == 20
     assert validation["unique_identifier_count"] == 44
@@ -57,7 +57,7 @@ def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
 
 def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Path) -> None:
     root = Path(__file__).resolve().parents[1]
-    review = json.loads((root / "input" / "itc_expert_review.json").read_text(encoding="utf-8"))
+    review = json.loads((root / "input" / "itc_curated_interface.json").read_text(encoding="utf-8"))
     snapshot = json.loads((root / "input" / "decode_workflows_source.json").read_text(encoding="utf-8"))
     source = next(workflow for workflow in snapshot["workflows"] if workflow["id"] == "iet-ink-to-composition-model")
     source_pairs = [(edge["source"], edge["target"]) for edge in source["edges"]]
@@ -70,7 +70,7 @@ def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Pa
     assert radius["label"] == "Catalyst active particle diameter"
     assert radius["mapping_override"]["anchor_iri"] == H2KG + "PlatinumParticleRadius"
     overlay = build_decode_itc_overlay(review)
-    assert overlay["badge"] == "Expert-reviewed ITC profile"
+    assert overlay["badge"] == "Curated ITC profile"
     parameter_records = [node for node in overlay["nodes"] if node["semantic_role"] == "Parameter"]
     parameter_edges = [edge for edge in overlay["edges"] if edge["predicate"] == H2KG + "hasParameter"]
     property_edges = [edge for edge in overlay["edges"] if edge["predicate"] == H2KG + "ofProperty"]
@@ -82,11 +82,11 @@ def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Pa
         root / "input" / "decode_multiscale_model_interface.json",
         root / "input" / "decode_workflows_source.json",
         tmp_path / "output",
-        root / "input" / "itc_expert_review.json",
+        root / "input" / "itc_curated_interface.json",
     )
-    expert = interface["validation"]["expert_itc_profile"]
-    assert expert["stage_occurrence_count"] == 68
-    assert expert["shared_identifier_count"] == 12
+    curated = interface["validation"]["curated_itc_profile"]
+    assert curated["stage_occurrence_count"] == 68
+    assert curated["shared_identifier_count"] == 12
     nodes = {node["source_id"]: node for node in interface["nodes"]}
     assert nodes["IO_MAT_CatalystActiveParticleDiameter"]["label"] == "Platinum particle radius"
     assert nodes["IO_CMP_CCLFractionHydrophilicPores"]["label"] == "CCL accessible primary-pore volume fraction"

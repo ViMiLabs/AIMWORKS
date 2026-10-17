@@ -4,7 +4,7 @@ from __future__ import annotations
 
 This module deliberately does not alter the H2KG TBox.  It assigns stable DECODE
 occurrence IRIs to source GraphML nodes, preserves every source edge, and applies
-only explicit mappings from the reviewed configuration file.
+only explicit mappings from the versioned configuration file.
 """
 
 import csv
@@ -12,6 +12,7 @@ import hashlib
 import io
 import json
 import re
+import shutil
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import date
@@ -101,17 +102,20 @@ def build_decode_workflow_release(
         if overlay_path.exists():
             manual_overlay = load_json(overlay_path)
             snapshot = merge_manual_overlay(base_snapshot, manual_overlay)
-    itc_review_path = snapshot_path.parent / "itc_expert_review.json"
-    itc_review = load_json(itc_review_path) if itc_review_path.exists() else None
-    if itc_review is not None:
-        snapshot = apply_itc_mapping_overrides(snapshot, itc_review)
+    itc_registry_path = snapshot_path.parent / "itc_curated_interface.json"
+    itc_registry = load_json(itc_registry_path) if itc_registry_path.exists() else None
+    if itc_registry is not None:
+        snapshot = apply_itc_mapping_overrides(snapshot, itc_registry)
     mapping_config = try_load_yaml(
         Path(mapping_config_path),
         {"mappings": [], "semantic_projections": [], "default_alignment": {}, "alias_curation": []},
     )
     mappings = _index_mappings(mapping_config.get("mappings", []))
     semantic_projections = _index_semantic_projections(mapping_config.get("semantic_projections", []))
-    target = ensure_dir(output_root / "decode")
+    target_path = output_root / "decode"
+    if target_path.exists():
+        shutil.rmtree(target_path)
+    target = ensure_dir(target_path)
     workflows_dir = ensure_dir(target / "workflows")
     graph, matrix_rows = _federate(
         snapshot,
@@ -130,7 +134,7 @@ def build_decode_workflow_release(
             snapshot_path.parent / "decode_multiscale_model_interface.json",
             snapshot_path,
             output_root,
-            itc_review_path,
+            itc_registry_path,
         )
         append_multiscale_interface(graph, interface)
     _apply_intrinsic_h2kg_roles(
@@ -139,8 +143,8 @@ def build_decode_workflow_release(
         output_root / "ontology" / "taxonomy_registry.json",
     )
     _canonicalize_duplicate_anchors(graph, matrix_rows)
-    if itc_review is not None:
-        attach_itc_profile_overlay(graph, itc_review)
+    if itc_registry is not None:
+        attach_itc_profile_overlay(graph, itc_registry)
     graph["counts"]["workflow_count"] = len(graph["workflows"])
     graph["counts"]["catalogue_entry_count"] = len(graph["workflows"])
     graph["counts"]["base_graphml_workflow_count"] = sum(
@@ -172,7 +176,7 @@ def build_decode_workflow_release(
         validation["multiscale_interface"] = interface["validation"]
     anchor_candidates = _anchor_candidates(snapshot, mappings)
     registry = _concept_registry(snapshot, graph, ontology_path)
-    definition_drafts = _definition_drafts(registry)
+    definition_registry = _build_definition_registry(registry)
     decode_ontology = build_decode_ontology(
         graph,
         registry,
@@ -186,12 +190,12 @@ def build_decode_workflow_release(
         dump_json(target / "decode_validation_report.json", validation),
         _write_mapping_matrix(target / "decode_mapping_matrix.csv", matrix_rows),
         _write_mapping_matrix_markdown(target / "decode_mapping_matrix.md", matrix_rows),
-        _write_anchor_candidates(target / "decode_anchor_candidates.csv", anchor_candidates),
+        _write_anchor_candidates(target / "decode_anchor_discovery.csv", anchor_candidates),
         dump_json(target / "decode_concept_registry.json", registry),
         _write_concept_registry(target / "decode_concept_registry.csv", registry["concepts"]),
-        dump_json(target / "decode_definition_drafts.json", definition_drafts),
-        _write_definition_drafts(target / "decode_definition_drafts.csv", definition_drafts["definitions"]),
-        _write_definition_drafts_markdown(target / "decode_definition_drafts.md", definition_drafts),
+        dump_json(target / "decode_definition_registry.json", definition_registry),
+        _write_definition_registry(target / "decode_definition_registry.csv", definition_registry["definitions"]),
+        _write_definition_registry_markdown(target / "decode_definition_registry.md", definition_registry),
         _write_semantic_role_audit(target / "decode_semantic_role_audit.csv", registry["concepts"]),
         dump_json(target / "decode_edge_registry.json", graph["edge_registry"]),
         _write_edge_registry(target / "decode_edge_registry.csv", graph["edge_registry"]),
@@ -199,6 +203,7 @@ def build_decode_workflow_release(
         _write_duplicate_occurrence_audit(target / "decode_duplicate_occurrence_audit.csv", duplicate_audit),
         dump_json(target / "decode_semantic_role_conflicts.json", role_conflicts),
         _write_semantic_role_conflict_audit(target / "decode_semantic_role_conflicts.csv", role_conflicts),
+        write_text(target / "EDGE_ALIGNMENT_RULES.md", _edge_alignment_rules(graph)),
         write_text(target / "README.md", _readme(graph, validation)),
     ]
     generated.extend(Path(path) for path in decode_ontology["generated_files"])
@@ -257,12 +262,12 @@ def build_decode_workflow_release(
         "source_edge_count": len(graph["source_edges"]),
         "mapped_occurrence_count": len(graph["anchor_edges"]),
         "approved_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "approved_h2kg"),
-        "reviewed_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "reviewed_decode"),
+        "decode_local_anchor_count": sum(1 for anchor in graph["anchors"] if anchor["state"] == "decode_local"),
         "semantic_role_conflict_count": len(role_conflicts),
         "semantic_projection_count": len(graph["semantic_edges"]),
         "edge_classification_count": len(graph["edge_registry"]),
         "concept_registry_count": registry["counts"]["concept_count"],
-        "definition_draft_count": definition_drafts["counts"]["concept_count"],
+        "definition_registry_count": definition_registry["counts"]["concept_count"],
         "decode_ontology": decode_ontology,
         "validation_status": validation["status"],
         "multiscale_interface": interface,
@@ -399,8 +404,8 @@ def _federate(
                 "canonical_role_iri": mapping.get("canonical_role_iri", "") if mapping else "",
                 "semantic_role": mapping.get("semantic_role", "") if mapping else "",
                 "role_assignment": mapping.get("role_assignment", "") if mapping else "",
-                "confidence": mapping.get("confidence", "unreviewed") if mapping else "unreviewed",
-                "mapping_evidence": mapping.get("evidence", "No reviewed mapping decision.") if mapping else "No reviewed mapping decision.",
+                "confidence": mapping.get("confidence", "not_mapped") if mapping else "not_mapped",
+                "mapping_evidence": mapping.get("evidence", "No explicit mapping decision.") if mapping else "No explicit mapping decision.",
             }
             nodes.append(node)
             matrix_rows.append(
@@ -492,7 +497,7 @@ def _federate(
     graph = {
         "schema_version": "1.0",
         "generated_on": date.today().isoformat(),
-        "description": "Federated DECODE workflow occurrence graph. GraphML topology is immutable, manual JSON workflows are source-backed overlays, and mappings are explicit reviewed decisions.",
+        "description": "Federated DECODE workflow occurrence graph. GraphML topology is immutable, manual JSON workflows are source-backed overlays, and mappings are explicit versioned decisions.",
         "raw_graphml_redistributed": False,
         "raw_manual_json_redistributed": False,
         "privacy_policy": "Public projections remove email addresses and personal names from source Owner fields while retaining owner organizations.",
@@ -556,7 +561,7 @@ def _canonicalize_duplicate_anchors(
                 "label": str(label),
                 "semantic_role": key[1],
                 "relation": "equivalentClass",
-                "rationale": "Same reviewed source label and compatible H2KG semantic role.",
+                "rationale": "Same configured source label and compatible H2KG semantic role.",
             }
 
     if not aliases:
@@ -602,7 +607,7 @@ def _canonicalize_duplicate_anchors(
                 **source_anchor,
                 "id": anchor_id,
                 "label": source_anchor.get("label") or node.get("label", _last_segment(anchor_id)),
-                "state": "approved_h2kg" if anchor_id.startswith(H2KG) else "reviewed_decode",
+                "state": "approved_h2kg" if anchor_id.startswith(H2KG) else "decode_local",
                 "occurrence_ids": [],
             },
         )
@@ -676,7 +681,7 @@ def _apply_intrinsic_h2kg_roles(
         node["intrinsic_semantic_role"] = intrinsic
         node["semantic_role"] = intrinsic
         node["canonical_role_iri"] = role_iris.get(intrinsic, H2KG + intrinsic)
-        node["role_assignment"] = "h2kg_taxonomy_2_1"
+        node["role_assignment"] = "h2kg_taxonomy_2_2"
         if previous != intrinsic:
             corrections += 1
 
@@ -718,7 +723,7 @@ def _build_edge_alignment(
     unknown_overrides = sorted(set(explicit_projections) - source_keys)
     if unknown_overrides:
         raise ValueError(
-            "A reviewed semantic projection must cite a preserved directed DECODE dependency: "
+            "A semantic projection must cite a preserved directed DECODE dependency: "
             + "; ".join("::".join(key) for key in unknown_overrides)
         )
 
@@ -772,7 +777,7 @@ def _classify_decode_edge(
         pattern: str,
         rationale: str,
         confidence: str = "rule_curated",
-        review_status: str = "classified",
+        governance_status: str = "classified",
     ) -> None:
         semantic_edges.append(
             _semantic_edge(
@@ -784,7 +789,7 @@ def _classify_decode_edge(
                 pattern,
                 rationale,
                 confidence,
-                review_status,
+                governance_status,
             )
         )
 
@@ -800,9 +805,9 @@ def _classify_decode_edge(
             semantic_target,
             "h2kg_direct",
             "explicit_override",
-            str(override.get("evidence", "Explicit reviewed semantic projection.")),
-            "reviewed",
-            "reviewed",
+            str(override.get("evidence", "Explicit configured semantic projection.")),
+            "configured",
+            "approved",
         )
     elif source_role == "Measurement" and target_role == "Property":
         direct(H2KG + "measures", source["id"], target["id"], "h2kg_direct", "measurement_property", "Measurement occurrence measures the preserved property occurrence.")
@@ -871,12 +876,12 @@ def _classify_decode_edge(
 
     if not semantic_edges:
         rationale = "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
-        outcome, pattern, confidence, review_status = "decode_structural_only", "structural_dependency", "context_required", "classified"
+        outcome, pattern, confidence, governance_status = "decode_structural_only", "structural_dependency", "context_required", "classified"
     else:
         outcome = semantic_edges[0]["projection_outcome"]
         pattern = semantic_edges[0]["projection_pattern"]
         confidence = semantic_edges[0]["confidence"]
-        review_status = semantic_edges[0]["review_status"]
+        governance_status = semantic_edges[0]["governance_status"]
         rationale = semantic_edges[0]["evidence"]
     return {
         "semantic_edges": semantic_edges,
@@ -905,7 +910,7 @@ def _classify_decode_edge(
             "semantic_edge_ids": [item["id"] for item in semantic_edges],
             "semantic_direction": _semantic_direction(edge, semantic_edges),
             "confidence": confidence,
-            "review_status": review_status,
+            "governance_status": governance_status,
             "rationale": rationale,
         },
     }
@@ -926,7 +931,7 @@ def _normalise_predicate_direction(
     source: dict[str, Any],
     target: dict[str, Any],
 ) -> tuple[str, str]:
-    """Apply H2KG direction to a reviewed predicate while retaining source provenance."""
+    """Apply H2KG direction to a configured predicate while retaining source provenance."""
     local_name = _last_segment(predicate)
     reversible_inputs = {
         ("hasInputMaterial", "Matter"),
@@ -995,7 +1000,7 @@ def _semantic_edge(
     pattern: str,
     evidence: str,
     confidence: str,
-    review_status: str,
+    governance_status: str,
 ) -> dict[str, Any]:
     return {
         "id": f"semantic::{source_edge['id']}::{_short_hash(source + '|' + target + '|' + predicate + '|' + pattern)}",
@@ -1010,7 +1015,7 @@ def _semantic_edge(
         "projection_pattern": pattern,
         "evidence": evidence,
         "confidence": confidence,
-        "review_status": review_status,
+        "governance_status": governance_status,
     }
 
 
@@ -1028,7 +1033,7 @@ def _semantic_direction(source_edge: dict[str, Any], semantic_edges: list[dict[s
 
 
 def _build_workflow_dependencies(graph: dict[str, Any], rows: list[dict[str, Any]]) -> None:
-    """Attach reviewed method dependencies without changing local source edges."""
+    """Attach declared method dependencies without changing local source edges."""
     nodes_by_workflow: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for node in graph["nodes"]:
         nodes_by_workflow[node["workflow_id"]].append(node)
@@ -1075,7 +1080,7 @@ def _build_workflow_dependencies(graph: dict[str, Any], rows: list[dict[str, Any
             published.append(row)
         elif row.get("publication_status") != "audit_only":
             row["publication_status"] = "audit_only"
-            row["review_rationale"] += " Publication was suppressed because a method occurrence endpoint was not found."
+            row["rationale"] += " Publication was suppressed because a method occurrence endpoint was not found."
         published_row = row
         source_row.clear()
         source_row.update(published_row)
@@ -1086,7 +1091,7 @@ def _build_workflow_dependencies(graph: dict[str, Any], rows: list[dict[str, Any
             "workflow_dependency_count": len(rows),
             "published_workflow_dependency_count": len(published),
             "confirmed_workflow_dependency_count": sum(row.get("publication_status") == "published_confirmed" for row in rows),
-            "pending_workflow_dependency_count": sum(row.get("publication_status") == "published_pending_review" for row in rows),
+            "grounded_one_sided_dependency_count": sum(row.get("publication_status") == "published_grounded_one_sided" for row in rows),
             "audit_only_workflow_dependency_count": sum(row.get("publication_status") == "audit_only" for row in rows),
         }
     )
@@ -1098,7 +1103,7 @@ def _write_workflow_dependency_exports(target: Path, graph: dict[str, Any]) -> l
     fields = [
         "id", "upstream_method_id", "downstream_method_id", "upstream_workflow_id", "downstream_workflow_id",
         "upstream_occurrence_id", "downstream_occurrence_id", "declarations", "reciprocity_state",
-        "handoff_labels", "handoff_anchor_iris", "predicate", "publication_status", "review_rationale",
+        "handoff_labels", "handoff_anchor_iris", "predicate", "publication_status", "rationale",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -1334,7 +1339,7 @@ def _validate_federated_graph(snapshot: dict[str, Any], graph: dict[str, Any]) -
         "workflow_dependency_count": len(dependencies),
         "published_workflow_dependency_count": len(graph.get("published_workflow_dependencies", [])),
         "edge_outcome_counts": dict(sorted(Counter(row.get("projection_outcome", "") for row in edge_registry).items())),
-        "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or reviewed_decode anchor mappings.",
+        "mapping_policy": "Cross-workflow traversal is available only through explicit approved_h2kg or decode_local anchor mappings.",
     }
 
 
@@ -1360,7 +1365,7 @@ def _build_semantic_overview(graph: dict[str, Any]) -> dict[str, Any]:
                 "decision": anchor["decision"] if anchor else occurrence["decision"],
                 "canonical_role_iri": anchor.get("canonical_role_iri", "") if anchor else occurrence.get("canonical_role_iri", ""),
                 "semantic_role": anchor.get("semantic_role", "") if anchor else occurrence.get("semantic_role", ""),
-                "confidence": anchor.get("confidence", "unreviewed") if anchor else occurrence.get("confidence", "unreviewed"),
+                "confidence": anchor.get("confidence", "not_mapped") if anchor else occurrence.get("confidence", "not_mapped"),
                 "evidence": anchor.get("evidence", "") if anchor else occurrence.get("mapping_evidence", ""),
                 "occurrence_ids": [],
                 "workflow_ids": [],
@@ -1534,8 +1539,8 @@ def _duplicate_occurrence_audit(
 def _default_decision(mapping_state: str) -> str:
     if mapping_state == "approved_h2kg":
         return "existing_h2kg_mapping"
-    if mapping_state == "reviewed_decode":
-        return "reviewed_decode_anchor"
+    if mapping_state == "decode_local":
+        return "decode_local_anchor"
     return "unresolved"
 
 
@@ -1548,17 +1553,17 @@ def _default_decode_mapping(source_node: dict[str, Any], policy: dict[str, Any])
     category = _normal(source_node.get("native_category", "")) or visual_category
     anchor_key = f"{_slug(source_node['label'])}-{_slug(category)}"
     return {
-        "state": "reviewed_decode",
-        "decision": "reviewed_decode_anchor",
+        "state": "decode_local",
+        "decision": "decode_local_anchor",
         "anchor_iri": f"{DECODE_NS}anchor/{anchor_key}",
         "anchor_label": source_node["label"],
         # The role is assigned after label-aware curation.  The GraphML visual
         # category remains source metadata and is only a final fallback.
         "canonical_role_iri": "",
         "semantic_role": "",
-        "confidence": "reviewed_structural",
+        "confidence": "decode_local",
         "evidence": (
-            "DECODE-specific concept retained as a stable reviewed anchor. "
+            "DECODE-specific concept retained as a stable local anchor. "
             "Its source topology is preserved; no H2KG synonym or new public term was asserted."
         ),
     }
@@ -1569,7 +1574,7 @@ def _with_semantic_role(
     source_node: dict[str, Any],
     policy: dict[str, Any],
 ) -> dict[str, Any]:
-    """Complete display-role metadata without changing a reviewed anchor decision."""
+    """Complete display-role metadata without changing an explicit anchor decision."""
     result = dict(mapping)
     curation = policy.get("semantic_role_curation", {})
     override = _role_override(source_node, curation.get("overrides", []))
@@ -1679,7 +1684,7 @@ def _concept_registry(
                 "canonical_role_iri": representative.get("canonical_role_iri", ""),
                 "semantic_role": representative.get("semantic_role", ""),
                 "role_assignment": representative.get("role_assignment", ""),
-                "confidence": representative.get("confidence", "unreviewed"),
+                "confidence": representative.get("confidence", "not_mapped"),
                 "rationale": representative.get("mapping_evidence", ""),
                 "candidate_h2kg_terms": candidates,
             }
@@ -1694,8 +1699,8 @@ def _concept_registry(
     }
 
 
-def _definition_drafts(registry: dict[str, Any]) -> dict[str, Any]:
-    """Create review-only, domain-aware definition drafts for DECODE concepts."""
+def _build_definition_registry(registry: dict[str, Any]) -> dict[str, Any]:
+    """Create a domain-aware DECODE-local definition registry."""
     definitions: list[dict[str, Any]] = []
     for concept in registry["concepts"]:
         state = str(concept.get("mapping_state", ""))
@@ -1714,23 +1719,23 @@ def _definition_drafts(registry: dict[str, Any]) -> dict[str, Any]:
                 "occurrence_count": concept.get("occurrence_count", 0),
                 "workflow_ids": concept.get("workflow_ids", []),
                 "mapping_state": state,
-                "current_decision": decision,
+                "mapping_decision": decision,
                 "current_anchor_iri": concept.get("anchor_iri", ""),
-                "proposed_definition": _draft_definition(concept["source_label"], role, source_excerpt),
+                "definition": _draft_definition(concept["source_label"], role, source_excerpt),
                 "source_evidence_excerpt": source_excerpt,
                 "definition_basis": (
-                    "Reviewed DECODE semantic role, source label, source workflow context, "
-                    "and direct-neighbor context. This is a draft for expert review, not an authoritative ontology definition."
+                    "DECODE semantic role, source label, source workflow context, "
+                    "and direct-neighbor context. This local definition does not assert inclusion in H2KG."
                 ),
-                "recommended_review_action": (
+                "integration_guidance": (
                     "Verify against the canonical H2KG definition and retain only a true synonym."
                     if state == "approved_h2kg"
-                    else "Decide: strict H2KG alias, existing H2KG mapping, new reusable H2KG term, or retain reviewed DECODE anchor."
+                    else "Integration options: strict H2KG alias, existing H2KG mapping, new reusable H2KG term, or retained DECODE-local anchor."
                 ),
-                "definition_status": "needs_human_review",
-                "reviewer_definition": "",
-                "reviewer_decision": "",
-                "review_notes": "",
+                "definition_status": "not_in_h2kg",
+                "curated_definition": "",
+                "integration_decision": "",
+                "integration_notes": "",
                 "candidate_h2kg_terms": concept.get("candidate_h2kg_terms", []),
                 "neighbor_context": concept.get("neighbor_context", []),
             }
@@ -1739,10 +1744,10 @@ def _definition_drafts(registry: dict[str, Any]) -> dict[str, Any]:
         "schema_version": "1.0",
         "generated_on": date.today().isoformat(),
         "description": (
-            "Domain-aware DECODE concept-definition drafts for human review. "
-            "They do not assert H2KG definitions or approve ontology additions."
+            "Domain-aware DECODE-local concept definitions. "
+            "They do not assert H2KG membership or modify the H2KG taxonomy."
         ),
-        "counts": {"concept_count": len(definitions), "needs_human_review": len(definitions)},
+        "counts": {"concept_count": len(definitions), "not_in_h2kg": len(definitions)},
         "definitions": definitions,
     }
 
@@ -1829,7 +1834,7 @@ def _index_mappings(entries: list[dict[str, Any]]) -> dict[tuple[str, str], dict
         if not isinstance(entry, dict) or not entry.get("source_label") or not entry.get("anchor_iri"):
             continue
         state = entry.get("state", "unresolved")
-        if state not in {"approved_h2kg", "reviewed_decode"}:
+        if state not in {"approved_h2kg", "decode_local"}:
             continue
         result[(_normal(str(entry["source_label"])), _normal(str(entry.get("native_category", ""))))] = entry
     return result
@@ -1875,8 +1880,8 @@ def _anchor_candidates(
                 "occurrence_count": str(len(nodes)),
                 "workflow_count": str(len(workflow_ids)),
                 "workflow_ids": "; ".join(workflow_ids),
-                "recommended_state": "review_required",
-                "note": "Candidate only. It does not create a cross-workflow link until an explicit mapping entry is reviewed and added.",
+                "recommended_state": "not_mapped",
+                "note": "Discovery suggestion only. It does not create a cross-workflow link until an explicit mapping entry is added.",
             }
         )
     return sorted(candidates, key=lambda item: (-int(item["workflow_count"]), item["source_label"].lower()))
@@ -1985,7 +1990,7 @@ def _write_mapping_matrix_markdown(path: Path, rows: list[dict[str, str]]) -> Pa
     lines = [
         "# DECODE Mapping Matrix",
         "",
-        "This matrix records explicit curation decisions. Unreviewed lexical similarity is not a mapping and does not create a cross-workflow connection.",
+        "This matrix records explicit curation decisions. Lexical similarity alone is not a mapping and does not create a cross-workflow connection.",
         "",
         "| State | Occurrences |",
         "| --- | ---: |",
@@ -2044,13 +2049,13 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
     return write_text(path, buffer.getvalue())
 
 
-def _write_definition_drafts(path: Path, rows: list[dict[str, Any]]) -> Path:
-    """Export editable definition drafts with explicit human-review fields."""
+def _write_definition_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
+    """Export the machine-readable DECODE-local definition registry."""
     fields = [
         "concept_id", "source_label", "native_category", "semantic_role", "canonical_role_iri",
-        "occurrence_count", "workflow_ids", "mapping_state", "current_decision", "current_anchor_iri",
-        "proposed_definition", "source_evidence_excerpt", "definition_basis", "recommended_review_action",
-        "definition_status", "reviewer_definition", "reviewer_decision", "review_notes",
+        "occurrence_count", "workflow_ids", "mapping_state", "mapping_decision", "current_anchor_iri",
+        "definition", "source_evidence_excerpt", "definition_basis", "integration_guidance",
+        "definition_status", "curated_definition", "integration_decision", "integration_notes",
         "candidate_h2kg_terms", "neighbor_context",
     ]
     buffer = io.StringIO()
@@ -2065,28 +2070,28 @@ def _write_definition_drafts(path: Path, rows: list[dict[str, Any]]) -> Path:
     return write_text(path, buffer.getvalue())
 
 
-def _write_definition_drafts_markdown(path: Path, register: dict[str, Any]) -> Path:
-    """Publish a readable definition register without implying review approval."""
+def _write_definition_registry_markdown(path: Path, register: dict[str, Any]) -> Path:
+    """Publish a readable DECODE-local definition register."""
     lines = [
-        "# DECODE Concept Definition Drafts",
+        "# DECODE Concept Definition Registry",
         "",
-        "This register contains domain-aware *draft* definitions for every distinct DECODE source concept. "
-        "They are starting points for expert review, not authoritative H2KG definitions and not approved ontology additions.",
+        "This register contains domain-aware DECODE-local definitions for every distinct DECODE source concept. "
+        "These records do not assert that a concept is part of the public H2KG taxonomy.",
         "",
         f"- Concepts: {register['counts']['concept_count']}",
-        "- Review status: all entries require human review.",
-        "- Decision rule: a reviewer must choose strict alias, existing H2KG mapping, new reusable H2KG term, or retained DECODE anchor.",
+        "- H2KG status: entries marked `not_in_h2kg` remain in the DECODE-local layer.",
+        "- Integration options: strict alias, existing H2KG mapping, new reusable H2KG term, or retained DECODE-local anchor.",
         "",
-        "| Label | Role | Proposed definition | Current decision | Review action |",
+        "| Label | Role | Definition | Mapping decision | Integration guidance |",
         "| --- | --- | --- | --- | --- |",
     ]
     for row in register["definitions"]:
         values = [
             str(row["source_label"]),
             str(row["semantic_role"]),
-            str(row["proposed_definition"]),
-            str(row["current_decision"]),
-            str(row["recommended_review_action"]),
+            str(row["definition"]),
+            str(row["mapping_decision"]),
+            str(row["integration_guidance"]),
         ]
         lines.append("| " + " | ".join(value.replace("|", "\\|").replace("\n", " ") for value in values) + " |")
     return write_text(path, "\n".join(lines) + "\n")
@@ -2131,7 +2136,7 @@ def _write_edge_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
         "target_occurrence_id", "target_node_id", "target_graphml_id", "target_label", "target_semantic_role", "target_workflow_role",
         "target_anchor_iri", "source_description", "projection_outcome", "projection_pattern",
         "semantic_predicates", "semantic_edge_ids", "semantic_direction", "confidence",
-        "review_status", "rationale",
+        "governance_status", "rationale",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -2260,7 +2265,7 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - Preserved source occurrences: {graph['counts']['source_node_count']}
 - Preserved directed source dependencies: {graph['counts']['source_edge_count']}
 - Explicitly mapped occurrences: {graph['counts']['mapped_occurrence_count']}
-- Shared reviewed anchors: {graph['counts']['anchor_count']}
+- Shared semantic anchors: {graph['counts']['anchor_count']}
 - Semantic-overview nodes: {graph['counts']['semantic_overview_node_count']}
 - Repeated source-concept groups: {graph['counts']['duplicate_occurrence_group_count']}
 - Semantic role conflicts: {graph['counts']['semantic_role_conflict_count']}
@@ -2268,17 +2273,17 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - H2KG/PROV semantic projection triples: {graph['counts'].get('semantic_projection_count', 0)}
 - Derived property-value DataPoint proxies: {graph['counts'].get('property_value_proxy_count', 0)}
 - Derived contextual Parameter-record proxies: {graph['counts'].get('parameter_record_proxy_count', 0)}
-- Reviewed workflow dependencies: {graph['counts'].get('workflow_dependency_count', 0)}
+- Declared workflow dependencies: {graph['counts'].get('workflow_dependency_count', 0)}
 - Published workflow dependencies: {graph['counts'].get('published_workflow_dependency_count', 0)}
 - Structural validation: {validation['status']}
 
 ## Mapping states
 
-- `approved_h2kg`: an explicit reviewed mapping to an existing H2KG IRI.
-- `reviewed_decode`: a reviewed DECODE anchor pending a future H2KG vocabulary decision.
+- `approved_h2kg`: an explicit mapping to an existing H2KG IRI.
+- `decode_local`: a stable DECODE-local anchor that is not part of H2KG.
 - `unresolved`: retained without cross-workflow merging.
 
-Raw GraphML files and the original attached manual JSON are not redistributed in this package. The sanitized overlay excludes personal names and email addresses. Normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for review and reuse.
+Raw GraphML files and the original attached manual JSON are not redistributed in this package. The sanitized overlay excludes personal names and email addresses. Normalized JSON, JSON-LD and Turtle projections preserve source node IDs and directed dependencies for inspection and reuse.
 
 `decode_manual_reconciliation.json` and `.csv` document duplicate handling, identifier correction, existing-workflow reconciliation, retained GraphML workflows, and the 16 new manual-source workflows. `decode_workflow_dependencies.*` publishes only reciprocal or exact-handoff-grounded method dependencies; unsupported one-sided declarations remain audit-only.
 
@@ -2286,7 +2291,69 @@ Raw GraphML files and the original attached manual JSON are not redistributed in
 
 `decode_edge_registry.csv` classifies every source dependency as `h2kg_direct`, `h2kg_reified`, `prov_derivation`, or `decode_structural_only`. Source dependencies are never relabelled or removed. A semantic projection may reverse direction where required by H2KG. Property-valued inputs use contextual `Parameter`-record proxies linked to preserved property occurrences through `ofProperty`; calculated values use `DataPoint` proxies with the same intrinsic-property pattern.
 
-`decode_definition_drafts.csv`, `.json`, and `.md` provide domain-aware definition drafts for every distinct DECODE source concept. They are explicitly marked `needs_human_review`; they do not assert H2KG definitions or approve vocabulary additions.
+`decode_definition_registry.csv`, `.json`, and `.md` provide domain-aware DECODE-local definitions for every distinct source concept. Entries marked `not_in_h2kg` remain outside the public H2KG taxonomy.
 
-`decode-h2kg-aligned-ontology.ttl` and `.jsonld` contain the complete merged DECODE vocabulary and workflow occurrence graph. Reviewed DECODE anchors are OWL classes under compatible H2KG roles, while source occurrences and reified source edges preserve the original workflow topology. Definitions in this module are marked `expert-draft`. DECODE licensing remains pending governance confirmation, so no open reuse license is asserted for these files.
+`decode-h2kg-aligned-ontology.ttl` and `.jsonld` contain the complete merged DECODE vocabulary and workflow occurrence graph. DECODE-local anchors are OWL classes under compatible H2KG roles, while source occurrences and reified source edges preserve the original workflow topology. DECODE-local terms remain separate from H2KG. DECODE licensing remains pending governance confirmation, so no open reuse license is asserted for these files.
+"""
+
+
+def _edge_alignment_rules(graph: dict[str, Any]) -> str:
+    return f"""# DECODE-to-H2KG Edge Alignment Rules
+
+## Scope and invariants
+
+These deterministic rules create the derived semantic-projection layer for
+{graph['counts'].get('source_edge_count', 0)} preserved source dependencies.
+The source layer is authoritative: labels, source IDs, native categories,
+directions, and topology are never rewritten. Every projection cites its
+originating `source_dependency_id` in the edge registry.
+
+## Role assignment
+
+Configured anchor mappings assign one intrinsic role to each occurrence:
+`Matter`, `Manufacturing`, `Process`, `Measurement`, `Instrument`, `Parameter`,
+`Data`, `Property`, or `Metadata`. Source categories remain provenance rather
+than assertions of scientific identity. Explicit mapping overrides take
+precedence over category defaults, and incompatible roles on one anchor fail
+the semantic-role audit.
+
+## Direct projections
+
+| Source role pattern | Semantic projection |
+| --- | --- |
+| `Matter -> Activity` | reverse to `Activity hasInputMaterial Matter` |
+| `Activity -> Matter` | `Activity hasOutputMaterial Matter` |
+| `Parameter -> Activity` | reverse to `Activity hasParameter Parameter` |
+| `Activity -> Parameter` | `Activity hasParameter Parameter` |
+| `Instrument -> Activity` | reverse to `Activity usesInstrument Instrument` |
+| `Activity -> Instrument` | `Activity usesInstrument Instrument` |
+| `Data -> Activity` | reverse to `Activity hasInputData Data` |
+| `Activity -> Data` | `Activity hasOutputData Data` |
+| `Metadata -> Activity` | reverse to `Activity hasMetadata Metadata` |
+| `Activity -> Metadata` | `Activity hasMetadata Metadata` |
+| `Measurement -> Property` | `Measurement measures Property` |
+| `Property -> Measurement` | reverse to `Measurement measures Property` |
+
+`Activity` denotes a `Manufacturing`, `Measurement`, or `Process` occurrence.
+Semantic direction may differ from source direction, but the source edge is
+always retained independently.
+
+## Property-value reification
+
+Property-valued workflow nodes are not treated as datasets or parameter
+records. Input properties receive contextual `Parameter` proxies and output
+properties receive `DataPoint` proxies. Each proxy links to the preserved
+property occurrence through `ofProperty`; activity input/output relations
+target the proxy. Data-to-property and property-to-property derivations use
+`prov:wasDerivedFrom` only when an H2KG activity predicate is not justified.
+
+## Projection outcomes
+
+- `h2kg_direct`: represented directly with a compatible H2KG predicate.
+- `h2kg_reified`: represented through a Parameter or DataPoint proxy.
+- `prov_derivation`: represented with compatible PROV-O derivation semantics.
+- `decode_structural_only`: preserved without an unsupported semantic claim.
+
+Cross-workflow joins require an explicit `approved_h2kg` or `decode_local`
+anchor. Label similarity alone never creates a projection or workflow link.
 """

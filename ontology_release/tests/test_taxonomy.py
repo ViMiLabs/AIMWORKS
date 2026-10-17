@@ -27,9 +27,9 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     )
 
     assert result["conforms"] is True
-    assert result["active_local_classes"] == 2360
-    assert result["deprecated_compatibility_classes"] == 6
-    assert result["new_structural_classes"] == 131
+    assert result["active_local_classes"] == 2221
+    assert result["deprecated_compatibility_classes"] == 165
+    assert result["new_structural_classes"] == 157
     assert result["publication_ready"] is True
 
     graph = Graph().parse(result["taxonomy_ttl"], format="turtle")
@@ -98,7 +98,7 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
         "https://www.w3.org/ns/prov-o",
     ]
     assert validation["governance"] == {
-        "domain_reviewer_status": "approved",
+        "approval_status": "approved",
         "external_reasoner_status": "passed",
         "technical_validation": "passed",
     }
@@ -130,6 +130,52 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     ]
     assert not any(definition.startswith("A parameter ") for definition in characteristic_definitions)
     assert not any(definition.startswith("Parameter describing") for definition in characteristic_definitions)
+
+    assert (_iri("Solution"), RDFS.subClassOf, _iri("Mixture")) in graph
+    assert (_iri("MetalOxideMaterial"), RDFS.subClassOf, _iri("OxideMaterial")) in graph
+    assert (_iri("SilicaBasedMaterial"), RDFS.subClassOf, _iri("OxideMaterial")) in graph
+    assert (_iri("BallMilling"), RDFS.subClassOf, _iri("MillingProcess")) in graph
+    assert (_iri("UVCuringProcess"), RDFS.subClassOf, _iri("PhotochemicalCuringProcess")) in graph
+    assert (
+        _iri("AnodeStoichiometricRatio"),
+        RDFS.subClassOf,
+        _iri("ElectrochemicalOperatingCharacteristic"),
+    ) in graph
+    assert (_iri("EISPerturbationAmplitude"), RDFS.subClassOf, _iri("ACAmplitude")) in graph
+
+    assert (_iri("DepositionRate"), OWL.deprecated, None) in graph
+    assert (
+        _iri("DepositionRate"),
+        DCTERMS.isReplacedBy,
+        _iri("VolumetricInkDepositionRate"),
+    ) in graph
+    assert (_iri("PolydispersityIndex"), OWL.deprecated, None) in graph
+    assert not any(graph.objects(_iri("PolydispersityIndex"), DCTERMS.isReplacedBy))
+    assert (_iri("XRayPhotoelectronSpectrometer"), DCTERMS.isReplacedBy, _iri("XPSInstrument")) in graph
+
+    registry = json.loads(Path(result["registry"]).read_text(encoding="utf-8"))
+    assert registry["version"] == "2.2.0"
+    assert registry["correction_decision_counts"] == {
+        "parent": 156,
+        "definition": 470,
+        "total": 626,
+    }
+    correction_report = json.loads(
+        Path(result["correction_report"]["json"]).read_text(encoding="utf-8")
+    )
+    assert correction_report["decision_counts"]["total"] == 626
+    assert correction_report["decision_counts"]["parent"] == 156
+    assert correction_report["decision_counts"]["definition"] == 470
+    assert correction_report["decision_counts"]["unique_classes"] == 544
+    assert correction_report["source_dependent_classes_assessed"] == 153
+    assert correction_report["source_ambiguous_classes_deprecated"] == 152
+    assert correction_report["source_dependent_classes_resolved"] == 1
+    assert len(correction_report["decisions"]) == 626
+    assert all(
+        term["definition_status"] in {"source", "curated", "structural"}
+        for term in registry["terms"]
+        if term["disposition"] == "active_local_class"
+    )
 
 
 def test_profile_fields_and_duplicate_iris_are_not_active_classes(tmp_path: Path) -> None:
@@ -307,8 +353,8 @@ def test_external_bridge_accepts_reviewed_equivalent_property(tmp_path: Path) ->
 
     assert result["mapping_count"] == 4
     assert result["tib_benchmark_asserted_mapping_count"] == 3
-    assert result["reviewed_foundational_mapping_count"] == 1
-    assert result["pending_review_mapping_count"] == 1
+    assert result["foundational_mapping_count"] == 1
+    assert result["evidence_only_mapping_count"] == 1
     assert result["invalid_mapping_count"] == 0
     assert result["serializations_isomorphic"] is True
     assert result["automatic_logical_axiom_count"] == 0
@@ -327,6 +373,6 @@ def test_external_bridge_accepts_reviewed_equivalent_property(tmp_path: Path) ->
     assert Path(result["sssom"]).exists()
     assert Path(result["changelog"]).exists()
     registry = json.loads((output_dir / "ontology" / "external_alignment_registry.json").read_text(encoding="utf-8"))
-    assert registry["pending_review_mappings"][0]["reviewer_decision"] == "pending-human-review"
+    assert registry["evidence_only_mappings"][0]["decision_status"] == "evidence-only"
     categories = {row["alignment_category"] for row in registry["mappings"]}
-    assert categories == {"reviewed_foundational_alignment", "tib_benchmark_alignment"}
+    assert categories == {"foundational_alignment", "tib_benchmark_alignment"}

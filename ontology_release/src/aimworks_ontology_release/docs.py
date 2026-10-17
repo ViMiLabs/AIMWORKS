@@ -123,6 +123,8 @@ def build_docs(
     alignment_registry = load_json(alignment_registry_path) if alignment_registry_path.exists() else {}
     alignment_report_path = output_dir.parent / "reports" / "tib_alignment_readiness.json"
     alignment_report = load_json(alignment_report_path) if alignment_report_path.exists() else {}
+    correction_report_path = output_dir.parent / "reports" / "h2kg_2_2_correction_report.json"
+    correction_report = load_json(correction_report_path) if correction_report_path.exists() else {}
     mapping_summary.update(alignment_report)
     # The whole-ontology Explorer must expose the current asserted source, not
     # a potentially stale compact-module artifact.
@@ -242,7 +244,7 @@ def build_docs(
         (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary, alignment_registry)),
         (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
         (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo)),
-        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, output_dir / "pages" / "release.html", output_dir)),
+        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, correction_report, output_dir / "pages" / "release.html", output_dir)),
         (output_dir / "pages" / "import-guide.html", "Import Guide", _import_guide_body(odk, hdo)),
         (output_dir / "pages" / "import-catalog.html", "Import Catalog", _import_catalog_body(odk)),
         (output_dir / "pages" / "developer-guide.html", "Developer Guide", _developer_body(odk, hdo)),
@@ -277,11 +279,15 @@ def build_docs(
     if decode is not None:
         # Publish normalized projections and reports, never the supplied raw GraphML files.
         shutil.copytree(output_dir.parent / "decode", output_dir / "decode", dirs_exist_ok=True)
-    itc_example_dir = output_dir.parent / "examples" / "itc_pilot"
-    if itc_example_dir.exists():
-        shutil.copytree(itc_example_dir, output_dir / "examples" / "itc_pilot", dirs_exist_ok=True)
+    examples_dir = output_dir.parent / "examples"
+    if examples_dir.exists():
+        target_examples = output_dir / "examples"
+        if target_examples.exists():
+            shutil.rmtree(target_examples)
+        shutil.copytree(examples_dir, target_examples)
     _copy_odk_artifacts(output_dir)
     _copy_taxonomy_artifacts(output_dir)
+    _copy_correction_reports(output_dir)
     _copy_asserted_source_jsonld(input_path, output_dir)
     write_text(output_dir / "assets" / "style.css", _style_css())
     write_text(output_dir / "assets" / "explorer.css", _explorer_css())
@@ -445,10 +451,10 @@ def _mapping_relation_label(relation: str) -> str:
         "skos:broadMatch": "H2KG narrower than",
         "skos:narrowMatch": "H2KG broader than",
         "skos:relatedMatch": "related to",
-        "owl:equivalentClass": "reviewed equivalent class",
-        "owl:equivalentProperty": "reviewed equivalent property",
-        "rdfs:subClassOf": "reviewed subclass of",
-        "rdfs:subPropertyOf": "reviewed subproperty of",
+        "owl:equivalentClass": "asserted equivalent class",
+        "owl:equivalentProperty": "asserted equivalent property",
+        "rdfs:subClassOf": "asserted subclass of",
+        "rdfs:subPropertyOf": "asserted subproperty of",
     }.get(relation, relation or "mapping")
 
 
@@ -566,7 +572,10 @@ def _merge_taxonomy_reference_terms(
         str(term.get("iri", "")): term
         for term in taxonomy_registry.get("terms", [])
         if term.get("iri")
-        and term.get("disposition") in {"active_local_class", "deprecated_compatibility_class"}
+        and (
+            term.get("disposition") == "active_local_class"
+            or str(term.get("disposition", "")).startswith("deprecated_")
+        )
     }
     mapping_index: dict[str, list[dict[str, Any]]] = {}
     for mapping in mappings:
@@ -825,7 +834,7 @@ def _short_label(iri: str) -> str:
 def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_root: Path) -> str:
     if decode is None:
         return """
-<section class="notice"><h2>DECODE workflow bundle not built</h2><p>The DECODE Explorer is generated only after a reviewed GraphML snapshot has been ingested. The H2KG ontology and its TBox-only Explore page remain available independently.</p></section>
+<section class="notice"><h2>DECODE workflow bundle not built</h2><p>The DECODE Explorer is generated only after a source GraphML snapshot has been ingested. The H2KG ontology and its TBox-only Explore page remain available independently.</p></section>
 """
     data_href = _relative_href(page_path, docs_root / "data" / "decode_workflows.json")
     catalogue_href = _relative_href(page_path, docs_root / "data" / "decode_workflow_catalog.json")
@@ -838,8 +847,8 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
 <section class="decode-intro">
   <p class="eyebrow">Separate aligned workflow layer</p>
   <h2>Federated DECODE workflow graph</h2>
-  <p>The 120 original GraphML workflows remain immutable. Sanitized manual-JSON workflows are added as source-backed overlays, and cross-workflow traversal uses reviewed shared anchors plus a separate evidence-bearing method-dependency layer. The H2KG TBox and its Explore page are unchanged.</p>
-  <p>The merged <strong>DECODE H2KG-Aligned Workflow Ontology</strong> publishes the complete catalogue as a provenance-preserving H2KG-aligned graph. DECODE definitions are expert drafts pending human review. The DECODE reuse license is pending governance confirmation; no open license is asserted for these ontology files.</p>
+  <p>The 120 original GraphML workflows remain immutable. Sanitized manual-JSON workflows are added as source-backed overlays, and cross-workflow traversal uses explicit semantic anchors plus a separate evidence-bearing method-dependency layer. The H2KG TBox and its Explore page are unchanged.</p>
+  <p>The merged <strong>DECODE H2KG-Aligned Workflow Ontology</strong> publishes the complete catalogue as a provenance-preserving H2KG-aligned graph. DECODE-local definitions remain separate from the public H2KG taxonomy. The DECODE reuse license is pending governance confirmation; no open license is asserted for these ontology files.</p>
   <div class="decode-ontology-downloads">
     <a href="{escape(ontology_ttl)}" download>Download ontology (Turtle)</a>
     <a href="{escape(ontology_jsonld)}" download>Download ontology (JSON-LD)</a>
@@ -853,7 +862,7 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
     <span><strong>{counts.get('source_node_count', 0)}</strong> source occurrences</span>
     <span><strong>{counts.get('source_edge_count', 0)}</strong> preserved dependencies</span>
     <span><strong>{counts.get('edge_classification_count', 0)}</strong> classified dependencies</span>
-    <span><strong>{counts.get('anchor_count', 0)}</strong> reviewed shared anchors</span>
+    <span><strong>{counts.get('anchor_count', 0)}</strong> semantic anchors</span>
     <span><strong>{counts.get('published_workflow_dependency_count', 0)}</strong> published method dependencies</span>
   </div>
 </section>
@@ -885,7 +894,7 @@ def _decode_workflows_body(decode: dict[str, Any] | None, page_path: Path, docs_
       </div>
       <p id="decode-legend" class="decode-legend" hidden></p>
     </div>
-    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and reviewed semantic projections will appear in the graph workspace.</p></aside>
+    <aside id="decode-details" class="decode-details"><h2>Workflow details</h2><p>Select a workflow above. Its preserved source topology and semantic projections will appear in the graph workspace.</p></aside>
   </div>
   <aside id="decode-hovercard" class="decode-hovercard is-hidden" aria-live="polite"></aside>
 </section>
@@ -931,9 +940,9 @@ def _decode_workflows_css() -> str:
 .decode-empty-state strong { font-size: 1.25rem; color: #183b43; }.decode-empty-state span { max-width: 560px; line-height: 1.55; }.decode-empty-state.is-loading strong::after { content: ' ...'; }
 .decode-legend { margin: 0; padding: .6rem .8rem; border-top: 1px solid #d8e3e5; color: #52656e; font-size: .78rem; line-height: 1.9; }
 .decode-legend span { display: inline-block; margin: 0 .4rem 0 0; font-weight: 700; }
-.decode-legend .legend-material::before, .decode-legend .legend-component::before, .decode-legend .legend-data::before, .decode-legend .legend-device::before, .decode-legend .legend-process::before, .decode-legend .legend-h2kg::before, .decode-legend .legend-decode::before, .decode-legend .legend-matter::before, .decode-legend .legend-manufacturing::before, .decode-legend .legend-measurement::before, .decode-legend .legend-instrument::before, .decode-legend .legend-parameter::before, .decode-legend .legend-property::before, .decode-legend .legend-metadata::before, .decode-legend .legend-mixed::before, .decode-legend .legend-approved::before, .decode-legend .legend-reviewed::before, .decode-legend .legend-unresolved::before { content: ''; display: inline-block; width: .72rem; height: .72rem; margin-right: .22rem; border-radius: 50%; vertical-align: -.08rem; border: 1px solid rgba(18,39,47,.35); }
+.decode-legend .legend-material::before, .decode-legend .legend-component::before, .decode-legend .legend-data::before, .decode-legend .legend-device::before, .decode-legend .legend-process::before, .decode-legend .legend-h2kg::before, .decode-legend .legend-decode::before, .decode-legend .legend-matter::before, .decode-legend .legend-manufacturing::before, .decode-legend .legend-measurement::before, .decode-legend .legend-instrument::before, .decode-legend .legend-parameter::before, .decode-legend .legend-property::before, .decode-legend .legend-metadata::before, .decode-legend .legend-mixed::before, .decode-legend .legend-approved::before, .decode-legend .legend-local::before, .decode-legend .legend-unresolved::before { content: ''; display: inline-block; width: .72rem; height: .72rem; margin-right: .22rem; border-radius: 50%; vertical-align: -.08rem; border: 1px solid rgba(18,39,47,.35); }
 .decode-legend .legend-material::before { background: #0f6d7a; }.decode-legend .legend-component::before { background: #487eb0; }.decode-legend .legend-data::before { background: #5ca9c9; }.decode-legend .legend-device::before { background: #72808b; }.decode-legend .legend-process::before { background: #c86a2b; }.decode-legend .legend-h2kg::before { background: #0d7f83; }.decode-legend .legend-decode::before { background: #bd8529; }
-.decode-legend .legend-matter::before { background: #0f6d7a; }.decode-legend .legend-manufacturing::before { background: #b45309; }.decode-legend .legend-measurement::before { background: #376caa; }.decode-legend .legend-instrument::before { background: #5d6b76; }.decode-legend .legend-parameter::before { background: #5d66a6; }.decode-legend .legend-property::before { background: #9d5549; }.decode-legend .legend-metadata::before { background: #98a3aa; }.decode-legend .legend-mixed::before { background: #adb8bd; border-color: #a63030; }.decode-legend .legend-approved::before { background: #fff; border: 3px solid #006f73; }.decode-legend .legend-reviewed::before { background: #fff; border: 3px solid #9a650b; }.decode-legend .legend-unresolved::before { background: #fff; border: 2px dashed #718088; }
+.decode-legend .legend-matter::before { background: #0f6d7a; }.decode-legend .legend-manufacturing::before { background: #b45309; }.decode-legend .legend-measurement::before { background: #376caa; }.decode-legend .legend-instrument::before { background: #5d6b76; }.decode-legend .legend-parameter::before { background: #5d66a6; }.decode-legend .legend-property::before { background: #9d5549; }.decode-legend .legend-metadata::before { background: #98a3aa; }.decode-legend .legend-mixed::before { background: #adb8bd; border-color: #a63030; }.decode-legend .legend-approved::before { background: #fff; border: 3px solid #006f73; }.decode-legend .legend-local::before { background: #fff; border: 3px solid #9a650b; }.decode-legend .legend-unresolved::before { background: #fff; border: 2px dashed #718088; }
 .legend-source { color: #45555d; }.legend-anchor { color: #a25b00; }.legend-semantic { color: #087f71; }.legend-dependency { color: #7c3aed; }
 .decode-details h2 { margin-top: 0; }.decode-details h3 { margin: 1rem 0 .35rem; font-size: .98rem; }.decode-details p, .decode-details li { font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }.decode-details ul { padding-left: 1.1rem; }.decode-details a { color: #087279; }.decode-details code { font-size: .76rem; }
 .decode-status { display: inline-block; padding: .18rem .4rem; border-radius: 999px; background: #e8f5f4; color: #075e63; font-size: .73rem; font-weight: 700; }.decode-status.unresolved { background: #f5ece5; color: #86521c; }.decode-downloads { display: grid; gap: .35rem; margin-top: .8rem; }
@@ -988,7 +997,7 @@ def _decode_workflows_js_legacy() -> str:
       return (!needle || haystack.includes(needle)) && (!family || workflow.method_family === family);
     });
     query('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
-    query('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${escapeHtml(workflow.id)}"><strong>${escapeHtml(workflow.title)}</strong><small>${escapeHtml(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} reviewed mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
+    query('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${escapeHtml(workflow.id)}"><strong>${escapeHtml(workflow.title)}</strong><small>${escapeHtml(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} explicit mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
     document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
   }
 
@@ -1023,7 +1032,7 @@ def _decode_workflows_js_legacy() -> str:
       { selector:'edge[kind = "anchor"]', style:{ 'width':1.5, 'line-style':'dashed', 'line-color':'#b87918', 'target-arrow-shape':'none', 'curve-style':'bezier' } },
       { selector:'edge[kind = "semantic"]', style:{ 'width':2.5, 'line-color':'#087f71', 'target-arrow-color':'#087f71', 'target-arrow-shape':'triangle', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2 } },
       { selector:'edge[kind = "dependency"]', style:{ 'width':3, 'line-color':'#7c3aed', 'target-arrow-color':'#7c3aed', 'target-arrow-shape':'triangle', 'line-style':'dashed', 'label':'data(label)', 'font-size':9, 'text-background-color':'#fff', 'text-background-opacity':.9, 'text-background-padding':2, 'curve-style':'bezier' } },
-      { selector:'edge[kind = "dependency"][dependencyStatus = "published_pending_review"]', style:{ 'line-color':'#a16207', 'target-arrow-color':'#a16207', 'line-style':'dotted' } }
+      { selector:'edge[kind = "dependency"][dependencyStatus = "published_grounded_one_sided"]', style:{ 'line-color':'#a16207', 'target-arrow-color':'#a16207', 'line-style':'dotted' } }
     ], layout:{ name:'cose', animate:false, padding:34, idealEdgeLength:100, nodeRepulsion:500000 } });
     cy.on('dbltap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'anchor') expandAnchor(item.id); else expandOccurrence(item.id); });
     cy.on('tap', 'node', (event) => { const item = event.target.data(); if (item.kind === 'anchor') showAnchorDetails(item.id); else showOccurrenceDetails(item.id); });
@@ -1052,13 +1061,13 @@ def _decode_workflows_js_legacy() -> str:
   }
 
   function showWorkflowDetails(workflow) {
-    details.innerHTML = `<h2>${escapeHtml(workflow.title)}</h2><p><span class="decode-status ${escapeHtml(workflow.mapping_status)}">${escapeHtml(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${escapeHtml(workflow.source_filename)}<br><strong>Method family:</strong> ${escapeHtml(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>${workflow.mapped_anchor_count} occurrence mappings and ${workflow.cross_workflow_connection_count} reviewed cross-workflow connections are available. Raw GraphML is not redistributed.</p>${downloadLinks(workflow)}`;
+    details.innerHTML = `<h2>${escapeHtml(workflow.title)}</h2><p><span class="decode-status ${escapeHtml(workflow.mapping_status)}">${escapeHtml(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${escapeHtml(workflow.source_filename)}<br><strong>Method family:</strong> ${escapeHtml(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>${workflow.mapped_anchor_count} occurrence mappings and ${workflow.cross_workflow_connection_count} explicit cross-workflow connections are available. Raw GraphML is not redistributed.</p>${downloadLinks(workflow)}`;
   }
 
   function showOccurrenceDetails(id) {
     const node = data.nodeById[id]; if (!node) return;
     const workflow = data.workflowById[node.workflow_id];
-    const anchorLink = node.anchor_id ? `<p><strong>Shared anchor:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.anchor_id)}">${escapeHtml(data.anchorById[node.anchor_id]?.label || node.anchor_id)}</a></p>` : '<p><strong>Shared anchor:</strong> none. This occurrence remains isolated until reviewed.</p>';
+    const anchorLink = node.anchor_id ? `<p><strong>Shared anchor:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.anchor_id)}">${escapeHtml(data.anchorById[node.anchor_id]?.label || node.anchor_id)}</a></p>` : '<p><strong>Shared anchor:</strong> none. This occurrence remains isolated.</p>';
     details.innerHTML = `<h2>${escapeHtml(node.label)}</h2><p><span class="decode-status ${escapeHtml(node.mapping_state)}">${escapeHtml(node.mapping_state)}</span></p><p><strong>Original GraphML ID:</strong> <code>${escapeHtml(node.source_id)}</code><br><strong>Workflow:</strong> ${escapeHtml(workflow.title)}<br><strong>Native category:</strong> ${escapeHtml(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${escapeHtml(node.description || 'not supplied')}</p>${anchorLink}<p><strong>Mapping evidence:</strong> ${escapeHtml(node.mapping_evidence)}</p>${downloadLinks(workflow)}`;
   }
 
@@ -1068,7 +1077,7 @@ def _decode_workflows_js_legacy() -> str:
     const byFamily = occurrences.reduce((groups, node) => { const workflow = data.workflowById[node.workflow_id]; (groups[workflow.method_family] ||= []).push(node); return groups; }, {});
     const groups = Object.entries(byFamily).sort(([left], [right]) => left.localeCompare(right)).map(([family, nodes]) => { const workflows = [...new Set(nodes.map((node) => node.workflow_id))].map((workflowId) => data.workflowById[workflowId]); return `<li><strong>${escapeHtml(family.replaceAll('_', ' '))}</strong> (${nodes.length} occurrence${nodes.length === 1 ? '' : 's'} across ${workflows.length} workflows)<ul>${workflows.slice(0, 8).map((workflow) => `<li>${escapeHtml(workflow.title)} <span class="decode-status ${escapeHtml(workflow.mapping_status)}">${escapeHtml(workflow.mapping_status)}</span></li>`).join('')}</ul></li>`; }).join('');
     const h2kgLink = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : '';
-    details.innerHTML = `<h2>${escapeHtml(anchor.label)}</h2><p><span class="decode-status">${escapeHtml(anchor.state)}</span></p><p><code>${escapeHtml(anchor.id)}</code></p><p>${escapeHtml(anchor.evidence)}</p>${h2kgLink}<h3>Connected workflow occurrences (${occurrences.length})</h3><ul>${groups}</ul><p>Double-clicked expansion is bounded to keep the graph readable; use “show more connected workflows” to reveal additional reviewed occurrences.</p>`;
+    details.innerHTML = `<h2>${escapeHtml(anchor.label)}</h2><p><span class="decode-status">${escapeHtml(anchor.state)}</span></p><p><code>${escapeHtml(anchor.id)}</code></p><p>${escapeHtml(anchor.evidence)}</p>${h2kgLink}<h3>Connected workflow occurrences (${occurrences.length})</h3><ul>${groups}</ul><p>Double-clicked expansion is bounded to keep the graph readable; use “show more connected workflows” to reveal additional mapped occurrences.</p>`;
   }
 })();
 """
@@ -1106,7 +1115,7 @@ def _decode_workflows_js_source() -> str:
     const needle = lower($('#decode-search').value), family = $('#decode-family').value;
     const matches = data.workflows.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
     $('#decode-catalogue-status').textContent = `${matches.length} of ${data.workflows.length} workflows`;
-    $('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} reviewed mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
+    $('#decode-workflow-list').innerHTML = matches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(workflow.method_family.replaceAll('_',' '))} | ${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges</small><small>${workflow.mapped_anchor_count} explicit mappings | ${workflow.cross_workflow_connection_count} cross-workflow links</small></button>`).join('');
     document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
   }
 
@@ -1140,7 +1149,7 @@ def _decode_workflows_js_source() -> str:
       { selector:'node[visual = "process"], node[visual = "method"]', style:{ 'background-color':'#c86a2b', 'border-color':'#93430d', 'color':'#fff' } },
       { selector:'node[visual = "model"]', style:{ 'background-color':'#6d9c63', 'border-color':'#477442', 'color':'#fff' } },
       { selector:'node[kind = "anchor"][state = "approved_h2kg"]', style:{ 'shape':'round-rectangle', 'background-color':'#0d7f83', 'border-color':'#07575a', 'color':'#fff', 'width':116, 'height':48, 'font-weight':700 } },
-      { selector:'node[kind = "anchor"][state = "reviewed_decode"]', style:{ 'shape':'round-rectangle', 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff', 'width':116, 'height':48, 'font-weight':700 } },
+      { selector:'node[kind = "anchor"][state = "decode_local"]', style:{ 'shape':'round-rectangle', 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff', 'width':116, 'height':48, 'font-weight':700 } },
       { selector:'node[state = "unresolved"]', style:{ 'background-opacity':.55, 'border-style':'dashed' } },
       { selector:'node.hovered', style:{ 'border-color':'#f59e0b', 'border-width':5, 'z-index':999 } },
       { selector:'edge[kind = "source"]', style:{ 'width':2, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
@@ -1164,7 +1173,7 @@ def _decode_workflows_js_source() -> str:
   function updateMoreButton() { const remaining = selectedAnchor ? rankedConnectedWorkflows(selectedAnchor).length : 0; more.hidden = !remaining; more.textContent = `Add next connected workflow (${remaining} remaining)`; }
 
   function downloads(workflow) { return `<div class="decode-downloads"><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_validation_report.json" download>Download validation report</a></div>`; }
-  function showWorkflowDetails(workflow) { details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>The complete source workflow is visible. Double-click a reviewed occurrence or anchor to add one complete linked workflow.</p>${downloads(workflow)}`; }
+  function showWorkflowDetails(workflow) { details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">source preserved</span></p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.</p><p>The complete source workflow is visible. Double-click a mapped occurrence or anchor to add one complete linked workflow.</p>${downloads(workflow)}`; }
   function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; const role = node.canonical_role_iri ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(node.semantic_role || node.canonical_role_iri)}</a></p>` : ''; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Decision:</strong> ${esc(node.decision || 'unresolved')}<br><strong>Original GraphML ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}${role}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; }
   function showAnchorDetails(anchorId) { const anchor = data.anchorById[anchorId]; if (!anchor) return; const workflows = [...new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))].map((id) => data.workflowById[id]); const candidates = rankedConnectedWorkflows(anchorId); const h2kg = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = anchor.canonical_role_iri && anchor.state !== 'approved_h2kg' ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.canonical_role_iri)}">${esc(anchor.semantic_role || anchor.canonical_role_iri)}</a></p>` : ''; const cards = candidates.slice(0,8).map((workflow) => `<button class="decode-add-workflow" data-add-workflow="${esc(workflow.id)}">Add full workflow: ${esc(workflow.title)}</button>`).join(''); details.innerHTML = `<h2>${esc(anchor.label)}</h2><p><span class="decode-status ${esc(anchor.state)}">${esc(anchor.state)}</span> ${esc(anchor.decision || '')}</p><p><code>${esc(anchor.id)}</code></p><p>${esc(anchor.evidence)}</p>${h2kg}${role}<h3>Linked workflows (${workflows.length})</h3><ul>${workflows.map((workflow) => `<li>${esc(workflow.title)}</li>`).join('')}</ul>${cards ? `<h3>Expand a connected workflow</h3>${cards}` : '<p>All linked workflows are visible.</p>'}`; document.querySelectorAll('[data-add-workflow]').forEach((button) => button.addEventListener('click', () => { shownWorkflows.add(button.dataset.addWorkflow); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); })); }
 
@@ -1212,9 +1221,9 @@ def _decode_workflows_js() -> str:
     data.workflow_dependencies ||= []; data.workflowDependencyById = index(data.workflow_dependencies);
     data.overviewNodeById = index(data.semantic_overview.nodes);
     data.nodesByWorkflow = {}; data.nodes.forEach((node) => (data.nodesByWorkflow[node.workflow_id] ||= []).push(node.id));
-    data.expert_profile_overlays ||= [];
-    data.profileOverlayByWorkflow = Object.fromEntries(data.expert_profile_overlays.map((overlay) => [overlay.workflow_id, overlay]));
-    data.profileNodeById = Object.fromEntries(data.expert_profile_overlays.flatMap((overlay) => overlay.nodes || []).map((node) => [node.id, node]));
+    data.curated_profile_overlays ||= [];
+    data.profileOverlayByWorkflow = Object.fromEntries(data.curated_profile_overlays.map((overlay) => [overlay.workflow_id, overlay]));
+    data.profileNodeById = Object.fromEntries(data.curated_profile_overlays.flatMap((overlay) => overlay.nodes || []).map((node) => [node.id, node]));
     return data;
   }
   function loadGraphData() {
@@ -1239,10 +1248,10 @@ def _decode_workflows_js() -> str:
   function updateLegend() {
     const legend = $('#decode-legend');
     if (viewMode === 'source') {
-      legend.innerHTML = '<strong>Semantic role (node fill):</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status (border):</strong> <span class="legend-approved">H2KG</span><span class="legend-reviewed">reviewed DECODE</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> preserved source dependency <span class="legend-anchor">dashed link</span> occurrence-to-anchor mapping <span class="legend-semantic">teal arrow</span> H2KG semantic projection <span class="legend-dependency">purple arrow</span> reviewed method dependency';
+      legend.innerHTML = '<strong>Semantic role (node fill):</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status (border):</strong> <span class="legend-approved">H2KG</span><span class="legend-local">DECODE local</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> preserved source dependency <span class="legend-anchor">dashed link</span> occurrence-to-anchor mapping <span class="legend-semantic">teal arrow</span> H2KG semantic projection <span class="legend-dependency">purple arrow</span> declared method dependency';
       return;
     }
-    legend.innerHTML = '<strong>Semantic role:</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status:</strong> <span class="legend-approved">H2KG</span><span class="legend-reviewed">reviewed DECODE</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> provenance-preserving aggregate <span class="legend-semantic">teal arrow</span> H2KG semantic projection <span class="legend-dependency">purple arrow</span> reviewed method dependency';
+    legend.innerHTML = '<strong>Semantic role:</strong> <span class="legend-matter">matter</span><span class="legend-manufacturing">manufacturing</span><span class="legend-process">process</span><span class="legend-measurement">measurement</span><span class="legend-instrument">instrument</span><span class="legend-parameter">parameter</span><span class="legend-data">data</span><span class="legend-property">property</span><span class="legend-metadata">metadata</span><span class="legend-mixed">mixed / missing role</span><br><strong>Mapping status:</strong> <span class="legend-approved">H2KG</span><span class="legend-local">DECODE local</span><span class="legend-unresolved">unresolved</span><br><span class="legend-source">solid arrow</span> provenance-preserving aggregate <span class="legend-semantic">teal arrow</span> H2KG semantic projection <span class="legend-dependency">purple arrow</span> declared method dependency';
   }
   function renderCatalogue() {
     const needle = lower($('#decode-search').value), family = $('#decode-family').value;
@@ -1250,7 +1259,7 @@ def _decode_workflows_js() -> str:
     currentMatches = catalogue.filter((workflow) => (!needle || [workflow.title, workflow.source_filename, workflow.method_family, workflow.mapping_status, workflow.iri, workflow.external_method_id, ...(workflow.alternate_titles || []), ...(workflow.search_terms || []), ...(workflow.partner_organization || [])].join(' ').toLowerCase().includes(needle)) && (!family || workflow.method_family === family));
     const visibleMatches = currentMatches.slice(0, 24);
     $('#decode-catalogue-status').textContent = currentMatches.length ? `${currentMatches.length} matching workflow${currentMatches.length === 1 ? '' : 's'}${currentMatches.length > visibleMatches.length ? '; showing the first 24' : ''}. Select one to open its graph.` : 'No matching workflows. Try a broader term or another method family.';
-    resultList.innerHTML = visibleMatches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} reviewed mappings</small></button>`).join('');
+    resultList.innerHTML = visibleMatches.map((workflow) => `<button class="decode-workflow-card ${workflow.id === selectedWorkflow ? 'active' : ''}" data-workflow="${esc(workflow.id)}"><strong>${esc(workflow.title)}</strong><small>${esc(sourceLabel(workflow))} | ${esc(workflow.method_family.replaceAll('_',' '))}</small><small>${workflow.source_node_count} nodes, ${workflow.source_edge_count} edges | ${workflow.mapped_anchor_count} explicit mappings</small></button>`).join('');
     resultList.hidden = !visibleMatches.length;
     document.querySelectorAll('[data-workflow]').forEach((button) => button.addEventListener('click', () => selectWorkflow(button.dataset.workflow)));
   }
@@ -1258,7 +1267,7 @@ def _decode_workflows_js() -> str:
     const summary = catalogueById[workflowId]; if (!summary) return;
     selectedWorkflow = workflowId; selectedAnchor = null; shownWorkflows = new Set([workflowId]); more.hidden = true; resultList.hidden = true;
     $('#decode-catalogue-status').textContent = `Loading ${summary.title} ...`;
-    details.innerHTML = `<h2>${esc(summary.title)}</h2><p>Loading the preserved source workflow and reviewed semantic projections.</p>`;
+    details.innerHTML = `<h2>${esc(summary.title)}</h2><p>Loading the preserved source workflow and semantic projections.</p>`;
     try {
       await loadGraphData();
       if (!data.workflowById[workflowId]) throw new Error('The selected workflow is not present in the federated graph.');
@@ -1280,7 +1289,7 @@ def _decode_workflows_js() -> str:
   function semanticRoleText(node) {
     return node.role_conflict ? `Mixed role: ${(node.semantic_roles || []).join(', ') || 'unresolved'}` : (node.semantic_role || 'Missing role');
   }
-  function mappingLabel(state) { return ({ approved_h2kg:'H2KG', reviewed_decode:'reviewed DECODE', unresolved:'Unresolved' })[state] || state || 'Unresolved'; }
+  function mappingLabel(state) { return ({ approved_h2kg:'H2KG', decode_local:'DECODE local', unresolved:'Unresolved' })[state] || state || 'Unresolved'; }
   function sourceLabel(workflow) { if (workflow.is_derived) return 'Derived schema'; if (workflow.source_kind === 'source_manual_json') return 'Manual JSON source'; return 'GraphML source'; }
   function projectionVisible(edge) { return semanticFilter.value === 'all' || edge.projection_outcome === semanticFilter.value; }
   function addProfileElements(output) {
@@ -1362,9 +1371,9 @@ def _decode_workflows_js() -> str:
       { selector:'node[kind = "profile-anchor"][role = "property"]', style:{ 'background-color':'#9d5549', 'color':'#fff' } },
       { selector:'node[kind = "source-anchor"], node[kind = "semantic-anchor"]', style:{ 'shape':'round-rectangle', 'width':124, 'height':50, 'font-weight':700 } },
       { selector:'node[kind = "source-anchor"][state = "approved_h2kg"]', style:{ 'background-color':'#0d7f83', 'border-color':'#07575a', 'color':'#fff' } },
-      { selector:'node[kind = "source-anchor"][state = "reviewed_decode"]', style:{ 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff' } },
+      { selector:'node[kind = "source-anchor"][state = "decode_local"]', style:{ 'background-color':'#bd8529', 'border-color':'#855c12', 'color':'#fff' } },
       { selector:'node[kind = "occurrence"][state = "approved_h2kg"]', style:{ 'border-color':'#006f73', 'border-width':4 } },
-      { selector:'node[kind = "occurrence"][state = "reviewed_decode"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
+      { selector:'node[kind = "occurrence"][state = "decode_local"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
       { selector:'node[kind = "occurrence"][state = "unresolved"]', style:{ 'border-color':'#a63030', 'border-style':'dashed', 'border-width':3 } },
       { selector:'node[kind = "semantic-anchor"][role = "matter"]', style:{ 'background-color':'#0f6d7a', 'color':'#fff' } },
       { selector:'node[kind = "semantic-anchor"][role = "manufacturing"]', style:{ 'background-color':'#b45309', 'color':'#fff' } },
@@ -1377,7 +1386,7 @@ def _decode_workflows_js() -> str:
       { selector:'node[kind = "semantic-anchor"][role = "metadata"]', style:{ 'background-color':'#98a3aa', 'color':'#183139' } },
       { selector:'node[kind = "semantic-anchor"][role = "mixed"], node[kind = "semantic-anchor"][role = "unknown"], node[kind = "semantic-unresolved"]', style:{ 'background-color':'#adb8bd', 'color':'#183139' } },
       { selector:'node[kind = "semantic-anchor"][state = "approved_h2kg"]', style:{ 'border-color':'#006f73', 'border-width':4 } },
-      { selector:'node[kind = "semantic-anchor"][state = "reviewed_decode"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
+      { selector:'node[kind = "semantic-anchor"][state = "decode_local"]', style:{ 'border-color':'#9a650b', 'border-width':4 } },
       { selector:'node[kind = "semantic-anchor"][role = "mixed"], node[kind = "semantic-anchor"][state = "unresolved"], node[kind = "semantic-unresolved"]', style:{ 'border-color':'#a63030', 'border-style':'dashed', 'border-width':3 } },
       { selector:'node.hovered, node.focused', style:{ 'border-color':'#f59e0b', 'border-width':5, 'z-index':999 } },
       { selector:'edge[kind = "source"]', style:{ 'width':1.25, 'opacity':.45, 'line-color':'#596c72', 'target-arrow-color':'#596c72', 'target-arrow-shape':'triangle', 'curve-style':'bezier' } },
@@ -1403,17 +1412,17 @@ def _decode_workflows_js() -> str:
   function updateMoreButton() { const remaining = selectedAnchor ? rankedConnectedWorkflows(selectedAnchor).length : 0; more.hidden = !remaining; more.textContent = `Add next connected workflow (${remaining} remaining)`; }
 
   function downloads(workflow) { const standard = `<a href="../decode/workflows/${encodeURIComponent(workflow.id)}.json" download>Download normalized workflow JSON</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.jsonld" download>Download JSON-LD projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.ttl" download>Download Turtle projection</a><a href="../decode/workflows/${encodeURIComponent(workflow.id)}.validation.json" download>Download workflow validation</a><a href="../decode/decode_mapping_matrix.csv" download>Download mapping matrix</a><a href="../decode/decode_edge_registry.csv" download>Download edge-alignment registry</a><a href="../decode/decode_workflow_dependencies.csv" download>Download workflow dependencies</a><a href="../decode/decode_duplicate_occurrence_audit.csv" download>Download duplicate-occurrence audit</a><a href="../decode/decode_validation_report.json" download>Download release validation</a>`; const extras = (workflow.downloads || []).map((item) => `<a href="${esc(item.href)}" download>${esc(item.label)}</a>`).join(''); return `<div class="decode-downloads">${standard}${extras}</div>`; }
-  function showWorkflowDetails(workflow) { const semanticCount = new Set((data.nodesByWorkflow[workflow.id] || []).map(overviewId)).size; const sourceStatus = workflow.is_derived ? 'PDF-derived interface schema; the source workflows are unchanged.' : (viewMode === 'semantic' ? 'Select a canonical node to inspect its source occurrences and branch contexts.' : 'The complete source workflow is visible. Double-click an occurrence or anchor to traverse reviewed cross-workflow connections.'); const profileBadge = workflow.expert_profile ? `<span class="decode-status approved_h2kg">${esc(workflow.expert_profile.badge)}</span>` : ''; details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">${esc(sourceLabel(workflow))}</span> ${profileBadge}</p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method ID:</strong> ${esc(workflow.external_method_id || 'not supplied')}<br><strong>Partner:</strong> ${esc((workflow.partner_organization || []).join('; ') || 'not supplied')}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.<br><strong>Semantic overview:</strong> ${semanticCount} canonical nodes.</p><p>${sourceStatus}</p>${workflow.expert_profile ? `<p>The expert profile is a derived semantic overlay and does not add source nodes or edges.</p>` : ''}${downloads(workflow)}`; }
+  function showWorkflowDetails(workflow) { const semanticCount = new Set((data.nodesByWorkflow[workflow.id] || []).map(overviewId)).size; const sourceStatus = workflow.is_derived ? 'PDF-derived interface schema; the source workflows are unchanged.' : (viewMode === 'semantic' ? 'Select a canonical node to inspect its source occurrences and branch contexts.' : 'The complete source workflow is visible. Double-click an occurrence or anchor to traverse explicit cross-workflow connections.'); const profileBadge = workflow.curated_profile ? `<span class="decode-status approved_h2kg">${esc(workflow.curated_profile.badge)}</span>` : ''; details.innerHTML = `<h2>${esc(workflow.title)}</h2><p><span class="decode-status ${esc(workflow.mapping_status)}">${esc(workflow.mapping_status)}</span> <span class="decode-status">${esc(sourceLabel(workflow))}</span> ${profileBadge}</p><p><strong>Source:</strong> ${esc(workflow.source_filename)}<br><strong>Method ID:</strong> ${esc(workflow.external_method_id || 'not supplied')}<br><strong>Partner:</strong> ${esc((workflow.partner_organization || []).join('; ') || 'not supplied')}<br><strong>Method family:</strong> ${esc(workflow.method_family)}<br><strong>Topology:</strong> ${workflow.source_node_count} occurrences and ${workflow.source_edge_count} directed dependencies.<br><strong>Semantic overview:</strong> ${semanticCount} canonical nodes.</p><p>${sourceStatus}</p>${workflow.curated_profile ? `<p>The curated profile is a derived semantic overlay and does not add source nodes or edges.</p>` : ''}${downloads(workflow)}`; }
   function showOccurrenceDetails(id) { const node = data.nodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], anchor = data.anchorById[node.anchor_id]; const anchorText = anchor ? `<p><strong>Shared anchor:</strong> ${anchor.state === 'approved_h2kg' ? `<a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">${esc(anchor.label)}</a>` : esc(anchor.label)}</p>` : '<p><strong>Shared anchor:</strong> unresolved; no cross-workflow join is available.</p>'; const role = node.canonical_role_iri ? `<p><strong>Intrinsic H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(node.semantic_role || node.canonical_role_iri)}</a>${node.workflow_role && node.workflow_role !== node.semantic_role ? `<br><strong>Source workflow role:</strong> ${esc(node.workflow_role)}` : ''}</p>` : ''; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.mapping_state)}">${esc(node.mapping_state)}</span></p><p><strong>Decision:</strong> ${esc(node.decision || 'unresolved')}<br><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Source metadata:</strong> ${esc(node.description || 'not supplied')}</p>${anchorText}${role}<p><strong>Mapping evidence:</strong> ${esc(node.mapping_evidence || 'not supplied')}</p>${downloads(workflow)}`; if (cy) { const selected = cy.$id(id); selected.addClass('focused'); cy.center(selected); } }
   function showProjectionNodeDetails(id) { const node = data.projectionNodeById[id]; if (!node) return; const workflow = data.workflowById[node.workflow_id], source = data.nodeById[node.source_occurrence_id], typeLabel = node.semantic_role || (node.kind === 'parameter_record_proxy' ? 'Parameter' : 'DataPoint'); details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status">derived semantic projection</span></p><p><strong>H2KG type:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(typeLabel)}</a><br><strong>Source occurrence:</strong> <code>${esc(source.source_id)}</code> ${esc(source.label)}<br><strong>Workflow:</strong> ${esc(workflow.title)}</p><p>${esc(node.description)}</p>`; }
-  function showProfileNodeDetails(id) { const node = data.profileNodeById[id]; if (!node) return; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}${node.io_id ? `<br><strong>Stable IO identifier:</strong> <code>${esc(node.io_id)}</code>` : ''}</p><p>${esc(node.description)}</p><p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.id)}">Inspect this public term in H2KG Explore</a></p>`; }
+  function showProfileNodeDetails(id) { const node = data.profileNodeById[id]; if (!node) return; details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status approved_h2kg">Curated ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}${node.io_id ? `<br><strong>Stable IO identifier:</strong> <code>${esc(node.io_id)}</code>` : ''}</p><p>${esc(node.description)}</p><p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.id)}">Inspect this public term in H2KG Explore</a></p>`; }
   function showSemanticNodeDetails(id) { const node = data.overviewNodeById[id]; if (!node) return; const visible = visibleNodeIds(), occurrences = node.occurrence_ids.filter((occurrenceId) => visible.has(occurrenceId)); const anchor = data.anchorById[id]; const h2kg = anchor?.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = node.canonical_role_iri && !node.role_conflict ? `<p><strong>Semantic role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(node.canonical_role_iri)}">${esc(semanticRoleText(node))}</a></p>` : `<p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p>`; const list = occurrences.map((occurrenceId) => { const occurrence = data.nodeById[occurrenceId], workflow = data.workflowById[occurrence.workflow_id]; return `<li><button class="decode-add-workflow" data-inspect-occurrence="${esc(occurrenceId)}"><code>${esc(occurrence.source_id)}</code> in ${esc(workflow.title)}</button></li>`; }).join(''); details.innerHTML = `<h2>${esc(node.label)}</h2><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span> ${esc(node.decision || '')}</p>${role}<p><strong>Semantic overview:</strong> ${occurrences.length} visible source occurrence${occurrences.length === 1 ? '' : 's'} represented by one canonical node.</p><p>${esc(node.evidence || '')}</p>${h2kg}<h3>Inspect preserved source occurrences</h3><ul>${list || '<li>No occurrence is visible.</li>'}</ul>${anchor ? `<p>Double-click this node to add one complete connected workflow through the shared anchor.</p>` : ''}`; document.querySelectorAll('[data-inspect-occurrence]').forEach((button) => button.addEventListener('click', () => { viewMode = 'source'; syncViewControls(); renderGraph(); showOccurrenceDetails(button.dataset.inspectOccurrence); })); }
   function showAnchorDetails(anchorId) { const anchor = data.anchorById[anchorId]; if (!anchor) return; const workflows = [...new Set((data.anchor_index[anchorId] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))].map((id) => data.workflowById[id]); const candidates = rankedConnectedWorkflows(anchorId); const h2kg = anchor.state === 'approved_h2kg' ? `<p><a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.id)}">Inspect this stable H2KG term in H2KG Explore</a></p>` : ''; const role = anchor.canonical_role_iri && anchor.state !== 'approved_h2kg' ? `<p><strong>H2KG role:</strong> <a href="${root.dataset.h2kgExplore}?iri=${encodeURIComponent(anchor.canonical_role_iri)}">${esc(anchor.semantic_role || anchor.canonical_role_iri)}</a></p>` : ''; const cards = candidates.slice(0,8).map((workflow) => `<button class="decode-add-workflow" data-add-workflow="${esc(workflow.id)}">Add full workflow: ${esc(workflow.title)}</button>`).join(''); details.innerHTML = `<h2>${esc(anchor.label)}</h2><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span> ${esc(anchor.decision || '')}</p><p><code>${esc(anchor.id)}</code></p><p>${esc(anchor.evidence)}</p>${h2kg}${role}<h3>Linked workflows (${workflows.length})</h3><ul>${workflows.map((workflow) => `<li>${esc(workflow.title)}</li>`).join('')}</ul>${cards ? `<h3>Expand a connected workflow</h3>${cards}` : '<p>All linked workflows are visible.</p>'}`; document.querySelectorAll('[data-add-workflow]').forEach((button) => button.addEventListener('click', () => { shownWorkflows.add(button.dataset.addWorkflow); renderGraph(); showAnchorDetails(anchorId); updateMoreButton(); })); }
   function visibleRelations(id) { return [...cy.$id(id).connectedEdges()].map((edge) => `${edge.data('kind')}: ${edge.data('label') || 'relation'}`).join('; ') || 'none'; }
   function edgeDecision(item) { return data.edgeRegistryBySource[item.sourceDependencyId || item.id]; }
-  function edgeDecisionHtml(item) { if (item.kind === 'dependency') { const decision = data.workflowDependencyById[item.dependencyId]; if (!decision) return ''; return `<p><strong>Status:</strong> ${esc(decision.publication_status)}<br><strong>Declarations:</strong> ${esc((decision.declarations || []).join(', '))}<br><strong>Handoff concepts:</strong> ${esc((decision.handoff_labels || []).join('; ') || 'none identified')}<br><strong>Handoff anchors:</strong> ${esc((decision.handoff_anchor_iris || []).join('; ') || 'none')}<br><strong>Evidence:</strong> ${esc(decision.review_rationale)}</p>`; } const decision = edgeDecision(item); if (!decision) return ''; return `<p><strong>Classification:</strong> ${esc(decision.projection_outcome)}<br><strong>Pattern:</strong> ${esc(decision.projection_pattern)}<br><strong>Semantic direction:</strong> ${esc(decision.semantic_direction)}<br><strong>Predicate(s):</strong> ${esc(decision.semantic_predicates || 'none')}<br><strong>Confidence:</strong> ${esc(decision.confidence)}<br><strong>Rationale:</strong> ${esc(decision.rationale)}</p>`; }
+  function edgeDecisionHtml(item) { if (item.kind === 'dependency') { const decision = data.workflowDependencyById[item.dependencyId]; if (!decision) return ''; return `<p><strong>Status:</strong> ${esc(decision.publication_status)}<br><strong>Declarations:</strong> ${esc((decision.declarations || []).join(', '))}<br><strong>Handoff concepts:</strong> ${esc((decision.handoff_labels || []).join('; ') || 'none identified')}<br><strong>Handoff anchors:</strong> ${esc((decision.handoff_anchor_iris || []).join('; ') || 'none')}<br><strong>Evidence:</strong> ${esc(decision.rationale)}</p>`; } const decision = edgeDecision(item); if (!decision) return ''; return `<p><strong>Classification:</strong> ${esc(decision.projection_outcome)}<br><strong>Pattern:</strong> ${esc(decision.projection_pattern)}<br><strong>Semantic direction:</strong> ${esc(decision.semantic_direction)}<br><strong>Predicate(s):</strong> ${esc(decision.semantic_predicates || 'none')}<br><strong>Confidence:</strong> ${esc(decision.confidence)}<br><strong>Rationale:</strong> ${esc(decision.rationale)}</p>`; }
   function showEdgeDetails(item) { const relationId = item.kind === 'dependency' ? item.dependencyId : (item.sourceDependencyId || item.id); details.innerHTML = `<h2>${esc(item.label || 'Source dependency')}</h2><p><strong>Relation layer:</strong> ${esc(item.kind)}<br><strong>Display direction:</strong> <code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code><br><strong>Relation ID:</strong> <code>${esc(relationId)}</code></p>${edgeDecisionHtml(item)}`; }
-  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'profile-anchor') { const node = data.profileNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status approved_h2kg">Expert-reviewed ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}</p><p>${esc(node.description)}</p>`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (data.projectionNodeById[item.id]) { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG ${esc(node.semantic_role || 'record')} proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Intrinsic semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}${node.workflow_role && node.workflow_role !== node.semantic_role ? `<br><strong>Source workflow role:</strong> ${esc(node.workflow_role)}` : ''}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
+  function showHover(element, event) { const item = element.data(); if (element.isEdge()) { const count = item.occurrenceCount ? `<p><strong>Preserved source dependencies:</strong> ${item.occurrenceCount}</p>` : ''; hover.innerHTML = `<h3>${esc(item.label || item.kind)}</h3><p><strong>Relation layer:</strong> ${esc(item.kind)}</p><p><code>${esc(item.source)}</code> -> <code>${esc(item.target)}</code></p>${edgeDecisionHtml(item)}${count}`; } else if (item.kind === 'profile-anchor') { const node = data.profileNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status approved_h2kg">Curated ITC profile</span></p><p><strong>Semantic role:</strong> ${esc(node.semantic_role)}</p><p>${esc(node.description)}</p>`; } else if (item.kind === 'semantic-anchor' || item.kind === 'semantic-unresolved') { const node = data.overviewNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.state)}">${esc(mappingLabel(node.state))}</span></p><p><strong>Semantic role:</strong> ${esc(semanticRoleText(node))}</p><p>${node.occurrence_count} preserved occurrence${node.occurrence_count === 1 ? '' : 's'} represented here. Double-click to expand connected workflows when an anchor is available.</p>`; } else if (item.kind === 'source-anchor') { const anchor = data.anchorById[item.id], workflows = [...new Set((data.anchor_index[item.id] || []).map((id) => data.nodeById[id]?.workflow_id).filter(Boolean))]; hover.innerHTML = `<h3>${esc(anchor.label)}</h3><p><span class="decode-status ${esc(anchor.state)}">${esc(mappingLabel(anchor.state))}</span></p><p><strong>Semantic role:</strong> ${esc(anchor.semantic_role || 'Missing role')}</p><p>${workflows.length} linked workflows. Double-click to add the next complete workflow.</p>`; } else if (data.projectionNodeById[item.id]) { const node = data.projectionNodeById[item.id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><strong>Derived semantic node:</strong> H2KG ${esc(node.semantic_role || 'record')} proxy</p><p>${esc(node.description)}</p>`; } else { const node = data.nodeById[item.id], workflow = data.workflowById[node.workflow_id]; hover.innerHTML = `<h3>${esc(node.label)}</h3><p><span class="decode-status ${esc(node.mapping_state)}">${esc(mappingLabel(node.mapping_state))}</span> ${esc(node.visual_category || 'other')}</p><p><strong>Intrinsic semantic role:</strong> ${esc(node.semantic_role || 'Missing role')}${node.workflow_role && node.workflow_role !== node.semantic_role ? `<br><strong>Source workflow role:</strong> ${esc(node.workflow_role)}` : ''}</p><p><strong>Source node ID:</strong> <code>${esc(node.source_id)}</code><br><strong>Source kind:</strong> ${esc(node.source_kind || workflow.source_kind || 'source_graphml')}<br><strong>Workflow:</strong> ${esc(workflow.title)}<br><strong>Native category:</strong> ${esc(node.native_category || 'not supplied')}</p><p><strong>Visible relations:</strong> ${esc(visibleRelations(node.id))}</p>`; } hover.classList.remove('is-hidden'); moveHover(event); }
   function moveHover(event) { if (!event || hover.classList.contains('is-hidden')) return; hover.style.left = `${Math.min((event.clientX || 0) + 14, window.innerWidth - hover.offsetWidth - 10)}px`; hover.style.top = `${Math.min((event.clientY || 0) + 14, window.innerHeight - hover.offsetHeight - 10)}px`; }
   function hideHover() { hover.classList.add('is-hidden'); }
 })();
@@ -1647,7 +1656,7 @@ def _overview_body(project: dict[str, Any], summary: dict[str, Any], odk: dict[s
         <h2>Semantic Division of Labor</h2>
         <p><strong>HDO</strong> is the primary alignment source for Helmholtz-community digital-data concepts such as metadata, identifiers, digital objects, schemas, and validation.</p>
         <p><strong>EMMO / ECHO</strong> remain the scientific and electrochemistry anchors, <strong>QUDT</strong> covers quantities and units, <strong>ChEBI</strong> covers chemistry, and <strong>PROV-O / DCTERMS</strong> remain publication metadata anchors.</p>
-        <p class="muted">Reviewed against HDO in the current run: {reviewed}</p>
+        <p class="muted">Assessed against HDO in the current run: {reviewed}</p>
       </article>
     </section>
     """.format(
@@ -1822,7 +1831,10 @@ def _build_explorer_dataset(
         if term.get("iri")
     }
     for iri, term in taxonomy_terms.items():
-        if term.get("disposition") not in {"active_local_class", "deprecated_compatibility_class"}:
+        if not (
+            term.get("disposition") == "active_local_class"
+            or str(term.get("disposition", "")).startswith("deprecated_")
+        ):
             continue
         modules = set(nodes.get(iri, {}).get("modules", []))
         modules.add("taxonomy")
@@ -1834,15 +1846,23 @@ def _build_explorer_dataset(
             "taxonomy_module": term.get("module", "core"),
             "taxonomy_role": term.get("corrected_semantic_role", "Class"),
             "definition_status": term.get("definition_status", ""),
-            "review_status": term.get("review_status", ""),
+            "governance_status": term.get("governance_status", ""),
             "migration_action": term.get("migration_action", ""),
+            "correction_action": term.get("correction_action", ""),
             "replacement_iri": term.get("replacement_iri", ""),
+            "migration_target_iris": term.get("migration_target_iris", []),
+            "profile_fallback_iri": term.get("profile_fallback_iri", ""),
         }
         if iri in nodes:
             nodes[iri].update(taxonomy_payload)
             nodes[iri]["display_class"] = str(term.get("corrected_semantic_role") or "Class")
             nodes[iri]["category"] = "Classes"
             nodes[iri]["type_labels"] = ["Class"]
+            nodes[iri]["deprecated"] = (
+                "Deprecated"
+                if str(term.get("disposition", "")).startswith("deprecated_")
+                else "Active"
+            )
             nodes[iri]["modules"] = sorted(modules)
             nodes[iri]["description"] = term.get("definition") or nodes[iri].get("description", "")
             nodes[iri]["alt_labels"] = sorted(set(nodes[iri].get("alt_labels", [])) | set(term.get("alt_labels", [])))
@@ -1880,7 +1900,7 @@ def _build_explorer_dataset(
             "display_class": str(term.get("corrected_semantic_role") or "Class"),
             "modules": sorted(modules),
             "local": True,
-            "deprecated": "Deprecated" if term.get("disposition") == "deprecated_compatibility_class" else "Active",
+            "deprecated": "Deprecated" if str(term.get("disposition", "")).startswith("deprecated_") else "Active",
             "mapping_labels": [],
             "external_alignments": [],
             "workflow_usages": [],
@@ -2073,14 +2093,14 @@ def _build_explorer_dataset(
         },
         "alignments": {
             "id": "alignments",
-            "label": "Reviewed alignments",
+            "label": "Asserted alignments",
             "description": "Reviewed mappings and directly linked external semantic anchors.",
             "nodeCount": sum(1 for node in nodes.values() if "alignments" in node.get("modules", [])),
             "edgeCount": sum(1 for link in links.values() if link["module"] == "alignments"),
         },
         "taxonomy": {
             "id": "taxonomy",
-            "label": "H2KG 2.1 taxonomy",
+            "label": "H₂KG 2.2 taxonomy",
             "description": "The complete class hierarchy generated from the approved taxonomy registry.",
             "nodeCount": sum(1 for node in nodes.values() if "taxonomy" in node.get("modules", [])),
             "edgeCount": sum(1 for link in links.values() if link["module"] == "taxonomy"),
@@ -2340,20 +2360,20 @@ def _merge_external_alignment_mappings(
     mappings: list[dict[str, Any]],
     registry_path: Path,
 ) -> list[dict[str, Any]]:
-    """Use the reviewed bridge as the authoritative documentation mapping surface."""
+    """Use the asserted bridge as the authoritative documentation mapping surface."""
     source_rows = mappings
     if registry_path.exists():
         payload = load_json(registry_path)
-        # The registry separates asserted mappings from pending review
-        # candidates. Only its `mappings` collection is publication-grade.
+        # The registry separates asserted mappings from evidence-only records.
+        # Only its `mappings` collection is publication-grade.
         source_rows = payload.get("mappings", [])
-    reviewed = {
+    asserted = {
         (str(row.get("local_iri", "")), str(row.get("relation", "")), str(row.get("target_iri", ""))): dict(row)
         for row in source_rows
         if row.get("local_iri") and row.get("relation") and row.get("target_iri")
     }
     return sorted(
-        reviewed.values(),
+        asserted.values(),
         key=lambda row: (
             str(row.get("local_label", "")).casefold(),
             str(row.get("relation", "")),
@@ -2441,7 +2461,7 @@ def _alignment_body(
     machine_exact_count = sum(row.get("relation") == "skos:exactMatch" for row in machine_mappings)
     machine_broad_count = sum(row.get("relation") == "skos:broadMatch" for row in machine_mappings)
     machine_narrow_count = sum(row.get("relation") == "skos:narrowMatch" for row in machine_mappings)
-    reviewed_count = sum(row.get("status") != "machine_safe" for row in mappings)
+    foundational_count = sum(row.get("status") != "machine_safe" for row in mappings)
     relation_options = sorted({str(row.get("relation", "")) for row in mappings if row.get("relation")})
     ontology_options = sorted({str(row.get("tib_ontology_id", "")) for row in mappings if row.get("tib_ontology_id")})
     collection_options = sorted(
@@ -2496,7 +2516,7 @@ def _alignment_body(
     )
     return f"""
     <section class='grid'>
-      <article class='card'><h2>Asserted mappings</h2><p><strong>{len(mappings)}</strong> mappings are published in the versioned bridge: {len(machine_mappings)} TIB benchmark assertions ({machine_exact_count} exact, {machine_broad_count} H2KG-narrower, and {machine_narrow_count} H2KG-broader) plus {reviewed_count} reviewed foundational assertions.</p></article>
+      <article class='card'><h2>Asserted mappings</h2><p><strong>{len(mappings)}</strong> mappings are published in the versioned bridge: {len(machine_mappings)} TIB benchmark assertions ({machine_exact_count} exact, {machine_broad_count} H2KG-narrower, and {machine_narrow_count} H2KG-broader) plus {foundational_count} configured foundational assertions.</p></article>
       <article class='card'><h2>Conservative boundary</h2><p>Only exact, broader, and narrower mappings pass into the asserted SKOS bridge. Other benchmark results remain audit evidence.</p></article>
       <article class='card'><h2>Snapshot scope</h2><p>{summary.get('tib_unique_ontology_count', 0)} unique ontologies across {summary.get('tib_collection_membership_count', 0)} collection memberships; snapshot {escape(str(summary.get('tib_snapshot_retrieved_at', 'not available')))}.</p></article>
     </section>
@@ -2649,7 +2669,7 @@ def _profile_reference_body(project: dict[str, Any], profile_key: str, terms: li
         <h2>Profile Reference Scope</h2>
         <p>This page presents the {title} as a structured reference, grouping all profile-visible terms into navigable sections instead of one flat list. It is the intended future human-readable landing page for the {title} namespace.</p>
         <p class="muted">ODK backend status: {escape(_shadow_mode_summary(odk))}</p>
-        <p class="muted">HDO-reviewed terms in the current run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+        <p class="muted">Terms assessed against HDO in the current run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
         <div class="button-row">
           <a class="inline-button" href="{namespace_link}">Full H2KG namespace</a>
         </div>
@@ -2778,6 +2798,7 @@ def _release_body(
     odk: dict[str, Any],
     hdo: dict[str, Any],
     alignment: dict[str, Any],
+    correction: dict[str, Any],
     page_path: Path,
     docs_root: Path,
 ) -> str:
@@ -2807,6 +2828,9 @@ def _release_body(
         "audit": _relative_href(page_path, docs_root / "ontology" / "semantic_role_audit.csv"),
         "migration": _relative_href(page_path, docs_root / "ontology" / "relation_migration_registry.csv"),
         "compatibility": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-compatibility.ttl"),
+        "correction_json": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_report.json"),
+        "correction_csv": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_decisions.csv"),
+        "correction_markdown": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_report.md"),
     }
     principal_sources = sorted(
         alignment.get("tib_benchmark_sources", alignment.get("sources", {})).items(),
@@ -2847,9 +2871,10 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H2KG 2.1</p>
+        <p class="eyebrow">H₂KG 2.2</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
+        <p>The 2.2 correction ledger records <strong>{correction.get('decision_counts', {}).get('total', 0)}</strong> parent and definition decisions across <strong>{correction.get('decision_counts', {}).get('unique_classes', 0)}</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
         <p>The compatibility graph is retained only for migration and may contain legacy class-level workflow assertions. It does not drive canonical outputs or Explore.</p>
         <div class="button-row">
           <a class="inline-button" href="{semantic_links['complete_ttl']}" download>Complete TTL</a>
@@ -2858,6 +2883,9 @@ def _release_body(
           <a class="inline-button" href="{semantic_links['profiles_jsonld']}" download>Workflow profiles JSON-LD</a>
           <a class="inline-button" href="{semantic_links['audit']}" download>Semantic-role audit</a>
           <a class="inline-button" href="{semantic_links['migration']}" download>Migration registry</a>
+          <a class="inline-button" href="{semantic_links['correction_json']}" download>Correction report JSON</a>
+          <a class="inline-button" href="{semantic_links['correction_csv']}" download>Decision ledger CSV</a>
+          <a class="inline-button" href="{semantic_links['correction_markdown']}" download>Correction report</a>
           <a class="inline-button inline-button--ghost" href="{semantic_links['compatibility']}" download>Legacy compatibility TTL</a>
         </div>
       </article>
@@ -2866,11 +2894,11 @@ def _release_body(
       <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H2KG {escape(str(alignment.get('h2kg_version', '2.1.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H2KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
+        <p>H₂KG {escape(str(alignment.get('h2kg_version', '2.2.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H₂KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> {alignment.get('tib_collection_count', 0)} TIB collections, {alignment.get('tib_unique_ontology_count', 0)} unique ontologies, {alignment.get('tib_collection_membership_count', 0)} collection memberships</li>
           <li><strong>TIB benchmark assertions:</strong> {alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} ({escape(', '.join(f'{key}={value}' for key, value in alignment.get('tib_asserted_mapping_counts', {}).items()) or 'none')})</li>
-          <li><strong>Reviewed foundational mappings:</strong> {alignment.get('reviewed_foundational_mapping_count', 0)}</li>
+          <li><strong>Foundational mappings:</strong> {alignment.get('foundational_mapping_count', 0)}</li>
           <li><strong>Asserted relations:</strong> {escape(', '.join(f'{key}={value}' for key, value in alignment.get('asserted_mapping_counts', {}).items()) or 'none')}</li>
           <li><strong>Principal benchmark ontologies:</strong> {escape(principal_source_text)}</li>
         </ul>
@@ -2921,7 +2949,7 @@ def _release_body(
           <li><strong>HDO import status:</strong> {_hdo_import_status(odk)}</li>
           <li><strong>Last refresh:</strong> {_hdo_import_refresh(odk)}</li>
           <li><strong>Included in current ODK build:</strong> {_hdo_import_included(odk)}</li>
-          <li><strong>HDO-reviewed local terms:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</li>
+          <li><strong>Local terms assessed against HDO:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</li>
           <li><strong>Aligned to HDO:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</li>
         </ul>
         <p>HDO is the primary alignment source for data, metadata, digital-object, information-profile, identifier, schema, and validation concepts in H2KG.</p>
@@ -3122,7 +3150,7 @@ def _import_guide_body(odk: dict[str, Any], hdo: dict[str, Any]) -> str:
         <h2>Shadow Mode Context</h2>
         <p>ODK is currently operating in <strong>{escape(str(odk.get('mode', 'shadow')))}</strong> mode. The AIMWORKS pipeline remains authoritative while ODK manages standard machine artefacts and import/QC infrastructure in parallel.</p>
         <p><strong>HDO role:</strong> HDO is the preferred Helmholtz-community source for data-management, metadata, identifier, digital-object, information-profile, schema, and validation concepts.</p>
-        <p class="muted">Current HDO-reviewed term count: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+        <p class="muted">Current HDO-assessed term count: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
       </article>
     </section>
     """
@@ -3241,7 +3269,7 @@ def _architecture_body(project: dict[str, Any], odk: dict[str, Any], hdo: dict[s
       <article class="card">
         <h2>HDO Integration</h2>
         <p>HDO is integrated as the Helmholtz-community anchor for digital-data concepts, complementing EMMO/ECHO, QUDT, ChEBI, and PROV-O / DCTERMS.</p>
-        <p><strong>Reviewed against HDO:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)} | <strong>Aligned:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</p>
+        <p><strong>Assessed against HDO:</strong> {hdo.get('summary', {}).get('reviewed_against_hdo', 0)} | <strong>Aligned:</strong> {hdo.get('summary', {}).get('aligned_to_hdo', 0)}</p>
       </article>
     </section>
     """
@@ -3319,7 +3347,7 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
         </ul>
         <p>ODK artefacts are machine-oriented H2KG v2 releases. Example and data-like content remain in the AIMWORKS profile and workflow packages.</p>
         <p>HDO is used as a primary alignment source for data, metadata, digital-object, and process-management concepts.</p>
-        <p class="muted">HDO-reviewed H2KG terms in this run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
+        <p class="muted">H₂KG terms assessed against HDO in this run: {hdo.get('summary', {}).get('reviewed_against_hdo', 0)}</p>
         {_shadow_note(parity)}
       </article>
     </section>
@@ -3633,10 +3661,9 @@ def _asset_src(item: dict[str, Any], asset_base: str) -> str:
 def _copy_site_assets(output_dir: Path, project: dict[str, Any]) -> None:
     asset_dir = ensure_dir(output_dir / "assets")
     source_dir = Path(__file__).resolve().parents[2] / "templates" / "site" / "assets"
-    for filename in ("h2kg-logo.png",):
-        source_path = source_dir / filename
-        if source_path.exists():
-            shutil.copyfile(source_path, asset_dir / filename)
+    for source_path in source_dir.iterdir():
+        if source_path.is_file():
+            shutil.copyfile(source_path, asset_dir / source_path.name)
     acknowledgements = project.get("acknowledgements", {})
     for item in acknowledgements.get("initiatives", []):
         if not isinstance(item, dict):
@@ -3697,6 +3724,19 @@ def _copy_taxonomy_artifacts(output_dir: Path) -> None:
     releases = source_dir / "releases"
     if releases.exists():
         shutil.copytree(releases, target_dir / "releases", dirs_exist_ok=True)
+
+
+def _copy_correction_reports(output_dir: Path) -> None:
+    source_dir = output_dir.parent / "reports"
+    target_dir = ensure_dir(output_dir / "reports")
+    for filename in (
+        "h2kg_2_2_correction_report.json",
+        "h2kg_2_2_correction_decisions.csv",
+        "h2kg_2_2_correction_report.md",
+    ):
+        source = source_dir / filename
+        if source.exists():
+            shutil.copyfile(source, target_dir / filename)
 
 
 def _copy_asserted_source_jsonld(input_path: Path, output_dir: Path) -> None:
@@ -4983,10 +5023,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "skos:broadMatch": "H2KG narrower than",
     "skos:narrowMatch": "H2KG broader than",
     "skos:relatedMatch": "related to",
-    "owl:equivalentClass": "reviewed equivalent class",
-    "owl:equivalentProperty": "reviewed equivalent property",
-    "rdfs:subClassOf": "reviewed subclass of",
-    "rdfs:subPropertyOf": "reviewed subproperty of"
+    "owl:equivalentClass": "configured equivalent class",
+    "owl:equivalentProperty": "configured equivalent property",
+    "rdfs:subClassOf": "configured subclass of",
+    "rdfs:subPropertyOf": "configured subproperty of"
   })[relation] || relation || "mapping";
 
   function assertedAlignmentHtml(node) {
@@ -5076,11 +5116,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${node.deprecated === "Deprecated" ? `<div class="explorer-inspector__section"><strong>Compatibility status</strong><p>This identifier is retained for compatibility and excluded from normal taxonomy expansion.${node.replacement_iri ? `<br>Canonical replacement: <code>${escapeHtml(node.replacement_iri)}</code>` : ""}${(node.migration_target_iris || []).length ? `<br>Context-specific migration targets: ${(node.migration_target_iris || []).map((iri) => `<code>${escapeHtml(iri)}</code>`).join(", ")}` : ""}${node.profile_fallback_iri ? `<br>Profile fallback: <code>${escapeHtml(node.profile_fallback_iri)}</code>` : ""}</p></div>` : ""}
         ${assertedAlignmentHtml(node)}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
         ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Intrinsic classification</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Semantic role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Workflow usage</strong>${workflowUsageHtml(node)}</div>` : ""}
-        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: approved<br>Definition status: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}</p></div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: ${escapeHtml(node.governance_status || "approved")}<br>Definition status: ${escapeHtml(node.definition_status)}<br>Correction action: ${escapeHtml(node.correction_action || node.migration_action || "retain")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
         ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>Quantity guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}

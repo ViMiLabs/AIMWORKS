@@ -1,4 +1,4 @@
-# ITC expert-review mapping matrix
+# ITC curated-interface mapping matrix
 
 | IO identifier | Direction | Preferred term | Intrinsic role | Workflow role | Outcome | H2KG IRI |
 |---|---|---|---|---|---|---|

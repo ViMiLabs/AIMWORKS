@@ -55,14 +55,14 @@ def test_decode_ontology_preserves_release_and_serializes_equivalently(tmp_path:
     assert validation["equivalent_serializations"] is True
     assert validation["published_workflow_dependency_count"] == 572
     assert validation["audit_only_workflow_dependency_count"] == 51
-    assert validation["definition_candidate_source_record_count"] == 522
-    assert validation["definition_candidate_unique_label_count"] == 522
+    assert validation["definition_source_record_count"] == 522
+    assert validation["definition_source_unique_label_count"] == 522
     assert validation["missing_definition_iris"] == []
     assert validation["placeholder_definition_iris"] == []
     assert result["decode_ontology"]["status"] == "generated"
 
 
-def test_decode_ontology_definitions_roles_and_aliases_are_reviewable(tmp_path: Path) -> None:
+def test_decode_ontology_definitions_roles_and_aliases_are_traceable(tmp_path: Path) -> None:
     root = Path(__file__).resolve().parents[1]
     build_decode_workflow_release(
         root / "input" / "decode_workflows_source.json",
@@ -77,16 +77,16 @@ def test_decode_ontology_definitions_roles_and_aliases_are_reviewable(tmp_path: 
     registry = json.loads(
         (decode_dir / "decode_ontology_definition_registry.json").read_text(encoding="utf-8")
     )
-    candidates = json.loads(
-        (root / "config" / "decode_definition_candidates.json").read_text(encoding="utf-8-sig")
+    sources = json.loads(
+        (root / "config" / "decode_definition_registry.json").read_text(encoding="utf-8-sig")
     )
     ontology = Graph().parse(decode_dir / "decode-h2kg-aligned-ontology.ttl", format="turtle")
 
     assert graph_data["deprecated_anchor_aliases"]
-    assert candidates["source_record_count"] == 522
-    assert candidates["source_sha256"] == registry["definition_seed_sha256"]
-    assert registry["counts"]["classes_with_supplied_candidate"] > 0
-    assert registry["counts"]["candidate_role_conflict_count"] > 0
+    assert sources["source_record_count"] == 522
+    assert sources["source_sha256"] == registry["definition_seed_sha256"]
+    assert registry["counts"]["classes_with_source_definition"] > 0
+    assert registry["counts"]["source_role_conflict_count"] > 0
     labels = {row["preferred_label"]: row for row in registry["definitions"]}
     for required in (
         "Adsorbate conformation on electrode (nanostructured)",
@@ -97,7 +97,7 @@ def test_decode_ontology_definitions_roles_and_aliases_are_reviewable(tmp_path: 
     ):
         assert required in labels
         assert len(labels[required]["definition"].split()) >= 10
-    assert all(row["definition_status"] == "expert-draft" for row in registry["definitions"])
+    assert all(row["definition_status"] == "decode-local" for row in registry["definitions"])
     assert all("concept denoted" not in row["definition"].casefold() for row in registry["definitions"])
 
     roles = {
@@ -115,7 +115,7 @@ def test_decode_ontology_definitions_roles_and_aliases_are_reviewable(tmp_path: 
     active_decode_classes = {
         URIRef(anchor["id"])
         for anchor in graph_data["anchors"]
-        if anchor.get("state") == "reviewed_decode"
+        if anchor.get("state") == "decode_local"
     }
     assert all(any(ontology.objects(iri, RDFS.subClassOf)) for iri in active_decode_classes)
     assert all(any(ontology.objects(iri, SKOS.definition)) for iri in active_decode_classes)

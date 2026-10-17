@@ -47,7 +47,7 @@ def main() -> None:
         if command == "decode-build":
             sub.add_argument("--manual-overlay", default="input/decode_manual_workflow_overlay.json")
         if command in {"itc-integrate", "itc-build"}:
-            sub.add_argument("--review", default="input/itc_expert_review.json")
+            sub.add_argument("--review", default="input/itc_curated_interface.json")
         if command == "itc-integrate":
             sub.add_argument("--write-in-place", action="store_true")
     decode_ingest = subparsers.add_parser("decode-ingest")

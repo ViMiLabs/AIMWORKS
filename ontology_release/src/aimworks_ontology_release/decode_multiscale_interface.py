@@ -17,7 +17,7 @@ from xml.etree import ElementTree as ET
 
 from rdflib import Graph
 
-from .itc_pilot import validate_review_registry
+from .itc_pilot import validate_interface_registry
 from .utils import COMMON_CONTEXT, dump_json, ensure_dir, load_json, write_text
 
 
@@ -52,7 +52,7 @@ STAGES = {
 }
 
 # Only unambiguous QUDT unit IRIs are emitted. All other reported units remain
-# explicit schema metadata until their compound-unit interpretation is reviewed.
+# explicit schema metadata until their compound-unit interpretation is established.
 SAFE_QUDT_UNITS = {
     "[Pa]": "http://qudt.org/vocab/unit/PA",
     "[m]": "http://qudt.org/vocab/unit/M",
@@ -67,7 +67,7 @@ def build_decode_multiscale_model_interface(
     manifest_path: str | Path,
     decode_snapshot_path: str | Path,
     output_root: str | Path,
-    itc_review_path: str | Path | None = None,
+    itc_registry_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """Generate the interface package and a graph fragment for DECODE Explorer."""
     manifest_path = Path(manifest_path)
@@ -80,27 +80,27 @@ def build_decode_multiscale_model_interface(
     variables = list(manifest.get("variables", []))
     _validate_manifest(variables)
     source_labels = _source_labels(decode_snapshot_path)
-    expert_fields: dict[str, dict[str, Any]] = {}
-    if itc_review_path and Path(itc_review_path).exists():
-        expert_review = load_json(Path(itc_review_path))
-        validate_review_registry(expert_review)
-        expert_fields = {field["io_id"]: field for field in expert_review["fields"]}
-    variable_index = _index_variables(variables, expert_fields)
+    curated_fields: dict[str, dict[str, Any]] = {}
+    if itc_registry_path and Path(itc_registry_path).exists():
+        interface_registry = load_json(Path(itc_registry_path))
+        validate_interface_registry(interface_registry)
+        curated_fields = {field["io_id"]: field for field in interface_registry["fields"]}
+    variable_index = _index_variables(variables, curated_fields)
     fragment = _build_fragment(manifest, variable_index)
     target = ensure_dir(output_root / "decode" / "modeling_interface")
     coverage = _coverage_rows(variables, source_labels)
     validation = _validation_report(variables, fragment, coverage)
-    if expert_fields:
-        expert_occurrences = [row for row in variables if row["io_id"] in expert_fields]
-        occurrence_counts = Counter(row["io_id"] for row in expert_occurrences)
+    if curated_fields:
+        curated_occurrences = [row for row in variables if row["io_id"] in curated_fields]
+        occurrence_counts = Counter(row["io_id"] for row in curated_occurrences)
         shared_identifiers = sorted(identifier for identifier, count in occurrence_counts.items() if count > 1)
-        if len(expert_occurrences) != 68 or len(shared_identifiers) != 12:
+        if len(curated_occurrences) != 68 or len(shared_identifiers) != 12:
             raise ValueError(
-                f"Expected 68 expert ITC occurrences and 12 shared identifiers, found {len(expert_occurrences)} and {len(shared_identifiers)}"
+                f"Expected 68 curated ITC occurrences and 12 shared identifiers, found {len(curated_occurrences)} and {len(shared_identifiers)}"
             )
-        validation["expert_itc_profile"] = {
-            "unique_identifier_count": len(expert_fields),
-            "stage_occurrence_count": len(expert_occurrences),
+        validation["curated_itc_profile"] = {
+            "unique_identifier_count": len(curated_fields),
+            "stage_occurrence_count": len(curated_occurrences),
             "shared_identifier_count": len(shared_identifiers),
             "shared_identifiers": shared_identifiers,
             "mapping_state": "approved_h2kg",
@@ -197,9 +197,9 @@ def _source_labels(snapshot_path: Path) -> set[str]:
 
 def _index_variables(
     variables: list[dict[str, Any]],
-    expert_fields: dict[str, dict[str, Any]] | None = None,
+    curated_fields: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
-    expert_fields = expert_fields or {}
+    curated_fields = curated_fields or {}
     indexed: dict[str, dict[str, Any]] = {}
     for row in variables:
         identifier = str(row["io_id"])
@@ -220,26 +220,26 @@ def _index_variables(
         record["stages"] = sorted({str(row["stage"]) for row in record["occurrences"]})
         record["directions"] = sorted({str(row["direction"]) for row in record["occurrences"]})
         record["is_model_output"] = "output" in record["directions"]
-        expert = expert_fields.get(record["io_id"])
-        if expert:
+        curated = curated_fields.get(record["io_id"])
+        if curated:
             record["legacy_label"] = record["label"]
-            record["label"] = expert["preferred_label"]
-            record["reported_unit"] = expert["reported_unit"]
-            record["value_shape"] = expert["value_shape"]
-            record["semantic_role"] = "Property" if expert["semantic_role"] in {"Parameter", "Property"} else "Data"
-            if expert["semantic_role"] == "Parameter":
+            record["label"] = curated["preferred_label"]
+            record["reported_unit"] = curated["reported_unit"]
+            record["value_shape"] = curated["value_shape"]
+            record["semantic_role"] = "Property" if curated["semantic_role"] in {"Parameter", "Property"} else "Data"
+            if curated["semantic_role"] == "Parameter":
                 record["workflow_role"] = "Parameter"
-            elif expert["direction"] == "input" and record["semantic_role"] == "Property":
+            elif curated["direction"] == "input" and record["semantic_role"] == "Property":
                 record["workflow_role"] = "InputDataPoint"
-            elif expert["direction"] == "output" and record["semantic_role"] == "Property":
+            elif curated["direction"] == "output" and record["semantic_role"] == "Property":
                 record["workflow_role"] = "OutputDataPoint"
             else:
                 record["workflow_role"] = "Data"
-            record["anchor_iri"] = H2KG + expert["h2kg_local_name"]
-            record["definition"] = expert["definition"]
-            record["notation"] = expert["notation"]
+            record["anchor_iri"] = H2KG + curated["h2kg_local_name"]
+            record["definition"] = curated["definition"]
+            record["notation"] = curated["notation"]
             record["mapping_state"] = "approved_h2kg"
-            record["decision"] = expert["decision"]
+            record["decision"] = curated["decision"]
         else:
             record["semantic_role"] = "Data" if record["value_shape"] == "array" else "Property"
             record["workflow_role"] = (
@@ -250,8 +250,8 @@ def _index_variables(
                 else "Parameter"
             )
             record["anchor_iri"] = f"{DECODE_NS}interface/variable/{record['io_id']}"
-            record["mapping_state"] = "reviewed_decode"
-            record["decision"] = "reviewed_decode_anchor"
+            record["mapping_state"] = "decode_local"
+            record["decision"] = "decode_local_anchor"
         record["canonical_role_iri"] = H2KG + record["semantic_role"]
         record["rdf_type"] = H2KG + "Data" if record["semantic_role"] == "Data" else record["anchor_iri"]
         record["iri"] = f"{WORKFLOW_IRI}/variable/{record['io_id']}"
@@ -270,7 +270,7 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
         "source_format": "pdf_interface_manifest",
         "method_family": "modeling_interface_schema",
         "source_status": "derived_pdf_schema",
-        "mapping_status": "reviewed_schema",
+        "mapping_status": "curated_schema",
         "source_node_count": 3 + len(variables),
         "source_edge_count": 0,
         "mapped_anchor_count": len(variables),
@@ -288,7 +288,7 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
         model_ids[stage] = node_id
         model_is_itc = stage == "ITC"
         model_anchor = H2KG + "InkToCompositionModel" if model_is_itc else f"{DECODE_NS}interface/model/{stage.lower()}"
-        model_state = "approved_h2kg" if model_is_itc else "reviewed_decode"
+        model_state = "approved_h2kg" if model_is_itc else "decode_local"
         nodes.append(
             {
                 "id": node_id,
@@ -304,11 +304,11 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
                 "visual_category": "model",
                 "mapping_state": model_state,
                 "anchor_id": model_anchor,
-                "decision": "existing_h2kg_mapping" if model_is_itc else "reviewed_decode_anchor",
+                "decision": "existing_h2kg_mapping" if model_is_itc else "decode_local_anchor",
                 "canonical_role_iri": H2KG + "Process",
                 "semantic_role": "Process",
-                "confidence": "reviewed_pdf_schema",
-                "mapping_evidence": "Expert-reviewed public H2KG model term." if model_is_itc else "Computational model named in the PDF-derived DECODE interface schema; represented as an H2KG Process without asserting a public H2KG method term.",
+                "confidence": "curated_pdf_schema",
+                "mapping_evidence": "Curated public H2KG model term." if model_is_itc else "Computational model named in the PDF-derived DECODE interface schema; represented as an H2KG Process without asserting a public H2KG method term.",
             }
         )
         anchors.append(
@@ -317,10 +317,10 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
                 "kind": "anchor",
                 "label": details["label"],
                 "state": model_state,
-                "decision": "existing_h2kg_mapping" if model_is_itc else "reviewed_decode_anchor",
+                "decision": "existing_h2kg_mapping" if model_is_itc else "decode_local_anchor",
                 "canonical_role_iri": H2KG + "Process",
                 "semantic_role": "Process",
-                "confidence": "reviewed_pdf_schema",
+                "confidence": "curated_pdf_schema",
                 "evidence": "PDF-defined computational-model schema anchor.",
                 "occurrence_ids": [node_id],
             }
@@ -350,8 +350,8 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
                 "canonical_role_iri": record["canonical_role_iri"],
                 "semantic_role": record["semantic_role"],
                 "workflow_role": record["workflow_role"],
-                "confidence": "expert_reviewed" if record["mapping_state"] == "approved_h2kg" else "reviewed_pdf_schema",
-                "mapping_evidence": "Expert-reviewed ITC field mapped to a public H2KG anchor." if record["mapping_state"] == "approved_h2kg" else "PDF-defined interface field retained as a reviewed DECODE anchor pending a term-specific H2KG vocabulary decision.",
+                "confidence": "curated_source" if record["mapping_state"] == "approved_h2kg" else "curated_pdf_schema",
+                "mapping_evidence": "Curated ITC field mapped to a public H2KG anchor." if record["mapping_state"] == "approved_h2kg" else "PDF-defined interface field retained as a DECODE-local anchor outside H2KG.",
             }
         )
         anchors.append(
@@ -363,7 +363,7 @@ def _build_fragment(manifest: dict[str, Any], variables: dict[str, dict[str, Any
                 "decision": record["decision"],
                 "canonical_role_iri": record["canonical_role_iri"],
                 "semantic_role": record["semantic_role"],
-                "confidence": "reviewed_pdf_schema",
+                "confidence": "curated_pdf_schema",
                 "evidence": f"Stable DECODE interface anchor for PDF identifier {record['io_id']}; no public H2KG synonym has been asserted.",
                 "occurrence_ids": [node_id],
             }
@@ -449,11 +449,11 @@ def _mapping_rows(variables: dict[str, dict[str, Any]]) -> list[dict[str, str]]:
                 "value_shape": record["value_shape"],
                 "reported_unit": record["reported_unit"],
                 "qudt_unit_iri": SAFE_QUDT_UNITS.get(record["reported_unit"], ""),
-                "mapping_decision": "reviewed_decode_anchor",
+                "mapping_decision": "decode_local_anchor",
                 "canonical_role_iri": record["canonical_role_iri"],
                 "semantic_role": record["semantic_role"],
                 "anchor_iri": record["anchor_iri"],
-                "rationale": "PDF-specific interface concept retained as a reviewed DECODE anchor until a reusable H2KG vocabulary decision is approved.",
+                "rationale": "PDF-specific interface concept retained as a DECODE-local anchor outside H2KG.",
             }
         )
     return rows
@@ -573,15 +573,15 @@ def _jsonld_document(manifest: dict[str, Any], variables: dict[str, dict[str, An
         qudt_unit = SAFE_QUDT_UNITS.get(record["reported_unit"])
         if qudt_unit:
             entry["decode:expectedUnit"] = [{"@id": qudt_unit}]
-        if record["mapping_state"] == "reviewed_decode":
+        if record["mapping_state"] == "decode_local":
             graph.append(
                 {
                     "@id": record["anchor_iri"],
                     "@type": ["owl:Class"],
                     "rdfs:subClassOf": [{"@id": H2KG + record["semantic_role"]}],
                     "rdfs:label": record["label"],
-                    "skos:definition": f"Reviewed DECODE interface concept for PDF variable {record['io_id']}.",
-                    "decode:reviewStatus": "pending reusable H2KG vocabulary decision",
+                    "skos:definition": f"DECODE-local interface concept for PDF variable {record['io_id']}.",
+                    "decode:governanceStatus": "not_in_h2kg",
                 }
             )
         graph.append(entry)

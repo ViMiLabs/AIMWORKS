@@ -60,6 +60,7 @@ def prepare_odk_shadow(
     prepare_only: bool = False,
     collect_only: bool = False,
     execute: bool = False,
+    prefer_actual_outputs: bool = True,
 ) -> dict[str, Any]:
     project_root = Path(project_root)
     config_dir = Path(config_dir or project_root / "config")
@@ -99,6 +100,7 @@ def prepare_odk_shadow(
         project_root / "ontology" / "schema.ttl",
         Path(input_path),
     )
+    taxonomy_sha256 = _file_sha256(schema_source)
 
     if prepare_only:
         manifest = {
@@ -111,6 +113,7 @@ def prepare_odk_shadow(
             "reasoner": "ELK",
             "primary_artifact": "base",
             "odk_version": "prepared only",
+            "taxonomy_sha256": taxonomy_sha256,
             "workbench": {
                 "root": str(workbench["root"]),
                 "edit_file": str(workbench["edit_file"]),
@@ -132,7 +135,11 @@ def prepare_odk_shadow(
     if execute and not collect_only:
         command_results = _run_odk_commands(project_root, workbench["root"], profile, source_registry)
 
-    actual_outputs = _collect_actual_odk_outputs(project_root, artifact_dir)
+    actual_outputs = (
+        _collect_actual_odk_outputs(project_root, artifact_dir)
+        if prefer_actual_outputs
+        else {"artifacts": [], "robot_report_source": ""}
+    )
     if actual_outputs["artifacts"]:
         persisted_command_results = command_results or existing_manifest.get("command_results", [])
         imports_report = _build_actual_imports_report(config_dir, workbench["root"])
@@ -158,6 +165,7 @@ def prepare_odk_shadow(
             "reasoner": "ELK",
             "primary_artifact": "base",
             "odk_version": _extract_odk_version(persisted_command_results) if persisted_command_results else existing_manifest.get("odk_version", "unknown"),
+            "taxonomy_sha256": taxonomy_sha256,
             "workbench": {
                 "root": str(workbench["root"]),
                 "edit_file": str(workbench["edit_file"]),
@@ -225,6 +233,7 @@ def prepare_odk_shadow(
         "reasoner": "ELK",
         "primary_artifact": "base",
         "odk_version": "shadow scaffold",
+        "taxonomy_sha256": taxonomy_sha256,
         "workbench": {
             "root": str(workbench["root"]),
             "edit_file": str(workbench["edit_file"]),
@@ -242,6 +251,16 @@ def prepare_odk_shadow(
     }
     dump_json(output_root / "manifest.json", manifest)
     return manifest
+
+
+def _file_sha256(path: Path) -> str:
+    import hashlib
+
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest().upper()
 
 
 def load_odk_manifest(output_root: str | Path) -> dict[str, Any]:
@@ -499,7 +518,7 @@ def _materialize_artifact(spec: dict[str, Any], artifact_dir: Path) -> dict[str,
 def _write_artifact_variant(source: Path, output_path: Path, fmt: str) -> None:
     ensure_dir(output_path.parent)
     if fmt == "ttl" and source.suffix.lower() in {".ttl", ".turtle"}:
-        shutil.copyfile(source, output_path)
+        write_text(output_path, source.read_text(encoding="utf-8").rstrip() + "\n")
         return
     if Graph is None:
         shutil.copyfile(source, output_path)

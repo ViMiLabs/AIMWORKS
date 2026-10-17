@@ -710,10 +710,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "skos:broadMatch": "H2KG narrower than",
     "skos:narrowMatch": "H2KG broader than",
     "skos:relatedMatch": "related to",
-    "owl:equivalentClass": "reviewed equivalent class",
-    "owl:equivalentProperty": "reviewed equivalent property",
-    "rdfs:subClassOf": "reviewed subclass of",
-    "rdfs:subPropertyOf": "reviewed subproperty of"
+    "owl:equivalentClass": "configured equivalent class",
+    "owl:equivalentProperty": "configured equivalent property",
+    "rdfs:subClassOf": "configured subclass of",
+    "rdfs:subPropertyOf": "configured subproperty of"
   })[relation] || relation || "mapping";
 
   function assertedAlignmentHtml(node) {
@@ -803,11 +803,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <strong>Definition</strong>
           <p>${escapeHtml(node.description || "No definition recorded.")}</p>
         </div>
+        ${node.deprecated === "Deprecated" ? `<div class="explorer-inspector__section"><strong>Compatibility status</strong><p>This identifier is retained for compatibility and excluded from normal taxonomy expansion.${node.replacement_iri ? `<br>Canonical replacement: <code>${escapeHtml(node.replacement_iri)}</code>` : ""}${(node.migration_target_iris || []).length ? `<br>Context-specific migration targets: ${(node.migration_target_iris || []).map((iri) => `<code>${escapeHtml(iri)}</code>`).join(", ")}` : ""}${node.profile_fallback_iri ? `<br>Profile fallback: <code>${escapeHtml(node.profile_fallback_iri)}</code>` : ""}</p></div>` : ""}
         ${assertedAlignmentHtml(node)}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Benchmark evidence, not asserted</strong><div data-external-evidence-for="${escapeHtml(node.id)}"><p>Loading compact benchmark evidence...</p></div></div>` : ""}
         ${node.taxonomy_parent_label || node.taxonomy_top_branch ? `<div class="explorer-inspector__section"><strong>Intrinsic classification</strong><p>Parent: ${escapeHtml(node.taxonomy_parent_label || "Top-level branch")}<br>Top branch: ${escapeHtml(node.taxonomy_top_branch || "Not assigned")}<br>Semantic role: ${escapeHtml(node.taxonomy_role || "Class")}<br>Module: ${escapeHtml(node.taxonomy_module || "core")}</p></div>` : ""}
         ${node.local ? `<div class="explorer-inspector__section"><strong>Workflow usage</strong>${workflowUsageHtml(node)}</div>` : ""}
-        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: approved<br>Definition status: ${escapeHtml(node.definition_status)}<br>Migration: ${escapeHtml(node.migration_action || "none")}</p></div>` : ""}
+        ${node.definition_status ? `<div class="explorer-inspector__section"><strong>Governance</strong><p>Status: ${escapeHtml(node.governance_status || "approved")}<br>Definition status: ${escapeHtml(node.definition_status)}<br>Correction action: ${escapeHtml(node.correction_action || node.migration_action || "retain")}</p></div>` : ""}
         ${(node.notations || []).length ? `<div class="explorer-inspector__section"><strong>Notation</strong><p>${escapeHtml(node.notations.join("; "))}</p></div>` : ""}
         ${(node.quantity_guidance || []).length ? `<div class="explorer-inspector__section"><strong>Quantity guidance</strong>${node.quantity_guidance.map((row) => `<p>${escapeHtml([row.quantity_kind, row.unit].filter(Boolean).join(" | "))}<br>${escapeHtml(row.description || "")}</p>`).join("")}</div>` : ""}
         ${(node.sources || []).length ? `<div class="explorer-inspector__section"><strong>Source</strong>${node.sources.map((source) => `<p>${source.startsWith("http") ? `<a href="${escapeHtml(source)}">${escapeHtml(source)}</a>` : escapeHtml(source)}</p>`).join("")}</div>` : ""}
