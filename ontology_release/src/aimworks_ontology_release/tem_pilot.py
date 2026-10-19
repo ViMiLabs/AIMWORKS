@@ -154,41 +154,16 @@ def _tem_mapping_rows() -> list[dict[str, str]]:
         )
 
     org_fields = [
-        ("ExperimentTitle", "Multi-technique characterization of electrodes with different carbons and Pt wt loadings", "instance metadata", "h2kg:hasMetadata + dcterms:title", "Stored on the source-record metadata node."),
-        ("ExperimentID", "3", "instance metadata", "h2kg:hasMetadata + h2kg:hasIdentifier", "Stored as a literal identifier on the source-record metadata node."),
-        ("Measurement-ID", "Run derived DOI", "instance metadata", "h2kg:hasMetadata + h2kg:hasIdentifier", "Stored as a literal identifier on the measurement metadata node."),
-        ("UploadDate", "2024-10-15", "instance metadata", "h2kg:hasMetadata + dcterms:date", "Excel serial normalized to ISO date on the source record."),
-        ("MeasurementDate", "", "not modeled", "-", "No value was present in the TEM pilot sheet."),
-        ("Institution", "UCONN", "instance metadata", "prov:Agent", "Represented as an agent instance linked from the source record."),
-        ("FoundingBody", "GCMAC", "instance metadata", "prov:Agent", "Represented as an agent instance linked from the source record."),
-        ("Country", "USA", "instance metadata", "h2kg:hasMetadata", "Retained as contextual metadata on the source record."),
-        ("Author", "Mariah Batool; Andre Colliard; Jasna Jankovic", "instance metadata", "prov:Agent", "Represented as author agent instances linked through publication metadata."),
-        ("ORCID", "123-465-5478; 321-321-3211; 987-987-4566", "instance metadata", "h2kg:hasMetadata", "Stored on author metadata nodes in the pilot graph."),
-        ("Email", "mari.ba@uconn.us; andyhuebsch@gmail.mx; jas.jan@uconn.us", "instance metadata", "h2kg:hasMetadata", "Stored on author metadata nodes in the pilot graph."),
-        ("Published", "1", "instance metadata", "h2kg:hasMetadata", "Retained as publication-status metadata."),
-        ("Publication", "Automatic Characterization of Energy Materials", "instance metadata", "h2kg:hasMetadata + dcterms:title", "Stored on a publication metadata node."),
-        ("DOI", "https://doi.org/10.3390/catal11030655465465", "instance metadata", "h2kg:hasMetadata + dcterms:identifier", "Stored on a publication metadata node."),
-        ("Journal", "ACS Nanoscale Au", "instance metadata", "h2kg:hasMetadata", "Retained as bibliographic metadata."),
-        ("Volume", "51", "instance metadata", "h2kg:hasMetadata", "Retained as bibliographic metadata."),
-        ("Issue", "78", "instance metadata", "h2kg:hasMetadata", "Retained as bibliographic metadata."),
-        ("Pages", "82-89", "instance metadata", "h2kg:hasMetadata", "Retained as bibliographic metadata."),
-        ("PublicationDate", "2023-11-12", "instance metadata", "h2kg:hasMetadata + dcterms:issued", "Excel serial normalized to ISO date on the publication metadata node."),
-        ("Topic", "Catalysis", "instance metadata", "h2kg:hasMetadata", "Retained as thematic metadata."),
+        ("ExperimentTitle", "Synthetic TEM workflow demonstration", "instance metadata", "h2kg:hasMetadata + dcterms:title", "Identifies an illustrative record; it is not an experimental observation."),
+        ("ExperimentID", "SYNTHETIC-TEM-001", "instance metadata", "h2kg:hasMetadata + h2kg:hasIdentifier", "Stable identifier for the synthetic demonstration."),
+        ("EvidenceStatus", "illustrative synthetic", "instance metadata", "h2kg:hasMetadata", "Prevents the representative values from being interpreted as measured evidence."),
+        ("Topic", "Catalyst nanoparticle characterization", "instance metadata", "h2kg:hasMetadata", "Retained as thematic metadata."),
         ("Device", "PEMFC", "instance metadata", "h2kg:hasMetadata", "Retained as application-context metadata."),
         ("Component", "Catalyst layer", "instance metadata", "h2kg:hasMetadata", "Retained as component-context metadata."),
-        ("Subcomponent", "Catalyst", "instance metadata", "h2kg:hasMetadata", "Retained as subcomponent metadata."),
-        ("Granularity Level", "Nanostructure", "instance metadata", "h2kg:hasMetadata", "Retained as scale/granularity metadata."),
-        ("Format", "tiff", "instance metadata", "h2kg:hasMetadata + dcterms:format", "Stored on the raw dataset metadata node."),
-        ("FileSize", "1", "instance metadata", "h2kg:hasMetadata + dcterms:extent", "Stored with its file-size unit in dataset metadata."),
-        ("FileSizeUnit", "MB", "instance metadata", "h2kg:hasMetadata + dcterms:extent", "Stored with file size in dataset metadata."),
-        ("FileName", "Pt_wt3.zip", "instance metadata", "h2kg:hasMetadata", "Stored on the raw dataset metadata node."),
-        ("DimensionX", "1024", "instance metadata", "h2kg:hasMetadata", "Stored on the raw dataset metadata node."),
-        ("DimensionY", "1024", "instance metadata", "h2kg:hasMetadata", "Stored on the raw dataset metadata node."),
-        ("DimensionZ", "0", "instance metadata", "h2kg:hasMetadata", "Stored on the raw dataset metadata node."),
-        ("PixelPerMetric", "8.1", "instance metadata", "h2kg:hasMetadata", "Stored on the raw dataset metadata node."),
-        ("Link", "link", "instance metadata", "h2kg:hasMetadata + dcterms:source", "Stored as source/link metadata."),
-        ("MaskExist", "yes", "instance metadata", "h2kg:hasMetadata", "Stored on the processed dataset metadata node."),
-        ("MaskLink", "github-com/StarPlatin", "instance metadata", "h2kg:hasMetadata + dcterms:source", "Stored on the processed dataset metadata node."),
+        ("Format", "TIFF", "instance metadata", "h2kg:hasMetadata + dcterms:format", "Stored on the raw dataset metadata node."),
+        ("DimensionX", "1024", "instance metadata", "h2kg:hasMetadata", "Representative image dimension for profile validation."),
+        ("DimensionY", "1024", "instance metadata", "h2kg:hasMetadata", "Representative image dimension for profile validation."),
+        ("MaskExist", "yes", "instance metadata", "h2kg:hasMetadata", "Synthetic processed-dataset metadata."),
     ]
     for field, value, classification, anchor, note in org_fields:
         add("org", field, value, classification, anchor, note)
@@ -307,73 +282,14 @@ def _tem_example_items() -> list[dict[str, Any]]:
         {
             "@id": iri("source-record"),
             "@type": [f"{H2KG}Metadata"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM pilot source record", language="en")],
-            f"{DCTERMS}title": [lit("Multi-technique characterization of electrodes with different carbons and Pt wt loadings", language="en")],
-            f"{DCTERMS}date": [lit("2024-10-15", datatype=f"{XSD}date")],
-            f"{H2KG}hasIdentifier": [lit("3"), lit("Run derived DOI")],
+            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Synthetic TEM demonstration record", language="en")],
+            f"{DCTERMS}title": [lit("Synthetic TEM workflow demonstration", language="en")],
+            f"{DCTERMS}date": [lit("2026-10-19", datatype=f"{XSD}date")],
+            f"{H2KG}hasIdentifier": [lit("SYNTHETIC-TEM-001")],
             "http://www.w3.org/2000/01/rdf-schema#comment": [
-                lit("Topic: Catalysis; device: PEMFC; component: Catalyst layer; subcomponent: Catalyst; granularity: Nanostructure.", language="en"),
-                lit("Country: USA; source link: link; pixel-per-metric: 8.1.", language="en"),
+                lit("Illustrative synthetic record for validating the H2KG TEM profile; no value is an experimental observation.", language="en"),
+                lit("Topic: catalyst nanoparticle characterization; device context: PEMFC; component context: catalyst layer.", language="en"),
             ],
-            f"{DCTERMS}creator": [ref(iri("author-mariah-batool")), ref(iri("author-andre-colliard")), ref(iri("author-jasna-jankovic"))],
-            f"{DCTERMS}contributor": [ref(iri("institution-uconn")), ref(iri("funding-gcmac"))],
-            f"{DCTERMS}source": [lit("link")],
-        },
-        {
-            "@id": iri("publication-record"),
-            "@type": [f"{H2KG}Metadata"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM pilot publication metadata", language="en")],
-            f"{DCTERMS}title": [lit("Automatic Characterization of Energy Materials", language="en")],
-            f"{DCTERMS}identifier": [lit("https://doi.org/10.3390/catal11030655465465")],
-            f"{DCTERMS}issued": [lit("2023-11-12", datatype=f"{XSD}date")],
-            "http://www.w3.org/2000/01/rdf-schema#comment": [
-                lit("Journal: ACS Nanoscale Au; volume: 51; issue: 78; pages: 82-89.", language="en"),
-                lit("Published flag from source sheet: 1.", language="en"),
-            ],
-            f"{DCTERMS}creator": [ref(iri("author-mariah-batool")), ref(iri("author-andre-colliard")), ref(iri("author-jasna-jankovic"))],
-        },
-        {
-            "@id": iri("author-mariah-batool"),
-            "@type": [f"{PROV}Agent"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Mariah Batool", language="en")],
-            f"{H2KG}hasMetadata": [ref(iri("author-mariah-batool-metadata"))],
-        },
-        {
-            "@id": iri("author-andre-colliard"),
-            "@type": [f"{PROV}Agent"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Andre Colliard", language="en")],
-            f"{H2KG}hasMetadata": [ref(iri("author-andre-colliard-metadata"))],
-        },
-        {
-            "@id": iri("author-jasna-jankovic"),
-            "@type": [f"{PROV}Agent"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Jasna Jankovic", language="en")],
-            f"{H2KG}hasMetadata": [ref(iri("author-jasna-jankovic-metadata"))],
-        },
-        {
-            "@id": iri("author-mariah-batool-metadata"),
-            "@type": [f"{H2KG}Metadata"],
-            f"{DCTERMS}identifier": [lit("ORCID: 123-465-5478"), lit("Email: mari.ba@uconn.us")],
-        },
-        {
-            "@id": iri("author-andre-colliard-metadata"),
-            "@type": [f"{H2KG}Metadata"],
-            f"{DCTERMS}identifier": [lit("ORCID: 321-321-3211"), lit("Email: andyhuebsch@gmail.mx")],
-        },
-        {
-            "@id": iri("author-jasna-jankovic-metadata"),
-            "@type": [f"{H2KG}Metadata"],
-            f"{DCTERMS}identifier": [lit("ORCID: 987-987-4566"), lit("Email: jas.jan@uconn.us")],
-        },
-        {
-            "@id": iri("institution-uconn"),
-            "@type": [f"{PROV}Agent"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("UCONN", language="en")],
-        },
-        {
-            "@id": iri("funding-gcmac"),
-            "@type": [f"{PROV}Agent"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("GCMAC", language="en")],
         },
         {
             "@id": iri("pdc-material"),
@@ -432,7 +348,7 @@ def _tem_example_items() -> list[dict[str, Any]]:
         {
             "@id": iri("tem-sample"),
             "@type": [f"{H2KG}Matter"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM pilot powder sample", language="en")],
+            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Synthetic TEM powder sample", language="en")],
             f"{H2KG}hasMetadata": [ref(iri("tem-sample-metadata"))],
         },
         {
@@ -486,7 +402,7 @@ def _tem_example_items() -> list[dict[str, Any]]:
         {
             "@id": iri("tem-measurement-001"),
             "@type": [f"{H2KG}Measurement", f"{H2KG}TransmissionElectronMicroscopyImaging"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM pilot measurement", language="en")],
+            "http://www.w3.org/2000/01/rdf-schema#label": [lit("Synthetic TEM measurement", language="en")],
             f"{H2KG}hasInputMaterial": [ref(iri("tem-sample"))],
             f"{H2KG}usesInstrument": [ref(iri("tem-instrument-001"))],
             f"{H2KG}hasOutputData": [ref(iri("tem-raw-image-dataset"))],
@@ -501,15 +417,13 @@ def _tem_example_items() -> list[dict[str, Any]]:
             f"{H2KG}hasMetadata": [
                 ref(iri("tem-acquisition-metadata")),
                 ref(iri("source-record")),
-                ref(iri("publication-record")),
             ],
-            f"{PROV}wasAssociatedWith": [ref(iri("author-mariah-batool")), ref(iri("author-andre-colliard")), ref(iri("author-jasna-jankovic"))],
-            f"{DCTERMS}source": [ref(iri("publication-record"))],
+            f"{DCTERMS}source": [ref(iri("source-record"))],
         },
         {
             "@id": iri("tem-instrument-001"),
             "@type": [f"{H2KG}Instrument", f"{H2KG}TEMInstrument"],
-            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM instrument used in the pilot case", language="en")],
+            "http://www.w3.org/2000/01/rdf-schema#label": [lit("TEM instrument in the synthetic demonstration", language="en")],
             f"{H2KG}hasMetadata": [ref(iri("tem-instrument-metadata"))],
         },
         {
@@ -586,7 +500,7 @@ def _tem_example_items() -> list[dict[str, Any]]:
             f"{H2KG}fromMeasurement": [ref(iri("tem-measurement-001"))],
             f"{H2KG}hasQuantityValue": [ref(iri("pd-nanoparticle-diameter-qv"))],
             f"{PROV}wasGeneratedBy": [ref(iri("manual-particle-measurement-step"))],
-            f"{DCTERMS}source": [ref(iri("publication-record"))],
+            f"{DCTERMS}source": [ref(iri("source-record"))],
         },
         qv("pd-nanoparticle-diameter-qv", "5", f"{XSD}decimal", f"{UNIT}NanoM", "http://qudt.org/vocab/quantitykind/Length"),
         {
@@ -665,7 +579,7 @@ def _tem_example_items() -> list[dict[str, Any]]:
 
 
 def _tem_validation_note() -> str:
-    return """# TEM Validation Note
+    return """# Synthetic TEM Demonstration Validation Note
 
 ## Ontology changes introduced in the TEM round
 
@@ -677,7 +591,7 @@ def _tem_validation_note() -> str:
 
 ## What remained instance metadata in round 1
 
-- Organizational, bibliographic, file, and access details from the `org` section.
+- Synthetic record, file, and access descriptors from the `org` section.
 - `MeasurementType`, `Specimen`, `Atmosphere`, and `Calibration` from the `char` section.
 - `MicroscopeBrand`, `Cathode`, `Probe`, `Detector`, `ImagingTechnique`, `Signal`, `TimeLapse`, `RawData`, and `DataAdquisitionRate` from the `inst` section.
 - Procurement metadata such as supplier, lot number, and CAS number.
@@ -687,22 +601,24 @@ def _tem_validation_note() -> str:
 - No new TBox terms were introduced for `Buy`, `Mix`, `Dispersion`, `Dry`, or `Manual particle measurement`; these remain labeled process instances.
 - No dedicated metadata sub-vocabulary was introduced for every catalog field in this first round.
 - `MeasurementType`, imaging mode, detector, and signal remain metadata until they are reviewed across additional imaging methods.
-- The pilot uses `PdNanoparticleDiameter` as the primary scientific output and does not broaden the result to a generic particle-size term.
+- The demonstration uses `PdNanoparticleDiameter` as the primary result type and does not broaden it to a generic particle-size term.
 
 ## Modeling note
 
-The TEM pilot follows the current H2KG release style by combining the reusable base schema (`Process`, `Measurement`, `Data`, `Metadata`, `DataPoint`) with local controlled-vocabulary anchors such as `TransmissionElectronMicroscopyImaging`, `TEMInstrument`, `MicrostructureImageDataset`, and `PdNanoparticleDiameter`.
+The synthetic TEM demonstration follows the current H2KG release style by combining the reusable base schema (`Process`, `Measurement`, `Data`, `Metadata`, `DataPoint`) with local controlled-vocabulary anchors such as `TransmissionElectronMicroscopyImaging`, `TEMInstrument`, `MicrostructureImageDataset`, and `PdNanoparticleDiameter`.
+
+All values are illustrative profile-test values. They are not measurements, are not attributed to a publication, and must not be used as scientific evidence.
 """
 
 
 def _tem_case_summary() -> str:
-    return """# TEM Case Summary
+    return """# Synthetic TEM Demonstration Summary
 
-The TEM pilot demonstrates that H2KG can capture one imaging workflow end to end without uncontrolled ontology growth. Procurement and sample-preparation steps are represented as process instances that consume and produce material instances, while the TEM acquisition itself is represented as a `TransmissionElectronMicroscopyImaging` measurement linked to a `TEMInstrument`, explicit acquisition-parameter settings, and a raw `MicrostructureImageDataset`.
+The synthetic TEM record demonstrates how H2KG represents one imaging workflow end to end. Procurement and sample-preparation steps are represented as process instances that consume and produce material instances, while the acquisition is represented as a `TransmissionElectronMicroscopyImaging` measurement linked to a `TEMInstrument`, explicit parameter records, and a raw `MicrostructureImageDataset`.
 
-A preprocessing step converts the raw image data into a processed image dataset, and an analysis step uses `FijiImageJSoftware` to derive the final scientific result. The reported average particle size is represented as a `DataPoint` for `PdNanoparticleDiameter`, linked back to the TEM measurement through `fromMeasurement`, to the analysis process through `prov:wasGeneratedBy`, and to a local QUDT quantity-value node carrying the numeric value `5 nm`.
+A preprocessing step converts the raw image data into a processed image dataset, and an analysis step uses `FijiImageJSoftware` to derive a synthetic result record. The illustrative particle diameter is represented as a `DataPoint` for `PdNanoparticleDiameter`, linked back to the TEM measurement through `fromMeasurement`, to the analysis process through `prov:wasGeneratedBy`, and to a local QUDT quantity-value node carrying the representative value `5 nm`.
 
-This pilot keeps publication, file, author, and organizational information as attached metadata rather than promoting dozens of one-off ontology terms. It therefore shows a conservative H2KG extension pattern that is rich enough for provenance and querying, but disciplined enough to remain compatible with the existing release model.
+The demonstration keeps source-specific file and contextual information as attached metadata rather than promoting one-off ontology terms. It therefore tests a conservative H2KG profile pattern while making the synthetic status of the record explicit.
 """
 
 
@@ -719,23 +635,23 @@ def _tem_follow_on_gaps() -> str:
 
 def _tem_readme(generated_files: list[Path]) -> str:
     files = "\n".join(f"- `{path.name}`" for path in generated_files)
-    return f"""# TEM Pilot Package
+    return f"""# Synthetic TEM Demonstration Package
 
-Generated TEM companion artifacts for the first imaging-method integration round.
+Generated TEM companion artifacts for profile validation and manuscript illustration. The record is wholly synthetic and is not attributed to an experiment or publication.
 
 ## Files
 
 {files}
 
-The pilot is intentionally conservative: only minimal reusable schema changes were introduced, while catalog-specific details remain attached as metadata or labeled process instances.
+The demonstration is intentionally conservative: reusable ontology terms are separated from synthetic occurrence values and source-specific metadata.
 """
 
 
 def _missing_terms_note(missing: list[str]) -> str:
     lines = "\n".join(f"- `{term}`" for term in missing)
-    return f"""# TEM Pilot Package
+    return f"""# Synthetic TEM Demonstration Package
 
-TEM pilot artifacts were not generated because required H2KG terms were missing from the input ontology source.
+Synthetic TEM demonstration artifacts were not generated because required H2KG terms were missing from the input ontology source.
 
 ## Missing terms
 

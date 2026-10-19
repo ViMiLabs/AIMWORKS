@@ -53,7 +53,20 @@ def _iri(local_name: str) -> str:
 
 
 PROFILES: tuple[MethodProfile, ...] = (
-    MethodProfile("tem", "Transmission electron microscopy", "tem_pilot", "tem_pilot_example", "TransmissionElectronMicroscopyImaging", "TEMInstrument", ("MicrostructureImageDataset",), ("AcceleratingVoltage", "Magnification", "WorkingDistance", "Temperature", "RelativeHumidity", "VacuumChamberPressure"), ("PdNanoparticleDiameter",), "Detector, grid, specimen descriptors, file details, and publication details remain metadata.", "The pilot contains a reported nanoparticle-diameter result."),
+    MethodProfile(
+        "tem",
+        "Transmission electron microscopy",
+        "tem_pilot",
+        "tem_pilot_example",
+        "TransmissionElectronMicroscopyImaging",
+        "TEMInstrument",
+        ("MicrostructureImageDataset",),
+        ("AcceleratingVoltage", "Magnification", "WorkingDistance", "Temperature", "RelativeHumidity", "VacuumChamberPressure"),
+        ("PdNanoparticleDiameter",),
+        "Detector, grid, specimen descriptors, file details, and publication details remain metadata.",
+        "The synthetic demonstration contains a representative nanoparticle-diameter result; it is not an experimental observation.",
+        evidence_status="illustrative_synthetic",
+    ),
     MethodProfile("sem", "Scanning electron microscopy", "sem_pilot", "sem_pilot_example", "ScanningElectronMicroscopyImaging", "SEMInstrument", ("SEMImageDataset",), ("AcceleratingVoltage", "Magnification", "WorkingDistance", "Temperature", "RelativeHumidity"), ("CatalystParticleDiameter",), "Detector mode, supplier information, image-file details, and publication details remain metadata.", "The pilot deliberately records a particle-diameter target without inventing a numeric result."),
     MethodProfile("fib_sem", "FIB-SEM tomography", "fib_sem_pilot", "fib_sem_example", "FIBSEMTomographyMeasurement", "FIBSEMInstrument", ("SEMImageDataset", "TomographicReconstructionDataset"), ("IonBeamEnergy", "IonBeamCurrent", "ElectronBeamEnergy", "ElectronCurrent", "VoxelSize", "SliceNumber", "CutThickness", "StageTilt", "DwellTime", "ExposureTime", "Magnification", "MicroscopyMeasuredArea", "Temperature", "RelativeHumidity", "VacuumChamberPressure", "TotalAcquisitionTime"), ("TotalPorosity", "GeodesicTortuosity", "Constrictivity"), "Instrument settings not represented by reusable parameters, segmentation choices, and file details remain metadata.", "The pilot captures acquisition, reconstruction, and multiple microstructural outputs."),
     MethodProfile("ic_sem", "Ion-cut scanning electron microscopy", "ic_sem_pilot", "ic_sem_example", "ICSEMImagingMeasurement", "ICSEMInstrument", ("SEMImageDataset", "SEMMicrographDataset"), ("IonBeamEnergy", "IonBeamCurrent", "ElectronBeamEnergy", "ElectronCurrent", "PixelSize", "CutThickness", "DwellTime", "ExposureTime", "Magnification", "MicroscopyMeasuredArea", "Temperature", "RelativeHumidity", "VacuumChamberPressure", "TotalAcquisitionTime"), ("MembraneElectrodeAssemblyThickness", "GasDiffusionLayerThickness", "TotalPorosity"), "Cutting details, detector settings, and study-specific context remain metadata.", "The pilot represents layer-resolved thickness and porosity analysis."),
@@ -139,8 +152,12 @@ def _build_one(
     if not source_ttl.exists() or not source_json.exists():
         write_text(folder / "README.md", f"# {spec.title} profile\n\nPilot source files were not available at profile build time.\n")
         return {"key": spec.key, "title": spec.title, "status": "skipped_missing_pilot", "evidence_status": spec.evidence_status}
-    copied_ttl = folder / "source_grounded_example.ttl"
-    copied_json = folder / "source_grounded_example.jsonld"
+    example_stem = "synthetic_example" if spec.evidence_status == "illustrative_synthetic" else "source_grounded_example"
+    if spec.evidence_status == "illustrative_synthetic":
+        for obsolete_suffix in ("ttl", "jsonld"):
+            (folder / f"source_grounded_example.{obsolete_suffix}").unlink(missing_ok=True)
+    copied_ttl = folder / f"{example_stem}.ttl"
+    copied_json = folder / f"{example_stem}.jsonld"
     shutil.copyfile(source_ttl, copied_ttl)
     shutil.copyfile(source_json, copied_json)
     normalize_example_pair(

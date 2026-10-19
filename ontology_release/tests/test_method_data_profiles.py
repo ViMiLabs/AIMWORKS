@@ -24,6 +24,10 @@ def test_method_profiles_generate_and_classify_existing_examples(tmp_path):
     assert len(coverage["profiles"]) == 9
     assert all(row["status"] == "generated" for row in coverage["profiles"])
     assert all(row["shacl_conforms"] for row in coverage["profiles"])
+    tem = next(row for row in coverage["profiles"] if row["method_profile"] == "tem")
+    assert tem["evidence_status"] == "illustrative_synthetic"
+    assert (tmp_path / "output" / "method_profiles" / "tem" / "synthetic_example.ttl").exists()
+    assert not (tmp_path / "output" / "method_profiles" / "tem" / "source_grounded_example.ttl").exists()
     neutron = next(row for row in coverage["profiles"] if row["method_profile"] == "neutron_tomography")
     assert neutron["shacl_conforms"] is True
     assert neutron["curation_finding_count"] == 1
@@ -71,7 +75,7 @@ def test_tem_profile_rejects_incompatible_measurement_and_result_chain(tmp_path)
     )
     assert result["status"] == "generated"
     folder = tmp_path / "output" / "method_profiles" / "tem"
-    source = folder / "source_grounded_example.ttl"
+    source = folder / "synthetic_example.ttl"
     shapes = folder / "tem_profile_shapes.ttl"
     assert validate_method_profile_graph(shapes, source)["conforms"] is True
 
@@ -112,7 +116,7 @@ def test_tem_profile_separates_parameter_records_from_properties(tmp_path):
         ROOT / "output" / "examples",
     )
     graph = Graph().parse(
-        tmp_path / "output" / "method_profiles" / "tem" / "source_grounded_example.ttl",
+        tmp_path / "output" / "method_profiles" / "tem" / "synthetic_example.ttl",
         format="turtle",
     )
     measurement = next(graph.subjects(RDF.type, H2KG.TransmissionElectronMicroscopyImaging))

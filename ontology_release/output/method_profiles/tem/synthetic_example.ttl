@@ -22,58 +22,11 @@
 
 <https://w3id.org/h2kg/examples/tem#source-record>
   a h2kg:Metadata ;
-  rdfs:label "TEM pilot source record"@en ;
-  dcterms:title "Multi-technique characterization of electrodes with different carbons and Pt wt loadings"@en ;
-  dcterms:date "2024-10-15"^^xsd:date ;
-  h2kg:hasIdentifier "3", "Run derived DOI" ;
-  rdfs:comment "Topic: Catalysis; device: PEMFC; component: Catalyst layer; subcomponent: Catalyst; granularity: Nanostructure."@en, "Country: USA; source link: link; pixel-per-metric: 8.1."@en ;
-  dcterms:creator <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> ;
-  dcterms:contributor <https://w3id.org/h2kg/examples/tem#institution-uconn>, <https://w3id.org/h2kg/examples/tem#funding-gcmac> ;
-  dcterms:source "link" .
-
-<https://w3id.org/h2kg/examples/tem#publication-record>
-  a h2kg:Metadata ;
-  rdfs:label "TEM pilot publication metadata"@en ;
-  dcterms:title "Automatic Characterization of Energy Materials"@en ;
-  dcterms:identifier "https://doi.org/10.3390/catal11030655465465" ;
-  dcterms:issued "2023-11-12"^^xsd:date ;
-  rdfs:comment "Journal: ACS Nanoscale Au; volume: 51; issue: 78; pages: 82-89."@en, "Published flag from source sheet: 1."@en ;
-  dcterms:creator <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> .
-
-<https://w3id.org/h2kg/examples/tem#author-mariah-batool>
-  a prov:Agent ;
-  rdfs:label "Mariah Batool"@en ;
-  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-mariah-batool-metadata> .
-
-<https://w3id.org/h2kg/examples/tem#author-andre-colliard>
-  a prov:Agent ;
-  rdfs:label "Andre Colliard"@en ;
-  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-andre-colliard-metadata> .
-
-<https://w3id.org/h2kg/examples/tem#author-jasna-jankovic>
-  a prov:Agent ;
-  rdfs:label "Jasna Jankovic"@en ;
-  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic-metadata> .
-
-<https://w3id.org/h2kg/examples/tem#author-mariah-batool-metadata>
-  a h2kg:Metadata ;
-  dcterms:identifier "ORCID: 123-465-5478", "Email: mari.ba@uconn.us" .
-
-<https://w3id.org/h2kg/examples/tem#author-andre-colliard-metadata>
-  a h2kg:Metadata ;
-  dcterms:identifier "ORCID: 321-321-3211", "Email: andyhuebsch@gmail.mx" .
-
-<https://w3id.org/h2kg/examples/tem#author-jasna-jankovic-metadata>
-  a h2kg:Metadata ;
-  dcterms:identifier "ORCID: 987-987-4566", "Email: jas.jan@uconn.us" .
-
-<https://w3id.org/h2kg/examples/tem#institution-uconn>
-  a prov:Agent ;
-  rdfs:label "UCONN"@en .
-
-<https://w3id.org/h2kg/examples/tem#funding-gcmac>
-  a prov:Agent ;
-  rdfs:label "GCMAC"@en .
+  rdfs:label "Synthetic TEM demonstration record"@en ;
+  dcterms:title "Synthetic TEM workflow demonstration"@en ;
+  dcterms:date "2026-10-19"^^xsd:date ;
+  h2kg:hasIdentifier "SYNTHETIC-TEM-001" ;
+  rdfs:comment "Illustrative synthetic record for validating the H2KG TEM profile; no value is an experimental observation."@en, "Topic: catalyst nanoparticle characterization; device context: PEMFC; component context: catalyst layer."@en .
 
 <https://w3id.org/h2kg/examples/tem#pdc-material>
   a h2kg:Matter ;
@@ -116,7 +69,7 @@
 
 <https://w3id.org/h2kg/examples/tem#tem-sample>
   a h2kg:Matter ;
-  rdfs:label "TEM pilot powder sample"@en ;
+  rdfs:label "Synthetic TEM powder sample"@en ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-sample-metadata> .
 
 <https://w3id.org/h2kg/examples/tem#tem-sample-metadata>
@@ -162,18 +115,17 @@
 
 <https://w3id.org/h2kg/examples/tem#tem-measurement-001>
   a h2kg:Measurement, h2kg:TransmissionElectronMicroscopyImaging ;
-  rdfs:label "TEM pilot measurement"@en ;
+  rdfs:label "Synthetic TEM measurement"@en ;
   h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/tem#tem-sample> ;
   h2kg:usesInstrument <https://w3id.org/h2kg/examples/tem#tem-instrument-001> ;
   h2kg:hasOutputData <https://w3id.org/h2kg/examples/tem#tem-raw-image-dataset> ;
   h2kg:hasParameter <https://w3id.org/h2kg/examples/tem#accelerating-voltage-setting>, <https://w3id.org/h2kg/examples/tem#magnification-setting>, <https://w3id.org/h2kg/examples/tem#working-distance-setting>, <https://w3id.org/h2kg/examples/tem#temperature-setting>, <https://w3id.org/h2kg/examples/tem#relative-humidity-setting>, <https://w3id.org/h2kg/examples/tem#vacuum-pressure-setting> ;
-  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-acquisition-metadata>, <https://w3id.org/h2kg/examples/tem#source-record>, <https://w3id.org/h2kg/examples/tem#publication-record> ;
-  prov:wasAssociatedWith <https://w3id.org/h2kg/examples/tem#author-mariah-batool>, <https://w3id.org/h2kg/examples/tem#author-andre-colliard>, <https://w3id.org/h2kg/examples/tem#author-jasna-jankovic> ;
-  dcterms:source <https://w3id.org/h2kg/examples/tem#publication-record> .
+  h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-acquisition-metadata>, <https://w3id.org/h2kg/examples/tem#source-record> ;
+  dcterms:source <https://w3id.org/h2kg/examples/tem#source-record> .
 
 <https://w3id.org/h2kg/examples/tem#tem-instrument-001>
   a h2kg:Instrument, h2kg:TEMInstrument ;
-  rdfs:label "TEM instrument used in the pilot case"@en ;
+  rdfs:label "TEM instrument in the synthetic demonstration"@en ;
   h2kg:hasMetadata <https://w3id.org/h2kg/examples/tem#tem-instrument-metadata> .
 
 <https://w3id.org/h2kg/examples/tem#tem-instrument-metadata>
@@ -230,7 +182,7 @@
   h2kg:ofProperty <https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-datapoint-property-occurrence> ;
   h2kg:fromMeasurement <https://w3id.org/h2kg/examples/tem#tem-measurement-001> ;
   prov:wasGeneratedBy <https://w3id.org/h2kg/examples/tem#manual-particle-measurement-step> ;
-  dcterms:source <https://w3id.org/h2kg/examples/tem#publication-record> .
+  dcterms:source <https://w3id.org/h2kg/examples/tem#source-record> .
 
 <https://w3id.org/h2kg/examples/tem#pd-nanoparticle-diameter-qv>
   a qudt:QuantityValue ;

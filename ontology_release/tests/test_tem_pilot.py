@@ -71,6 +71,11 @@ def test_tem_pilot_package_generates_outputs(tmp_path: Path):
     assert "inst,Magnification,140000,new ontology term,h2kg:Magnification" in csv_text
 
     payload = json.loads((target_dir / "tem_pilot_example.jsonld").read_text(encoding="utf-8"))
+    serialized = json.dumps(payload).casefold()
+    assert "illustrative synthetic record" in serialized
+    assert "doi.org/10.3390" not in serialized
+    assert "@gmail" not in serialized
+    assert "@uconn" not in serialized
     items = payload["@graph"]
     datapoint = next(item for item in items if item["@id"].endswith("pd-nanoparticle-diameter-datapoint"))
     assert datapoint["https://w3id.org/h2kg/hydrogen-ontology#ofProperty"][0]["@id"] == "https://w3id.org/h2kg/hydrogen-ontology#PdNanoparticleDiameter"

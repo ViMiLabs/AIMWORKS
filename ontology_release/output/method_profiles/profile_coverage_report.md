@@ -2,7 +2,7 @@
 
 | Profile | Evidence status | SHACL conforms | Result treatment |
 | --- | --- | --- | --- |
-| Transmission electron microscopy | source_grounded | True | required |
+| Transmission electron microscopy | illustrative_synthetic | True | required |
 | Scanning electron microscopy | source_grounded | True | required |
 | FIB-SEM tomography | source_grounded | True | required |
 | Ion-cut scanning electron microscopy | source_grounded | True | required |

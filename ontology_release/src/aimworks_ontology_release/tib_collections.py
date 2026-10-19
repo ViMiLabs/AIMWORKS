@@ -769,8 +769,24 @@ Generate the H2KG taxonomy before running the collection benchmark.
         }
         for row in decision_rows
     ]
-    baseline_summaries = summarize_decisions(terms, baseline_rows, snapshot, legacy_policy=True)
-    summaries = summarize_decisions(terms, decision_rows, snapshot)
+    deprecated_class_count = sum(
+        1
+        for term in taxonomy_registry.get("terms", [])
+        if str(term.get("disposition", "")).startswith("deprecated_")
+    )
+    baseline_summaries = summarize_decisions(
+        terms,
+        baseline_rows,
+        snapshot,
+        legacy_policy=True,
+        deprecated_class_count=deprecated_class_count,
+    )
+    summaries = summarize_decisions(
+        terms,
+        decision_rows,
+        snapshot,
+        deprecated_class_count=deprecated_class_count,
+    )
     _validate_publishable_summaries(summaries)
     summaries["benchmark_summary"]["failed_query_count"] = int(candidate_cache.get("query_failure_count") or 0)
     summaries["benchmark_summary"]["incomplete_h2kg_class_count"] = 0
@@ -966,6 +982,7 @@ def summarize_decisions(
     *,
     incomplete_term_iris: set[str] | None = None,
     legacy_policy: bool = False,
+    deprecated_class_count: int = 0,
 ) -> dict[str, Any]:
     denominator = len(terms)
     incomplete_term_iris = incomplete_term_iris or set()
@@ -1109,7 +1126,7 @@ def summarize_decisions(
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "tib_retrieved_at": snapshot.get("retrieved_at"),
         "h2kg_active_classes_assessed": denominator,
-        "deprecated_h2kg_classes_excluded": 6,
+        "deprecated_h2kg_classes_excluded": deprecated_class_count,
         "collections": sorted(collection_members),
         "unique_target_ontologies": len({value for values in collection_members.values() for value in values}),
         "candidate_decisions": len(decisions),
