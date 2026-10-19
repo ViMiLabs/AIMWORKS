@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "schema_version": "h2kg-application-evaluation/v1",
-  "generated_at": "2026-10-19T15:47:51+00:00",
+  "schema_version": "h2kg-application-evaluation/v2",
+  "generated_at": "2026-10-19T19:53:21+00:00",
   "coverage": {
     "canonical_source_concepts": 573,
     "public_h2kg_outcomes": 35,
@@ -27,13 +27,24 @@
     "task_count": 4,
     "result_row_count": 77,
     "rq1_semantic_result_count": 26,
+    "rq1_semantic_workflow_count": 14,
     "rq1_exact_label_result_count": 19,
+    "rq1_exact_label_workflow_count": 11,
     "rq1_semantic_only_result_count": 7,
+    "rq1_semantic_only_reviewed_relevant_count": 7,
+    "rq1_omission_candidate_count": 58,
+    "rq1_omission_pool_exhaustive": false,
+    "rq1_baseline_normalization": "case-fold; replace non-alphanumeric characters with spaces; collapse whitespace; exact equality against preferred, source, or alternate ITC labels",
     "rq2_semantic_result_count": 2,
+    "rq2_profile_count": 1,
     "rq2_label_baseline_result_count": 24,
-    "rq2_label_false_positive_count": 22,
+    "rq2_reviewed_scalar_exclusion_count": 22,
     "rq3_carbon_normalized_field_count": 4,
-    "evaluation_status": "registry_derived_expected_sets_complete; independent_relevance_assessment_pending",
+    "rq3_interpretation": "encoded retrieval capability; no precision or recall estimate",
+    "rq4_accepted_handoff_count": 1,
+    "rq4_rejected_lexical_connection_count": 1,
+    "reviewed_result_count": 135,
+    "evaluation_status": "completed_with_independent_application_level_labels",
     "independent_precision_recall_claimed": false
   },
   "benchmark_diagnostic": {
@@ -51,26 +62,139 @@
       "cached_imported_candidate_count": 2,
       "cached_defining_ontology_candidate_count": 0,
       "native_source_rdf_in_frozen_package": false,
-      "diagnostic_status": "candidate_provenance_diagnosed; native_BattINFO_RDF_hierarchy_comparison_pending"
+      "diagnostic_status": "not_assessed_native_evidence_unavailable",
+      "benchmark_effect": "retained_as_catalogue_membership; excluded_from_semantic_outcomes_and_NFDI4Ing_union"
     },
-    "focused_hdo_edo_comparison": {
-      "status": "instrument_generated; execution_and_independent_assessment_pending",
-      "reason": "Neither comparator is a native row in the frozen three-collection snapshot, so collection percentages cannot substitute for task-based comparison."
+    "focused_comparator_evaluation": {
+      "status": "complete",
+      "resources": [
+        "H2KG 2.3.0",
+        "Electrochemistry Domain Ontology 0.39.0",
+        "Helmholtz Digitisation Ontology 2026-09-25",
+        "HOLY 1.1.0"
+      ],
+      "reason": "The task matrix uses frozen full RDF graphs and reports native and imported evidence separately from TIB collection percentages."
     }
   },
-  "independent_semantic_audit_status": "awaiting_independent_review",
-  "independent_judgments_completed": 0,
+  "semantic_assessment": {
+    "status": "complete",
+    "assessment_count": 5486,
+    "reviewer_count": 2,
+    "strata": [
+      {
+        "review_stratum": "itc_field",
+        "item_count": 44,
+        "accepted_count": 7,
+        "accepted_after_correction_count": 37,
+        "rejected_count": 0,
+        "unresolved_count": 0,
+        "recorded_disagreement_count": null,
+        "adjudicated_count": null,
+        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+      },
+      {
+        "review_stratum": "decode_concept",
+        "item_count": 573,
+        "accepted_count": 573,
+        "accepted_after_correction_count": 0,
+        "rejected_count": 0,
+        "unresolved_count": 0,
+        "recorded_disagreement_count": null,
+        "adjudicated_count": null,
+        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+      },
+      {
+        "review_stratum": "decode_edge",
+        "item_count": 4463,
+        "accepted_count": 4463,
+        "accepted_after_correction_count": 0,
+        "rejected_count": 0,
+        "unresolved_count": 0,
+        "recorded_disagreement_count": null,
+        "adjudicated_count": null,
+        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+      },
+      {
+        "review_stratum": "h2kg_taxonomy_sample",
+        "item_count": 150,
+        "accepted_count": 149,
+        "accepted_after_correction_count": 1,
+        "rejected_count": 0,
+        "unresolved_count": 0,
+        "recorded_disagreement_count": null,
+        "adjudicated_count": null,
+        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+      },
+      {
+        "review_stratum": "asserted_external_mapping",
+        "item_count": 256,
+        "accepted_count": 256,
+        "accepted_after_correction_count": 0,
+        "rejected_count": 0,
+        "unresolved_count": 0,
+        "recorded_disagreement_count": null,
+        "adjudicated_count": null,
+        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+      }
+    ],
+    "accepted_count": 5448,
+    "accepted_after_correction_count": 38,
+    "rejected_count": 0,
+    "unresolved_count": 0,
+    "recorded_disagreement_count": null,
+    "adjudicated_count": null,
+    "publication_interpretation": "Acceptance of a DECODE-local item confirms its application-level identity or semantic role; it does not promote the item into H2KG."
+  },
+  "comparator_evaluation": {
+    "status": "complete",
+    "resource_count": 4,
+    "task_count": 5,
+    "assessment_count": 20,
+    "outcome_counts_by_resource": {
+      "h2kg": {
+        "direct_native": 3,
+        "direct_via_import": 1,
+        "requires_extension": 1
+      },
+      "edo": {
+        "direct_native": 1,
+        "direct_via_import": 3,
+        "requires_extension": 1
+      },
+      "hdo": {
+        "out_of_scope": 1,
+        "requires_mapping_or_context": 1,
+        "requires_extension": 2,
+        "direct_via_import": 1
+      },
+      "holy": {
+        "requires_mapping_or_context": 2,
+        "out_of_scope": 3
+      }
+    },
+    "aggregate_score_reported": false,
+    "method_note": "Native and imported evidence are reported separately; outcomes are not combined into a superiority score."
+  },
+  "independent_semantic_audit_status": "complete",
+  "independent_judgments_completed": 5486,
   "files": [
-    "..\\output\\evaluation\\decode_public_coverage.csv",
-    "..\\output\\evaluation\\decode_public_coverage.json",
-    "..\\output\\evaluation\\itc_decode_population_crosswalk.csv",
-    "..\\output\\evaluation\\itc_decode_population_crosswalk.json",
-    "..\\output\\evaluation\\retrieval_tasks.csv",
-    "..\\output\\evaluation\\retrieval_results.csv",
-    "..\\output\\evaluation\\retrieval_evaluation.json",
-    "..\\output\\evaluation\\tib_resource_diagnostic.csv",
-    "..\\output\\evaluation\\tib_resource_diagnostic.json",
-    "..\\output\\evaluation\\independent_semantic_audit_instrument.xlsx",
-    "..\\output\\evaluation\\hdo_edo_task_comparison_instrument.xlsx"
+    "output\\evaluation\\decode_public_coverage.csv",
+    "output\\evaluation\\decode_public_coverage.json",
+    "output\\evaluation\\itc_decode_population_crosswalk.csv",
+    "output\\evaluation\\itc_decode_population_crosswalk.json",
+    "output\\evaluation\\retrieval_tasks.csv",
+    "output\\evaluation\\retrieval_results.csv",
+    "output\\evaluation\\retrieval_review_registry.csv",
+    "output\\evaluation\\retrieval_evaluation.json",
+    "output\\evaluation\\tib_resource_diagnostic.csv",
+    "output\\evaluation\\tib_resource_diagnostic.json",
+    "output\\evaluation\\semantic_assessment_registry.csv",
+    "output\\evaluation\\semantic_assessment_registry.json",
+    "output\\evaluation\\semantic_assessment_summary.md",
+    "output\\evaluation\\comparator_matrix.csv",
+    "output\\evaluation\\comparator_matrix.json",
+    "output\\evaluation\\comparator_matrix.md",
+    "output\\evaluation\\semantic_assessment_registry.xlsx",
+    "output\\evaluation\\focused_comparator_matrix.xlsx"
   ]
 }

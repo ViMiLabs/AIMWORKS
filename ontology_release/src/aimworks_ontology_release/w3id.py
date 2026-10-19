@@ -41,9 +41,9 @@ def generate_w3id_artifacts(
     htaccess = _htaccess(html_targets, rdf_targets, profile)
     readme = _w3id_readme(strategy, profile, html_targets, rdf_targets)
 
-    # These files document the established H2KG resolver configuration. The
-    # external bridge is published through GitHub Pages and does not mint a new
-    # W3ID route.
+    # These files update the established H2KG resolver configuration with a
+    # reusable version route. The external bridge remains on GitHub Pages and
+    # does not mint a separate W3ID namespace.
     write_text(output_dir / ".htaccess", htaccess)
     write_text(output_dir / "README.md", _root_readme())
     write_text(output_dir / "publishing_notes.md", _publishing_notes(strategy, profile, html_targets, rdf_targets))
@@ -67,9 +67,7 @@ def _htaccess(
     rdf_targets: dict[str, str],
     profile: dict[str, Any],
 ) -> str:
-    version = str(profile.get("version", "2.2.0"))
-    escaped_version = version.replace(".", r"\.")
-    return f"""Options +FollowSymLinks
+    return rf"""Options +FollowSymLinks
 RewriteEngine On
 
 # Project home under /h2kg/
@@ -88,16 +86,17 @@ RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
 RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
 
-# Published H2KG v2 taxonomy
+# Immutable tagged H2KG releases. One rule serves every semantic version;
+# stable class IRIs under the unversioned namespace remain unchanged.
 RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
-RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/([0-9]+\.[0-9]+\.[0-9]+)$ https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/v$1/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl [R=302,L,NE]
 
 RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
-RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {rdf_targets['v2_taxonomy_jsonld']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/([0-9]+\.[0-9]+\.[0-9]+)$ https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/v$1/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld [R=302,L,NE]
 
-RewriteRule ^hydrogen-ontology/releases/{escaped_version}$ {html_targets['v2_taxonomy']} [R=302,L]
+RewriteRule ^hydrogen-ontology/releases/([0-9]+\.[0-9]+\.[0-9]+)$ https://github.com/ViMiLabs/AIMWORKS/releases/tag/v$1 [R=302,L,NE]
 
 RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
@@ -150,8 +149,9 @@ The resolver configuration is represented by:
 - `h2kg/.htaccess`
 - `h2kg/README.md`
 
-No new W3ID route is required for external alignments because mapping targets
-use their original ontology IRIs and bridge files are served by GitHub Pages.
+The reusable `releases/X.Y.Z` route resolves immutable tagged ontology files.
+No separate W3ID namespace is required for external alignments because mapping
+targets use their original ontology IRIs and bridge files are served by GitHub Pages.
 """
 
 
@@ -197,6 +197,7 @@ current H2KG release targets.
 - Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
 - JSON-LD: `{rdf_targets['v2_taxonomy_jsonld']}`
 - Compatibility Turtle: `{rdf_targets['v2_compatibility_ttl']}`
+- Version routing: one semantic-version rule resolves `releases/X.Y.Z` to immutable Git tag `vX.Y.Z`
 
 ## Contact and maintenance
 
@@ -223,8 +224,11 @@ def _publishing_notes(
 ) -> str:
     return f"""# Resolver and Publishing Notes
 
-The H2KG namespace is already established. This generated configuration is a
-reference for resolver maintenance and does not require a new W3ID registration.
+The H2KG namespace is already established. This generated configuration adds a
+reusable semantic-version route while preserving every existing ontology and
+term IRI. Activating the updated route requires updating the existing H2KG
+resolver configuration, not registering a new namespace.
+This route update does not require a new W3ID registration.
 
 ## Resolver targets
 
@@ -234,6 +238,7 @@ reference for resolver maintenance and does not require a new W3ID registration.
 - PEMFC HTML target: `{html_targets['pemfc']}`
 - PEMWE HTML target: `{html_targets['pemwe']}`
 - H2KG v2 taxonomy target: `{rdf_targets['v2_taxonomy_ttl']}`
+- Immutable version target pattern: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/vX.Y.Z/ontology_release/output/ontology/`
 
 ## Policy reminders
 
@@ -246,7 +251,7 @@ reference for resolver maintenance and does not require a new W3ID registration.
 
 
 def _curl_tests(profile: dict[str, Any]) -> str:
-    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0"))
+    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0"))
     return f"""#!/usr/bin/env sh
 set -eu
 

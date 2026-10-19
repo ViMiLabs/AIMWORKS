@@ -1,0 +1,35 @@
+# Focused ontology comparator matrix
+
+Each cell reports a representation outcome backed by exact IRIs in a frozen full RDF graph. No aggregate superiority score is calculated.
+
+| Task | Resource | Version | Outcome | Evidence IRIs |
+|---|---|---|---|---|
+| C1: Electrochemical domain representation | H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | direct_native | https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity <br> https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalComponent <br> https://w3id.org/h2kg/hydrogen-ontology#SynthesisProcess |
+| C2: Measurement context representation | H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | direct_native | https://w3id.org/h2kg/hydrogen-ontology#Measurement <br> https://w3id.org/h2kg/hydrogen-ontology#hasMeasurementSubject <br> https://w3id.org/h2kg/hydrogen-ontology#usesInstrument <br> https://w3id.org/h2kg/hydrogen-ontology#hasParameter <br> https://w3id.org/h2kg/hydrogen-ontology#hasOutputData |
+| C3: Result representation | H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | direct_via_import | https://w3id.org/h2kg/hydrogen-ontology#DataPoint <br> https://w3id.org/h2kg/hydrogen-ontology#ofProperty <br> https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf <br> https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue <br> http://qudt.org/schema/qudt/QuantityValue <br> https://www.w3.org/ns/prov-o |
+| C4: Computational-model interface | H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | direct_native | https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel <br> https://w3id.org/h2kg/hydrogen-ontology#hasParameter <br> https://w3id.org/h2kg/hydrogen-ontology#hasInputData <br> https://w3id.org/h2kg/hydrogen-ontology#hasOutputData |
+| C5: Source-preserving workflow representation | H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | requires_extension | https://w3id.org/h2kg/hydrogen-ontology#WorkflowProfile <br> https://w3id.org/h2kg/hydrogen-ontology#hasMetadata <br> https://www.w3.org/ns/prov-o |
+| C1: Electrochemical domain representation | Electrochemistry Domain Ontology | 0.39.0 | direct_native | https://w3id.org/emmo/domain/electrochemistry#electrochemistry_6f2c88c9_5c04_4953_a298_032cc3ab9b77 <br> https://w3id.org/emmo/domain/electrochemistry#electrochemistry_0f007072_a8dd_4798_b865_1bf9363be627 <br> https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2e3e14f9_4cb8_45b2_908e_47eec893dec8 |
+| C2: Measurement context representation | Electrochemistry Domain Ontology | 0.39.0 | direct_via_import | https://w3id.org/emmo#EMMO_463bcfda_867b_41d9_a967_211d4d437cfb <br> https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample <br> https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument <br> https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementParameter <br> https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput |
+| C3: Result representation | Electrochemistry Domain Ontology | 0.39.0 | direct_via_import | https://w3id.org/emmo#EMMO_b7bcff25_ffc3_474e_9ab5_01b1664bd4ba <br> https://w3id.org/emmo#EMMO_e1097637_70d2_4895_973f_2396f04fa204 <br> https://w3id.org/emmo#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569 <br> https://w3id.org/emmo#EMMO_873b0ab3_88e6_4054_b901_5531e01f14a4 |
+| C4: Computational-model interface | Electrochemistry Domain Ontology | 0.39.0 | direct_via_import | https://w3id.org/emmo#EMMO_64963ed6_39c9_4258_85e0_6466c4b5420c <br> https://w3id.org/emmo#EMMO_d1d436e7_72fc_49cd_863b_7bfb4ba5276a <br> https://w3id.org/emmo#EMMO_36e69413_8c59_4799_946c_10b05d266e22 <br> https://w3id.org/emmo#EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 |
+| C5: Source-preserving workflow representation | Electrochemistry Domain Ontology | 0.39.0 | requires_extension | https://w3id.org/emmo#EMMO_64963ed6_39c9_4258_85e0_6466c4b5420c <br> https://w3id.org/emmo#EMMO_36e69413_8c59_4799_946c_10b05d266e22 <br> https://w3id.org/emmo#EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 |
+| C1: Electrochemical domain representation | Helmholtz Digitisation Ontology | 2026-09-25 | out_of_scope | http://purl.obolibrary.org/obo/BFO_0000040 <br> http://purl.obolibrary.org/obo/BFO_0000015 |
+| C2: Measurement context representation | Helmholtz Digitisation Ontology | 2026-09-25 | requires_mapping_or_context | https://purls.helmholtz-metadaten.de/hob/HDO_00001070 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00001071 <br> http://purl.obolibrary.org/obo/RO_0002233 <br> http://purl.obolibrary.org/obo/RO_0002234 |
+| C3: Result representation | Helmholtz Digitisation Ontology | 2026-09-25 | requires_extension | https://purls.helmholtz-metadaten.de/hob/HDO_00002023 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00000101 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00006075 |
+| C4: Computational-model interface | Helmholtz Digitisation Ontology | 2026-09-25 | direct_via_import | https://purls.helmholtz-metadaten.de/hob/HDO_00001067 <br> https://purls.helmholtz-metadaten.de/hob/HDO_10000006 <br> http://purl.obolibrary.org/obo/RO_0002233 <br> http://purl.obolibrary.org/obo/RO_0002234 |
+| C5: Source-preserving workflow representation | Helmholtz Digitisation Ontology | 2026-09-25 | requires_extension | https://purls.helmholtz-metadaten.de/hob/HDO_10000023 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00000029 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00002025 <br> https://purls.helmholtz-metadaten.de/hob/HDO_00006069 |
+| C1: Electrochemical domain representation | Hydrogen Ontology (HOLY) | 1.1.0 | requires_mapping_or_context | http://purl.org/holy/ns#MembraneElectrodeAssembly <br> http://purl.org/holy/ns#FuelCellStack <br> http://purl.org/holy/ns#HydrogenConversion |
+| C2: Measurement context representation | Hydrogen Ontology (HOLY) | 1.1.0 | out_of_scope | http://purl.org/holy/ns#MembraneElectrodeAssembly |
+| C3: Result representation | Hydrogen Ontology (HOLY) | 1.1.0 | out_of_scope | http://purl.org/holy/ns#hasIndicator |
+| C4: Computational-model interface | Hydrogen Ontology (HOLY) | 1.1.0 | out_of_scope | http://purl.org/holy/ns#usesTechnology |
+| C5: Source-preserving workflow representation | Hydrogen Ontology (HOLY) | 1.1.0 | requires_mapping_or_context | http://purl.org/holy/ns#hasProject <br> http://purl.org/holy/ns#usesSource <br> http://w3id.org/nfdi4ing/metadata4ing#inProject |
+
+## Frozen resources
+
+| Resource | Version | SHA-256 | Triples |
+|---|---|---|---:|
+| H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | `946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1` | 78511 |
+| Electrochemistry Domain Ontology | 0.39.0 | `78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7` | 67104 |
+| Helmholtz Digitisation Ontology | 2026-09-25 | `6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986` | 4387 |
+| Hydrogen Ontology (HOLY) | 1.1.0 | `6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B` | 3529 |

@@ -10,6 +10,7 @@ from aimworks_ontology_release.tib_collections import (
     OUTCOMES,
     _assess_candidate,
     _external_role_evidence,
+    _independent_percentages,
     _write_csv,
     apply_harmonization_registry,
     build_harmonization_registry,
@@ -363,6 +364,54 @@ def test_failed_api_assessment_blocks_final_semantic_summary() -> None:
             snapshot,
             incomplete_term_iris={term["h2kg_iri"]},
         )
+
+
+def test_independent_percentage_rounding_uses_counts_as_authority() -> None:
+    percentages = _independent_percentages([3, 7, 5, 2206], 2221, decimals=2)
+    assert percentages[:3] == [0.14, 0.32, 0.23]
+
+
+def test_battinfo_membership_is_retained_but_not_semantically_assessed() -> None:
+    terms = [
+        {
+            "h2kg_iri": f"{H2KG}Matter",
+            "h2kg_label": "Matter",
+            "h2kg_role": "Matter",
+            "h2kg_top_branch": "Matter",
+        },
+        {
+            "h2kg_iri": f"{H2KG}Process",
+            "h2kg_label": "Process",
+            "h2kg_role": "Process",
+            "h2kg_top_branch": "Process",
+        },
+    ]
+    snapshot = {
+        "retrieved_at": "2026-10-14T00:00:00Z",
+        "collections": {
+            "nfdi4ing": {
+                "catalogue_name": "NFDI4ING",
+                "requested_name": "NFDI4ING",
+                "ontology_ids": ["battinfo", "oeo"],
+            }
+        },
+        "ontologies": [
+            {"ontology_id": "battinfo", "title": "Battery Interface Ontology"},
+            {"ontology_id": "oeo", "title": "Open Energy Ontology"},
+        ],
+    }
+    result = summarize_decisions(terms, [], snapshot)
+    summary = result["benchmark_summary"]
+    assert summary["catalogue_collection_memberships"] == 2
+    assert summary["assessed_collection_memberships"] == 1
+    assert summary["ontology_class_assignments"] == len(terms)
+    battinfo = next(row for row in result["ontology_summary"] if row["ontology_id"] == "battinfo")
+    assert battinfo["assessment_status"] == "not_assessed_native_evidence_unavailable"
+    assert battinfo["native_evidence_status"] == "native_evidence_unavailable"
+    assert battinfo["unmatched_count"] is None
+    nfdi4ing = next(row for row in result["collection_summary"] if row["collection"] == "NFDI4Ing")
+    assert nfdi4ing["member_ontology_count"] == 2
+    assert nfdi4ing["assessed_member_ontology_count"] == 1
 
 
 def test_many_h2kg_classes_to_one_external_target_are_related_not_equivalent() -> None:

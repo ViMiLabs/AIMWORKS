@@ -227,6 +227,8 @@ def build_docs(
     )
     decode_path = output_dir.parent / "decode" / "decode_federated_graph.json"
     decode = load_json(decode_path) if decode_path.exists() else None
+    evaluation_path = output_dir.parent / "evaluation" / "evaluation_summary.json"
+    evaluation = load_json(evaluation_path) if evaluation_path.exists() else {}
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
@@ -243,8 +245,8 @@ def build_docs(
         (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
         (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary, alignment_registry)),
         (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
-        (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo)),
-        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, correction_report, output_dir / "pages" / "release.html", output_dir)),
+        (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo, evaluation)),
+        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, correction_report, evaluation, output_dir / "pages" / "release.html", output_dir)),
         (output_dir / "pages" / "import-guide.html", "Import Guide", _import_guide_body(odk, hdo)),
         (output_dir / "pages" / "import-catalog.html", "Import Catalog", _import_catalog_body(odk)),
         (output_dir / "pages" / "developer-guide.html", "Developer Guide", _developer_body(odk, hdo)),
@@ -279,6 +281,9 @@ def build_docs(
     if decode is not None:
         # Publish normalized projections and reports, never the supplied raw GraphML files.
         shutil.copytree(output_dir.parent / "decode", output_dir / "decode", dirs_exist_ok=True)
+    evaluation_dir = output_dir.parent / "evaluation"
+    if evaluation_dir.exists():
+        shutil.copytree(evaluation_dir, output_dir / "evaluation", dirs_exist_ok=True)
     examples_dir = output_dir.parent / "examples"
     if examples_dir.exists():
         target_examples = output_dir / "examples"
@@ -2100,7 +2105,7 @@ def _build_explorer_dataset(
         },
         "taxonomy": {
             "id": "taxonomy",
-            "label": "H₂KG 2.2 taxonomy",
+            "label": "H2KG 2.3 taxonomy",
             "description": "The complete class hierarchy generated from the approved taxonomy registry.",
             "nodeCount": sum(1 for node in nodes.values() if "taxonomy" in node.get("modules", [])),
             "edgeCount": sum(1 for link in links.values() if link["module"] == "taxonomy"),
@@ -2799,6 +2804,7 @@ def _release_body(
     hdo: dict[str, Any],
     alignment: dict[str, Any],
     correction: dict[str, Any],
+    evaluation: dict[str, Any],
     page_path: Path,
     docs_root: Path,
 ) -> str:
@@ -2832,6 +2838,18 @@ def _release_body(
         "correction_csv": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_decisions.csv"),
         "correction_markdown": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_report.md"),
     }
+    evaluation_links = {
+        "assessment_csv": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.csv"),
+        "assessment_json": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.json"),
+        "assessment_md": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_summary.md"),
+        "assessment_xlsx": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.xlsx"),
+        "retrieval_json": _relative_href(page_path, docs_root / "evaluation" / "retrieval_evaluation.json"),
+        "comparator_md": _relative_href(page_path, docs_root / "evaluation" / "comparator_matrix.md"),
+        "comparator_xlsx": _relative_href(page_path, docs_root / "evaluation" / "focused_comparator_matrix.xlsx"),
+    }
+    assessment = evaluation.get("semantic_assessment", {})
+    retrieval = evaluation.get("retrieval", {})
+    comparator = evaluation.get("comparator_evaluation", {})
     principal_sources = sorted(
         alignment.get("tib_benchmark_sources", alignment.get("sources", {})).items(),
         key=lambda item: (-int(item[1]), str(item[0]).casefold()),
@@ -2871,7 +2889,7 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H₂KG 2.2</p>
+        <p class="eyebrow">H2KG 2.3 evaluated release</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
         <p>The 2.2 correction ledger records <strong>{correction.get('decision_counts', {}).get('total', 0)}</strong> parent and definition decisions across <strong>{correction.get('decision_counts', {}).get('unique_classes', 0)}</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
@@ -2892,9 +2910,34 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
+        <p class="eyebrow">Evaluation</p>
+        <h2>Traceable semantic and application assessment</h2>
+        <p>The release records <strong>{assessment.get('assessment_count', 0)}</strong> item-level decisions across ITC fields, DECODE concepts and edges, a stratified H2KG taxonomy sample, and asserted external mappings. Application-level acceptance of a DECODE-local item does not promote it into H2KG.</p>
+        <ul class="stats">
+          <li><strong>Accepted:</strong> {assessment.get('accepted_count', 0)}</li>
+          <li><strong>Accepted after correction:</strong> {assessment.get('accepted_after_correction_count', 0)}</li>
+          <li><strong>Rejected:</strong> {assessment.get('rejected_count', 0)}</li>
+          <li><strong>Unresolved:</strong> {assessment.get('unresolved_count', 0)}</li>
+          <li><strong>Retrieval:</strong> {retrieval.get('rq1_semantic_result_count', 0)} occurrences across {retrieval.get('rq1_semantic_workflow_count', 0)} workflows, compared with {retrieval.get('rq1_exact_label_result_count', 0)} occurrences across {retrieval.get('rq1_exact_label_workflow_count', 0)} workflows for the defined exact-label baseline</li>
+          <li><strong>Focused comparison:</strong> {comparator.get('assessment_count', 0)} evidence-backed task outcomes across {comparator.get('resource_count', 0)} ontology resources; no aggregate superiority score</li>
+        </ul>
+        <p class="muted">Historical disagreement and adjudication counts are reported as unavailable where they were not retained. Retrieval results demonstrate reviewed query behavior but do not claim independently estimated precision or recall.</p>
+        <div class="button-row">
+          <a class="inline-button" href="{evaluation_links['assessment_csv']}" download>Assessment CSV</a>
+          <a class="inline-button" href="{evaluation_links['assessment_json']}" download>Assessment JSON</a>
+          <a class="inline-button" href="{evaluation_links['assessment_md']}" download>Assessment summary</a>
+          <a class="inline-button" href="{evaluation_links['assessment_xlsx']}" download>Assessment Excel</a>
+          <a class="inline-button" href="{evaluation_links['retrieval_json']}" download>Retrieval evaluation</a>
+          <a class="inline-button" href="{evaluation_links['comparator_md']}" download>Comparator matrix</a>
+          <a class="inline-button" href="{evaluation_links['comparator_xlsx']}" download>Comparator Excel</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H₂KG {escape(str(alignment.get('h2kg_version', '2.2.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H₂KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
+        <p>H₂KG {escape(str(alignment.get('h2kg_version', '2.3.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H₂KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> {alignment.get('tib_collection_count', 0)} TIB collections, {alignment.get('tib_unique_ontology_count', 0)} unique ontologies, {alignment.get('tib_collection_membership_count', 0)} collection memberships</li>
           <li><strong>TIB benchmark assertions:</strong> {alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} ({escape(', '.join(f'{key}={value}' for key, value in alignment.get('tib_asserted_mapping_counts', {}).items()) or 'none')})</li>
@@ -2959,12 +3002,20 @@ def _release_body(
     """
 
 
-def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, Any]) -> str:
+def _quality_body(
+    release: dict[str, Any],
+    odk: dict[str, Any],
+    hdo: dict[str, Any],
+    evaluation: dict[str, Any],
+) -> str:
     explanations = release.get("section_explanations", {})
     freshness = release.get("freshness", {})
     publication = release.get("publication_evidence", {})
     semantic_validation = release.get("semantic_role_validation", {})
     semantic_metrics = semantic_validation.get("metrics", {})
+    assessment = evaluation.get("semantic_assessment", {})
+    retrieval = evaluation.get("retrieval", {})
+    comparator = evaluation.get("comparator_evaluation", {})
     current_status_rows = [
         {
             "label": "Overall validation",
@@ -3070,6 +3121,20 @@ def _quality_body(release: dict[str, Any], odk: dict[str, Any], hdo: dict[str, A
       <p>{escape(str(release.get('summary', 'No quality summary available.')))}</p>
     </section>
     <section class="grid">
+      <article class="card">
+        <h2>Evaluation Evidence</h2>
+        <p><strong>{assessment.get('assessment_count', 0)}</strong> semantic-assessment records are published with evidence and final outcomes. The focused comparator contains <strong>{comparator.get('assessment_count', 0)}</strong> task outcomes, and the reviewed ITC retrieval returns <strong>{retrieval.get('rq1_semantic_result_count', 0)}</strong> occurrences across <strong>{retrieval.get('rq1_semantic_workflow_count', 0)}</strong> workflows.</p>
+        <p class="muted">DECODE acceptance is application-level evidence only. No DECODE-local concept is promoted into the H2KG vocabulary by this assessment.</p>
+        <div class="button-row">
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.csv" download>Assessment CSV</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.json" download>Assessment JSON</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_summary.md" download>Assessment summary</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.xlsx" download>Assessment Excel</a>
+          <a class="inline-button" href="../evaluation/retrieval_evaluation.json" download>Retrieval JSON</a>
+          <a class="inline-button" href="../evaluation/comparator_matrix.md" download>Comparator matrix</a>
+          <a class="inline-button" href="../evaluation/focused_comparator_matrix.xlsx" download>Comparator Excel</a>
+        </div>
+      </article>
       <article class="card">
         <h2>TIB Collection Benchmark</h2>
         <p>Review the reproducible H2KG comparison with NFDI4Cat, NFDI4Energy, and NFDI4Ing, including collection- and ontology-level percentages and downloadable Excel evidence.</p>

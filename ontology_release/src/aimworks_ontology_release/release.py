@@ -247,7 +247,7 @@ def _reset_docs_output(docs_dir: Path) -> None:
 
     if not docs_dir.exists():
         return
-    for name in ("benchmarks", "decode"):
+    for name in ("benchmarks", "decode", "evaluation"):
         child = docs_dir / name
         if child.exists():
             shutil.rmtree(child)
@@ -364,7 +364,7 @@ def _odk_public_artifacts_are_clean(artifact_dir: Path) -> bool:
 
 
 def _release_notes() -> str:
-    return """# H₂KG 2.2.0 Release Notes
+    return """# H₂KG 2.3.0 Release Notes
 
 - Release title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems
 - Namespace policy: existing H2KG hash IRIs are preserved
@@ -372,4 +372,6 @@ def _release_notes() -> str:
 - Workflow profiles: class-level workflow assertions are migrated to value-free SHACL profiles with complete provenance
 - Compatibility: legacy assertions remain available only in the versioned compatibility artifact
 - External alignment: conservative SKOS mappings are published separately from the H2KG taxonomy
+- Evaluation: application-level semantic assessment, reviewed retrieval tasks, corrected TIB benchmarking, and an evidence-backed H2KG/EDO/HDO/HOLY comparator matrix are included
+- Benchmark correction: BattINFO remains visible as a catalogue membership but contributes no semantic outcomes because native frozen evidence is unavailable
 """

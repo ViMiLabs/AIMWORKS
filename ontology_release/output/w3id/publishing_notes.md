@@ -1,7 +1,10 @@
 # Resolver and Publishing Notes
 
-The H2KG namespace is already established. This generated configuration is a
-reference for resolver maintenance and does not require a new W3ID registration.
+The H2KG namespace is already established. This generated configuration adds a
+reusable semantic-version route while preserving every existing ontology and
+term IRI. Activating the updated route requires updating the existing H2KG
+resolver configuration, not registering a new namespace.
+This route update does not require a new W3ID registration.
 
 ## Resolver targets
 
@@ -11,6 +14,7 @@ reference for resolver maintenance and does not require a new W3ID registration.
 - PEMFC HTML target: `https://vimilabs.github.io/AIMWORKS/pemfc/hydrogen-ontology.html`
 - PEMWE HTML target: `https://vimilabs.github.io/AIMWORKS/pemwe/hydrogen-ontology.html`
 - H2KG v2 taxonomy target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
+- Immutable version target pattern: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/vX.Y.Z/ontology_release/output/ontology/`
 
 ## Policy reminders
 

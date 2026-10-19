@@ -24,3 +24,6 @@ def test_w3id_keeps_established_routes_without_a_new_bridge_route(tmp_path: Path
     assert "Accept: text/turtle" in curls
     assert "hydrogen-ontology/bridge/tib" not in curls
     assert "external_bridge_ttl" not in result["rdf_targets"]
+    assert "hydrogen-ontology/releases/([0-9]+\\.[0-9]+\\.[0-9]+)" in htaccess
+    assert "AIMWORKS/v$1/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl" in htaccess
+    assert "releases/X.Y.Z" in readme

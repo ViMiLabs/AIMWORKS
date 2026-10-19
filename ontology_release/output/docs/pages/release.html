@@ -66,7 +66,7 @@
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H₂KG 2.2</p>
+        <p class="eyebrow">H₂KG 2.3 evaluated release</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H₂KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
         <p>The 2.2 correction ledger records <strong>626</strong> parent and definition decisions across <strong>544</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
@@ -87,9 +87,34 @@
     </section>
     <section class="stack">
       <article class="card">
+        <p class="eyebrow">Evaluation</p>
+        <h2>Traceable semantic and application assessment</h2>
+        <p>The release records <strong>5486</strong> item-level decisions across ITC fields, DECODE concepts and edges, a stratified H₂KG taxonomy sample, and asserted external mappings. Application-level acceptance of a DECODE-local item does not promote it into H₂KG.</p>
+        <ul class="stats">
+          <li><strong>Accepted:</strong> 5448</li>
+          <li><strong>Accepted after correction:</strong> 38</li>
+          <li><strong>Rejected:</strong> 0</li>
+          <li><strong>Unresolved:</strong> 0</li>
+          <li><strong>Retrieval:</strong> 26 occurrences across 14 workflows, compared with 19 occurrences across 11 workflows for the defined exact-label baseline</li>
+          <li><strong>Focused comparison:</strong> 20 evidence-backed task outcomes across 4 ontology resources; no aggregate superiority score</li>
+        </ul>
+        <p class="muted">Historical disagreement and adjudication counts are reported as unavailable where they were not retained. Retrieval results demonstrate reviewed query behavior but do not claim independently estimated precision or recall.</p>
+        <div class="button-row">
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.csv" download>Assessment CSV</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.json" download>Assessment JSON</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_summary.md" download>Assessment summary</a>
+          <a class="inline-button" href="../evaluation/semantic_assessment_registry.xlsx" download>Assessment Excel</a>
+          <a class="inline-button" href="../evaluation/retrieval_evaluation.json" download>Retrieval evaluation</a>
+          <a class="inline-button" href="../evaluation/comparator_matrix.md" download>Comparator matrix</a>
+          <a class="inline-button" href="../evaluation/focused_comparator_matrix.xlsx" download>Comparator Excel</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H₂KG 2.2.0 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>256</strong> asserted mappings covering <strong>168</strong> H₂KG classes and <strong>31</strong> external ontologies.</p>
+        <p>H₂KG 2.3.0 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>256</strong> asserted mappings covering <strong>168</strong> H₂KG classes and <strong>31</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> 3 TIB collections, 143 unique ontologies, 165 collection memberships</li>
           <li><strong>TIB benchmark assertions:</strong> 245 (skos:broadMatch=83, skos:exactMatch=140, skos:narrowMatch=22)</li>
@@ -116,22 +141,22 @@
         <section class='list-grid'>
             <article class="term-card">
               <h3>Base ontology</h3>
-              <p>Primary ODK machine artefact for downstream ontology reuse without import closure.</p>
-              <p class="muted">Generated: 2026-10-19T15:47:59+00:00 | Size: 11287218 bytes</p>
+              <p>Actual ODK base artefact generated from the nested workbench.</p>
+              <p class="muted">Generated: 2026-10-19T19:43:13+00:00 | Size: 12142662 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/base.owl' download='base.owl'>OWL</a><a class='inline-button' href='../odk/artifacts/base.ttl' download='base.ttl'>TTL</a><a class='inline-button' href='../odk/artifacts/base.json' download='base.json'>JSON-LD</a></div>
             </article>
 
             <article class="term-card">
               <h3>Full ontology</h3>
-              <p>Companion ODK artefact representing the broader asserted or inferred release surface for validation and distribution.</p>
-              <p class="muted">Generated: 2026-10-19T15:48:06+00:00 | Size: 3502801 bytes</p>
+              <p>Actual ODK full artefact with import closure or broader release surface.</p>
+              <p class="muted">Generated: 2026-10-19T19:43:13+00:00 | Size: 3667218 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/full.owl' download='full.owl'>OWL</a></div>
             </article>
 
             <article class="term-card">
               <h3>Simple ontology</h3>
-              <p>Companion ODK artefact optimized as a simplified machine release for tooling that prefers a smaller asserted view.</p>
-              <p class="muted">Generated: 2026-10-19T15:48:10+00:00 | Size: 3502801 bytes</p>
+              <p>Actual ODK simple artefact for tooling that prefers a smaller release view.</p>
+              <p class="muted">Generated: 2026-10-19T19:43:13+00:00 | Size: 24320 bytes</p>
               <div class="button-row"><a class='inline-button' href='../odk/artifacts/simple.owl' download='simple.owl'>OWL</a></div>
             </article>
             </section>
@@ -149,11 +174,11 @@
           <li><strong>Current authority:</strong> AIMWORKS pipeline</li>
           <li><strong>ODK status:</strong> promoted</li>
           <li><strong>Reasoner:</strong> ELK</li>
-          <li><strong>ODK version:</strong> shadow scaffold</li>
+          <li><strong>ODK version:</strong> ODK Image v1.6.1</li>
           <li><strong>Parity:</strong> aligned</li>
         </ul>
         <p>ODK artefacts are technically aligned, show no IRI drift, and have been explicitly promoted out of shadow mode.</p>
-        <ul class='metric-list'><li><strong>Import stability</strong> <span class='badge good'>GOOD</span> <span class='value'>configured</span><br><span class='muted'>Required imports are configured and surfaced through the nested ODK workbench.</span></li><li><strong>Parity accepted</strong> <span class='badge good'>GOOD</span> <span class='value'>aligned</span><br><span class='muted'>ODK base artefact currently matches the curated schema and vocabulary baseline closely enough for shadow-mode review.</span></li><li><strong>Collected base artefact completeness</strong> <span class='badge good'>GOOD</span> <span class='value'>complete</span><br><span class='muted'>The collected ODK base artefact contains the expected local schema terms.</span></li><li><strong>Reproducible CI build</strong> <span class='badge good'>GOOD</span> <span class='value'>good</span><br><span class='muted'>GitHub Actions workflows include the full ODK prepare, build, collect, and release sequence needed to reproduce the shadow build in CI.</span></li><li><strong>No IRI drift</strong> <span class='badge good'>GOOD</span> <span class='value'>none</span><br><span class='muted'>No local H₂KG IRI drift was detected between the curated release and the parity comparison target.</span></li><li><strong>Promotion readiness</strong> <span class='badge good'>GOOD</span> <span class='value'>promoted</span><br><span class='muted'>ODK promotion has been explicitly approved and the current technical gates are satisfied.</span></li></ul>
+        <ul class='metric-list'><li><strong>Import stability</strong> <span class='badge watch'>WATCH</span> <span class='value'>follow-up</span><br><span class='muted'>Required imports are configured and surfaced through the nested ODK workbench.</span></li><li><strong>Parity accepted</strong> <span class='badge good'>GOOD</span> <span class='value'>aligned</span><br><span class='muted'>ODK base artefact currently matches the curated schema and vocabulary baseline closely enough for shadow-mode review.</span></li><li><strong>Collected base artefact completeness</strong> <span class='badge good'>GOOD</span> <span class='value'>complete</span><br><span class='muted'>The collected ODK base artefact contains the expected local schema terms.</span></li><li><strong>Reproducible CI build</strong> <span class='badge good'>GOOD</span> <span class='value'>good</span><br><span class='muted'>GitHub Actions workflows include the full ODK prepare, build, collect, and release sequence needed to reproduce the shadow build in CI.</span></li><li><strong>No IRI drift</strong> <span class='badge good'>GOOD</span> <span class='value'>none</span><br><span class='muted'>No local H₂KG IRI drift was detected between the curated release and the parity comparison target.</span></li><li><strong>Promotion readiness</strong> <span class='badge watch'>WATCH</span> <span class='value'>promoted</span><br><span class='muted'>Promotion was requested, but one or more technical shadow-mode gates are still not satisfied.</span></li></ul>
       </article>
       <article class="card">
         <h2>Publication Establishment</h2>
@@ -163,7 +188,7 @@
         <h2>ODK and HDO Integration</h2>
         <ul class="stats">
           <li><strong>HDO import status:</strong> configured</li>
-          <li><strong>Last refresh:</strong> configured (shadow mode)</li>
+          <li><strong>Last refresh:</strong> actual refresh at 1792438497.5590267</li>
           <li><strong>Included in current ODK build:</strong> yes</li>
           <li><strong>Local terms assessed against HDO:</strong> 141</li>
           <li><strong>Aligned to HDO:</strong> 8</li>
@@ -187,7 +212,7 @@
         </div>
       </section>
 
-      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.2.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.3.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
   <script data-h2kg-branding>

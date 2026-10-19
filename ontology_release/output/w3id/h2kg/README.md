@@ -34,11 +34,12 @@ current H2KG release targets.
 
 ### H2KG v2 taxonomy release
 
-- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0`
+- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0`
 - Browser / HTML: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?view=taxonomy`
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`
 - Compatibility Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-compatibility.ttl`
+- Version routing: one semantic-version rule resolves `releases/X.Y.Z` to immutable Git tag `vX.Y.Z`
 
 ## Contact and maintenance
 

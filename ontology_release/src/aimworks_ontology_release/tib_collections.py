@@ -27,6 +27,9 @@ CANDIDATE_FORMAT = "h2kg-tib-collection-candidates/v1"
 BENCHMARK_FORMAT = "h2kg-tib-collection-benchmark/v2"
 HARMONIZATION_FORMAT = "h2kg-tib-auto-harmonization/v2"
 DEFAULT_COLLECTIONS = ("NFDI4CAT", "NFDI4ENERGY", "NFDI4ING")
+UNASSESSED_NATIVE_ONTOLOGIES = {
+    "battinfo": "native_evidence_unavailable",
+}
 COLLECTION_DISPLAY_NAMES = {
     "nfdi4cat": "NFDI4Cat",
     "nfdi4energy": "NFDI4Energy",
@@ -1003,6 +1006,25 @@ def summarize_decisions(
     collection_members = _collection_members(snapshot)
     for collection, ontology_ids in collection_members.items():
         for ontology_id in ontology_ids:
+            if ontology_id in UNASSESSED_NATIVE_ONTOLOGIES:
+                record = ontology_by_id.get(ontology_id, {})
+                ontology_summary.append(
+                    _summary_row(
+                        scope_type="ontology",
+                        collection=collection,
+                        ontology_id=ontology_id,
+                        ontology_title=str(record.get("title", "")),
+                        ontology_version=str(record.get("version") or ""),
+                        tib_reported_term_count=int(record.get("number_of_terms") or 0),
+                        member_ontology_count=1,
+                        denominator=0,
+                        counts=Counter(),
+                        assessment_status="not_assessed_native_evidence_unavailable",
+                        native_evidence_status=UNASSESSED_NATIVE_ONTOLOGIES[ontology_id],
+                        assessed_member_ontology_count=0,
+                    )
+                )
+                continue
             counts = Counter()
             for term in terms:
                 outcome, best = pair_resolver(decisions_by_pair.get((term["h2kg_iri"], ontology_id), []))
@@ -1046,23 +1068,31 @@ def summarize_decisions(
             )
 
     unique_ontology_ids = {ontology_id for values in collection_members.values() for ontology_id in values}
-    expected_unique_ontology_class_decisions = denominator * len(unique_ontology_ids)
+    assessed_unique_ontology_ids = unique_ontology_ids - set(UNASSESSED_NATIVE_ONTOLOGIES)
+    expected_unique_ontology_class_decisions = denominator * len(assessed_unique_ontology_ids)
     if len(ontology_outcomes) != expected_unique_ontology_class_decisions:
         raise ValueError(
             "Ontology-level benchmark did not assign every active H2KG class exactly once for every unique "
             f"ontology: expected {expected_unique_ontology_class_decisions}, "
             f"found {len(ontology_outcomes)}."
         )
-    ontology_class_assignments = denominator * sum(len(values) for values in collection_members.values())
+    assessed_membership_count = sum(
+        sum(1 for ontology_id in values if ontology_id not in UNASSESSED_NATIVE_ONTOLOGIES)
+        for values in collection_members.values()
+    )
+    ontology_class_assignments = denominator * assessed_membership_count
 
     class_collection_rows: list[dict[str, Any]] = []
     collection_summary: list[dict[str, Any]] = []
     category_summary: list[dict[str, Any]] = []
     for collection, ontology_ids in collection_members.items():
+        assessed_ontology_ids = [
+            ontology_id for ontology_id in ontology_ids if ontology_id not in UNASSESSED_NATIVE_ONTOLOGIES
+        ]
         counts = Counter()
         category_counts: dict[str, Counter] = defaultdict(Counter)
         for term in terms:
-            outcomes = [ontology_outcomes[(term["h2kg_iri"], ontology_id)] for ontology_id in ontology_ids]
+            outcomes = [ontology_outcomes[(term["h2kg_iri"], ontology_id)] for ontology_id in assessed_ontology_ids]
             outcome, best = collection_resolver(outcomes)
             counts[outcome] += 1
             category_counts[term["h2kg_top_branch"]][outcome] += 1
@@ -1088,6 +1118,7 @@ def summarize_decisions(
                 member_ontology_count=len(ontology_ids),
                 denominator=denominator,
                 counts=counts,
+                assessed_member_ontology_count=len(assessed_ontology_ids),
             )
         )
         for category, category_counter in sorted(category_counts.items()):
@@ -1131,13 +1162,17 @@ def summarize_decisions(
         "deprecated_h2kg_classes_excluded": deprecated_class_count,
         "collections": sorted(collection_members),
         "unique_target_ontologies": len({value for values in collection_members.values() for value in values}),
+        "assessed_unique_target_ontologies": len(assessed_unique_ontology_ids),
+        "catalogue_collection_memberships": sum(len(values) for values in collection_members.values()),
+        "assessed_collection_memberships": assessed_membership_count,
+        "unassessed_ontologies": dict(UNASSESSED_NATIVE_ONTOLOGIES),
         "candidate_decisions": len(decisions),
         "collection_summary": collection_summary,
         "ontology_rows": len(ontology_summary),
         "unique_ontology_class_decisions": len(ontology_outcomes),
         "expected_unique_ontology_class_decisions": expected_unique_ontology_class_decisions,
         "ontology_class_assignments": ontology_class_assignments,
-        "expected_ontology_class_assignments": denominator * len(ontology_summary),
+        "expected_ontology_class_assignments": denominator * assessed_membership_count,
         "classification_policy": (
             "legacy machine-safe tiered coverage with abstention"
             if legacy_policy
@@ -1171,7 +1206,7 @@ def build_harmonization_registry(
     term_by_iri = {term["h2kg_iri"]: term for term in terms}
     rows_by_pair: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in decisions:
-        if row.get("native_to_ontology"):
+        if row.get("native_to_ontology") and str(row.get("ontology_id", "")).casefold() not in UNASSESSED_NATIVE_ONTOLOGIES:
             rows_by_pair[(row["h2kg_iri"], row["ontology_id"])].append(row)
     publishable_rows: list[dict[str, Any]] = []
     shared_target_conflicts = _shared_exact_target_pairs(decisions)
@@ -1690,6 +1725,9 @@ def _summary_row(
     member_ontology_count: int,
     denominator: int,
     counts: Counter,
+    assessment_status: str = "assessed",
+    native_evidence_status: str = "available",
+    assessed_member_ontology_count: int | None = None,
 ) -> dict[str, Any]:
     row: dict[str, Any] = {
         "scope_type": scope_type,
@@ -1699,16 +1737,25 @@ def _summary_row(
         "ontology_version": ontology_version,
         "tib_reported_term_count": tib_reported_term_count,
         "member_ontology_count": member_ontology_count,
+        "assessed_member_ontology_count": (
+            member_ontology_count if assessed_member_ontology_count is None else assessed_member_ontology_count
+        ),
         "h2kg_classes_assessed": denominator,
+        "assessment_status": assessment_status,
+        "native_evidence_status": native_evidence_status,
     }
     for outcome in OUTCOMES:
-        row[f"{outcome}_count"] = counts[outcome]
-        row[f"{outcome}_percent"] = _percent(counts[outcome], denominator)
-    row["strict_coverage_percent"] = _percent(
-        counts["exact_iri_reuse"] + counts["machine_exact_equivalent"], denominator
+        row[f"{outcome}_count"] = counts[outcome] if assessment_status == "assessed" else None
+        row[f"{outcome}_percent"] = (
+            _percent(counts[outcome], denominator) if assessment_status == "assessed" else None
+        )
+    row["strict_coverage_percent"] = (
+        _percent(counts["exact_iri_reuse"] + counts["machine_exact_equivalent"], denominator)
+        if assessment_status == "assessed" else None
     )
-    row["hierarchical_coverage_percent"] = _percent(
-        counts["h2kg_narrower"] + counts["h2kg_broader"], denominator
+    row["hierarchical_coverage_percent"] = (
+        _percent(counts["h2kg_narrower"] + counts["h2kg_broader"], denominator)
+        if assessment_status == "assessed" else None
     )
     return row
 
@@ -2492,6 +2539,10 @@ def _validate_publishable_summaries(summaries: dict[str, Any]) -> None:
         raise ValueError("Ontology-level class assignment coverage is incomplete.")
     for group in ("collection_summary", "ontology_summary", "category_summary"):
         for row in summaries[group]:
+            if row.get("assessment_status") == "not_assessed_native_evidence_unavailable":
+                if row.get("ontology_id") not in UNASSESSED_NATIVE_ONTOLOGIES:
+                    raise ValueError(f"Unexpected unassessed ontology row: {row}")
+                continue
             denominator = int(row["h2kg_classes_assessed"])
             total = sum(int(row[f"{outcome}_count"]) for outcome in OUTCOMES)
             if total != denominator:
@@ -2573,25 +2624,18 @@ def _pre_post_comparison_rows(
     return rows
 
 
-def _balanced_percentages(counts: list[int], denominator: int, decimals: int = 2) -> list[float]:
+def _independent_percentages(counts: list[int], denominator: int, decimals: int = 2) -> list[float]:
     if not denominator:
         return [0.0 for _ in counts]
-    scale = 10**decimals
-    target = 100 * scale
-    raw = [count * target / denominator for count in counts]
-    units = [int(value) for value in raw]
-    remainder = target - sum(units)
-    order = sorted(range(len(counts)), key=lambda index: (-(raw[index] - units[index]), index))
-    for index in order[:remainder]:
-        units[index] += 1
-    return [value / scale for value in units]
+    return [round(100.0 * count / denominator, decimals) for count in counts]
 
 
 def _ontology_publication_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     output: list[dict[str, Any]] = []
     for row in sorted(rows, key=lambda item: (item["collection"].casefold(), item["ontology_title"].casefold(), item["ontology_id"])):
-        counts = [int(row[f"{outcome}_count"]) for outcome in OUTCOMES]
-        percentages = _balanced_percentages(counts, int(row["h2kg_classes_assessed"]), decimals=2)
+        assessed = row.get("assessment_status", "assessed") == "assessed"
+        counts = [int(row[f"{outcome}_count"] or 0) for outcome in OUTCOMES]
+        percentages = _independent_percentages(counts, int(row["h2kg_classes_assessed"] or 0), decimals=2)
         published = {
             "Collection": row["collection"],
             "Ontology ID": row["ontology_id"],
@@ -2599,10 +2643,12 @@ def _ontology_publication_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any
             "Version": row["ontology_version"],
             "TIB link": f"https://terminology.tib.eu/ts/ontologies/{row['ontology_id']}",
             "TIB-reported terms": row["tib_reported_term_count"],
-            "H2KG classes assessed": row["h2kg_classes_assessed"],
+            "Assessment status": row.get("assessment_status", "assessed"),
+            "Native evidence status": row.get("native_evidence_status", "available"),
+            "H2KG classes assessed": row["h2kg_classes_assessed"] if assessed else "",
         }
         for outcome, count, percent in zip(OUTCOMES, counts, percentages):
-            published[PUBLICATION_OUTCOME_LABELS[outcome]] = f"{count} ({percent:.2f}%)"
+            published[PUBLICATION_OUTCOME_LABELS[outcome]] = f"{count} ({percent:.2f}%)" if assessed else ""
         output.append(published)
     return output
 
@@ -2611,10 +2657,11 @@ def _collection_publication_rows(rows: list[dict[str, Any]]) -> list[dict[str, A
     output: list[dict[str, Any]] = []
     for row in rows:
         counts = [int(row[f"{outcome}_count"]) for outcome in OUTCOMES]
-        percentages = _balanced_percentages(counts, int(row["h2kg_classes_assessed"]), decimals=2)
+        percentages = _independent_percentages(counts, int(row["h2kg_classes_assessed"]), decimals=2)
         published = {
             "Collection": row["collection"],
             "Member ontologies": row["member_ontology_count"],
+            "Assessed ontologies": row.get("assessed_member_ontology_count", row["member_ontology_count"]),
             "H2KG classes assessed": row["h2kg_classes_assessed"],
         }
         for outcome, count, percent in zip(OUTCOMES, counts, percentages):
@@ -2727,7 +2774,7 @@ def collection_readme(
 
 This package benchmarks `{summary['h2kg_active_classes_assessed']}` active local H2KG classes against the ontologies assigned to NFDI4Cat, NFDI4Energy, and NFDI4Ing in the TIB catalogue snapshot retrieved at `{snapshot.get('retrieved_at')}`.
 
-Primary percentages use native classes only. Imported availability is documented separately. Each collection and ontology row assigns every H2KG class to exactly one of seven outcomes, so the outcome percentages total 100% subject only to decimal rounding.
+Primary percentages use native classes only. Imported availability is documented separately. BattINFO remains one of the 165 catalogue-membership rows but is marked not assessed because native frozen evidence is unavailable; it contributes no semantic outcome and is excluded from the NFDI4Ing union. Every assessed row assigns each H2KG class to exactly one outcome. Percentages are rounded independently, so displayed totals may differ from 100% by 0.01 percentage point while exact counts remain authoritative.
 
 TIB catalogue term/property/individual counts are retained as descriptive metadata. They may include imported resources and are never used as the H2KG overlap denominator.
 
@@ -2756,10 +2803,10 @@ Frozen inputs: `{snapshot_path}` and `{candidate_cache_path}`.
 def manuscript_table(summaries: dict[str, Any], snapshot: dict[str, Any]) -> str:
     outcome_columns = [name.replace("_", " ") + " (%)" for name in OUTCOMES]
 
-    collection_columns = ["Collection", "Member ontologies", "H2KG classes", *outcome_columns]
+    collection_columns = ["Collection", "Catalogue members", "Assessed members", "H2KG classes", *outcome_columns]
     collection_rows = [
         "| " + " | ".join(collection_columns) + " |",
-        "| " + " | ".join(["---", "---:", "---:", *["---:" for _ in OUTCOMES]]) + " |",
+        "| " + " | ".join(["---", "---:", "---:", "---:", *["---:" for _ in OUTCOMES]]) + " |",
     ]
     for row in summaries["collection_summary"]:
         collection_rows.append(
@@ -2768,6 +2815,7 @@ def manuscript_table(summaries: dict[str, Any], snapshot: dict[str, Any]) -> str
                 [
                     row["collection"],
                     str(row["member_ontology_count"]),
+                    str(row.get("assessed_member_ontology_count", row["member_ontology_count"])),
                     str(row["h2kg_classes_assessed"]),
                     *[f"{row[f'{name}_percent']:.2f}" for name in OUTCOMES],
                 ]
@@ -2775,21 +2823,23 @@ def manuscript_table(summaries: dict[str, Any], snapshot: dict[str, Any]) -> str
             + " |"
         )
 
-    ontology_columns = ["Collection", "Ontology", "TIB-reported terms", "H2KG classes", *outcome_columns]
+    ontology_columns = ["Collection", "Ontology", "Assessment status", "TIB-reported terms", "H2KG classes", *outcome_columns]
     ontology_rows = [
         "| " + " | ".join(ontology_columns) + " |",
-        "| " + " | ".join(["---", "---", "---:", "---:", *["---:" for _ in OUTCOMES]]) + " |",
+        "| " + " | ".join(["---", "---", "---", "---:", "---:", *["---:" for _ in OUTCOMES]]) + " |",
     ]
     for row in summaries["ontology_summary"]:
+        assessed = row.get("assessment_status", "assessed") == "assessed"
         ontology_rows.append(
             "| "
             + " | ".join(
                 [
                     row["collection"],
                     f"{row['ontology_id']} - {row['ontology_title']}",
+                    str(row.get("assessment_status", "assessed")),
                     str(row["tib_reported_term_count"]),
-                    str(row["h2kg_classes_assessed"]),
-                    *[f"{row[f'{name}_percent']:.2f}" for name in OUTCOMES],
+                    str(row["h2kg_classes_assessed"]) if assessed else "",
+                    *([f"{row[f'{name}_percent']:.2f}" for name in OUTCOMES] if assessed else ["" for _ in OUTCOMES]),
                 ]
             )
             + " |"
@@ -2806,7 +2856,7 @@ TIB catalogue snapshot: `{snapshot.get('retrieved_at')}`. Percentages use `{summ
 
 {chr(10).join(ontology_rows)}
 
-**Interpretation.** `exact_iri_reuse` and `machine_exact_equivalent` form strict coverage. Broader, narrower, and related classes indicate semantic complementarity rather than equivalence. `ambiguous_abstained` is retained as a transparent column but is zero in the publishable result; technical retrieval failures block publication. `unmatched` indicates that no candidate was discovered after the complete frozen-snapshot search.
+**Interpretation.** `exact_iri_reuse` and `machine_exact_equivalent` form strict coverage. Broader, narrower, and related classes indicate semantic complementarity rather than equivalence. `ambiguous_abstained` is retained as a transparent column but is zero in assessed rows; technical retrieval failures block publication. `unmatched` indicates that no candidate was discovered after the complete frozen-snapshot search. BattINFO is not assessed because the frozen evidence contains no native BattINFO graph.
 
 **Catalogue-count note.** `TIB-reported terms` reproduces the catalogue metadata and may include imported terms. It is descriptive only and is not used as the overlap denominator.
 """
@@ -2856,7 +2906,7 @@ def benchmark_html(
     <a href="{prefix}manuscript_table.md" download>Manuscript table</a>
   </div>
   <section><h2>Collection summary</h2><div class="table-wrap">{_html_table_header('collection-table')}{collection_rows}</tbody></table></div></section>
-  <section><h2>Ontology-by-ontology summary</h2><p>Every row assigns all active H2KG classes exactly once. Counts and display percentages total the fixed denominator and 100%.</p>
+  <section><h2>Ontology-by-ontology summary</h2><p>Every assessed row assigns all active H2KG classes exactly once. BattINFO remains visible as a not-assessed catalogue membership. Percentages are rounded independently; exact counts are authoritative.</p>
     <div class="filters"><label>Collection<select id="collection-filter"><option value="">All collections</option><option>NFDI4Cat</option><option>NFDI4Energy</option><option>NFDI4Ing</option></select></label><label>Ontology<input id="ontology-filter" type="search" placeholder="ID or title"></label></div>
     <div class="table-wrap">{_html_table_header('ontology-table')}{ontology_rows}</tbody></table></div></section>
   <section><h2>Interpretation boundary</h2><p>Strict coverage combines <code>exact_iri_reuse</code> and <code>machine_exact_equivalent</code>. Hierarchical and related results are not equivalence. The visible <code>ambiguous_abstained</code> column is zero in this publishable build; incomplete retrieval would block publication instead of becoming a semantic result. This benchmark measures terminological complementarity, not ontology quality or scientific correctness.</p></section>
@@ -2890,15 +2940,19 @@ def _html_summary_rows(rows: list[dict[str, Any]], *, link_ontologies: bool = Fa
             url = f"https://terminology.tib.eu/ts/ontologies/{quote(str(row['ontology_id']))}"
             ontology_cell = f'<a href="{html.escape(url)}">{ontology_cell}</a>'
         cells = [html.escape(str(row["collection"])), ontology_cell]
-        percentages = _balanced_percentages(
-            [int(row[f"{name}_count"]) for name in OUTCOMES],
-            int(row["h2kg_classes_assessed"]),
-            decimals=2,
-        )
-        cells.extend(
-            f"{int(row[f'{name}_count'])} ({percent:.2f}%)"
-            for name, percent in zip(OUTCOMES, percentages)
-        )
+        assessed = row.get("assessment_status", "assessed") == "assessed"
+        if assessed:
+            percentages = _independent_percentages(
+                [int(row[f"{name}_count"]) for name in OUTCOMES],
+                int(row["h2kg_classes_assessed"]),
+                decimals=2,
+            )
+            cells.extend(
+                f"{int(row[f'{name}_count'])} ({percent:.2f}%)"
+                for name, percent in zip(OUTCOMES, percentages)
+            )
+        else:
+            cells.extend(["not assessed" for _ in OUTCOMES])
         rendered_cells = []
         for index, value in enumerate(cells):
             css_class = "num" if index >= 2 else ""
@@ -2960,6 +3014,8 @@ def _write_benchmark_workbooks(
             ("TIB snapshot", snapshot.get("retrieved_at", "")),
             ("H2KG denominator", summaries["benchmark_summary"]["h2kg_active_classes_assessed"]),
             ("Primary policy", "Native ontology classes only; imported availability is separate."),
+            ("BattINFO", "Catalogue membership retained; semantic outcomes excluded because native frozen evidence is unavailable."),
+            ("Rounding", "Display percentages are rounded independently; exact counts are authoritative."),
             ("TIB catalogue counts", "Descriptive metadata; may include imports and are not overlap denominators."),
             ("Strict coverage", "exact_iri_reuse + machine_exact_equivalent"),
             ("Publication gate", "Retrieval failures block generation; semantic abstentions must be zero."),
@@ -3081,16 +3137,18 @@ PUBLICATION_OUTCOME_LABELS = {
 }
 ONTOLOGY_PUBLICATION_COLUMNS = [
     "Collection", "Ontology ID", "Ontology title", "Version", "TIB link", "TIB-reported terms",
-    "H2KG classes assessed", *[PUBLICATION_OUTCOME_LABELS[outcome] for outcome in OUTCOMES],
+    "Assessment status", "Native evidence status", "H2KG classes assessed",
+    *[PUBLICATION_OUTCOME_LABELS[outcome] for outcome in OUTCOMES],
 ]
 COLLECTION_PUBLICATION_COLUMNS = [
-    "Collection", "Member ontologies", "H2KG classes assessed",
+    "Collection", "Member ontologies", "Assessed ontologies", "H2KG classes assessed",
     *[PUBLICATION_OUTCOME_LABELS[outcome] for outcome in OUTCOMES],
 ]
 
 SUMMARY_BASE_COLUMNS = [
     "scope_type", "collection", "ontology_id", "ontology_title", "ontology_version",
-    "member_ontology_count", "tib_reported_term_count", "h2kg_classes_assessed",
+    "member_ontology_count", "assessed_member_ontology_count", "tib_reported_term_count",
+    "assessment_status", "native_evidence_status", "h2kg_classes_assessed",
 ]
 SUMMARY_METRIC_COLUMNS = [item for outcome in OUTCOMES for item in (f"{outcome}_count", f"{outcome}_percent")]
 SUMMARY_COLUMNS = [*SUMMARY_BASE_COLUMNS, *SUMMARY_METRIC_COLUMNS, "strict_coverage_percent", "hierarchical_coverage_percent"]

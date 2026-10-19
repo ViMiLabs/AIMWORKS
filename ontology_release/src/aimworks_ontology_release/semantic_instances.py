@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Normalize generated example records to the H2KG 2.2 role model."""
+"""Normalize generated example records to the H2KG 2.3 role model."""
 
 import json
 from pathlib import Path
@@ -53,7 +53,7 @@ def normalize_generated_example_instances(
     if not taxonomy_registry_path.exists():
         report = {
             "schema_version": "h2kg-instance-role-normalization/v1",
-            "profile_version": "2.2.0",
+            "profile_version": "2.3.0",
             "status": "skipped_missing_taxonomy_registry",
             "taxonomy_registry": str(taxonomy_registry_path),
             "file_pair_count": 0,
@@ -103,7 +103,7 @@ def normalize_generated_example_instances(
 
     report = {
         "schema_version": "h2kg-instance-role-normalization/v1",
-        "profile_version": "2.2.0",
+        "profile_version": "2.3.0",
         "status": "passed" if all(row["conforms"] for row in rows) else "failed",
         "file_pair_count": len(rows),
         "parameter_record_count": sum(row["parameter_record_count"] for row in rows),

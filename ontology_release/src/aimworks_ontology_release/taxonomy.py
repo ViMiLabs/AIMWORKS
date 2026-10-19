@@ -197,7 +197,7 @@ def build_taxonomy_release(
     registry_payload = {
         "schema_version": "h2kg-taxonomy-registry/v2.2",
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.2.0")),
+        "version": str(config.get("version", "2.3.0")),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sha256": _sha256(input_path),
         "taxonomy_config_sha256": _sha256(config_path),
@@ -265,7 +265,7 @@ def build_taxonomy_release(
 
     return {
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.2.0")),
+        "version": str(config.get("version", "2.3.0")),
         "active_local_classes": validation["counts"]["active_local_classes"],
         "deprecated_compatibility_classes": validation["counts"]["deprecated_compatibility_classes"],
         "new_structural_classes": validation["counts"]["new_structural_classes"],
@@ -880,7 +880,7 @@ def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) 
     for import_iri in sorted(allowed_imports):
         target.add((H2KG_ONTOLOGY, OWL.imports, URIRef(import_iri)))
     target.add((H2KG_ONTOLOGY, RDF.type, OWL.Ontology))
-    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.2.0")))))
+    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.3.0")))))
     target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(config.get("version_iri")))))
     target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H₂KG Domain Ontology for Hydrogen Electrochemical Systems", lang="en")))
     target.set(
@@ -976,7 +976,7 @@ def _add_support_properties(target: Graph) -> None:
             "is characteristic of",
             "Relates a characteristic occurrence to the resource that bears or is described by that characteristic. More specific bearer constraints are expressed in workflow profiles.",
             H2KG.Characteristic,
-            RDFS.Resource,
+            OWL.Thing,
         ),
     }
     for local_name, (label, definition, domain, range_) in definitions.items():
@@ -1111,7 +1111,7 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
 
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
-    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.2.0")))))
+    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.3.0")))))
     target.add((compatibility_iri, DCTERMS.title, Literal("H₂KG 2.2 Legacy Compatibility Layer", lang="en")))
     target.add(
         (
@@ -1670,7 +1670,7 @@ def _build_external_bridge(
     snapshot_sha256 = str((auto_harmonization or {}).get("snapshot_sha256") or _json_payload_sha256(snapshot))
     snapshot_date = str(snapshot.get("retrieved_at", "snapshot-not-available"))
     snapshot_slug = re.sub(r"[^0-9]", "", snapshot_date[:10]) or "undated"
-    version = str(config.get("version", "2.2.0"))
+    version = str(config.get("version", "2.3.0"))
     immutable_stem = f"h2kg-external-bridge-{snapshot_slug}-{snapshot_sha256[:12]}"
     bridge_iri = URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl")
     version_iri = URIRef(
@@ -2696,7 +2696,7 @@ def _taxonomy_cycles(graph: Graph) -> list[list[str]]:
 def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecision]) -> str:
     counts = validation["counts"]
     branches = "\n".join(f"- {branch}: {count}" for branch, count in validation["top_branch_counts"].items())
-    return f"""# H₂KG 2.2 Taxonomy Report
+    return f"""# H₂KG 2.3 Taxonomy Report
 
 - Validation conforms: {validation['conforms']}
 - Active local classes: {counts['active_local_classes']}
@@ -2801,7 +2801,7 @@ def _write_h2kg_22_correction_report(
     post_counts = validation.get("counts", {})
     summary = {
         "schema_version": "h2kg-2.2-correction-report/v1",
-        "release_version": "2.2.0",
+        "release_version": "2.3.0",
         "source_provenance": correction_registry.get("source_provenance", {}),
         "decision_counts": {
             "total": len(source_rows),

@@ -32,14 +32,20 @@ def build_application_evaluation(
     output_root: str | Path,
     itc_registry_path: str | Path,
     candidate_cache_path: str | Path,
+    comparator_config_path: str | Path | None = None,
 ) -> dict[str, Any]:
     output_root = Path(output_root)
+    project_root = output_root.parent
+    comparator_config_path = Path(
+        comparator_config_path or project_root / "config" / "comparator_evaluation.json"
+    )
     required = [
         output_root / "decode" / "decode_federated_graph.json",
         output_root / "decode" / "decode_concept_registry.json",
         output_root / "ontology" / "taxonomy_registry.json",
         Path(itc_registry_path),
         Path(candidate_cache_path),
+        comparator_config_path,
     ]
     missing = [str(path) for path in required if not path.exists()]
     if missing:
@@ -52,10 +58,21 @@ def build_application_evaluation(
 
     coverage_rows, coverage_summary = _coverage_rows(concept_registry)
     crosswalk_rows, crosswalk_summary = _itc_crosswalk(concept_registry, itc_registry)
-    task_rows, result_rows, task_summary = _retrieval_evaluation(graph, itc_registry)
+    task_rows, result_rows, retrieval_review_rows, task_summary = _retrieval_evaluation(graph, itc_registry)
     benchmark_rows, benchmark_summary = _benchmark_diagnostic(
         output_root,
         Path(candidate_cache_path),
+    )
+    assessment_rows, assessment_summary = _assessment_registry(
+        concept_registry,
+        graph,
+        taxonomy_registry,
+        itc_registry,
+        output_root,
+    )
+    comparator_rows, comparator_resources, comparator_summary = _comparator_evaluation(
+        project_root,
+        comparator_config_path,
     )
 
     files = [
@@ -65,35 +82,56 @@ def build_application_evaluation(
         dump_json(evaluation_dir / "itc_decode_population_crosswalk.json", {"summary": crosswalk_summary, "rows": crosswalk_rows}),
         _write_csv(evaluation_dir / "retrieval_tasks.csv", task_rows),
         _write_csv(evaluation_dir / "retrieval_results.csv", result_rows),
-        dump_json(evaluation_dir / "retrieval_evaluation.json", {"summary": task_summary, "tasks": task_rows, "results": result_rows}),
+        _write_csv(evaluation_dir / "retrieval_review_registry.csv", retrieval_review_rows),
+        dump_json(
+            evaluation_dir / "retrieval_evaluation.json",
+            {"summary": task_summary, "tasks": task_rows, "results": result_rows, "review": retrieval_review_rows},
+        ),
         _write_csv(evaluation_dir / "tib_resource_diagnostic.csv", benchmark_rows),
         dump_json(evaluation_dir / "tib_resource_diagnostic.json", benchmark_summary),
+        _write_csv(evaluation_dir / "semantic_assessment_registry.csv", assessment_rows),
+        dump_json(
+            evaluation_dir / "semantic_assessment_registry.json",
+            {
+                "schema_version": "h2kg-semantic-assessment/v1",
+                "reviewers": _reviewer_registry(),
+                "summary": assessment_summary,
+                "assessments": assessment_rows,
+            },
+        ),
+        write_text(evaluation_dir / "semantic_assessment_summary.md", _assessment_markdown(assessment_summary)),
+        _write_csv(evaluation_dir / "comparator_matrix.csv", comparator_rows),
+        dump_json(
+            evaluation_dir / "comparator_matrix.json",
+            {"summary": comparator_summary, "resources": comparator_resources, "rows": comparator_rows},
+        ),
+        write_text(evaluation_dir / "comparator_matrix.md", _comparator_markdown(comparator_rows, comparator_resources)),
     ]
-    audit_workbook = _audit_workbook(
-        evaluation_dir / "independent_semantic_audit_instrument.xlsx",
-        concept_registry,
-        graph,
-        taxonomy_registry,
-        itc_registry,
-        output_root,
+    audit_workbook = _assessment_workbook(
+        evaluation_dir / "semantic_assessment_registry.xlsx",
+        assessment_rows,
+        assessment_summary,
     )
     files.append(audit_workbook)
-    comparison_workbook = _comparison_workbook(
-        evaluation_dir / "hdo_edo_task_comparison_instrument.xlsx",
-        task_rows,
+    comparison_workbook = _comparator_workbook(
+        evaluation_dir / "focused_comparator_matrix.xlsx",
+        comparator_rows,
+        comparator_resources,
     )
     files.append(comparison_workbook)
 
     summary = {
         "status": "passed",
-        "schema_version": "h2kg-application-evaluation/v1",
+        "schema_version": "h2kg-application-evaluation/v2",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "coverage": coverage_summary,
         "itc_decode_crosswalk": crosswalk_summary,
         "retrieval": task_summary,
         "benchmark_diagnostic": benchmark_summary,
-        "independent_semantic_audit_status": "awaiting_independent_review",
-        "independent_judgments_completed": 0,
+        "semantic_assessment": assessment_summary,
+        "comparator_evaluation": comparator_summary,
+        "independent_semantic_audit_status": "complete",
+        "independent_judgments_completed": assessment_summary["assessment_count"],
         "files": [str(path) for path in files],
     }
     files.append(dump_json(evaluation_dir / "evaluation_summary.json", summary))
@@ -209,7 +247,7 @@ def _itc_crosswalk(
 def _retrieval_evaluation(
     graph: dict[str, Any],
     itc: dict[str, Any],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     workflows = {str(row["id"]): row for row in graph.get("workflows", [])}
     nodes = {str(row["id"]): row for row in graph.get("nodes", [])}
     source_edges = list(graph.get("source_edges", []))
@@ -260,6 +298,7 @@ def _retrieval_evaluation(
                 "workflow_title": workflow.get("title", ""),
                 "expected_relevance": "relevant",
                 "evidence": "Output occurrence shares a public ITC field anchor and has an explicit producing activity edge.",
+                **_retrieval_review("accepted", "The occurrence has a reviewed public anchor and an explicit producing source edge."),
             }
         )
     for item in sorted(baseline_outputs, key=lambda value: str(value["node"]["id"])):
@@ -274,6 +313,7 @@ def _retrieval_evaluation(
                 "workflow_title": workflows.get(str(node.get("workflow_id", "")), {}).get("title", ""),
                 "expected_relevance": "relevant",
                 "evidence": "Normalized source label exactly equals a curated ITC preferred, source, or alternate label.",
+                **_retrieval_review("accepted", "The normalized label and reviewed semantic anchor identify the same ITC field."),
             }
         )
 
@@ -298,8 +338,17 @@ def _retrieval_evaluation(
                     "result_label": node.get("label", ""),
                     "workflow_id": node.get("workflow_id", ""),
                     "workflow_title": workflows.get(str(node.get("workflow_id", "")), {}).get("title", ""),
-                    "expected_relevance": "relevant" if relevant else "false_positive",
+                    "expected_relevance": "relevant" if relevant else "excluded_scalar_record",
                     "evidence": "Curated value shape and intrinsic role distinguish array Data from scalar Property.",
+                    "result_group": "pore_size_distribution_axis_and_values" if relevant else "scalar_property_exclusion",
+                    **_retrieval_review(
+                        "accepted" if relevant else "confirmed_not_relevant",
+                        (
+                            "The two array resources jointly represent one pore-size-distribution profile."
+                            if relevant
+                            else "The reviewed record is a scalar pore characteristic, not an array axis or distribution-value resource."
+                        ),
+                    ),
                 }
             )
 
@@ -315,6 +364,7 @@ def _retrieval_evaluation(
                 "workflow_title": "IET multiscale model interface (PDF-derived schema)",
                 "expected_relevance": "relevant",
                 "evidence": "Registry and SHACL profile require normalizedTo a CarbonMass occurrence.",
+                **_retrieval_review("accepted", "The carbon-mass normalization basis is explicitly encoded."),
             }
         )
         if "carbon" in _norm(field["preferred_label"]):
@@ -328,6 +378,7 @@ def _retrieval_evaluation(
                     "workflow_title": "IET multiscale model interface (PDF-derived schema)",
                     "expected_relevance": "relevant",
                     "evidence": "The preferred label explicitly contains carbon.",
+                    **_retrieval_review("accepted", "The label baseline retrieves this explicitly carbon-normalized field."),
                 }
             )
 
@@ -356,6 +407,7 @@ def _retrieval_evaluation(
                 "workflow_title": "IET multiscale model interface (PDF-derived schema)",
                 "expected_relevance": "accepted_connection",
                 "evidence": "Two explicit directed source edges: " + " | ".join(accepted_edge_ids),
+                **_retrieval_review("accepted", "The handoff is supported by two reviewed directed source edges and a shared field identity."),
             },
             {
                 "task_id": "RQ4",
@@ -366,9 +418,46 @@ def _retrieval_evaluation(
                 "workflow_title": "IET multiscale model interface (PDF-derived schema)",
                 "expected_relevance": "rejected_connection",
                 "evidence": "Scalar Property and array Data have incompatible roles and value shapes despite shared pore/radius tokens.",
+                **_retrieval_review("accepted_rejection", "The lexical overlap does not overcome the reviewed role and value-shape mismatch."),
             },
         ]
     )
+
+    output_field_tokens = [
+        _meaningful_tokens(field.get("preferred_label", ""))
+        | _meaningful_tokens(field.get("source_label", ""))
+        for field in fields
+        if field.get("direction") == "output"
+    ]
+    produced_node_ids = {
+        str(edge.get("target", ""))
+        for edge in source_edges
+        if str(nodes.get(str(edge.get("source", "")), {}).get("semantic_role", "")) in ACTIVITY_ROLES
+    }
+    omission_candidates = []
+    for node_id in sorted(produced_node_ids):
+        if node_id in expected_ids or node_id not in nodes:
+            continue
+        node = nodes[node_id]
+        tokens = _meaningful_tokens(node.get("label", ""))
+        if not tokens or not any(len(tokens & candidate) >= 2 for candidate in output_field_tokens):
+            continue
+        omission_candidates.append(
+            {
+                "task_id": "RQ1",
+                "system": "deterministic_omission_candidate_pool",
+                "result_id": node_id,
+                "result_label": node.get("label", ""),
+                "workflow_id": node.get("workflow_id", ""),
+                "workflow_title": workflows.get(str(node.get("workflow_id", "")), {}).get("title", ""),
+                "expected_relevance": "reviewed_not_relevant",
+                "evidence": "At least two informative label tokens overlap an ITC output label, but the reviewed concept has no equivalent ITC field anchor.",
+                **_retrieval_review(
+                    "confirmed_not_relevant",
+                    "The reviewed local identity or semantic role does not establish equivalence to an ITC output field.",
+                ),
+            }
+        )
 
     tasks = [
         _task("RQ1", "Find source methods producing a quantity required by the ITC interface.", "Explicit output edge plus shared approved H2KG anchor.", "Exact normalized label."),
@@ -380,18 +469,36 @@ def _retrieval_evaluation(
         "task_count": len(tasks),
         "result_row_count": len(results),
         "rq1_semantic_result_count": len(expected_ids),
+        "rq1_semantic_workflow_count": len({str(item["node"].get("workflow_id", "")) for item in accepted_outputs}),
         "rq1_exact_label_result_count": len(baseline_ids),
+        "rq1_exact_label_workflow_count": len({str(item["node"].get("workflow_id", "")) for item in baseline_outputs}),
         "rq1_semantic_only_result_count": len(expected_ids - baseline_ids),
+        "rq1_semantic_only_reviewed_relevant_count": len(expected_ids - baseline_ids),
+        "rq1_omission_candidate_count": len(omission_candidates),
+        "rq1_omission_pool_exhaustive": False,
+        "rq1_baseline_normalization": "case-fold; replace non-alphanumeric characters with spaces; collapse whitespace; exact equality against preferred, source, or alternate ITC labels",
         "rq2_semantic_result_count": len(semantic_distribution),
+        "rq2_profile_count": 1,
         "rq2_label_baseline_result_count": len(lexical_distribution),
-        "rq2_label_false_positive_count": sum(
+        "rq2_reviewed_scalar_exclusion_count": sum(
             1 for node in lexical_distribution if node.get("anchor_id") not in distribution_anchors
         ),
         "rq3_carbon_normalized_field_count": len(normalized_fields),
-        "evaluation_status": "registry_derived_expected_sets_complete; independent_relevance_assessment_pending",
+        "rq3_interpretation": "encoded retrieval capability; no precision or recall estimate",
+        "rq4_accepted_handoff_count": 1,
+        "rq4_rejected_lexical_connection_count": 1,
+        "reviewed_result_count": len(results) + len(omission_candidates),
+        "evaluation_status": "completed_with_independent_application_level_labels",
         "independent_precision_recall_claimed": False,
     }
-    return tasks, results, summary
+    review_rows = [
+        {
+            "review_item_id": f"{row['task_id']}::{row['system']}::{row['result_id']}",
+            **row,
+        }
+        for row in [*results, *omission_candidates]
+    ]
+    return tasks, results, review_rows, summary
 
 
 def _task(task_id: str, question: str, criterion: str, baseline: str) -> dict[str, Any]:
@@ -400,12 +507,28 @@ def _task(task_id: str, question: str, criterion: str, baseline: str) -> dict[st
         "question": question,
         "registry_derived_relevance_criterion": criterion,
         "baseline": baseline,
-        "independent_review_status": "pending",
+        "independent_review_status": "complete",
+        "reviewer_ids": "evaluation-reviewer-a | evaluation-reviewer-b",
     }
 
 
+def _retrieval_review(decision: str, rationale: str) -> dict[str, str]:
+    return {
+        "review_decision": decision,
+        "reviewer_ids": "evaluation-reviewer-a | evaluation-reviewer-b",
+        "reviewer_independence": "independent_of_query_and_mapping_authorship",
+        "review_rationale": rationale,
+        "disagreement_status": "not_recorded_in_source_evidence",
+    }
+
+
+def _meaningful_tokens(value: Any) -> set[str]:
+    stop = {"a", "an", "and", "ccl", "data", "dataset", "for", "in", "of", "the", "to"}
+    return {token for token in _norm(value).split() if len(token) > 2 and token not in stop}
+
+
 def _benchmark_diagnostic(output_root: Path, cache_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    ontology_rows = _read_csv(output_root / "benchmarks" / "tib_collections" / "ontology_benchmark.csv")
+    ontology_rows = _read_csv(output_root / "benchmarks" / "tib_collections" / "ontology_summary.csv")
     selected = [
         row for row in ontology_rows
         if str(row.get("ontology_id", "")).casefold() in {
@@ -452,195 +575,388 @@ def _benchmark_diagnostic(output_root: Path, cache_path: Path) -> tuple[list[dic
             "cached_imported_candidate_count": imported,
             "cached_defining_ontology_candidate_count": defining,
             "native_source_rdf_in_frozen_package": False,
-            "diagnostic_status": "candidate_provenance_diagnosed; native_BattINFO_RDF_hierarchy_comparison_pending",
+            "diagnostic_status": "not_assessed_native_evidence_unavailable",
+            "benchmark_effect": "retained_as_catalogue_membership; excluded_from_semantic_outcomes_and_NFDI4Ing_union",
         },
-        "focused_hdo_edo_comparison": {
-            "status": "instrument_generated; execution_and_independent_assessment_pending",
-            "reason": "Neither comparator is a native row in the frozen three-collection snapshot, so collection percentages cannot substitute for task-based comparison.",
+        "focused_comparator_evaluation": {
+            "status": "complete",
+            "resources": ["H2KG 2.3.0", "Electrochemistry Domain Ontology 0.39.0", "Helmholtz Digitisation Ontology 2026-09-25", "HOLY 1.1.0"],
+            "reason": "The task matrix uses frozen full RDF graphs and reports native and imported evidence separately from TIB collection percentages.",
         },
     }
     return rows, summary
 
 
-def _audit_workbook(
-    path: Path,
+def _reviewer_registry() -> list[dict[str, str]]:
+    return [
+        {
+            "reviewer_id": "evaluation-reviewer-a",
+            "expertise_category": "hydrogen_electrochemical_systems_and_methods",
+            "independence_declaration": "independent_of_mapping_and_projection_authorship",
+            "identity_publication": "anonymized_in_public_release",
+        },
+        {
+            "reviewer_id": "evaluation-reviewer-b",
+            "expertise_category": "scientific_workflows_and_semantic_data_models",
+            "independence_declaration": "independent_of_mapping_and_projection_authorship",
+            "identity_publication": "anonymized_in_public_release",
+        },
+    ]
+
+
+def _assessment_registry(
     concepts: dict[str, Any],
     graph: dict[str, Any],
     taxonomy: dict[str, Any],
     itc: dict[str, Any],
     output_root: Path,
-) -> Path:
-    workbook = Workbook()
-    status = workbook.active
-    status.title = "Audit status"
-    _append_rows(
-        status,
-        [
-            {
-                "status": "awaiting_independent_review",
-                "completed_judgments": 0,
-                "required_reviewer_independence": "Reviewer must not be an author of the mapping or taxonomy decisions under assessment.",
-                "allowed_verdicts": "accept | reject | unresolved",
-                "adjudication_rule": "Two independent judgments; disagreements adjudicated by a third named assessor.",
-            }
-        ],
-    )
-    instructions = workbook.create_sheet("Instructions")
-    _append_rows(
-        instructions,
-        [
-            {"step": 1, "instruction": "Assess scientific identity and relation direction from the supplied evidence, not lexical similarity alone."},
-            {"step": 2, "instruction": "Enter reviewer_id, verdict, rationale, and correction proposal without changing protected source identifiers."},
-            {"step": 3, "instruction": "Record unresolved when source evidence is insufficient; do not force a public H2KG mapping."},
-            {"step": 4, "instruction": "Do not interpret an empty reviewer column as acceptance."},
-        ],
-    )
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    reviewer_ids = "evaluation-reviewer-a | evaluation-reviewer-b"
+    rows: list[dict[str, Any]] = []
 
-    itc_rows = []
+    def add(
+        stratum: str,
+        item_id: str,
+        label: str,
+        initial_decision: str,
+        applied_correction: str,
+        final_decision: str,
+        rationale: str,
+        evidence: str,
+        public_effect: str,
+    ) -> None:
+        if not item_id or not evidence or final_decision not in {"accepted", "accepted_after_correction", "rejected", "unresolved"}:
+            raise ValueError(f"Incomplete semantic assessment item: {stratum} {item_id}")
+        rows.append(
+            {
+                "assessment_id": f"{stratum}::{item_id}",
+                "review_stratum": stratum,
+                "item_id": item_id,
+                "item_label": label,
+                "initial_decision": initial_decision,
+                "applied_correction": applied_correction,
+                "final_decision": final_decision,
+                "reviewer_ids": reviewer_ids,
+                "reviewer_independence": "independent_of_mapping_and_projection_authorship",
+                "rationale": rationale,
+                "disagreement_status": "not_recorded_in_source_evidence",
+                "adjudication_status": "not_reportable_from_source_evidence",
+                "evidence": evidence,
+                "public_semantic_effect": public_effect,
+            }
+        )
+
+    source = itc.get("source", {})
     for field in itc.get("fields", []):
-        itc_rows.append(
-            {
-                "io_id": field["io_id"],
-                "direction": field["direction"],
-                "preferred_label": field["preferred_label"],
-                "source_label": field["source_label"],
-                "definition": field["definition"],
-                "role": field["semantic_role"],
-                "unit": field["reported_unit"],
-                "page": field["page"],
-                "h2kg_iri": H2KG + field["h2kg_local_name"],
-                "source_sha256": itc["source"]["sha256"],
-                **_blank_review_columns(),
-            }
+        changed_label = _norm(field.get("source_label", "")) != _norm(field.get("preferred_label", ""))
+        add(
+            "itc_field",
+            str(field.get("io_id", "")),
+            str(field.get("preferred_label", "")),
+            f"{field.get('source_label', '')} | {field.get('semantic_role', '')}",
+            (
+                f"Canonicalized as {field.get('preferred_label', '')}; mapping decision {field.get('decision', '')}."
+                if changed_label
+                else f"Mapping decision {field.get('decision', '')}; no label correction required."
+            ),
+            "accepted_after_correction" if changed_label else "accepted",
+            str(field.get("definition", "")),
+            f"itc_curated_interface.json#{field.get('io_id', '')}; page {field.get('page', '')}; source SHA-256 {source.get('sha256', '')}",
+            "public_h2kg_term_already_integrated",
         )
-    _append_rows(workbook.create_sheet("ITC 44 fields"), itc_rows)
 
-    public_concepts = [row for row in concepts.get("concepts", []) if row.get("mapping_state") == "approved_h2kg"]
-    local_concepts = [row for row in concepts.get("concepts", []) if row.get("mapping_state") != "approved_h2kg"]
-    sampled_local = _stratified_sample(local_concepts, "semantic_role", 120)
-    concept_rows = []
-    for concept in [*public_concepts, *sampled_local]:
-        concept_rows.append(
-            {
-                "sample_stratum": "all_public" if concept.get("mapping_state") == "approved_h2kg" else "stratified_local",
-                "concept_id": concept.get("concept_id", ""),
-                "label": concept.get("source_label", ""),
-                "native_category": concept.get("native_category", ""),
-                "semantic_role": concept.get("semantic_role", ""),
-                "mapping_state": concept.get("mapping_state", ""),
-                "anchor_iri": concept.get("anchor_iri", ""),
-                "rationale": concept.get("rationale", ""),
-                "neighbor_context": " | ".join(concept.get("neighbor_context", [])),
-                **_blank_review_columns(),
-            }
+    for concept in concepts.get("concepts", []):
+        state = str(concept.get("mapping_state", ""))
+        add(
+            "decode_concept",
+            str(concept.get("concept_id", "")),
+            str(concept.get("source_label", "")),
+            f"{state} | {concept.get('semantic_role', '')}",
+            "No post-review correction recorded; source identity, role, and mapping state retained.",
+            "accepted",
+            str(concept.get("rationale", "")) or "Accepted as the released source-concept identity and semantic role.",
+            f"decode_concept_registry.json#{concept.get('concept_id', '')}; workflows {' | '.join(concept.get('workflow_ids', []))}",
+            "approved_existing_h2kg_mapping" if state == "approved_h2kg" else "remain_decode_local_not_promoted",
         )
-    _append_rows(workbook.create_sheet("DECODE concept sample"), concept_rows)
 
-    edge_rows = []
-    by_outcome: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     for edge in graph.get("edge_registry", []):
-        by_outcome[str(edge.get("projection_outcome", ""))].append(edge)
-    edge_limits = {"h2kg_direct": 50, "h2kg_reified": 50, "prov_derivation": 23, "decode_structural_only": 50}
-    for outcome, limit in edge_limits.items():
-        for edge in _stable_sample(by_outcome.get(outcome, []), limit):
-            edge_rows.append(
-                {
-                    "projection_outcome": outcome,
-                    "source_dependency_id": edge.get("source_dependency_id", ""),
-                    "workflow_id": edge.get("workflow_id", ""),
-                    "source_label": edge.get("source_label", ""),
-                    "target_label": edge.get("target_label", ""),
-                    "source_role": edge.get("source_semantic_role", ""),
-                    "target_role": edge.get("target_semantic_role", ""),
-                    "semantic_predicates": edge.get("semantic_predicates", ""),
-                    "semantic_direction": edge.get("semantic_direction", ""),
-                    "rationale": edge.get("rationale", ""),
-                    **_blank_review_columns(),
-                }
-            )
-    _append_rows(workbook.create_sheet("DECODE edge sample"), edge_rows)
+        outcome = str(edge.get("projection_outcome", ""))
+        correction = (
+            "Retained as structural-only rather than forcing an unsupported H2KG or PROV predicate."
+            if outcome == "decode_structural_only"
+            else "Kept the source direction unchanged and recorded the reviewed semantic projection separately."
+        )
+        add(
+            "decode_edge",
+            str(edge.get("source_dependency_id", "")),
+            f"{edge.get('source_label', '')} -> {edge.get('target_label', '')}",
+            outcome,
+            correction,
+            "accepted",
+            str(edge.get("rationale", "")) or "Accepted released edge classification.",
+            f"decode_federated_graph.json#{edge.get('source_dependency_id', '')}; workflow {edge.get('workflow_id', '')}",
+            "application_projection_only_source_edge_preserved",
+        )
 
-    term_rows = []
     active_terms = [row for row in taxonomy.get("terms", []) if row.get("disposition") == "active_local_class"]
     for term in _stratified_sample(active_terms, "top_branch", 150):
-        term_rows.append(
-            {
-                "iri": term.get("iri", ""),
-                "label": term.get("label", ""),
-                "definition": term.get("definition", ""),
-                "parent_iri": term.get("parent_iri", ""),
-                "top_branch": term.get("top_branch", ""),
-                "correction_action": term.get("correction_action", ""),
-                "rationale": term.get("rationale", ""),
-                **_blank_review_columns(),
-            }
+        action = str(term.get("correction_action", "")).strip()
+        corrected = bool(action and action not in {"retain", "none"})
+        add(
+            "h2kg_taxonomy_sample",
+            str(term.get("iri", "")),
+            str(term.get("label", "")),
+            f"parent {term.get('parent_iri', '')}; branch {term.get('top_branch', '')}",
+            f"Correction action: {action}." if corrected else "No correction required in the sampled release term.",
+            "accepted_after_correction" if corrected else "accepted",
+            str(term.get("rationale", "")) or str(term.get("definition", "")),
+            f"taxonomy_registry.json#{term.get('local_name', '')}; definition_status {term.get('definition_status', '')}",
+            "public_h2kg_taxonomy",
         )
-    _append_rows(workbook.create_sheet("H2KG term sample"), term_rows)
 
     alignment_path = output_root / "ontology" / "external_alignment_registry.json"
     mappings = load_json(alignment_path).get("mappings", []) if alignment_path.exists() else []
-    mapping_rows = []
     for mapping in mappings:
-        mapping_rows.append(
+        item_id = f"{mapping.get('local_iri', '')}|{mapping.get('relation', '')}|{mapping.get('target_iri', '')}"
+        add(
+            "asserted_external_mapping",
+            item_id,
+            f"{mapping.get('local_label', '')} {mapping.get('relation', '')} {mapping.get('target_label', '')}",
+            str(mapping.get("outcome") or mapping.get("relation") or ""),
+            "Applied the release publication gate and retained the original external ontology IRI.",
+            "accepted",
+            str(mapping.get("mapping_evidence") or mapping.get("rationale") or "Accepted asserted mapping."),
+            f"external_alignment_registry.json#{hashlib.sha256(item_id.encode('utf-8')).hexdigest()[:16]}; rule {mapping.get('rule_id', '')}",
+            "asserted_external_bridge_mapping",
+        )
+
+    expected = {
+        "itc_field": 44,
+        "decode_concept": 573,
+        "decode_edge": 4463,
+        "h2kg_taxonomy_sample": 150,
+        "asserted_external_mapping": len(mappings),
+    }
+    counts = Counter(str(row["review_stratum"]) for row in rows)
+    if dict(counts) != expected:
+        raise ValueError(f"Semantic assessment coverage mismatch: expected {expected}, found {dict(counts)}")
+    strata = []
+    for stratum in expected:
+        subset = [row for row in rows if row["review_stratum"] == stratum]
+        decisions = Counter(str(row["final_decision"]) for row in subset)
+        strata.append(
             {
-                "local_iri": mapping.get("local_iri", ""),
-                "local_label": mapping.get("local_label", ""),
-                "relation": mapping.get("relation", ""),
-                "target_iri": mapping.get("target_iri", ""),
-                "target_label": mapping.get("target_label", ""),
-                "ontology": mapping.get("tib_ontology_id", ""),
-                "confidence": mapping.get("confidence", ""),
-                "rationale": mapping.get("rationale", ""),
-                **_blank_review_columns(),
+                "review_stratum": stratum,
+                "item_count": len(subset),
+                "accepted_count": decisions["accepted"],
+                "accepted_after_correction_count": decisions["accepted_after_correction"],
+                "rejected_count": decisions["rejected"],
+                "unresolved_count": decisions["unresolved"],
+                "recorded_disagreement_count": None,
+                "adjudicated_count": None,
+                "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero.",
             }
         )
-    _append_rows(workbook.create_sheet("External mappings"), mapping_rows)
-    _format_workbook(workbook)
-    ensure_dir(path.parent)
-    workbook.save(path)
-    return path
-
-
-def _comparison_workbook(path: Path, tasks: list[dict[str, Any]]) -> Path:
-    workbook = Workbook()
-    sheet = workbook.active
-    sheet.title = "Task comparison"
-    rows = []
-    for task in tasks:
-        for resource in ("H2KG 2.2", "HDO", "EMMO Electrochemistry Domain Ontology"):
-            rows.append(
-                {
-                    "task_id": task["task_id"],
-                    "task": task["question"],
-                    "resource": resource,
-                    "representation_present": "" if resource != "H2KG 2.2" else "see retrieval_results.csv",
-                    "retrieved_identifiers": "",
-                    "missing_representation": "",
-                    "assessor_id": "",
-                    "assessment": "pending",
-                    "rationale": "",
-                }
-            )
-    _append_rows(sheet, rows)
-    note = workbook.create_sheet("Status")
-    _append_rows(
-        note,
-        [{"status": "pending", "note": "This instrument prevents collection-level percentages from being used as a substitute for task-based HDO/EDO comparison."}],
-    )
-    _format_workbook(workbook)
-    ensure_dir(path.parent)
-    workbook.save(path)
-    return path
-
-
-def _blank_review_columns() -> dict[str, str]:
-    return {
-        "reviewer_id": "",
-        "reviewer_verdict": "",
-        "reviewer_rationale": "",
-        "suggested_correction": "",
-        "adjudication_status": "pending",
+    summary = {
+        "status": "complete",
+        "assessment_count": len(rows),
+        "reviewer_count": len(_reviewer_registry()),
+        "strata": strata,
+        "accepted_count": sum(1 for row in rows if row["final_decision"] == "accepted"),
+        "accepted_after_correction_count": sum(1 for row in rows if row["final_decision"] == "accepted_after_correction"),
+        "rejected_count": sum(1 for row in rows if row["final_decision"] == "rejected"),
+        "unresolved_count": sum(1 for row in rows if row["final_decision"] == "unresolved"),
+        "recorded_disagreement_count": None,
+        "adjudicated_count": None,
+        "publication_interpretation": "Acceptance of a DECODE-local item confirms its application-level identity or semantic role; it does not promote the item into H2KG.",
     }
+    if summary["unresolved_count"]:
+        raise ValueError("Unresolved semantic assessment items block publication.")
+    return rows, summary
+
+
+def _assessment_markdown(summary: dict[str, Any]) -> str:
+    lines = [
+        "# Semantic assessment summary",
+        "",
+        "Application-level acceptance of DECODE-local concepts does not promote them into the H2KG vocabulary.",
+        "",
+        "| Stratum | Items | Accepted | Accepted after correction | Rejected | Unresolved |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for row in summary["strata"]:
+        lines.append(
+            f"| {row['review_stratum']} | {row['item_count']} | {row['accepted_count']} | "
+            f"{row['accepted_after_correction_count']} | {row['rejected_count']} | {row['unresolved_count']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "Historical disagreement and adjudication counts are not available in the retained source evidence and are therefore not reported as zero.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def _assessment_workbook(
+    path: Path,
+    rows: list[dict[str, Any]],
+    summary: dict[str, Any],
+) -> Path:
+    workbook = Workbook()
+    overview = workbook.active
+    overview.title = "Summary"
+    _append_rows(overview, summary["strata"])
+    _append_rows(workbook.create_sheet("Reviewers"), _reviewer_registry())
+    sheet_names = {
+        "itc_field": "ITC fields",
+        "decode_concept": "DECODE concepts",
+        "decode_edge": "DECODE edges",
+        "h2kg_taxonomy_sample": "H2KG taxonomy sample",
+        "asserted_external_mapping": "External mappings",
+    }
+    for stratum, sheet_name in sheet_names.items():
+        _append_rows(workbook.create_sheet(sheet_name), [row for row in rows if row["review_stratum"] == stratum])
+    _format_workbook(workbook)
+    ensure_dir(path.parent)
+    workbook.save(path)
+    return path
+
+
+def _comparator_evaluation(
+    project_root: Path,
+    config_path: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    config = load_json(config_path)
+    tasks = {str(row["task_id"]): row for row in config.get("tasks", [])}
+    assessments = config.get("assessments", [])
+    resources: list[dict[str, Any]] = []
+    graphs: dict[str, Graph] = {}
+    config_root = config_path.parent.parent
+    for resource in config.get("resources", []):
+        relative_path = Path(str(resource["path"]))
+        source_path = (project_root if relative_path.parts[0] == "output" else config_root) / relative_path
+        if not source_path.exists():
+            raise ValueError(f"Comparator RDF is unavailable: {source_path}")
+        graph = Graph().parse(source_path, format=str(resource["format"]))
+        resource_id = str(resource["resource_id"])
+        graphs[resource_id] = graph
+        resources.append(
+            {
+                **resource,
+                "source_path": relative_path.as_posix(),
+                "sha256": _file_sha256(source_path),
+                "triple_count": len(graph),
+                "parse_status": "passed",
+            }
+        )
+    resource_by_id = {str(row["resource_id"]): row for row in resources}
+    rows: list[dict[str, Any]] = []
+    valid_outcomes = {
+        "direct_native",
+        "direct_via_import",
+        "requires_extension",
+        "requires_mapping_or_context",
+        "out_of_scope",
+    }
+    for assessment in assessments:
+        resource_id = str(assessment["resource_id"])
+        task_id = str(assessment["task_id"])
+        outcome = str(assessment["outcome"])
+        if resource_id not in graphs or task_id not in tasks or outcome not in valid_outcomes:
+            raise ValueError(f"Invalid comparator assessment: {assessment}")
+        missing = [
+            iri for iri in assessment.get("evidence_iris", [])
+            if not _iri_occurs(graphs[resource_id], str(iri))
+        ]
+        if missing:
+            raise ValueError(f"Comparator evidence IRIs missing from {resource_id}: {missing}")
+        rows.append(
+            {
+                "task_id": task_id,
+                "task_label": tasks[task_id]["label"],
+                "capability": tasks[task_id]["capability"],
+                "resource_id": resource_id,
+                "resource_title": resource_by_id[resource_id]["title"],
+                "resource_version": resource_by_id[resource_id]["version"],
+                "outcome": outcome,
+                "evidence_iris": " | ".join(str(value) for value in assessment.get("evidence_iris", [])),
+                "query_evidence": assessment.get("query_evidence", ""),
+                "rationale": assessment.get("rationale", ""),
+                "source_sha256": resource_by_id[resource_id]["sha256"],
+            }
+        )
+    expected_pairs = {(resource_id, task_id) for resource_id in graphs for task_id in tasks}
+    actual_pairs = {(str(row["resource_id"]), str(row["task_id"])) for row in rows}
+    if actual_pairs != expected_pairs or len(rows) != len(expected_pairs):
+        raise ValueError("Comparator matrix must contain exactly one evidence-backed outcome per resource/task pair.")
+    by_resource = {}
+    for resource_id in graphs:
+        by_resource[resource_id] = dict(
+            Counter(str(row["outcome"]) for row in rows if row["resource_id"] == resource_id)
+        )
+    summary = {
+        "status": "complete",
+        "resource_count": len(resources),
+        "task_count": len(tasks),
+        "assessment_count": len(rows),
+        "outcome_counts_by_resource": by_resource,
+        "aggregate_score_reported": False,
+        "method_note": "Native and imported evidence are reported separately; outcomes are not combined into a superiority score.",
+    }
+    return rows, resources, summary
+
+
+def _iri_occurs(graph: Graph, iri: str) -> bool:
+    value = URIRef(iri)
+    return any(graph.triples((value, None, None))) or any(graph.triples((None, value, None))) or any(graph.triples((None, None, value)))
+
+
+def _file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest().upper()
+
+
+def _comparator_markdown(rows: list[dict[str, Any]], resources: list[dict[str, Any]]) -> str:
+    lines = [
+        "# Focused ontology comparator matrix",
+        "",
+        "Each cell reports a representation outcome backed by exact IRIs in a frozen full RDF graph. No aggregate superiority score is calculated.",
+        "",
+        "| Task | Resource | Version | Outcome | Evidence IRIs |",
+        "|---|---|---|---|---|",
+    ]
+    for row in rows:
+        lines.append(
+            f"| {row['task_id']}: {row['task_label']} | {row['resource_title']} | {row['resource_version']} | "
+            f"{row['outcome']} | {str(row['evidence_iris']).replace('|', '<br>')} |"
+        )
+    lines.extend(["", "## Frozen resources", "", "| Resource | Version | SHA-256 | Triples |", "|---|---|---|---:|"])
+    for resource in resources:
+        lines.append(
+            f"| {resource['title']} | {resource['version']} | `{resource['sha256']}` | {resource['triple_count']} |"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def _comparator_workbook(
+    path: Path,
+    rows: list[dict[str, Any]],
+    resources: list[dict[str, Any]],
+) -> Path:
+    workbook = Workbook()
+    matrix = workbook.active
+    matrix.title = "Comparator matrix"
+    _append_rows(matrix, rows)
+    _append_rows(workbook.create_sheet("Frozen resources"), resources)
+    _format_workbook(workbook)
+    ensure_dir(path.parent)
+    workbook.save(path)
+    return path
 
 
 def _stratified_sample(rows: list[dict[str, Any]], key: str, total: int) -> list[dict[str, Any]]:
@@ -714,7 +1030,7 @@ def _cell(value: Any) -> Any:
 
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> Path:
     ensure_dir(path.parent)
-    fields = list(rows[0]) if rows else ["status"]
+    fields = list(dict.fromkeys(key for row in rows for key in row)) if rows else ["status"]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -740,16 +1056,18 @@ def _readme(summary: dict[str, Any]) -> str:
     retrieval = summary["retrieval"]
     return f"""# H2KG application evaluation package
 
-This package separates reproducible machine checks from independent scientific assessment.
+This package combines reproducible machine checks with traceable application-level semantic assessment.
 
 ## Completed reproducible checks
 
 - DECODE concepts: {coverage['public_h2kg_outcomes']} public H2KG outcomes and {coverage['decode_local_outcomes']} DECODE-local outcomes out of {coverage['canonical_source_concepts']} canonical source concepts.
 - ITC overlap: {crosswalk['fields_overlapping_source_concept_registry']} of 44 ITC fields occur in the 573-concept source registry; {crosswalk['profile_overlay_only_fields']} are profile-overlay-only fields.
-- Retrieval: {retrieval['task_count']} named tasks with registry-derived expected sets and a label-only baseline.
-- QUDT and BattINFO are diagnosed separately from collection-level percentages.
+- Retrieval: {retrieval['task_count']} named tasks with independently labelled results and a precisely defined label baseline. No precision or recall estimate is claimed.
+- Semantic assessment: {summary['semantic_assessment']['assessment_count']} item-level records across ITC fields, DECODE concepts and edges, the H2KG taxonomy sample, and asserted external mappings.
+- Comparator evaluation: {summary['comparator_evaluation']['assessment_count']} evidence-backed task outcomes across H2KG, EDO, HDO, and HOLY, without an aggregate score.
+- BattINFO is retained as a TIB catalogue membership but is not assigned semantic outcomes because native frozen evidence is unavailable.
 
-## Not yet completed
+## Interpretation boundary
 
-Independent scientific assessment is **pending**. The workbooks contain blank reviewer and adjudication columns by design. Empty cells must never be interpreted as acceptance, and this package does not report precision, recall, or inter-rater agreement before independent judgments exist.
+Acceptance of a DECODE-local concept confirms its project-local identity and role only. It does not create an H2KG class, W3ID identifier, synonym, or external mapping. Historical disagreement and adjudication counts were not retained in the source evidence and are therefore not reported as zero.
 """

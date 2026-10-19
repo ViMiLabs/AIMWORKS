@@ -1,4 +1,4 @@
-# H₂KG 2.2 Taxonomy Report
+# H₂KG 2.3 Taxonomy Report
 
 - Validation conforms: True
 - Active local classes: 2221

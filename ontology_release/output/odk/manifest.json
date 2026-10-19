@@ -2,85 +2,150 @@
   "enabled": true,
   "mode": "shadow",
   "status": "enabled",
-  "execution_mode": "bridge",
+  "execution_mode": "actual",
   "authority": "AIMWORKS pipeline",
   "current_role": "ODK shadow-mode release/QC backend",
-  "last_built": "2026-10-19T15:48:19+00:00",
+  "last_built": "2026-10-19T19:43:18+00:00",
   "reasoner": "ELK",
   "primary_artifact": "base",
-  "odk_version": "shadow scaffold",
-  "taxonomy_sha256": "C3F65BF6057C4D0167AF7665758FD814D3B45C748C1391EF41CCE2F44DE9FEFB",
+  "odk_version": "ODK Image v1.6.1",
+  "taxonomy_sha256": "38F6B5D5C4F241C25378848975DCB8968C3B9919C8419C62EE6F2B58D93BD52C",
   "workbench": {
-    "root": "..\\odk\\src\\ontology",
-    "edit_file": "..\\odk\\src\\ontology\\h2kg-edit.owl",
-    "config_file": "..\\odk\\src\\ontology\\h2kg-odk.yaml"
+    "root": "odk\\src\\ontology",
+    "edit_file": "odk\\src\\ontology\\h2kg-edit.owl",
+    "config_file": "odk\\src\\ontology\\h2kg-odk.yaml"
   },
   "cache_refresh": {
     "status": "cached",
-    "path": "..\\cache\\sources\\hdo.owl",
+    "path": "cache\\sources\\hdo.owl",
     "detail": "Existing HDO cache file retained."
   },
-  "command_results": [],
+  "command_results": [
+    {
+      "label": "update_repo",
+      "command": [
+        "cmd",
+        "/c",
+        "run.bat",
+        "update_repo"
+      ],
+      "returncode": 0,
+      "stdout": "WARNING: This file should be manually migrated: mkdocs.yaml\nOntology repository update successfully completed.\n",
+      "stderr": "INFO:root:Applying templates\nINFO:root:  Unpacking: ../../_dynamic_documentation\nINFO:root:  Unpacking: ../../_dynamic_sparql\nINFO:root:  Unpacking into: ../../src/sparql/h2kg_terms.sparql\nINFO:root:  Unpacking into: ../../src/sparql/owldef-self-reference-violation.sparql\nINFO:root:  Unpacking into: ../../src/sparql/iri-range-violation.sparql\nINFO:root:  Unpacking into: ../../src/sparql/label-with-iri-violation.sparql\nINFO:root:  Unpacking into: ../../src/sparql/multiple-replaced_by-violation.sparql\nINFO:root:  Unpacking into: ../../src/sparql/dc-properties-violation.sparql\nINFO:root:  Unpacking: ../../_dynamic_files\nINFO:root:  Unpacking: ../../_dynamic_workflows\nINFO:root:Applying templates\nINFO:root:Applying templates\nINFO:root:  Compiling: /tools/templates/src/ontology/Makefile.jinja2 -> ../../src/ontology/Makefile\nINFO:root:  Compiling: /tools/templates/src/ontology/run.sh.jinja2 -> ../../src/ontology/run.sh\nINFO:root:Applying templates\nINFO:root:Applying templates\nINFO:root:  Copying: /tools/templates/src/sparql/terms.sparql -> ../../src/sparql/terms.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/xrefs.sparql -> ../../src/sparql/xrefs.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/synonyms.sparql -> ../../src/sparql/synonyms.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/class-count-by-prefix.sparql -> ../../src/sparql/class-count-by-prefix.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/preprocess-module.ru -> ../../src/sparql/preprocess-module.ru\nINFO:root:  Copying: /tools/templates/src/sparql/edges.sparql -> ../../src/sparql/edges.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/subsets-labeled.sparql -> ../../src/sparql/subsets-labeled.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/simple-seed.sparql -> ../../src/sparql/simple-seed.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/basic-report.sparql -> ../../src/sparql/basic-report.sparql\nINFO:root:  Copying: /tools/templates/src/sparql/postprocess-module.ru -> ../../src/sparql/postprocess-module.ru\nINFO:root:  Copying: /tools/templates/src/sparql/obsoletes.sparql -> ../../src/sparql/obsoletes.sparql\nINFO:root:Applying templates\nINFO:root:  Compiling: /tools/templates/src/sparql/README.md.jinja2 -> ../../src/sparql/README.md\nINFO:root:RUNNING: robot odk:import -i h2kg-edit.owl --exclusive true --add http://purl.obolibrary.org/obo/h2kg/imports/emmo-core_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/emmo-electrochemistry_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/qudt-schema_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/qudt-units_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/qudt-quantitykinds_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/chebi_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/prov-o_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/dcterms_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/vann_import.owl --add http://purl.obolibrary.org/obo/h2kg/imports/hdo_import.owl convert -f ofn -o h2kg-edit.owl\nINFO:root:OUT: \n"
+    },
+    {
+      "label": "odkversion",
+      "command": [
+        "cmd",
+        "/c",
+        "run.bat",
+        "make",
+        "odkversion"
+      ],
+      "returncode": 0,
+      "stdout": "ODK Makefile v1.6.1\nODK Image v1.6.1\nROBOT version 1.9.10\nDOSDP-Tools v0.19.3\nKonclude v0.7.0-1138\nJena v4.9.0\nRelation-Graph v2.3.3\nOntology Access Kit v0.6.23\nAmmonite REPL & Script-Runner, 2.5.9\nSSSOM-CLI version 1.10.0\n",
+      "stderr": "h2kg.Makefile:14: warning: overriding recipe for target 'mirror-emmo-core'\nMakefile:517: warning: ignoring old recipe for target 'mirror-emmo-core'\nh2kg.Makefile:41: warning: overriding recipe for target 'imports/emmo-core_import.owl'\nMakefile:422: warning: ignoring old recipe for target 'imports/emmo-core_import.owl'\nh2kg.Makefile:70: warning: overriding recipe for target 'mirror-emmo-electrochemistry'\nMakefile:525: warning: ignoring old recipe for target 'mirror-emmo-electrochemistry'\nh2kg.Makefile:97: warning: overriding recipe for target 'imports/emmo-electrochemistry_import.owl'\nMakefile:428: warning: ignoring old recipe for target 'imports/emmo-electrochemistry_import.owl'\nh2kg.Makefile:126: warning: overriding recipe for target 'mirror-qudt-schema'\nMakefile:533: warning: ignoring old recipe for target 'mirror-qudt-schema'\nh2kg.Makefile:153: warning: overriding recipe for target 'imports/qudt-schema_import.owl'\nMakefile:434: warning: ignoring old recipe for target 'imports/qudt-schema_import.owl'\nh2kg.Makefile:182: warning: overriding recipe for target 'mirror-qudt-units'\nMakefile:541: warning: ignoring old recipe for target 'mirror-qudt-units'\nh2kg.Makefile:209: warning: overriding recipe for target 'imports/qudt-units_import.owl'\nMakefile:440: warning: ignoring old recipe for target 'imports/qudt-units_import.owl'\nh2kg.Makefile:238: warning: overriding recipe for target 'mirror-qudt-quantitykinds'\nMakefile:549: warning: ignoring old recipe for target 'mirror-qudt-quantitykinds'\nh2kg.Makefile:265: warning: overriding recipe for target 'imports/qudt-quantitykinds_import.owl'\nMakefile:446: warning: ignoring old recipe for target 'imports/qudt-quantitykinds_import.owl'\nh2kg.Makefile:294: warning: overriding recipe for target 'mirror-chebi'\nMakefile:557: warning: ignoring old recipe for target 'mirror-chebi'\nh2kg.Makefile:321: warning: overriding recipe for target 'imports/chebi_import.owl'\nMakefile:452: warning: ignoring old recipe for target 'imports/chebi_import.owl'\nh2kg.Makefile:342: warning: overriding recipe for target 'mirror-prov-o'\nMakefile:565: warning: ignoring old recipe for target 'mirror-prov-o'\nh2kg.Makefile:369: warning: overriding recipe for target 'imports/prov-o_import.owl'\nMakefile:458: warning: ignoring old recipe for target 'imports/prov-o_import.owl'\nh2kg.Makefile:398: warning: overriding recipe for target 'mirror-dcterms'\nMakefile:573: warning: ignoring old recipe for target 'mirror-dcterms'\nh2kg.Makefile:425: warning: overriding recipe for target 'imports/dcterms_import.owl'\nMakefile:464: warning: ignoring old recipe for target 'imports/dcterms_import.owl'\nh2kg.Makefile:446: warning: overriding recipe for target 'mirror-vann'\nMakefile:581: warning: ignoring old recipe for target 'mirror-vann'\nh2kg.Makefile:473: warning: overriding recipe for target 'imports/vann_import.owl'\nMakefile:470: warning: ignoring old recipe for target 'imports/vann_import.owl'\nh2kg.Makefile:494: warning: overriding recipe for target 'mirror-hdo'\nMakefile:589: warning: ignoring old recipe for target 'mirror-hdo'\nh2kg.Makefile:521: warning: overriding recipe for target 'imports/hdo_import.owl'\nMakefile:476: warning: ignoring old recipe for target 'imports/hdo_import.owl'\nh2kg.Makefile:548: warning: overriding recipe for target 'h2kg-base.owl'\nMakefile:693: warning: ignoring old recipe for target 'h2kg-base.owl'\n"
+    },
+    {
+      "label": "refresh-imports",
+      "command": [
+        "cmd",
+        "/c",
+        "run.bat",
+        "make",
+        "refresh-imports"
+      ],
+      "returncode": 0,
+      "stdout": "s(OWLOntologyManagerImpl.java:1873)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.makeLoadImportRequest(OWLOntologyManagerImpl.java:1911)\n        org.semanticweb.owlapi.rdf.rdfxml.parser.TripleHandlers$TPImportsHandler.handleTriple(TripleHandlers.java:1647)\n        org.semanticweb.owlapi.rdf.rdfxml.parser.TripleHandlers$HandlerAccessor.handleStreaming(TripleHandlers.java:278)\n        org.semanticweb.owlapi.rdf.rdfxml.parser.OWLRDFConsumer.statementWithResourceValue(OWLRDFConsumer.java:1578)\nDid not recognise RDF format object RDFa (mimeTypes=application/xhtml+xml, application/html, text/html; ext=xhtml, html)        org.eclipse.rdf4j.rio.Rio.lambda$unsupportedFormat$0(Rio.java:690)\n        java.base/java.util.Optional.orElseThrow(Optional.java:408)\n        org.eclipse.rdf4j.rio.Rio.createParser(Rio.java:96)\n        org.semanticweb.owlapi.rio.RioParserImpl.parseDocumentSource(RioParserImpl.java:225)\n        org.semanticweb.owlapi.rio.RioParserImpl.parse(RioParserImpl.java:185)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyFactoryImpl.loadOWLOntology(OWLOntologyFactoryImpl.java:220)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.actualParse(OWLOntologyManagerImpl.java:1303)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.loadOntology(OWLOntologyManagerImpl.java:1243)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.loadOntology(OWLOntologyManagerImpl.java:1143)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.loadImports(OWLOntologyManagerImpl.java:1873)\n\n\n\nUse the -vvv option to show the stack trace.\nUse the --help option to see usage information.\nRemote fetch failed for qudt-quantitykinds; writing placeholder mirror for shadow-mode continuity.\nif [ -f tmp/mirror-qudt-quantitykinds.owl ]; then if cmp -s tmp/mirror-qudt-quantitykinds.owl mirror/qudt-quantitykinds.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-qudt-quantitykinds.owl mirror/qudt-quantitykinds.owl; fi; fi\nMirrors different, updating.\nSkipping optional source chebi; writing placeholder import mirror.\nif [ -f tmp/mirror-chebi.owl ]; then if cmp -s tmp/mirror-chebi.owl mirror/chebi.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-chebi.owl mirror/chebi.owl; fi; fi\nMirrors different, updating.\nDownloading prov-o from https://www.w3.org/ns/prov-o\nif [ -f tmp/mirror-prov-o.owl ]; then if cmp -s tmp/mirror-prov-o.owl mirror/prov-o.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-prov-o.owl mirror/prov-o.owl; fi; fi\nMirrors different, updating.\nDownloading dcterms from http://purl.org/dc/terms/\n2026-10-19 19:34:46,636 ERROR org.obolibrary.robot.IOHelper - Input ontology contains 1 triple(s) that could not be parsed:\n - <http://purl.org/dc/terms/creator> <http://www.w3.org/2002/07/owl#equivalentProperty> <http://xmlns.com/foaf/0.1/maker>.\n\nif [ -f tmp/mirror-dcterms.owl ]; then if cmp -s tmp/mirror-dcterms.owl mirror/dcterms.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-dcterms.owl mirror/dcterms.owl; fi; fi\nMirrors different, updating.\nNo configured terms for optional source vann; writing placeholder import mirror.\nif [ -f tmp/mirror-vann.owl ]; then if cmp -s tmp/mirror-vann.owl mirror/vann.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-vann.owl mirror/vann.owl; fi; fi\nMirrors different, updating.\nNo configured terms for vann; writing placeholder import module.\nUsing local cache for hdo: ../../../cache/sources/hdo.owl\nif [ -f tmp/mirror-hdo.owl ]; then if cmp -s tmp/mirror-hdo.owl mirror/hdo.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-hdo.owl mirror/hdo.owl; fi; fi\nMirrors different, updating.\nmake[1]: Leaving directory '/work/odk/src/ontology'\n",
+      "stderr": "riding recipe for target 'h2kg-base.owl'\nMakefile:693: warning: ignoring old recipe for target 'h2kg-base.owl'\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100    50  100    50    0     0    114      0 --:--:-- --:--:-- --:--:--   114\n\n100    50  100    50    0     0     87      0 --:--:-- --:--:-- --:--:--    87\n\n  1 4059k    1 65536    0     0  69108      0  0:01:00 --:--:--  0:01:00 69108\n100 4059k  100 4059k    0     0  2681k      0  0:00:01  0:00:01 --:--:-- 7071k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100    50  100    50    0     0    111      0 --:--:-- --:--:-- --:--:--   111\n\n 39 4883k   39 1935k    0     0  1855k      0  0:00:02  0:00:01  0:00:01 1855k\n100 4883k  100 4883k    0     0  3366k      0  0:00:01  0:00:01 --:--:-- 7244k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   216    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n 23  130k   23 31854    0     0  24018      0  0:00:05  0:00:01  0:00:04 24018\n100  130k  100  130k    0     0  77924      0  0:00:01  0:00:01 --:--:--  253k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   215    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  7 2337k    7  171k    0     0   100k      0  0:00:23  0:00:01  0:00:22  197k\n100 2337k  100 2337k    0     0   861k      0  0:00:02  0:00:02 --:--:-- 1251k\n100 2337k  100 2337k    0     0   861k      0  0:00:02  0:00:02 --:--:-- 1250k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   223    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  2 1717k    2 39844    0     0  27879      0  0:01:03  0:00:01  0:01:02 27879\n 63 1717k   63 1093k    0     0   467k      0  0:00:03  0:00:02  0:00:01 1157k\n100 1717k  100 1717k    0     0   657k      0  0:00:02  0:00:02 --:--:-- 1417k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100 68795    0 68795    0     0   259k      0 --:--:-- --:--:-- --:--:--  259k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   138    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n\n100   241  100   241    0     0    137      0  0:00:01  0:00:01 --:--:--   137\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\n\n100  125k  100  125k    0     0  56476      0  0:00:02  0:00:02 --:--:-- 56476\n"
+    },
+    {
+      "label": "test",
+      "command": [
+        "cmd",
+        "/c",
+        "run.bat",
+        "make",
+        "test"
+      ],
+      "returncode": 0,
+      "stdout": "mpl.java:1143)\n        uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.loadImports(OWLOntologyManagerImpl.java:1873)\n\n\n\nUse the -vvv option to show the stack trace.\nUse the --help option to see usage information.\nRemote fetch failed for qudt-quantitykinds; writing placeholder mirror for shadow-mode continuity.\nif [ -f tmp/mirror-qudt-quantitykinds.owl ]; then if cmp -s tmp/mirror-qudt-quantitykinds.owl mirror/qudt-quantitykinds.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-qudt-quantitykinds.owl mirror/qudt-quantitykinds.owl; fi; fi\nMirror identical, ignoring.\nSkipping optional source chebi; writing placeholder import mirror.\nif [ -f tmp/mirror-chebi.owl ]; then if cmp -s tmp/mirror-chebi.owl mirror/chebi.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-chebi.owl mirror/chebi.owl; fi; fi\nMirror identical, ignoring.\nDownloading prov-o from https://www.w3.org/ns/prov-o\nif [ -f tmp/mirror-prov-o.owl ]; then if cmp -s tmp/mirror-prov-o.owl mirror/prov-o.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-prov-o.owl mirror/prov-o.owl; fi; fi\nMirror identical, ignoring.\nDownloading dcterms from http://purl.org/dc/terms/\n2026-10-19 19:37:50,947 ERROR org.obolibrary.robot.IOHelper - Input ontology contains 1 triple(s) that could not be parsed:\n - <http://purl.org/dc/terms/creator> <http://www.w3.org/2002/07/owl#equivalentProperty> <http://xmlns.com/foaf/0.1/maker>.\n\nif [ -f tmp/mirror-dcterms.owl ]; then if cmp -s tmp/mirror-dcterms.owl mirror/dcterms.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-dcterms.owl mirror/dcterms.owl; fi; fi\nMirror identical, ignoring.\nNo configured terms for optional source vann; writing placeholder import mirror.\nif [ -f tmp/mirror-vann.owl ]; then if cmp -s tmp/mirror-vann.owl mirror/vann.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-vann.owl mirror/vann.owl; fi; fi\nMirror identical, ignoring.\nUsing local cache for hdo: ../../../cache/sources/hdo.owl\nif [ -f tmp/mirror-hdo.owl ]; then if cmp -s tmp/mirror-hdo.owl mirror/hdo.owl ; then echo \"Mirror identical, ignoring.\"; else echo \"Mirrors different, updating.\" &&\\\n\tcp tmp/mirror-hdo.owl mirror/hdo.owl; fi; fi\nMirror identical, ignoring.\nrobot --catalog catalog-v001.xml merge --input tmp/h2kg-preprocess.owl  \\\nreason --reasoner ELK --equivalent-classes-allowed asserted-only --exclude-tautologies structural --annotate-inferred-axioms false \\\nrelax --include-subclass-of true \\\nreduce -r ELK --include-subproperties true \\\nremove --base-iri http://purl.obolibrary.org/obo/H2KG --base-iri https://w3id.org/h2kg/hydrogen-ontology --base-iri https://w3id.org/h2kg/hydrogen-ontology# --axioms external --preserve-structure false --trim false \\\n \\\nannotate --link-annotation http://purl.org/dc/elements/1.1/type http://purl.obolibrary.org/obo/IAO_8000001 \\\n\t--ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-base.owl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-base.owl --annotation owl:versionInfo 2026-10-19 \\\n\t--output h2kg-base.owl.tmp.owl && mv h2kg-base.owl.tmp.owl h2kg-base.owl\nrobot --catalog catalog-v001.xml annotate --input h2kg-base.owl --ontology-iri http://purl.obolibrary.org/obo/h2kg.owl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg.owl --annotation owl:versionInfo 2026-10-19 \\\n\tconvert -o h2kg.owl.tmp.owl && mv h2kg.owl.tmp.owl h2kg.owl\nrobot --catalog catalog-v001.xml merge -i h2kg.owl convert -f ofn -o tmp/validate.ofn\nrobot --catalog catalog-v001.xml validate-profile --profile DL -i tmp/validate.ofn -o reports/validate_profile_owl2dl_h2kg.owl.txt || { cat reports/validate_profile_owl2dl_h2kg.owl.txt && exit 1; }\necho \"Finished running all tests successfully.\"\nFinished running all tests successfully.\n",
+      "stderr": "riding recipe for target 'h2kg-base.owl'\nMakefile:693: warning: ignoring old recipe for target 'h2kg-base.owl'\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100    50  100    50    0     0    118      0 --:--:-- --:--:-- --:--:--   118\n\n100    50  100    50    0     0     91      0 --:--:-- --:--:-- --:--:--    91\n\n 77 4059k   77 3163k    0     0  2830k      0  0:00:01  0:00:01 --:--:-- 2830k\n100 4059k  100 4059k    0     0  3249k      0  0:00:01  0:00:01 --:--:-- 6840k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100    50  100    50    0     0    120      0 --:--:-- --:--:-- --:--:--   120\n\n 75 4883k   75 3695k    0     0  3554k      0  0:00:01  0:00:01 --:--:-- 3554k\n100 4883k  100 4883k    0     0  4046k      0  0:00:01  0:00:01 --:--:-- 7113k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   216    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n 23  130k   23 31854    0     0  26134      0  0:00:05  0:00:01  0:00:04 26134\n100  130k  100  130k    0     0  83670      0  0:00:01  0:00:01 --:--:--  260k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   215    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n 37 2337k   37  874k    0     0   402k      0  0:00:05  0:00:02  0:00:03  912k\n100 2337k  100 2337k    0     0   898k      0  0:00:02  0:00:02 --:--:-- 1684k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   223    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  1 1717k    1 31844    0     0  22245      0  0:01:19  0:00:01  0:01:18 22245\n 84 1717k   84 1452k    0     0   609k      0  0:00:02  0:00:02 --:--:-- 1493k\n100 1717k  100 1717k    0     0   704k      0  0:00:02  0:00:02 --:--:-- 1678k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100 68795    0 68795    0     0   273k      0 --:--:-- --:--:-- --:--:--  274k\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0   138    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n100   241  100   241    0     0    156      0  0:00:01  0:00:01 --:--:-- 17214\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n\n100  125k  100  125k    0     0  68046      0  0:00:01  0:00:01 --:--:-- 68046\n"
+    },
+    {
+      "label": "prepare_release",
+      "command": [
+        "cmd",
+        "/c",
+        "run.bat",
+        "make",
+        "prepare_release"
+      ],
+      "returncode": 0,
+      "stdout": ".obolibrary.org/obo/h2kg/h2kg-full.owl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-full.owl --annotation owl:versionInfo 2026-10-19 --output h2kg-full.owl.tmp.owl && mv h2kg-full.owl.tmp.owl h2kg-full.owl\nrobot --catalog catalog-v001.xml annotate --input h2kg-full.owl --ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-full.json annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-full.json --annotation owl:versionInfo 2026-10-19 \\\n\tconvert --check false -f json -o h2kg-full.json.tmp.json &&\\\n\tmv h2kg-full.json.tmp.json h2kg-full.json\nrobot --catalog catalog-v001.xml annotate --input h2kg-full.owl --ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-full.ttl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-full.ttl --annotation owl:versionInfo 2026-10-19 \\\n\tconvert --check false -f ttl -o h2kg-full.ttl.tmp.ttl && mv h2kg-full.ttl.tmp.ttl h2kg-full.ttl\nrobot --catalog catalog-v001.xml query -f csv -i tmp/merged-h2kg-edit.ofn --query ../sparql/h2kg_terms.sparql tmp/ontologyterms.txt\nrobot --catalog catalog-v001.xml query -f csv -i tmp/merged-h2kg-edit.ofn --query ../sparql/simple-seed.sparql tmp/simple_seed.txt.tmp &&\\\ncat tmp/simple_seed.txt.tmp tmp/ontologyterms.txt | sort | uniq >  tmp/simple_seed.txt &&\\\necho \"http://www.geneontology.org/formats/oboInOwl#SubsetProperty\" >> tmp/simple_seed.txt &&\\\necho \"http://www.geneontology.org/formats/oboInOwl#SynonymTypeProperty\" >> tmp/simple_seed.txt\nrobot --catalog catalog-v001.xml merge --input tmp/h2kg-preprocess.owl  \\\n\treason --reasoner ELK --equivalent-classes-allowed asserted-only --exclude-tautologies structural --annotate-inferred-axioms false \\\n\trelax --include-subclass-of true \\\n\tremove --axioms equivalent \\\n\tfilter --term-file tmp/simple_seed.txt --select \"annotations ontology anonymous self\" --trim true --signature true \\\n\treduce -r ELK --include-subproperties true \\\n\todk:normalize --base-iri http://purl.obolibrary.org/obo --subset-decls true --synonym-decls true \\\n\trepair --merge-axiom-annotations true \\\n\t annotate --ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-simple.owl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-simple.owl --annotation owl:versionInfo 2026-10-19 --output h2kg-simple.owl.tmp.owl && mv h2kg-simple.owl.tmp.owl h2kg-simple.owl\nrobot --catalog catalog-v001.xml annotate --input h2kg-simple.owl --ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-simple.json annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-simple.json --annotation owl:versionInfo 2026-10-19 \\\n\tconvert --check false -f json -o h2kg-simple.json.tmp.json &&\\\n\tmv h2kg-simple.json.tmp.json h2kg-simple.json\nrobot --catalog catalog-v001.xml annotate --input h2kg-simple.owl --ontology-iri http://purl.obolibrary.org/obo/h2kg/h2kg-simple.ttl annotate -V http://purl.obolibrary.org/obo/h2kg/releases/2026-10-19/h2kg-simple.ttl --annotation owl:versionInfo 2026-10-19 \\\n\tconvert --check false -f ttl -o h2kg-simple.ttl.tmp.ttl && mv h2kg-simple.ttl.tmp.ttl h2kg-simple.ttl\nChecking RDF/XML file h2kg.owl...\n  LightRDF: OK\nChecking RDF/XML file h2kg-base.owl...\n  LightRDF: OK\nChecking RDF/XML file h2kg-full.owl...\n  LightRDF: OK\nChecking RDF/XML file h2kg-simple.owl...\n  LightRDF: OK\nmake copy_release_files\nmake[1]: Entering directory '/work/odk/src/ontology'\nrsync -R   h2kg.json  h2kg.owl  h2kg.ttl   h2kg-base.json  h2kg-base.owl  h2kg-base.ttl   h2kg-full.json  h2kg-full.owl  h2kg-full.ttl   h2kg-simple.json  h2kg-simple.owl  h2kg-simple.ttl   ../..\nmake[1]: Leaving directory '/work/odk/src/ontology'\nrm -f   h2kg.json  h2kg.owl  h2kg.ttl   h2kg-base.json  h2kg-base.owl  h2kg-base.ttl   h2kg-full.json  h2kg-full.owl  h2kg-full.ttl   h2kg-simple.json  h2kg-simple.owl  h2kg-simple.ttl  tmp/merged-h2kg-edit.ofn tmp/h2kg-preprocess.owl\nRelease files are now in ../.. - now you should commit, push and make a release         on your git hosting site such as GitHub or GitLab\n",
+      "stderr": " 0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n100   241  100   241    0     0    145      0  0:00:01  0:00:01 --:--:--   145\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n\n  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\n\n100  125k  100  125k    0     0  59369      0  0:00:02  0:00:02 --:--:-- 59369\nh2kg.Makefile:14: warning: overriding recipe for target 'mirror-emmo-core'\nMakefile:517: warning: ignoring old recipe for target 'mirror-emmo-core'\nh2kg.Makefile:41: warning: overriding recipe for target 'imports/emmo-core_import.owl'\nMakefile:422: warning: ignoring old recipe for target 'imports/emmo-core_import.owl'\nh2kg.Makefile:70: warning: overriding recipe for target 'mirror-emmo-electrochemistry'\nMakefile:525: warning: ignoring old recipe for target 'mirror-emmo-electrochemistry'\nh2kg.Makefile:97: warning: overriding recipe for target 'imports/emmo-electrochemistry_import.owl'\nMakefile:428: warning: ignoring old recipe for target 'imports/emmo-electrochemistry_import.owl'\nh2kg.Makefile:126: warning: overriding recipe for target 'mirror-qudt-schema'\nMakefile:533: warning: ignoring old recipe for target 'mirror-qudt-schema'\nh2kg.Makefile:153: warning: overriding recipe for target 'imports/qudt-schema_import.owl'\nMakefile:434: warning: ignoring old recipe for target 'imports/qudt-schema_import.owl'\nh2kg.Makefile:182: warning: overriding recipe for target 'mirror-qudt-units'\nMakefile:541: warning: ignoring old recipe for target 'mirror-qudt-units'\nh2kg.Makefile:209: warning: overriding recipe for target 'imports/qudt-units_import.owl'\nMakefile:440: warning: ignoring old recipe for target 'imports/qudt-units_import.owl'\nh2kg.Makefile:238: warning: overriding recipe for target 'mirror-qudt-quantitykinds'\nMakefile:549: warning: ignoring old recipe for target 'mirror-qudt-quantitykinds'\nh2kg.Makefile:265: warning: overriding recipe for target 'imports/qudt-quantitykinds_import.owl'\nMakefile:446: warning: ignoring old recipe for target 'imports/qudt-quantitykinds_import.owl'\nh2kg.Makefile:294: warning: overriding recipe for target 'mirror-chebi'\nMakefile:557: warning: ignoring old recipe for target 'mirror-chebi'\nh2kg.Makefile:321: warning: overriding recipe for target 'imports/chebi_import.owl'\nMakefile:452: warning: ignoring old recipe for target 'imports/chebi_import.owl'\nh2kg.Makefile:342: warning: overriding recipe for target 'mirror-prov-o'\nMakefile:565: warning: ignoring old recipe for target 'mirror-prov-o'\nh2kg.Makefile:369: warning: overriding recipe for target 'imports/prov-o_import.owl'\nMakefile:458: warning: ignoring old recipe for target 'imports/prov-o_import.owl'\nh2kg.Makefile:398: warning: overriding recipe for target 'mirror-dcterms'\nMakefile:573: warning: ignoring old recipe for target 'mirror-dcterms'\nh2kg.Makefile:425: warning: overriding recipe for target 'imports/dcterms_import.owl'\nMakefile:464: warning: ignoring old recipe for target 'imports/dcterms_import.owl'\nh2kg.Makefile:446: warning: overriding recipe for target 'mirror-vann'\nMakefile:581: warning: ignoring old recipe for target 'mirror-vann'\nh2kg.Makefile:473: warning: overriding recipe for target 'imports/vann_import.owl'\nMakefile:470: warning: ignoring old recipe for target 'imports/vann_import.owl'\nh2kg.Makefile:494: warning: overriding recipe for target 'mirror-hdo'\nMakefile:589: warning: ignoring old recipe for target 'mirror-hdo'\nh2kg.Makefile:521: warning: overriding recipe for target 'imports/hdo_import.owl'\nMakefile:476: warning: ignoring old recipe for target 'imports/hdo_import.owl'\nh2kg.Makefile:548: warning: overriding recipe for target 'h2kg-base.owl'\nMakefile:693: warning: ignoring old recipe for target 'h2kg-base.owl'\n"
+    }
+  ],
   "artifacts": [
     {
       "name": "base",
       "title": "Base ontology",
-      "description": "Primary ODK machine artefact for downstream ontology reuse without import closure.",
-      "generated_at": "2026-10-19T15:47:59+00:00",
+      "description": "Actual ODK base artefact generated from the nested workbench.",
+      "generated_at": "2026-10-19T19:43:13+00:00",
       "status": "good",
       "formats": [
         {
           "format": "owl",
-          "path": "..\\output\\odk\\artifacts\\base.owl",
+          "path": "output\\odk\\artifacts\\base.owl",
           "filename": "base.owl",
-          "size_bytes": 3502801
+          "size_bytes": 3667446
         },
         {
           "format": "ttl",
-          "path": "..\\output\\odk\\artifacts\\base.ttl",
+          "path": "output\\odk\\artifacts\\base.ttl",
           "filename": "base.ttl",
-          "size_bytes": 2256152
+          "size_bytes": 3270563
         },
         {
           "format": "json-ld",
-          "path": "..\\output\\odk\\artifacts\\base.json",
+          "path": "output\\odk\\artifacts\\base.json",
           "filename": "base.json",
-          "size_bytes": 5528265
+          "size_bytes": 5204653
         }
       ],
-      "size_bytes": 11287218
+      "size_bytes": 12142662
     },
     {
       "name": "full",
       "title": "Full ontology",
-      "description": "Companion ODK artefact representing the broader asserted or inferred release surface for validation and distribution.",
-      "generated_at": "2026-10-19T15:48:06+00:00",
+      "description": "Actual ODK full artefact with import closure or broader release surface.",
+      "generated_at": "2026-10-19T19:43:13+00:00",
       "status": "good",
       "formats": [
         {
           "format": "owl",
-          "path": "..\\output\\odk\\artifacts\\full.owl",
+          "path": "output\\odk\\artifacts\\full.owl",
           "filename": "full.owl",
-          "size_bytes": 3502801
+          "size_bytes": 3667218
         }
       ],
-      "size_bytes": 3502801
+      "size_bytes": 3667218
     },
     {
       "name": "simple",
       "title": "Simple ontology",
-      "description": "Companion ODK artefact optimized as a simplified machine release for tooling that prefers a smaller asserted view.",
-      "generated_at": "2026-10-19T15:48:10+00:00",
+      "description": "Actual ODK simple artefact for tooling that prefers a smaller release view.",
+      "generated_at": "2026-10-19T19:43:13+00:00",
       "status": "good",
       "formats": [
         {
           "format": "owl",
-          "path": "..\\output\\odk\\artifacts\\simple.owl",
+          "path": "output\\odk\\artifacts\\simple.owl",
           "filename": "simple.owl",
-          "size_bytes": 3502801
+          "size_bytes": 24320
         }
       ],
-      "size_bytes": 3502801
+      "size_bytes": 24320
     }
   ],
   "imports": [
@@ -91,10 +156,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "https://w3id.org/emmo#",
-      "local_cache": "ontology_release/odk/src/ontology/imports/emmo-core.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\emmo-core_import.owl",
       "product_id": "emmo-core",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438749.7405138",
       "semantic_role": ""
     },
     {
@@ -104,10 +169,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "https://w3id.org/emmo/domain/electrochemistry#",
-      "local_cache": "ontology_release/odk/src/ontology/imports/emmo-electrochemistry.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\emmo-electrochemistry_import.owl",
       "product_id": "emmo-electrochemistry",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438772.195612",
       "semantic_role": ""
     },
     {
@@ -117,10 +182,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "http://qudt.org/schema/qudt/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/qudt-schema.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\qudt-schema_import.owl",
       "product_id": "qudt-schema",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438783.0328062",
       "semantic_role": ""
     },
     {
@@ -128,12 +193,12 @@
       "title": "QUDT Units",
       "required": true,
       "enabled": true,
-      "status": "configured",
+      "status": "placeholder-after-refresh",
       "source_iri": "http://qudt.org/vocab/unit/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/qudt-units.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\qudt-units_import.owl",
       "product_id": "qudt-units",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "placeholder refresh output at 1792438433.3594513",
       "semantic_role": ""
     },
     {
@@ -141,12 +206,12 @@
       "title": "QUDT Quantity Kinds",
       "required": true,
       "enabled": true,
-      "status": "configured",
+      "status": "placeholder-after-refresh",
       "source_iri": "http://qudt.org/vocab/quantitykind/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/qudt-quantitykinds.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\qudt-quantitykinds_import.owl",
       "product_id": "qudt-quantitykinds",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "placeholder refresh output at 1792438474.4175124",
       "semantic_role": ""
     },
     {
@@ -156,10 +221,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "http://purl.obolibrary.org/obo/chebi.owl",
-      "local_cache": "ontology_release/odk/src/ontology/imports/chebi.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\chebi_import.owl",
       "product_id": "chebi",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438476.808435",
       "semantic_role": ""
     },
     {
@@ -221,10 +286,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "http://www.w3.org/ns/prov#",
-      "local_cache": "ontology_release/odk/src/ontology/imports/prov-o.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\prov-o_import.owl",
       "product_id": "prov-o",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438482.633103",
       "semantic_role": ""
     },
     {
@@ -234,10 +299,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "http://purl.org/dc/terms/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/dcterms.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\dcterms_import.owl",
       "product_id": "dcterms",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438487.104288",
       "semantic_role": ""
     },
     {
@@ -245,12 +310,12 @@
       "title": "VANN",
       "required": false,
       "enabled": true,
-      "status": "configured",
+      "status": "optional-unused-after-refresh",
       "source_iri": "http://purl.org/vocab/vann/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/vann.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\vann_import.owl",
       "product_id": "vann",
-      "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "included_in_release": false,
+      "last_refresh_status": "no selected terms at 1792438490.4807596",
       "semantic_role": ""
     },
     {
@@ -260,10 +325,10 @@
       "enabled": true,
       "status": "configured",
       "source_iri": "https://materials-data-science-and-informatics.github.io/Helmholtz-Digitisation-Ontology-Documentation/index-en.html",
-      "local_cache": "ontology_release/odk/src/ontology/imports/hdo.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\hdo_import.owl",
       "product_id": "hdo",
       "included_in_release": true,
-      "last_refresh_status": "configured (shadow mode)",
+      "last_refresh_status": "actual refresh at 1792438497.5590267",
       "semantic_role": "data/metadata/digital-object/process-management anchor"
     },
     {
@@ -271,12 +336,12 @@
       "title": "Open Energy Ontology",
       "required": false,
       "enabled": false,
-      "status": "optional-disabled",
+      "status": "optional-unused-after-refresh",
       "source_iri": "http://openenergy-platform.org/ontology/oeo/",
-      "local_cache": "ontology_release/odk/src/ontology/imports/oeo.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\oeo_import.owl",
       "product_id": "oeo",
       "included_in_release": false,
-      "last_refresh_status": "not included",
+      "last_refresh_status": "no selected terms at 1776008906.3063476",
       "semantic_role": ""
     },
     {
@@ -284,22 +349,22 @@
       "title": "Optional PEMFC-specific Source Ontology",
       "required": false,
       "enabled": false,
-      "status": "optional-disabled",
+      "status": "optional-unused-after-refresh",
       "source_iri": "",
-      "local_cache": "ontology_release/odk/src/ontology/imports/pemfc-external.owl",
+      "local_cache": "odk\\src\\ontology\\imports\\pemfc-external_import.owl",
       "product_id": "pemfc-external",
       "included_in_release": false,
-      "last_refresh_status": "not included",
+      "last_refresh_status": "no selected terms at 1776008906.3063476",
       "semantic_role": ""
     }
   ],
   "robot_summary": {
-    "status": "watch",
+    "status": "good",
     "errors": 0,
-    "warnings": 1,
+    "warnings": 0,
     "profile_violations": 0,
-    "reasoning_status": "pending nested ODK execution",
-    "detail": "Shadow artefacts were generated successfully. ROBOT profile and reasoner checks still need an explicit ODK run."
+    "reasoning_status": "completed",
+    "detail": "ROBOT/ODK commands completed and actual ODK artefacts were collected."
   },
   "parity": {
     "status": "aligned",
@@ -337,8 +402,8 @@
   "promotion_gates": [
     {
       "label": "Import stability",
-      "status": "good",
-      "value": "configured",
+      "status": "watch",
+      "value": "follow-up",
       "detail": "Required imports are configured and surfaced through the nested ODK workbench."
     },
     {
@@ -367,9 +432,9 @@
     },
     {
       "label": "Promotion readiness",
-      "status": "good",
+      "status": "watch",
       "value": "promoted",
-      "detail": "ODK promotion has been explicitly approved and the current technical gates are satisfied."
+      "detail": "Promotion was requested, but one or more technical shadow-mode gates are still not satisfied."
     }
   ]
 }
