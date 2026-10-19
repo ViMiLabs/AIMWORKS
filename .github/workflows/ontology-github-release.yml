@@ -39,7 +39,7 @@ jobs:
       - name: Run tests
         run: python -m pytest
       - name: Build ontology release
-        run: python -m aimworks_ontology_release.cli release-all
+        run: python -m aimworks_ontology_release.cli --project-root . run --input input/current_ontology.jsonld --rewrite --split --build-docs --build-release --fair-check
       - name: Resolve release metadata
         id: meta
         shell: bash
