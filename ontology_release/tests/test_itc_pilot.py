@@ -27,6 +27,9 @@ def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
     assert validation["unique_identifier_count"] == 44
     assert validation["new_term_count"] == 40
     assert validation["reused_term_count"] == 4
+    assert validation["source_metadata_complete"] is True
+    assert validation["misleading_identifiers_without_evidence"] == []
+    assert validation["normalized_fields_without_basis_iri"] == []
 
     ontology = tmp_path / "current_ontology.jsonld"
     shutil.copy2(root / "input" / "current_ontology.jsonld", ontology)
@@ -53,6 +56,23 @@ def test_itc_expert_registry_and_h2kg_profile(tmp_path: Path) -> None:
     serialized = (Path(package["output_dir"]) / "itc_h2kg_profile.jsonld").read_text(encoding="utf-8")
     assert "catalyst active particle diameter" not in serialized.lower()
     assert "mean pore radius inside the ionomer" not in serialized.lower()
+
+    pattern = Graph().parse(Path(package["output_dir"]) / "itc_semantic_pattern.ttl", format="turtle")
+    pattern_base = "https://w3id.org/h2kg/profiles/itc/example/"
+    pore_occurrence = URIRef(pattern_base + "total-pore-volume-occurrence")
+    catalyst = URIRef(pattern_base + "pt-on-carbon-bearer-template")
+    carbon_basis = URIRef(pattern_base + "carbon-mass-normalization-basis")
+    assert (pore_occurrence, URIRef(H2KG + "isCharacteristicOf"), catalyst) in pattern
+    assert (pore_occurrence, URIRef(H2KG + "normalizedTo"), carbon_basis) in pattern
+    assert (carbon_basis, RDF.type, URIRef(H2KG + "CarbonMass")) in pattern
+    tension = URIRef(pattern_base + "surface-tension-occurrence")
+    water = URIRef(pattern_base + "water-bearer-at-353-k-template")
+    assert (tension, URIRef(H2KG + "isCharacteristicOf"), water) in pattern
+
+    mapping_csv = (Path(package["output_dir"]) / "itc_mapping_matrix.csv").read_text(encoding="utf-8")
+    assert "source_registry_version" in mapping_csv
+    assert "misleading_identifier_retained_for_traceability" in mapping_csv
+    assert "CarbonMass" in mapping_csv
 
 
 def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Path) -> None:

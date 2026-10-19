@@ -899,6 +899,11 @@ def _copy_properties(source: Graph, target: Graph) -> None:
     properties = _property_resources(source)
     bad_inverse_subjects = {H2KG.hasOutputData, H2KG.hasOutputMaterial}
     for subject in properties:
+        if subject == H2KG.hasProperty:
+            # The legacy predicate has Measurement as its OWL domain. Keeping it
+            # in a canonical graph can therefore classify any bearer as a
+            # Measurement. It is retained only in the compatibility artifact.
+            continue
         for predicate, obj in source.predicate_objects(subject):
             if predicate == OWL.inverseOf and subject in bad_inverse_subjects and obj == PROV.wasGeneratedBy:
                 continue
@@ -920,8 +925,6 @@ def _copy_properties(source: Graph, target: Graph) -> None:
     target.add((H2KG.referenceElectrode, OWL.deprecated, Literal(True, datatype=XSD.boolean)))
     target.add((H2KG.referenceElectrode, DCTERMS.isReplacedBy, H2KG.usesReferenceElectrode))
     target.add((H2KG.referenceElectrode, DCTERMS.isReplacedBy, H2KG.hasReferenceScale))
-    target.add((H2KG.hasProperty, OWL.deprecated, Literal(True, datatype=XSD.boolean)))
-    target.add((H2KG.hasProperty, DCTERMS.isReplacedBy, H2KG.measures))
     target.set((H2KG.ofProperty, RDFS.domain, H2KG.InformationEntity))
     target.set((H2KG.ofProperty, RDFS.range, H2KG.Property))
     target.set((H2KG.hasQuantityValue, RDFS.domain, H2KG.Property))
@@ -968,6 +971,12 @@ def _add_support_properties(target: Graph) -> None:
             "Relates a measurement to the material, specimen, component, or system whose characteristics are investigated.",
             H2KG.Measurement,
             H2KG.Matter,
+        ),
+        "isCharacteristicOf": (
+            "is characteristic of",
+            "Relates a characteristic occurrence to the resource that bears or is described by that characteristic. More specific bearer constraints are expressed in workflow profiles.",
+            H2KG.Characteristic,
+            RDFS.Resource,
         ),
     }
     for local_name, (label, definition, domain, range_) in definitions.items():
@@ -1083,6 +1092,22 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
             target.add((activity, H2KG.hasMeasurementSubject, subject))
     for activity, characteristic in source.subject_objects(H2KG.hasProperty):
         target.add((activity, H2KG.measures, characteristic))
+
+    # Keep the historically asserted relation resolvable only in this
+    # download-only graph. There is intentionally no single replacement:
+    # source uses are migrated to measures, ofProperty, or isCharacteristicOf
+    # according to their recorded context.
+    target.add((H2KG.hasProperty, OWL.deprecated, Literal(True, datatype=XSD.boolean)))
+    target.add(
+        (
+            H2KG.hasProperty,
+            SKOS.scopeNote,
+            Literal(
+                "Legacy compatibility predicate. Canonical data use measures, ofProperty, or isCharacteristicOf according to context; consult the relation migration registry.",
+                lang="en",
+            ),
+        )
+    )
 
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
@@ -1470,6 +1495,14 @@ def _resource_dispositions(
             rationale = "The stable H2KG ontology identifier and release metadata resource."
             label = _best_label(source, subject, "H2KG")
             governance_status = "approved"
+        elif subject == H2KG.hasProperty:
+            disposition = "legacy_compatibility_property"
+            corrected_kind = "owl:ObjectProperty"
+            rationale = (
+                "Legacy relation retained only in the compatibility artifact; canonical uses are migrated contextually."
+            )
+            label = _best_label(source, subject, local_name)
+            governance_status = "legacy"
         elif subject in source_properties or subject in clean_properties:
             if (subject, RDF.type, OWL.ObjectProperty) in source or (subject, RDF.type, OWL.ObjectProperty) in clean:
                 disposition = "object_property"
@@ -2500,6 +2533,11 @@ def _validate_taxonomy(
             for type_iri in graph.objects(URIRef(item.iri), RDF.type)
         )
     )
+    canonical_has_property_triples = sorted(
+        (str(subject), str(predicate), str(obj))
+        for subject, predicate, obj in graph
+        if H2KG.hasProperty in {subject, predicate, obj}
+    )
 
     if missing_parents:
         errors.append(f"{len(missing_parents)} active classes do not resolve to a declared top branch.")
@@ -2525,6 +2563,8 @@ def _validate_taxonomy(
         errors.append(f"{len(nothing_subclasses)} classes are asserted below owl:Nothing.")
     if incompatible_role_types:
         errors.append(f"{len(incompatible_role_types)} clean taxonomy classes retain legacy role-instance typing.")
+    if canonical_has_property_triples:
+        errors.append("The legacy hasProperty predicate remains in the canonical taxonomy graph.")
     if unapproved_imports:
         errors.append(f"{len(unapproved_imports)} ontology imports are outside the foundational allowlist.")
     if int(bridge.get("invalid_mapping_count", 0)):
@@ -2606,6 +2646,7 @@ def _validate_taxonomy(
         "subclass_cycles": cycles,
         "classes_below_owl_nothing": nothing_subclasses,
         "incompatible_role_type_iris": incompatible_role_types,
+        "canonical_has_property_triples": canonical_has_property_triples,
         "asserted_foundational_imports": asserted_imports,
         "unapproved_imports": unapproved_imports,
         "resolved_legacy_multi_role_classes": [item.iri for item in active if len(item.source_roles) > 1],

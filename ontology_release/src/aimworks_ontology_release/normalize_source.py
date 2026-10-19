@@ -23,6 +23,7 @@ def normalize_source_document(
     input_path: str | Path,
     output_dir: str | Path,
     write_in_place: bool = True,
+    emit_normalized_document: bool = True,
 ) -> dict[str, Any]:
     input_path = Path(input_path)
     output_dir = ensure_dir(Path(output_dir))
@@ -38,7 +39,10 @@ def normalize_source_document(
     repairs = _apply_targeted_repairs(normalized_items)
 
     target_path = input_path if write_in_place else output_dir / input_path.name
-    dump_json(target_path, normalized_items)
+    if write_in_place or emit_normalized_document:
+        dump_json(target_path, normalized_items)
+    else:
+        target_path = input_path
 
     report = {
         "target_path": str(target_path),
@@ -47,6 +51,7 @@ def normalize_source_document(
         "duplicate_group_count": len(duplicate_ids),
         "duplicate_ids": duplicate_ids,
         "repairs": repairs,
+        "normalized_document_written": write_in_place or emit_normalized_document,
     }
     dump_json(output_dir / "source_normalization_report.json", report)
     return report

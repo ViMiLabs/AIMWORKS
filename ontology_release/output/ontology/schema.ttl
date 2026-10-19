@@ -52,16 +52,6 @@ h2kg:hasParameter
   rdfs:comment "Core H2KG relation for hasparameter."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
 
-h2kg:hasProperty
-  a owl:ObjectProperty ;
-  rdfs:domain h2kg:Measurement ;
-  rdfs:range h2kg:Property ;
-  rdfs:label "hasProperty"@en ;
-  dcterms:description "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."@en ;
-  skos:definition "An object property that relates a resource to a property that it bears, reports, or is described in terms of."@en ;
-  rdfs:comment "Core H2KG relation for hasproperty."@en ;
-  rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
-
 h2kg:usesInstrument
   a owl:ObjectProperty ;
   rdfs:domain h2kg:Process ;
@@ -344,3 +334,10 @@ h2kg:NormalizationBasis
   skos:definition "The basis with respect to which a quantitative result or property is normalized."@en ;
   rdfs:comment "Core H2KG class for normalization reference concepts such as area, mass, or active surface area."@en ;
   rdfs:isDefinedBy <https://w3id.org/h2kg/hydrogen-ontology> .
+
+h2kg:isCharacteristicOf
+  a owl:ObjectProperty ;
+  rdfs:label "is characteristic of"@en ;
+  skos:definition "Relates a characteristic occurrence to the resource that bears or is described by that characteristic. More specific bearer constraints are expressed in workflow profiles."@en ;
+  rdfs:domain h2kg:Characteristic ;
+  rdfs:range rdfs:Resource .

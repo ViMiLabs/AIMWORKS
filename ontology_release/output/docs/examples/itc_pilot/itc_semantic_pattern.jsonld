@@ -1,0 +1,185 @@
+{
+  "@context": {
+    "h2kg": "https://w3id.org/h2kg/hydrogen-ontology#",
+    "h2kg-pemfc": "https://w3id.org/h2kg/pemfc/hydrogen-ontology#",
+    "h2kg-pemwe": "https://w3id.org/h2kg/pemwe/hydrogen-ontology#",
+    "holy": "http://purl.org/holy/ns#",
+    "emmo": "https://w3id.org/emmo#",
+    "electrochemistry": "https://w3id.org/emmo/domain/electrochemistry#",
+    "pemfc": "https://w3id.org/emmo/domain/pemfc#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vann": "http://purl.org/vocab/vann/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "quantitykind": "http://qudt.org/vocab/quantitykind/",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "oeo": "http://openenergy-platform.org/ontology/oeo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/model-run-template",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel"
+      ],
+      "http://www.w3.org/2004/02/skos/core#prefLabel": [
+        {
+          "@language": "en",
+          "@value": "ITC model-run schema template"
+        }
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@language": "en",
+          "@value": "A non-observational schema example; it asserts no model result value."
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-parameter-record"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-parameter-record"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#PtOnCarbonCatalyst"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Water"
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-parameter-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-occurrence"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-occurrence",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#TotalPoreVolume"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#normalizedTo": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/carbon-mass-normalization-basis"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/carbon-mass-normalization-basis",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#CarbonMass"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-parameter-record",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-occurrence"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-occurrence",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTension"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-condition-metadata"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/water-temperature-occurrence",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Temperature"
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue": [
+        {
+          "@id": "https://w3id.org/h2kg/profiles/itc/example/water-temperature-353-k"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/water-temperature-353-k",
+      "@type": [
+        "http://qudt.org/schema/qudt/QuantityValue"
+      ],
+      "http://qudt.org/schema/qudt/numericValue": [
+        {
+          "@value": "353",
+          "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      ],
+      "http://qudt.org/schema/qudt/unit": [
+        {
+          "@id": "http://qudt.org/vocab/unit/K"
+        }
+      ],
+      "http://qudt.org/schema/qudt/quantityKind": [
+        {
+          "@id": "http://qudt.org/vocab/quantitykind/ThermodynamicTemperature"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/profiles/itc/example/surface-tension-condition-metadata",
+      "@type": [
+        "https://w3id.org/h2kg/hydrogen-ontology#Metadata"
+      ],
+      "http://purl.org/dc/terms/description": [
+        {
+          "@language": "en",
+          "@value": "The ITC profile uses the surface tension of the represented water bearer at 353 K; this is a profile condition, not a model output."
+        }
+      ],
+      "http://purl.org/dc/terms/source": [
+        {
+          "@id": "https://doi.org/10.1016/j.electacta.2022.140850"
+        }
+      ]
+    }
+  ]
+}

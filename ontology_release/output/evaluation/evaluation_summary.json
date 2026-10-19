@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "schema_version": "h2kg-application-evaluation/v1",
+  "generated_at": "2026-10-19T15:47:51+00:00",
+  "coverage": {
+    "canonical_source_concepts": 573,
+    "public_h2kg_outcomes": 35,
+    "decode_local_outcomes": 538,
+    "public_h2kg_percent": 6.11,
+    "decode_local_percent": 93.89,
+    "reason_counts": {
+      "contextualized_or_derived_concept": 37,
+      "domain_concept_without_asserted_public_h2kg_term": 456,
+      "public_h2kg_outcome": 35,
+      "workflow_specific_activity": 45
+    },
+    "interpretation": "Coverage is counted over canonical source concepts. DECODE-local does not mean scientifically invalid; it means no public H2KG identity is asserted in this release."
+  },
+  "itc_decode_crosswalk": {
+    "itc_field_count": 44,
+    "fields_overlapping_source_concept_registry": 11,
+    "profile_overlay_only_fields": 33,
+    "source_occurrences_covered_by_overlapping_fields": 43,
+    "denominator_note": "The 573 denominator contains canonical concepts derived from source workflow occurrences. The 44 ITC fields are a public profile vocabulary; fields absent from source occurrences are not members of that denominator."
+  },
+  "retrieval": {
+    "task_count": 4,
+    "result_row_count": 77,
+    "rq1_semantic_result_count": 26,
+    "rq1_exact_label_result_count": 19,
+    "rq1_semantic_only_result_count": 7,
+    "rq2_semantic_result_count": 2,
+    "rq2_label_baseline_result_count": 24,
+    "rq2_label_false_positive_count": 22,
+    "rq3_carbon_normalized_field_count": 4,
+    "evaluation_status": "registry_derived_expected_sets_complete; independent_relevance_assessment_pending",
+    "independent_precision_recall_claimed": false
+  },
+  "benchmark_diagnostic": {
+    "qudt": {
+      "class_overlap_interpretation": "not_a_reuse_metric",
+      "complete_distribution_reference_counts": {
+        "schema": 3,
+        "unit": 41,
+        "quantity_kind": 240
+      },
+      "complete_distribution_unique_qudt_iris": 284
+    },
+    "battinfo": {
+      "cached_candidate_count": 2,
+      "cached_imported_candidate_count": 2,
+      "cached_defining_ontology_candidate_count": 0,
+      "native_source_rdf_in_frozen_package": false,
+      "diagnostic_status": "candidate_provenance_diagnosed; native_BattINFO_RDF_hierarchy_comparison_pending"
+    },
+    "focused_hdo_edo_comparison": {
+      "status": "instrument_generated; execution_and_independent_assessment_pending",
+      "reason": "Neither comparator is a native row in the frozen three-collection snapshot, so collection percentages cannot substitute for task-based comparison."
+    }
+  },
+  "independent_semantic_audit_status": "awaiting_independent_review",
+  "independent_judgments_completed": 0,
+  "files": [
+    "..\\output\\evaluation\\decode_public_coverage.csv",
+    "..\\output\\evaluation\\decode_public_coverage.json",
+    "..\\output\\evaluation\\itc_decode_population_crosswalk.csv",
+    "..\\output\\evaluation\\itc_decode_population_crosswalk.json",
+    "..\\output\\evaluation\\retrieval_tasks.csv",
+    "..\\output\\evaluation\\retrieval_results.csv",
+    "..\\output\\evaluation\\retrieval_evaluation.json",
+    "..\\output\\evaluation\\tib_resource_diagnostic.csv",
+    "..\\output\\evaluation\\tib_resource_diagnostic.json",
+    "..\\output\\evaluation\\independent_semantic_audit_instrument.xlsx",
+    "..\\output\\evaluation\\hdo_edo_task_comparison_instrument.xlsx"
+  ]
+}

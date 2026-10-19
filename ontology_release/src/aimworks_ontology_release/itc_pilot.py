@@ -33,6 +33,9 @@ HAS_OUTPUT_DATA = H2KG + "hasOutputData"
 HAS_PART = H2KG + "hasPart"
 OF_PROPERTY = H2KG + "ofProperty"
 HAS_QUANTITY_VALUE = H2KG + "hasQuantityValue"
+IS_CHARACTERISTIC_OF = H2KG + "isCharacteristicOf"
+NORMALIZED_TO = H2KG + "normalizedTo"
+HAS_METADATA = H2KG + "hasMetadata"
 QUDT_UNIT = QUDT + "unit"
 QUDT_QUANTITY_KIND = QUDT + "quantityKind"
 QUDT_QUANTITY_VALUE = QUDT + "QuantityValue"
@@ -151,6 +154,9 @@ def build_itc_pilot_package(
     jsonld_path = dump_jsonld_items(package / "itc_h2kg_profile.jsonld", profile_items)
     ttl_path = dump_turtle_items(package / "itc_h2kg_profile.ttl", profile_items)
     shapes_path = write_text(package / "itc_h2kg_profile_shapes.ttl", _shacl_profile(review))
+    pattern_items = _semantic_pattern_items(review)
+    pattern_jsonld = dump_jsonld_items(package / "itc_semantic_pattern.jsonld", pattern_items)
+    pattern_ttl = dump_turtle_items(package / "itc_semantic_pattern.ttl", pattern_items)
     mapping_rows = _mapping_rows(review)
     mapping_csv = _write_csv(package / "itc_mapping_matrix.csv", mapping_rows)
     mapping_md = write_text(package / "itc_mapping_matrix.md", _mapping_markdown(mapping_rows))
@@ -178,7 +184,19 @@ def build_itc_pilot_package(
         "overlay": overlay,
         "generated_files": [
             str(path)
-            for path in [jsonld_path, ttl_path, shapes_path, mapping_csv, mapping_md, audit_path, overlay_path, validation_path, readme_path]
+            for path in [
+                jsonld_path,
+                ttl_path,
+                shapes_path,
+                pattern_jsonld,
+                pattern_ttl,
+                mapping_csv,
+                mapping_md,
+                audit_path,
+                overlay_path,
+                validation_path,
+                readme_path,
+            ]
         ],
     }
 
@@ -208,6 +226,22 @@ def validate_interface_registry(review: dict[str, Any]) -> dict[str, Any]:
         for field in fields
         if set(field.get("rejected_legacy_labels", [])) & set(field.get("alternate_labels", []))
     )
+    source = dict(review.get("source", {}))
+    source_metadata_complete = all(
+        str(source.get(key, "")).strip()
+        for key in ("document_title", "registry_version", "filename", "sha256", "scientific_source")
+    )
+    misleading_identifiers_without_evidence = sorted(
+        field["io_id"]
+        for field in fields
+        if field.get("legacy_identifier_status")
+        and not all(str(field.get(key, "")).strip() for key in ("value_transformation", "interpretation_evidence"))
+    )
+    normalized_without_basis_iri = sorted(
+        field["io_id"]
+        for field in fields
+        if field.get("normalization_basis") and not field.get("normalization_basis_iri")
+    )
     valid = (
         len(fields) == 44
         and len(set(identifiers)) == 44
@@ -218,6 +252,9 @@ def validate_interface_registry(review: dict[str, Any]) -> dict[str, Any]:
         and not invalid_roles
         and not symbols_as_aliases
         and not rejected_as_aliases
+        and source_metadata_complete
+        and not misleading_identifiers_without_evidence
+        and not normalized_without_basis_iri
     )
     if not valid:
         raise ValueError(
@@ -236,6 +273,11 @@ def validate_interface_registry(review: dict[str, Any]) -> dict[str, Any]:
         "intrinsic_role_counts": dict(sorted(intrinsic_roles.items())),
         "symbols_used_as_alt_labels": symbols_as_aliases,
         "rejected_legacy_labels_used_as_alt_labels": rejected_as_aliases,
+        "source_metadata_complete": source_metadata_complete,
+        "misleading_identifiers_without_evidence": misleading_identifiers_without_evidence,
+        "normalized_fields_without_basis_iri": normalized_without_basis_iri,
+        "source_document_title": source["document_title"],
+        "source_registry_version": source["registry_version"],
         "source_sha256": review["source"]["sha256"],
     }
 
@@ -558,7 +600,79 @@ def _guidance_iri(field: dict[str, Any]) -> str:
 
 def _guidance_description(field: dict[str, Any]) -> str:
     suffix = " Values are normalized per unit carbon mass." if field.get("normalization_basis") == "CarbonMass" else ""
-    return f"Value-free QUDT guidance for {field['preferred_label']}; the curated source reports {field['reported_unit']}.{suffix}"
+    context = f" Profile context: {field['profile_context']}" if field.get("profile_context") else ""
+    return f"Value-free QUDT guidance for {field['preferred_label']}; the curated source reports {field['reported_unit']}.{suffix}{context}"
+
+
+def _semantic_pattern_items(review: dict[str, Any]) -> list[dict[str, Any]]:
+    """Build a non-observational example of bearer and normalization semantics."""
+
+    base = "https://w3id.org/h2kg/profiles/itc/example/"
+    run = base + "model-run-template"
+    catalyst = base + "pt-on-carbon-bearer-template"
+    water = base + "water-bearer-at-353-k-template"
+    pore_record = base + "total-pore-volume-parameter-record"
+    pore_occurrence = base + "total-pore-volume-occurrence"
+    carbon_basis = base + "carbon-mass-normalization-basis"
+    tension_record = base + "surface-tension-parameter-record"
+    tension_occurrence = base + "surface-tension-occurrence"
+    temperature_occurrence = base + "water-temperature-occurrence"
+    temperature_value = base + "water-temperature-353-k"
+    condition_note = base + "surface-tension-condition-metadata"
+    return [
+        {
+            "@id": run,
+            "@type": [review["model"]["iri"]],
+            PREF_LABEL: [{"@language": "en", "@value": "ITC model-run schema template"}],
+            DESCRIPTION: [{"@language": "en", "@value": "A non-observational schema example; it asserts no model result value."}],
+            HAS_PARAMETER: [{"@id": pore_record}, {"@id": tension_record}],
+        },
+        {"@id": catalyst, "@type": [H2KG + "PtOnCarbonCatalyst"]},
+        {"@id": water, "@type": [H2KG + "Water"]},
+        {"@id": pore_record, "@type": [H2KG + "Parameter"], OF_PROPERTY: [{"@id": pore_occurrence}]},
+        {
+            "@id": pore_occurrence,
+            "@type": [H2KG + "TotalPoreVolume"],
+            IS_CHARACTERISTIC_OF: [{"@id": catalyst}],
+            NORMALIZED_TO: [{"@id": carbon_basis}],
+        },
+        {
+            "@id": carbon_basis,
+            "@type": [H2KG + "CarbonMass"],
+            IS_CHARACTERISTIC_OF: [{"@id": catalyst}],
+        },
+        {"@id": tension_record, "@type": [H2KG + "Parameter"], OF_PROPERTY: [{"@id": tension_occurrence}]},
+        {
+            "@id": tension_occurrence,
+            "@type": [H2KG + "SurfaceTension"],
+            IS_CHARACTERISTIC_OF: [{"@id": water}],
+            HAS_METADATA: [{"@id": condition_note}],
+        },
+        {
+            "@id": temperature_occurrence,
+            "@type": [H2KG + "Temperature"],
+            IS_CHARACTERISTIC_OF: [{"@id": water}],
+            HAS_QUANTITY_VALUE: [{"@id": temperature_value}],
+        },
+        {
+            "@id": temperature_value,
+            "@type": [QUDT_QUANTITY_VALUE],
+            QUDT + "numericValue": [{"@value": "353", "@type": COMMON_CONTEXT["xsd"] + "decimal"}],
+            QUDT_UNIT: [{"@id": UNIT + "K"}],
+            QUDT_QUANTITY_KIND: [{"@id": QK + "ThermodynamicTemperature"}],
+        },
+        {
+            "@id": condition_note,
+            "@type": [H2KG + "Metadata"],
+            DESCRIPTION: [
+                {
+                    "@language": "en",
+                    "@value": "The ITC profile uses the surface tension of the represented water bearer at 353 K; this is a profile condition, not a model output.",
+                }
+            ],
+            SOURCE: [{"@id": review["source"]["scientific_source"]}],
+        },
+    ]
 
 
 def _mapping_rows(review: dict[str, Any]) -> list[dict[str, Any]]:
@@ -576,6 +690,17 @@ def _mapping_rows(review: dict[str, Any]) -> list[dict[str, Any]]:
         "qudt_unit": UNIT + field["unit"],
         "qudt_quantity_kind": QK + field["quantity_kind"],
         "definition": field["definition"],
+        "profile_context": field.get("profile_context", ""),
+        "bearer_class": field.get("bearer_class", ""),
+        "normalization_basis": field.get("normalization_basis", ""),
+        "normalization_basis_iri": field.get("normalization_basis_iri", ""),
+        "legacy_identifier_status": field.get("legacy_identifier_status", ""),
+        "value_transformation": field.get("value_transformation", ""),
+        "interpretation_evidence": field.get("interpretation_evidence", ""),
+        "source_document": review["source"]["document_title"],
+        "source_registry_version": review["source"]["registry_version"],
+        "source_sha256": review["source"]["sha256"],
+        "scientific_source": review["source"]["scientific_source"],
         "page": field["page"],
     } for field in review["fields"]]
 
@@ -623,8 +748,50 @@ def _validate_serializations(jsonld_path: Path, ttl_path: Path) -> dict[str, Any
 
 def _shacl_profile(review: dict[str, Any]) -> str:
     parameters = [field for field in review["fields"] if _workflow_role(field) == "Parameter"]
-    parameter_shapes = " ".join(
-        f"[ sh:class h2kg:{field['h2kg_local_name']} ]" for field in parameters
+    input_properties = [
+        field for field in review["fields"]
+        if field["direction"] == "input" and _workflow_role(field) == "InputDataPoint"
+    ]
+    result_properties = [
+        field for field in review["fields"]
+        if field["direction"] == "output" and _intrinsic_role(field) == "Property"
+    ]
+
+    def property_shape(field: dict[str, Any]) -> str:
+        constraints = [f"sh:class h2kg:{field['h2kg_local_name']}"]
+        if field.get("bearer_class"):
+            constraints.append(
+                "sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; "
+                f"sh:class h2kg:{field['bearer_class']} ]"
+            )
+        if field.get("normalization_basis"):
+            constraints.append(
+                "sh:property [ sh:path h2kg:normalizedTo ; sh:minCount 1 ; "
+                f"sh:class h2kg:{field['normalization_basis']} ]"
+            )
+        return "[ " + " ; ".join(constraints) + " ]"
+
+    parameter_shapes = " ".join(property_shape(field) for field in parameters)
+
+    def dataset_constraints(fields: list[dict[str, Any]]) -> str:
+        return "\n".join(
+            "  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; "
+            "sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; "
+            "sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; "
+            f"sh:node {property_shape(field)} ] ] ] ;"
+            for field in fields
+        )
+
+    array_shapes = "\n\n".join(
+        f"h2kg:{group}Shape a sh:NodeShape ;\n"
+        f"  sh:targetClass h2kg:{group} ;\n"
+        + "\n".join(
+            "  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; "
+            f"sh:qualifiedValueShape [ sh:class h2kg:{next(field['h2kg_local_name'] for field in review['fields'] if field['io_id'] == identifier)} ] ] ;"
+            for identifier in identifiers
+        )
+        + "\n  ."
+        for group, identifiers in ARRAY_GROUPS.items()
     )
     return f"""@prefix h2kg: <{H2KG}> .
 @prefix rdf: <{COMMON_CONTEXT['rdf']}> .
@@ -646,6 +813,18 @@ h2kg:InkToCompositionModelParameterRecordShape a sh:NodeShape ;
     sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
     sh:node [ sh:or ( {parameter_shapes} ) ]
   ] .
+
+h2kg:InkToCompositionModelInputDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:InkToCompositionModelInputDataset ;
+{dataset_constraints(input_properties)}
+  .
+
+h2kg:InkToCompositionModelScalarResultDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:InkToCompositionModelScalarResultDataset ;
+{dataset_constraints(result_properties)}
+  .
+
+{array_shapes}
 """
 
 
@@ -656,9 +835,13 @@ This value-free profile integrates {report['unique_identifier_count']} curated I
 
 Scientific source: {review['source']['scientific_source']}
 
+Curated source registry: `{review['source']['registry_version']}`; document: `{review['source']['document_title']}`.
+
 Source fingerprint: `{review['source']['sha256']}`. The source PDF is not redistributed.
 
 Explore: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?iri={H2KG}{MODEL_LOCAL_NAME}`
 
 Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The Turtle and JSON-LD files contain the curated vocabulary module and quantity guidance. Contextual model-input and output expectations are expressed in SHACL, so no scientific Property class is reclassified as a Parameter.
+
+`itc_semantic_pattern.*` demonstrates the occurrence-level bearer and normalization pattern. It explicitly distinguishes total pore volume normalized to carbon mass from catalyst-mass normalization and represents the water surface-tension condition at 353 K. It is a schema example, not an experimental observation or model execution.
 """

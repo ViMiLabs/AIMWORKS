@@ -106,9 +106,9 @@ MANUAL_DESCRIPTION_OVERRIDES = {
         "An object property relating a process or measurement to a parameter that specifies one of its "
         "inputs, settings, or operating conditions."
     ),
-    "https://w3id.org/h2kg/hydrogen-ontology#hasProperty": (
-        "An object property relating a measurement to a property that is determined, reported, or otherwise "
-        "associated with that measurement."
+    "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf": (
+        "An object property relating a characteristic occurrence to the resource that bears or is described "
+        "by that characteristic."
     ),
     "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": (
         "An object property relating a process or measurement to an instrument used to carry it out or support it."

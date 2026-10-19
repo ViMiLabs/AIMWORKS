@@ -8,7 +8,6 @@
 
 - Hydrogen ontology
 - hasParameter
-- hasProperty
 - usesInstrument
 - hasInputMaterial
 - hasOutputMaterial
@@ -21,6 +20,7 @@
 - isPartOf
 - hasIdentifier
 - Agent
+- Instrument
 
 ## Controlled Vocabulary Preview
 

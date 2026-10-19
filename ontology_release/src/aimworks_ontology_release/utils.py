@@ -52,6 +52,7 @@ RDFS_SUBPROPERTY = "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
 RDFS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain"
 RDFS_RANGE = "http://www.w3.org/2000/01/rdf-schema#range"
 RDFS_IS_DEFINED_BY = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy"
+RDFS_RESOURCE = "http://www.w3.org/2000/01/rdf-schema#Resource"
 SKOS_DEFINITION = "http://www.w3.org/2004/02/skos/core#definition"
 SKOS_PREF_LABEL = "http://www.w3.org/2004/02/skos/core#prefLabel"
 SKOS_ALT_LABEL = "http://www.w3.org/2004/02/skos/core#altLabel"
@@ -61,6 +62,34 @@ QUDT_UNIT = "http://qudt.org/schema/qudt/unit"
 QUDT_QUANTITY_KIND = "http://qudt.org/schema/qudt/quantityKind"
 H2KG_APPLIES_TO_PROFILE = "https://w3id.org/h2kg/hydrogen-ontology#appliesToProfile"
 LEGACY_SOURCE_NAMESPACE = "https://w3id.org/h2kg/hydrogen-ontology/legacy-source/"
+LEGACY_HAS_PROPERTY = COMMON_CONTEXT["h2kg"] + "hasProperty"
+IS_CHARACTERISTIC_OF = COMMON_CONTEXT["h2kg"] + "isCharacteristicOf"
+
+
+def canonicalize_schema_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove the unsafe legacy bearer predicate and add its canonical successor."""
+
+    result = [deepcopy(item) for item in items if item.get("@id") != LEGACY_HAS_PROPERTY]
+    if not any(item.get("@id") == IS_CHARACTERISTIC_OF for item in result):
+        result.append(
+            {
+                "@id": IS_CHARACTERISTIC_OF,
+                "@type": [OWL_OBJECT_PROPERTY],
+                RDFS_LABEL: [{"@value": "is characteristic of", "@language": "en"}],
+                SKOS_DEFINITION: [
+                    {
+                        "@value": (
+                            "Relates a characteristic occurrence to the resource that bears or is described by that characteristic. "
+                            "More specific bearer constraints are expressed in workflow profiles."
+                        ),
+                        "@language": "en",
+                    }
+                ],
+                RDFS_DOMAIN: [{"@id": COMMON_CONTEXT["h2kg"] + "Characteristic"}],
+                RDFS_RANGE: [{"@id": RDFS_RESOURCE}],
+            }
+        )
+    return result
 
 
 def legacy_source_identifier(value: str) -> str:

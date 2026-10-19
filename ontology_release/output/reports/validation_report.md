@@ -5,7 +5,7 @@
 - SHACL executed: true
 - SHACL details: Validation Report
 Conforms: True
-- Release path: `output\ontology\schema.ttl`
+- Release path: `..\output\ontology\schema.ttl`
 
 ## Release Checks
 
@@ -23,26 +23,30 @@ Conforms: True
 
 - Status: unavailable
 - Service: https://oops.linkeddata.es/rest
-- Message: OOPS! service unavailable: HTTPSConnectionPool(host='oops.linkeddata.es', port=443): Max retries exceeded with url: /rest (Caused by NewConnectionError("HTTPSConnection(host='oops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))
+- Message: OOPS! something went wrong. There was an unexpected error.
 - Pitfall count: not assessed
 
 - No pitfalls listed.
 
 ## FOOPS! FAIR Assessment
 
-- Status: unavailable
+- Status: assessed
 - Service: https://foops.linkeddata.es/FAIR_validator.html
 - Mode: file
-- Message: FOOPS! service unavailable: HTTPSConnectionPool(host='foops.linkeddata.es', port=443): Max retries exceeded with url: /assessOntologyFile (Caused by NewConnectionError("HTTPSConnection(host='foops.linkeddata.es', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))
-- Overall score: not assessed
-- Findable: not assessed
-- Accessible: not assessed
-- Interoperable: not assessed
-- Reusable: not assessed
+- Message: FOOPS! assessment completed in file mode. Accessible checks may remain unassessed.
+- Overall score: 89.1
+- Findable: 100.0
+- Accessible: None
+- Interoperable: 100.0
+- Reusable: 89.3
 
 ## FOOPS! Failed Checks
 
-- No failed-check detail extracted.
+- R1: The following metadata was not found: citation
+- R1: The following metadata was not found: doi, logo, status, source, issued. Warning: The following OPTIONAL detailed metadata could not be found: backwards compatibility. Please consider adding them if appropriate.
+- R1.2: The following provenance information was not found: issued
+- R1: Labels found for 33 out of 34 terms.
+- R1: Descriptions found for 33 out of 34 terms.
 
 ## Errors
 

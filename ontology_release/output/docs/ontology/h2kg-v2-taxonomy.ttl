@@ -37224,20 +37224,18 @@ h2kg:hasParameter a owl:ObjectProperty ;
     rdfs:subPropertyOf prov:used ;
     skos:definition "Relates a process or measurement occurrence to a Parameter record that specifies one selected workflow condition."@en .
 
-h2kg:hasProperty a owl:ObjectProperty ;
-    rdfs:label "hasProperty"@en ;
-    dcterms:description "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."@en ;
-    dcterms:isReplacedBy h2kg:measures ;
-    rdfs:domain h2kg:Measurement ;
-    rdfs:range h2kg:Property ;
-    owl:deprecated true .
-
 h2kg:hasQuantityValue a owl:ObjectProperty ;
     rdfs:label "hasQuantityValue"@en ;
     dcterms:description "Relates a property occurrence to its QUDT quantity-value representation."@en ;
     rdfs:domain h2kg:Property ;
     rdfs:range qudt:QuantityValue ;
     skos:definition "Relates a property occurrence to its QUDT quantity-value representation."@en .
+
+h2kg:isCharacteristicOf a owl:ObjectProperty ;
+    rdfs:label "is characteristic of"@en ;
+    rdfs:domain h2kg:Characteristic ;
+    rdfs:range rdfs:Resource ;
+    skos:definition "Relates a characteristic occurrence to the resource that bears or is described by that characteristic. More specific bearer constraints are expressed in workflow profiles."@en .
 
 h2kg:isPartOf a owl:ObjectProperty ;
     rdfs:label "isPartOf"@en ;
@@ -37263,6 +37261,12 @@ h2kg:mPBI a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
+
+h2kg:measures a owl:ObjectProperty ;
+    rdfs:label "measures"@en ;
+    dcterms:description "An object property relating a measurement to a property that it determines."@en ;
+    rdfs:domain h2kg:Measurement ;
+    rdfs:range h2kg:Property .
 
 h2kg:migrationAction a owl:AnnotationProperty ;
     rdfs:label "migration action"@en ;
@@ -37477,21 +37481,6 @@ h2kg:CellAssembly a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
-
-h2kg:Characteristic a owl:Class ;
-    rdfs:label "Characteristic"@en ;
-    dcterms:description "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Entity ;
-    skos:definition "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
-    skos:prefLabel "Characteristic"@en ;
-    h2kg:canonicalSemanticRole "Characteristic" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:DegradationCharacteristic a owl:Class ;
     rdfs:label "Degradation characteristic"@en ;
@@ -38039,18 +38028,27 @@ h2kg:hasSubProcess a owl:ObjectProperty ;
     rdfs:label "hasSubProcess"@en ;
     dcterms:description "An object property relating a process to a subprocess that forms part of its overall execution."@en .
 
-h2kg:measures a owl:ObjectProperty ;
-    rdfs:label "measures"@en ;
-    dcterms:description "An object property relating a measurement to a property that it determines."@en ;
-    rdfs:domain h2kg:Measurement ;
-    rdfs:range h2kg:Property .
-
 h2kg:usesReferenceElectrode a owl:ObjectProperty ;
     rdfs:label "uses reference electrode"@en ;
     rdfs:domain h2kg:Measurement ;
     rdfs:range h2kg:ReferenceElectrode ;
     rdfs:subPropertyOf prov:used ;
     skos:definition "Relates an electrochemical measurement to the reference electrode used in its measurement arrangement."@en .
+
+h2kg:Characteristic a owl:Class ;
+    rdfs:label "Characteristic"@en ;
+    dcterms:description "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Entity ;
+    skos:definition "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
+    skos:prefLabel "Characteristic"@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:ChemicalReactionProcess a owl:Class ;
     rdfs:label "Chemical reaction process"@en ;
@@ -38669,6 +38667,21 @@ h2kg:ElectrolyteMaterial a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
 
+h2kg:Measurement a owl:Class ;
+    rdfs:label "Measurement"@en ;
+    dcterms:description "A process that acquires observations or data to determine or estimate a characteristic of a material, component, process, or system."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:Process ;
+    skos:definition "A process that acquires observations or data to determine or estimate a characteristic of a material, component, process, or system."@en ;
+    skos:prefLabel "Measurement"@en ;
+    h2kg:canonicalSemanticRole "Measurement" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Process" .
+
 h2kg:PrintingInstrument a owl:Class ;
     rdfs:label "Printing instrument"@en ;
     dcterms:description "A coating instrument that places material according to a controlled spatial pattern by a printing process."@en ;
@@ -38819,21 +38832,6 @@ h2kg:Matter a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
-
-h2kg:Measurement a owl:Class ;
-    rdfs:label "Measurement"@en ;
-    dcterms:description "A process that acquires observations or data to determine or estimate a characteristic of a material, component, process, or system."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:Process ;
-    skos:definition "A process that acquires observations or data to determine or estimate a characteristic of a material, component, process, or system."@en ;
-    skos:prefLabel "Measurement"@en ;
-    h2kg:canonicalSemanticRole "Measurement" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Process" .
 
 h2kg:MechanicalMeasurement a owl:Class ;
     rdfs:label "Mechanical measurement"@en ;
@@ -39362,6 +39360,21 @@ h2kg:Process a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Process" .
 
+h2kg:Property a owl:Class ;
+    rdfs:label "Property"@en ;
+    dcterms:description "A characteristic that can be measured, computed, specified, or otherwise attributed to an entity."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:Characteristic ;
+    skos:definition "A characteristic that can be measured, computed, specified, or otherwise attributed to an entity."@en ;
+    skos:prefLabel "Property"@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Characteristic" .
+
 h2kg:SpectroscopyMeasurement a owl:Class ;
     rdfs:label "Spectroscopy measurement"@en ;
     dcterms:description "A characterization measurement that determines a response as a function of energy, wavelength, frequency, mass-to-charge ratio, or another spectral coordinate."@en ;
@@ -39384,21 +39397,6 @@ h2kg:LayerThickness a owl:Class ;
     rdfs:subClassOf h2kg:GeometricCharacteristic ;
     skos:definition "A length characteristic representing the separation between the bounding surfaces of a material layer."@en ;
     skos:prefLabel "Layer thickness"@en ;
-    h2kg:canonicalSemanticRole "Characteristic" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Characteristic" .
-
-h2kg:Property a owl:Class ;
-    rdfs:label "Property"@en ;
-    dcterms:description "A characteristic that can be measured, computed, specified, or otherwise attributed to an entity."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:Characteristic ;
-    skos:definition "A characteristic that can be measured, computed, specified, or otherwise attributed to an entity."@en ;
-    skos:prefLabel "Property"@en ;
     h2kg:canonicalSemanticRole "Characteristic" ;
     h2kg:correctionAction "retain" ;
     h2kg:definitionStatus "structural" ;

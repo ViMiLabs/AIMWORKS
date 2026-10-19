@@ -1,6 +1,6 @@
-# TEM Pilot Package
+# Synthetic TEM Demonstration Package
 
-Generated TEM companion artifacts for the first imaging-method integration round.
+Generated TEM companion artifacts for profile validation and manuscript illustration. The record is wholly synthetic and is not attributed to an experiment or publication.
 
 ## Files
 
@@ -12,4 +12,4 @@ Generated TEM companion artifacts for the first imaging-method integration round
 - `tem_case_summary.md`
 - `tem_follow_on_gaps.md`
 
-The pilot is intentionally conservative: only minimal reusable schema changes were introduced, while catalog-specific details remain attached as metadata or labeled process instances.
+The demonstration is intentionally conservative: reusable ontology terms are separated from synthetic occurrence values and source-specific metadata.

@@ -873,9 +873,11 @@ Generate the H2KG taxonomy before running the collection benchmark.
         "h2kg_corrections.csv",
         "h2kg_corrections.json",
         "automatic_harmonization_registry.json",
+        "benchmark_summary.json",
         "manuscript_table.md",
         "matching_rules.md",
         "README.md",
+        "tib_collection_benchmark.html",
     ]:
         shutil.copy2(target / name, docs_assets / name)
     docs_target = ensure_dir(output_root / "docs" / "pages") / "tib-benchmark.html"

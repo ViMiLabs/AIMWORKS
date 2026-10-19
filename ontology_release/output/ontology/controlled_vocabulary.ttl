@@ -470,7 +470,7 @@ h2kg:IonomerType
   dcterms:description "A parameter specifying ionomer type used to characterize Catalyst Ink Preparation."@en .
 
 h2kg:IonomerToCarbonRatio
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Ionomer-to-carbon ratio"@en ;
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IonomerToCarbonRatio ;
   skos:altLabel "I/C-ratio"@en, "ITC ionomer-to-carbon ratio"@en ;
@@ -1793,7 +1793,7 @@ h2kg:SurfaceTension
   skos:prefLabel "Surface tension"@en ;
   rdfs:label "Surface tension"@en ;
   skos:altLabel "surface tension of water at 353 K"@en ;
-  dcterms:description "Surface tension of liquid water at 353 K used to determine capillary flooding behavior in catalyst-layer pores."@en ;
+  dcterms:description "Interfacial free energy per unit area associated with the surface of a liquid."@en ;
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_SurfaceTension ;
   skos:notation "gamma" ;
   dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
@@ -2657,7 +2657,7 @@ h2kg:TotalPoreVolume
   skos:prefLabel "Total pore volume"@en ;
   rdfs:label "Total pore volume"@en ;
   skos:altLabel "ITC total pore volume"@en ;
-  dcterms:description "Total volume of primary and secondary pores in the ionomer-free platinum-on-carbon structure per unit mass of carbon."@en ;
+  dcterms:description "Total volume of void space within a specified material or structure."@en ;
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_TotalPoreVolume ;
   skos:notation "Vpores" ;
   dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
@@ -16726,7 +16726,7 @@ h2kg:InkToCompositionModel
   h2kg:hasOutputData h2kg:InkToCompositionModelScalarResultDataset, h2kg:CCLWaterRetentionCurveDataset, h2kg:CCLRefinedPoreSizeDistributionDataset, h2kg:CCLContactAngleDistributionDataset .
 
 h2kg:PlatinumToCarbonMassRatio
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Platinum-to-carbon mass ratio"@en ;
   rdfs:label "Platinum-to-carbon mass ratio"@en ;
   dcterms:description "Mass ratio of platinum catalyst to carbon support in the catalyst layer."@en ;
@@ -16737,7 +16737,7 @@ h2kg:PlatinumToCarbonMassRatio
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumToCarbonMassRatio .
 
 h2kg:IonomerCatalystDispersionParameter
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Ionomer-catalyst dispersion parameter"@en ;
   rdfs:label "Ionomer-catalyst dispersion parameter"@en ;
   dcterms:description "Parameter describing the tendency of ionomer to spread over the platinum-on-carbon surface rather than form larger ionomer aggregates."@en ;
@@ -16747,7 +16747,7 @@ h2kg:IonomerCatalystDispersionParameter
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IonomerCatalystDispersionParameter .
 
 h2kg:CCLPrimaryPoreVolumeFraction
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL primary-pore volume fraction"@en ;
   rdfs:label "CCL primary-pore volume fraction"@en ;
   dcterms:description "Fraction of the total pore volume assigned to primary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
@@ -16758,7 +16758,7 @@ h2kg:CCLPrimaryPoreVolumeFraction
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreVolumeFraction .
 
 h2kg:CCLSecondaryPoreVolumeFraction
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL secondary-pore volume fraction"@en ;
   rdfs:label "CCL secondary-pore volume fraction"@en ;
   dcterms:description "Fraction of the total pore volume assigned to secondary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
@@ -16769,7 +16769,7 @@ h2kg:CCLSecondaryPoreVolumeFraction
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreVolumeFraction .
 
 h2kg:CCLPrimaryPoreRadiusGeometricMean
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL primary-pore geometric-mean radius"@en ;
   rdfs:label "CCL primary-pore geometric-mean radius"@en ;
   dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for primary pores in a cathode catalyst layer."@en ;
@@ -16780,7 +16780,7 @@ h2kg:CCLPrimaryPoreRadiusGeometricMean
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusGeometricMean .
 
 h2kg:CCLSecondaryPoreRadiusGeometricMean
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL secondary-pore geometric-mean radius"@en ;
   rdfs:label "CCL secondary-pore geometric-mean radius"@en ;
   dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for secondary pores in a cathode catalyst layer."@en ;
@@ -16791,7 +16791,7 @@ h2kg:CCLSecondaryPoreRadiusGeometricMean
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusGeometricMean .
 
 h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL primary-pore logarithmic radius deviation"@en ;
   rdfs:label "CCL primary-pore logarithmic radius deviation"@en ;
   dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of primary-pore radii, calculated using the natural logarithm."@en ;
@@ -16802,7 +16802,7 @@ h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusLogarithmicStandardDeviation .
 
 h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "CCL secondary-pore logarithmic radius deviation"@en ;
   rdfs:label "CCL secondary-pore logarithmic radius deviation"@en ;
   dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of secondary-pore radii, calculated using the natural logarithm."@en ;
@@ -16813,7 +16813,7 @@ h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusLogarithmicStandardDeviation .
 
 h2kg:CarbonSupportInducedIonomerAlignmentDegree
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Carbon-support-induced ionomer alignment degree"@en ;
   rdfs:label "Carbon-support-induced ionomer alignment degree"@en ;
   dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface."@en ;
@@ -16823,7 +16823,7 @@ h2kg:CarbonSupportInducedIonomerAlignmentDegree
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CarbonSupportInducedIonomerAlignmentDegree .
 
 h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Platinum-surface-induced ionomer alignment degree"@en ;
   rdfs:label "Platinum-surface-induced ionomer alignment degree"@en ;
   dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface."@en ;
@@ -16833,7 +16833,7 @@ h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumSurfaceInducedIonomerAlignmentDegree .
 
 h2kg:LimitingIonomerAlignmentDegree
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Limiting ionomer alignment degree"@en ;
   rdfs:label "Limiting ionomer alignment degree"@en ;
   dcterms:description "Limiting degree of ionomer molecular alignment in a thick film where the influence of the platinum-on-carbon surface is negligible."@en ;
@@ -16865,7 +16865,7 @@ h2kg:PlatinumSurfaceWaterContactAngle
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumSurfaceWaterContactAngle .
 
 h2kg:IdealHydrophilicIonomerContactAngle
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Ideal hydrophilic ionomer contact angle"@en ;
   rdfs:label "Ideal hydrophilic ionomer contact angle"@en ;
   dcterms:description "Limiting water contact angle of an ideally hydrophilic aligned ionomer surface used as the hydrophilic endpoint of the model wetting relation."@en ;
@@ -16875,7 +16875,7 @@ h2kg:IdealHydrophilicIonomerContactAngle
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IdealHydrophilicIonomerContactAngle .
 
 h2kg:IdealHydrophobicIonomerContactAngle
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Ideal hydrophobic ionomer contact angle"@en ;
   rdfs:label "Ideal hydrophobic ionomer contact angle"@en ;
   dcterms:description "Limiting water contact angle of an ideally hydrophobic aligned ionomer surface used as the hydrophobic endpoint of the model wetting relation."@en ;
@@ -16885,7 +16885,7 @@ h2kg:IdealHydrophobicIonomerContactAngle
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IdealHydrophobicIonomerContactAngle .
 
 h2kg:InitialIonomerFilmThickness
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Initial ionomer film thickness"@en ;
   rdfs:label "Initial ionomer film thickness"@en ;
   dcterms:description "Limiting effective thickness of the ionomer film on the covered platinum-on-carbon surface as ionomer loading approaches zero, representing the characteristic thickness of the first deposited ionomer layer."@en ;
@@ -16896,7 +16896,7 @@ h2kg:InitialIonomerFilmThickness
   h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_InitialIonomerFilmThickness .
 
 h2kg:EquivalentIonomerPatchRadius
-  a h2kg:Parameter ;
+  a h2kg:Property ;
   skos:prefLabel "Equivalent ionomer patch radius"@en ;
   rdfs:label "Equivalent ionomer patch radius"@en ;
   dcterms:description "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface."@en ;
@@ -16909,7 +16909,7 @@ h2kg:PlatinumParticleRadius
   a h2kg:Property ;
   skos:prefLabel "Platinum particle radius"@en ;
   rdfs:label "Platinum particle radius"@en ;
-  dcterms:description "Radius of the hemispherical platinum nanoparticles used to determine platinum surface coverage in the model."@en ;
+  dcterms:description "Radius of a platinum catalyst particle used to characterize particle geometry."@en ;
   dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
   skos:altLabel "catalyst active particle radius"@en ;
   skos:notation "rPt" ;

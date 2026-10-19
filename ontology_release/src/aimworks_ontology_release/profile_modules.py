@@ -11,6 +11,7 @@ from .utils import (
     H2KG_APPLIES_TO_PROFILE,
     OWL_ONTOLOGY,
     RDFS_IS_DEFINED_BY,
+    canonicalize_schema_items,
     default_release_profile,
     dump_json,
     ensure_dir,
@@ -72,6 +73,11 @@ def build_profile_modules(
     pemfc_header = _profile_header(project, pemfc_profile, imports=pemfc_profile.get("imports", [core_profile["ontology_iri"]]), prefix="h2kg-pemfc")
     pemwe_header = _profile_header(project, pemwe_profile, imports=pemwe_profile.get("imports", [core_profile["ontology_iri"]]), prefix="h2kg-pemwe")
 
+    local_schema_items = canonicalize_schema_items(local_schema_items)
+    assignments.setdefault(
+        "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf",
+        {"pemfc", "pemwe"},
+    )
     core_items = [core_header] + [_tag_item(item, {pemfc_profile["ontology_iri"], pemwe_profile["ontology_iri"]}, core_profile["ontology_iri"]) for item in local_schema_items]
     pemfc_items = [pemfc_header] + [
         _tag_item(item, assignments.get(str(item.get("@id")), {"pemfc"}), pemfc_profile["ontology_iri"], iri_by_key={"pemfc": pemfc_profile["ontology_iri"], "pemwe": pemwe_profile["ontology_iri"]})

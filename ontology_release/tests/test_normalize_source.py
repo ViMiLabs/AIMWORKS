@@ -47,3 +47,22 @@ def test_normalize_source_merges_duplicates_and_repairs_dynamic_hydrogen_electro
     dhe = next(item for item in payload if item["@id"] == "https://w3id.org/h2kg/hydrogen-ontology#DynamicHydrogenElectrode")
     assert "https://w3id.org/h2kg/hydrogen-ontology#Instrument" in dhe["@type"]
     assert dhe["http://purl.org/dc/terms/description"][0]["@value"].startswith("An instrument corresponding to a dynamic hydrogen electrode")
+
+
+def test_normalize_source_can_emit_report_without_copying_document(tmp_path: Path):
+    source = tmp_path / "source.jsonld"
+    original = [{"@id": "https://example.org/Term", "@type": ["http://www.w3.org/2002/07/owl#Class"]}]
+    source.write_text(json.dumps(original), encoding="utf-8")
+    reports = tmp_path / "reports"
+
+    report = normalize_source_document(
+        source,
+        reports,
+        write_in_place=False,
+        emit_normalized_document=False,
+    )
+
+    assert report["normalized_document_written"] is False
+    assert json.loads(source.read_text(encoding="utf-8")) == original
+    assert (reports / "source_normalization_report.json").exists()
+    assert not (reports / source.name).exists()

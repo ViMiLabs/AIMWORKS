@@ -12,6 +12,7 @@ from .utils import (
     RDFS_IS_DEFINED_BY,
     RDFS_LABEL,
     SKOS_DEFINITION,
+    canonicalize_schema_items,
     default_metadata_defaults,
     default_release_profile,
     ensure_dir,
@@ -36,7 +37,7 @@ SCHEMA_DEFINITIONS: dict[str, str] = {
     "Property": "A characteristic, attribute, or measurable feature of an entity, material, process, or system.",
     "Normalization Basis": "The basis with respect to which a quantitative result or property is normalized.",
     "hasParameter": "An object property that relates a process, measurement, or resource to a parameter used to characterize its conditions or settings.",
-    "hasProperty": "An object property that relates a resource to a property that it bears, reports, or is described in terms of.",
+    "is characteristic of": "An object property that relates a characteristic occurrence to the resource that bears or is described by that characteristic.",
     "usesInstrument": "An object property that relates a process or measurement to an instrument used in carrying it out.",
     "hasInputMaterial": "An object property that relates a process to a material that serves as an input to that process.",
     "hasOutputMaterial": "An object property that relates a process to a material produced by that process.",
@@ -111,6 +112,7 @@ def enrich_ontology(
             and classifications[str(item.get("@id"))].kind in {"class", "object_property", "datatype_property"}
         )
     ]
+    schema_items = canonicalize_schema_items(schema_items)
     dump_turtle_items(output_dir / "schema.ttl", schema_items)
     dump_jsonld_items(output_dir / "schema.jsonld", schema_items)
     write_text(output_dir.parent / "reports" / "metadata_report.md", _metadata_report(schema_items))

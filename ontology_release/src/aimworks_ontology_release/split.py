@@ -7,7 +7,7 @@ from typing import Any
 from .classify import classify_resources
 from .io import dump_jsonld_items, dump_turtle_items, load_json_document, merge_document_items
 from .normalize import best_label
-from .utils import ensure_dir, write_text
+from .utils import canonicalize_schema_items, ensure_dir, write_text
 
 
 def split_ontology(
@@ -39,6 +39,8 @@ def split_ontology(
         elif kind in {"example_individual", "ephemeral_generated_instance", "quantity_value_data_node"} and classification.is_local:
             example_items.append(item)
             counts["examples"] += 1
+    schema_items = canonicalize_schema_items(schema_items)
+    counts["schema"] = len(schema_items)
     dump_turtle_items(output_dir / "schema.ttl", schema_items)
     dump_jsonld_items(output_dir / "schema.jsonld", schema_items)
     dump_turtle_items(output_dir / "controlled_vocabulary.ttl", vocab_items)

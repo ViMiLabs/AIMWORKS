@@ -5,7 +5,7 @@
 - Deprecated compatibility classes: 165
 - Curated structural classes: 157
 - Asserted subclass axioms: 2221
-- Definitions: 2401
+- Definitions: 2402
 - Turtle/JSON-LD parity: True
 - Taxonomy SHACL conforms: True
 - All source resources classified: 2324 / 2324

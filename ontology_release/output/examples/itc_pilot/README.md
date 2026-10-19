@@ -4,8 +4,12 @@ This value-free profile integrates 44 curated ITC interface concepts into H2KG w
 
 Scientific source: https://doi.org/10.1016/j.electacta.2022.140850
 
+Curated source registry: `2026-10-19.1`; document: `ITC definitions - corrected`.
+
 Source fingerprint: `2DF4CF1ADB53F99FE2E5C6D7C03629BD24E35A05E2DDFB23AB73F419BDFA7180`. The source PDF is not redistributed.
 
 Explore: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?iri=https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel`
 
 Symbols are represented with `skos:notation`; rejected historical labels are retained only in the audit. The Turtle and JSON-LD files contain the curated vocabulary module and quantity guidance. Contextual model-input and output expectations are expressed in SHACL, so no scientific Property class is reclassified as a Parameter.
+
+`itc_semantic_pattern.*` demonstrates the occurrence-level bearer and normalization pattern. It explicitly distinguishes total pore volume normalized to carbon mass from catalyst-mass normalization and represents the water surface-tension condition at 353 K. It is a schema example, not an experimental observation or model execution.

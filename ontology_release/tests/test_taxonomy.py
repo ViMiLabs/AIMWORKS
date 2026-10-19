@@ -87,8 +87,11 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert "Parameter or DataPoint" in str(graph.value(_iri("ofProperty"), DCTERMS.description))
     assert "Parameter record" in str(graph.value(_iri("hasParameter"), DCTERMS.description))
     assert "property occurrence" in str(graph.value(_iri("hasQuantityValue"), DCTERMS.description))
-    assert (_iri("hasProperty"), OWL.deprecated, None) in graph
-    assert (_iri("hasProperty"), DCTERMS.isReplacedBy, _iri("measures")) in graph
+    assert not any(graph.triples((_iri("hasProperty"), None, None)))
+    assert not any(graph.triples((None, _iri("hasProperty"), None)))
+    assert (_iri("isCharacteristicOf"), RDF.type, OWL.ObjectProperty) in graph
+    assert (_iri("isCharacteristicOf"), RDFS.domain, _iri("Characteristic")) in graph
+    assert (_iri("isCharacteristicOf"), RDFS.range, RDFS.Resource) in graph
 
     validation = json.loads(Path(result["validation"]).read_text(encoding="utf-8"))
     assert validation["competency_checks"]["all_passed"] is True
@@ -108,6 +111,8 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert validation["compatibility_file_uris"] == []
 
     compatibility = Graph().parse(result["compatibility_ttl"], format="turtle")
+    assert (_iri("hasProperty"), OWL.deprecated, None) in compatibility
+    assert "compatibility predicate" in str(compatibility.value(_iri("hasProperty"), SKOS.scopeNote)).lower()
     assert not any(
         isinstance(term, URIRef) and str(term).startswith("file:")
         for triple in compatibility

@@ -8170,7 +8170,9 @@ h2kg:hasProperty a owl:ObjectProperty ;
     rdfs:label "hasProperty"@en ;
     dcterms:description "An object property relating a measurement to a property that is determined, reported, or otherwise associated with that measurement."@en ;
     rdfs:domain h2kg:Measurement ;
-    rdfs:range h2kg:Property .
+    rdfs:range h2kg:Property ;
+    owl:deprecated true ;
+    skos:scopeNote "Legacy compatibility predicate. Canonical data use measures, ofProperty, or isCharacteristicOf according to context; consult the relation migration registry."@en .
 
 h2kg:hasQuantityValue a owl:ObjectProperty ;
     rdfs:label "hasQuantityValue"@en ;
@@ -8823,7 +8825,7 @@ h2kg:CCLMeanContactAngle a h2kg:Property ;
     skos:prefLabel "CCL mean contact angle"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLMeanContactAngle .
 
-h2kg:CCLPrimaryPoreRadiusGeometricMean a h2kg:Parameter ;
+h2kg:CCLPrimaryPoreRadiusGeometricMean a h2kg:Property ;
     rdfs:label "CCL primary-pore geometric-mean radius"@en ;
     dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for primary pores in a cathode catalyst layer."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu1" ;
@@ -8833,7 +8835,7 @@ h2kg:CCLPrimaryPoreRadiusGeometricMean a h2kg:Parameter ;
     skos:prefLabel "CCL primary-pore geometric-mean radius"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusGeometricMean .
 
-h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation a h2kg:Parameter ;
+h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation a h2kg:Property ;
     rdfs:label "CCL primary-pore logarithmic radius deviation"@en ;
     dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of primary-pore radii, calculated using the natural logarithm."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR1" ;
@@ -8853,7 +8855,7 @@ h2kg:CCLPrimaryPoreSpecificSurfaceArea a h2kg:Property ;
     skos:prefLabel "CCL primary-pore specific surface area"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLPrimaryPoreSpecificSurfaceArea .
 
-h2kg:CCLPrimaryPoreVolumeFraction a h2kg:Parameter ;
+h2kg:CCLPrimaryPoreVolumeFraction a h2kg:Property ;
     rdfs:label "CCL primary-pore volume fraction"@en ;
     dcterms:description "Fraction of the total pore volume assigned to primary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi1" ;
@@ -8891,7 +8893,7 @@ h2kg:CCLSecondaryPoreHydrophobicVolumeFraction a h2kg:Property ;
     skos:prefLabel "CCL secondary-pore hydrophobic volume fraction"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreHydrophobicVolumeFraction .
 
-h2kg:CCLSecondaryPoreRadiusGeometricMean a h2kg:Parameter ;
+h2kg:CCLSecondaryPoreRadiusGeometricMean a h2kg:Property ;
     rdfs:label "CCL secondary-pore geometric-mean radius"@en ;
     dcterms:description "Geometric mean, equal to the median, of the volume-weighted lognormal pore-radius distribution for secondary pores in a cathode catalyst layer."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_rMu2" ;
@@ -8901,7 +8903,7 @@ h2kg:CCLSecondaryPoreRadiusGeometricMean a h2kg:Parameter ;
     skos:prefLabel "CCL secondary-pore geometric-mean radius"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusGeometricMean .
 
-h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation a h2kg:Parameter ;
+h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation a h2kg:Property ;
     rdfs:label "CCL secondary-pore logarithmic radius deviation"@en ;
     dcterms:description "Dimensionless standard deviation in the volume-weighted lognormal distribution of secondary-pore radii, calculated using the natural logarithm."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_sigmaR2" ;
@@ -8921,7 +8923,7 @@ h2kg:CCLSecondaryPoreSpecificSurfaceArea a h2kg:Property ;
     skos:prefLabel "CCL secondary-pore specific surface area"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_CCLSecondaryPoreSpecificSurfaceArea .
 
-h2kg:CCLSecondaryPoreVolumeFraction a h2kg:Parameter ;
+h2kg:CCLSecondaryPoreVolumeFraction a h2kg:Property ;
     rdfs:label "CCL secondary-pore volume fraction"@en ;
     dcterms:description "Fraction of the total pore volume assigned to secondary pores in the ionomer-free platinum-on-carbon structure of a cathode catalyst layer."@en ;
     dcterms:identifier "IO_MAT_CatalystPoreSizeDistribution_phi2" ;
@@ -9190,7 +9192,7 @@ h2kg:CarbonShellThickness a h2kg:Property ;
     skos:prefLabel "Carbon Shell Thickness"@en ;
     h2kg:hasQuantityValue <https://w3id.org/h2kg/hydrogen-ontology/legacy-source/CarbonShellThickness_QV-1d9bb48a6fd6> .
 
-h2kg:CarbonSupportInducedIonomerAlignmentDegree a h2kg:Parameter ;
+h2kg:CarbonSupportInducedIonomerAlignmentDegree a h2kg:Property ;
     rdfs:label "Carbon-support-induced ionomer alignment degree"@en ;
     dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface."@en ;
     dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC" ;
@@ -10303,7 +10305,7 @@ h2kg:EquivalentIonomerFilmThickness a h2kg:Property ;
     skos:prefLabel "Equivalent ionomer film thickness"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_EquivalentIonomerFilmThickness .
 
-h2kg:EquivalentIonomerPatchRadius a h2kg:Parameter ;
+h2kg:EquivalentIonomerPatchRadius a h2kg:Property ;
     rdfs:label "Equivalent ionomer patch radius"@en ;
     dcterms:description "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface."@en ;
     dcterms:identifier "IO_CMP_MeanPoreRadiusInsideTheIonomer" ;
@@ -11228,265 +11230,265 @@ h2kg:ITCPlatinumSurfaceWaterContactAngleInputField a h2kg:DataPoint ;
     h2kg:ofProperty h2kg:PlatinumSurfaceWaterContactAngle .
 
 h2kg:ITCQuantityGuidance_CCLAccessiblePrimaryPoreVolumeFraction a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL accessible primary-pore volume fraction; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL accessible primary-pore volume fraction; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLAccessibleSecondaryPoreVolumeFraction a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL accessible secondary-pore volume fraction; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL accessible secondary-pore volume fraction; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLContactAngleDistributionData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL contact-angle-distribution data; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL contact-angle-distribution data; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLEffectiveIonomerCoverage a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL effective ionomer coverage; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL effective ionomer coverage; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLHydrophilicPoreMeanContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL hydrophilic-pore mean contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL hydrophilic-pore mean contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_CCLHydrophobicPoreMeanContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL hydrophobic-pore mean contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL hydrophobic-pore mean contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_CCLIonomerAlignmentDegree a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL ionomer alignment degree; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL ionomer alignment degree; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLMeanContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL mean contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL mean contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusGeometricMean a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL primary-pore geometric-mean radius; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL primary-pore geometric-mean radius; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_CCLPrimaryPoreRadiusLogarithmicStandardDeviation a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL primary-pore logarithmic radius deviation; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL primary-pore logarithmic radius deviation; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLPrimaryPoreSpecificSurfaceArea a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL primary-pore specific surface area; the expert source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL primary-pore specific surface area; the curated source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SpecificSurfaceArea> ;
     qudt:unit <http://qudt.org/vocab/unit/M2-PER-GM> .
 
 h2kg:ITCQuantityGuidance_CCLPrimaryPoreVolumeFraction a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL primary-pore volume fraction; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL primary-pore volume fraction; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLRefinedPoreSizeDistributionData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL refined pore-size-distribution data; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL refined pore-size-distribution data; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLSecondaryPoreHydrophobicVolumeFraction a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL secondary-pore hydrophobic volume fraction; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL secondary-pore hydrophobic volume fraction; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusGeometricMean a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL secondary-pore geometric-mean radius; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL secondary-pore geometric-mean radius; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_CCLSecondaryPoreRadiusLogarithmicStandardDeviation a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL secondary-pore logarithmic radius deviation; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL secondary-pore logarithmic radius deviation; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLSecondaryPoreSpecificSurfaceArea a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL secondary-pore specific surface area; the expert source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL secondary-pore specific surface area; the curated source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SpecificSurfaceArea> ;
     qudt:unit <http://qudt.org/vocab/unit/M2-PER-GM> .
 
 h2kg:ITCQuantityGuidance_CCLSecondaryPoreVolumeFraction a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL secondary-pore volume fraction; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL secondary-pore volume fraction; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CCLTotalPoreSpecificSurfaceArea a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL total-pore specific surface area; the expert source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL total-pore specific surface area; the curated source reports [m^2/gC]. Values are normalized per unit carbon mass."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SpecificSurfaceArea> ;
     qudt:unit <http://qudt.org/vocab/unit/M2-PER-GM> .
 
 h2kg:ITCQuantityGuidance_CCLWaterSaturationData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for CCL water-saturation data; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for CCL water-saturation data; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CapillaryPressureAxisData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Capillary-pressure axis data; the expert source reports [Pa]."@en ;
+    dcterms:description "Value-free QUDT guidance for Capillary-pressure axis data; the curated source reports [Pa]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
     qudt:unit <http://qudt.org/vocab/unit/PA> .
 
 h2kg:ITCQuantityGuidance_CarbonDensity a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Carbon density; the expert source reports [g/m^3]."@en ;
+    dcterms:description "Value-free QUDT guidance for Carbon density; the curated source reports [g/m^3]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/MassDensity> ;
     qudt:unit <http://qudt.org/vocab/unit/GM-PER-M3> .
 
 h2kg:ITCQuantityGuidance_CarbonSupportInducedIonomerAlignmentDegree a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Carbon-support-induced ionomer alignment degree; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Carbon-support-induced ionomer alignment degree; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_CarbonSupportWaterContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Carbon-support water contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Carbon-support water contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_ContactAngleCosineAxisData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Contact-angle cosine axis data; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Contact-angle cosine axis data; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_DryIonomerDensity a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Dry ionomer density; the expert source reports [g/m^3]."@en ;
+    dcterms:description "Value-free QUDT guidance for Dry ionomer density; the curated source reports [g/m^3]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/MassDensity> ;
     qudt:unit <http://qudt.org/vocab/unit/GM-PER-M3> .
 
 h2kg:ITCQuantityGuidance_EquivalentIonomerFilmThickness a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Equivalent ionomer film thickness; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for Equivalent ionomer film thickness; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_EquivalentIonomerPatchRadius a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Equivalent ionomer patch radius; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for Equivalent ionomer patch radius; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_IdealHydrophilicIonomerContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Ideal hydrophilic ionomer contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Ideal hydrophilic ionomer contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_IdealHydrophobicIonomerContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Ideal hydrophobic ionomer contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Ideal hydrophobic ionomer contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_InitialIonomerFilmThickness a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Initial ionomer film thickness; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for Initial ionomer film thickness; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_IonomerCatalystDispersionParameter a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Ionomer-catalyst dispersion parameter; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Ionomer-catalyst dispersion parameter; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_IonomerCoatedPoreWallContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Ionomer-coated pore-wall contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Ionomer-coated pore-wall contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_IonomerToCarbonRatio a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Ionomer-to-carbon ratio; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Ionomer-to-carbon ratio; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_LimitingIonomerAlignmentDegree a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Limiting ionomer alignment degree; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Limiting ionomer alignment degree; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_PlatinumCarbonPoreWallContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum-carbon pore-wall contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum-carbon pore-wall contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_PlatinumDensity a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum density; the expert source reports [g/m^3]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum density; the curated source reports [g/m^3]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/MassDensity> ;
     qudt:unit <http://qudt.org/vocab/unit/GM-PER-M3> .
 
 h2kg:ITCQuantityGuidance_PlatinumParticleRadius a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum particle radius; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum particle radius; the curated source reports [m]. Profile context: The ITC model uses the radius of hemispherical platinum nanoparticles to determine platinum surface coverage."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_PlatinumSurfaceInducedIonomerAlignmentDegree a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum-surface-induced ionomer alignment degree; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum-surface-induced ionomer alignment degree; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_PlatinumSurfaceWaterContactAngle a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum-surface water contact angle; the expert source reports [deg]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum-surface water contact angle; the curated source reports [deg]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Angle> ;
     qudt:unit <http://qudt.org/vocab/unit/DEG> .
 
 h2kg:ITCQuantityGuidance_PlatinumToCarbonMassRatio a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Platinum-to-carbon mass ratio; the expert source reports [-]."@en ;
+    dcterms:description "Value-free QUDT guidance for Platinum-to-carbon mass ratio; the curated source reports [-]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
     qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
 
 h2kg:ITCQuantityGuidance_PoreRadiusAxisData a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Pore-radius axis data; the expert source reports [m]."@en ;
+    dcterms:description "Value-free QUDT guidance for Pore-radius axis data; the curated source reports [m]."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
     qudt:unit <http://qudt.org/vocab/unit/M> .
 
 h2kg:ITCQuantityGuidance_SurfaceTension a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Surface tension; the expert source reports [J/m^2]."@en ;
+    dcterms:description "Value-free QUDT guidance for Surface tension; the curated source reports [J/m^2]. Profile context: The ITC profile requires the surface tension of liquid water at 353 K for the capillary flooding calculation."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SurfaceTension> ;
     qudt:unit <http://qudt.org/vocab/unit/J-PER-M2> .
 
 h2kg:ITCQuantityGuidance_TotalPoreVolume a qudt:QuantityValue ;
-    dcterms:description "Value-free QUDT guidance for Total pore volume; the expert source reports [m^3/gC]. Values are normalized per unit carbon mass."@en ;
+    dcterms:description "Value-free QUDT guidance for Total pore volume; the curated source reports [m^3/gC]. Values are normalized per unit carbon mass. Profile context: For the ITC profile, this is the total primary- and secondary-pore volume of the ionomer-free platinum-on-carbon structure normalized per unit carbon mass."@en ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SpecificVolume> ;
     qudt:unit <http://qudt.org/vocab/unit/M3-PER-GM> .
@@ -11505,7 +11507,7 @@ h2kg:ITCTotalPoreVolumeInputField a h2kg:DataPoint ;
     skos:prefLabel "ITC Total pore volume input field"@en ;
     h2kg:ofProperty h2kg:TotalPoreVolume .
 
-h2kg:IdealHydrophilicIonomerContactAngle a h2kg:Parameter ;
+h2kg:IdealHydrophilicIonomerContactAngle a h2kg:Property ;
     rdfs:label "Ideal hydrophilic ionomer contact angle"@en ;
     dcterms:description "Limiting water contact angle of an ideally hydrophilic aligned ionomer surface used as the hydrophilic endpoint of the model wetting relation."@en ;
     dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHI" ;
@@ -11514,7 +11516,7 @@ h2kg:IdealHydrophilicIonomerContactAngle a h2kg:Parameter ;
     skos:prefLabel "Ideal hydrophilic ionomer contact angle"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_IdealHydrophilicIonomerContactAngle .
 
-h2kg:IdealHydrophobicIonomerContactAngle a h2kg:Parameter ;
+h2kg:IdealHydrophobicIonomerContactAngle a h2kg:Property ;
     rdfs:label "Ideal hydrophobic ionomer contact angle"@en ;
     dcterms:description "Limiting water contact angle of an ideally hydrophobic aligned ionomer surface used as the hydrophobic endpoint of the model wetting relation."@en ;
     dcterms:identifier "IO_MAT_IonomerContactAngles_thetaHO" ;
@@ -11590,7 +11592,7 @@ h2kg:InitialCatalyticActivityLossPercent a h2kg:Property ;
     skos:prefLabel "Initial Catalytic Activity Loss Percent"@en ;
     h2kg:hasQuantityValue <https://w3id.org/h2kg/hydrogen-ontology/legacy-source/InitialCatalyticActivityLossPercent_QV-c83cef9c91c3> .
 
-h2kg:InitialIonomerFilmThickness a h2kg:Parameter ;
+h2kg:InitialIonomerFilmThickness a h2kg:Property ;
     rdfs:label "Initial ionomer film thickness"@en ;
     dcterms:description "Limiting effective thickness of the ionomer film on the covered platinum-on-carbon surface as ionomer loading approaches zero, representing the characteristic thickness of the first deposited ionomer layer."@en ;
     dcterms:identifier "IO_MAT_IonomerInitialFilmThickness" ;
@@ -11801,7 +11803,7 @@ h2kg:IonomerAggregateDiameter a h2kg:Property ;
     skos:prefLabel "Ionomer Aggregate Diameter"@en ;
     h2kg:hasQuantityValue <https://w3id.org/h2kg/hydrogen-ontology/legacy-source/IonomerAggregateDiameter_QV-a26cf31be97d> .
 
-h2kg:IonomerCatalystDispersionParameter a h2kg:Parameter ;
+h2kg:IonomerCatalystDispersionParameter a h2kg:Property ;
     rdfs:label "Ionomer-catalyst dispersion parameter"@en ;
     dcterms:description "Parameter describing the tendency of ionomer to spread over the platinum-on-carbon surface rather than form larger ionomer aggregates."@en ;
     dcterms:identifier "IO_CMP_IonomerCatalystDispersionParameter" ;
@@ -12093,7 +12095,7 @@ h2kg:LimitingCurrentDensityLossPercentAfterADT a h2kg:Property ;
     skos:prefLabel "Limiting Current Density Loss Percent After ADT"@en ;
     h2kg:hasQuantityValue <https://w3id.org/h2kg/hydrogen-ontology/legacy-source/LimitingCurrentDensityLossPercentAfterADT_QV-48c339852cf0> .
 
-h2kg:LimitingIonomerAlignmentDegree a h2kg:Parameter ;
+h2kg:LimitingIonomerAlignmentDegree a h2kg:Property ;
     rdfs:label "Limiting ionomer alignment degree"@en ;
     dcterms:description "Limiting degree of ionomer molecular alignment in a thick film where the influence of the platinum-on-carbon surface is negligible."@en ;
     dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf" ;
@@ -13249,7 +13251,7 @@ h2kg:PlatinumDensity a h2kg:Property ;
 
 h2kg:PlatinumParticleRadius a h2kg:Property ;
     rdfs:label "Platinum particle radius"@en ;
-    dcterms:description "Radius of the hemispherical platinum nanoparticles used to determine platinum surface coverage in the model."@en ;
+    dcterms:description "Radius of a platinum catalyst particle used to characterize particle geometry."@en ;
     dcterms:identifier "IO_MAT_CatalystActiveParticleDiameter" ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     skos:altLabel "catalyst active particle radius"@en ;
@@ -13257,7 +13259,7 @@ h2kg:PlatinumParticleRadius a h2kg:Property ;
     skos:prefLabel "Platinum particle radius"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumParticleRadius .
 
-h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree a h2kg:Parameter ;
+h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree a h2kg:Property ;
     rdfs:label "Platinum-surface-induced ionomer alignment degree"@en ;
     dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface."@en ;
     dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt" ;
@@ -13276,7 +13278,7 @@ h2kg:PlatinumSurfaceWaterContactAngle a h2kg:Property ;
     skos:prefLabel "Platinum-surface water contact angle"@en ;
     h2kg:hasQuantityValue h2kg:ITCQuantityGuidance_PlatinumSurfaceWaterContactAngle .
 
-h2kg:PlatinumToCarbonMassRatio a h2kg:Parameter ;
+h2kg:PlatinumToCarbonMassRatio a h2kg:Property ;
     rdfs:label "Platinum-to-carbon mass ratio"@en ;
     dcterms:description "Mass ratio of platinum catalyst to carbon support in the catalyst layer."@en ;
     dcterms:identifier "IO_CMP_CatalystSupportRatio" ;
@@ -22843,7 +22845,7 @@ h2kg:TotalGasDiffusionResistance a h2kg:Property ;
 
 h2kg:TotalPoreVolume a h2kg:Property ;
     rdfs:label "Total pore volume"@en ;
-    dcterms:description "Total volume of primary and secondary pores in the ionomer-free platinum-on-carbon structure per unit mass of carbon."@en ;
+    dcterms:description "Total volume of void space within a specified material or structure."@en ;
     dcterms:identifier "IO_CMP_TotalPoreVolume" ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     skos:altLabel "ITC total pore volume"@en ;
@@ -23377,7 +23379,7 @@ h2kg:StirringTime a h2kg:Parameter ;
 
 h2kg:SurfaceTension a h2kg:Property ;
     rdfs:label "Surface tension"@en ;
-    dcterms:description "Surface tension of liquid water at 353 K used to determine capillary flooding behavior in catalyst-layer pores."@en ;
+    dcterms:description "Interfacial free energy per unit area associated with the surface of a liquid."@en ;
     dcterms:identifier "IO_CMP_SurfaceTensionOfWaterAtT353k" ;
     dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
     skos:altLabel "surface tension of water at 353 K"@en ;
@@ -24685,7 +24687,7 @@ h2kg:DwellTime a h2kg:Parameter ;
     skos:prefLabel "Dwell Time"@en ;
     h2kg:hasQuantityValue <https://w3id.org/h2kg/hydrogen-ontology/legacy-source/DwellTime_QV-0b953b308161> .
 
-h2kg:IonomerToCarbonRatio a h2kg:Parameter ;
+h2kg:IonomerToCarbonRatio a h2kg:Property ;
     rdfs:label "Ionomer-to-carbon ratio"@en ;
     dcterms:description "Mass ratio of dry ionomer to carbon support in the catalyst layer."@en ;
     dcterms:identifier "IO_CMP_ICRatio" ;

@@ -1,0 +1,71 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix h2kg-pemfc: <https://w3id.org/h2kg/pemfc/hydrogen-ontology#> .
+@prefix h2kg-pemwe: <https://w3id.org/h2kg/pemwe/hydrogen-ontology#> .
+@prefix holy: <http://purl.org/holy/ns#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix electrochemistry: <https://w3id.org/emmo/domain/electrochemistry#> .
+@prefix pemfc: <https://w3id.org/emmo/domain/pemfc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix oeo: <http://openenergy-platform.org/ontology/oeo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/profiles/itc/example/model-run-template>
+  a h2kg:InkToCompositionModel ;
+  skos:prefLabel "ITC model-run schema template"@en ;
+  dcterms:description "A non-observational schema example; it asserts no model result value."@en ;
+  h2kg:hasParameter <https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-parameter-record>, <https://w3id.org/h2kg/profiles/itc/example/surface-tension-parameter-record> .
+
+<https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template>
+  a h2kg:PtOnCarbonCatalyst .
+
+<https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template>
+  a h2kg:Water .
+
+<https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-parameter-record>
+  a h2kg:Parameter ;
+  h2kg:ofProperty <https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-occurrence> .
+
+<https://w3id.org/h2kg/profiles/itc/example/total-pore-volume-occurrence>
+  a h2kg:TotalPoreVolume ;
+  h2kg:isCharacteristicOf <https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template> ;
+  h2kg:normalizedTo <https://w3id.org/h2kg/profiles/itc/example/carbon-mass-normalization-basis> .
+
+<https://w3id.org/h2kg/profiles/itc/example/carbon-mass-normalization-basis>
+  a h2kg:CarbonMass ;
+  h2kg:isCharacteristicOf <https://w3id.org/h2kg/profiles/itc/example/pt-on-carbon-bearer-template> .
+
+<https://w3id.org/h2kg/profiles/itc/example/surface-tension-parameter-record>
+  a h2kg:Parameter ;
+  h2kg:ofProperty <https://w3id.org/h2kg/profiles/itc/example/surface-tension-occurrence> .
+
+<https://w3id.org/h2kg/profiles/itc/example/surface-tension-occurrence>
+  a h2kg:SurfaceTension ;
+  h2kg:isCharacteristicOf <https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template> ;
+  h2kg:hasMetadata <https://w3id.org/h2kg/profiles/itc/example/surface-tension-condition-metadata> .
+
+<https://w3id.org/h2kg/profiles/itc/example/water-temperature-occurrence>
+  a h2kg:Temperature ;
+  h2kg:isCharacteristicOf <https://w3id.org/h2kg/profiles/itc/example/water-bearer-at-353-k-template> ;
+  h2kg:hasQuantityValue <https://w3id.org/h2kg/profiles/itc/example/water-temperature-353-k> .
+
+<https://w3id.org/h2kg/profiles/itc/example/water-temperature-353-k>
+  a qudt:QuantityValue ;
+  qudt:numericValue "353"^^xsd:decimal ;
+  qudt:unit unit:K ;
+  qudt:quantityKind quantitykind:ThermodynamicTemperature .
+
+<https://w3id.org/h2kg/profiles/itc/example/surface-tension-condition-metadata>
+  a h2kg:Metadata ;
+  dcterms:description "The ITC profile uses the surface tension of the represented water bearer at 353 K; this is a profile condition, not a model output."@en ;
+  dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> .

@@ -12,6 +12,7 @@ from .decode_workflows import build_decode_workflow_release
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .afm_pilot import build_afm_pilot_package
+from .application_evaluation import build_application_evaluation
 from .fib_sem_pilot import build_fib_sem_pilot_package
 from .hdo import load_hdo_alignment_report
 from .ic_sem_pilot import build_ic_sem_pilot_package
@@ -59,7 +60,7 @@ def run_release(
     # independently executed reasoner/QC manifest.
     for folder in (
         "mappings", "reports", "examples", "method_profiles",
-        "benchmarks", "decode", "w3id", "release_bundle",
+        "benchmarks", "decode", "evaluation", "w3id", "release_bundle",
     ):
         path = output_root / folder
         if path.exists():
@@ -77,6 +78,13 @@ def run_release(
     ensure_dir(output_root / "odk")
     if rewrite:
         normalize_source_document(input_path, reports_dir, write_in_place=True)
+    else:
+        normalize_source_document(
+            input_path,
+            reports_dir,
+            write_in_place=False,
+            emit_normalized_document=False,
+        )
     inspection = inspect_ontology(input_path, reports_dir, project_root / "config")
     split_summary = split_ontology(input_path, ontology_dir, project_root / "config")
     mappings = propose_mappings(input_path, review_dir, project_root / "config")
@@ -147,6 +155,11 @@ def run_release(
             project_root / "config",
             auto_harmonization_override=json.loads(generated_harmonization.read_text(encoding="utf-8")),
         )
+    application_evaluation = build_application_evaluation(
+        output_root,
+        project_root / "input" / "itc_curated_interface.json",
+        project_root / "input" / "tib_collection_candidate_cache.json",
+    )
     # Preserve an already-executed actual ODK manifest so the website and
     # release bundle continue to show the real ODK command history, version,
     # and QC state. Fall back to collect-only when the actual manifest has not
@@ -199,6 +212,7 @@ def run_release(
         "decode_workflows": decode_workflows,
         "tib_benchmark": tib_benchmark,
         "tib_collection_benchmark": tib_collection_benchmark,
+        "application_evaluation": application_evaluation,
         "fair": fair,
         "odk": odk,
         "docs": docs,
@@ -216,7 +230,7 @@ def build_release_bundle(project_root: str | Path) -> Path:
     if bundle_dir.exists():
         shutil.rmtree(bundle_dir)
     ensure_dir(bundle_dir)
-    for folder in ["ontology", "mappings", "reports", "examples", "method_profiles", "benchmarks", "decode", "docs", "w3id", "odk"]:
+    for folder in ["ontology", "mappings", "reports", "examples", "method_profiles", "benchmarks", "decode", "evaluation", "docs", "w3id", "odk"]:
         source = project_root / "output" / folder
         target = bundle_dir / folder
         if target.exists():

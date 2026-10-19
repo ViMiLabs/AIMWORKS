@@ -16,5 +16,53 @@ h2kg:InkToCompositionModelParameterRecordShape a sh:NodeShape ;
   sh:class h2kg:Parameter ;
   sh:property [
     sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ;
-    sh:node [ sh:or ( [ sh:class h2kg:PlatinumToCarbonMassRatio ] [ sh:class h2kg:IonomerToCarbonRatio ] [ sh:class h2kg:IonomerCatalystDispersionParameter ] [ sh:class h2kg:CCLPrimaryPoreVolumeFraction ] [ sh:class h2kg:CCLSecondaryPoreVolumeFraction ] [ sh:class h2kg:CCLPrimaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLSecondaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CarbonSupportInducedIonomerAlignmentDegree ] [ sh:class h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree ] [ sh:class h2kg:LimitingIonomerAlignmentDegree ] [ sh:class h2kg:IdealHydrophilicIonomerContactAngle ] [ sh:class h2kg:IdealHydrophobicIonomerContactAngle ] [ sh:class h2kg:InitialIonomerFilmThickness ] [ sh:class h2kg:EquivalentIonomerPatchRadius ] ) ]
+    sh:node [ sh:or ( [ sh:class h2kg:PlatinumToCarbonMassRatio ] [ sh:class h2kg:IonomerToCarbonRatio ] [ sh:class h2kg:IonomerCatalystDispersionParameter ] [ sh:class h2kg:CCLPrimaryPoreVolumeFraction ] [ sh:class h2kg:CCLSecondaryPoreVolumeFraction ] [ sh:class h2kg:CCLPrimaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLSecondaryPoreRadiusGeometricMean ] [ sh:class h2kg:CCLPrimaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CCLSecondaryPoreRadiusLogarithmicStandardDeviation ] [ sh:class h2kg:CarbonSupportInducedIonomerAlignmentDegree ] [ sh:class h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree ] [ sh:class h2kg:LimitingIonomerAlignmentDegree ] [ sh:class h2kg:IdealHydrophilicIonomerContactAngle ] [ sh:class h2kg:IdealHydrophobicIonomerContactAngle ] [ sh:class h2kg:InitialIonomerFilmThickness ] [ sh:class h2kg:EquivalentIonomerPatchRadius ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:PFSAIonomer ] ] ) ]
   ] .
+
+h2kg:InkToCompositionModelInputDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:InkToCompositionModelInputDataset ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:TotalPoreVolume ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:PtOnCarbonCatalyst ] ; sh:property [ sh:path h2kg:normalizedTo ; sh:minCount 1 ; sh:class h2kg:CarbonMass ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CarbonSupportWaterContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:PlatinumSurfaceWaterContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:PlatinumParticleRadius ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:PtOnCarbonCatalyst ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:SurfaceTension ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:Water ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:DryIonomerDensity ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:PlatinumDensity ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CarbonDensity ] ] ] ] ;
+  .
+
+h2kg:InkToCompositionModelScalarResultDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:InkToCompositionModelScalarResultDataset ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLAccessiblePrimaryPoreVolumeFraction ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLAccessibleSecondaryPoreVolumeFraction ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLEffectiveIonomerCoverage ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:EquivalentIonomerFilmThickness ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLPrimaryPoreSpecificSurfaceArea ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:CathodeCatalystLayer ] ; sh:property [ sh:path h2kg:normalizedTo ; sh:minCount 1 ; sh:class h2kg:CarbonMass ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLSecondaryPoreSpecificSurfaceArea ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:CathodeCatalystLayer ] ; sh:property [ sh:path h2kg:normalizedTo ; sh:minCount 1 ; sh:class h2kg:CarbonMass ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLTotalPoreSpecificSurfaceArea ; sh:property [ sh:path h2kg:isCharacteristicOf ; sh:minCount 1 ; sh:class h2kg:CathodeCatalystLayer ] ; sh:property [ sh:path h2kg:normalizedTo ; sh:minCount 1 ; sh:class h2kg:CarbonMass ] ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLIonomerAlignmentDegree ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:PlatinumCarbonPoreWallContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:IonomerCoatedPoreWallContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLMeanContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLHydrophilicPoreMeanContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLHydrophobicPoreMeanContactAngle ] ] ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:DataPoint ; sh:property [ sh:path h2kg:ofProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:node [ sh:class h2kg:CCLSecondaryPoreHydrophobicVolumeFraction ] ] ] ] ;
+  .
+
+h2kg:CCLWaterRetentionCurveDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:CCLWaterRetentionCurveDataset ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CapillaryPressureAxisData ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLWaterSaturationData ] ] ;
+  .
+
+h2kg:CCLRefinedPoreSizeDistributionDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:CCLRefinedPoreSizeDistributionDataset ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:PoreRadiusAxisData ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLRefinedPoreSizeDistributionData ] ] ;
+  .
+
+h2kg:CCLContactAngleDistributionDatasetShape a sh:NodeShape ;
+  sh:targetClass h2kg:CCLContactAngleDistributionDataset ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:ContactAngleCosineAxisData ] ] ;
+  sh:property [ sh:path h2kg:hasPart ; sh:qualifiedMinCount 1 ; sh:qualifiedValueShape [ sh:class h2kg:CCLContactAngleDistributionData ] ] ;
+  .
