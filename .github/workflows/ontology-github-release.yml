@@ -82,12 +82,18 @@ jobs:
               shutil.rmtree(assets)
           assets.mkdir(parents=True, exist_ok=True)
 
-          shutil.make_archive(str(assets / f"h2kg-publication-site-{version}"), "zip", root_dir=root / "output" / "publication")
+          site_root = root / "output" / "docs"
+          if not site_root.exists():
+              site_root = root / "output" / "publication"
+          if not site_root.exists():
+              raise FileNotFoundError("Generated documentation site is missing from output/docs and output/publication")
+
+          shutil.make_archive(str(assets / f"h2kg-publication-site-{version}"), "zip", root_dir=site_root)
           shutil.make_archive(str(assets / f"h2kg-release-bundle-{version}"), "zip", root_dir=root / "output" / "release_bundle")
 
           copied = []
           for slug in ("pemfc", "pemwe"):
-              publication_root = root / "output" / "publication" / slug
+              publication_root = site_root / slug
               release_files = [
                   ("source/asserted.ttl", f"h2kg-{slug}-asserted-{version}.ttl"),
                   ("source/asserted.jsonld", f"h2kg-{slug}-asserted-{version}.jsonld"),
