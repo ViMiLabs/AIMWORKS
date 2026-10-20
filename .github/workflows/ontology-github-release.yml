@@ -48,7 +48,10 @@ jobs:
           import yaml
           from pathlib import Path
           cfg = yaml.safe_load(Path("config/release_profile.yaml").read_text(encoding="utf-8"))
-          print(cfg["release"]["version"])
+          version = cfg.get("project", {}).get("version") or cfg.get("release", {}).get("version")
+          if not version:
+              raise KeyError("Ontology version is missing from project.version and release.version")
+          print(version)
           PY
           )
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
