@@ -311,12 +311,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "atr_ftir_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "dft-onto-idealized-surfaces::n14",
@@ -868,8 +868,8 @@
       "label": "In Situ Fourier Transformed IR in ATR configuration",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1925,6 +1925,21 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::dft-onto-idealized-surfaces::e17::bd83c3e969",
+      "workflow_id": "dft-onto-idealized-surfaces",
+      "source": "dft-onto-idealized-surfaces::n13",
+      "target": "dft-onto-idealized-surfaces::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "label": "hasOutputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "dft-onto-idealized-surfaces::e17",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "evidence": "Activity produces the target material.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::dft-onto-idealized-surfaces::e18::0cb5b29a4f",
       "workflow_id": "dft-onto-idealized-surfaces",
       "source": "dft-onto-idealized-surfaces::n14",
@@ -2623,8 +2638,8 @@
       "source_node_id": "n13",
       "source_graphml_id": "n13",
       "source_label": "In Situ Fourier Transformed IR in ATR configuration",
-      "source_semantic_role": "Parameter",
-      "source_workflow_role": "Parameter",
+      "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method",
       "target_occurrence_id": "dft-onto-idealized-surfaces::n2",
       "target_node_id": "n2",
@@ -2634,14 +2649,16 @@
       "target_workflow_role": "Matter",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/adsorbate-types-on-electrode-idealized-lre",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputMaterial",
+      "semantic_edge_ids": [
+        "semantic::dft-onto-idealized-surfaces::e17::bd83c3e969"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity produces the target material."
     },
     {
       "source_dependency_id": "dft-onto-idealized-surfaces::e18",

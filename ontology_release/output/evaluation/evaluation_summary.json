@@ -1,50 +1,55 @@
 {
   "status": "passed",
-  "schema_version": "h2kg-application-evaluation/v2",
-  "generated_at": "2026-10-19T20:39:49+00:00",
+  "schema_version": "h2kg-application-evaluation/v3",
+  "generated_at": "2026-10-20T11:59:53+00:00",
   "coverage": {
     "canonical_source_concepts": 573,
-    "public_h2kg_outcomes": 35,
-    "decode_local_outcomes": 538,
-    "public_h2kg_percent": 6.11,
-    "decode_local_percent": 93.89,
+    "public_h2kg_outcomes": 29,
+    "decode_local_outcomes": 544,
+    "public_h2kg_percent": 5.06,
+    "decode_local_percent": 94.94,
     "reason_counts": {
       "contextualized_or_derived_concept": 37,
-      "domain_concept_without_asserted_public_h2kg_term": 456,
-      "public_h2kg_outcome": 35,
+      "domain_concept_without_asserted_public_h2kg_term": 462,
+      "public_h2kg_outcome": 29,
       "workflow_specific_activity": 45
     },
     "interpretation": "Coverage is counted over canonical source concepts. DECODE-local does not mean scientifically invalid; it means no public H2KG identity is asserted in this release."
   },
   "itc_decode_crosswalk": {
     "itc_field_count": 44,
-    "fields_overlapping_source_concept_registry": 11,
-    "profile_overlay_only_fields": 33,
-    "source_occurrences_covered_by_overlapping_fields": 43,
-    "denominator_note": "The 573 denominator contains canonical concepts derived from source workflow occurrences. The 44 ITC fields are a public profile vocabulary; fields absent from source occurrences are not members of that denominator."
+    "fields_with_concept_wide_source_alignment": 6,
+    "fields_without_concept_wide_alignment": 38,
+    "fields_with_occurrence_specific_source_alignment": 5,
+    "fields_without_source_occurrence": 33,
+    "source_occurrences_covered_by_concept_wide_fields": 14,
+    "source_occurrences_covered_by_occurrence_specific_fields": 5,
+    "source_occurrences_covered_total": 19,
+    "denominator_note": "The 573 denominator contains canonical concepts derived from source workflow occurrences. 6 ITC fields have concept-wide source alignments, 5 have source-backed occurrence-specific alignments and therefore remain outside the concept-wide numerator, and 33 have no source occurrence in this corpus."
   },
   "retrieval": {
+    "evaluation_kind": "competency_demonstrations_not_search_performance_evaluation",
     "task_count": 4,
-    "result_row_count": 77,
-    "rq1_semantic_result_count": 26,
-    "rq1_semantic_workflow_count": 14,
-    "rq1_exact_label_result_count": 19,
-    "rq1_exact_label_workflow_count": 11,
-    "rq1_semantic_only_result_count": 7,
-    "rq1_semantic_only_reviewed_relevant_count": 7,
-    "rq1_omission_candidate_count": 58,
-    "rq1_omission_pool_exhaustive": false,
-    "rq1_baseline_normalization": "case-fold; replace non-alphanumeric characters with spaces; collapse whitespace; exact equality against preferred, source, or alternate ITC labels",
-    "rq2_semantic_result_count": 2,
+    "result_row_count": 50,
+    "rq1_target_input_concept_count": 24,
+    "rq1_common_population_output_occurrence_count": 917,
+    "rq1_semantic_result_count": 3,
+    "rq1_semantic_workflow_count": 1,
+    "rq1_exact_label_result_count": 15,
+    "rq1_exact_label_workflow_count": 9,
+    "rq1_semantic_only_result_count": 1,
+    "rq1_label_only_result_count": 13,
+    "rq1_baseline_normalization": "case-fold; replace non-alphanumeric characters with spaces; collapse whitespace; exact equality against preferred, source, or accepted alternate labels",
+    "rq1_relevance_assessment_status": "not_independently_labelled",
+    "rq1_precision_recall_claimed": false,
+    "rq2_typed_array_result_count": 2,
     "rq2_profile_count": 1,
-    "rq2_label_baseline_result_count": 24,
-    "rq2_reviewed_scalar_exclusion_count": 22,
+    "rq2_label_candidate_count": 24,
+    "rq2_scalar_candidate_count": 22,
+    "rq2_scalar_candidate_interpretation": "lexical candidates excluded by the typed array query; not established false positives",
     "rq3_carbon_normalized_field_count": 4,
-    "rq3_interpretation": "encoded retrieval capability; no precision or recall estimate",
     "rq4_accepted_handoff_count": 1,
     "rq4_rejected_lexical_connection_count": 1,
-    "reviewed_result_count": 135,
-    "evaluation_status": "completed_with_independent_application_level_labels",
     "independent_precision_recall_claimed": false
   },
   "benchmark_diagnostic": {
@@ -76,77 +81,42 @@
       "reason": "The task matrix uses frozen full RDF graphs and reports native and imported evidence separately from TIB collection percentages."
     }
   },
-  "semantic_assessment": {
+  "automated_consistency": {
     "status": "complete",
-    "assessment_count": 5486,
-    "reviewer_count": 2,
+    "check_count": 5486,
+    "check_kind": "automated_registry_consistency_not_independent_semantic_assessment",
     "strata": [
       {
-        "review_stratum": "itc_field",
-        "item_count": 44,
-        "accepted_count": 7,
-        "accepted_after_correction_count": 37,
-        "rejected_count": 0,
-        "unresolved_count": 0,
-        "recorded_disagreement_count": null,
-        "adjudicated_count": null,
-        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+        "check_stratum": "itc_field",
+        "item_count": 44
       },
       {
-        "review_stratum": "decode_concept",
-        "item_count": 573,
-        "accepted_count": 573,
-        "accepted_after_correction_count": 0,
-        "rejected_count": 0,
-        "unresolved_count": 0,
-        "recorded_disagreement_count": null,
-        "adjudicated_count": null,
-        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+        "check_stratum": "decode_concept",
+        "item_count": 573
       },
       {
-        "review_stratum": "decode_edge",
-        "item_count": 4463,
-        "accepted_count": 4463,
-        "accepted_after_correction_count": 0,
-        "rejected_count": 0,
-        "unresolved_count": 0,
-        "recorded_disagreement_count": null,
-        "adjudicated_count": null,
-        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+        "check_stratum": "decode_edge",
+        "item_count": 4463
       },
       {
-        "review_stratum": "h2kg_taxonomy_sample",
-        "item_count": 150,
-        "accepted_count": 149,
-        "accepted_after_correction_count": 1,
-        "rejected_count": 0,
-        "unresolved_count": 0,
-        "recorded_disagreement_count": null,
-        "adjudicated_count": null,
-        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+        "check_stratum": "h2kg_taxonomy_sample",
+        "item_count": 150
       },
       {
-        "review_stratum": "asserted_external_mapping",
-        "item_count": 256,
-        "accepted_count": 256,
-        "accepted_after_correction_count": 0,
-        "rejected_count": 0,
-        "unresolved_count": 0,
-        "recorded_disagreement_count": null,
-        "adjudicated_count": null,
-        "disagreement_reporting_note": "Historical disagreement and adjudication states were not present in the retained source evidence and are not reported as zero."
+        "check_stratum": "asserted_external_mapping",
+        "item_count": 256
       }
     ],
-    "accepted_count": 5448,
-    "accepted_after_correction_count": 38,
-    "rejected_count": 0,
-    "unresolved_count": 0,
-    "recorded_disagreement_count": null,
-    "adjudicated_count": null,
-    "publication_interpretation": "Acceptance of a DECODE-local item confirms its application-level identity or semantic role; it does not promote the item into H2KG."
+    "interpretation": "These checks confirm registry presence, structural completeness, and traceability. They do not constitute independent scientific acceptance."
+  },
+  "independent_application_audit": {
+    "status": "review_pending",
+    "review_item_count": 134,
+    "reviewer_count_required": 2,
+    "publication_gate": "blocked_until_authentic_reviews_and_adjudication_are_imported"
   },
   "comparator_evaluation": {
-    "status": "complete",
+    "status": "author_curated_assessment_complete",
     "resource_count": 4,
     "task_count": 5,
     "assessment_count": 20,
@@ -173,28 +143,28 @@
       }
     },
     "aggregate_score_reported": false,
-    "method_note": "Native and imported evidence are reported separately; outcomes are not combined into a superiority score."
+    "method_note": "Capability outcomes are author-curated judgments. Automation verifies RDF parsing and presence of cited IRIs only; it does not execute the representation tasks or establish ontology superiority."
   },
-  "independent_semantic_audit_status": "complete",
-  "independent_judgments_completed": 5486,
+  "independent_semantic_audit_status": "review_pending",
+  "independent_judgments_completed": 0,
   "files": [
-    "output\\evaluation\\decode_public_coverage.csv",
-    "output\\evaluation\\decode_public_coverage.json",
-    "output\\evaluation\\itc_decode_population_crosswalk.csv",
-    "output\\evaluation\\itc_decode_population_crosswalk.json",
-    "output\\evaluation\\retrieval_tasks.csv",
-    "output\\evaluation\\retrieval_results.csv",
-    "output\\evaluation\\retrieval_review_registry.csv",
-    "output\\evaluation\\retrieval_evaluation.json",
-    "output\\evaluation\\tib_resource_diagnostic.csv",
-    "output\\evaluation\\tib_resource_diagnostic.json",
-    "output\\evaluation\\semantic_assessment_registry.csv",
-    "output\\evaluation\\semantic_assessment_registry.json",
-    "output\\evaluation\\semantic_assessment_summary.md",
-    "output\\evaluation\\comparator_matrix.csv",
-    "output\\evaluation\\comparator_matrix.json",
-    "output\\evaluation\\comparator_matrix.md",
-    "output\\evaluation\\semantic_assessment_registry.xlsx",
-    "output\\evaluation\\focused_comparator_matrix.xlsx"
+    "ontology_release\\output\\evaluation\\decode_public_coverage.csv",
+    "ontology_release\\output\\evaluation\\decode_public_coverage.json",
+    "ontology_release\\output\\evaluation\\itc_decode_population_crosswalk.csv",
+    "ontology_release\\output\\evaluation\\itc_decode_population_crosswalk.json",
+    "ontology_release\\output\\evaluation\\retrieval_tasks.csv",
+    "ontology_release\\output\\evaluation\\retrieval_results.csv",
+    "ontology_release\\output\\evaluation\\retrieval_candidate_inventory.csv",
+    "ontology_release\\output\\evaluation\\retrieval_evaluation.json",
+    "ontology_release\\output\\evaluation\\tib_resource_diagnostic.csv",
+    "ontology_release\\output\\evaluation\\tib_resource_diagnostic.json",
+    "ontology_release\\output\\evaluation\\automated_consistency_inventory.csv",
+    "ontology_release\\output\\evaluation\\automated_consistency_inventory.json",
+    "ontology_release\\output\\evaluation\\automated_consistency_summary.md",
+    "ontology_release\\output\\evaluation\\comparator_matrix.csv",
+    "ontology_release\\output\\evaluation\\comparator_matrix.json",
+    "ontology_release\\output\\evaluation\\comparator_matrix.md",
+    "ontology_release\\output\\evaluation\\automated_consistency_inventory.xlsx",
+    "ontology_release\\output\\evaluation\\focused_comparator_matrix.xlsx"
   ]
 }

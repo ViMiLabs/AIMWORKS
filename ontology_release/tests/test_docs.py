@@ -22,6 +22,12 @@ def test_docs_generation(mini_ontology_file, output_dir):
     legacy_js = output_dir / "docs" / "pemfc" / "assets" / "visuals.js"
     legacy_js.parent.mkdir(parents=True)
     legacy_js.write_text('if (iri.startsWith("file:///")) return false;', encoding="utf-8")
+    evaluation_source = output_dir / "evaluation"
+    evaluation_source.mkdir()
+    (evaluation_source / "automated_consistency_summary.md").write_text("current", encoding="utf-8")
+    stale_evaluation = output_dir / "docs" / "evaluation" / "semantic_assessment_summary.md"
+    stale_evaluation.parent.mkdir(parents=True)
+    stale_evaluation.write_text("obsolete generated review claim", encoding="utf-8")
     fair_snapshot = {
         "generated_at": "2026-04-13T10:00:00+00:00",
         "findable": 78,
@@ -58,6 +64,8 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "assets" / "explorer.css").exists()
     assert (output_dir / "docs" / "assets" / "explorer.js").exists()
     assert (output_dir / "docs" / "source" / "h2kg-asserted-source.jsonld").exists()
+    assert (output_dir / "docs" / "evaluation" / "automated_consistency_summary.md").exists()
+    assert not stale_evaluation.exists()
     assert (output_dir / "docs" / "pages" / "explore.html").exists()
     assert (output_dir / "docs" / "pages" / "reference.html").exists()
     assert (output_dir / "docs" / "pages" / "core-reference.html").exists()

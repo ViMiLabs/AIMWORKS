@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-10-19",
+  "generated_on": "2026-10-20",
   "ontology_iri": "https://w3id.org/h2kg/decode/ontology",
   "definition_status": "decode-local",
   "definition_seed_sha256": "1655e3c3724b1318607a16f977aa8cef8408500805f956a68f4ccc4466e9c838",
   "counts": {
-    "active_decode_class_count": 642,
-    "classes_with_source_definition": 490,
+    "active_decode_class_count": 648,
+    "classes_with_source_definition": 496,
     "classes_without_source_definition": 152,
-    "source_role_conflict_count": 31
+    "source_role_conflict_count": 43
   },
   "definitions": [
     {
@@ -285,13 +285,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/additional-measurements-on-pewe-during-operation-method",
       "preferred_label": "Additional measurements on PEWE during operation",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing additional measurements on PEWE during operation, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Measurement",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "definition": "A measurement procedure used in DECODE workflows to characterize additional measurements on PEWE during operation under specified experimental conditions.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"Additional measurements on PEWE during operation\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "additional-measurements-on-pewe-during-operation"
@@ -720,6 +720,34 @@
       ]
     },
     {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "preferred_label": "Catalyst active particle density",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing catalyst active particle density for a material, component, interface, or electrochemical system.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Property",
+      "source_role_compatible": true,
+      "source_definition": "A measurable, calculated, or derived scientific characteristic denoted \"Catalyst active particle density\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [],
+      "source_labels": []
+    },
+    {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "preferred_label": "Catalyst active particle diameter",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing catalyst active particle diameter for a material, component, interface, or electrochemical system.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Matter",
+      "source_role_compatible": false,
+      "source_definition": "A material, component, chemical species, phase, specimen, or assembly denoted \"Catalyst active particle diameter\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [],
+      "source_labels": []
+    },
+    {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material",
       "preferred_label": "Catalyst active particle radius distribution",
       "semantic_role": "Property",
@@ -1074,6 +1102,20 @@
       "source_labels": [
         "Catalyst surface tension"
       ]
+    },
+    {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "preferred_label": "Catalyst-support ratio",
+      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "definition": "A specified input or operating parameter representing catalyst-support ratio, used to configure, constrain, or report a process, measurement, or computational model.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Parameter",
+      "source_role_compatible": true,
+      "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"Catalyst-support ratio\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [],
+      "source_labels": []
     },
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalysts-for-molecular-probe-synthesis-material",
@@ -1456,13 +1498,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-effective-mass-activity-component",
       "preferred_label": "CCL effective mass activity",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing cCL effective mass activity, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing cCL effective mass activity for a material, component, interface, or electrochemical system.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"CCL effective mass activity\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "iet-1d-performance-model-for-mea-prediction"
@@ -1761,6 +1803,20 @@
       "source_labels": [
         "CCL ionomer distribution statistics"
       ]
+    },
+    {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-effective-film-thickness-component",
+      "preferred_label": "CCL ionomer effective film thickness",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing cCL ionomer effective film thickness for a material, component, interface, or electrochemical system.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Property",
+      "source_role_compatible": true,
+      "source_definition": "A measurable, calculated, or derived scientific characteristic denoted \"CCL ionomer effective film thickness\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [],
+      "source_labels": []
     },
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-ionomer-saturation-component",
@@ -2352,13 +2408,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccm-area-component",
       "preferred_label": "CCM area",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing cCM area, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing cCM area for a material, component, interface, or electrochemical system.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"CCM area\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement",
@@ -3817,13 +3873,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "preferred_label": "CT-based capillary pressure saturation curves",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing cT-based capillary pressure saturation curves, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Measurement",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "definition": "A measurement procedure used in DECODE workflows to characterize cT-based capillary pressure saturation curves under specified experimental conditions.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"CT-based capillary pressure saturation curves\" in DECODE hydrogen-electrochemistry workflows. Source context: 0-200 mbar 0-200 mbar",
       "workflow_ids": [
         "cea-mea-model-europium-2d",
@@ -3841,13 +3897,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "preferred_label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing current modulated hydrogen flow-rate spectroscopy (CH2S), used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Measurement",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "definition": "A measurement procedure used in DECODE workflows to characterize current modulated hydrogen flow-rate spectroscopy (CH2S) under specified experimental conditions.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"Current modulated hydrogen flow-rate spectroscopy (CH2S)\" in DECODE hydrogen-electrochemistry workflows. Source context: Mixtures possible: H2O/H2/N2 Liquid water not possibleFrequency range available 100 Hz - 0.01 Hz (at present)",
       "workflow_ids": [
         "cea-mea-model-europium-2d",
@@ -3975,13 +4031,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "preferred_label": "Determination of CL saturation by SAXS/SANS",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing determination of CL saturation by SAXS/SANS, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Measurement",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "definition": "A measurement procedure that applies determination of CL saturation by SAXS/SANS to acquire or derive observations about hydrogen-electrochemical materials, components, or operating cells.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"Determination of CL saturation by SAXS/SANS\" in DECODE hydrogen-electrochemistry workflows. Source context: only valid for pore diameter range convered by scattering angle range - pores beyond +/- 100nm will not be covered at SLS/cSAXS(the smaller the smallest angle, the larger the covered pores)",
       "workflow_ids": [
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm",
@@ -4002,13 +4058,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement-method",
       "preferred_label": "Development of a zero gap cell for GDE based spectrocopy measurement",
-      "semantic_role": "Manufacturing",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
-      "definition": "A manufacturing or specimen-preparation process that performs development of a zero gap cell for GDE based spectrocopy measurement to produce or condition a material, electrode, membrane-electrode assembly, or test specimen.",
+      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "definition": "A workflow process that performs development of a zero gap cell for GDE based spectrocopy measurement as part of material preparation, data transformation, analysis, or model execution.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Manufacturing",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A fabrication, preparation, deposition, assembly, or conditioning operation denoted \"Development of a zero gap cell for GDE based spectrocopy measurement\" in DECODE hydrogen-electrochemistry workflows. Source context: XAS, EXAFS atomic level resolution, bulk technique, XRD micro to milimeter resolution, bulk technique",
       "workflow_ids": [
         "blade-coating-and-decal-transfer-for-ref-pefc-ccm",
@@ -5929,13 +5985,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-breakthrough-pressure-component",
       "preferred_label": "GDL substrate breakthrough pressure",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing gDL substrate breakthrough pressure, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing gDL substrate breakthrough pressure for a material, component, interface, or electrochemical system.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"GDL substrate breakthrough pressure\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "lab-ct-measurements-on-gdl-or-mpl-materials",
@@ -7341,13 +7397,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method",
       "preferred_label": "In Situ Fourier Transformed IR in ATR configuration",
-      "semantic_role": "Parameter",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "definition": "A specified input or operating parameter representing in Situ Fourier Transformed IR in ATR configuration, used to configure, constrain, or report a process, measurement, or computational model.",
+      "semantic_role": "Measurement",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "definition": "A measurement procedure used in DECODE workflows to characterize in Situ Fourier Transformed IR in ATR configuration under specified experimental conditions.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Parameter",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A specified, controlled, reported, or model-input condition or quantity denoted \"In Situ Fourier Transformed IR in ATR configuration\" in DECODE hydrogen-electrochemistry workflows. Source context: pH from ~1 to ~13, but more robust in the acidic region due to better established tools.",
       "workflow_ids": [
         "dft-onto-idealized-surfaces",
@@ -7567,6 +7623,20 @@
       "source_labels": [
         "Ionomer contact angles"
       ]
+    },
+    {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "preferred_label": "Ionomer density (dry)",
+      "semantic_role": "Property",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "definition": "A measurable, calculated, or derived property representing ionomer density (dry) for a material, component, interface, or electrochemical system.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Property",
+      "source_role_compatible": true,
+      "source_definition": "A measurable, calculated, or derived scientific characteristic denoted \"Ionomer density (dry)\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [],
+      "source_labels": []
     },
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-gas-diffusivities-component",
@@ -8389,6 +8459,30 @@
       ],
       "source_labels": [
         "Mechanical properties of catalyst layers, GDLs, and MEAs by small-punch and nanoindentation"
+      ]
+    },
+    {
+      "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
+      "preferred_label": "Membrane",
+      "semantic_role": "Matter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "definition": "A material entity, specimen, component, or assembly characterized as membrane and used or produced in a hydrogen-technology workflow.",
+      "definition_status": "decode-local",
+      "source_definition_status": "source-definition",
+      "source_supplied_role": "Matter",
+      "source_role_compatible": true,
+      "source_definition": "A material, component, chemical species, phase, specimen, or assembly denoted \"Membrane\" in DECODE hydrogen-electrochemistry workflows.",
+      "workflow_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm",
+        "electrospray-deposition-of-catalyst-layers",
+        "gde-cell-for-electrochemical-studies",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test",
+        "manual-nel-exp-large-scale-durability-test",
+        "manual-nel-exp-pewe-single-cell-benchtop-test",
+        "ultrasonic-spray-deposition-for-catalytic-layers"
+      ],
+      "source_labels": [
+        "Membrane"
       ]
     },
     {
@@ -10505,13 +10599,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "preferred_label": "RDE electrochemical protocol",
-      "semantic_role": "Process",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "definition": "A workflow process that performs rDE electrochemical protocol as part of material preparation, data transformation, analysis, or model execution.",
+      "semantic_role": "Metadata",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "definition": "Contextual metadata describing rDE electrochemical protocol and retained to support interpretation and provenance of a DECODE workflow record.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Process",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A computational, analytical, transformation, or generic workflow process denoted \"RDE electrochemical protocol\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "fitting-version-of-the-hierachical-model",
@@ -10858,13 +10952,13 @@
     {
       "anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/reaction-mechanisms-orr-lre",
       "preferred_label": "Reaction mechanisms (ORR)",
-      "semantic_role": "Process",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "definition": "A workflow process that performs reaction mechanisms (ORR) as part of material preparation, data transformation, analysis, or model execution.",
+      "semantic_role": "Data",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "definition": "A data artifact recording reaction mechanisms (ORR) as an input, intermediate result, or output of a hydrogen-technology workflow.",
       "definition_status": "decode-local",
       "source_definition_status": "source-definition",
       "source_supplied_role": "Process",
-      "source_role_compatible": true,
+      "source_role_compatible": false,
       "source_definition": "A computational, analytical, transformation, or generic workflow process denoted \"Reaction mechanisms (ORR)\" in DECODE hydrogen-electrochemistry workflows.",
       "workflow_ids": [
         "fitting-version-of-the-hierachical-model",

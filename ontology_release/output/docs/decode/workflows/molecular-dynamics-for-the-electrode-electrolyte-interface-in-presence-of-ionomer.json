@@ -21,7 +21,7 @@
     "source_node_count": 23,
     "source_edge_count": 22,
     "mapped_anchor_count": 22,
-    "cross_workflow_connection_count": 126
+    "cross_workflow_connection_count": 124
   },
   "nodes": [
     {
@@ -53,30 +53,18 @@
       "native_category": "material",
       "description": "Ionomer density (dry)\ninternal key: Ionomer density (dry): material",
       "shape": "ellipse",
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
-        "anchor_label": "Dry ionomer density",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_IonomerDensityDry."
-      },
       "kind": "occurrence",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "visual_category": "material",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_IonomerDensityDry.",
-      "workflow_role": "Property",
-      "intrinsic_semantic_role": "Property"
+      "role_assignment": "physical_or_derived_property",
+      "confidence": "decode_local",
+      "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n2",
@@ -556,7 +544,7 @@
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "source_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1",
       "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer/node/n1",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -772,24 +760,6 @@
       ]
     },
     {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
-      "kind": "anchor",
-      "label": "Dry ionomer density",
-      "state": "approved_h2kg",
-      "decision": "new_h2kg_term",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "curated_pdf_schema",
-      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_IonomerDensityDry; no public H2KG synonym has been asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n5",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
-        "iet-ink-to-composition-model::n2",
-        "iet-multiscale-model-interface::variable::IO_MAT_IonomerDensityDry",
-        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1"
-      ]
-    },
-    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/electrode-chemistry-material",
       "kind": "anchor",
       "label": "Electrode chemistry",
@@ -902,6 +872,22 @@
         "in-situ-fourier-transformed-ir-in-atr-configuration::n10",
         "manual-icpees-cnrs-unistra-psi-exp-in-situ-ftir-atr-configuration-nanostructured::output-ionomer-contact-angles-1b2c5afe99",
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n12"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
+      "kind": "anchor",
+      "label": "Ionomer density (dry)",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "decode_local",
+      "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n5",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n5",
+        "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1"
       ]
     },
     {
@@ -1364,10 +1350,10 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1::e767f5f523",
+      "id": "anchor::molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1::d0283a0e33",
       "workflow_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
       "source": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n1",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2072,7 +2058,7 @@
       "source_label": "Ionomer density (dry)",
       "source_semantic_role": "Property",
       "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ionomer-density-dry-material",
       "target_occurrence_id": "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n13",
       "target_node_id": "n13",
       "target_graphml_id": "n13",

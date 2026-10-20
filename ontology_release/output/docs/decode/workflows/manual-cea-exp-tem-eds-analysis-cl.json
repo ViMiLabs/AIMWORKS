@@ -42,7 +42,7 @@
     "source_node_count": 11,
     "source_edge_count": 10,
     "mapped_anchor_count": 11,
-    "cross_workflow_connection_count": 199
+    "cross_workflow_connection_count": 197
   },
   "nodes": [
     {
@@ -154,30 +154,19 @@
       "source_kind": "source_manual_json",
       "source_field": "output",
       "source_position": 0,
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-        "anchor_label": "Platinum particle radius",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDiameter."
-      },
+      "prevent_anchor_canonicalization": true,
       "kind": "occurrence",
       "workflow_id": "manual-cea-exp-tem-eds-analysis-cl",
       "visual_category": "material",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDiameter.",
-      "workflow_role": "Property",
-      "intrinsic_semantic_role": "Property"
+      "role_assignment": "catalyst_active_particle_diameter_is_property",
+      "confidence": "decode_local",
+      "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-radius-distribution-713aaacc30",
@@ -447,7 +436,7 @@
       "workflow_id": "manual-cea-exp-tem-eds-analysis-cl",
       "source_occurrence_id": "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
       "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/manual-cea-exp-tem-eds-analysis-cl/node/output-catalyst-active-particle-diameter-05e2cc4fda",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -582,6 +571,25 @@
         "sheet-resistance-measurement::n15",
         "tem-and-eds-analysis-of-mea::n10",
         "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n16"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "kind": "anchor",
+      "label": "Catalyst active particle diameter",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "decode_local",
+      "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-tem-data-parameter-extraction-3d::n2",
+        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "sem-and-fib-powder::n3",
+        "tem-and-eds-analysis-of-mea::n2"
       ]
     },
     {
@@ -748,27 +756,6 @@
         "molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer::n15",
         "sem-and-fib-powder::n7",
         "tem-and-eds-analysis-of-mea::n9"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-      "kind": "anchor",
-      "label": "Platinum particle radius",
-      "state": "approved_h2kg",
-      "decision": "new_h2kg_term",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "curated_pdf_schema",
-      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleDiameter; no public H2KG synonym has been asserted.",
-      "occurrence_ids": [
-        "iet-ink-to-composition-model::n6",
-        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleDiameter",
-        "image-tem-data-parameter-extraction-3d::n2",
-        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "sem-and-fib-powder::n3",
-        "tem-and-eds-analysis-of-mea::n2"
       ]
     },
     {
@@ -974,10 +961,10 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda::88e9511fb0",
+      "id": "anchor::manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda::0054de1851",
       "workflow_id": "manual-cea-exp-tem-eds-analysis-cl",
       "source": "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -1305,7 +1292,7 @@
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
       "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "measurement_property",
@@ -1388,7 +1375,7 @@
       "source_label": "Catalyst active particle diameter",
       "source_semantic_role": "Property",
       "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "target_occurrence_id": "manual-cea-exp-tem-eds-analysis-cl::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_node_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_graphml_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
@@ -1599,6 +1586,7 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "manual-cea-exp-tem-eds-analysis-cl::method",
       "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
         "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
       "valid_endpoints": true

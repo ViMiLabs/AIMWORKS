@@ -65,7 +65,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed abbreviation for gas-diffusion-layer thickness.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -725,12 +725,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ct_capillary_saturation_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "iet-1d-mea-with-water-transport-eis-model::n33",
@@ -746,12 +746,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ct_capillary_saturation_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "iet-1d-mea-with-water-transport-eis-model::n34",
@@ -1190,6 +1190,20 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n1",
+      "iri": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-eis-model/node/n1/data-point",
+      "label": "GDL thickness value",
+      "kind": "value_proxy",
+      "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
+      "source_occurrence_id": "iet-1d-mea-with-water-transport-eis-model::n1",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-eis-model/node/n1",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n10",
       "iri": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-eis-model/node/n10/data-point",
       "label": "CCL ORR apparent Tafel slope(s) value",
@@ -1370,20 +1384,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::iet-1d-mea-with-water-transport-eis-model::n1",
-      "iri": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-eis-model/node/n1/parameter-record",
-      "label": "GDL thickness parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
-      "source_occurrence_id": "iet-1d-mea-with-water-transport-eis-model::n1",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-eis-model/node/n1",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -1767,8 +1767,8 @@
       "label": "CT-based capillary pressure saturation curves",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -4043,32 +4043,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e1::d2f2c3cb66",
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e1::1a96e6a99b",
       "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
       "source": "iet-1d-mea-with-water-transport-eis-model::n24",
-      "target": "projection::parameter::iet-1d-mea-with-water-transport-eis-model::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e1",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e1::e46a5ba319",
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e1::faca6ac4df",
       "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
-      "source": "projection::parameter::iet-1d-mea-with-water-transport-eis-model::n1",
+      "source": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n1",
       "target": "iet-1d-mea-with-water-transport-eis-model::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e1",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -5123,6 +5123,36 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e43::7e21e00fd3",
+      "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
+      "source": "iet-1d-mea-with-water-transport-eis-model::n32",
+      "target": "iet-1d-mea-with-water-transport-eis-model::n18",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
+      "type": "semantic_projection",
+      "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e43",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "evidence": "Activity produces the target data.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e44::42239b4b4f",
+      "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
+      "source": "iet-1d-mea-with-water-transport-eis-model::n33",
+      "target": "iet-1d-mea-with-water-transport-eis-model::n18",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
+      "type": "semantic_projection",
+      "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e44",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "evidence": "Activity produces the target data.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e45::a384715497",
       "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
       "source": "iet-1d-mea-with-water-transport-eis-model::n34",
@@ -5228,32 +5258,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e52::3f26a00bde",
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e52::98dbc271b8",
       "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
       "source": "iet-1d-mea-with-water-transport-eis-model::n41",
-      "target": "projection::parameter::iet-1d-mea-with-water-transport-eis-model::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e52",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e52::e46a5ba319",
+      "id": "semantic::iet-1d-mea-with-water-transport-eis-model::e52::faca6ac4df",
       "workflow_id": "iet-1d-mea-with-water-transport-eis-model",
-      "source": "projection::parameter::iet-1d-mea-with-water-transport-eis-model::n1",
+      "source": "projection::datapoint::iet-1d-mea-with-water-transport-eis-model::n1",
       "target": "iet-1d-mea-with-water-transport-eis-model::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e52",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -5734,7 +5764,7 @@
       "source_graphml_id": "n1",
       "source_label": "GDL thickness",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "target_occurrence_id": "iet-1d-mea-with-water-transport-eis-model::n24",
       "target_node_id": "n24",
@@ -5745,16 +5775,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/iet-1d-mea-with-water-transport-eis-model-model",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::iet-1d-mea-with-water-transport-eis-model::e1::d2f2c3cb66",
-        "semantic::iet-1d-mea-with-water-transport-eis-model::e1::e46a5ba319"
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e1::1a96e6a99b",
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e1::faca6ac4df"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e2",
@@ -7023,8 +7053,8 @@
       "source_node_id": "n32",
       "source_graphml_id": "n32",
       "source_label": "CT-based capillary pressure saturation curves",
-      "source_semantic_role": "Parameter",
-      "source_workflow_role": "Parameter",
+      "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "target_occurrence_id": "iet-1d-mea-with-water-transport-eis-model::n18",
       "target_node_id": "n18",
@@ -7034,14 +7064,16 @@
       "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-water-retention-curve-component",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "semantic_edge_ids": [
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e43::7e21e00fd3"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity produces the target data."
     },
     {
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e44",
@@ -7051,8 +7083,8 @@
       "source_node_id": "n33",
       "source_graphml_id": "n33",
       "source_label": "CT-based capillary pressure saturation curves",
-      "source_semantic_role": "Parameter",
-      "source_workflow_role": "Parameter",
+      "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "target_occurrence_id": "iet-1d-mea-with-water-transport-eis-model::n18",
       "target_node_id": "n18",
@@ -7062,14 +7094,16 @@
       "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-water-retention-curve-component",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "semantic_edge_ids": [
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e44::42239b4b4f"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity produces the target data."
     },
     {
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e45",
@@ -7237,7 +7271,7 @@
       "target_graphml_id": "n1",
       "target_label": "GDL thickness",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -7297,20 +7331,20 @@
       "target_graphml_id": "n1",
       "target_label": "GDL thickness",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::iet-1d-mea-with-water-transport-eis-model::e52::3f26a00bde",
-        "semantic::iet-1d-mea-with-water-transport-eis-model::e52::e46a5ba319"
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e52::98dbc271b8",
+        "semantic::iet-1d-mea-with-water-transport-eis-model::e52::faca6ac4df"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "iet-1d-mea-with-water-transport-eis-model::e53",
@@ -7480,7 +7514,7 @@
       "target_graphml_id": "n1",
       "target_label": "GDL thickness",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -7510,7 +7544,7 @@
       "target_graphml_id": "n1",
       "target_label": "GDL thickness",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -7570,7 +7604,7 @@
       "target_graphml_id": "n1",
       "target_label": "GDL thickness",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerThickness",
       "source_description": "",
       "projection_outcome": "h2kg_direct",

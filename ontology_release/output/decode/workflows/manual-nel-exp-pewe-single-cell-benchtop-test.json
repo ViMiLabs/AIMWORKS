@@ -253,16 +253,15 @@
       "kind": "occurrence",
       "workflow_id": "manual-nel-exp-pewe-single-cell-benchtop-test",
       "visual_category": "component",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "h2kg_taxonomy_2_2",
+      "role_assignment": "explicit_mapping",
       "confidence": "not_mapped",
-      "mapping_evidence": "Reviewed material-category mapping to the public H2KG membrane anchor.",
-      "workflow_role": "Matter",
-      "intrinsic_semantic_role": "Matter"
+      "mapping_evidence": "A generic membrane label does not establish proton-exchange chemistry; occurrences remain local until membrane type is documented.",
+      "workflow_role": "Matter"
     },
     {
       "id": "manual-nel-exp-pewe-single-cell-benchtop-test::input-ptl-d9d7347fb8",
@@ -1089,6 +1088,26 @@
       ]
     },
     {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
+      "kind": "anchor",
+      "label": "Membrane",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "not_mapped",
+      "evidence": "A generic membrane label does not establish proton-exchange chemistry; occurrences remain local until membrane type is documented.",
+      "occurrence_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n2",
+        "electrospray-deposition-of-catalyst-layers::n1",
+        "gde-cell-for-electrochemical-studies::n7",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-membrane-d12d5dda08",
+        "manual-nel-exp-large-scale-durability-test::input-membrane-d12d5dda08",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
+        "ultrasonic-spray-deposition-for-catalytic-layers::n2"
+      ]
+    },
+    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/pewe-single-cell-benchtop-test-3daac512f8",
       "kind": "anchor",
       "label": "PEWE Single Cell Benchtop Test",
@@ -1101,26 +1120,6 @@
       "occurrence_ids": [
         "manual-ciemat-exp-effective-proton-conductivity::linked-upstream-nel-exp-pewe-single-cell-benchtop-test-70d0817e9f",
         "manual-nel-exp-pewe-single-cell-benchtop-test::method"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
-      "kind": "anchor",
-      "label": "Proton Exchange Membrane",
-      "state": "approved_h2kg",
-      "decision": "existing_h2kg_mapping",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "confidence": "not_mapped",
-      "evidence": "Reviewed material-category mapping to the public H2KG membrane anchor.",
-      "occurrence_ids": [
-        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n2",
-        "electrospray-deposition-of-catalyst-layers::n1",
-        "gde-cell-for-electrochemical-studies::n7",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-membrane-d12d5dda08",
-        "manual-nel-exp-large-scale-durability-test::input-membrane-d12d5dda08",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n2"
       ]
     },
     {
@@ -1431,10 +1430,10 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08::f225b29b6c",
+      "id": "anchor::manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08::fbb981a5f7",
       "workflow_id": "manual-nel-exp-pewe-single-cell-benchtop-test",
       "source": "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -1948,7 +1947,7 @@
       "source_label": "Membrane",
       "source_semantic_role": "Matter",
       "source_workflow_role": "Matter",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
       "target_occurrence_id": "manual-nel-exp-pewe-single-cell-benchtop-test::method",
       "target_node_id": "method",
       "target_graphml_id": "method",

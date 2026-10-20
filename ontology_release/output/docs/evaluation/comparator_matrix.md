@@ -1,6 +1,6 @@
-# Focused ontology comparator matrix
+# Author-curated ontology capability assessment
 
-Each cell reports a representation outcome backed by exact IRIs in a frozen full RDF graph. No aggregate superiority score is calculated.
+Each cell is an author-curated capability judgment. Automated checks parse the frozen RDF graph and verify that cited IRIs occur; they do not execute the representation task. No aggregate superiority score is calculated.
 
 | Task | Resource | Version | Outcome | Evidence IRIs |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ Each cell reports a representation outcome backed by exact IRIs in a frozen full
 
 | Resource | Version | SHA-256 | Triples |
 |---|---|---|---:|
-| H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | `946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1` | 78511 |
+| H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | `A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9` | 78619 |
 | Electrochemistry Domain Ontology | 0.39.0 | `78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7` | 67104 |
 | Helmholtz Digitisation Ontology | 2026-09-25 | `6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986` | 4387 |
 | Hydrogen Ontology (HOLY) | 1.1.0 | `6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B` | 3529 |

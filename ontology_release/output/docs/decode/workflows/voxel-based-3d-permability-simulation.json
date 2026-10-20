@@ -106,7 +106,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed abbreviation for microporous-layer permeability.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -666,6 +666,20 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
+      "iri": "https://w3id.org/h2kg/decode/workflow/voxel-based-3d-permability-simulation/node/n3/data-point",
+      "label": "MPL permeability value",
+      "kind": "value_proxy",
+      "workflow_id": "voxel-based-3d-permability-simulation",
+      "source_occurrence_id": "voxel-based-3d-permability-simulation::n3",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/voxel-based-3d-permability-simulation/node/n3",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::voxel-based-3d-permability-simulation::n5",
       "iri": "https://w3id.org/h2kg/decode/workflow/voxel-based-3d-permability-simulation/node/n5/data-point",
       "label": "GDL substrate in-plane permeability value",
@@ -706,20 +720,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::voxel-based-3d-permability-simulation::n3",
-      "iri": "https://w3id.org/h2kg/decode/workflow/voxel-based-3d-permability-simulation/node/n3/parameter-record",
-      "label": "MPL permeability parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "voxel-based-3d-permability-simulation",
-      "source_occurrence_id": "voxel-based-3d-permability-simulation::n3",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/voxel-based-3d-permability-simulation/node/n3",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -2182,32 +2182,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e10::e61666bf52",
+      "id": "semantic::voxel-based-3d-permability-simulation::e10::2fe41fe415",
       "workflow_id": "voxel-based-3d-permability-simulation",
       "source": "voxel-based-3d-permability-simulation::n10",
-      "target": "projection::parameter::voxel-based-3d-permability-simulation::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e10",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e10::d49e4761c0",
+      "id": "semantic::voxel-based-3d-permability-simulation::e10::b64da60fe3",
       "workflow_id": "voxel-based-3d-permability-simulation",
-      "source": "projection::parameter::voxel-based-3d-permability-simulation::n3",
+      "source": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
       "target": "voxel-based-3d-permability-simulation::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e10",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -2272,62 +2272,62 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e15::38cf8ccec2",
+      "id": "semantic::voxel-based-3d-permability-simulation::e15::f48193e3c7",
       "workflow_id": "voxel-based-3d-permability-simulation",
       "source": "voxel-based-3d-permability-simulation::n18",
-      "target": "projection::parameter::voxel-based-3d-permability-simulation::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e15",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e15::d49e4761c0",
+      "id": "semantic::voxel-based-3d-permability-simulation::e15::b64da60fe3",
       "workflow_id": "voxel-based-3d-permability-simulation",
-      "source": "projection::parameter::voxel-based-3d-permability-simulation::n3",
+      "source": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
       "target": "voxel-based-3d-permability-simulation::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e15",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e16::425952fa3e",
+      "id": "semantic::voxel-based-3d-permability-simulation::e16::26c2f21803",
       "workflow_id": "voxel-based-3d-permability-simulation",
       "source": "voxel-based-3d-permability-simulation::n19",
-      "target": "projection::parameter::voxel-based-3d-permability-simulation::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e16",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::voxel-based-3d-permability-simulation::e16::d49e4761c0",
+      "id": "semantic::voxel-based-3d-permability-simulation::e16::b64da60fe3",
       "workflow_id": "voxel-based-3d-permability-simulation",
-      "source": "projection::parameter::voxel-based-3d-permability-simulation::n3",
+      "source": "projection::datapoint::voxel-based-3d-permability-simulation::n3",
       "target": "voxel-based-3d-permability-simulation::n3",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "voxel-based-3d-permability-simulation::e16",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3042,20 +3042,20 @@
       "target_graphml_id": "n3",
       "target_label": "MPL permeability",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::voxel-based-3d-permability-simulation::e10::e61666bf52",
-        "semantic::voxel-based-3d-permability-simulation::e10::d49e4761c0"
+        "semantic::voxel-based-3d-permability-simulation::e10::2fe41fe415",
+        "semantic::voxel-based-3d-permability-simulation::e10::b64da60fe3"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "voxel-based-3d-permability-simulation::e11",
@@ -3186,7 +3186,7 @@
       "source_graphml_id": "n3",
       "source_label": "MPL permeability",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "target_occurrence_id": "voxel-based-3d-permability-simulation::n18",
       "target_node_id": "n18",
@@ -3197,16 +3197,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cea-mea-model-europium-2d-model",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::voxel-based-3d-permability-simulation::e15::38cf8ccec2",
-        "semantic::voxel-based-3d-permability-simulation::e15::d49e4761c0"
+        "semantic::voxel-based-3d-permability-simulation::e15::f48193e3c7",
+        "semantic::voxel-based-3d-permability-simulation::e15::b64da60fe3"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "voxel-based-3d-permability-simulation::e16",
@@ -3217,7 +3217,7 @@
       "source_graphml_id": "n3",
       "source_label": "MPL permeability",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "target_occurrence_id": "voxel-based-3d-permability-simulation::n19",
       "target_node_id": "n19",
@@ -3228,16 +3228,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::voxel-based-3d-permability-simulation::e16::425952fa3e",
-        "semantic::voxel-based-3d-permability-simulation::e16::d49e4761c0"
+        "semantic::voxel-based-3d-permability-simulation::e16::26c2f21803",
+        "semantic::voxel-based-3d-permability-simulation::e16::b64da60fe3"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "voxel-based-3d-permability-simulation::e17",

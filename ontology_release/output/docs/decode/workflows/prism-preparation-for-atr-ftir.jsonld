@@ -265,12 +265,10 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n6"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
-        }
-      ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasInputData": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
+        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n4/data-point"
         }
@@ -286,7 +284,7 @@
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
         "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "In Situ Fourier Transformed IR in ATR configuration"
@@ -298,6 +296,11 @@
       "https://w3id.org/h2kg/decode/workflow/mappedToAnchor": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n7"
         }
       ]
     },
@@ -324,9 +327,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-parameter-extraction-2d-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ]
     },
@@ -353,9 +356,35 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst loading value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
         }
       ]
     },
@@ -376,32 +405,6 @@
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n4"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record",
-      "@type": [
-        "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        "Catalyst loading parameter record"
-      ],
-      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2"
         }
       ]
     },
@@ -453,7 +456,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/in-situ-fourier-transformed-ir-in-atr-configuration-method",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Measurement"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "In Situ Fourier Transformed IR in ATR configuration"
@@ -556,7 +559,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/769563c4ad",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/8ae3fc36af",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -567,7 +570,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_input"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -576,17 +579,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/141f4e26eb",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/15bc9a8f8c",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -597,11 +600,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -796,7 +799,37 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/ac28ef060f",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/2dd2a95f99",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "prism-preparation-for-atr-ftir::e8"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_direct"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "activity_instrument"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n9"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n7"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/b2e5835888",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -807,7 +840,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_output_direction"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -816,17 +849,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/cb394a4dab",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/0ab7d03763",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -837,11 +870,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -856,7 +889,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/94681419ca",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/03fe148af3",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -867,7 +900,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_output_direction"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -876,17 +909,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/3ddd663ab8",
+      "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/projection/f9906ae9e1",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -897,11 +930,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/prism-preparation-for-atr-ftir/node/n2/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [

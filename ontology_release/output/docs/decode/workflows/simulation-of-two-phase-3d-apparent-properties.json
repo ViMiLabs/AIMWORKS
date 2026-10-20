@@ -190,7 +190,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed abbreviation for microporous-layer permeability.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -854,6 +854,20 @@
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
     },
     {
+      "id": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
+      "iri": "https://w3id.org/h2kg/decode/workflow/simulation-of-two-phase-3d-apparent-properties/node/n7/data-point",
+      "label": "MPL permeability value",
+      "kind": "value_proxy",
+      "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
+      "source_occurrence_id": "simulation-of-two-phase-3d-apparent-properties::n7",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/simulation-of-two-phase-3d-apparent-properties/node/n7",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n8",
       "iri": "https://w3id.org/h2kg/decode/workflow/simulation-of-two-phase-3d-apparent-properties/node/n8/data-point",
       "label": "GDL substrate effective water permeability value",
@@ -880,20 +894,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
-      "iri": "https://w3id.org/h2kg/decode/workflow/simulation-of-two-phase-3d-apparent-properties/node/n7/parameter-record",
-      "label": "MPL permeability parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
-      "source_occurrence_id": "simulation-of-two-phase-3d-apparent-properties::n7",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/simulation-of-two-phase-3d-apparent-properties/node/n7",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -2876,32 +2876,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e7::bc16b958a6",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e7::0833a6a672",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
       "source": "simulation-of-two-phase-3d-apparent-properties::n17",
-      "target": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e7",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e7::24f3d2a9fc",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e7::70c40ee6d7",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
-      "source": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
+      "source": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
       "target": "simulation-of-two-phase-3d-apparent-properties::n7",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e7",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3596,32 +3596,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e36::c9799d3bc6",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e36::eab4044405",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
       "source": "simulation-of-two-phase-3d-apparent-properties::n29",
-      "target": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e36",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e36::24f3d2a9fc",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e36::70c40ee6d7",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
-      "source": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
+      "source": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
       "target": "simulation-of-two-phase-3d-apparent-properties::n7",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e36",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -4016,32 +4016,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e51::9dc462c4f0",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e51::3d108acb29",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
       "source": "simulation-of-two-phase-3d-apparent-properties::n30",
-      "target": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e51",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e51::24f3d2a9fc",
+      "id": "semantic::simulation-of-two-phase-3d-apparent-properties::e51::70c40ee6d7",
       "workflow_id": "simulation-of-two-phase-3d-apparent-properties",
-      "source": "projection::parameter::simulation-of-two-phase-3d-apparent-properties::n7",
+      "source": "projection::datapoint::simulation-of-two-phase-3d-apparent-properties::n7",
       "target": "simulation-of-two-phase-3d-apparent-properties::n7",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e51",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -4518,20 +4518,20 @@
       "target_graphml_id": "n7",
       "target_label": "MPL permeability",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e7::bc16b958a6",
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e7::24f3d2a9fc"
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e7::0833a6a672",
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e7::70c40ee6d7"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e8",
@@ -5400,7 +5400,7 @@
       "source_graphml_id": "n7",
       "source_label": "MPL permeability",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "target_occurrence_id": "simulation-of-two-phase-3d-apparent-properties::n29",
       "target_node_id": "n29",
@@ -5411,16 +5411,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/cea-mea-model-europium-2d-model",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e36::c9799d3bc6",
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e36::24f3d2a9fc"
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e36::eab4044405",
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e36::70c40ee6d7"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e37",
@@ -5863,7 +5863,7 @@
       "source_graphml_id": "n7",
       "source_label": "MPL permeability",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#MicroporousLayerPermeability",
       "target_occurrence_id": "simulation-of-two-phase-3d-apparent-properties::n30",
       "target_node_id": "n30",
@@ -5874,16 +5874,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-of-the-europium-model-model",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e51::9dc462c4f0",
-        "semantic::simulation-of-two-phase-3d-apparent-properties::e51::24f3d2a9fc"
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e51::3d108acb29",
+        "semantic::simulation-of-two-phase-3d-apparent-properties::e51::70c40ee6d7"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "simulation-of-two-phase-3d-apparent-properties::e52",

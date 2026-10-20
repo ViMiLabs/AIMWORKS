@@ -1,10 +1,10 @@
 # H₂KG 2.3 Taxonomy Report
 
 - Validation conforms: True
-- Active local classes: 2221
-- Deprecated compatibility classes: 165
+- Active local classes: 2226
+- Deprecated compatibility classes: 160
 - Curated structural classes: 157
-- Asserted subclass axioms: 2221
+- Asserted subclass axioms: 2226
 - Definitions: 2402
 - Turtle/JSON-LD parity: True
 - Taxonomy SHACL conforms: True
@@ -18,7 +18,7 @@
 ## Top-Level Branches
 
 - Agent: 4
-- Characteristic: 1052
+- Characteristic: 1057
 - InformationEntity: 109
 - Matter: 692
 - Process: 364

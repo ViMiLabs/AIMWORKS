@@ -21,7 +21,7 @@
     "source_node_count": 27,
     "source_edge_count": 44,
     "mapped_anchor_count": 26,
-    "cross_workflow_connection_count": 447
+    "cross_workflow_connection_count": 445
   },
   "nodes": [
     {
@@ -32,30 +32,18 @@
       "native_category": "component",
       "description": "Catalyst-support ratio\ninternal key: Catalyst-support ratio: component",
       "shape": "ellipse",
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
-        "anchor_label": "Platinum-to-carbon mass ratio",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_CMP_CatalystSupportRatio."
-      },
       "kind": "occurrence",
       "workflow_id": "iet-composition-to-property-model",
       "visual_category": "component",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
-      "decision": "existing_h2kg_mapping",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_CMP_CatalystSupportRatio.",
-      "workflow_role": "Property",
-      "intrinsic_semantic_role": "Property"
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "role_assignment": "operating_or_geometric_parameter",
+      "confidence": "decode_local",
+      "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Parameter"
     },
     {
       "id": "iet-composition-to-property-model::n1",
@@ -65,28 +53,17 @@
       "native_category": "component",
       "description": "I/C-ratio\ninternal key: I/C-ratio: component",
       "shape": "ellipse",
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
-        "anchor_label": "Ionomer-to-carbon ratio",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_CMP_ICRatio."
-      },
       "kind": "occurrence",
       "workflow_id": "iet-composition-to-property-model",
       "visual_category": "component",
       "mapping_state": "approved_h2kg",
       "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
-      "decision": "existing_h2kg_mapping",
+      "decision": "strict_alt_label",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
       "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_CMP_ICRatio.",
+      "confidence": "high",
+      "mapping_evidence": "Reviewed abbreviation for the ionomer-to-carbon ratio.",
       "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
@@ -630,20 +607,6 @@
   ],
   "projection_nodes": [
     {
-      "id": "projection::datapoint::iet-composition-to-property-model::n0",
-      "iri": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n0/data-point",
-      "label": "Catalyst-support ratio value",
-      "kind": "value_proxy",
-      "workflow_id": "iet-composition-to-property-model",
-      "source_occurrence_id": "iet-composition-to-property-model::n0",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n0",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "semantic_role": "DataPoint",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
-      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
       "id": "projection::datapoint::iet-composition-to-property-model::n1",
       "iri": "https://w3id.org/h2kg/decode/workflow/iet-composition-to-property-model/node/n1/data-point",
       "label": "I/C-ratio value",
@@ -815,6 +778,25 @@
         "tem-and-eds-analysis-of-mea::n7",
         "tem-and-eds-analysis-of-mea::n8",
         "voxel-based-3d-effective-diffusivity-simulation::n18"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+      "kind": "anchor",
+      "label": "Catalyst-support ratio",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
+      "semantic_role": "Parameter",
+      "confidence": "decode_local",
+      "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n1",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n1",
+        "iet-composition-to-property-model::n0",
+        "image-fib-tomography-dataparameter-extraction-3d::n2",
+        "image-parameter-extraction-2d::n12",
+        "image-tem-data-parameter-extraction-3d::n1"
       ]
     },
     {
@@ -1546,27 +1528,6 @@
       "occurrence_ids": [
         "iet-composition-to-property-model::n4"
       ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
-      "kind": "anchor",
-      "label": "Platinum-to-carbon mass ratio",
-      "state": "approved_h2kg",
-      "decision": "new_h2kg_term",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "curated_pdf_schema",
-      "evidence": "Stable DECODE interface anchor for PDF identifier IO_CMP_CatalystSupportRatio; no public H2KG synonym has been asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n1",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n1",
-        "iet-composition-to-property-model::n0",
-        "iet-ink-to-composition-model::n7",
-        "iet-multiscale-model-interface::variable::IO_CMP_CatalystSupportRatio",
-        "image-fib-tomography-dataparameter-extraction-3d::n2",
-        "image-parameter-extraction-2d::n12",
-        "image-tem-data-parameter-extraction-3d::n1"
-      ]
     }
   ],
   "source_edges": [
@@ -2057,10 +2018,10 @@
   ],
   "anchor_edges": [
     {
-      "id": "anchor::iet-composition-to-property-model::n0::7904dc8d19",
+      "id": "anchor::iet-composition-to-property-model::n0::543b82c769",
       "workflow_id": "iet-composition-to-property-model",
       "source": "iet-composition-to-property-model::n0",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -2248,32 +2209,17 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::iet-composition-to-property-model::e0::f3c591dafc",
+      "id": "semantic::iet-composition-to-property-model::e0::3c9af4bba3",
       "workflow_id": "iet-composition-to-property-model",
       "source": "iet-composition-to-property-model::n12",
-      "target": "projection::datapoint::iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
-      "label": "hasInputData",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-composition-to-property-model::e0",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
-      "id": "semantic::iet-composition-to-property-model::e0::3cf2b73db8",
-      "workflow_id": "iet-composition-to-property-model",
-      "source": "projection::datapoint::iet-composition-to-property-model::n0",
       "target": "iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-composition-to-property-model::e0",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3118,92 +3064,47 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-composition-to-property-model::e33::006040f438",
+      "id": "semantic::iet-composition-to-property-model::e33::a3901115af",
       "workflow_id": "iet-composition-to-property-model",
       "source": "iet-composition-to-property-model::n21",
-      "target": "projection::datapoint::iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-composition-to-property-model::e33",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
-      "id": "semantic::iet-composition-to-property-model::e33::3cf2b73db8",
-      "workflow_id": "iet-composition-to-property-model",
-      "source": "projection::datapoint::iet-composition-to-property-model::n0",
       "target": "iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-composition-to-property-model::e33",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Target parameter describes the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-composition-to-property-model::e34::3c4c5b1cf9",
+      "id": "semantic::iet-composition-to-property-model::e34::2f9be9c9d6",
       "workflow_id": "iet-composition-to-property-model",
       "source": "iet-composition-to-property-model::n22",
-      "target": "projection::datapoint::iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-composition-to-property-model::e34",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
-      "id": "semantic::iet-composition-to-property-model::e34::3cf2b73db8",
-      "workflow_id": "iet-composition-to-property-model",
-      "source": "projection::datapoint::iet-composition-to-property-model::n0",
       "target": "iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-composition-to-property-model::e34",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Target parameter describes the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::iet-composition-to-property-model::e35::2ccdc19547",
+      "id": "semantic::iet-composition-to-property-model::e35::f08f8d65e7",
       "workflow_id": "iet-composition-to-property-model",
       "source": "iet-composition-to-property-model::n23",
-      "target": "projection::datapoint::iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
-      "type": "semantic_projection",
-      "source_dependency_id": "iet-composition-to-property-model::e35",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
-      "id": "semantic::iet-composition-to-property-model::e35::3cf2b73db8",
-      "workflow_id": "iet-composition-to-property-model",
-      "source": "projection::datapoint::iet-composition-to-property-model::n0",
       "target": "iet-composition-to-property-model::n0",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "label": "hasParameter",
       "type": "semantic_projection",
       "source_dependency_id": "iet-composition-to-property-model::e35",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "evidence": "Target parameter describes the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3427,9 +3328,9 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Catalyst-support ratio",
-      "source_semantic_role": "Property",
-      "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "source_semantic_role": "Parameter",
+      "source_workflow_role": "Parameter",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
       "target_occurrence_id": "iet-composition-to-property-model::n12",
       "target_node_id": "n12",
       "target_graphml_id": "n12",
@@ -3438,17 +3339,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/ctp",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-composition-to-property-model::e0::f3c591dafc",
-        "semantic::iet-composition-to-property-model::e0::3cf2b73db8"
+        "semantic::iet-composition-to-property-model::e0::3c9af4bba3"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
+      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
     },
     {
       "source_dependency_id": "iet-composition-to-property-model::e1",
@@ -4449,21 +4349,20 @@
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "Catalyst-support ratio",
-      "target_semantic_role": "Property",
-      "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "target_semantic_role": "Parameter",
+      "target_workflow_role": "Parameter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-composition-to-property-model::e33::006040f438",
-        "semantic::iet-composition-to-property-model::e33::3cf2b73db8"
+        "semantic::iet-composition-to-property-model::e33::a3901115af"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Target parameter describes the activity."
     },
     {
       "source_dependency_id": "iet-composition-to-property-model::e34",
@@ -4480,21 +4379,20 @@
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "Catalyst-support ratio",
-      "target_semantic_role": "Property",
-      "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "target_semantic_role": "Parameter",
+      "target_workflow_role": "Parameter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-composition-to-property-model::e34::3c4c5b1cf9",
-        "semantic::iet-composition-to-property-model::e34::3cf2b73db8"
+        "semantic::iet-composition-to-property-model::e34::2f9be9c9d6"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Target parameter describes the activity."
     },
     {
       "source_dependency_id": "iet-composition-to-property-model::e35",
@@ -4511,21 +4409,20 @@
       "target_node_id": "n0",
       "target_graphml_id": "n0",
       "target_label": "Catalyst-support ratio",
-      "target_semantic_role": "Property",
-      "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
+      "target_semantic_role": "Parameter",
+      "target_workflow_role": "Parameter",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_parameter",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
       "semantic_edge_ids": [
-        "semantic::iet-composition-to-property-model::e35::2ccdc19547",
-        "semantic::iet-composition-to-property-model::e35::3cf2b73db8"
+        "semantic::iet-composition-to-property-model::e35::f08f8d65e7"
       ],
-      "semantic_direction": "reified_projection",
+      "semantic_direction": "same_as_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "Target parameter describes the activity."
     },
     {
       "source_dependency_id": "iet-composition-to-property-model::e36",
@@ -5197,7 +5094,7 @@
       "semantic_source": "iet-composition-to-property-model::n12",
       "semantic_target": "image-parameter-extraction-2d::n18",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component"
       ],
       "valid_endpoints": true
     },
@@ -5238,7 +5135,7 @@
       "semantic_source": "iet-composition-to-property-model::n12",
       "semantic_target": "image-fib-tomography-dataparameter-extraction-3d::n11",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component"
       ],
       "valid_endpoints": true
     },
@@ -5280,8 +5177,8 @@
       "semantic_source": "iet-composition-to-property-model::n12",
       "semantic_target": "image-tem-data-parameter-extraction-3d::n10",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-structural-parameters-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio"
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-support-ratio-component",
+        "https://w3id.org/h2kg/decode/workflow/anchor/ccl-structural-parameters-component"
       ],
       "valid_endpoints": true
     },

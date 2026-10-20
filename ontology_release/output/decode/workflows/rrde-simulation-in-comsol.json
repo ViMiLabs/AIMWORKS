@@ -38,12 +38,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
-      "role_assignment": "workflow_or_analysis",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
+      "role_assignment": "rde_protocol_is_metadata",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Process"
+      "workflow_role": "Metadata"
     },
     {
       "id": "rrde-simulation-in-comsol::n1",
@@ -738,8 +738,8 @@
       "label": "RDE electrochemical protocol",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1454,21 +1454,6 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::rrde-simulation-in-comsol::e0::f564612903",
-      "workflow_id": "rrde-simulation-in-comsol",
-      "source": "rrde-simulation-in-comsol::n13",
-      "target": "rrde-simulation-in-comsol::n0",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
-      "type": "semantic_projection",
-      "source_dependency_id": "rrde-simulation-in-comsol::e0",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
       "id": "semantic::rrde-simulation-in-comsol::e1::2b40acb9a3",
       "workflow_id": "rrde-simulation-in-comsol",
       "source": "rrde-simulation-in-comsol::n13",
@@ -2003,8 +1988,8 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "rrde-simulation-in-comsol::n13",
       "target_node_id": "n13",
@@ -2014,16 +1999,14 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rrde-simulation-in-comsol-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
-      "semantic_edge_ids": [
-        "semantic::rrde-simulation-in-comsol::e0::f564612903"
-      ],
-      "semantic_direction": "reversed_from_source",
-      "confidence": "rule_curated",
-      "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "projection_outcome": "decode_structural_only",
+      "projection_pattern": "protocol_specification_dependency",
+      "semantic_predicates": "",
+      "semantic_edge_ids": [],
+      "semantic_direction": "not_projected",
+      "confidence": "configured",
+      "governance_status": "approved",
+      "rationale": "A simulation may use a protocol specification, but source order alone does not support prov:wasInformedBy."
     },
     {
       "source_dependency_id": "rrde-simulation-in-comsol::e1",

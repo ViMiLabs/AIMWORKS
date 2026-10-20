@@ -38,12 +38,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/reaction-mechanisms-orr-lre",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
-      "role_assignment": "lre_reaction_mechanism_is_process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "semantic_role": "Data",
+      "role_assignment": "lre_reaction_mechanism_is_data",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Process"
+      "workflow_role": "Data"
     },
     {
       "id": "fitting-version-of-the-hierachical-model::n1",
@@ -143,12 +143,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
-      "role_assignment": "workflow_or_analysis",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
+      "role_assignment": "rde_protocol_is_metadata",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Process"
+      "workflow_role": "Metadata"
     },
     {
       "id": "fitting-version-of-the-hierachical-model::n6",
@@ -788,8 +788,8 @@
       "label": "RDE electrochemical protocol",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -871,8 +871,8 @@
       "label": "Reaction mechanisms (ORR)",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Data",
+      "semantic_role": "Data",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1556,17 +1556,17 @@
   ],
   "semantic_edges": [
     {
-      "id": "semantic::fitting-version-of-the-hierachical-model::e0::3e54f459c8",
+      "id": "semantic::fitting-version-of-the-hierachical-model::e0::ed714d189c",
       "workflow_id": "fitting-version-of-the-hierachical-model",
       "source": "fitting-version-of-the-hierachical-model::n9",
       "target": "fitting-version-of-the-hierachical-model::n0",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e0",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "evidence": "Activity consumes the source data; H2KG direction is activity to data.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -1661,17 +1661,17 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::fitting-version-of-the-hierachical-model::e5::5d89c15edf",
+      "id": "semantic::fitting-version-of-the-hierachical-model::e5::9dd1268b4c",
       "workflow_id": "fitting-version-of-the-hierachical-model",
       "source": "fitting-version-of-the-hierachical-model::n9",
       "target": "fitting-version-of-the-hierachical-model::n5",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "label": "hasMetadata",
       "type": "semantic_projection",
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e5",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "evidence": "Source metadata describes the activity; H2KG direction is described resource to metadata.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -2126,17 +2126,17 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::fitting-version-of-the-hierachical-model::e29::3204b4dd79",
+      "id": "semantic::fitting-version-of-the-hierachical-model::e29::1632f71b17",
       "workflow_id": "fitting-version-of-the-hierachical-model",
       "source": "fitting-version-of-the-hierachical-model::n10",
       "target": "fitting-version-of-the-hierachical-model::n0",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e29",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "evidence": "Activity consumes the source data; H2KG direction is activity to data.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -2201,21 +2201,6 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::fitting-version-of-the-hierachical-model::e33::6d1ef63f61",
-      "workflow_id": "fitting-version-of-the-hierachical-model",
-      "source": "fitting-version-of-the-hierachical-model::n10",
-      "target": "fitting-version-of-the-hierachical-model::n5",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
-      "type": "semantic_projection",
-      "source_dependency_id": "fitting-version-of-the-hierachical-model::e33",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
       "id": "semantic::fitting-version-of-the-hierachical-model::e34::f1a240181b",
       "workflow_id": "fitting-version-of-the-hierachical-model",
       "source": "fitting-version-of-the-hierachical-model::n10",
@@ -2270,8 +2255,8 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Reaction mechanisms (ORR)",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Data",
+      "source_workflow_role": "Data",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/reaction-mechanisms-orr-lre",
       "target_occurrence_id": "fitting-version-of-the-hierachical-model::n9",
       "target_node_id": "n9",
@@ -2281,16 +2266,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-version-of-the-hierachical-model-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
       "semantic_edge_ids": [
-        "semantic::fitting-version-of-the-hierachical-model::e0::3e54f459c8"
+        "semantic::fitting-version-of-the-hierachical-model::e0::ed714d189c"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "rationale": "Activity consumes the source data; H2KG direction is activity to data."
     },
     {
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e1",
@@ -2422,8 +2407,8 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "fitting-version-of-the-hierachical-model::n9",
       "target_node_id": "n9",
@@ -2433,16 +2418,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-version-of-the-hierachical-model-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
       "semantic_edge_ids": [
-        "semantic::fitting-version-of-the-hierachical-model::e5::5d89c15edf"
+        "semantic::fitting-version-of-the-hierachical-model::e5::9dd1268b4c"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "rationale": "Source metadata describes the activity; H2KG direction is described resource to metadata."
     },
     {
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e6",
@@ -3149,8 +3134,8 @@
       "source_node_id": "n0",
       "source_graphml_id": "n0",
       "source_label": "Reaction mechanisms (ORR)",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Data",
+      "source_workflow_role": "Data",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/reaction-mechanisms-orr-lre",
       "target_occurrence_id": "fitting-version-of-the-hierachical-model::n10",
       "target_node_id": "n10",
@@ -3160,16 +3145,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-version-of-the-hierachical-model-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
       "semantic_edge_ids": [
-        "semantic::fitting-version-of-the-hierachical-model::e29::3204b4dd79"
+        "semantic::fitting-version-of-the-hierachical-model::e29::1632f71b17"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "rationale": "Activity consumes the source data; H2KG direction is activity to data."
     },
     {
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e30",
@@ -3270,8 +3255,8 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "fitting-version-of-the-hierachical-model::n10",
       "target_node_id": "n10",
@@ -3281,16 +3266,14 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/fitting-version-of-the-hierachical-model-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
-      "semantic_edge_ids": [
-        "semantic::fitting-version-of-the-hierachical-model::e33::6d1ef63f61"
-      ],
-      "semantic_direction": "reversed_from_source",
-      "confidence": "rule_curated",
-      "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "projection_outcome": "decode_structural_only",
+      "projection_pattern": "protocol_specification_dependency",
+      "semantic_predicates": "",
+      "semantic_edge_ids": [],
+      "semantic_direction": "not_projected",
+      "confidence": "configured",
+      "governance_status": "approved",
+      "rationale": "The source does not distinguish an RDE protocol specification from an executed activity producing fitting data."
     },
     {
       "source_dependency_id": "fitting-version-of-the-hierachical-model::e34",

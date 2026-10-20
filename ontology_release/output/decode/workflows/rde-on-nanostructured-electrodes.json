@@ -81,12 +81,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
-      "role_assignment": "workflow_or_analysis",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
+      "role_assignment": "rde_protocol_is_metadata",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Process"
+      "workflow_role": "Metadata"
     },
     {
       "id": "rde-on-nanostructured-electrodes::n3",
@@ -286,8 +286,8 @@
       "label": "RDE electrochemical protocol",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -573,36 +573,6 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::rde-on-nanostructured-electrodes::e2::fbb22d781f",
-      "workflow_id": "rde-on-nanostructured-electrodes",
-      "source": "rde-on-nanostructured-electrodes::n2",
-      "target": "projection::datapoint::rde-on-nanostructured-electrodes::n6",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "label": "hasOutputData",
-      "type": "semantic_projection",
-      "source_dependency_id": "rde-on-nanostructured-electrodes::e2",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "evidence": "Activity produces a DataPoint representing the target property.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
-      "id": "semantic::rde-on-nanostructured-electrodes::e2::41317b5b61",
-      "workflow_id": "rde-on-nanostructured-electrodes",
-      "source": "projection::datapoint::rde-on-nanostructured-electrodes::n6",
-      "target": "rde-on-nanostructured-electrodes::n6",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "label": "ofProperty",
-      "type": "semantic_projection",
-      "source_dependency_id": "rde-on-nanostructured-electrodes::e2",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_type",
-      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
-      "confidence": "rule_curated",
-      "governance_status": "classified"
-    },
-    {
       "id": "semantic::rde-on-nanostructured-electrodes::e5::6d8d21496f",
       "workflow_id": "rde-on-nanostructured-electrodes",
       "source": "rde-on-nanostructured-electrodes::n5",
@@ -732,8 +702,8 @@
       "source_node_id": "n2",
       "source_graphml_id": "n2",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "rde-on-nanostructured-electrodes::n6",
       "target_node_id": "n6",
@@ -743,17 +713,14 @@
       "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-on-nanostructured-electrodes-method",
       "source_description": "",
-      "projection_outcome": "h2kg_reified",
-      "projection_pattern": "property_value_output",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
-      "semantic_edge_ids": [
-        "semantic::rde-on-nanostructured-electrodes::e2::fbb22d781f",
-        "semantic::rde-on-nanostructured-electrodes::e2::41317b5b61"
-      ],
-      "semantic_direction": "reified_projection",
-      "confidence": "rule_curated",
+      "projection_outcome": "decode_structural_only",
+      "projection_pattern": "structural_dependency",
+      "semantic_predicates": "",
+      "semantic_edge_ids": [],
+      "semantic_direction": "not_projected",
+      "confidence": "context_required",
       "governance_status": "classified",
-      "rationale": "Activity produces a DataPoint representing the target property."
+      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
     },
     {
       "source_dependency_id": "rde-on-nanostructured-electrodes::e3",

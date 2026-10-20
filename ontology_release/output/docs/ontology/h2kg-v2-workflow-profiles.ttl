@@ -683,6 +683,11 @@ profile:Shape_CCLHydrophobicPoreMeanContactAngle a sh:NodeShape ;
     sh:property profile:Property_8912e71ad6b9d855 ;
     sh:targetClass h2kg:CCLHydrophobicPoreMeanContactAngle .
 
+profile:Shape_CCLIonomerAlignmentDegree a sh:NodeShape ;
+    rdfs:label "CCLIonomerAlignmentDegree workflow profile"@en ;
+    sh:property profile:Property_821bc88af8622638 ;
+    sh:targetClass h2kg:CCLIonomerAlignmentDegree .
+
 profile:Shape_CCLMeanContactAngle a sh:NodeShape ;
     rdfs:label "CCLMeanContactAngle workflow profile"@en ;
     sh:property profile:Property_ee7e073a60a9712b ;
@@ -997,6 +1002,11 @@ profile:Shape_CarbonShellThickness a sh:NodeShape ;
     rdfs:label "CarbonShellThickness workflow profile"@en ;
     sh:property profile:Property_f3b7de32628f527f ;
     sh:targetClass h2kg:CarbonShellThickness .
+
+profile:Shape_CarbonSupportInducedIonomerAlignmentDegree a sh:NodeShape ;
+    rdfs:label "CarbonSupportInducedIonomerAlignmentDegree workflow profile"@en ;
+    sh:property profile:Property_a4147dc2d3e3ee43 ;
+    sh:targetClass h2kg:CarbonSupportInducedIonomerAlignmentDegree .
 
 profile:Shape_CarbonSupportWaterContactAngle a sh:NodeShape ;
     rdfs:label "CarbonSupportWaterContactAngle workflow profile"@en ;
@@ -3054,6 +3064,11 @@ profile:Shape_EquivalentIonomerFilmThickness a sh:NodeShape ;
     sh:property profile:Property_8b43becb47db5523 ;
     sh:targetClass h2kg:EquivalentIonomerFilmThickness .
 
+profile:Shape_EquivalentIonomerPatchRadius a sh:NodeShape ;
+    rdfs:label "EquivalentIonomerPatchRadius workflow profile"@en ;
+    sh:property profile:Property_80c039a153a6b98c ;
+    sh:targetClass h2kg:EquivalentIonomerPatchRadius .
+
 profile:Shape_EthanolMassFractionInInk a sh:NodeShape ;
     rdfs:label "EthanolMassFractionInInk workflow profile"@en ;
     sh:property profile:Property_4408723de20686db ;
@@ -4383,10 +4398,13 @@ profile:Shape_InkToCompositionModel a sh:NodeShape ;
         profile:Property_246f14dbd50e02ce,
         profile:Property_2c5bd6549c6d2715,
         profile:Property_2cbf83009317c825,
+        profile:Property_3ad7a8a0dd8abf2f,
         profile:Property_46594a7af712cf50,
+        profile:Property_4f9222cec5dc186a,
         profile:Property_527ae9041f50b733,
         profile:Property_597b08fae6abdd42,
         profile:Property_59db2fbd4b677513,
+        profile:Property_5e08c980585c293c,
         profile:Property_69b7abd34dcdd690,
         profile:Property_809f301f2cf57ca0,
         profile:Property_ae4995243ca827fa,
@@ -4394,8 +4412,7 @@ profile:Shape_InkToCompositionModel a sh:NodeShape ;
         profile:Property_b73faaba231a043e,
         profile:Property_b8e9b83c2abf4360,
         profile:Property_db2c8a4a1457c6f9,
-        profile:Property_e02ffbff77cd4d9f,
-        profile:Property_f6fd0ccfd9a016f4,
+        profile:Property_ebbaf8ec85f684da,
         profile:Record_9f81ed1cf72ab0bb ;
     sh:targetClass h2kg:InkToCompositionModel .
 
@@ -4630,6 +4647,11 @@ profile:Shape_IonomerAggregateSizeRatio a sh:NodeShape ;
     rdfs:label "IonomerAggregateSizeRatio workflow profile"@en ;
     sh:property profile:Property_8ef13ce9bf8014fb ;
     sh:targetClass h2kg:IonomerAggregateSizeRatio .
+
+profile:Shape_IonomerCatalystDispersionParameter a sh:NodeShape ;
+    rdfs:label "IonomerCatalystDispersionParameter workflow profile"@en ;
+    sh:property profile:Property_727a498343dfa211 ;
+    sh:targetClass h2kg:IonomerCatalystDispersionParameter .
 
 profile:Shape_IonomerCoatedPoreWallContactAngle a sh:NodeShape ;
     rdfs:label "IonomerCoatedPoreWallContactAngle workflow profile"@en ;
@@ -5775,7 +5797,7 @@ profile:Shape_MonomerConversion a sh:NodeShape ;
 
 profile:Shape_MorphologicalCharacteristic a sh:NodeShape ;
     rdfs:label "MorphologicalCharacteristic workflow profile"@en ;
-    sh:property profile:Property_80c039a153a6b98c ;
+    sh:property profile:Property_2a5743d827a67925 ;
     sh:targetClass h2kg:MorphologicalCharacteristic .
 
 profile:Shape_N1sAtomicPercent a sh:NodeShape ;
@@ -6591,6 +6613,11 @@ profile:Shape_PlatinumParticleRadius a sh:NodeShape ;
     rdfs:label "PlatinumParticleRadius workflow profile"@en ;
     sh:property profile:Property_2e61e1479cf7726b ;
     sh:targetClass h2kg:PlatinumParticleRadius .
+
+profile:Shape_PlatinumSurfaceInducedIonomerAlignmentDegree a sh:NodeShape ;
+    rdfs:label "PlatinumSurfaceInducedIonomerAlignmentDegree workflow profile"@en ;
+    sh:property profile:Property_d56a50166cce8657 ;
+    sh:targetClass h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree .
 
 profile:Shape_PlatinumSurfaceWaterContactAngle a sh:NodeShape ;
     rdfs:label "PlatinumSurfaceWaterContactAngle workflow profile"@en ;
@@ -16129,6 +16156,15 @@ profile:Property_2a51841654215eca a sh:PropertyShape ;
     sh:path h2kg:measures ;
     sh:severity sh:Info .
 
+profile:Property_2a5743d827a67925 a sh:PropertyShape ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/PERCENT> ;
+    sh:class qudt:QuantityValue ;
+    sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
+    sh:name "has quantity value guidance"@en ;
+    sh:path h2kg:hasQuantityValue ;
+    sh:severity sh:Info .
+
 profile:Property_2a57e5a2d16c544b a sh:PropertyShape ;
     sh:class h2kg:SilicaNanosheet ;
     sh:description "The source relation is retained as a value-free SHACL workflow-use constraint rather than an OWL class assertion."@en ;
@@ -18748,6 +18784,19 @@ profile:Property_3ac38566b35cf2a8 a sh:PropertyShape ;
     sh:name "measures property"@en ;
     sh:path h2kg:measures ;
     sh:severity sh:Info .
+
+profile:Property_3ad7a8a0dd8abf2f a sh:PropertyShape ;
+    sh:class h2kg:IonomerCatalystDispersionParameter ;
+    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
+    sh:name "uses as parameter"@en ;
+    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_3ad7a8a0dd8abf2f/path/0> ;
+    sh:severity sh:Info .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_3ad7a8a0dd8abf2f/path/0> rdf:first h2kg:hasParameter ;
+    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_3ad7a8a0dd8abf2f/path/1> .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_3ad7a8a0dd8abf2f/path/1> rdf:first h2kg:ofProperty ;
+    rdf:rest () .
 
 profile:Property_3adc1e7a8b462e60 a sh:PropertyShape ;
     sh:class h2kg:PtLoading ;
@@ -21665,6 +21714,19 @@ profile:Property_4f8dbc94bb3bd716 a sh:PropertyShape ;
     sh:path h2kg:measures ;
     sh:severity sh:Info .
 
+profile:Property_4f9222cec5dc186a a sh:PropertyShape ;
+    sh:class h2kg:EquivalentIonomerPatchRadius ;
+    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
+    sh:name "uses as parameter"@en ;
+    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_4f9222cec5dc186a/path/0> ;
+    sh:severity sh:Info .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_4f9222cec5dc186a/path/0> rdf:first h2kg:hasParameter ;
+    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_4f9222cec5dc186a/path/1> .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_4f9222cec5dc186a/path/1> rdf:first h2kg:ofProperty ;
+    rdf:rest () .
+
 profile:Property_4fa34eed2e28d499 a sh:PropertyShape ;
     sh:class h2kg:LiquidFlowRate ;
     sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
@@ -23808,6 +23870,19 @@ profile:Property_5e02b3155cc33e83 a sh:PropertyShape ;
     rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e02b3155cc33e83/path/1> .
 
 <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e02b3155cc33e83/path/1> rdf:first h2kg:ofProperty ;
+    rdf:rest () .
+
+profile:Property_5e08c980585c293c a sh:PropertyShape ;
+    sh:class h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree ;
+    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
+    sh:name "uses as parameter"@en ;
+    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e08c980585c293c/path/0> ;
+    sh:severity sh:Info .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e08c980585c293c/path/0> rdf:first h2kg:hasParameter ;
+    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e08c980585c293c/path/1> .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_5e08c980585c293c/path/1> rdf:first h2kg:ofProperty ;
     rdf:rest () .
 
 profile:Property_5e0d50db00f4909d a sh:PropertyShape ;
@@ -26783,6 +26858,15 @@ profile:Property_7271e90d6aca2397 a sh:PropertyShape ;
     sh:path h2kg:hasQuantityValue ;
     sh:severity sh:Info .
 
+profile:Property_727a498343dfa211 a sh:PropertyShape ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> ;
+    sh:class qudt:QuantityValue ;
+    sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
+    sh:name "has quantity value guidance"@en ;
+    sh:path h2kg:hasQuantityValue ;
+    sh:severity sh:Info .
+
 profile:Property_728bf592be3291cf a sh:PropertyShape ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/SpringConstant> ;
     sh:class qudt:QuantityValue ;
@@ -29181,6 +29265,15 @@ profile:Property_81e5d3e825e93cc9 a sh:PropertyShape ;
         <http://qudt.org/vocab/quantitykind/PotentialRange>,
         <http://qudt.org/vocab/quantitykind/Voltage> ;
     qudt:unit <http://qudt.org/vocab/unit/V> ;
+    sh:class qudt:QuantityValue ;
+    sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
+    sh:name "has quantity value guidance"@en ;
+    sh:path h2kg:hasQuantityValue ;
+    sh:severity sh:Info .
+
+profile:Property_821bc88af8622638 a sh:PropertyShape ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> ;
     sh:class qudt:QuantityValue ;
     sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
     sh:name "has quantity value guidance"@en ;
@@ -34457,6 +34550,15 @@ profile:Property_a3fceb212fafe1c3 a sh:PropertyShape ;
 
 profile:Property_a3ff3365da231932 a sh:PropertyShape ;
     qudt:quantityKind <http://qudt.org/vocab/quantitykind/Modulus> ;
+    sh:class qudt:QuantityValue ;
+    sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
+    sh:name "has quantity value guidance"@en ;
+    sh:path h2kg:hasQuantityValue ;
+    sh:severity sh:Info .
+
+profile:Property_a4147dc2d3e3ee43 a sh:PropertyShape ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> ;
     sh:class qudt:QuantityValue ;
     sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
     sh:name "has quantity value guidance"@en ;
@@ -41169,6 +41271,15 @@ profile:Property_d55aea89f7164904 a sh:PropertyShape ;
     sh:path h2kg:measures ;
     sh:severity sh:Info .
 
+profile:Property_d56a50166cce8657 a sh:PropertyShape ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> ;
+    sh:class qudt:QuantityValue ;
+    sh:description "A legacy class-level quantity-value template is expressed as optional QUDT guidance on property occurrences."@en ;
+    sh:name "has quantity value guidance"@en ;
+    sh:path h2kg:hasQuantityValue ;
+    sh:severity sh:Info .
+
 profile:Property_d596ebfb7a2987cf a sh:PropertyShape ;
     sh:class h2kg:CathodeCatalystLayer ;
     sh:description "The source relation is retained as a value-free SHACL workflow-use constraint rather than an OWL class assertion."@en ;
@@ -43040,19 +43151,6 @@ profile:Property_e01e96cea6b9e014 a sh:PropertyShape ;
 <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_e01e96cea6b9e014/path/1> rdf:first h2kg:ofProperty ;
     rdf:rest () .
 
-profile:Property_e02ffbff77cd4d9f a sh:PropertyShape ;
-    sh:class h2kg:QuantitativeCharacteristic ;
-    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
-    sh:name "uses as parameter"@en ;
-    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_e02ffbff77cd4d9f/path/0> ;
-    sh:severity sh:Info .
-
-<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_e02ffbff77cd4d9f/path/0> rdf:first h2kg:hasParameter ;
-    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_e02ffbff77cd4d9f/path/1> .
-
-<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_e02ffbff77cd4d9f/path/1> rdf:first h2kg:ofProperty ;
-    rdf:rest () .
-
 profile:Property_e04b93feb01ec1c1 a sh:PropertyShape ;
     sh:class h2kg:PeakToPeakSeparation ;
     sh:description "The measurement targets a property occurrence whose class identifies the measured characteristic."@en ;
@@ -44682,6 +44780,19 @@ profile:Property_ebb1446b048cb6b2 a sh:PropertyShape ;
     rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebb1446b048cb6b2/path/1> .
 
 <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebb1446b048cb6b2/path/1> rdf:first h2kg:ofProperty ;
+    rdf:rest () .
+
+profile:Property_ebbaf8ec85f684da a sh:PropertyShape ;
+    sh:class h2kg:CarbonSupportInducedIonomerAlignmentDegree ;
+    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
+    sh:name "uses as parameter"@en ;
+    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebbaf8ec85f684da/path/0> ;
+    sh:severity sh:Info .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebbaf8ec85f684da/path/0> rdf:first h2kg:hasParameter ;
+    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebbaf8ec85f684da/path/1> .
+
+<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_ebbaf8ec85f684da/path/1> rdf:first h2kg:ofProperty ;
     rdf:rest () .
 
 profile:Property_ebbd1408307ba157 a sh:PropertyShape ;
@@ -46391,19 +46502,6 @@ profile:Property_f6ee257d92a1c8c9 a sh:PropertyShape ;
     sh:name "has input material"@en ;
     sh:path h2kg:hasInputMaterial ;
     sh:severity sh:Info .
-
-profile:Property_f6fd0ccfd9a016f4 a sh:PropertyShape ;
-    sh:class h2kg:MorphologicalCharacteristic ;
-    sh:description "The characteristic is selected contextually through a Parameter record and remains a Property in the taxonomy."@en ;
-    sh:name "uses as parameter"@en ;
-    sh:path <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_f6fd0ccfd9a016f4/path/0> ;
-    sh:severity sh:Info .
-
-<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_f6fd0ccfd9a016f4/path/0> rdf:first h2kg:hasParameter ;
-    rdf:rest <https://w3id.org/h2kg/hydrogen-ontology/profile/Property_f6fd0ccfd9a016f4/path/1> .
-
-<https://w3id.org/h2kg/hydrogen-ontology/profile/Property_f6fd0ccfd9a016f4/path/1> rdf:first h2kg:ofProperty ;
-    rdf:rest () .
 
 profile:Property_f71dba3ed84a340c a sh:PropertyShape ;
     sh:class h2kg:ProjectorLightIntensity ;

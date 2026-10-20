@@ -513,6 +513,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n0/data-point"
         },
         {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
+        },
+        {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n2/data-point"
         },
         {
@@ -547,9 +550,6 @@
         }
       ],
       "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
-        },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n11"
         },
@@ -1069,9 +1069,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-parameter-extraction-2d-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
         }
       ]
     },
@@ -1423,6 +1423,29 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL thickness value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n10/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -1673,29 +1696,6 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n9"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record",
-      "@type": [
-        "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        "GDL thickness parameter record"
-      ],
-      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1"
         }
       ]
     },
@@ -2066,7 +2066,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/bd9b040fc5",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/ac6ca4ccb0",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2077,7 +2077,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_input"
+        "property_value_input"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -2086,17 +2086,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/7e548ae66d",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/5077d14b33",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2107,11 +2107,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -4136,7 +4136,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/722858ae47",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/6865d69621",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -4147,7 +4147,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_output_direction"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -4156,17 +4156,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/052d9d5262",
+      "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/projection/80e523166f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -4177,11 +4177,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/iet-1d-mea-with-water-transport-in-ccl-eis-model/node/n1/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [

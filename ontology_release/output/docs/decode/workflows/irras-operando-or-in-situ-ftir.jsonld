@@ -493,9 +493,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-parameter-extraction-2d-method"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ]
     },
@@ -522,9 +522,9 @@
           "@id": "https://w3id.org/h2kg/decode/workflow/anchor/image-fib-tomography-dataparameter-extraction-3d-data"
         }
       ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+      "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ]
     },
@@ -550,6 +550,29 @@
       "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n13"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "Catalyst loading value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
+        },
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
         }
       ]
     },
@@ -582,29 +605,6 @@
         },
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n5"
-        }
-      ]
-    },
-    {
-      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record",
-      "@type": [
-        "http://www.w3.org/ns/prov#Entity",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
-      ],
-      "http://www.w3.org/2000/01/rdf-schema#label": [
-        "Catalyst loading parameter record"
-      ],
-      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
-        },
-        {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3"
         }
       ]
     },
@@ -1227,7 +1227,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/4f09acc71e",
+      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/d4f2cf560e",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1238,7 +1238,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_output_direction"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1247,17 +1247,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/1035a18c2a",
+      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/d54db2770f",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1268,11 +1268,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -1287,7 +1287,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/2ef26c8b61",
+      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/0b0e18e635",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1298,7 +1298,7 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_output_direction"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
@@ -1307,17 +1307,17 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
         }
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/e525fbafd5",
+      "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/projection/213a95c7cb",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -1328,11 +1328,11 @@
         "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "parameter_record_property"
+        "property_value_type"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/parameter-record"
+          "@id": "https://w3id.org/h2kg/decode/workflow/irras-operando-or-in-situ-ftir/node/n3/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [

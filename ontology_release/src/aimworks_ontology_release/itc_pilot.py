@@ -364,19 +364,13 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
     validate_interface_registry(review)
     snapshot = deepcopy(snapshot)
     fields = {field["io_id"]: field for field in review["fields"]}
-    label_counts = Counter(field["source_label"].strip().casefold() for field in review["fields"])
-    exact_label_fields = {
-        field["source_label"].strip().casefold(): field
-        for field in review["fields"]
-        if label_counts[field["source_label"].strip().casefold()] == 1
-    }
-    legacy_labels = [
-        (label.strip().casefold(), field)
+    # Rejected historical labels are provenance only. They must never drive a
+    # global label mapping because the correction may be source-specific.
+    rejected_legacy_labels = {
+        str(label).strip().casefold()
         for field in review["fields"]
         for label in field.get("rejected_legacy_labels", [])
-    ]
-    legacy_counts = Counter(label for label, _field in legacy_labels)
-    exact_label_fields.update({label: field for label, field in legacy_labels if legacy_counts[label] == 1})
+    }
     node_field_ids = {
         "n1": "IO_CMP_ICRatio",
         "n2": "IO_MAT_IonomerDensityDry",
@@ -393,14 +387,8 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
     for workflow in snapshot.get("workflows", []):
         for node in workflow.get("nodes", []):
             source_id = str(node.get("source_id", ""))
-            exact_field = exact_label_fields.get(str(node.get("label", "")).strip().casefold())
-            if exact_field is not None:
-                node["mapping_override"] = _mapping_override(
-                    H2KG + exact_field["h2kg_local_name"],
-                    exact_field["preferred_label"],
-                    _intrinsic_role(exact_field),
-                    f"Unambiguous exact-label mapping established by the curated ITC registry for {exact_field['io_id']}.",
-                )
+            if str(node.get("label", "")).strip().casefold() in rejected_legacy_labels:
+                node["prevent_anchor_canonicalization"] = True
             if str(node.get("label", "")).strip().casefold() in {
                 review["model"]["preferred_label"].casefold(),
                 *(label.casefold() for label in review["model"]["alternate_labels"]),
@@ -427,6 +415,9 @@ def apply_itc_mapping_overrides(snapshot: dict[str, Any], review: dict[str, Any]
                 )
             elif source_id in node_field_ids:
                 field = fields[node_field_ids[source_id]]
+                # ITC evidence supports this source occurrence. It must not
+                # silently promote same-label occurrences in other workflows.
+                node["prevent_anchor_canonicalization"] = True
                 correction = " Corrected curated semantics supersede the historical source label for mapping only." if field.get("rejected_legacy_labels") else ""
                 node["mapping_override"] = _mapping_override(
                     H2KG + field["h2kg_local_name"],

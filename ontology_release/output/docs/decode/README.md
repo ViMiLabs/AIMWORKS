@@ -9,14 +9,14 @@ This release contains a normalized structural projection of immutable DECODE Gra
 - Preserved source occurrences: 3307
 - Preserved directed source dependencies: 4463
 - Explicitly mapped occurrences: 3134
-- Shared semantic anchors: 709
-- Semantic-overview nodes: 709
+- Shared semantic anchors: 714
+- Semantic-overview nodes: 714
 - Repeated source-concept groups: 294
 - Semantic role conflicts: 0
 - Classified source dependencies: 4463
-- H2KG/PROV semantic projection triples: 6568
-- Derived property-value DataPoint proxies: 687
-- Derived contextual Parameter-record proxies: 134
+- H2KG/PROV semantic projection triples: 6646
+- Derived property-value DataPoint proxies: 713
+- Derived contextual Parameter-record proxies: 84
 - Declared workflow dependencies: 623
 - Published workflow dependencies: 572
 - Structural validation: passed

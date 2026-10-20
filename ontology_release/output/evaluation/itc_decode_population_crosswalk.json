@@ -1,10 +1,14 @@
 {
   "summary": {
     "itc_field_count": 44,
-    "fields_overlapping_source_concept_registry": 11,
-    "profile_overlay_only_fields": 33,
-    "source_occurrences_covered_by_overlapping_fields": 43,
-    "denominator_note": "The 573 denominator contains canonical concepts derived from source workflow occurrences. The 44 ITC fields are a public profile vocabulary; fields absent from source occurrences are not members of that denominator."
+    "fields_with_concept_wide_source_alignment": 6,
+    "fields_without_concept_wide_alignment": 38,
+    "fields_with_occurrence_specific_source_alignment": 5,
+    "fields_without_source_occurrence": 33,
+    "source_occurrences_covered_by_concept_wide_fields": 14,
+    "source_occurrences_covered_by_occurrence_specific_fields": 5,
+    "source_occurrences_covered_total": 19,
+    "denominator_note": "The 573 denominator contains canonical concepts derived from source workflow occurrences. 6 ITC fields have concept-wide source alignments, 5 have source-backed occurrence-specific alignments and therefore remain outside the concept-wide numerator, and 33 have no source occurrence in this corpus."
   },
   "rows": [
     {
@@ -12,12 +16,16 @@
       "direction": "input",
       "preferred_label": "Platinum-to-carbon mass ratio",
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumToCarbonMassRatio",
-      "present_in_573_source_concepts": "true",
-      "matching_source_concept_count": 1,
-      "source_occurrence_count": 7,
-      "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/catalyst-support-ratio-component",
-      "workflow_ids": "0d-particle-population-degradation-model-coupled-with-performance-model-prediction | 0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods | iet-composition-to-property-model | iet-ink-to-composition-model | image-fib-tomography-dataparameter-extraction-3d | image-parameter-extraction-2d | image-tem-data-parameter-extraction-3d",
-      "population_layer": "source_concept_registry"
+      "present_in_573_source_concepts": "false",
+      "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 1,
+      "source_occurrence_count": 1,
+      "concept_ids": "",
+      "workflow_ids": "iet-ink-to-composition-model",
+      "occurrence_ids": "iet-ink-to-composition-model::n7",
+      "population_layer": "source_occurrence_specific_alignment"
     },
     {
       "io_id": "IO_CMP_ICRatio",
@@ -26,10 +34,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCarbonRatio",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 9,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 9,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/i-c-ratio-component",
       "workflow_ids": "0d-particle-population-degradation-model-coupled-with-performance-model-prediction | 0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods | accelerated-stress-test-ast-on-nanostructured-electrodes | eis-on-nanostructured-electrodes | iet-composition-to-property-model | iet-ink-to-composition-model | ionomer-reconstruction-in-ccl-3d-images | model-electrochemistry-in-a-rde-cell | rotating-ring-disk-electrode-rrde",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n1",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_CMP_IonomerCatalystDispersionParameter",
@@ -38,10 +50,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCatalystDispersionParameter",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 1,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 1,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/ionomer-catalyst-dispersion-parameter-component",
       "workflow_ids": "iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n5",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_CMP_TotalPoreVolume",
@@ -50,10 +66,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#TotalPoreVolume",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_phi1",
@@ -62,10 +82,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreVolumeFraction",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_phi2",
@@ -74,10 +98,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreVolumeFraction",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_rMu1",
@@ -86,10 +114,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusGeometricMean",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_rMu2",
@@ -98,10 +130,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusGeometricMean",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_sigmaR1",
@@ -110,10 +146,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreRadiusLogarithmicStandardDeviation",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystPoreSizeDistribution_sigmaR2",
@@ -122,10 +162,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreRadiusLogarithmicStandardDeviation",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC",
@@ -134,10 +178,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportInducedIonomerAlignmentDegree",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt",
@@ -146,10 +194,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceInducedIonomerAlignmentDegree",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAinf",
@@ -158,10 +210,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#LimitingIonomerAlignmentDegree",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystSupportContactAngle",
@@ -170,10 +226,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonSupportWaterContactAngle",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 1,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 1,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/catalyst-support-contact-angle-material",
       "workflow_ids": "iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n12",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_MAT_CatalystActiveParticleContactAngle",
@@ -182,10 +242,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumSurfaceWaterContactAngle",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 1,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 1,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/catalyst-active-particle-contact-angle-material",
       "workflow_ids": "iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n11",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_MAT_IonomerContactAngles_thetaHI",
@@ -194,10 +258,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophilicIonomerContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_IonomerContactAngles_thetaHO",
@@ -206,10 +274,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#IdealHydrophobicIonomerContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_IonomerInitialFilmThickness",
@@ -218,10 +290,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#InitialIonomerFilmThickness",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 1,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 1,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/ionomer-initial-film-thickness-material",
       "workflow_ids": "iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n3",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_CMP_MeanPoreRadiusInsideTheIonomer",
@@ -230,22 +306,30 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerPatchRadius",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_CatalystActiveParticleDiameter",
       "direction": "input",
       "preferred_label": "Platinum particle radius",
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-      "present_in_573_source_concepts": "true",
-      "matching_source_concept_count": 1,
-      "source_occurrence_count": 7,
-      "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/catalyst-active-particle-diameter-material",
-      "workflow_ids": "iet-ink-to-composition-model | image-tem-data-parameter-extraction-3d | manual-cea-exp-tem-eds-analysis-cl | manual-fzj-mod-stardist-temseg | manual-fzj-mod-starplatin-temseg | sem-and-fib-powder | tem-and-eds-analysis-of-mea",
-      "population_layer": "source_concept_registry"
+      "present_in_573_source_concepts": "false",
+      "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 1,
+      "source_occurrence_count": 1,
+      "concept_ids": "",
+      "workflow_ids": "iet-ink-to-composition-model",
+      "occurrence_ids": "iet-ink-to-composition-model::n6",
+      "population_layer": "source_occurrence_specific_alignment"
     },
     {
       "io_id": "IO_CMP_SurfaceTensionOfWaterAtT353k",
@@ -254,34 +338,46 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#SurfaceTension",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_MAT_IonomerDensityDry",
       "direction": "input",
       "preferred_label": "Dry ionomer density",
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#DryIonomerDensity",
-      "present_in_573_source_concepts": "true",
-      "matching_source_concept_count": 1,
-      "source_occurrence_count": 4,
-      "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/ionomer-density-dry-material",
-      "workflow_ids": "0d-particle-population-degradation-model-coupled-with-performance-model-prediction | 0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods | iet-ink-to-composition-model | molecular-dynamics-for-the-electrode-electrolyte-interface-in-presence-of-ionomer",
-      "population_layer": "source_concept_registry"
+      "present_in_573_source_concepts": "false",
+      "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 1,
+      "source_occurrence_count": 1,
+      "concept_ids": "",
+      "workflow_ids": "iet-ink-to-composition-model",
+      "occurrence_ids": "iet-ink-to-composition-model::n2",
+      "population_layer": "source_occurrence_specific_alignment"
     },
     {
       "io_id": "IO_MAT_CatalystActiveParticleDensity",
       "direction": "input",
       "preferred_label": "Platinum density",
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
-      "present_in_573_source_concepts": "true",
-      "matching_source_concept_count": 1,
-      "source_occurrence_count": 8,
-      "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/catalyst-active-particle-density-material",
-      "workflow_ids": "0d-particle-population-degradation-model-coupled-with-performance-model-prediction | 0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods | iet-ink-to-composition-model | image-fib-tomography-dataparameter-extraction-3d | image-parameter-extraction-2d | image-tem-data-parameter-extraction-3d | manual-fzj-mod-stardist-temseg | manual-fzj-mod-starplatin-temseg",
-      "population_layer": "source_concept_registry"
+      "present_in_573_source_concepts": "false",
+      "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 1,
+      "source_occurrence_count": 1,
+      "concept_ids": "",
+      "workflow_ids": "iet-ink-to-composition-model",
+      "occurrence_ids": "iet-ink-to-composition-model::n8",
+      "population_layer": "source_occurrence_specific_alignment"
     },
     {
       "io_id": "IO_CMP_DensityOfCarbon",
@@ -290,10 +386,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonDensity",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_SIM_CapillaryPressureRange",
@@ -302,10 +402,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CapillaryPressureAxisData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLWaterRetentionCurve",
@@ -314,10 +418,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLWaterSaturationData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLFractionHydrophilicPores",
@@ -326,10 +434,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessiblePrimaryPoreVolumeFraction",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLFractionHydrophobicPores",
@@ -338,10 +450,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLAccessibleSecondaryPoreVolumeFraction",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLEffectiveIonomerCoverage",
@@ -350,22 +466,30 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLEffectiveIonomerCoverage",
       "present_in_573_source_concepts": "true",
       "matching_source_concept_count": 1,
+      "concept_wide_source_occurrence_count": 1,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 1,
       "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/ccl-effective-ionomer-coverage-component",
       "workflow_ids": "iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "occurrence_ids": "iet-ink-to-composition-model::n16",
+      "population_layer": "source_concept_registry_concept_wide"
     },
     {
       "io_id": "IO_CMP_CCLIonomerEffectiveFilmThickness",
       "direction": "output",
       "preferred_label": "Equivalent ionomer film thickness",
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#EquivalentIonomerFilmThickness",
-      "present_in_573_source_concepts": "true",
-      "matching_source_concept_count": 1,
-      "source_occurrence_count": 3,
-      "concept_ids": "https://w3id.org/h2kg/decode/workflow/concept/ccl-ionomer-effective-film-thickness-component",
-      "workflow_ids": "cea-mea-model-europium-2d | fitting-of-the-europium-model | iet-ink-to-composition-model",
-      "population_layer": "source_concept_registry"
+      "present_in_573_source_concepts": "false",
+      "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "true",
+      "occurrence_specific_source_occurrence_count": 1,
+      "source_occurrence_count": 1,
+      "concept_ids": "",
+      "workflow_ids": "iet-ink-to-composition-model",
+      "occurrence_ids": "iet-ink-to-composition-model::n17",
+      "population_layer": "source_occurrence_specific_alignment"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_A1",
@@ -374,10 +498,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLPrimaryPoreSpecificSurfaceArea",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_A2",
@@ -386,10 +514,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreSpecificSurfaceArea",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_Apores",
@@ -398,10 +530,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLTotalPoreSpecificSurfaceArea",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_deltaDA",
@@ -410,10 +546,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLIonomerAlignmentDegree",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_ThetaPtC",
@@ -422,10 +562,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumCarbonPoreWallContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_ThetaIon",
@@ -434,10 +578,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#IonomerCoatedPoreWallContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_thetaCCL",
@@ -446,10 +594,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLMeanContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHI",
@@ -458,10 +610,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophilicPoreMeanContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLStructuralParameters_thetaCCLHO",
@@ -470,10 +626,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLHydrophobicPoreMeanContactAngle",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLFractionHydrophobicPores_XHO",
@@ -482,10 +642,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLSecondaryPoreHydrophobicVolumeFraction",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_SIM_PoreSizeRange",
@@ -494,10 +658,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#PoreRadiusAxisData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_PSD",
@@ -506,10 +674,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLRefinedPoreSizeDistributionData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_SIM_ContactAngleRange",
@@ -518,10 +690,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#ContactAngleCosineAxisData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     },
     {
       "io_id": "IO_CMP_CCLRefinedPoreSizeDistributionContactAngleDistribution_CAD",
@@ -530,10 +706,14 @@
       "h2kg_iri": "https://w3id.org/h2kg/hydrogen-ontology#CCLContactAngleDistributionData",
       "present_in_573_source_concepts": "false",
       "matching_source_concept_count": 0,
+      "concept_wide_source_occurrence_count": 0,
+      "occurrence_specific_source_alignment": "false",
+      "occurrence_specific_source_occurrence_count": 0,
       "source_occurrence_count": 0,
       "concept_ids": "",
       "workflow_ids": "",
-      "population_layer": "itc_profile_overlay_only"
+      "occurrence_ids": "",
+      "population_layer": "itc_profile_without_source_occurrence"
     }
   ]
 }

@@ -4657,19 +4657,19 @@
         "deltaDA"
       ],
       "definition": "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness.",
-      "definition_status": "legacy",
+      "definition_status": "source",
       "source_roles": [
         "Property"
       ],
-      "disposition": "deprecated_source_ambiguous",
-      "primary_parent": "",
+      "disposition": "active_local_class",
+      "primary_parent": "StructuralCharacteristic",
       "replacement": "",
       "migration_targets": [],
-      "profile_fallback": "QuantitativeCharacteristic",
-      "scope_note": "",
-      "governance_status": "legacy",
-      "correction_action": "deprecate_source_ambiguous",
-      "evidence": "H2KG 2.1 taxonomy registry",
+      "profile_fallback": "",
+      "scope_note": "This model-derived characteristic describes molecular orientation in the cathode catalyst layer; a workflow may refer to its selected or reported value through a separate Parameter or DataPoint record.",
+      "governance_status": "approved",
+      "correction_action": "retain",
+      "evidence": "Curated ITC interface definition and notation deltaDA.",
       "module": "core",
       "technology_applicability": []
     },
@@ -6557,19 +6557,19 @@
         "deltaDA,C"
       ],
       "definition": "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface.",
-      "definition_status": "legacy",
+      "definition_status": "source",
       "source_roles": [
         "Parameter"
       ],
-      "disposition": "deprecated_source_ambiguous",
-      "primary_parent": "",
+      "disposition": "active_local_class",
+      "primary_parent": "StructuralCharacteristic",
       "replacement": "",
       "migration_targets": [],
-      "profile_fallback": "QuantitativeCharacteristic",
-      "scope_note": "",
-      "governance_status": "legacy",
-      "correction_action": "deprecate_source_ambiguous",
-      "evidence": "H2KG 2.1 taxonomy registry",
+      "profile_fallback": "",
+      "scope_note": "This intrinsic alignment characteristic is used by the ITC model through a separate Parameter record.",
+      "governance_status": "approved",
+      "correction_action": "retain",
+      "evidence": "Curated ITC interface definition and notation deltaDA,C.",
       "module": "core",
       "technology_applicability": []
     },
@@ -7583,8 +7583,8 @@
         "diameter of catalyst particle"
       ],
       "notations": [],
-      "definition": "A property denoting catalyst particle diameter and determined in Scanning Electron Microscopy Imaging.",
-      "definition_status": "source",
+      "definition": "A particle-size characteristic equal to the distance across a catalyst particle through its center under the adopted particle-shape and measurement convention.",
+      "definition_status": "curated",
       "source_roles": [
         "Property"
       ],
@@ -17222,19 +17222,19 @@
         "rion"
       ],
       "definition": "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface.",
-      "definition_status": "legacy",
+      "definition_status": "source",
       "source_roles": [
         "Parameter"
       ],
-      "disposition": "deprecated_source_ambiguous",
-      "primary_parent": "",
+      "disposition": "active_local_class",
+      "primary_parent": "MorphologicalCharacteristic",
       "replacement": "",
       "migration_targets": [],
-      "profile_fallback": "MorphologicalCharacteristic",
-      "scope_note": "",
-      "governance_status": "legacy",
-      "correction_action": "deprecate_source_ambiguous",
-      "evidence": "H2KG 2.1 taxonomy registry",
+      "profile_fallback": "",
+      "scope_note": "This radius characterizes finite ionomer patches on the secondary-pore surface and is not a pore radius inside ionomer.",
+      "governance_status": "approved",
+      "correction_action": "retain",
+      "evidence": "Curated ITC interface definition and notation rion; the misleading historical identifier is retained only as provenance.",
       "module": "core",
       "technology_applicability": []
     },
@@ -26744,19 +26744,19 @@
         "kA"
       ],
       "definition": "A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates.",
-      "definition_status": "legacy",
+      "definition_status": "source",
       "source_roles": [
         "Parameter"
       ],
-      "disposition": "deprecated_source_ambiguous",
-      "primary_parent": "",
+      "disposition": "active_local_class",
+      "primary_parent": "StructuralCharacteristic",
       "replacement": "",
       "migration_targets": [],
-      "profile_fallback": "QuantitativeCharacteristic",
-      "scope_note": "",
-      "governance_status": "legacy",
-      "correction_action": "deprecate_source_ambiguous",
-      "evidence": "H2KG 2.1 taxonomy registry",
+      "profile_fallback": "",
+      "scope_note": "The characteristic is intrinsic to the model description; its selected input value is represented by a separate Parameter record.",
+      "governance_status": "approved",
+      "correction_action": "retain",
+      "evidence": "Curated ITC interface definition and notation kA.",
       "module": "core",
       "technology_applicability": []
     },
@@ -33199,8 +33199,8 @@
         "MPL ink"
       ],
       "notations": [],
-      "definition": "Ink precursor used to fabricate microporous layer (carbon black + PTFE suspension + water + surfactant).",
-      "definition_status": "source",
+      "definition": "A fluid dispersion formulated for deposition and drying to form a microporous layer in an electrochemical gas-diffusion medium.",
+      "definition_status": "curated",
       "source_roles": [
         "Matter"
       ],
@@ -33209,7 +33209,7 @@
       "replacement": "",
       "migration_targets": [],
       "profile_fallback": "",
-      "scope_note": "",
+      "scope_note": "Typical formulations contain conductive carbon and a hydrophobic binder, but composition is recorded on the material occurrence rather than fixed by this class.",
       "governance_status": "approved",
       "correction_action": "retain",
       "evidence": "H2KG 2.1 taxonomy registry",
@@ -35654,8 +35654,8 @@
         "nitrogen physisorption"
       ],
       "notations": [],
-      "definition": "Nitrogen adsorption at 77 K to determine BET surface area and pore volume distribution (QSDFT).",
-      "definition_status": "source",
+      "definition": "An adsorption measurement in which nitrogen is used as the probe adsorptive to characterize specific surface area or pore structure.",
+      "definition_status": "curated",
       "source_roles": [
         "Measurement"
       ],
@@ -35664,7 +35664,7 @@
       "replacement": "",
       "migration_targets": [],
       "profile_fallback": "",
-      "scope_note": "",
+      "scope_note": "Measurement temperature, adsorption branch, surface-area model, and pore-size analysis method, such as BET or QSDFT, are occurrence-level conditions and metadata.",
       "governance_status": "approved",
       "correction_action": "retain",
       "evidence": "H2KG 2.1 taxonomy registry",
@@ -40396,19 +40396,19 @@
         "deltaDA,Pt"
       ],
       "definition": "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface.",
-      "definition_status": "legacy",
+      "definition_status": "source",
       "source_roles": [
         "Parameter"
       ],
-      "disposition": "deprecated_source_ambiguous",
-      "primary_parent": "",
+      "disposition": "active_local_class",
+      "primary_parent": "StructuralCharacteristic",
       "replacement": "",
       "migration_targets": [],
-      "profile_fallback": "QuantitativeCharacteristic",
-      "scope_note": "",
-      "governance_status": "legacy",
-      "correction_action": "deprecate_source_ambiguous",
-      "evidence": "H2KG 2.1 taxonomy registry",
+      "profile_fallback": "",
+      "scope_note": "This intrinsic alignment characteristic is used by the ITC model through a separate Parameter record.",
+      "governance_status": "approved",
+      "correction_action": "retain",
+      "evidence": "Curated ITC interface definition and notation deltaDA,Pt.",
       "module": "core",
       "technology_applicability": []
     },

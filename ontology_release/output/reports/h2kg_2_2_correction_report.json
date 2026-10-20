@@ -20,16 +20,16 @@
     }
   },
   "source_dependent_classes_assessed": 153,
-  "source_ambiguous_classes_deprecated": 152,
-  "source_dependent_classes_resolved": 1,
+  "source_ambiguous_classes_deprecated": 147,
+  "source_dependent_classes_resolved": 6,
   "baseline_counts": {
     "active_classes": 2360,
     "deprecated_classes": 6
   },
   "released_counts": {
-    "active_classes": 2221,
-    "deprecated_classes": 165,
-    "subclass_axioms": 2221,
+    "active_classes": 2226,
+    "deprecated_classes": 160,
+    "subclass_axioms": 2226,
     "definitions": 2402
   },
   "profile_migrations": {
@@ -49,7 +49,7 @@
       "skos:narrowMatch": 22
     },
     "mapped_h2kg_class_count": 168,
-    "changelog": "output\\ontology\\h2kg-tib-alignment-changelog.csv"
+    "changelog": "ontology_release\\output\\ontology\\h2kg-tib-alignment-changelog.csv"
   },
   "validation": {
     "taxonomy_conforms": true,
@@ -4658,11 +4658,11 @@
       "recommended_value": "Radius of a circular patch having the same surface area as the finite ionomer patch represented in the model; for patch area A, the area-equivalent radius is sqrt(A/pi).",
       "registry_final_value": "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface.",
       "released_value": "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface.",
-      "released_disposition": "deprecated_source_ambiguous",
-      "released_parent_iri": "",
+      "released_disposition": "active_local_class",
+      "released_parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#MorphologicalCharacteristic",
       "replacement_iri": "",
       "migration_target_iris": [],
-      "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#MorphologicalCharacteristic",
+      "profile_fallback_iri": "",
       "rationale": "An equivalent radius requires a declared geometrical equivalence; the current definition does not specify one.",
       "implementation": "Use this replacement only if the model uses area-equivalent circular patches. Confirm whether A is actual covered surface area or a projected area and how multiple patches are averaged. If the source uses a hemisphere, volume equivalence, or another model radius, retain that exact construction instead."
     },
@@ -6254,11 +6254,11 @@
       "recommended_value": "",
       "registry_final_value": "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface.",
       "released_value": "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface.",
-      "released_disposition": "deprecated_source_ambiguous",
-      "released_parent_iri": "",
+      "released_disposition": "active_local_class",
+      "released_parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#StructuralCharacteristic",
       "replacement_iri": "",
       "migration_target_iris": [],
-      "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "profile_fallback_iri": "",
       "rationale": "The record does not identify the orientation observable or normalization represented by degree.",
       "implementation": "Retrieve the source equation: identify which ionomer vector/group is oriented, the direction relative to the Pt surface, and whether the value is an orientational order parameter, angular statistic, aligned fraction or fitted coefficient. These alternatives cannot share one numerical definition."
     },
@@ -8406,11 +8406,11 @@
       "recommended_value": "",
       "registry_final_value": "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface.",
       "released_value": "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface.",
-      "released_disposition": "deprecated_source_ambiguous",
-      "released_parent_iri": "",
+      "released_disposition": "active_local_class",
+      "released_parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#StructuralCharacteristic",
       "replacement_iri": "",
       "migration_target_iris": [],
-      "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "profile_fallback_iri": "",
       "rationale": "The molecular orientation vector, surface reference direction, and order-parameter equation are unspecified.",
       "implementation": "Recover the source order parameter, molecular segment, reference axis, averaging region, and weighting. Do not assume a second-rank orientational order parameter or a particular cosine convention without the source."
     },
@@ -8463,11 +8463,11 @@
       "recommended_value": "",
       "registry_final_value": "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness.",
       "released_value": "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness.",
-      "released_disposition": "deprecated_source_ambiguous",
-      "released_parent_iri": "",
+      "released_disposition": "active_local_class",
+      "released_parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#StructuralCharacteristic",
       "replacement_iri": "",
       "migration_target_iris": [],
-      "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "profile_fallback_iri": "",
       "rationale": "The combined sidechain/backbone alignment formula and its thickness-dependent averaging are absent.",
       "implementation": "Recover the order-parameter equation, molecular vectors, reference direction, Pt/C weighting, and thickness weighting. Keep sidechain and backbone alignment separate unless the source defines their combination."
     },
@@ -8729,11 +8729,11 @@
       "recommended_value": "",
       "registry_final_value": "A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates.",
       "released_value": "A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates.",
-      "released_disposition": "deprecated_source_ambiguous",
-      "released_parent_iri": "",
+      "released_disposition": "active_local_class",
+      "released_parent_iri": "https://w3id.org/h2kg/hydrogen-ontology#StructuralCharacteristic",
       "replacement_iri": "",
       "migration_target_iris": [],
-      "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "profile_fallback_iri": "",
       "rationale": "The record identifies a spreading tendency but not the equation that assigns numerical values to its dimensionless parameter.",
       "implementation": "Retrieve the model equation or operational metric, define its normalization, sign and limits, and explain whether larger values mean more spreading. Do not substitute an arbitrary uniformity or contact-angle metric."
     },

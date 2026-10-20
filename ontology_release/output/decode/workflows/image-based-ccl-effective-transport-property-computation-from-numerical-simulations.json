@@ -479,12 +479,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "cl_saturation_scattering_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     }
   ],
   "projection_nodes": [
@@ -766,8 +766,8 @@
       "label": "Determination of CL saturation by SAXS/SANS",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -2277,6 +2277,21 @@
       "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
+    },
+    {
+      "id": "semantic::image-based-ccl-effective-transport-property-computation-from-numerical-simulations::e26::6911355472",
+      "workflow_id": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations",
+      "source": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n21",
+      "target": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n0",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
+      "type": "semantic_projection",
+      "source_dependency_id": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::e26",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "evidence": "Activity produces the target data.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
     }
   ],
   "edge_registry": [
@@ -3085,8 +3100,8 @@
       "source_node_id": "n21",
       "source_graphml_id": "n21",
       "source_label": "Determination of CL saturation by SAXS/SANS",
-      "source_semantic_role": "Parameter",
-      "source_workflow_role": "Parameter",
+      "source_semantic_role": "Measurement",
+      "source_workflow_role": "Measurement",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "target_occurrence_id": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n0",
       "target_node_id": "n0",
@@ -3096,14 +3111,16 @@
       "target_workflow_role": "Data",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccl-3d-voxel-data-classified-with-ionomer-and-pt-meso",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_output_data",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "semantic_edge_ids": [
+        "semantic::image-based-ccl-effective-transport-property-computation-from-numerical-simulations::e26::6911355472"
+      ],
+      "semantic_direction": "same_as_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity produces the target data."
     }
   ],
   "workflow_dependencies": [
@@ -3271,12 +3288,12 @@
       ],
       "rationale": "One record declares the dependency and an exact declared handoff grounds a grounded one-sided link.",
       "both_methods_in_manual_json": false,
-      "upstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "upstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "downstream_occurrence_id": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n6",
-      "source": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "source": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "target": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n6",
       "semantic_source": "image-based-ccl-effective-transport-property-computation-from-numerical-simulations::n6",
-      "semantic_target": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "semantic_target": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "handoff_anchor_iris": [
         "https://w3id.org/h2kg/decode/workflow/anchor/ccl-3d-voxel-data-classified-with-ionomer-and-pt-meso"
       ],

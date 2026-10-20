@@ -283,7 +283,10 @@ def build_docs(
         shutil.copytree(output_dir.parent / "decode", output_dir / "decode", dirs_exist_ok=True)
     evaluation_dir = output_dir.parent / "evaluation"
     if evaluation_dir.exists():
-        shutil.copytree(evaluation_dir, output_dir / "evaluation", dirs_exist_ok=True)
+        evaluation_target = output_dir / "evaluation"
+        if evaluation_target.exists():
+            shutil.rmtree(evaluation_target)
+        shutil.copytree(evaluation_dir, evaluation_target)
     examples_dir = output_dir.parent / "examples"
     if examples_dir.exists():
         target_examples = output_dir / "examples"
@@ -2839,15 +2842,16 @@ def _release_body(
         "correction_markdown": _relative_href(page_path, docs_root / "reports" / "h2kg_2_2_correction_report.md"),
     }
     evaluation_links = {
-        "assessment_csv": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.csv"),
-        "assessment_json": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.json"),
-        "assessment_md": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_summary.md"),
-        "assessment_xlsx": _relative_href(page_path, docs_root / "evaluation" / "semantic_assessment_registry.xlsx"),
+        "inventory_csv": _relative_href(page_path, docs_root / "evaluation" / "automated_consistency_inventory.csv"),
+        "inventory_json": _relative_href(page_path, docs_root / "evaluation" / "automated_consistency_inventory.json"),
+        "inventory_md": _relative_href(page_path, docs_root / "evaluation" / "automated_consistency_summary.md"),
+        "inventory_xlsx": _relative_href(page_path, docs_root / "evaluation" / "automated_consistency_inventory.xlsx"),
         "retrieval_json": _relative_href(page_path, docs_root / "evaluation" / "retrieval_evaluation.json"),
         "comparator_md": _relative_href(page_path, docs_root / "evaluation" / "comparator_matrix.md"),
         "comparator_xlsx": _relative_href(page_path, docs_root / "evaluation" / "focused_comparator_matrix.xlsx"),
     }
-    assessment = evaluation.get("semantic_assessment", {})
+    inventory = evaluation.get("automated_consistency", {})
+    independent_audit = evaluation.get("independent_application_audit", {})
     retrieval = evaluation.get("retrieval", {})
     comparator = evaluation.get("comparator_evaluation", {})
     principal_sources = sorted(
@@ -2889,7 +2893,7 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H2KG 2.3 evaluated release</p>
+        <p class="eyebrow">H2KG 2.3 release; independent application audit pending</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
         <p>The 2.2 correction ledger records <strong>{correction.get('decision_counts', {}).get('total', 0)}</strong> parent and definition decisions across <strong>{correction.get('decision_counts', {}).get('unique_classes', 0)}</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
@@ -2911,24 +2915,21 @@ def _release_body(
     <section class="stack">
       <article class="card">
         <p class="eyebrow">Evaluation</p>
-        <h2>Traceable semantic and application assessment</h2>
-        <p>The release records <strong>{assessment.get('assessment_count', 0)}</strong> item-level decisions across ITC fields, DECODE concepts and edges, a stratified H2KG taxonomy sample, and asserted external mappings. Application-level acceptance of a DECODE-local item does not promote it into H2KG.</p>
+        <h2>Machine checks separated from independent review</h2>
+        <p>The release records <strong>{inventory.get('check_count', 0)}</strong> automated registry-consistency and traceability checks. These are machine checks, not reviewer judgments. A focused audit of <strong>{independent_audit.get('review_item_count', 134)}</strong> prespecified application items by two external experts is <strong>{escape(str(independent_audit.get('status', 'review_pending')).replace('_', ' '))}</strong>.</p>
         <ul class="stats">
-          <li><strong>Accepted:</strong> {assessment.get('accepted_count', 0)}</li>
-          <li><strong>Accepted after correction:</strong> {assessment.get('accepted_after_correction_count', 0)}</li>
-          <li><strong>Rejected:</strong> {assessment.get('rejected_count', 0)}</li>
-          <li><strong>Unresolved:</strong> {assessment.get('unresolved_count', 0)}</li>
-          <li><strong>Retrieval:</strong> {retrieval.get('rq1_semantic_result_count', 0)} occurrences across {retrieval.get('rq1_semantic_workflow_count', 0)} workflows, compared with {retrieval.get('rq1_exact_label_result_count', 0)} occurrences across {retrieval.get('rq1_exact_label_workflow_count', 0)} workflows for the defined exact-label baseline</li>
-          <li><strong>Focused comparison:</strong> {comparator.get('assessment_count', 0)} evidence-backed task outcomes across {comparator.get('resource_count', 0)} ontology resources; no aggregate superiority score</li>
+          <li><strong>Review design:</strong> 44 ITC fields, 34 asserted public mappings plus one withheld negative control, 7 diameter/radius occurrences, 24 DECODE-local concepts, and 24 edge projections</li>
+          <li><strong>RQ1:</strong> independent semantic-anchor and normalized exact-label queries over one source-output population and the same 24 ITC inputs</li>
+          <li><strong>Comparator:</strong> {comparator.get('assessment_count', 0)} author-curated capability judgments across {comparator.get('resource_count', 0)} resources; automation checks graph parsing and cited-IRI presence only</li>
         </ul>
-        <p class="muted">Historical disagreement and adjudication counts are reported as unavailable where they were not retained. Retrieval results demonstrate reviewed query behavior but do not claim independently estimated precision or recall.</p>
+        <p class="muted">No independent acceptance, precision, recall, retrieval-improvement, or ontology-superiority claim is made while review is pending. DECODE-local concepts remain project-local regardless of application-level acceptance.</p>
         <div class="button-row">
-          <a class="inline-button" href="{evaluation_links['assessment_csv']}" download>Assessment CSV</a>
-          <a class="inline-button" href="{evaluation_links['assessment_json']}" download>Assessment JSON</a>
-          <a class="inline-button" href="{evaluation_links['assessment_md']}" download>Assessment summary</a>
-          <a class="inline-button" href="{evaluation_links['assessment_xlsx']}" download>Assessment Excel</a>
-          <a class="inline-button" href="{evaluation_links['retrieval_json']}" download>Retrieval evaluation</a>
-          <a class="inline-button" href="{evaluation_links['comparator_md']}" download>Comparator matrix</a>
+          <a class="inline-button" href="{evaluation_links['inventory_csv']}" download>Automated checks CSV</a>
+          <a class="inline-button" href="{evaluation_links['inventory_json']}" download>Automated checks JSON</a>
+          <a class="inline-button" href="{evaluation_links['inventory_md']}" download>Automated-check summary</a>
+          <a class="inline-button" href="{evaluation_links['inventory_xlsx']}" download>Automated checks Excel</a>
+          <a class="inline-button" href="{evaluation_links['retrieval_json']}" download>Competency demonstrations</a>
+          <a class="inline-button" href="{evaluation_links['comparator_md']}" download>Capability assessment</a>
           <a class="inline-button" href="{evaluation_links['comparator_xlsx']}" download>Comparator Excel</a>
         </div>
       </article>
@@ -2945,7 +2946,7 @@ def _release_body(
           <li><strong>Asserted relations:</strong> {escape(', '.join(f'{key}={value}' for key, value in alignment.get('asserted_mapping_counts', {}).items()) or 'none')}</li>
           <li><strong>Principal benchmark ontologies:</strong> {escape(principal_source_text)}</li>
         </ul>
-        <p><strong>Foundational dependencies and reused vocabularies</strong> such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
+        <p>The <strong>{alignment.get('mapping_count', 0)} alignment records</strong> comprise <strong>{alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} TIB-derived SKOS mappings</strong> and <strong>{alignment.get('foundational_mapping_count', 0)} foundational reuse/alignment records</strong>. Foundational dependencies and reused vocabularies such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
         <div class="button-row">
           <a class="inline-button" href="{alignment_links['page']}">Browse alignments</a>
           <a class="inline-button" href="{alignment_links['benchmark']}">Benchmark</a>
@@ -3013,7 +3014,8 @@ def _quality_body(
     publication = release.get("publication_evidence", {})
     semantic_validation = release.get("semantic_role_validation", {})
     semantic_metrics = semantic_validation.get("metrics", {})
-    assessment = evaluation.get("semantic_assessment", {})
+    inventory = evaluation.get("automated_consistency", {})
+    independent_audit = evaluation.get("independent_application_audit", {})
     retrieval = evaluation.get("retrieval", {})
     comparator = evaluation.get("comparator_evaluation", {})
     current_status_rows = [
@@ -3123,15 +3125,15 @@ def _quality_body(
     <section class="grid">
       <article class="card">
         <h2>Evaluation Evidence</h2>
-        <p><strong>{assessment.get('assessment_count', 0)}</strong> semantic-assessment records are published with evidence and final outcomes. The focused comparator contains <strong>{comparator.get('assessment_count', 0)}</strong> task outcomes, and the reviewed ITC retrieval returns <strong>{retrieval.get('rq1_semantic_result_count', 0)}</strong> occurrences across <strong>{retrieval.get('rq1_semantic_workflow_count', 0)}</strong> workflows.</p>
-        <p class="muted">DECODE acceptance is application-level evidence only. No DECODE-local concept is promoted into the H2KG vocabulary by this assessment.</p>
+        <p><strong>{inventory.get('check_count', 0)}</strong> automated consistency checks are published separately from the <strong>{independent_audit.get('review_item_count', 134)}-item</strong> external application audit, whose current status is <strong>{escape(str(independent_audit.get('status', 'review_pending')).replace('_', ' '))}</strong>. The comparator contains <strong>{comparator.get('assessment_count', 0)}</strong> author-curated capability judgments verified only for graph parsing and cited-IRI presence.</p>
+        <p class="muted">The retrieval outputs are competency demonstrations, not a precision, recall, or retrieval-improvement evaluation. No DECODE-local concept is promoted into H2KG by either the machine checks or the application audit.</p>
         <div class="button-row">
-          <a class="inline-button" href="../evaluation/semantic_assessment_registry.csv" download>Assessment CSV</a>
-          <a class="inline-button" href="../evaluation/semantic_assessment_registry.json" download>Assessment JSON</a>
-          <a class="inline-button" href="../evaluation/semantic_assessment_summary.md" download>Assessment summary</a>
-          <a class="inline-button" href="../evaluation/semantic_assessment_registry.xlsx" download>Assessment Excel</a>
-          <a class="inline-button" href="../evaluation/retrieval_evaluation.json" download>Retrieval JSON</a>
-          <a class="inline-button" href="../evaluation/comparator_matrix.md" download>Comparator matrix</a>
+          <a class="inline-button" href="../evaluation/automated_consistency_inventory.csv" download>Automated checks CSV</a>
+          <a class="inline-button" href="../evaluation/automated_consistency_inventory.json" download>Automated checks JSON</a>
+          <a class="inline-button" href="../evaluation/automated_consistency_summary.md" download>Automated-check summary</a>
+          <a class="inline-button" href="../evaluation/automated_consistency_inventory.xlsx" download>Automated checks Excel</a>
+          <a class="inline-button" href="../evaluation/retrieval_evaluation.json" download>Competency demonstrations</a>
+          <a class="inline-button" href="../evaluation/comparator_matrix.md" download>Capability assessment</a>
           <a class="inline-button" href="../evaluation/focused_comparator_matrix.xlsx" download>Comparator Excel</a>
         </div>
       </article>

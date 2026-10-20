@@ -483,12 +483,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ch2s_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n22",
@@ -1275,8 +1275,8 @@
       "label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -2961,6 +2961,21 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::fib-measurements-on-gdl-or-mpl-and-catalyst-materials::e8::928b9fd494",
+      "workflow_id": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials",
+      "source": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n21",
+      "target": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::e8",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::fib-measurements-on-gdl-or-mpl-and-catalyst-materials::e9::44f948b1ac",
       "workflow_id": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials",
       "source": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::n22",
@@ -3910,18 +3925,20 @@
       "target_node_id": "n21",
       "target_graphml_id": "n21",
       "target_label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::fib-measurements-on-gdl-or-mpl-and-catalyst-materials::e8::928b9fd494"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "fib-measurements-on-gdl-or-mpl-and-catalyst-materials::e9",

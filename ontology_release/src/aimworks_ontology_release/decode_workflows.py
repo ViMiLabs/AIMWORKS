@@ -407,6 +407,8 @@ def _federate(
                 "confidence": mapping.get("confidence", "not_mapped") if mapping else "not_mapped",
                 "mapping_evidence": mapping.get("evidence", "No explicit mapping decision.") if mapping else "No explicit mapping decision.",
             }
+            if mapping and str(mapping.get("workflow_role", "")).strip():
+                node["workflow_role"] = str(mapping["workflow_role"])
             nodes.append(node)
             matrix_rows.append(
                 {
@@ -540,6 +542,8 @@ def _canonicalize_duplicate_anchors(
     aliases: dict[str, dict[str, str]] = {}
     for key, anchor_ids in groups.items():
         if len(anchor_ids) < 2:
+            continue
+        if any(node.get("prevent_anchor_canonicalization") for node in nodes_by_key[key]):
             continue
         ranked = sorted(
             anchor_ids,
@@ -793,7 +797,10 @@ def _classify_decode_edge(
             )
         )
 
-    if override:
+    forced_structural = bool(override and override.get("outcome") == "decode_structural_only")
+    if forced_structural:
+        pass
+    elif override:
         semantic_source = f"{edge['workflow_id']}::{override.get('semantic_source_node_id', source['source_id'])}"
         semantic_target = f"{edge['workflow_id']}::{override.get('semantic_target_node_id', target['source_id'])}"
         semantic_source, semantic_target = _normalise_predicate_direction(
@@ -875,8 +882,14 @@ def _classify_decode_edge(
         direct(H2KG + "ofProperty", proxy["id"], source["id"], "h2kg_reified", "property_value_type", "Reified DataPoint refers to the source property occurrence.")
 
     if not semantic_edges:
-        rationale = "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
-        outcome, pattern, confidence, governance_status = "decode_structural_only", "structural_dependency", "context_required", "classified"
+        if forced_structural:
+            rationale = str(override.get("evidence", "Configured evidence-limited structural dependency."))
+            pattern = str(override.get("pattern", "explicit_structural_only"))
+            confidence, governance_status = "configured", "approved"
+        else:
+            rationale = "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+            pattern, confidence, governance_status = "structural_dependency", "context_required", "classified"
+        outcome = "decode_structural_only"
     else:
         outcome = semantic_edges[0]["projection_outcome"]
         pattern = semantic_edges[0]["projection_pattern"]
@@ -1583,6 +1596,8 @@ def _with_semantic_role(
         result["role_assignment"] = str(override.get("id", "curated_override"))
         result["canonical_role_iri"] = role
         result["semantic_role"] = _last_segment(role)
+        if str(override.get("workflow_role", "")).strip():
+            result["workflow_role"] = str(override["workflow_role"])
     if not role:
         role = str(result.get("canonical_role_iri", "")).strip()
         if role:
@@ -1664,9 +1679,27 @@ def _concept_registry(
     concepts: list[dict[str, Any]] = []
     for key, occurrences in sorted(groups.items(), key=lambda item: (item[1][0]["label"].lower(), item[0][1])):
         representative = occurrences[0]
-        decisions = {node["decision"] for node in occurrences}
-        if len(decisions) != 1:
-            raise ValueError(f"Inconsistent DECODE decisions for {representative['label']!r}: {sorted(decisions)}")
+        mapping_variants = sorted(
+            {
+                (
+                    str(node.get("decision", "")),
+                    str(node.get("mapping_state", "")),
+                    str(node.get("anchor_id", "")),
+                    str(node.get("semantic_role", "")),
+                )
+                for node in occurrences
+            }
+        )
+        semantic_mapping_variants = {
+            (state, anchor, role)
+            for _decision, state, anchor, role in mapping_variants
+        }
+        # Mapping provenance may legitimately differ (for example, an existing
+        # mapping versus a strict alias) while all occurrences still resolve to
+        # the same semantic state, anchor, and role.
+        mixed_mapping = len(semantic_mapping_variants) != 1
+        semantic_roles = {str(node.get("semantic_role", "")) for node in occurrences}
+        canonical_roles = {str(node.get("canonical_role_iri", "")) for node in occurrences}
         candidates = _h2kg_candidates(representative["label"], h2kg_terms)
         concepts.append(
             {
@@ -1678,14 +1711,28 @@ def _concept_registry(
                 "workflow_ids": sorted({node["workflow_id"] for node in occurrences}),
                 "source_descriptions": sorted({node.get("description", "") for node in occurrences if node.get("description", "")}),
                 "neighbor_context": sorted({label for node in occurrences for label in neighbors[node["id"]]})[:20],
-                "decision": representative["decision"],
-                "mapping_state": representative["mapping_state"],
-                "anchor_iri": representative.get("anchor_id", ""),
-                "canonical_role_iri": representative.get("canonical_role_iri", ""),
-                "semantic_role": representative.get("semantic_role", ""),
-                "role_assignment": representative.get("role_assignment", ""),
-                "confidence": representative.get("confidence", "not_mapped"),
-                "rationale": representative.get("mapping_evidence", ""),
+                "decision": "occurrence_specific" if mixed_mapping else representative["decision"],
+                "mapping_state": "mixed_occurrence_mapping" if mixed_mapping else representative["mapping_state"],
+                "anchor_iri": "" if mixed_mapping else representative.get("anchor_id", ""),
+                "canonical_role_iri": next(iter(canonical_roles)) if len(canonical_roles) == 1 else "",
+                "semantic_role": next(iter(semantic_roles)) if len(semantic_roles) == 1 else "Mixed role",
+                "role_assignment": "occurrence_specific_source_evidence" if mixed_mapping else representative.get("role_assignment", ""),
+                "confidence": "source_specific" if mixed_mapping else representative.get("confidence", "not_mapped"),
+                "rationale": (
+                    "Identical source labels have source-specific semantic interpretations. "
+                    "Occurrence mappings are retained separately and no concept-wide anchor is asserted."
+                    if mixed_mapping
+                    else representative.get("mapping_evidence", "")
+                ),
+                "occurrence_mapping_variants": [
+                    {
+                        "decision": decision,
+                        "mapping_state": state,
+                        "anchor_iri": anchor,
+                        "semantic_role": role,
+                    }
+                    for decision, state, anchor, role in mapping_variants
+                ],
                 "candidate_h2kg_terms": candidates,
             }
         )
@@ -1845,7 +1892,13 @@ def _index_semantic_projections(entries: list[dict[str, Any]]) -> dict[tuple[str
     for entry in entries:
         if not isinstance(entry, dict):
             continue
-        if all(isinstance(entry.get(key), str) and entry[key] for key in ("workflow_id", "source_node_id", "target_node_id", "predicate")):
+        has_identity = all(
+            isinstance(entry.get(key), str) and entry[key]
+            for key in ("workflow_id", "source_node_id", "target_node_id")
+        )
+        has_projection = isinstance(entry.get("predicate"), str) and bool(entry["predicate"])
+        is_structural = entry.get("outcome") == "decode_structural_only"
+        if has_identity and (has_projection or is_structural):
             result[(entry["workflow_id"], entry["source_node_id"], entry["target_node_id"])] = entry
     return result
 
@@ -2035,7 +2088,7 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
         "concept_id", "source_label", "native_category", "visual_category", "occurrence_count",
         "workflow_ids", "source_descriptions", "neighbor_context", "decision", "mapping_state",
         "anchor_iri", "canonical_role_iri", "semantic_role", "role_assignment", "confidence", "rationale",
-        "candidate_h2kg_terms",
+        "occurrence_mapping_variants", "candidate_h2kg_terms",
     ]
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=fields)
@@ -2044,6 +2097,9 @@ def _write_concept_registry(path: Path, rows: list[dict[str, Any]]) -> Path:
         flattened = dict(row)
         for key in ("workflow_ids", "source_descriptions", "neighbor_context"):
             flattened[key] = "; ".join(str(value) for value in row[key])
+        flattened["occurrence_mapping_variants"] = json.dumps(
+            row.get("occurrence_mapping_variants", []), ensure_ascii=False
+        )
         flattened["candidate_h2kg_terms"] = json.dumps(row["candidate_h2kg_terms"], ensure_ascii=False)
         writer.writerow(flattened)
     return write_text(path, buffer.getvalue())

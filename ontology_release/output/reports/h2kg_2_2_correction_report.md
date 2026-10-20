@@ -4,10 +4,10 @@
 - Decisions: 626 (156 parent; 470 definition)
 - Unique classes covered: 544
 - Source-dependent classes assessed: 153
-- Source-ambiguous classes deprecated: 152
-- Source-dependent classes resolved: 1
-- Active classes: 2360 -> 2221
-- Deprecated compatibility classes: 6 -> 165
+- Source-ambiguous classes deprecated: 147
+- Source-dependent classes resolved: 6
+- Active classes: 2360 -> 2226
+- Deprecated compatibility classes: 6 -> 160
 - Validation conforms: True
 - Competency checks: 9 / 9
 

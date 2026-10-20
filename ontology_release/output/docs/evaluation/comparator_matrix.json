@@ -1,6 +1,6 @@
 {
   "summary": {
-    "status": "complete",
+    "status": "author_curated_assessment_complete",
     "resource_count": 4,
     "task_count": 5,
     "assessment_count": 20,
@@ -27,7 +27,7 @@
       }
     },
     "aggregate_score_reported": false,
-    "method_note": "Native and imported evidence are reported separately; outcomes are not combined into a superiority score."
+    "method_note": "Capability outcomes are author-curated judgments. Automation verifies RDF parsing and presence of cited IRIs only; it does not execute the representation tasks or establish ontology superiority."
   },
   "resources": [
     {
@@ -40,8 +40,8 @@
       "source_url": "https://github.com/ViMiLabs/AIMWORKS",
       "source_revision": "release-build",
       "source_path": "output/ontology/h2kg-v2-complete.ttl",
-      "sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1",
-      "triple_count": 78511,
+      "sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "triple_count": 78619,
       "parse_status": "passed"
     },
     {
@@ -97,9 +97,11 @@
       "resource_version": "2.3.0",
       "outcome": "direct_native",
       "evidence_iris": "https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity | https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalComponent | https://w3id.org/h2kg/hydrogen-ontology#SynthesisProcess",
-      "query_evidence": "All three IRIs occur in the H2KG graph and cover material, electrochemical-component, and process roles.",
+      "iri_presence_evidence": "All three IRIs occur in the H2KG graph and cover material, electrochemical-component, and process roles.",
       "rationale": "The domain classes and their intrinsic taxonomy are defined by H2KG.",
-      "source_sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1"
+      "source_sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C2",
@@ -110,9 +112,11 @@
       "resource_version": "2.3.0",
       "outcome": "direct_native",
       "evidence_iris": "https://w3id.org/h2kg/hydrogen-ontology#Measurement | https://w3id.org/h2kg/hydrogen-ontology#hasMeasurementSubject | https://w3id.org/h2kg/hydrogen-ontology#usesInstrument | https://w3id.org/h2kg/hydrogen-ontology#hasParameter | https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "query_evidence": "The graph contains a native measurement anchor and explicit subject, instrument, parameter-record, and output-data relations.",
+      "iri_presence_evidence": "The graph contains a native measurement anchor and explicit subject, instrument, parameter-record, and output-data relations.",
       "rationale": "The complete measurement-context pattern is represented by native H2KG classes and properties.",
-      "source_sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1"
+      "source_sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C3",
@@ -123,9 +127,11 @@
       "resource_version": "2.3.0",
       "outcome": "direct_via_import",
       "evidence_iris": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint | https://w3id.org/h2kg/hydrogen-ontology#ofProperty | https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf | https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue | http://qudt.org/schema/qudt/QuantityValue | https://www.w3.org/ns/prov-o",
-      "query_evidence": "Native H2KG result and bearer relations connect to QUDT quantity values and PROV-O generation provenance imported by the release.",
+      "iri_presence_evidence": "Native H2KG result and bearer relations connect to QUDT quantity values and PROV-O generation provenance imported by the release.",
       "rationale": "H2KG supplies the domain pattern while unit/value and provenance semantics are completed through foundational imports.",
-      "source_sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1"
+      "source_sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C4",
@@ -136,9 +142,11 @@
       "resource_version": "2.3.0",
       "outcome": "direct_native",
       "evidence_iris": "https://w3id.org/h2kg/hydrogen-ontology#InkToCompositionModel | https://w3id.org/h2kg/hydrogen-ontology#hasParameter | https://w3id.org/h2kg/hydrogen-ontology#hasInputData | https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
-      "query_evidence": "The released ITC profile uses explicit parameter-record, input-data, and output-data paths.",
+      "iri_presence_evidence": "The released ITC profile uses explicit parameter-record, input-data, and output-data paths.",
       "rationale": "Typed model interfaces are represented directly in H2KG profiles.",
-      "source_sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1"
+      "source_sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C5",
@@ -149,9 +157,11 @@
       "resource_version": "2.3.0",
       "outcome": "requires_extension",
       "evidence_iris": "https://w3id.org/h2kg/hydrogen-ontology#WorkflowProfile | https://w3id.org/h2kg/hydrogen-ontology#hasMetadata | https://www.w3.org/ns/prov-o",
-      "query_evidence": "H2KG provides workflow-profile, metadata, and provenance semantics but does not define immutable source-edge records in its core graph.",
+      "iri_presence_evidence": "H2KG provides workflow-profile, metadata, and provenance semantics but does not define immutable source-edge records in its core graph.",
       "rationale": "Source identifiers and edge-level preservation require an application layer such as the DECODE projection.",
-      "source_sha256": "946C462EEABDC14ECF82325AA468A40B1881C119451DB6953322F78BD96128A1"
+      "source_sha256": "A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C1",
@@ -162,9 +172,11 @@
       "resource_version": "0.39.0",
       "outcome": "direct_native",
       "evidence_iris": "https://w3id.org/emmo/domain/electrochemistry#electrochemistry_6f2c88c9_5c04_4953_a298_032cc3ab9b77 | https://w3id.org/emmo/domain/electrochemistry#electrochemistry_0f007072_a8dd_4798_b865_1bf9363be627 | https://w3id.org/emmo/domain/electrochemistry#electrochemistry_2e3e14f9_4cb8_45b2_908e_47eec893dec8",
-      "query_evidence": "Native EDO classes identify an electrochemical cell, electrode, and electrode reaction.",
+      "iri_presence_evidence": "Native EDO classes identify an electrochemical cell, electrode, and electrode reaction.",
       "rationale": "Electrochemical systems, components, and reactions are a direct EDO scope.",
-      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7"
+      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C2",
@@ -175,9 +187,11 @@
       "resource_version": "0.39.0",
       "outcome": "direct_via_import",
       "evidence_iris": "https://w3id.org/emmo#EMMO_463bcfda_867b_41d9_a967_211d4d437cfb | https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample | https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument | https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementParameter | https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput",
-      "query_evidence": "The frozen full graph exposes the measurement pattern through imported EMMO and CHAMEO IRIs.",
+      "iri_presence_evidence": "The frozen full graph exposes the measurement pattern through imported EMMO and CHAMEO IRIs.",
       "rationale": "The capability is present, but the supporting measurement vocabulary is imported rather than native to the EDO namespace.",
-      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7"
+      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C3",
@@ -188,9 +202,11 @@
       "resource_version": "0.39.0",
       "outcome": "direct_via_import",
       "evidence_iris": "https://w3id.org/emmo#EMMO_b7bcff25_ffc3_474e_9ab5_01b1664bd4ba | https://w3id.org/emmo#EMMO_e1097637_70d2_4895_973f_2396f04fa204 | https://w3id.org/emmo#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569 | https://w3id.org/emmo#EMMO_873b0ab3_88e6_4054_b901_5531e01f14a4",
-      "query_evidence": "Imported EMMO terms provide property, bearer linkage, measured-property, and measurement-unit semantics in the full graph.",
+      "iri_presence_evidence": "Imported EMMO terms provide property, bearer linkage, measured-property, and measurement-unit semantics in the full graph.",
       "rationale": "The result pattern is available through EMMO imports; application provenance still requires an instance convention.",
-      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7"
+      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C4",
@@ -201,9 +217,11 @@
       "resource_version": "0.39.0",
       "outcome": "direct_via_import",
       "evidence_iris": "https://w3id.org/emmo#EMMO_64963ed6_39c9_4258_85e0_6466c4b5420c | https://w3id.org/emmo#EMMO_d1d436e7_72fc_49cd_863b_7bfb4ba5276a | https://w3id.org/emmo#EMMO_36e69413_8c59_4799_946c_10b05d266e22 | https://w3id.org/emmo#EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840",
-      "query_evidence": "Imported EMMO classes and relations represent workflows, parameters, inputs, and outputs.",
+      "iri_presence_evidence": "Imported EMMO classes and relations represent workflows, parameters, inputs, and outputs.",
       "rationale": "A generic model interface can be expressed through imported EMMO, but ITC-specific typing is not native EDO content.",
-      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7"
+      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C5",
@@ -214,9 +232,11 @@
       "resource_version": "0.39.0",
       "outcome": "requires_extension",
       "evidence_iris": "https://w3id.org/emmo#EMMO_64963ed6_39c9_4258_85e0_6466c4b5420c | https://w3id.org/emmo#EMMO_36e69413_8c59_4799_946c_10b05d266e22 | https://w3id.org/emmo#EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840",
-      "query_evidence": "Workflow and input/output concepts occur, but no native source-edge identity and source-topology preservation pattern was found.",
+      "iri_presence_evidence": "Workflow and input/output concepts occur, but no native source-edge identity and source-topology preservation pattern was found.",
       "rationale": "Application-specific provenance and immutable source dependency records require an extension.",
-      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7"
+      "source_sha256": "78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C1",
@@ -227,9 +247,11 @@
       "resource_version": "2026-09-25",
       "outcome": "out_of_scope",
       "evidence_iris": "http://purl.obolibrary.org/obo/BFO_0000040 | http://purl.obolibrary.org/obo/BFO_0000015",
-      "query_evidence": "Only imported generic material-entity and process anchors support this task; no native electrochemical classes were found.",
+      "iri_presence_evidence": "Only imported generic material-entity and process anchors support this task; no native electrochemical classes were found.",
       "rationale": "HDO addresses digital assets and metadata rather than electrochemical domain terminology.",
-      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986"
+      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C2",
@@ -240,9 +262,11 @@
       "resource_version": "2026-09-25",
       "outcome": "requires_mapping_or_context",
       "evidence_iris": "https://purls.helmholtz-metadaten.de/hob/HDO_00001070 | https://purls.helmholtz-metadaten.de/hob/HDO_00001071 | http://purl.obolibrary.org/obo/RO_0002233 | http://purl.obolibrary.org/obo/RO_0002234",
-      "query_evidence": "Native measurement-process and measurement-data classes combine with imported generic input/output relations, but no complete subject-instrument-setting pattern was found.",
+      "iri_presence_evidence": "Native measurement-process and measurement-data classes combine with imported generic input/output relations, but no complete subject-instrument-setting pattern was found.",
       "rationale": "Domain mapping and additional context are required for a characterization record.",
-      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986"
+      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C3",
@@ -253,9 +277,11 @@
       "resource_version": "2026-09-25",
       "outcome": "requires_extension",
       "evidence_iris": "https://purls.helmholtz-metadaten.de/hob/HDO_00002023 | https://purls.helmholtz-metadaten.de/hob/HDO_00000101 | https://purls.helmholtz-metadaten.de/hob/HDO_00006075",
-      "query_evidence": "HDO natively covers provenance and unit concepts but lacks a complete scientific result-property-bearer-value pattern.",
+      "iri_presence_evidence": "HDO natively covers provenance and unit concepts but lacks a complete scientific result-property-bearer-value pattern.",
       "rationale": "The digital-asset semantics need a domain result model extension.",
-      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986"
+      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C4",
@@ -266,9 +292,11 @@
       "resource_version": "2026-09-25",
       "outcome": "direct_via_import",
       "evidence_iris": "https://purls.helmholtz-metadaten.de/hob/HDO_00001067 | https://purls.helmholtz-metadaten.de/hob/HDO_10000006 | http://purl.obolibrary.org/obo/RO_0002233 | http://purl.obolibrary.org/obo/RO_0002234",
-      "query_evidence": "Native computational-model and model-parameter terms combine with imported Relation Ontology input/output properties.",
+      "iri_presence_evidence": "Native computational-model and model-parameter terms combine with imported Relation Ontology input/output properties.",
       "rationale": "The generic computational-model interface is representable through native HDO plus imported relations.",
-      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986"
+      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C5",
@@ -279,9 +307,11 @@
       "resource_version": "2026-09-25",
       "outcome": "requires_extension",
       "evidence_iris": "https://purls.helmholtz-metadaten.de/hob/HDO_10000023 | https://purls.helmholtz-metadaten.de/hob/HDO_00000029 | https://purls.helmholtz-metadaten.de/hob/HDO_00002025 | https://purls.helmholtz-metadaten.de/hob/HDO_00006069",
-      "query_evidence": "HDO represents plans, metadata, provenance records, and metadata links but not immutable scientific source-edge records.",
+      "iri_presence_evidence": "HDO represents plans, metadata, provenance records, and metadata links but not immutable scientific source-edge records.",
       "rationale": "Source-topology preservation requires an application-level workflow extension.",
-      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986"
+      "source_sha256": "6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C1",
@@ -292,9 +322,11 @@
       "resource_version": "1.1.0",
       "outcome": "requires_mapping_or_context",
       "evidence_iris": "http://purl.org/holy/ns#MembraneElectrodeAssembly | http://purl.org/holy/ns#FuelCellStack | http://purl.org/holy/ns#HydrogenConversion",
-      "query_evidence": "HOLY contains hydrogen products and components, but their market-oriented scope does not supply a scientific electrochemical process taxonomy.",
+      "iri_presence_evidence": "HOLY contains hydrogen products and components, but their market-oriented scope does not supply a scientific electrochemical process taxonomy.",
       "rationale": "The concepts are relevant only after mapping and adding scientific context.",
-      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B"
+      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C2",
@@ -305,9 +337,11 @@
       "resource_version": "1.1.0",
       "outcome": "out_of_scope",
       "evidence_iris": "http://purl.org/holy/ns#MembraneElectrodeAssembly",
-      "query_evidence": "No measurement, instrument-setting, or output-dataset pattern was found in the frozen graph.",
+      "iri_presence_evidence": "No measurement, instrument-setting, or output-dataset pattern was found in the frozen graph.",
       "rationale": "Laboratory measurement representation is outside HOLY's hydrogen-market scope.",
-      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B"
+      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C3",
@@ -318,9 +352,11 @@
       "resource_version": "1.1.0",
       "outcome": "out_of_scope",
       "evidence_iris": "http://purl.org/holy/ns#hasIndicator",
-      "query_evidence": "A market indicator relation is present, but no scientific result-property-bearer-value-unit-provenance pattern was found.",
+      "iri_presence_evidence": "A market indicator relation is present, but no scientific result-property-bearer-value-unit-provenance pattern was found.",
       "rationale": "Scientific measurement-result modeling is outside the ontology's stated market focus.",
-      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B"
+      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C4",
@@ -331,9 +367,11 @@
       "resource_version": "1.1.0",
       "outcome": "out_of_scope",
       "evidence_iris": "http://purl.org/holy/ns#usesTechnology",
-      "query_evidence": "Technology-use relations occur, but typed computational-model input and output semantics were not found.",
+      "iri_presence_evidence": "Technology-use relations occur, but typed computational-model input and output semantics were not found.",
       "rationale": "Computational model interfaces are outside HOLY's published scope.",
-      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B"
+      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     },
     {
       "task_id": "C5",
@@ -344,9 +382,11 @@
       "resource_version": "1.1.0",
       "outcome": "requires_mapping_or_context",
       "evidence_iris": "http://purl.org/holy/ns#hasProject | http://purl.org/holy/ns#usesSource | http://w3id.org/nfdi4ing/metadata4ing#inProject",
-      "query_evidence": "HOLY links projects, sources, and organizations, but does not encode source-preserving scientific workflow dependencies.",
+      "iri_presence_evidence": "HOLY links projects, sources, and organizations, but does not encode source-preserving scientific workflow dependencies.",
       "rationale": "The market/project relations need mapping and an application workflow model for this task.",
-      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B"
+      "source_sha256": "6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B",
+      "assessment_origin": "author_curated_capability_judgment",
+      "automated_verification": "rdf_parse_and_evidence_iri_presence_only"
     }
   ]
 }

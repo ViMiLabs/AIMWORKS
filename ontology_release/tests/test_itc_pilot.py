@@ -89,6 +89,16 @@ def test_itc_corrections_propagate_without_changing_source_topology(tmp_path: Pa
     radius = next(node for node in mapped_source["nodes"] if node["source_id"] == "n6")
     assert radius["label"] == "Catalyst active particle diameter"
     assert radius["mapping_override"]["anchor_iri"] == H2KG + "PlatinumParticleRadius"
+    non_itc = next(
+        workflow for workflow in mapped["workflows"]
+        if workflow["id"] == "image-tem-data-parameter-extraction-3d"
+    )
+    non_itc_diameter = next(
+        node for node in non_itc["nodes"]
+        if node["label"] == "Catalyst active particle diameter"
+    )
+    assert "mapping_override" not in non_itc_diameter
+    assert non_itc_diameter["prevent_anchor_canonicalization"] is True
     overlay = build_decode_itc_overlay(review)
     assert overlay["badge"] == "Curated ITC profile"
     parameter_records = [node for node in overlay["nodes"] if node["semantic_role"] == "Parameter"]

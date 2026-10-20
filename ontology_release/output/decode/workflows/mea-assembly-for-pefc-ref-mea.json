@@ -188,12 +188,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ch2s_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "mea-assembly-for-pefc-ref-mea::n8",
@@ -377,8 +377,8 @@
       "label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1053,6 +1053,21 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::mea-assembly-for-pefc-ref-mea::e6::1a8a608a4d",
+      "workflow_id": "mea-assembly-for-pefc-ref-mea",
+      "source": "mea-assembly-for-pefc-ref-mea::n7",
+      "target": "mea-assembly-for-pefc-ref-mea::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "mea-assembly-for-pefc-ref-mea::e6",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::mea-assembly-for-pefc-ref-mea::e7::567b54d864",
       "workflow_id": "mea-assembly-for-pefc-ref-mea",
       "source": "mea-assembly-for-pefc-ref-mea::n8",
@@ -1324,18 +1339,20 @@
       "target_node_id": "n7",
       "target_graphml_id": "n7",
       "target_label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::mea-assembly-for-pefc-ref-mea::e6::1a8a608a4d"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "mea-assembly-for-pefc-ref-mea::e7",

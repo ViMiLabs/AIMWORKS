@@ -78,16 +78,15 @@
       "kind": "occurrence",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "visual_category": "component",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
       "semantic_role": "Matter",
-      "role_assignment": "h2kg_taxonomy_2_2",
+      "role_assignment": "explicit_mapping",
       "confidence": "not_mapped",
-      "mapping_evidence": "Reviewed material-category mapping to the public H2KG membrane anchor.",
-      "workflow_role": "Matter",
-      "intrinsic_semantic_role": "Matter"
+      "mapping_evidence": "A generic membrane label does not establish proton-exchange chemistry; occurrences remain local until membrane type is documented.",
+      "workflow_role": "Matter"
     },
     {
       "id": "ultrasonic-spray-deposition-for-catalytic-layers::n3",
@@ -462,12 +461,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "cl_saturation_scattering_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "ultrasonic-spray-deposition-for-catalytic-layers::n21",
@@ -504,12 +503,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
-      "semantic_role": "Manufacturing",
-      "role_assignment": "zero_gap_cell_development_is_manufacturing",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
+      "role_assignment": "zero_gap_cell_development_is_process",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Manufacturing"
+      "workflow_role": "Process"
     },
     {
       "id": "ultrasonic-spray-deposition-for-catalytic-layers::n23",
@@ -709,8 +708,8 @@
       "label": "Determination of CL saturation by SAXS/SANS",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -732,8 +731,8 @@
       "label": "Development of a zero gap cell for GDE based spectrocopy measurement",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Manufacturing",
-      "semantic_role": "Manufacturing",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "semantic_role": "Process",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -989,6 +988,26 @@
       ]
     },
     {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
+      "kind": "anchor",
+      "label": "Membrane",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
+      "semantic_role": "Matter",
+      "confidence": "not_mapped",
+      "evidence": "A generic membrane label does not establish proton-exchange chemistry; occurrences remain local until membrane type is documented.",
+      "occurrence_ids": [
+        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n2",
+        "electrospray-deposition-of-catalyst-layers::n1",
+        "gde-cell-for-electrochemical-studies::n7",
+        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-membrane-d12d5dda08",
+        "manual-nel-exp-large-scale-durability-test::input-membrane-d12d5dda08",
+        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
+        "ultrasonic-spray-deposition-for-catalytic-layers::n2"
+      ]
+    },
+    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/mpl-saturation-determination-from-x-ray-ct-data-method",
       "kind": "anchor",
       "label": "MPL saturation determination from X-ray CT-data",
@@ -1033,26 +1052,6 @@
         "impregnation-by-immersion-and-blade-coating::n27",
         "neutron-imaging::n10",
         "ultrasonic-spray-deposition-for-catalytic-layers::n18"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
-      "kind": "anchor",
-      "label": "Proton Exchange Membrane",
-      "state": "approved_h2kg",
-      "decision": "existing_h2kg_mapping",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Matter",
-      "semantic_role": "Matter",
-      "confidence": "not_mapped",
-      "evidence": "Reviewed material-category mapping to the public H2KG membrane anchor.",
-      "occurrence_ids": [
-        "blade-coating-and-decal-transfer-for-ref-pefc-ccm::n2",
-        "electrospray-deposition-of-catalyst-layers::n1",
-        "gde-cell-for-electrochemical-studies::n7",
-        "manual-hte-mod-pemfc-4-fold-cell-benchtop-test::input-membrane-d12d5dda08",
-        "manual-nel-exp-large-scale-durability-test::input-membrane-d12d5dda08",
-        "manual-nel-exp-pewe-single-cell-benchtop-test::input-membrane-d12d5dda08",
-        "ultrasonic-spray-deposition-for-catalytic-layers::n2"
       ]
     },
     {
@@ -1559,10 +1558,10 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::ultrasonic-spray-deposition-for-catalytic-layers::n2::f225b29b6c",
+      "id": "anchor::ultrasonic-spray-deposition-for-catalytic-layers::n2::fbb981a5f7",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n2",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -1938,6 +1937,21 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e16::1276be04d5",
+      "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
+      "source": "ultrasonic-spray-deposition-for-catalytic-layers::n20",
+      "target": "ultrasonic-spray-deposition-for-catalytic-layers::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e16",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e17::410a6332f2",
       "workflow_id": "ultrasonic-spray-deposition-for-catalytic-layers",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n21",
@@ -2159,7 +2173,7 @@
       "source_label": "Membrane",
       "source_semantic_role": "Matter",
       "source_workflow_role": "Matter",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#ProtonExchangeMembrane",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/membrane-component",
       "target_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n6",
       "target_node_id": "n6",
       "target_graphml_id": "n6",
@@ -2578,18 +2592,20 @@
       "target_node_id": "n20",
       "target_graphml_id": "n20",
       "target_label": "Determination of CL saturation by SAXS/SANS",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::ultrasonic-spray-deposition-for-catalytic-layers::e16::1276be04d5"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "ultrasonic-spray-deposition-for-catalytic-layers::e17",
@@ -2636,8 +2652,8 @@
       "target_node_id": "n22",
       "target_graphml_id": "n22",
       "target_label": "Development of a zero gap cell for GDE based spectrocopy measurement",
-      "target_semantic_role": "Manufacturing",
-      "target_workflow_role": "Manufacturing",
+      "target_semantic_role": "Process",
+      "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -3327,10 +3343,10 @@
       "rationale": "One record declares the dependency and an exact declared handoff grounds a grounded one-sided link.",
       "both_methods_in_manual_json": false,
       "upstream_occurrence_id": "ultrasonic-spray-deposition-for-catalytic-layers::n6",
-      "downstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "downstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "source": "ultrasonic-spray-deposition-for-catalytic-layers::n6",
-      "target": "determination-of-cl-saturation-by-saxs-or-sans::n24",
-      "semantic_source": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "target": "determination-of-cl-saturation-by-saxs-or-sans::n16",
+      "semantic_source": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "semantic_target": "ultrasonic-spray-deposition-for-catalytic-layers::n6",
       "handoff_anchor_iris": [
         "https://w3id.org/h2kg/hydrogen-ontology#CatalystCoatedMembrane"

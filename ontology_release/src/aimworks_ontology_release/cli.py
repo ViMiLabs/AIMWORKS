@@ -12,6 +12,7 @@ from .curate_definitions import curate_source_definitions
 from .enrich import enrich_ontology
 from .fair import compute_fair_readiness
 from .inspect import inspect_ontology
+from .independent_review import build_independent_review_package, import_independent_reviews
 from .itc_pilot import build_itc_pilot_package, integrate_itc_terms
 from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
@@ -99,6 +100,18 @@ def main() -> None:
         default="output/benchmarks/tib_collections/automatic_harmonization_registry.json",
     )
     tib_harmonize.add_argument("--output-registry", default="config/tib_auto_harmonization.json")
+    review_package = subparsers.add_parser("evaluation-review-package")
+    review_package.add_argument("--output-root", default="output")
+    review_package.add_argument("--itc-registry", default="input/itc_curated_interface.json")
+    review_package.add_argument("--package-dir", required=True)
+    review_package.add_argument("--baseline-commit", default="")
+    review_import = subparsers.add_parser("evaluation-import-review")
+    review_import.add_argument("--manifest", required=True)
+    review_import.add_argument("--reviewer-one", required=True)
+    review_import.add_argument("--reviewer-two", required=True)
+    review_import.add_argument("--adjudication")
+    review_import.add_argument("--public-output", default="output/evaluation")
+    review_import.add_argument("--private-output", required=True)
     args = parser.parse_args()
     project_root = Path(args.project_root)
     input_path = Path(getattr(args, "input", project_root))
@@ -106,7 +119,59 @@ def main() -> None:
         input_path = project_root / input_path
     config_dir = project_root / "config"
     output = project_root / "output"
-    if args.command == "tib-collection-benchmark":
+    if args.command == "evaluation-review-package":
+        output_root = Path(args.output_root)
+        itc_registry = Path(args.itc_registry)
+        package_dir = Path(args.package_dir)
+        if not output_root.is_absolute():
+            output_root = project_root / output_root
+        if not itc_registry.is_absolute():
+            itc_registry = project_root / itc_registry
+        if not package_dir.is_absolute():
+            package_dir = project_root / package_dir
+        result = build_independent_review_package(
+            output_root,
+            itc_registry,
+            package_dir,
+            baseline_commit=args.baseline_commit,
+        )
+    elif args.command == "evaluation-import-review":
+        manifest = Path(args.manifest)
+        reviewer_one = Path(args.reviewer_one)
+        reviewer_two = Path(args.reviewer_two)
+        public_output = Path(args.public_output)
+        private_output = Path(args.private_output)
+        adjudication = Path(args.adjudication) if args.adjudication else None
+        for path_name, path_value in (
+            ("manifest", manifest),
+            ("reviewer_one", reviewer_one),
+            ("reviewer_two", reviewer_two),
+            ("public_output", public_output),
+            ("private_output", private_output),
+        ):
+            if not path_value.is_absolute():
+                resolved = project_root / path_value
+                if path_name == "manifest":
+                    manifest = resolved
+                elif path_name == "reviewer_one":
+                    reviewer_one = resolved
+                elif path_name == "reviewer_two":
+                    reviewer_two = resolved
+                elif path_name == "public_output":
+                    public_output = resolved
+                else:
+                    private_output = resolved
+        if adjudication is not None and not adjudication.is_absolute():
+            adjudication = project_root / adjudication
+        result = import_independent_reviews(
+            manifest,
+            reviewer_one,
+            reviewer_two,
+            public_output,
+            private_output,
+            adjudication,
+        )
+    elif args.command == "tib-collection-benchmark":
         taxonomy_registry = Path(args.taxonomy_registry)
         snapshot = Path(args.snapshot)
         candidate_cache = Path(args.candidate_cache)

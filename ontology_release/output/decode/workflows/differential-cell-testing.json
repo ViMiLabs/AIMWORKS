@@ -65,7 +65,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed exact mapping to the established catalyst-loading term.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -820,6 +820,20 @@
   ],
   "projection_nodes": [
     {
+      "id": "projection::datapoint::differential-cell-testing::n1",
+      "iri": "https://w3id.org/h2kg/decode/workflow/differential-cell-testing/node/n1/data-point",
+      "label": "Catalyst loading value",
+      "kind": "value_proxy",
+      "workflow_id": "differential-cell-testing",
+      "source_occurrence_id": "differential-cell-testing::n1",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/differential-cell-testing/node/n1",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::differential-cell-testing::n10",
       "iri": "https://w3id.org/h2kg/decode/workflow/differential-cell-testing/node/n10/data-point",
       "label": "Cell limiting current value",
@@ -930,20 +944,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::differential-cell-testing::n1",
-      "iri": "https://w3id.org/h2kg/decode/workflow/differential-cell-testing/node/n1/parameter-record",
-      "label": "Catalyst loading parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "differential-cell-testing",
-      "source_occurrence_id": "differential-cell-testing::n1",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/differential-cell-testing/node/n1",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -3636,32 +3636,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::differential-cell-testing::e36::17b92bfb7d",
+      "id": "semantic::differential-cell-testing::e36::69fdf19ca9",
       "workflow_id": "differential-cell-testing",
       "source": "differential-cell-testing::n31",
-      "target": "projection::parameter::differential-cell-testing::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::differential-cell-testing::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "differential-cell-testing::e36",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::differential-cell-testing::e36::a3029eeee9",
+      "id": "semantic::differential-cell-testing::e36::2fc4e25309",
       "workflow_id": "differential-cell-testing",
-      "source": "projection::parameter::differential-cell-testing::n1",
+      "source": "projection::datapoint::differential-cell-testing::n1",
       "target": "differential-cell-testing::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "differential-cell-testing::e36",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3696,32 +3696,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::differential-cell-testing::e38::91cb641e43",
+      "id": "semantic::differential-cell-testing::e38::43caea9fdd",
       "workflow_id": "differential-cell-testing",
       "source": "differential-cell-testing::n32",
-      "target": "projection::parameter::differential-cell-testing::n1",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::differential-cell-testing::n1",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "differential-cell-testing::e38",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::differential-cell-testing::e38::a3029eeee9",
+      "id": "semantic::differential-cell-testing::e38::2fc4e25309",
       "workflow_id": "differential-cell-testing",
-      "source": "projection::parameter::differential-cell-testing::n1",
+      "source": "projection::datapoint::differential-cell-testing::n1",
       "target": "differential-cell-testing::n1",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "differential-cell-testing::e38",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -4216,7 +4216,7 @@
       "source_graphml_id": "n1",
       "source_label": "Catalyst loading",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "target_occurrence_id": "differential-cell-testing::n15",
       "target_node_id": "n15",
@@ -5285,20 +5285,20 @@
       "target_graphml_id": "n1",
       "target_label": "Catalyst loading",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::differential-cell-testing::e36::17b92bfb7d",
-        "semantic::differential-cell-testing::e36::a3029eeee9"
+        "semantic::differential-cell-testing::e36::69fdf19ca9",
+        "semantic::differential-cell-testing::e36::2fc4e25309"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "differential-cell-testing::e37",
@@ -5347,20 +5347,20 @@
       "target_graphml_id": "n1",
       "target_label": "Catalyst loading",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::differential-cell-testing::e38::91cb641e43",
-        "semantic::differential-cell-testing::e38::a3029eeee9"
+        "semantic::differential-cell-testing::e38::43caea9fdd",
+        "semantic::differential-cell-testing::e38::2fc4e25309"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "differential-cell-testing::e39",

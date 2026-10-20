@@ -86,7 +86,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed abbreviation for gas-diffusion-layer porosity.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -355,12 +355,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ch2s_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     }
   ],
   "projection_nodes": [
@@ -419,20 +419,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::hg-porosimetry-gdl::n2",
-      "iri": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n2/parameter-record",
-      "label": "GDL porosity parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "hg-porosimetry-gdl",
-      "source_occurrence_id": "hg-porosimetry-gdl::n2",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/hg-porosimetry-gdl/node/n2",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -492,8 +478,8 @@
       "label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1280,32 +1266,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::hg-porosimetry-gdl::e3::c9bd071e9e",
+      "id": "semantic::hg-porosimetry-gdl::e3::43a35122a6",
       "workflow_id": "hg-porosimetry-gdl",
       "source": "hg-porosimetry-gdl::n9",
-      "target": "projection::parameter::hg-porosimetry-gdl::n2",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::hg-porosimetry-gdl::n2",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData",
+      "label": "hasInputData",
       "type": "semantic_projection",
       "source_dependency_id": "hg-porosimetry-gdl::e3",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "evidence": "The activity uses a Parameter record that refers to the preserved property occurrence.",
+      "projection_pattern": "property_value_input",
+      "evidence": "Property-valued source is reified as a DataPoint consumed by the activity.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::hg-porosimetry-gdl::e3::2c87335cc7",
+      "id": "semantic::hg-porosimetry-gdl::e3::2116fd1562",
       "workflow_id": "hg-porosimetry-gdl",
-      "source": "projection::parameter::hg-porosimetry-gdl::n2",
+      "source": "projection::datapoint::hg-porosimetry-gdl::n2",
       "target": "hg-porosimetry-gdl::n2",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "hg-porosimetry-gdl::e3",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -1683,6 +1669,21 @@
       "evidence": "Reified DataPoint refers to the preserved source property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
+    },
+    {
+      "id": "semantic::hg-porosimetry-gdl::e18::cf2b65de93",
+      "workflow_id": "hg-porosimetry-gdl",
+      "source": "hg-porosimetry-gdl::n15",
+      "target": "hg-porosimetry-gdl::n6",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
+      "type": "semantic_projection",
+      "source_dependency_id": "hg-porosimetry-gdl::e18",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
     }
   ],
   "edge_registry": [
@@ -1762,7 +1763,7 @@
       "target_graphml_id": "n2",
       "target_label": "GDL porosity",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
@@ -1785,7 +1786,7 @@
       "source_graphml_id": "n2",
       "source_label": "GDL porosity",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity",
       "target_occurrence_id": "hg-porosimetry-gdl::n9",
       "target_node_id": "n9",
@@ -1796,16 +1797,16 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/interface/model/ptp",
       "source_description": "",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_input",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_input",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::hg-porosimetry-gdl::e3::c9bd071e9e",
-        "semantic::hg-porosimetry-gdl::e3::2c87335cc7"
+        "semantic::hg-porosimetry-gdl::e3::43a35122a6",
+        "semantic::hg-porosimetry-gdl::e3::2116fd1562"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The activity uses a Parameter record that refers to the preserved property occurrence."
+      "rationale": "Property-valued source is reified as a DataPoint consumed by the activity."
     },
     {
       "source_dependency_id": "hg-porosimetry-gdl::e4",
@@ -1816,7 +1817,7 @@
       "source_graphml_id": "n2",
       "source_label": "GDL porosity",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayerPorosity",
       "target_occurrence_id": "hg-porosimetry-gdl::n10",
       "target_node_id": "n10",
@@ -2253,18 +2254,20 @@
       "target_node_id": "n15",
       "target_graphml_id": "n15",
       "target_label": "Current modulated hydrogen flow-rate spectroscopy (CH2S)",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/current-modulated-hydrogen-flow-rate-spectroscopy-ch2s-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "measurement_property_reversed",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "semantic_edge_ids": [
+        "semantic::hg-porosimetry-gdl::e18::cf2b65de93"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     }
   ],
   "workflow_dependencies": [

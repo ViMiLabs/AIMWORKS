@@ -5,7 +5,7 @@
 - SHACL executed: true
 - SHACL details: Validation Report
 Conforms: True
-- Release path: `output\ontology\schema.ttl`
+- Release path: `ontology_release\output\ontology\schema.ttl`
 
 ## Release Checks
 

@@ -144,12 +144,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
-      "role_assignment": "workflow_or_analysis",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
+      "role_assignment": "rde_protocol_is_metadata",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Process"
+      "workflow_role": "Metadata"
     },
     {
       "id": "rrde-on-model-electrodes-in-acidic-solutions::n6",
@@ -588,8 +588,8 @@
       "label": "RDE electrochemical protocol",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Process",
-      "semantic_role": "Process",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Metadata",
+      "semantic_role": "Metadata",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1355,17 +1355,17 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::rrde-on-model-electrodes-in-acidic-solutions::e5::5edb3ecad9",
+      "id": "semantic::rrde-on-model-electrodes-in-acidic-solutions::e5::f3245f5020",
       "workflow_id": "rrde-on-model-electrodes-in-acidic-solutions",
       "source": "rrde-on-model-electrodes-in-acidic-solutions::n11",
       "target": "rrde-on-model-electrodes-in-acidic-solutions::n5",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "label": "hasMetadata",
       "type": "semantic_projection",
       "source_dependency_id": "rrde-on-model-electrodes-in-acidic-solutions::e5",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "evidence": "Source metadata describes the activity; H2KG direction is described resource to metadata.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -1670,17 +1670,17 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::rrde-on-model-electrodes-in-acidic-solutions::e22::fcb521f449",
+      "id": "semantic::rrde-on-model-electrodes-in-acidic-solutions::e22::0766d34723",
       "workflow_id": "rrde-on-model-electrodes-in-acidic-solutions",
       "source": "rrde-on-model-electrodes-in-acidic-solutions::n12",
       "target": "rrde-on-model-electrodes-in-acidic-solutions::n5",
-      "predicate": "http://www.w3.org/ns/prov#wasInformedBy",
-      "label": "wasInformedBy",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
+      "label": "hasMetadata",
       "type": "semantic_projection",
       "source_dependency_id": "rrde-on-model-electrodes-in-acidic-solutions::e22",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "evidence": "Target activity follows the source activity in the preserved workflow.",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "evidence": "Source metadata describes the activity; H2KG direction is described resource to metadata.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -1905,8 +1905,8 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "rrde-on-model-electrodes-in-acidic-solutions::n11",
       "target_node_id": "n11",
@@ -1916,16 +1916,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rrde-on-model-electrodes-in-acidic-solutions-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
       "semantic_edge_ids": [
-        "semantic::rrde-on-model-electrodes-in-acidic-solutions::e5::5edb3ecad9"
+        "semantic::rrde-on-model-electrodes-in-acidic-solutions::e5::f3245f5020"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "rationale": "Source metadata describes the activity; H2KG direction is described resource to metadata."
     },
     {
       "source_dependency_id": "rrde-on-model-electrodes-in-acidic-solutions::e6",
@@ -2419,8 +2419,8 @@
       "source_node_id": "n5",
       "source_graphml_id": "n5",
       "source_label": "RDE electrochemical protocol",
-      "source_semantic_role": "Process",
-      "source_workflow_role": "Process",
+      "source_semantic_role": "Metadata",
+      "source_workflow_role": "Metadata",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rde-electrochemical-protocol-component",
       "target_occurrence_id": "rrde-on-model-electrodes-in-acidic-solutions::n12",
       "target_node_id": "n12",
@@ -2430,16 +2430,16 @@
       "target_workflow_role": "Process",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/rrde-on-model-electrodes-in-acidic-solutions-model",
       "source_description": "",
-      "projection_outcome": "prov_derivation",
-      "projection_pattern": "activity_sequence",
-      "semantic_predicates": "http://www.w3.org/ns/prov#wasInformedBy",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_metadata",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasMetadata",
       "semantic_edge_ids": [
-        "semantic::rrde-on-model-electrodes-in-acidic-solutions::e22::fcb521f449"
+        "semantic::rrde-on-model-electrodes-in-acidic-solutions::e22::0766d34723"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Target activity follows the source activity in the preserved workflow."
+      "rationale": "Source metadata describes the activity; H2KG direction is described resource to metadata."
     },
     {
       "source_dependency_id": "rrde-on-model-electrodes-in-acidic-solutions::e23",

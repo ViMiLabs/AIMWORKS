@@ -51,19 +51,27 @@ def build_application_evaluation(
     if missing:
         return {"status": "skipped_missing_inputs", "missing": missing}
     evaluation_dir = ensure_dir(output_root / "evaluation")
+    for obsolete_name in (
+        "retrieval_review_registry.csv",
+        "semantic_assessment_registry.csv",
+        "semantic_assessment_registry.json",
+        "semantic_assessment_registry.xlsx",
+        "semantic_assessment_summary.md",
+    ):
+        (evaluation_dir / obsolete_name).unlink(missing_ok=True)
     graph = load_json(output_root / "decode" / "decode_federated_graph.json")
     concept_registry = load_json(output_root / "decode" / "decode_concept_registry.json")
     taxonomy_registry = load_json(output_root / "ontology" / "taxonomy_registry.json")
     itc_registry = load_json(Path(itc_registry_path))
 
     coverage_rows, coverage_summary = _coverage_rows(concept_registry)
-    crosswalk_rows, crosswalk_summary = _itc_crosswalk(concept_registry, itc_registry)
-    task_rows, result_rows, retrieval_review_rows, task_summary = _retrieval_evaluation(graph, itc_registry)
+    crosswalk_rows, crosswalk_summary = _itc_crosswalk(concept_registry, itc_registry, graph)
+    task_rows, result_rows, retrieval_candidate_rows, task_summary = _retrieval_evaluation(graph, itc_registry)
     benchmark_rows, benchmark_summary = _benchmark_diagnostic(
         output_root,
         Path(candidate_cache_path),
     )
-    assessment_rows, assessment_summary = _assessment_registry(
+    inventory_rows, inventory_summary = _automated_consistency_inventory(
         concept_registry,
         graph,
         taxonomy_registry,
@@ -82,24 +90,28 @@ def build_application_evaluation(
         dump_json(evaluation_dir / "itc_decode_population_crosswalk.json", {"summary": crosswalk_summary, "rows": crosswalk_rows}),
         _write_csv(evaluation_dir / "retrieval_tasks.csv", task_rows),
         _write_csv(evaluation_dir / "retrieval_results.csv", result_rows),
-        _write_csv(evaluation_dir / "retrieval_review_registry.csv", retrieval_review_rows),
+        _write_csv(evaluation_dir / "retrieval_candidate_inventory.csv", retrieval_candidate_rows),
         dump_json(
             evaluation_dir / "retrieval_evaluation.json",
-            {"summary": task_summary, "tasks": task_rows, "results": result_rows, "review": retrieval_review_rows},
+            {
+                "summary": task_summary,
+                "tasks": task_rows,
+                "results": result_rows,
+                "candidate_inventory": retrieval_candidate_rows,
+            },
         ),
         _write_csv(evaluation_dir / "tib_resource_diagnostic.csv", benchmark_rows),
         dump_json(evaluation_dir / "tib_resource_diagnostic.json", benchmark_summary),
-        _write_csv(evaluation_dir / "semantic_assessment_registry.csv", assessment_rows),
+        _write_csv(evaluation_dir / "automated_consistency_inventory.csv", inventory_rows),
         dump_json(
-            evaluation_dir / "semantic_assessment_registry.json",
+            evaluation_dir / "automated_consistency_inventory.json",
             {
-                "schema_version": "h2kg-semantic-assessment/v1",
-                "reviewers": _reviewer_registry(),
-                "summary": assessment_summary,
-                "assessments": assessment_rows,
+                "schema_version": "h2kg-automated-consistency-inventory/v1",
+                "summary": inventory_summary,
+                "checks": inventory_rows,
             },
         ),
-        write_text(evaluation_dir / "semantic_assessment_summary.md", _assessment_markdown(assessment_summary)),
+        write_text(evaluation_dir / "automated_consistency_summary.md", _inventory_markdown(inventory_summary)),
         _write_csv(evaluation_dir / "comparator_matrix.csv", comparator_rows),
         dump_json(
             evaluation_dir / "comparator_matrix.json",
@@ -107,10 +119,10 @@ def build_application_evaluation(
         ),
         write_text(evaluation_dir / "comparator_matrix.md", _comparator_markdown(comparator_rows, comparator_resources)),
     ]
-    audit_workbook = _assessment_workbook(
-        evaluation_dir / "semantic_assessment_registry.xlsx",
-        assessment_rows,
-        assessment_summary,
+    audit_workbook = _inventory_workbook(
+        evaluation_dir / "automated_consistency_inventory.xlsx",
+        inventory_rows,
+        inventory_summary,
     )
     files.append(audit_workbook)
     comparison_workbook = _comparator_workbook(
@@ -120,18 +132,33 @@ def build_application_evaluation(
     )
     files.append(comparison_workbook)
 
+    independent_audit_path = evaluation_dir / "independent_application_audit.json"
+    if independent_audit_path.exists():
+        independent_audit = load_json(independent_audit_path).get("summary", {})
+    else:
+        independent_audit = {
+            "status": "review_pending",
+            "review_item_count": 134,
+            "reviewer_count_required": 2,
+            "publication_gate": "blocked_until_authentic_reviews_and_adjudication_are_imported",
+        }
     summary = {
         "status": "passed",
-        "schema_version": "h2kg-application-evaluation/v2",
+        "schema_version": "h2kg-application-evaluation/v3",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "coverage": coverage_summary,
         "itc_decode_crosswalk": crosswalk_summary,
         "retrieval": task_summary,
         "benchmark_diagnostic": benchmark_summary,
-        "semantic_assessment": assessment_summary,
+        "automated_consistency": inventory_summary,
+        "independent_application_audit": independent_audit,
         "comparator_evaluation": comparator_summary,
-        "independent_semantic_audit_status": "complete",
-        "independent_judgments_completed": assessment_summary["assessment_count"],
+        "independent_semantic_audit_status": independent_audit.get("status", "review_pending"),
+        "independent_judgments_completed": (
+            independent_audit.get("review_item_count", 0)
+            if independent_audit.get("status") in {"complete", "complete_with_unresolved_items"}
+            else 0
+        ),
         "files": [str(path) for path in files],
     }
     files.append(dump_json(evaluation_dir / "evaluation_summary.json", summary))
@@ -201,20 +228,40 @@ def _local_reason(concept: dict[str, Any]) -> str:
 def _itc_crosswalk(
     registry: dict[str, Any],
     itc: dict[str, Any],
+    graph: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     by_anchor: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     for concept in registry.get("concepts", []):
         by_anchor[str(concept.get("anchor_iri", ""))].append(concept)
     rows: list[dict[str, Any]] = []
-    overlap_occurrences = 0
-    overlap_fields = 0
+    concept_wide_occurrences = 0
+    concept_wide_fields = 0
+    occurrence_specific_occurrences = 0
+    occurrence_specific_fields = 0
     for field in itc.get("fields", []):
         iri = H2KG + str(field["h2kg_local_name"])
         matches = by_anchor.get(iri, [])
-        occurrences = sum(int(match.get("occurrence_count", 0)) for match in matches)
-        overlap_occurrences += occurrences
+        concept_occurrences = sum(int(match.get("occurrence_count", 0)) for match in matches)
+        specific_matches = [
+            node
+            for node in graph.get("nodes", [])
+            if str(node.get("anchor_id", "")) == iri
+            and bool(node.get("prevent_anchor_canonicalization"))
+            and not bool(node.get("is_derived_interface"))
+        ]
+        specific_occurrences = len(specific_matches) if not matches else 0
+        concept_wide_occurrences += concept_occurrences
+        occurrence_specific_occurrences += specific_occurrences
         if matches:
-            overlap_fields += 1
+            concept_wide_fields += 1
+        elif specific_matches:
+            occurrence_specific_fields += 1
+        if matches:
+            population_layer = "source_concept_registry_concept_wide"
+        elif specific_matches:
+            population_layer = "source_occurrence_specific_alignment"
+        else:
+            population_layer = "itc_profile_without_source_occurrence"
         rows.append(
             {
                 "io_id": field["io_id"],
@@ -223,28 +270,44 @@ def _itc_crosswalk(
                 "h2kg_iri": iri,
                 "present_in_573_source_concepts": str(bool(matches)).lower(),
                 "matching_source_concept_count": len(matches),
-                "source_occurrence_count": occurrences,
+                "concept_wide_source_occurrence_count": concept_occurrences,
+                "occurrence_specific_source_alignment": str(bool(specific_matches)).lower(),
+                "occurrence_specific_source_occurrence_count": specific_occurrences,
+                "source_occurrence_count": concept_occurrences + specific_occurrences,
                 "concept_ids": " | ".join(str(match.get("concept_id", "")) for match in matches),
                 "workflow_ids": " | ".join(
-                    sorted({workflow for match in matches for workflow in match.get("workflow_ids", [])})
+                    sorted(
+                        {workflow for match in matches for workflow in match.get("workflow_ids", [])}
+                        | {str(node.get("workflow_id", "")) for node in specific_matches}
+                    )
                 ),
-                "population_layer": "source_concept_registry" if matches else "itc_profile_overlay_only",
+                "occurrence_ids": " | ".join(str(node.get("id", "")) for node in specific_matches),
+                "population_layer": population_layer,
             }
         )
+    fields_without_concept_wide_alignment = len(rows) - concept_wide_fields
+    fields_without_source_occurrence = fields_without_concept_wide_alignment - occurrence_specific_fields
     summary = {
         "itc_field_count": len(rows),
-        "fields_overlapping_source_concept_registry": overlap_fields,
-        "profile_overlay_only_fields": len(rows) - overlap_fields,
-        "source_occurrences_covered_by_overlapping_fields": overlap_occurrences,
+        "fields_with_concept_wide_source_alignment": concept_wide_fields,
+        "fields_without_concept_wide_alignment": fields_without_concept_wide_alignment,
+        "fields_with_occurrence_specific_source_alignment": occurrence_specific_fields,
+        "fields_without_source_occurrence": fields_without_source_occurrence,
+        "source_occurrences_covered_by_concept_wide_fields": concept_wide_occurrences,
+        "source_occurrences_covered_by_occurrence_specific_fields": occurrence_specific_occurrences,
+        "source_occurrences_covered_total": concept_wide_occurrences + occurrence_specific_occurrences,
         "denominator_note": (
             "The 573 denominator contains canonical concepts derived from source workflow occurrences. "
-            "The 44 ITC fields are a public profile vocabulary; fields absent from source occurrences are not members of that denominator."
+            f"{concept_wide_fields} ITC fields have concept-wide source alignments, "
+            f"{occurrence_specific_fields} have source-backed occurrence-specific alignments and therefore remain "
+            f"outside the concept-wide numerator, and {fields_without_source_occurrence} have no source occurrence "
+            "in this corpus."
         ),
     }
     return rows, summary
 
 
-def _retrieval_evaluation(
+def _legacy_retrieval_evaluation(
     graph: dict[str, Any],
     itc: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -488,7 +551,7 @@ def _retrieval_evaluation(
         "rq4_accepted_handoff_count": 1,
         "rq4_rejected_lexical_connection_count": 1,
         "reviewed_result_count": len(results) + len(omission_candidates),
-        "evaluation_status": "completed_with_independent_application_level_labels",
+        "evaluation_status": "legacy_generated_labels_not_independent_review",
         "independent_precision_recall_claimed": False,
     }
     review_rows = [
@@ -501,24 +564,291 @@ def _retrieval_evaluation(
     return tasks, results, review_rows, summary
 
 
+def _retrieval_evaluation(
+    graph: dict[str, Any],
+    itc: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    """Run competency demonstrations without treating registry state as relevance judgment."""
+    workflows = {str(row["id"]): row for row in graph.get("workflows", [])}
+    nodes = {str(row["id"]): row for row in graph.get("nodes", [])}
+    source_edges = list(graph.get("source_edges", []))
+    input_fields = [field for field in itc.get("fields", []) if field.get("direction") == "input"]
+    if len(input_fields) != 24:
+        raise ValueError(f"RQ1 requires exactly 24 ITC input concepts, found {len(input_fields)}")
+    input_by_anchor = {
+        H2KG + str(field["h2kg_local_name"]): field for field in input_fields
+    }
+    normalized_labels: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
+    for field in input_fields:
+        labels = {
+            _norm(field.get("preferred_label", "")),
+            _norm(field.get("source_label", "")),
+            *(_norm(value) for value in field.get("alternate_labels", [])),
+        }
+        for label in labels - {""}:
+            normalized_labels[label].append(field)
+
+    eligible_ids: set[str] = set()
+    producing_edges: defaultdict[str, list[str]] = defaultdict(list)
+    for edge in source_edges:
+        source = nodes.get(str(edge.get("source", "")), {})
+        target = nodes.get(str(edge.get("target", "")), {})
+        if target.get("workflow_id") == "iet-multiscale-model-interface":
+            continue
+        if str(source.get("semantic_role", "")) not in ACTIVITY_ROLES:
+            continue
+        target_id = str(target.get("id", ""))
+        if target_id:
+            eligible_ids.add(target_id)
+            producing_edges[target_id].append(str(edge.get("id", "")))
+
+    semantic_matches: dict[str, dict[str, Any]] = {}
+    label_matches: dict[str, dict[str, Any]] = {}
+    for node_id in sorted(eligible_ids):
+        node = nodes[node_id]
+        field = input_by_anchor.get(str(node.get("anchor_id", "")))
+        if field:
+            semantic_matches[node_id] = field
+        label_candidates = normalized_labels.get(_norm(node.get("label", "")), [])
+        if len(label_candidates) == 1:
+            label_matches[node_id] = label_candidates[0]
+
+    results: list[dict[str, Any]] = []
+    for system, matches, evidence in (
+        (
+            "semantic_anchor_query",
+            semantic_matches,
+            "Source-backed output occurrence has an explicit producing edge and an H2KG anchor matching one of the 24 ITC input concepts.",
+        ),
+        (
+            "normalized_exact_label_query",
+            label_matches,
+            "Source-backed output label exactly matches a normalized preferred, source, or accepted alternate label for one of the same 24 ITC input concepts.",
+        ),
+    ):
+        for node_id, field in sorted(matches.items()):
+            node = nodes[node_id]
+            results.append(
+                {
+                    "task_id": "RQ1",
+                    "system": system,
+                    "result_id": node_id,
+                    "result_label": node.get("label", ""),
+                    "workflow_id": node.get("workflow_id", ""),
+                    "workflow_title": workflows.get(str(node.get("workflow_id", "")), {}).get("title", ""),
+                    "target_field_id": field.get("io_id", ""),
+                    "target_field_label": field.get("preferred_label", ""),
+                    "evidence": evidence,
+                    "source_edge_ids": " | ".join(producing_edges[node_id]),
+                    "interpretation": "raw_query_result_not_independently_relevance_labelled",
+                }
+            )
+
+    distribution_anchors = {
+        H2KG + "CCLRefinedPoreSizeDistributionData",
+        H2KG + "PoreRadiusAxisData",
+    }
+    derived_nodes = [
+        node for node in nodes.values()
+        if node.get("workflow_id") == "iet-multiscale-model-interface"
+    ]
+    semantic_distribution = [
+        node for node in derived_nodes if node.get("anchor_id") in distribution_anchors
+    ]
+    lexical_distribution = [
+        node
+        for node in derived_nodes
+        if "pore" in _norm(node.get("label", ""))
+        and any(token in _norm(node.get("label", "")) for token in ("radius", "size"))
+    ]
+    for system, candidates in (
+        ("typed_array_profile_query", semantic_distribution),
+        ("pore_radius_or_size_label_query", lexical_distribution),
+    ):
+        for node in sorted(candidates, key=lambda value: str(value["id"])):
+            typed_array = str(node.get("anchor_id", "")) in distribution_anchors
+            results.append(
+                {
+                    "task_id": "RQ2",
+                    "system": system,
+                    "result_id": node["id"],
+                    "result_label": node.get("label", ""),
+                    "workflow_id": node.get("workflow_id", ""),
+                    "workflow_title": workflows.get(str(node.get("workflow_id", "")), {}).get("title", ""),
+                    "result_group": "pore_size_distribution_axis_and_values" if typed_array else "lexical_scalar_candidate",
+                    "evidence": (
+                        "The profile encodes this resource as one of two arrays composing one pore-size-distribution profile."
+                        if typed_array
+                        else "The label query retrieves this scalar record; no independent relevance judgment is asserted."
+                    ),
+                    "interpretation": "competency_demonstration_query_result",
+                }
+            )
+
+    normalized_fields = [
+        field for field in itc.get("fields", []) if field.get("normalization_basis") == "CarbonMass"
+    ]
+    for field in normalized_fields:
+        results.append(
+            {
+                "task_id": "RQ3",
+                "system": "encoded_normalization_query",
+                "result_id": field["io_id"],
+                "result_label": field["preferred_label"],
+                "workflow_id": "iet-multiscale-model-interface",
+                "workflow_title": "IET multiscale model interface (derived schema)",
+                "evidence": "The curated profile explicitly records CarbonMass as the normalization basis.",
+                "interpretation": "explicitly_encoded_field_retrieval_not_accuracy_measurement",
+            }
+        )
+
+    accepted_variable = next(
+        node for node in derived_nodes if node.get("source_id") == "IO_CMP_CCLWaterRetentionCurve"
+    )
+    itc_model = next(node for node in derived_nodes if node.get("source_id") == "itc")
+    ctp_model = next(node for node in derived_nodes if node.get("source_id") == "ctp")
+    handoff_edge_ids = [
+        str(edge["id"])
+        for edge in source_edges
+        if (edge.get("source"), edge.get("target"))
+        in {
+            (itc_model["id"], accepted_variable["id"]),
+            (accepted_variable["id"], ctp_model["id"]),
+        }
+    ]
+    results.extend(
+        [
+            {
+                "task_id": "RQ4",
+                "system": "typed_handoff_query",
+                "result_id": "ITC--CCLWaterSaturationData--CTP",
+                "result_label": "ITC to CTP through CCL water-saturation data",
+                "workflow_id": "iet-multiscale-model-interface",
+                "workflow_title": "IET multiscale model interface (derived schema)",
+                "evidence": "Two explicit directed source edges: " + " | ".join(handoff_edge_ids),
+                "interpretation": "accepted_by_curated_source_edge_handoff_rule",
+            },
+            {
+                "task_id": "RQ4",
+                "system": "typed_handoff_query",
+                "result_id": "rejected::mean-radius--pore-size-distribution",
+                "result_label": "Geometric-mean pore radius is not a pore-size-distribution dataset",
+                "workflow_id": "iet-multiscale-model-interface",
+                "workflow_title": "IET multiscale model interface (derived schema)",
+                "evidence": "Scalar Property and array Data have incompatible encoded roles and value shapes despite shared words.",
+                "interpretation": "rejected_by_curated_role_and_value_shape_rule",
+            },
+        ]
+    )
+
+    semantic_only = sorted(set(semantic_matches) - set(label_matches))
+    label_only = sorted(set(label_matches) - set(semantic_matches))
+    scalar_candidates = [
+        node for node in lexical_distribution if node.get("anchor_id") not in distribution_anchors
+    ]
+    candidates = [
+        {
+            "task_id": "RQ1",
+            "candidate_kind": "semantic_only_query_result",
+            "result_id": node_id,
+            "result_label": nodes[node_id].get("label", ""),
+            "workflow_id": nodes[node_id].get("workflow_id", ""),
+            "review_status": "not_independently_adjudicated",
+        }
+        for node_id in semantic_only
+    ]
+    candidates.extend(
+        {
+            "task_id": "RQ1",
+            "candidate_kind": "label_only_query_result",
+            "result_id": node_id,
+            "result_label": nodes[node_id].get("label", ""),
+            "workflow_id": nodes[node_id].get("workflow_id", ""),
+            "review_status": "not_independently_adjudicated",
+        }
+        for node_id in label_only
+    )
+    candidates.extend(
+        {
+            "task_id": "RQ2",
+            "candidate_kind": "lexical_scalar_candidate_excluded_by_typed_array_query",
+            "result_id": node.get("id", ""),
+            "result_label": node.get("label", ""),
+            "workflow_id": node.get("workflow_id", ""),
+            "review_status": "not_independently_adjudicated",
+        }
+        for node in scalar_candidates
+    )
+    tasks = [
+        _task(
+            "RQ1",
+            "Find source-backed method outputs corresponding to any of the 24 ITC input concepts.",
+            "Independent semantic-anchor and normalized exact-label queries over the same source-output population.",
+            "Normalized exact equality against preferred, source, or accepted alternate labels.",
+        ),
+        _task(
+            "RQ2",
+            "Retrieve the two arrays composing the pore-size-distribution profile.",
+            "Typed Data anchors and array value shape.",
+            "Labels containing pore plus radius or size.",
+        ),
+        _task(
+            "RQ3",
+            "Retrieve ITC fields explicitly normalized to carbon mass.",
+            "CarbonMass normalization basis in the curated interface.",
+            "No search-performance baseline; this tests explicit encoding.",
+        ),
+        _task(
+            "RQ4",
+            "Traverse one encoded ITC-to-CTP handoff and reject one incompatible lexical connection.",
+            "Directed source edges, role compatibility, and value shape.",
+            "Shared words alone.",
+        ),
+    ]
+    summary = {
+        "evaluation_kind": "competency_demonstrations_not_search_performance_evaluation",
+        "task_count": len(tasks),
+        "result_row_count": len(results),
+        "rq1_target_input_concept_count": len(input_fields),
+        "rq1_common_population_output_occurrence_count": len(eligible_ids),
+        "rq1_semantic_result_count": len(semantic_matches),
+        "rq1_semantic_workflow_count": len({nodes[item]["workflow_id"] for item in semantic_matches}),
+        "rq1_exact_label_result_count": len(label_matches),
+        "rq1_exact_label_workflow_count": len({nodes[item]["workflow_id"] for item in label_matches}),
+        "rq1_semantic_only_result_count": len(semantic_only),
+        "rq1_label_only_result_count": len(label_only),
+        "rq1_baseline_normalization": "case-fold; replace non-alphanumeric characters with spaces; collapse whitespace; exact equality against preferred, source, or accepted alternate labels",
+        "rq1_relevance_assessment_status": "not_independently_labelled",
+        "rq1_precision_recall_claimed": False,
+        "rq2_typed_array_result_count": len(semantic_distribution),
+        "rq2_profile_count": 1,
+        "rq2_label_candidate_count": len(lexical_distribution),
+        "rq2_scalar_candidate_count": len(scalar_candidates),
+        "rq2_scalar_candidate_interpretation": "lexical candidates excluded by the typed array query; not established false positives",
+        "rq3_carbon_normalized_field_count": len(normalized_fields),
+        "rq4_accepted_handoff_count": 1,
+        "rq4_rejected_lexical_connection_count": 1,
+        "independent_precision_recall_claimed": False,
+    }
+    return tasks, results, candidates, summary
+
+
 def _task(task_id: str, question: str, criterion: str, baseline: str) -> dict[str, Any]:
     return {
         "task_id": task_id,
         "question": question,
         "registry_derived_relevance_criterion": criterion,
         "baseline": baseline,
-        "independent_review_status": "complete",
-        "reviewer_ids": "evaluation-reviewer-a | evaluation-reviewer-b",
+        "evaluation_kind": "competency_demonstration",
+        "independent_relevance_review_status": "not_completed",
     }
 
 
 def _retrieval_review(decision: str, rationale: str) -> dict[str, str]:
     return {
-        "review_decision": decision,
-        "reviewer_ids": "evaluation-reviewer-a | evaluation-reviewer-b",
-        "reviewer_independence": "independent_of_query_and_mapping_authorship",
-        "review_rationale": rationale,
-        "disagreement_status": "not_recorded_in_source_evidence",
+        "legacy_registry_state": decision,
+        "legacy_registry_rationale": rationale,
+        "assessment_kind": "automated_not_independent_review",
     }
 
 
@@ -587,31 +917,177 @@ def _benchmark_diagnostic(output_root: Path, cache_path: Path) -> tuple[list[dic
     return rows, summary
 
 
-def _reviewer_registry() -> list[dict[str, str]]:
-    return [
-        {
-            "reviewer_id": "evaluation-reviewer-a",
-            "expertise_category": "hydrogen_electrochemical_systems_and_methods",
-            "independence_declaration": "independent_of_mapping_and_projection_authorship",
-            "identity_publication": "anonymized_in_public_release",
-        },
-        {
-            "reviewer_id": "evaluation-reviewer-b",
-            "expertise_category": "scientific_workflows_and_semantic_data_models",
-            "independence_declaration": "independent_of_mapping_and_projection_authorship",
-            "identity_publication": "anonymized_in_public_release",
-        },
-    ]
-
-
-def _assessment_registry(
+def _automated_consistency_inventory(
     concepts: dict[str, Any],
     graph: dict[str, Any],
     taxonomy: dict[str, Any],
     itc: dict[str, Any],
     output_root: Path,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    reviewer_ids = "evaluation-reviewer-a | evaluation-reviewer-b"
+    """Inventory deterministic representation checks without implying human judgment."""
+    rows: list[dict[str, Any]] = []
+
+    def add(
+        stratum: str,
+        item_id: str,
+        label: str,
+        status: str,
+        rule: str,
+        evidence: str,
+        public_effect: str,
+    ) -> None:
+        if not item_id or not evidence:
+            raise ValueError(f"Incomplete automated consistency item: {stratum} {item_id}")
+        rows.append(
+            {
+                "check_id": f"{stratum}::{item_id}",
+                "check_stratum": stratum,
+                "item_id": item_id,
+                "item_label": label,
+                "automated_status": status,
+                "consistency_rule": rule,
+                "evidence": evidence,
+                "public_semantic_effect": public_effect,
+                "assessment_kind": "automated_registry_consistency_check_not_independent_review",
+            }
+        )
+
+    source = itc.get("source", {})
+    for field in itc.get("fields", []):
+        normalized = _norm(field.get("source_label", "")) != _norm(field.get("preferred_label", ""))
+        add(
+            "itc_field",
+            str(field.get("io_id", "")),
+            str(field.get("preferred_label", "")),
+            "represented_after_normalization" if normalized else "represented",
+            "itc_field_has_identifier_role_definition_and_public_mapping",
+            f"itc_curated_interface.json#{field.get('io_id', '')}; page {field.get('page', '')}; source SHA-256 {source.get('sha256', '')}",
+            "public_h2kg_term_already_integrated",
+        )
+    for concept in concepts.get("concepts", []):
+        state = str(concept.get("mapping_state", ""))
+        add(
+            "decode_concept",
+            str(concept.get("concept_id", "")),
+            str(concept.get("source_label", "")),
+            "represented",
+            "concept_has_identity_role_and_mapping_state",
+            f"decode_concept_registry.json#{concept.get('concept_id', '')}; workflows {' | '.join(concept.get('workflow_ids', []))}",
+            "approved_existing_h2kg_mapping" if state == "approved_h2kg" else "remain_decode_local_not_promoted",
+        )
+    for edge in graph.get("edge_registry", []):
+        add(
+            "decode_edge",
+            str(edge.get("source_dependency_id", "")),
+            f"{edge.get('source_label', '')} -> {edge.get('target_label', '')}",
+            "classified",
+            "source_edge_has_exactly_one_projection_outcome_and_traceable_source_id",
+            f"decode_federated_graph.json#{edge.get('source_dependency_id', '')}; workflow {edge.get('workflow_id', '')}; outcome {edge.get('projection_outcome', '')}",
+            "application_projection_only_source_edge_preserved",
+        )
+    active_terms = [row for row in taxonomy.get("terms", []) if row.get("disposition") == "active_local_class"]
+    for term in _stratified_sample(active_terms, "top_branch", 150):
+        add(
+            "h2kg_taxonomy_sample",
+            str(term.get("iri", "")),
+            str(term.get("label", "")),
+            "structurally_complete",
+            "active_term_has_label_definition_primary_parent_and_top_branch",
+            f"taxonomy_registry.json#{term.get('local_name', '')}; definition_status {term.get('definition_status', '')}",
+            "public_h2kg_taxonomy",
+        )
+    alignment_path = output_root / "ontology" / "external_alignment_registry.json"
+    mappings = load_json(alignment_path).get("mappings", []) if alignment_path.exists() else []
+    for mapping in mappings:
+        item_id = f"{mapping.get('local_iri', '')}|{mapping.get('relation', '')}|{mapping.get('target_iri', '')}"
+        add(
+            "asserted_external_mapping",
+            item_id,
+            f"{mapping.get('local_label', '')} {mapping.get('relation', '')} {mapping.get('target_label', '')}",
+            "publication_gate_recorded",
+            "asserted_mapping_has_original_target_iri_relation_rule_and_provenance",
+            f"external_alignment_registry.json#{hashlib.sha256(item_id.encode('utf-8')).hexdigest()[:16]}; rule {mapping.get('rule_id', '')}",
+            "asserted_external_bridge_mapping",
+        )
+    expected = {
+        "itc_field": 44,
+        "decode_concept": len(concepts.get("concepts", [])),
+        "decode_edge": len(graph.get("edge_registry", [])),
+        "h2kg_taxonomy_sample": 150,
+        "asserted_external_mapping": len(mappings),
+    }
+    counts = Counter(str(row["check_stratum"]) for row in rows)
+    if dict(counts) != expected:
+        raise ValueError(f"Automated inventory coverage mismatch: expected {expected}, found {dict(counts)}")
+    summary = {
+        "status": "complete",
+        "check_count": len(rows),
+        "check_kind": "automated_registry_consistency_not_independent_semantic_assessment",
+        "strata": [
+            {"check_stratum": stratum, "item_count": counts[stratum]}
+            for stratum in expected
+        ],
+        "interpretation": (
+            "These checks confirm registry presence, structural completeness, and traceability. "
+            "They do not constitute independent scientific acceptance."
+        ),
+    }
+    return rows, summary
+
+
+def _inventory_markdown(summary: dict[str, Any]) -> str:
+    lines = [
+        "# Automated consistency inventory",
+        "",
+        "These deterministic checks verify registry representation and traceability. They are not independent reviewer judgments.",
+        "",
+        "| Stratum | Checks |",
+        "|---|---:|",
+    ]
+    for row in summary["strata"]:
+        lines.append(f"| {row['check_stratum']} | {row['item_count']} |")
+    lines.extend(["", f"Total: **{summary['check_count']}** automated checks.", ""])
+    return "\n".join(lines)
+
+
+def _inventory_workbook(
+    path: Path,
+    rows: list[dict[str, Any]],
+    summary: dict[str, Any],
+) -> Path:
+    workbook = Workbook()
+    overview = workbook.active
+    overview.title = "Summary"
+    _append_rows(overview, summary["strata"])
+    sheet_names = {
+        "itc_field": "ITC fields",
+        "decode_concept": "DECODE concepts",
+        "decode_edge": "DECODE edges",
+        "h2kg_taxonomy_sample": "H2KG taxonomy sample",
+        "asserted_external_mapping": "External mappings",
+    }
+    for stratum, sheet_name in sheet_names.items():
+        _append_rows(workbook.create_sheet(sheet_name), [row for row in rows if row["check_stratum"] == stratum])
+    _format_workbook(workbook)
+    ensure_dir(path.parent)
+    workbook.save(path)
+    return path
+
+
+def _reviewer_registry() -> list[dict[str, str]]:
+    """Retained only for reading obsolete local artifacts; no identities are generated."""
+    return []
+
+
+def _obsolete_generated_assessment_registry(
+    concepts: dict[str, Any],
+    graph: dict[str, Any],
+    taxonomy: dict[str, Any],
+    itc: dict[str, Any],
+    output_root: Path,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Read-only migration helper; never used as independent-review evidence."""
+    reviewer_ids = ""
     rows: list[dict[str, Any]] = []
 
     def add(
@@ -637,7 +1113,7 @@ def _assessment_registry(
                 "applied_correction": applied_correction,
                 "final_decision": final_decision,
                 "reviewer_ids": reviewer_ids,
-                "reviewer_independence": "independent_of_mapping_and_projection_authorship",
+                "reviewer_independence": "not_applicable_automated_legacy_inventory",
                 "rationale": rationale,
                 "disagreement_status": "not_recorded_in_source_evidence",
                 "adjudication_status": "not_reportable_from_source_evidence",
@@ -882,9 +1358,13 @@ def _comparator_evaluation(
                 "resource_version": resource_by_id[resource_id]["version"],
                 "outcome": outcome,
                 "evidence_iris": " | ".join(str(value) for value in assessment.get("evidence_iris", [])),
-                "query_evidence": assessment.get("query_evidence", ""),
+                "iri_presence_evidence": assessment.get(
+                    "iri_presence_evidence", assessment.get("query_evidence", "")
+                ),
                 "rationale": assessment.get("rationale", ""),
                 "source_sha256": resource_by_id[resource_id]["sha256"],
+                "assessment_origin": "author_curated_capability_judgment",
+                "automated_verification": "rdf_parse_and_evidence_iri_presence_only",
             }
         )
     expected_pairs = {(resource_id, task_id) for resource_id in graphs for task_id in tasks}
@@ -897,13 +1377,16 @@ def _comparator_evaluation(
             Counter(str(row["outcome"]) for row in rows if row["resource_id"] == resource_id)
         )
     summary = {
-        "status": "complete",
+        "status": "author_curated_assessment_complete",
         "resource_count": len(resources),
         "task_count": len(tasks),
         "assessment_count": len(rows),
         "outcome_counts_by_resource": by_resource,
         "aggregate_score_reported": False,
-        "method_note": "Native and imported evidence are reported separately; outcomes are not combined into a superiority score.",
+        "method_note": (
+            "Capability outcomes are author-curated judgments. Automation verifies RDF parsing and presence of cited IRIs only; "
+            "it does not execute the representation tasks or establish ontology superiority."
+        ),
     }
     return rows, resources, summary
 
@@ -923,9 +1406,9 @@ def _file_sha256(path: Path) -> str:
 
 def _comparator_markdown(rows: list[dict[str, Any]], resources: list[dict[str, Any]]) -> str:
     lines = [
-        "# Focused ontology comparator matrix",
+        "# Author-curated ontology capability assessment",
         "",
-        "Each cell reports a representation outcome backed by exact IRIs in a frozen full RDF graph. No aggregate superiority score is calculated.",
+        "Each cell is an author-curated capability judgment. Automated checks parse the frozen RDF graph and verify that cited IRIs occur; they do not execute the representation task. No aggregate superiority score is calculated.",
         "",
         "| Task | Resource | Version | Outcome | Evidence IRIs |",
         "|---|---|---|---|---|",
@@ -1054,20 +1537,23 @@ def _readme(summary: dict[str, Any]) -> str:
     coverage = summary["coverage"]
     crosswalk = summary["itc_decode_crosswalk"]
     retrieval = summary["retrieval"]
+    inventory = summary["automated_consistency"]
+    audit = summary["independent_application_audit"]
     return f"""# H2KG application evaluation package
 
-This package combines reproducible machine checks with traceable application-level semantic assessment.
+This package separates reproducible machine checks from authentic independent application review.
 
 ## Completed reproducible checks
 
 - DECODE concepts: {coverage['public_h2kg_outcomes']} public H2KG outcomes and {coverage['decode_local_outcomes']} DECODE-local outcomes out of {coverage['canonical_source_concepts']} canonical source concepts.
-- ITC overlap: {crosswalk['fields_overlapping_source_concept_registry']} of 44 ITC fields occur in the 573-concept source registry; {crosswalk['profile_overlay_only_fields']} are profile-overlay-only fields.
-- Retrieval: {retrieval['task_count']} named tasks with independently labelled results and a precisely defined label baseline. No precision or recall estimate is claimed.
-- Semantic assessment: {summary['semantic_assessment']['assessment_count']} item-level records across ITC fields, DECODE concepts and edges, the H2KG taxonomy sample, and asserted external mappings.
-- Comparator evaluation: {summary['comparator_evaluation']['assessment_count']} evidence-backed task outcomes across H2KG, EDO, HDO, and HOLY, without an aggregate score.
+- ITC overlap: {crosswalk['fields_with_concept_wide_source_alignment']} of 44 ITC fields have concept-wide source alignments; {crosswalk['fields_with_occurrence_specific_source_alignment']} has an occurrence-specific source alignment, and {crosswalk['fields_without_source_occurrence']} have no source occurrence in this corpus.
+- Competency demonstrations: {retrieval['task_count']} named queries. RQ1 runs semantic-anchor and normalized exact-label retrieval independently over the same source-output population and the same 24 ITC inputs. No precision, recall, or retrieval-improvement estimate is claimed.
+- Automated consistency inventory: {inventory['check_count']} deterministic registry and traceability checks. These are not reviewer judgments.
+- Independent application audit: {audit.get('status', 'review_pending')} for 134 prespecified items assessed by two external experts; publication remains blocked until valid workbooks and any required adjudication are imported.
+- Comparator assessment: {summary['comparator_evaluation']['assessment_count']} author-curated capability judgments across H2KG, EDO, HDO, and HOLY. Automation verifies RDF parsing and cited-IRI presence only; no aggregate score is calculated.
 - BattINFO is retained as a TIB catalogue membership but is not assigned semantic outcomes because native frozen evidence is unavailable.
 
 ## Interpretation boundary
 
-Acceptance of a DECODE-local concept confirms its project-local identity and role only. It does not create an H2KG class, W3ID identifier, synonym, or external mapping. Historical disagreement and adjudication counts were not retained in the source evidence and are therefore not reported as zero.
+The review-pending package does not infer human acceptance from existing ontology registries. Future acceptance of a DECODE-local concept will confirm its project-local identity and role only; it will not create an H2KG class, W3ID identifier, synonym, or external mapping.
 """

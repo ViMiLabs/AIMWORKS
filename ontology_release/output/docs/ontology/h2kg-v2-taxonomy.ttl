@@ -3030,19 +3030,23 @@ h2kg:CCLHydrophobicPoreMeanContactAngle a owl:Class ;
 
 h2kg:CCLIonomerAlignmentDegree a owl:Class ;
     rdfs:label "CCL ionomer alignment degree"@en ;
+    dcterms:description "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness."@en ;
+    dcterms:identifier "IO_CMP_CCLStructuralParameters_deltaDA" ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    owl:deprecated true ;
+    dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+    rdfs:subClassOf h2kg:StructuralCharacteristic ;
     skos:altLabel "CCL degree of alignment of ionomer film"@en ;
     skos:definition "Degree of alignment of ionomer sidechains and backbones after accounting for the platinum-on-carbon surface and the decay of alignment with film thickness."@en ;
     skos:notation "deltaDA" ;
     skos:prefLabel "CCL ionomer alignment degree"@en ;
-    h2kg:canonicalSemanticRole "Compatibility" ;
-    h2kg:correctionAction "deprecate_source_ambiguous" ;
-    h2kg:definitionStatus "legacy" ;
-    h2kg:governanceStatus "legacy" ;
-    h2kg:migrationAction "deprecate_source_ambiguous" ;
+    skos:scopeNote "This model-derived characteristic describes molecular orientation in the cathode catalyst layer; a workflow may refer to its selected or reported value through a separate Parameter or DataPoint record."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "source" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Compatibility" .
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:CCLMeanContactAngle a owl:Class ;
     rdfs:label "CCL mean contact angle"@en ;
@@ -4293,18 +4297,23 @@ h2kg:CarbonSupportAccessibility a owl:Class ;
 
 h2kg:CarbonSupportInducedIonomerAlignmentDegree a owl:Class ;
     rdfs:label "Carbon-support-induced ionomer alignment degree"@en ;
+    dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface."@en ;
+    dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAC" ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    owl:deprecated true ;
+    dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+    rdfs:subClassOf h2kg:StructuralCharacteristic ;
     skos:definition "Degree of molecular alignment induced in the adjacent ionomer film by the carbon-support surface."@en ;
     skos:notation "deltaDA,C" ;
     skos:prefLabel "Carbon-support-induced ionomer alignment degree"@en ;
-    h2kg:canonicalSemanticRole "Compatibility" ;
-    h2kg:correctionAction "deprecate_source_ambiguous" ;
-    h2kg:definitionStatus "legacy" ;
-    h2kg:governanceStatus "legacy" ;
-    h2kg:migrationAction "deprecate_source_ambiguous" ;
+    skos:scopeNote "This characteristic can be selected as a workflow parameter through a Parameter record; contextual parameter use does not alter its intrinsic classification."@en,
+        "This intrinsic alignment characteristic is used by the ITC model through a separate Parameter record."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "source" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Compatibility" .
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:CarbonSupportWaterContactAngle a owl:Class ;
     rdfs:label "Carbon-support water contact angle"@en ;
@@ -4922,15 +4931,15 @@ h2kg:CatalystMassFractionInInkSolids a owl:Class ;
 
 h2kg:CatalystParticleDiameter a owl:Class ;
     rdfs:label "Catalyst Particle Diameter"@en ;
-    dcterms:description "A property denoting catalyst particle diameter and determined in Scanning Electron Microscopy Imaging."@en ;
+    dcterms:description "A particle-size characteristic equal to the distance across a catalyst particle through its center under the adopted particle-shape and measurement convention."@en ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
     rdfs:subClassOf h2kg:MorphologicalCharacteristic ;
     skos:altLabel "diameter of catalyst particle"@en ;
-    skos:definition "A property denoting catalyst particle diameter and determined in Scanning Electron Microscopy Imaging."@en ;
+    skos:definition "A particle-size characteristic equal to the distance across a catalyst particle through its center under the adopted particle-shape and measurement convention."@en ;
     skos:prefLabel "Catalyst Particle Diameter"@en ;
     h2kg:canonicalSemanticRole "Characteristic" ;
     h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "source" ;
+    h2kg:definitionStatus "curated" ;
     h2kg:governanceStatus "approved" ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
@@ -10689,18 +10698,23 @@ h2kg:EquivalentIonomerFilmThickness a owl:Class ;
 
 h2kg:EquivalentIonomerPatchRadius a owl:Class ;
     rdfs:label "Equivalent ionomer patch radius"@en ;
+    dcterms:description "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface."@en ;
+    dcterms:identifier "IO_CMP_MeanPoreRadiusInsideTheIonomer" ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    owl:deprecated true ;
+    dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+    rdfs:subClassOf h2kg:MorphologicalCharacteristic ;
     skos:definition "Equivalent radius representing the characteristic size of finite ionomer patches distributed over the secondary-pore surface."@en ;
     skos:notation "rion" ;
     skos:prefLabel "Equivalent ionomer patch radius"@en ;
-    h2kg:canonicalSemanticRole "Compatibility" ;
-    h2kg:correctionAction "deprecate_source_ambiguous" ;
-    h2kg:definitionStatus "legacy" ;
-    h2kg:governanceStatus "legacy" ;
-    h2kg:migrationAction "deprecate_source_ambiguous" ;
+    skos:scopeNote "This characteristic can be selected as a workflow parameter through a Parameter record; contextual parameter use does not alter its intrinsic classification."@en,
+        "This radius characterizes finite ionomer patches on the secondary-pore surface and is not a pore radius inside ionomer."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "source" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Compatibility" .
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:EquivalentSprayCoatingPassCount a owl:Class ;
     rdfs:label "Equivalent Spray Coating Pass Count"@en ;
@@ -16704,18 +16718,23 @@ h2kg:IonomerAggregateSizeRatio a owl:Class ;
 
 h2kg:IonomerCatalystDispersionParameter a owl:Class ;
     rdfs:label "Ionomer-catalyst dispersion parameter"@en ;
+    dcterms:description "A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates."@en ;
+    dcterms:identifier "IO_CMP_IonomerCatalystDispersionParameter" ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    owl:deprecated true ;
+    dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+    rdfs:subClassOf h2kg:StructuralCharacteristic ;
     skos:definition "A dimensionless dispersion characteristic representing the tendency of ionomer to spread over a platinum-on-carbon surface rather than form larger ionomer aggregates."@en ;
     skos:notation "kA" ;
     skos:prefLabel "Ionomer-catalyst dispersion parameter"@en ;
-    h2kg:canonicalSemanticRole "Compatibility" ;
-    h2kg:correctionAction "deprecate_source_ambiguous" ;
-    h2kg:definitionStatus "legacy" ;
-    h2kg:governanceStatus "legacy" ;
-    h2kg:migrationAction "deprecate_source_ambiguous" ;
+    skos:scopeNote "The characteristic is intrinsic to the model description; its selected input value is represented by a separate Parameter record."@en,
+        "This characteristic can be selected as a workflow parameter through a Parameter record; contextual parameter use does not alter its intrinsic classification."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "source" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Compatibility" .
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:IonomerCoatedPoreWallContactAngle a owl:Class ;
     rdfs:label "Ionomer-coated pore-wall contact angle"@en ;
@@ -20660,17 +20679,18 @@ h2kg:MicroporousLayer a owl:Class ;
 
 h2kg:MicroporousLayerInk a owl:Class ;
     rdfs:label "Microporous Layer Ink"@en ;
-    dcterms:description "Ink precursor used to fabricate microporous layer (carbon black + PTFE suspension + water + surfactant)."@en ;
+    dcterms:description "A fluid dispersion formulated for deposition and drying to form a microporous layer in an electrochemical gas-diffusion medium."@en ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
     rdfs:subClassOf h2kg:Dispersion ;
     skos:altLabel "MPL ink"@en,
         "conductive ink"@en,
         "ink slurry"@en ;
-    skos:definition "Ink precursor used to fabricate microporous layer (carbon black + PTFE suspension + water + surfactant)."@en ;
+    skos:definition "A fluid dispersion formulated for deposition and drying to form a microporous layer in an electrochemical gas-diffusion medium."@en ;
     skos:prefLabel "Microporous Layer Ink"@en ;
+    skos:scopeNote "Typical formulations contain conductive carbon and a hydrophobic binder, but composition is recorded on the material occurrence rather than fixed by this class."@en ;
     h2kg:canonicalSemanticRole "Matter" ;
     h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "source" ;
+    h2kg:definitionStatus "curated" ;
     h2kg:governanceStatus "approved" ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
@@ -22170,17 +22190,18 @@ h2kg:NitrogenDopedGraphene a owl:Class ;
 
 h2kg:NitrogenPhysisorptionMeasurement a owl:Class ;
     rdfs:label "Nitrogen Physisorption Measurement"@en ;
-    dcterms:description "Nitrogen adsorption at 77 K to determine BET surface area and pore volume distribution (QSDFT)."@en ;
+    dcterms:description "An adsorption measurement in which nitrogen is used as the probe adsorptive to characterize specific surface area or pore structure."@en ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
     rdfs:subClassOf h2kg:AdsorptionMeasurement ;
     skos:altLabel "BET measurement"@en,
         "BET surface area measurement"@en,
         "nitrogen physisorption"@en ;
-    skos:definition "Nitrogen adsorption at 77 K to determine BET surface area and pore volume distribution (QSDFT)."@en ;
+    skos:definition "An adsorption measurement in which nitrogen is used as the probe adsorptive to characterize specific surface area or pore structure."@en ;
     skos:prefLabel "Nitrogen Physisorption Measurement"@en ;
+    skos:scopeNote "Measurement temperature, adsorption branch, surface-area model, and pore-size analysis method, such as BET or QSDFT, are occurrence-level conditions and metadata."@en ;
     h2kg:canonicalSemanticRole "Measurement" ;
     h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "source" ;
+    h2kg:definitionStatus "curated" ;
     h2kg:governanceStatus "approved" ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
@@ -25111,18 +25132,23 @@ h2kg:PlatinumParticleRadius a owl:Class ;
 
 h2kg:PlatinumSurfaceInducedIonomerAlignmentDegree a owl:Class ;
     rdfs:label "Platinum-surface-induced ionomer alignment degree"@en ;
+    dcterms:description "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface."@en ;
+    dcterms:identifier "IO_CMP_IonomerCatalystDegreeAlignment_deltaDAPt" ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    owl:deprecated true ;
+    dcterms:source <https://doi.org/10.1016/j.electacta.2022.140850> ;
+    rdfs:subClassOf h2kg:StructuralCharacteristic ;
     skos:definition "Degree of molecular alignment induced in the adjacent ionomer film by the platinum surface."@en ;
     skos:notation "deltaDA,Pt" ;
     skos:prefLabel "Platinum-surface-induced ionomer alignment degree"@en ;
-    h2kg:canonicalSemanticRole "Compatibility" ;
-    h2kg:correctionAction "deprecate_source_ambiguous" ;
-    h2kg:definitionStatus "legacy" ;
-    h2kg:governanceStatus "legacy" ;
-    h2kg:migrationAction "deprecate_source_ambiguous" ;
+    skos:scopeNote "This characteristic can be selected as a workflow parameter through a Parameter record; contextual parameter use does not alter its intrinsic classification."@en,
+        "This intrinsic alignment characteristic is used by the ITC model through a separate Parameter record."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "source" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Compatibility" .
+    h2kg:taxonomyTopBranch "Characteristic" .
 
 h2kg:PlatinumSurfaceWaterContactAngle a owl:Class ;
     rdfs:label "Platinum-surface water contact angle"@en ;
@@ -37950,21 +37976,6 @@ h2kg:SpectrumDataset a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "InformationEntity" .
 
-h2kg:StructuralCharacteristic a owl:Class ;
-    rdfs:label "Structural characteristic"@en ;
-    dcterms:description "A property describing the internal arrangement, connectivity, phase structure, or architecture of matter."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:Property ;
-    skos:definition "A property describing the internal arrangement, connectivity, phase structure, or architecture of matter."@en ;
-    skos:prefLabel "Structural characteristic"@en ;
-    h2kg:canonicalSemanticRole "Characteristic" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Characteristic" .
-
 h2kg:VolumetricInkDepositionRate a owl:Class ;
     rdfs:label "Volumetric ink deposition rate"@en ;
     dcterms:description "A volumetric-rate characteristic specifying the volume of ink deposited per unit time by a printing or dispensing process."@en ;
@@ -38720,6 +38731,21 @@ h2kg:StatisticalCharacteristic a owl:Class ;
     skos:definition "A quantitative characteristic describing a statistic, goodness-of-fit measure, uncertainty, deviation, or fitted coefficient."@en ;
     skos:prefLabel "Statistical characteristic"@en ;
     skos:scopeNote "This characteristic can be selected as a workflow parameter through a Parameter record; contextual parameter use does not alter its intrinsic classification."@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Characteristic" .
+
+h2kg:StructuralCharacteristic a owl:Class ;
+    rdfs:label "Structural characteristic"@en ;
+    dcterms:description "A property describing the internal arrangement, connectivity, phase structure, or architecture of matter."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:Property ;
+    skos:definition "A property describing the internal arrangement, connectivity, phase structure, or architecture of matter."@en ;
+    skos:prefLabel "Structural characteristic"@en ;
     h2kg:canonicalSemanticRole "Characteristic" ;
     h2kg:correctionAction "retain" ;
     h2kg:definitionStatus "structural" ;

@@ -139,7 +139,7 @@
       "role_assignment": "h2kg_taxonomy_2_2",
       "confidence": "high",
       "mapping_evidence": "Reviewed exact mapping to the established catalyst-loading term.",
-      "workflow_role": "Parameter",
+      "workflow_role": "Property",
       "intrinsic_semantic_role": "Property"
     },
     {
@@ -951,6 +951,20 @@
   ],
   "projection_nodes": [
     {
+      "id": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "iri": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/data-point",
+      "label": "Catalyst loading value",
+      "kind": "value_proxy",
+      "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
+      "source_occurrence_id": "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca",
+      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "semantic_role": "DataPoint",
+      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
+      "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
+    },
+    {
       "id": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-ccl-thickness-98b8b5b28f",
       "iri": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-ccl-thickness-98b8b5b28f/data-point",
       "label": "CCL thickness value",
@@ -1033,20 +1047,6 @@
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "description": "Derived semantic projection node. It represents a value of the preserved DECODE property occurrence and is not a source GraphML node."
-    },
-    {
-      "id": "projection::parameter::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
-      "iri": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca/parameter-record",
-      "label": "Catalyst loading parameter record",
-      "kind": "parameter_record_proxy",
-      "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
-      "source_occurrence_id": "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
-      "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/manual-ciemat-exp-single-cell-polarization-eis/node/input-catalyst-loading-9735316dca",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "description": "Derived semantic projection node. It represents contextual parameter use and refers to the preserved property occurrence through ofProperty."
     }
   ],
   "anchors": [
@@ -3377,32 +3377,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::774cb04744",
+      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::a7f1caa5a2",
       "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
       "source": "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-2d-51f91574f8",
-      "target": "projection::parameter::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::69ba169e9b",
+      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::5a5e392aef",
       "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
-      "source": "projection::parameter::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "source": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
       "target": "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3437,32 +3437,32 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::0c4e2b9ba4",
+      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::3075243376",
       "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
       "source": "manual-ciemat-exp-single-cell-polarization-eis::linked-upstream-hzb-mod-image-parameter-extraction-3d-fib-tomography-563cc6bc1b",
-      "target": "projection::parameter::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "target": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "label": "hasOutputData",
       "type": "semantic_projection",
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "evidence": "The property is represented through a Parameter record; the preserved source direction remains separately available.",
+      "projection_pattern": "property_value_output",
+      "evidence": "Activity produces a DataPoint representing the target property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
     {
-      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::69ba169e9b",
+      "id": "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::5a5e392aef",
       "workflow_id": "manual-ciemat-exp-single-cell-polarization-eis",
-      "source": "projection::parameter::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
+      "source": "projection::datapoint::manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
       "target": "manual-ciemat-exp-single-cell-polarization-eis::input-catalyst-loading-9735316dca",
       "predicate": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "label": "ofProperty",
       "type": "semantic_projection",
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_property",
-      "evidence": "The Parameter record refers to the intrinsic property occurrence rather than changing its class identity.",
+      "projection_pattern": "property_value_type",
+      "evidence": "Reified DataPoint refers to the preserved target property occurrence.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -3537,7 +3537,7 @@
       "source_graphml_id": "input-catalyst-loading-9735316dca",
       "source_label": "Catalyst loading",
       "source_semantic_role": "Property",
-      "source_workflow_role": "Parameter",
+      "source_workflow_role": "Property",
       "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "target_occurrence_id": "manual-ciemat-exp-single-cell-polarization-eis::method",
       "target_node_id": "method",
@@ -4606,20 +4606,20 @@
       "target_graphml_id": "input-catalyst-loading-9735316dca",
       "target_label": "Catalyst loading",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "source_description": "Reviewed linked-method context through Catalyst loading, CCL thickness.",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::774cb04744",
-        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::69ba169e9b"
+        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::a7f1caa5a2",
+        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-d768a10802::5a5e392aef"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-88f746a540",
@@ -4668,20 +4668,20 @@
       "target_graphml_id": "input-catalyst-loading-9735316dca",
       "target_label": "Catalyst loading",
       "target_semantic_role": "Property",
-      "target_workflow_role": "Parameter",
+      "target_workflow_role": "Property",
       "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#CatalystLoading",
       "source_description": "Reviewed linked-method context through Catalyst loading, CCL thickness.",
       "projection_outcome": "h2kg_reified",
-      "projection_pattern": "parameter_record_output_direction",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "projection_pattern": "property_value_output",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData; https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
       "semantic_edge_ids": [
-        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::0c4e2b9ba4",
-        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::69ba169e9b"
+        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::3075243376",
+        "semantic::manual-ciemat-exp-single-cell-polarization-eis::context-67803fe80b::5a5e392aef"
       ],
       "semantic_direction": "reified_projection",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The property is represented through a Parameter record; the preserved source direction remains separately available."
+      "rationale": "Activity produces a DataPoint representing the target property."
     },
     {
       "source_dependency_id": "manual-ciemat-exp-single-cell-polarization-eis::context-371a11a569",

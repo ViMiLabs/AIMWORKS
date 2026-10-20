@@ -250,12 +250,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "ct_capillary_saturation_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "impregnation-by-immersion-and-blade-coating::n11",
@@ -649,12 +649,12 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
+      "role_assignment": "cl_saturation_scattering_is_measurement",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
-      "workflow_role": "Parameter"
+      "workflow_role": "Measurement"
     },
     {
       "id": "impregnation-by-immersion-and-blade-coating::n30",
@@ -740,8 +740,8 @@
       "label": "CT-based capillary pressure saturation curves",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -766,8 +766,8 @@
       "label": "Determination of CL saturation by SAXS/SANS",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "semantic_role": "Measurement",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -2241,6 +2241,21 @@
       "governance_status": "classified"
     },
     {
+      "id": "semantic::impregnation-by-immersion-and-blade-coating::e9::b62237a15e",
+      "workflow_id": "impregnation-by-immersion-and-blade-coating",
+      "source": "impregnation-by-immersion-and-blade-coating::n10",
+      "target": "impregnation-by-immersion-and-blade-coating::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "impregnation-by-immersion-and-blade-coating::e9",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
       "id": "semantic::impregnation-by-immersion-and-blade-coating::e10::e6dd7447ca",
       "workflow_id": "impregnation-by-immersion-and-blade-coating",
       "source": "impregnation-by-immersion-and-blade-coating::n11",
@@ -2444,6 +2459,21 @@
       "label": "hasInputMaterial",
       "type": "semantic_projection",
       "source_dependency_id": "impregnation-by-immersion-and-blade-coating::e26",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
+      "confidence": "rule_curated",
+      "governance_status": "classified"
+    },
+    {
+      "id": "semantic::impregnation-by-immersion-and-blade-coating::e28::5e22559e00",
+      "workflow_id": "impregnation-by-immersion-and-blade-coating",
+      "source": "impregnation-by-immersion-and-blade-coating::n29",
+      "target": "impregnation-by-immersion-and-blade-coating::n3",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "label": "hasInputMaterial",
+      "type": "semantic_projection",
+      "source_dependency_id": "impregnation-by-immersion-and-blade-coating::e28",
       "projection_outcome": "h2kg_direct",
       "projection_pattern": "activity_input_material",
       "evidence": "Activity consumes the source material; H2KG direction is activity to material.",
@@ -2749,18 +2779,20 @@
       "target_node_id": "n10",
       "target_graphml_id": "n10",
       "target_label": "CT-based capillary pressure saturation curves",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ct-based-capillary-pressure-saturation-curves-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::impregnation-by-immersion-and-blade-coating::e9::b62237a15e"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "impregnation-by-immersion-and-blade-coating::e10",
@@ -3309,18 +3341,20 @@
       "target_node_id": "n29",
       "target_graphml_id": "n29",
       "target_label": "Determination of CL saturation by SAXS/SANS",
-      "target_semantic_role": "Parameter",
-      "target_workflow_role": "Parameter",
+      "target_semantic_role": "Measurement",
+      "target_workflow_role": "Measurement",
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/determination-of-cl-saturation-by-saxs-sans-method",
       "source_description": "",
-      "projection_outcome": "decode_structural_only",
-      "projection_pattern": "structural_dependency",
-      "semantic_predicates": "",
-      "semantic_edge_ids": [],
-      "semantic_direction": "not_projected",
-      "confidence": "context_required",
+      "projection_outcome": "h2kg_direct",
+      "projection_pattern": "activity_input_material",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasInputMaterial",
+      "semantic_edge_ids": [
+        "semantic::impregnation-by-immersion-and-blade-coating::e28::5e22559e00"
+      ],
+      "semantic_direction": "reversed_from_source",
+      "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "The preserved dependency has no activity or data-flow context sufficient for a scientifically defensible H2KG or PROV-O predicate."
+      "rationale": "Activity consumes the source material; H2KG direction is activity to material."
     },
     {
       "source_dependency_id": "impregnation-by-immersion-and-blade-coating::e29",
@@ -4054,10 +4088,10 @@
       "rationale": "Both method records declare the dependency and exact declared input/output handoff labels are shared.",
       "both_methods_in_manual_json": true,
       "upstream_occurrence_id": "impregnation-by-immersion-and-blade-coating::n4",
-      "downstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "downstream_occurrence_id": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "source": "impregnation-by-immersion-and-blade-coating::n4",
-      "target": "determination-of-cl-saturation-by-saxs-or-sans::n24",
-      "semantic_source": "determination-of-cl-saturation-by-saxs-or-sans::n24",
+      "target": "determination-of-cl-saturation-by-saxs-or-sans::n16",
+      "semantic_source": "determination-of-cl-saturation-by-saxs-or-sans::n16",
       "semantic_target": "impregnation-by-immersion-and-blade-coating::n4",
       "handoff_anchor_iris": [
         "https://w3id.org/h2kg/hydrogen-ontology#GasDiffusionLayer"

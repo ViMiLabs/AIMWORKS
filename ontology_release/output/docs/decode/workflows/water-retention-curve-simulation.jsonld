@@ -318,7 +318,7 @@
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
         "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-breakthrough-pressure-component",
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate breakthrough pressure"
@@ -548,11 +548,9 @@
       "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n10"
-        }
-      ],
-      "https://w3id.org/h2kg/hydrogen-ontology#hasParameter": [
+        },
         {
-          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11"
+          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11/data-point"
         }
       ]
     },
@@ -1143,6 +1141,26 @@
       ]
     },
     {
+      "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11/data-point",
+      "@type": [
+        "http://www.w3.org/ns/prov#Entity",
+        "https://w3id.org/h2kg/hydrogen-ontology#DataPoint"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        "GDL substrate breakthrough pressure value"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/derivedFromOccurrence": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11"
+        }
+      ],
+      "https://w3id.org/h2kg/hydrogen-ontology#ofProperty": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11"
+        }
+      ]
+    },
+    {
       "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n13/data-point",
       "@type": [
         "http://www.w3.org/ns/prov#Entity",
@@ -1277,7 +1295,7 @@
     {
       "@id": "https://w3id.org/h2kg/decode/workflow/anchor/gdl-substrate-breakthrough-pressure-component",
       "@type": [
-        "https://w3id.org/h2kg/hydrogen-ontology#Parameter"
+        "https://w3id.org/h2kg/hydrogen-ontology#Property"
       ],
       "http://www.w3.org/2000/01/rdf-schema#label": [
         "GDL substrate breakthrough pressure"
@@ -2373,7 +2391,7 @@
       ]
     },
     {
-      "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/projection/6b637b5881",
+      "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/projection/47678198d0",
       "@type": [
         "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
       ],
@@ -2381,14 +2399,44 @@
         "water-retention-curve-simulation::e27"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
-        "h2kg_direct"
+        "h2kg_reified"
       ],
       "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
-        "activity_parameter"
+        "property_value_output"
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticSource": [
         {
           "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n18"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11/data-point"
+        }
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
+        {
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/projection/dc96c5214b",
+      "@type": [
+        "https://w3id.org/h2kg/decode/workflow/SemanticProjection"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/sourceDependencyId": [
+        "water-retention-curve-simulation::e27"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionOutcome": [
+        "h2kg_reified"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/projectionPattern": [
+        "property_value_type"
+      ],
+      "https://w3id.org/h2kg/decode/workflow/semanticSource": [
+        {
+          "@id": "https://w3id.org/h2kg/decode/workflow/water-retention-curve-simulation/node/n11/data-point"
         }
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticTarget": [
@@ -2398,7 +2446,7 @@
       ],
       "https://w3id.org/h2kg/decode/workflow/semanticPredicate": [
         {
-          "@id": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter"
+          "@id": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty"
         }
       ]
     },

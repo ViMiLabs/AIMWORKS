@@ -7,13 +7,9 @@
 
 h2kg:TaxonomyClassShape a sh:NodeShape ;
     sh:property [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one correction action." ;
+            sh:message "Every H2KG class must have exactly one taxonomy module." ;
             sh:minCount 1 ;
-            sh:path h2kg:correctionAction ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one canonical semantic role." ;
-            sh:minCount 1 ;
-            sh:path h2kg:canonicalSemanticRole ],
+            sh:path h2kg:taxonomyModule ],
         [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have exactly one migration action." ;
             sh:minCount 1 ;
@@ -23,9 +19,25 @@ h2kg:TaxonomyClassShape a sh:NodeShape ;
             sh:minCount 1 ;
             sh:path h2kg:governanceStatus ],
         [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must record migration provenance." ;
+            sh:minCount 1 ;
+            sh:path dcterms:provenance ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must identify exactly one top-level taxonomy branch." ;
+            sh:minCount 1 ;
+            sh:path h2kg:taxonomyTopBranch ],
+        [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have exactly one definition status." ;
             sh:minCount 1 ;
             sh:path h2kg:definitionStatus ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one canonical semantic role." ;
+            sh:minCount 1 ;
+            sh:path h2kg:canonicalSemanticRole ],
+        [ sh:maxCount 1 ;
+            sh:message "Every H2KG class must have exactly one correction action." ;
+            sh:minCount 1 ;
+            sh:path h2kg:correctionAction ],
         [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have a definition." ;
             sh:minCount 1 ;
@@ -33,17 +45,5 @@ h2kg:TaxonomyClassShape a sh:NodeShape ;
         [ sh:maxCount 1 ;
             sh:message "Every H2KG class must have exactly one preferred label." ;
             sh:minCount 1 ;
-            sh:path skos:prefLabel ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must identify exactly one top-level taxonomy branch." ;
-            sh:minCount 1 ;
-            sh:path h2kg:taxonomyTopBranch ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must record migration provenance." ;
-            sh:minCount 1 ;
-            sh:path dcterms:provenance ],
-        [ sh:maxCount 1 ;
-            sh:message "Every H2KG class must have exactly one taxonomy module." ;
-            sh:minCount 1 ;
-            sh:path h2kg:taxonomyModule ] ;
+            sh:path skos:prefLabel ] ;
     sh:targetClass owl:Class .

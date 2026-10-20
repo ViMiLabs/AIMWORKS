@@ -313,6 +313,12 @@ def test_role_curation_overrides_graphml_visual_categories(tmp_path: Path) -> No
     assert concepts["CLSM temperature"]["role_assignment"] == "clsm_temperature_is_parameter"
     assert concepts["Cell EIS"]["semantic_role"] == "Data"
     assert concepts["Cell Tafel slope"]["semantic_role"] == "Property"
+    assert concepts["CCL effective mass activity"]["semantic_role"] == "Property"
+    assert concepts["CCM area"]["semantic_role"] == "Property"
+    assert concepts["CT-based capillary pressure saturation curves"]["semantic_role"] == "Measurement"
+    assert concepts["Current modulated hydrogen flow-rate spectroscopy (CH2S)"]["semantic_role"] == "Measurement"
+    assert concepts["GDL substrate breakthrough pressure"]["semantic_role"] == "Property"
+    assert concepts["Membrane"]["mapping_state"] == "decode_local"
 
 
 def test_all_decode_edges_receive_traceable_semantic_classification(tmp_path: Path) -> None:
@@ -340,6 +346,20 @@ def test_all_decode_edges_receive_traceable_semantic_classification(tmp_path: Pa
     assert validation["invalid_of_property_edge_ids"] == []
     assert validation["invalid_has_parameter_edge_ids"] == []
     assert validation["invalid_measures_edge_ids"] == []
+
+    structural_ids = {
+        "development-of-a-zero-gap-cell-for-gde-based-spectrocopy-measurement::e4",
+        "fitting-version-of-the-hierachical-model::e33",
+        "hierarchical-model-for-electrocatalytic-reactions::e0",
+        "lab-ct-measurements-on-gdl-or-mpl-materials::e9",
+        "rde-on-mono-or-polycrystalline-electrodes::e13",
+        "rrde-on-model-electrodes-in-alkaline-solutions::e22",
+        "rrde-simulation-in-comsol::e0",
+        "tem-and-eds-analysis-of-mea::e8",
+    }
+    by_id = {row["source_dependency_id"]: row for row in registry}
+    assert all(by_id[edge_id]["projection_outcome"] == "decode_structural_only" for edge_id in structural_ids)
+    assert not any(edge["source_dependency_id"] in structural_ids for edge in graph["semantic_edges"])
 
     fib_input = next(edge for edge in graph["semantic_edges"] if edge["source_dependency_id"] == "fib-sem-on-cl-material::e0")
     assert fib_input["predicate"].endswith("#hasInputMaterial")

@@ -1,6 +1,6 @@
 # H2KG--TIB Collection Benchmark
 
-This package benchmarks `2221` active local H2KG classes against the ontologies assigned to NFDI4Cat, NFDI4Energy, and NFDI4Ing in the TIB catalogue snapshot retrieved at `2026-10-14T07:32:20+00:00`.
+This package benchmarks `2226` active local H2KG classes against the ontologies assigned to NFDI4Cat, NFDI4Energy, and NFDI4Ing in the TIB catalogue snapshot retrieved at `2026-10-14T07:32:20+00:00`.
 
 Primary percentages use native classes only. Imported availability is documented separately. BattINFO remains one of the 165 catalogue-membership rows but is marked not assessed because native frozen evidence is unavailable; it contributes no semantic outcome and is excluded from the NFDI4Ing union. Every assessed row assigns each H2KG class to exactly one outcome. Percentages are rounded independently, so displayed totals may differ from 100% by 0.01 percentage point while exact counts remain authoritative.
 
@@ -24,4 +24,4 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `imported_availability.csv`: secondary import-inclusive evidence.
 - `automatic_harmonization_registry.json`: exact, machine-safe mappings and non-destructive label actions.
 
-Frozen inputs: `input\tib_collection_snapshot.json` and `input\tib_collection_candidate_cache.json`.
+Frozen inputs: `ontology_release\input\tib_collection_snapshot.json` and `ontology_release\input\tib_collection_candidate_cache.json`.

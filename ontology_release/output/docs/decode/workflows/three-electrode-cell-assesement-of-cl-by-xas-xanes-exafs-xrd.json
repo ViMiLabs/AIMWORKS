@@ -103,9 +103,9 @@
       "mapping_state": "decode_local",
       "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/ccm-area-component",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
-      "role_assignment": "operating_or_geometric_parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "role_assignment": "ccm_area_is_property",
       "confidence": "decode_local",
       "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "workflow_role": "Parameter"
@@ -518,8 +518,8 @@
       "label": "CCM area",
       "state": "decode_local",
       "decision": "decode_local_anchor",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Parameter",
-      "semantic_role": "Parameter",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
       "confidence": "decode_local",
       "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
       "occurrence_ids": [
@@ -1225,17 +1225,17 @@
       "governance_status": "classified"
     },
     {
-      "id": "semantic::three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e3::8de8aa8cc5",
+      "id": "semantic::three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e3::d66dcc7229",
       "workflow_id": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd",
       "source": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n15",
       "target": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n3",
-      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
-      "label": "hasParameter",
+      "predicate": "https://w3id.org/h2kg/hydrogen-ontology#measures",
+      "label": "measures",
       "type": "semantic_projection",
       "source_dependency_id": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e3",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_parameter",
-      "evidence": "Activity uses the source parameter; H2KG direction is activity to parameter.",
+      "projection_pattern": "measurement_property_reversed",
+      "evidence": "Source property occurrence is a measured outcome; H2KG direction is measurement to property.",
       "confidence": "rule_curated",
       "governance_status": "classified"
     },
@@ -1549,7 +1549,7 @@
       "source_node_id": "n3",
       "source_graphml_id": "n3",
       "source_label": "CCM area",
-      "source_semantic_role": "Parameter",
+      "source_semantic_role": "Property",
       "source_workflow_role": "Parameter",
       "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/ccm-area-component",
       "target_occurrence_id": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::n15",
@@ -1561,15 +1561,15 @@
       "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd-method",
       "source_description": "",
       "projection_outcome": "h2kg_direct",
-      "projection_pattern": "activity_parameter",
-      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "projection_pattern": "measurement_property_reversed",
+      "semantic_predicates": "https://w3id.org/h2kg/hydrogen-ontology#measures",
       "semantic_edge_ids": [
-        "semantic::three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e3::8de8aa8cc5"
+        "semantic::three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e3::d66dcc7229"
       ],
       "semantic_direction": "reversed_from_source",
       "confidence": "rule_curated",
       "governance_status": "classified",
-      "rationale": "Activity uses the source parameter; H2KG direction is activity to parameter."
+      "rationale": "Source property occurrence is a measured outcome; H2KG direction is measurement to property."
     },
     {
       "source_dependency_id": "three-electrode-cell-assesement-of-cl-by-xas-xanes-exafs-xrd::e4",

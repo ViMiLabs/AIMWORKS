@@ -41,7 +41,7 @@
     "source_node_count": 9,
     "source_edge_count": 10,
     "mapped_anchor_count": 9,
-    "cross_workflow_connection_count": 102
+    "cross_workflow_connection_count": 98
   },
   "nodes": [
     {
@@ -135,30 +135,18 @@
       "source_kind": "source_manual_json",
       "source_field": "output",
       "source_position": 0,
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
-        "anchor_label": "Platinum density",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDensity."
-      },
       "kind": "occurrence",
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "visual_category": "material",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDensity.",
-      "workflow_role": "Property",
-      "intrinsic_semantic_role": "Property"
+      "role_assignment": "physical_or_derived_property",
+      "confidence": "decode_local",
+      "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
@@ -175,30 +163,19 @@
       "source_kind": "source_manual_json",
       "source_field": "output",
       "source_position": 1,
-      "mapping_override": {
-        "state": "approved_h2kg",
-        "decision": "existing_h2kg_mapping",
-        "anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-        "anchor_label": "Platinum particle radius",
-        "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-        "semantic_role": "Property",
-        "role_assignment": "curated_interface",
-        "confidence": "curated_source",
-        "evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDiameter."
-      },
+      "prevent_anchor_canonicalization": true,
       "kind": "occurrence",
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "visual_category": "material",
-      "mapping_state": "approved_h2kg",
-      "anchor_id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-      "decision": "existing_h2kg_mapping",
+      "mapping_state": "decode_local",
+      "anchor_id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "decision": "decode_local_anchor",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
       "semantic_role": "Property",
-      "role_assignment": "h2kg_taxonomy_2_2",
-      "confidence": "curated_source",
-      "mapping_evidence": "Unambiguous exact-label mapping established by the curated ITC registry for IO_MAT_CatalystActiveParticleDiameter.",
-      "workflow_role": "Property",
-      "intrinsic_semantic_role": "Property"
+      "role_assignment": "catalyst_active_particle_diameter_is_property",
+      "confidence": "decode_local",
+      "mapping_evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "workflow_role": "Property"
     },
     {
       "id": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-radius-distribution-713aaacc30",
@@ -382,7 +359,7 @@
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "source_occurrence_id": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb",
       "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/manual-fzj-mod-starplatin-temseg/node/output-catalyst-active-particle-density-3577973ddb",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -396,7 +373,7 @@
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "source_occurrence_id": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
       "source_occurrence_iri": "https://w3id.org/h2kg/decode/workflow/manual-fzj-mod-starplatin-temseg/node/output-catalyst-active-particle-diameter-05e2cc4fda",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
       "semantic_role": "DataPoint",
       "rdf_type": "https://w3id.org/h2kg/hydrogen-ontology#DataPoint",
@@ -514,6 +491,45 @@
       ]
     },
     {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+      "kind": "anchor",
+      "label": "Catalyst active particle density",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "decode_local",
+      "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n3",
+        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n3",
+        "image-fib-tomography-dataparameter-extraction-3d::n3",
+        "image-parameter-extraction-2d::n13",
+        "image-tem-data-parameter-extraction-3d::n3",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-density-3577973ddb",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb"
+      ]
+    },
+    {
+      "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
+      "kind": "anchor",
+      "label": "Catalyst active particle diameter",
+      "state": "decode_local",
+      "decision": "decode_local_anchor",
+      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
+      "semantic_role": "Property",
+      "confidence": "decode_local",
+      "evidence": "DECODE-specific concept retained as a stable local anchor. Its source topology is preserved; no H2KG synonym or new public term was asserted.",
+      "occurrence_ids": [
+        "image-tem-data-parameter-extraction-3d::n2",
+        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
+        "sem-and-fib-powder::n3",
+        "tem-and-eds-analysis-of-mea::n2"
+      ]
+    },
+    {
       "id": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material",
       "kind": "anchor",
       "label": "Catalyst active particle radius distribution",
@@ -601,49 +617,6 @@
       "occurrence_ids": [
         "manual-fzj-mod-stardist-temseg::input-ccl-2d-tem-images-raw-708b4d4271",
         "manual-fzj-mod-starplatin-temseg::input-ccl-2d-tem-images-raw-708b4d4271"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
-      "kind": "anchor",
-      "label": "Platinum density",
-      "state": "approved_h2kg",
-      "decision": "new_h2kg_term",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "curated_pdf_schema",
-      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleDensity; no public H2KG synonym has been asserted.",
-      "occurrence_ids": [
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction-without-fitting-methods::n3",
-        "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n3",
-        "iet-ink-to-composition-model::n8",
-        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleDensity",
-        "image-fib-tomography-dataparameter-extraction-3d::n3",
-        "image-parameter-extraction-2d::n13",
-        "image-tem-data-parameter-extraction-3d::n3",
-        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-density-3577973ddb",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb"
-      ]
-    },
-    {
-      "id": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
-      "kind": "anchor",
-      "label": "Platinum particle radius",
-      "state": "approved_h2kg",
-      "decision": "new_h2kg_term",
-      "canonical_role_iri": "https://w3id.org/h2kg/hydrogen-ontology#Property",
-      "semantic_role": "Property",
-      "confidence": "curated_pdf_schema",
-      "evidence": "Stable DECODE interface anchor for PDF identifier IO_MAT_CatalystActiveParticleDiameter; no public H2KG synonym has been asserted.",
-      "occurrence_ids": [
-        "iet-ink-to-composition-model::n6",
-        "iet-multiscale-model-interface::variable::IO_MAT_CatalystActiveParticleDiameter",
-        "image-tem-data-parameter-extraction-3d::n2",
-        "manual-cea-exp-tem-eds-analysis-cl::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-stardist-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-        "sem-and-fib-powder::n3",
-        "tem-and-eds-analysis-of-mea::n2"
       ]
     },
     {
@@ -804,17 +777,17 @@
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb::d05f94c3ca",
+      "id": "anchor::manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb::a15a9283e6",
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "source": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-density-3577973ddb",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
       "type": "occurrence_anchor_mapping"
     },
     {
-      "id": "anchor::manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda::88e9511fb0",
+      "id": "anchor::manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda::0054de1851",
       "workflow_id": "manual-fzj-mod-starplatin-temseg",
       "source": "manual-fzj-mod-starplatin-temseg::output-catalyst-active-particle-diameter-05e2cc4fda",
-      "target": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "type": "occurrence_anchor_mapping"
     },
     {
@@ -1188,7 +1161,7 @@
       "target_label": "Catalyst active particle density",
       "target_semantic_role": "Property",
       "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
@@ -1219,7 +1192,7 @@
       "target_label": "Catalyst active particle diameter",
       "target_semantic_role": "Property",
       "target_workflow_role": "Property",
-      "target_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "target_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "source_description": "Manual JSON output dependency.",
       "projection_outcome": "h2kg_reified",
       "projection_pattern": "property_value_output",
@@ -1305,7 +1278,7 @@
       "source_label": "Catalyst active particle density",
       "source_semantic_role": "Property",
       "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
       "target_occurrence_id": "manual-fzj-mod-starplatin-temseg::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_node_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_graphml_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
@@ -1336,7 +1309,7 @@
       "source_label": "Catalyst active particle diameter",
       "source_semantic_role": "Property",
       "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
       "target_occurrence_id": "manual-fzj-mod-starplatin-temseg::linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_node_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
       "target_graphml_id": "linked-downstream-fzj-iet-3-mod-ink-composition-9c278004fb",
@@ -1367,7 +1340,7 @@
       "source_label": "Catalyst active particle density",
       "source_semantic_role": "Property",
       "source_workflow_role": "Property",
-      "source_anchor_iri": "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
+      "source_anchor_iri": "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
       "target_occurrence_id": "manual-fzj-mod-starplatin-temseg::linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045",
       "target_node_id": "linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045",
       "target_graphml_id": "linked-downstream-0d-particle-population-degradation-model-coupled-with-performance-model-prediction-9bd7710045",
@@ -1546,6 +1519,8 @@
       "semantic_source": "iet-ink-to-composition-model::n22",
       "semantic_target": "manual-fzj-mod-starplatin-temseg::method",
       "handoff_anchor_iris": [
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-diameter-material",
         "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity",
         "https://w3id.org/h2kg/hydrogen-ontology#PlatinumParticleRadius"
       ],
@@ -1583,8 +1558,8 @@
       "semantic_source": "0d-particle-population-degradation-model-coupled-with-performance-model-prediction::n32",
       "semantic_target": "manual-fzj-mod-starplatin-temseg::method",
       "handoff_anchor_iris": [
-        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material",
-        "https://w3id.org/h2kg/hydrogen-ontology#PlatinumDensity"
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-density-material",
+        "https://w3id.org/h2kg/decode/workflow/anchor/catalyst-active-particle-radius-distribution-material"
       ],
       "valid_endpoints": true
     },

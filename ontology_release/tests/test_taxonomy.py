@@ -27,8 +27,8 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     )
 
     assert result["conforms"] is True
-    assert result["active_local_classes"] == 2221
-    assert result["deprecated_compatibility_classes"] == 165
+    assert result["active_local_classes"] == 2226
+    assert result["deprecated_compatibility_classes"] == 160
     assert result["new_structural_classes"] == 157
     assert result["publication_ready"] is True
 
@@ -53,6 +53,16 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert str(graph.value(_iri("IonomerCatalystDispersionParameter"), SKOS.definition)).startswith(
         "A dimensionless dispersion characteristic"
     )
+    corrected_itc_characteristics = {
+        "CCLIonomerAlignmentDegree": "StructuralCharacteristic",
+        "CarbonSupportInducedIonomerAlignmentDegree": "StructuralCharacteristic",
+        "PlatinumSurfaceInducedIonomerAlignmentDegree": "StructuralCharacteristic",
+        "IonomerCatalystDispersionParameter": "StructuralCharacteristic",
+        "EquivalentIonomerPatchRadius": "MorphologicalCharacteristic",
+    }
+    for local_name, parent in corrected_itc_characteristics.items():
+        assert (_iri(local_name), RDFS.subClassOf, _iri(parent)) in graph
+        assert (_iri(local_name), OWL.deprecated, None) not in graph
     assert (_iri("DynamicHydrogenElectrode"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
     assert (_iri("SCE"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
     assert (_iri("SHE"), RDFS.subClassOf, _iri("ReferenceElectrode")) in graph
@@ -173,8 +183,8 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert correction_report["decision_counts"]["definition"] == 470
     assert correction_report["decision_counts"]["unique_classes"] == 544
     assert correction_report["source_dependent_classes_assessed"] == 153
-    assert correction_report["source_ambiguous_classes_deprecated"] == 152
-    assert correction_report["source_dependent_classes_resolved"] == 1
+    assert correction_report["source_ambiguous_classes_deprecated"] == 147
+    assert correction_report["source_dependent_classes_resolved"] == 6
     assert len(correction_report["decisions"]) == 626
     assert all(
         term["definition_status"] in {"source", "curated", "structural"}
