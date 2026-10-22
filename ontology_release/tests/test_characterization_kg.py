@@ -1,0 +1,216 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+from rdflib import Graph, Literal, RDF, RDFS
+from rdflib.compare import isomorphic
+
+from aimworks_ontology_release.characterization_docs import (
+    characterization_body,
+    characterization_css,
+    characterization_js,
+)
+from aimworks_ontology_release.characterization_kg import (
+    CASE,
+    EXPECTED_WORKBOOK_SHA256,
+    GRAPH,
+    H2KG,
+    KG,
+    QUDT,
+    build_characterization_kg,
+    write_characterization_manuscript_materials,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def characterization_build(tmp_path_factory: pytest.TempPathFactory) -> tuple[Path, dict]:
+    root = tmp_path_factory.mktemp("characterization")
+    report = build_characterization_kg(
+        ROOT / "input" / "characterization_workbook_manifest.json",
+        ROOT / "input" / "current_ontology.jsonld",
+        root,
+        taxonomy_registry_path=ROOT / "output" / "ontology" / "taxonomy_registry.json",
+        taxonomy_ttl_path=ROOT / "output" / "ontology" / "h2kg-v2-taxonomy.ttl",
+    )
+    return root / "characterization_kg", report
+
+
+def test_manifest_is_sanitized_complete_and_fingerprinted() -> None:
+    manifest = json.loads((ROOT / "input" / "characterization_workbook_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["source"]["sha256"] == EXPECTED_WORKBOOK_SHA256
+    assert manifest["case_count"] == 8
+    assert manifest["method_family_count"] == 7
+    assert {item["key"] for item in manifest["cases"]} == {
+        "tem", "sem", "afm", "fib_sem", "ic_sem", "neutron_tomography",
+        "synchrotron_radiography", "synchrotron_tomography",
+    }
+    assert manifest["eligible_field_count"] == 1635
+    assert manifest["excluded_field_count"] == 40
+    assert {item["field"] for item in manifest["excluded_fields"]} == {
+        "Author", "Email", "ORCID", "Institution", "FoundingBody"
+    }
+    source_records = [record for case in manifest["cases"] for record in case["source_records"]]
+    assert len(source_records) == 1635
+    assert not any(record["field"] in {"Author", "Email", "ORCID", "Institution", "FoundingBody"} for record in source_records)
+    assert not any("@" in str(record.get("raw_value", "")) for record in source_records)
+
+
+def test_build_preserves_every_eligible_field_and_serialization_parity(characterization_build) -> None:
+    target, report = characterization_build
+    assert report["ontology_version"] == "2.3.0"
+    assert report["ontology_modified"] is False
+    assert report["case_count"] == 8
+    assert report["represented_field_count"] == report["eligible_field_count"] == 1635
+    assert report["source_coverage_percent"] == 100.0
+    assert sum(report["source_status_counts"].values()) == 1635
+    assert report["source_status_counts"]["missing"] > 0
+    assert report["source_status_counts"]["semantic_conflict"] == 1
+    assert report["shacl_conforms"] is True
+    assert {item["scenario"] for item in report["negative_tests"]} == {
+        "missing_measurement_subject",
+        "missing_parameter_property",
+        "missing_result_provenance",
+        "missing_quantity_unit",
+    }
+    assert all(item["conforms"] is False for item in report["negative_tests"])
+    assert report["turtle_jsonld_isomorphic"] is True
+    turtle = Graph().parse(target / "characterization_knowledge_graph.ttl", format="turtle")
+    jsonld = Graph().parse(target / "characterization_knowledge_graph.jsonld", format="json-ld")
+    assert isomorphic(turtle, jsonld)
+    assert len(set(turtle.subjects(RDF.type, KG.SourceField))) == 1635
+    assert len(list((target / "cases").glob("*.ttl"))) == 8
+
+
+def test_tem_queryable_chain_and_missing_states(characterization_build) -> None:
+    target, _ = characterization_build
+    graph = Graph().parse(target / "cases" / "tem.ttl", format="turtle")
+    measurement = next(graph.subjects(RDF.type, H2KG.TransmissionElectronMicroscopyImaging))
+    specimen = next(graph.objects(measurement, H2KG.hasMeasurementSubject))
+    instrument = next(graph.objects(measurement, H2KG.usesInstrument))
+    assert (specimen, RDF.type, H2KG.Matter) in graph
+    assert (instrument, RDF.type, H2KG.TEMInstrument) in graph
+    result = next(graph.subjects(RDF.type, H2KG.DataPoint))
+    prop = next(graph.objects(result, H2KG.ofProperty))
+    assert (prop, RDF.type, H2KG.MeanParticleSize) in graph
+    assert (prop, H2KG.isCharacteristicOf, specimen) in graph
+    qv = next(graph.objects(prop, H2KG.hasQuantityValue))
+    assert str(next(graph.objects(qv, QUDT.numericValue))) in {"5", "5.0"}
+    assert str(next(graph.objects(qv, QUDT.unit))).endswith("NanoM")
+    assert str(next(graph.objects(qv, RDFS.label))) == "5 nm"
+    mix_steps = {
+        subject
+        for subject in graph.subjects(RDFS.label, Literal("Mix"))
+        if (subject, RDF.type, H2KG.Manufacturing) in graph
+    }
+    assert len(mix_steps) == 1
+    mix_step = next(iter(mix_steps))
+    assert len(set(graph.objects(mix_step, H2KG.hasInputMaterial))) == 2
+    assert (mix_step, RDF.type, H2KG.MixingOrDispersionProcess) in graph
+    sonication = next(graph.subjects(RDFS.label, Literal("Sonification")))
+    assert (sonication, RDF.type, H2KG.Sonication) in graph
+    working_distance_records = [
+        item
+        for item in graph.subjects(RDF.type, H2KG.Parameter)
+        if "WorkingDistance" in str(next(graph.objects(item, RDFS.label), ""))
+    ]
+    assert working_distance_records
+    assert any(str(next(graph.objects(item, KG.valueStatus))).endswith("unconfirmed") for item in working_distance_records)
+
+
+def test_parameter_records_do_not_reclassify_properties(characterization_build) -> None:
+    target, _ = characterization_build
+    graph = Graph().parse(target / "characterization_knowledge_graph.ttl", format="turtle")
+    records = set(graph.subjects(RDF.type, H2KG.Parameter))
+    assert records
+    for record in records:
+        occurrences = list(graph.objects(record, H2KG.ofProperty))
+        assert len(occurrences) == 1
+        assert (occurrences[0], RDF.type, H2KG.Parameter) not in graph
+        assert len(list(graph.objects(occurrences[0], H2KG.isCharacteristicOf))) == 1
+    afm = Graph().parse(target / "cases" / "afm.ttl", format="turtle")
+    scan_rate_occurrences = set(afm.subjects(RDF.type, H2KG.FrequencyCharacteristic))
+    assert scan_rate_occurrences
+    assert not list(afm.subjects(RDF.type, H2KG.AFMScanSpeed))
+
+
+def test_conservative_source_conflicts_are_findings_not_quantities(characterization_build) -> None:
+    target, _ = characterization_build
+    fib = Graph().parse(target / "cases" / "fib_sem.ttl", format="turtle")
+    volume_prop = next(
+        subject
+        for subject in fib.subjects(RDF.type, H2KG.CompositionCharacteristic)
+        if str(next(fib.objects(subject, RDFS.label), "")).casefold() == "volume fraction"
+    )
+    assert not list(fib.objects(volume_prop, H2KG.hasQuantityValue))
+    findings = {str(value) for finding in fib.subjects(RDF.type, KG.ValidationFinding) for value in fib.objects(finding, KG.findingCode)}
+    assert "label_unit_conflict" in findings
+    assert "unit_unresolved" in findings
+    neutron = Graph().parse(target / "cases" / "neutron_tomography.ttl", format="turtle")
+    barycenter = next(
+        subject
+        for subject in neutron.subjects(RDF.type, H2KG.GeometricCharacteristic)
+        if str(next(neutron.objects(subject, RDFS.label), "")) == "AverageBaryCenter"
+    )
+    assert not list(neutron.objects(barycenter, H2KG.hasQuantityValue))
+    synchrotron = Graph().parse(target / "cases" / "synchrotron_tomography.ttl", format="turtle")
+    ratio = next(
+        subject
+        for subject in synchrotron.subjects(RDF.type, H2KG.CompositionCharacteristic)
+        if str(next(synchrotron.objects(subject, RDFS.label), "")).casefold().endswith("ratio")
+    )
+    assert not list(synchrotron.objects(ratio, H2KG.hasQuantityValue))
+
+
+def test_queries_and_browser_package_are_deterministic(characterization_build) -> None:
+    target, report = characterization_build
+    counts = {item["id"]: item["row_count"] for item in report["queries"]}
+    assert counts == {
+        "q1_tem_specimen_preparation": 6,
+        "q2_tem_instrument_settings": 8,
+        "q3_tem_dataset_analysis": 1,
+        "q4_all_reported_results": 24,
+        "q5_quality_findings": report["validation_finding_count"],
+    }
+    web = json.loads((target / "characterization_web_graph.json").read_text(encoding="utf-8"))
+    assert web["default_case"] == "tem"
+    assert len(web["cases"]) == 8
+    assert len(web["queries"]) == 5
+    assert "quads" not in web
+    assert all(item["query"].startswith("PREFIX h2kg:") for item in web["queries"])
+    assert (target / "run_demo.py").exists()
+    assert (target / "characterization_kg_demo.ipynb").exists()
+
+
+def test_characterization_page_is_dependency_free_and_downloadable(characterization_build, tmp_path: Path) -> None:
+    target, report = characterization_build
+    page = characterization_body(report, tmp_path / "pages" / "characterization-knowledge-graph.html", tmp_path)
+    assert "Search the characterization workflow evidence" in page
+    assert "SPARQL competency workspace" in page
+    assert "characterization_knowledge_graph.trig" in page
+    assert "cdn.jsdelivr" not in page
+    assert "#kg-graph" in characterization_css()
+    script = characterization_js()
+    assert "default_case" in (target / "characterization_web_graph.json").read_text(encoding="utf-8")
+    assert "Run tested query" not in script  # label is HTML; behavior remains in the local script.
+    assert "fetch(root.dataset.graph)" in script
+
+
+def test_local_manuscript_materials_are_generated_outside_release(characterization_build, tmp_path: Path) -> None:
+    target, _ = characterization_build
+    local = tmp_path / "local_manuscript"
+    result = write_characterization_manuscript_materials(target, local)
+    assert result["status"] == "generated"
+    assert (local / "methods_subsection.md").exists()
+    assert (local / "results_subsection.md").exists()
+    assert (local / "query_table.md").exists()
+    assert (local / "workflow_to_kg_figure.svg").exists()
+    assert "competency demonstration" in (local / "methods_subsection.md").read_text(encoding="utf-8")
+    query_table = (local / "query_table.md").read_text(encoding="utf-8")
+    assert "Expected answer" in query_table
+    assert "Observed answer" in query_table
+

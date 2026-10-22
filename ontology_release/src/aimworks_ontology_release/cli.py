@@ -4,6 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
+from .characterization_kg import (
+    build_characterization_kg,
+    ingest_characterization_workbook,
+    write_characterization_manuscript_materials,
+)
 from .docs import build_docs
 from .decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
 from .decode_manual_overlay import ingest_decode_manual_json
@@ -32,7 +37,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AIMWORKS ontology release pipeline")
     parser.add_argument("--project-root", default=str(Path(__file__).resolve().parents[2]), help="Path to ontology_release root")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ["inspect", "split", "map", "enrich", "profiles", "taxonomy", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases", "itc-integrate", "itc-build"]:
+    for command in ["inspect", "split", "map", "enrich", "profiles", "taxonomy", "docs", "validate", "fair", "release", "odk", "tib-benchmark", "decode-build", "decode-apply-aliases", "itc-integrate", "itc-build", "characterization-build"]:
         sub = subparsers.add_parser(command)
         sub.add_argument("--input", required=True)
         if command == "odk":
@@ -51,6 +56,17 @@ def main() -> None:
             sub.add_argument("--review", default="input/itc_curated_interface.json")
         if command == "itc-integrate":
             sub.add_argument("--write-in-place", action="store_true")
+        if command == "characterization-build":
+            sub.add_argument("--manifest", default="input/characterization_workbook_manifest.json")
+            sub.add_argument("--taxonomy-registry", default="output/ontology/taxonomy_registry.json")
+            sub.add_argument("--taxonomy-ttl", default="output/ontology/h2kg-v2-taxonomy.ttl")
+    characterization_ingest = subparsers.add_parser("characterization-ingest")
+    characterization_ingest.add_argument("--workbook", required=True)
+    characterization_ingest.add_argument("--manifest", default="input/characterization_workbook_manifest.json")
+    characterization_ingest.add_argument("--allow-fingerprint-change", action="store_true")
+    characterization_manuscript = subparsers.add_parser("characterization-manuscript")
+    characterization_manuscript.add_argument("--kg-output", default="output/characterization_kg")
+    characterization_manuscript.add_argument("--local-output", required=True)
     decode_ingest = subparsers.add_parser("decode-ingest")
     decode_ingest.add_argument("--source-dir", required=True)
     decode_ingest.add_argument("--snapshot", default="input/decode_workflows_source.json")
@@ -119,7 +135,24 @@ def main() -> None:
         input_path = project_root / input_path
     config_dir = project_root / "config"
     output = project_root / "output"
-    if args.command == "evaluation-review-package":
+    if args.command == "characterization-ingest":
+        manifest = Path(args.manifest)
+        if not manifest.is_absolute():
+            manifest = project_root / manifest
+        result = ingest_characterization_workbook(
+            args.workbook,
+            manifest,
+            enforce_fingerprint=not args.allow_fingerprint_change,
+        )
+    elif args.command == "characterization-manuscript":
+        kg_output = Path(args.kg_output)
+        local_output = Path(args.local_output)
+        if not kg_output.is_absolute():
+            kg_output = project_root / kg_output
+        if not local_output.is_absolute():
+            local_output = project_root / local_output
+        result = write_characterization_manuscript_materials(kg_output, local_output)
+    elif args.command == "evaluation-review-package":
         output_root = Path(args.output_root)
         itc_registry = Path(args.itc_registry)
         package_dir = Path(args.package_dir)
@@ -306,6 +339,23 @@ def main() -> None:
             result = integrate_itc_terms(input_path, review_path, write_in_place=args.write_in_place)
         else:
             result = build_itc_pilot_package(input_path, output, review_path)
+    elif args.command == "characterization-build":
+        manifest = Path(args.manifest)
+        taxonomy_registry = Path(args.taxonomy_registry)
+        taxonomy_ttl = Path(args.taxonomy_ttl)
+        if not manifest.is_absolute():
+            manifest = project_root / manifest
+        if not taxonomy_registry.is_absolute():
+            taxonomy_registry = project_root / taxonomy_registry
+        if not taxonomy_ttl.is_absolute():
+            taxonomy_ttl = project_root / taxonomy_ttl
+        result = build_characterization_kg(
+            manifest,
+            input_path,
+            output,
+            taxonomy_registry_path=taxonomy_registry,
+            taxonomy_ttl_path=taxonomy_ttl,
+        )
     else:
         result = run_release(
             input_path,

@@ -67,6 +67,9 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert (output_dir / "docs" / "evaluation" / "automated_consistency_summary.md").exists()
     assert not stale_evaluation.exists()
     assert (output_dir / "docs" / "pages" / "explore.html").exists()
+    assert (output_dir / "docs" / "pages" / "characterization-knowledge-graph.html").exists()
+    assert (output_dir / "docs" / "assets" / "characterization-kg.css").exists()
+    assert (output_dir / "docs" / "assets" / "characterization-kg.js").exists()
     assert (output_dir / "docs" / "pages" / "reference.html").exists()
     assert (output_dir / "docs" / "pages" / "core-reference.html").exists()
     assert (output_dir / "docs" / "pages" / "class-index.html").exists()
@@ -76,6 +79,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     assert "./pemfc/index.html" in home_page
     assert "./pemwe/index.html" in home_page
     assert "./pages/explore.html" in home_page
+    assert "./pages/characterization-knowledge-graph.html" in home_page
     assert "Foundational reuse" in home_page
     assert "External alignment" in home_page
     assert "NFDI4Cat, NFDI4Energy, and NFDI4Ing" in home_page

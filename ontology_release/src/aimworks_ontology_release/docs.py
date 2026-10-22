@@ -21,6 +21,7 @@ except Exception:  # pragma: no cover
     OWL = None  # type: ignore[assignment]
 
 from .classify import classify_resources
+from .characterization_docs import characterization_body, characterization_css, characterization_js
 from .hdo import load_hdo_alignment_report
 from .io import load_json_document, merge_document_items
 from .mapper import propose_mappings
@@ -142,6 +143,14 @@ def build_docs(
         if workflow_usage_registry_path.exists()
         else {}
     )
+    characterization_usage_path = output_dir.parent / "characterization_kg" / "characterization_workflow_usage_registry.json"
+    if characterization_usage_path.exists():
+        characterization_usage = load_json(characterization_usage_path)
+        workflow_usage_registry = dict(workflow_usage_registry)
+        workflow_usage_registry["usage_edges"] = [
+            *(workflow_usage_registry.get("usage_edges", [])),
+            *(characterization_usage.get("usage_edges", [])),
+        ]
     if taxonomy_registry:
         namespace_terms = _merge_taxonomy_reference_terms(namespace_terms, taxonomy_registry, mappings)
         classes = [
@@ -229,6 +238,8 @@ def build_docs(
     decode = load_json(decode_path) if decode_path.exists() else None
     evaluation_path = output_dir.parent / "evaluation" / "evaluation_summary.json"
     evaluation = load_json(evaluation_path) if evaluation_path.exists() else {}
+    characterization_report_path = output_dir.parent / "characterization_kg" / "validation_report.json"
+    characterization_report = load_json(characterization_report_path) if characterization_report_path.exists() else None
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
@@ -239,6 +250,7 @@ def build_docs(
         (output_dir / "pages" / "ontology-overview.html", "Ontology Overview", _overview_body(project, summary, odk, hdo)),
         (output_dir / "pages" / "explore.html", "Explore H2KG", _explore_body(project, explorer, output_dir / "pages" / "explore.html", output_dir)),
         (output_dir / "pages" / "decode-workflows.html", "Explore DECODE Workflows", _decode_workflows_body(decode, output_dir / "pages" / "decode-workflows.html", output_dir)),
+        (output_dir / "pages" / "characterization-knowledge-graph.html", "Characterization Knowledge Graph", characterization_body(characterization_report, output_dir / "pages" / "characterization-knowledge-graph.html", output_dir)),
         (output_dir / "pages" / "reference.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "pages" / "reference.html", output_dir)),
         (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
@@ -274,6 +286,13 @@ def build_docs(
                 '  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>\n'
                 f'  <script defer src="{decode_js}"></script>'
             )
+        if path.name == "characterization-knowledge-graph.html":
+            kg_css = _relative_href(path, output_dir / "assets" / "characterization-kg.css")
+            kg_js = _relative_href(path, output_dir / "assets" / "characterization-kg.js")
+            extra_head = (
+                f'<link rel="stylesheet" href="{kg_css}">\n'
+                f'  <script defer src="{kg_js}"></script>'
+            )
         write_text(path, _page_template(project, title, body, path, output_dir, extra_head=extra_head))
 
     write_text(output_dir / "index.html", _legacy_profile_home())
@@ -287,6 +306,12 @@ def build_docs(
         if evaluation_target.exists():
             shutil.rmtree(evaluation_target)
         shutil.copytree(evaluation_dir, evaluation_target)
+    characterization_dir = output_dir.parent / "characterization_kg"
+    if characterization_dir.exists():
+        characterization_target = output_dir / "characterization_kg"
+        if characterization_target.exists():
+            shutil.rmtree(characterization_target)
+        shutil.copytree(characterization_dir, characterization_target)
     examples_dir = output_dir.parent / "examples"
     if examples_dir.exists():
         target_examples = output_dir / "examples"
@@ -302,6 +327,8 @@ def build_docs(
     write_text(output_dir / "assets" / "explorer.js", _explorer_js())
     write_text(output_dir / "assets" / "decode-workflows.css", _decode_workflows_css())
     write_text(output_dir / "assets" / "decode-workflows.js", _decode_workflows_js())
+    write_text(output_dir / "assets" / "characterization-kg.css", characterization_css())
+    write_text(output_dir / "assets" / "characterization-kg.js", characterization_js())
     dump_json(
         output_dir / "search-index.json",
         {
@@ -319,6 +346,12 @@ def build_docs(
     if decode is not None:
         dump_json(output_dir / "data" / "decode_workflow_catalog.json", decode.get("workflows", []))
         dump_json(output_dir / "data" / "decode_workflows.json", decode)
+    if characterization_report is not None:
+        summary["characterization_kg"] = {
+            "case_count": characterization_report.get("case_count", 0),
+            "represented_field_count": characterization_report.get("represented_field_count", 0),
+            "shacl_conforms": characterization_report.get("shacl_conforms", False),
+        }
     _modernize_legacy_profile_content(output_dir)
     _normalize_visible_branding(output_dir)
     return summary
@@ -1456,6 +1489,7 @@ def _page_template(
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'ontology-overview.html')}">Overview</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'explore.html')}">Explore</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'decode-workflows.html')}">DECODE Workflows</a>
+      <a href="{_relative_href(page_path, docs_root / 'pages' / 'characterization-knowledge-graph.html')}">Characterization KG</a>
       <a href="{_relative_href(page_path, docs_root / 'hydrogen-ontology.html')}">Reference</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'architecture-workflow.html')}">Architecture</a>
       <a href="{_relative_href(page_path, docs_root / 'pages' / 'class-index.html')}">Classes</a>
@@ -1582,6 +1616,7 @@ def _legacy_profile_home() -> str:
         <p>Modern release pages, profile documentation, and machine-readable ontology artifacts for PEMFC and PEMWE research.</p>
         <div class="links">
           <a href="./pages/explore.html">Explore H2KG</a>
+          <a href="./pages/characterization-knowledge-graph.html">Characterization KG</a>
           <a href="./hydrogen-ontology.html">Open full reference</a>
           <a href="./pemfc/index.html">Explore PEMFC</a>
           <a href="./pemwe/index.html">Explore PEMWE</a>

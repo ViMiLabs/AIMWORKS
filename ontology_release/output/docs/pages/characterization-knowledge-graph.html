@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Characterization Knowledge Graph | H₂KG Domain Ontology for Hydrogen Electrochemical Systems</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/characterization-kg.css">
+  <script defer src="../assets/characterization-kg.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-head">
+        <div class="hero-copy">
+          <p class="eyebrow">H₂KG Ontology</p>
+          <h1>Characterization Knowledge Graph</h1>
+          <p class="subtitle">Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
+        </div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H₂KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+      </div>
+      <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="explore.html">Explore</a>
+      <a href="decode-workflows.html">DECODE Workflows</a>
+      <a href="characterization-knowledge-graph.html">Characterization KG</a>
+      <a href="../hydrogen-ontology.html">Reference</a>
+      <a href="architecture-workflow.html">Architecture</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="tib-benchmark.html">TIB Benchmark</a>
+      <a href="developer-guide.html">Developer</a>
+      <a href="release.html">Release</a>
+    </nav>
+
+    </div>
+  </header>
+  <main class="wrap content">
+
+<section class="kg-intro">
+  <div>
+    <p class="eyebrow">Workbook-backed application graph</p>
+    <h2>Search the characterization workflow evidence</h2>
+    <p>Eight source-fidelity case graphs are connected to H₂KG 2.3.0 occurrence semantics without changing the ontology taxonomy. TEM opens by default. Missing, unconfirmed, unresolved-unit, and conflicting values remain visible instead of being normalized away.</p>
+  </div>
+  <div class="kg-metrics" aria-label="Knowledge graph metrics">
+    <span><strong>8</strong> cases</span><span><strong>1,635</strong> source fields</span><span><strong>32,436</strong> RDF triples</span><span><strong>402</strong> explicit findings</span>
+  </div>
+</section>
+
+<section class="kg-app" id="characterization-kg-root" data-graph="../characterization_kg/characterization_web_graph.json" data-artifact-root="../characterization_kg">
+  <header class="kg-toolbar">
+    <div><label for="kg-case">Method case</label><select id="kg-case"></select></div>
+    <div class="kg-search-wrap"><label for="kg-search">Search nodes and source values</label><input id="kg-search" type="search" placeholder="e.g. working distance, ImageJ, 5 nm" autocomplete="off"></div>
+    <fieldset><legend>Visible layers</legend><label><input id="kg-layer-semantic" type="checkbox" checked> Semantic</label><label><input id="kg-layer-source" type="checkbox"> Source fields</label><label><input id="kg-layer-validation" type="checkbox"> Findings</label></fieldset>
+    <button id="kg-reset" type="button">Reset view</button>
+  </header>
+  <p id="kg-status" class="kg-status" aria-live="polite">Loading the local graph package...</p>
+  <div class="kg-stage">
+    <div class="kg-graph-panel">
+      <svg id="kg-graph" role="img" aria-label="Interactive characterization knowledge graph"></svg>
+      <div class="kg-legend"><span class="matter">Matter</span><span class="process">Process</span><span class="measurement">Measurement</span><span class="instrument">Instrument</span><span class="parameter">Parameter</span><span class="data">Data</span><span class="property">Property</span><span class="source">Source field</span><span class="validation">Finding</span></div>
+    </div>
+    <aside id="kg-inspector" class="kg-inspector"><p class="eyebrow">Node inspector</p><h3>Select a node</h3><p>Click a node to inspect its H₂KG types, source status, provenance, and connected relations.</p></aside>
+  </div>
+</section>
+
+<section class="kg-lower-grid">
+  <article class="kg-query card">
+    <p class="eyebrow">SPARQL competency workspace</p>
+    <h2>Run the release-tested queries</h2>
+    <p>The static page shows deterministic RDFLib results for the five published query files. Edit or download a query, then use the bundled script or notebook for unrestricted local SPARQL execution.</p>
+    <label for="kg-query-select">Query preset</label><select id="kg-query-select"></select>
+    <textarea id="kg-query-editor" spellcheck="false" aria-label="SPARQL query editor"></textarea>
+    <div class="kg-query-actions"><button id="kg-run-query" type="button">Run tested query</button><button id="kg-download-query" type="button">Download .rq</button><button id="kg-result-csv" type="button">Export CSV</button><button id="kg-result-json" type="button">Export JSON</button></div>
+    <p id="kg-query-note" class="kg-status"></p>
+    <div id="kg-query-results" class="kg-table-wrap"></div>
+  </article>
+  <aside class="kg-downloads card">
+    <p class="eyebrow">Reproducibility package</p><h2>Download artifacts</h2>
+    <a href="../characterization_kg/characterization_knowledge_graph.trig" download>Named graph dataset (.trig)</a>
+    <a href="../characterization_kg/characterization_knowledge_graph.nq" download>Named graph dataset (.nq)</a>
+    <a href="../characterization_kg/characterization_knowledge_graph.ttl" download>Flattened graph (.ttl)</a>
+    <a href="../characterization_kg/characterization_knowledge_graph.jsonld" download>Flattened graph (.jsonld)</a>
+    <a href="../characterization_kg/characterization_shapes.ttl" download>SHACL shapes</a>
+    <a href="../characterization_kg/characterization_source_manifest.json" download>Sanitized source manifest</a>
+    <a href="../characterization_kg/source_semantic_mapping_registry.csv" download>Source-to-semantic registry</a>
+    <a href="../characterization_kg/source_coverage_report.csv" download>Source coverage report</a>
+    <a href="../characterization_kg/unit_registry.csv" download>QUDT unit registry</a>
+    <a href="../characterization_kg/validation_report.json" download>Validation report</a>
+    <a href="../characterization_kg/run_demo.py" download>RDFLib demonstration script</a>
+    <a href="../characterization_kg/characterization_kg_demo.ipynb" download>Reproducible notebook</a>
+    <div class="kg-integrity"><strong>Source integrity</strong><span>Workbook SHA-256</span><code>C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6</code><span>Coverage</span><code>100.00%</code><span>SHACL</span><code>conforms</code><span>RDF parity</span><code>isomorphic</code></div>
+  </aside>
+</section>
+
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
+        </div>
+        <div class="acknowledgement-copy">
+          <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
+        </div>
+      </section>
+
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.3.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+</body>
+</html>

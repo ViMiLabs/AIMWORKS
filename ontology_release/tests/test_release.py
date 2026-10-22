@@ -27,6 +27,7 @@ def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
     assert summary["xps_pilot"]["status"] == "skipped_missing_terms"
     assert summary["itc_pilot"]["status"] == "skipped_missing_registry"
     assert summary["method_data_profiles"]["status"] == "skipped_missing_terms"
+    assert summary["characterization_kg"]["status"] == "skipped_missing_manifest"
     assert (project_root / "output" / "docs" / "index.html").exists()
     assert (project_root / "output" / "docs" / "hydrogen-ontology.html").exists()
     assert (project_root / "output" / "docs" / "pages" / "quality-dashboard.html").exists()

@@ -22,6 +22,7 @@ from .llm_annotator import draft_annotations
 from .mapper import propose_mappings
 from .neutron_tomo_pilot import build_neutron_tomo_pilot_package
 from .method_data_profiles import build_method_data_profiles
+from .characterization_kg import build_characterization_kg
 from .normalize_source import normalize_source_document
 from .odk import load_odk_manifest, prepare_odk_shadow
 from .profile_modules import build_profile_modules
@@ -60,7 +61,7 @@ def run_release(
     # independently executed reasoner/QC manifest.
     for folder in (
         "mappings", "reports", "examples", "method_profiles",
-        "benchmarks", "decode", "evaluation", "w3id", "release_bundle",
+        "benchmarks", "decode", "evaluation", "characterization_kg", "w3id", "release_bundle",
     ):
         path = output_root / folder
         if path.exists():
@@ -155,6 +156,20 @@ def run_release(
             project_root / "config",
             auto_harmonization_override=json.loads(generated_harmonization.read_text(encoding="utf-8")),
         )
+    characterization_manifest = project_root / "input" / "characterization_workbook_manifest.json"
+    if characterization_manifest.exists():
+        characterization_kg = build_characterization_kg(
+            characterization_manifest,
+            input_path,
+            output_root,
+            taxonomy_registry_path=output_root / "ontology" / "taxonomy_registry.json",
+            taxonomy_ttl_path=output_root / "ontology" / "h2kg-v2-taxonomy.ttl",
+        )
+    else:
+        characterization_kg = {
+            "status": "skipped_missing_manifest",
+            "manifest": str(characterization_manifest),
+        }
     application_evaluation = build_application_evaluation(
         output_root,
         project_root / "input" / "itc_curated_interface.json",
@@ -213,6 +228,7 @@ def run_release(
         "tib_benchmark": tib_benchmark,
         "tib_collection_benchmark": tib_collection_benchmark,
         "application_evaluation": application_evaluation,
+        "characterization_kg": characterization_kg,
         "fair": fair,
         "odk": odk,
         "docs": docs,
@@ -230,7 +246,7 @@ def build_release_bundle(project_root: str | Path) -> Path:
     if bundle_dir.exists():
         shutil.rmtree(bundle_dir)
     ensure_dir(bundle_dir)
-    for folder in ["ontology", "mappings", "reports", "examples", "method_profiles", "benchmarks", "decode", "evaluation", "docs", "w3id", "odk"]:
+    for folder in ["ontology", "mappings", "reports", "examples", "method_profiles", "benchmarks", "decode", "evaluation", "characterization_kg", "docs", "w3id", "odk"]:
         source = project_root / "output" / folder
         target = bundle_dir / folder
         if target.exists():
@@ -247,7 +263,7 @@ def _reset_docs_output(docs_dir: Path) -> None:
 
     if not docs_dir.exists():
         return
-    for name in ("benchmarks", "decode", "evaluation"):
+    for name in ("benchmarks", "decode", "evaluation", "characterization_kg"):
         child = docs_dir / name
         if child.exists():
             shutil.rmtree(child)

@@ -9,5 +9,5 @@ FAIR signals on this page follow a public-first policy: local build artefacts im
 - JSON-LD source: published
 - Alignment mappings: published
 - Examples module: published
-- Release bundle: not built in docs-only run
+- Release bundle: published
 - w3id artifacts: published

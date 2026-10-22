@@ -1,0 +1,97 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix kg: <https://w3id.org/h2kg/examples/characterization/schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kg:DataPointShape a sh:NodeShape ;
+    sh:property [ sh:class h2kg:Measurement ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path h2kg:fromMeasurement ],
+        [ sh:class h2kg:Process ;
+            sh:minCount 1 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:class h2kg:Property ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path h2kg:ofProperty ] ;
+    sh:targetClass h2kg:DataPoint .
+
+kg:MeasurementShape a sh:NodeShape ;
+    sh:property [ sh:class h2kg:Matter ;
+            sh:minCount 1 ;
+            sh:path h2kg:hasMeasurementSubject ],
+        [ sh:class h2kg:Instrument ;
+            sh:minCount 1 ;
+            sh:path h2kg:usesInstrument ],
+        [ sh:class h2kg:Parameter ;
+            sh:path h2kg:hasParameter ],
+        [ sh:class h2kg:Data ;
+            sh:minCount 1 ;
+            sh:path h2kg:hasOutputData ] ;
+    sh:targetClass h2kg:Measurement .
+
+kg:ParameterShape a sh:NodeShape ;
+    sh:property [ sh:class h2kg:Property ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path h2kg:ofProperty ] ;
+    sh:targetClass h2kg:Parameter .
+
+kg:ProcessShape a sh:NodeShape ;
+    sh:property [ sh:class h2kg:Instrument ;
+            sh:path h2kg:usesInstrument ],
+        [ sh:class h2kg:SoftwareArtifact ;
+            sh:path h2kg:usesSoftware ],
+        [ sh:class h2kg:Parameter ;
+            sh:path h2kg:hasParameter ],
+        [ sh:class h2kg:Matter ;
+            sh:path h2kg:hasInputMaterial ],
+        [ sh:class h2kg:Matter ;
+            sh:path h2kg:hasOutputMaterial ],
+        [ sh:class h2kg:Data ;
+            sh:path h2kg:hasInputData ],
+        [ sh:class h2kg:Data ;
+            sh:path h2kg:hasOutputData ] ;
+    sh:targetClass h2kg:Process .
+
+kg:PropertyShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path h2kg:isCharacteristicOf ],
+        [ sh:class qudt:QuantityValue ;
+            sh:path h2kg:hasQuantityValue ] ;
+    sh:targetClass h2kg:Property .
+
+kg:QuantityValueShape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:decimal ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path qudt:numericValue ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path qudt:unit ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path qudt:quantityKind ] ;
+    sh:targetClass qudt:QuantityValue .
+
+kg:SourceFieldShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kg:sourceCell ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kg:fieldName ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kg:valueStatus ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path prov:wasDerivedFrom ] ;
+    sh:targetClass kg:SourceField .
+

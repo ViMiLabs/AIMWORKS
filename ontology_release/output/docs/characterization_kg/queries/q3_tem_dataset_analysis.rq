@@ -1,0 +1,18 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?inputDataLabel ?analysisLabel ?softwareLabel ?resultLabel
+WHERE {
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
+    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .
+    ?analysis rdfs:label ?analysisLabel ; h2kg:hasInputData ?inputData .
+    ?inputData rdfs:label ?inputDataLabel .
+    OPTIONAL { ?analysis h2kg:usesSoftware ?software . ?software rdfs:label ?softwareLabel . }
+  }
+}
+ORDER BY ?resultLabel

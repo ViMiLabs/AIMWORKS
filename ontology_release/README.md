@@ -52,6 +52,36 @@ This writes:
 - `output/ontology/pemwe_schema.ttl` and `.jsonld`
 - `output/reports/profile_module_report.md` and `.json`
 
+## Workbook-Backed Characterization Knowledge Graph
+
+The characterization package converts the sanitized workbook manifest into eight
+source-traceable RDF case graphs for seven method families. It preserves every
+eligible workbook field, keeps missing and conflicting values explicit, and uses
+H2KG occurrence semantics without changing the ontology taxonomy.
+
+Regenerate the manifest only when an authorized workbook revision is supplied:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . characterization-ingest \
+  --workbook /path/to/Metadata_Imaging_revised_highlighted.xlsx \
+  --manifest input/characterization_workbook_manifest.json
+```
+
+Build the RDFLib dataset, SHACL reports, SPARQL demonstrations, notebook, and web
+payload from the versioned manifest:
+
+```bash
+python -m aimworks_ontology_release.cli --project-root . characterization-build \
+  --input input/current_ontology.jsonld \
+  --manifest input/characterization_workbook_manifest.json \
+  --taxonomy-registry output/ontology/taxonomy_registry.json \
+  --taxonomy-ttl output/ontology/h2kg-v2-taxonomy.ttl
+```
+
+The static documentation build publishes the searchable application at
+`pages/characterization-knowledge-graph.html`. The source workbook and local
+manuscript material are deliberately excluded from public artifacts.
+
 ## TIB Collection Benchmark
 
 Refresh the dated TIB Terminology Service catalogue and candidate cache explicitly:

@@ -1,0 +1,351 @@
+{
+  "schema_version": "h2kg-characterization-kg/v1",
+  "generated_at": "2026-10-22T13:38:45+00:00",
+  "ontology_version": "2.3.0",
+  "ontology_modified": false,
+  "source_manifest": "characterization_workbook_manifest.json",
+  "source_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+  "case_count": 8,
+  "method_family_count": 7,
+  "eligible_field_count": 1635,
+  "represented_field_count": 1635,
+  "source_coverage_percent": 100.0,
+  "source_status_counts": {
+    "reported": 1260,
+    "missing": 267,
+    "not_applicable": 2,
+    "not_specified": 89,
+    "unconfirmed": 14,
+    "formula_unresolved": 2,
+    "semantic_conflict": 1
+  },
+  "excluded_personal_field_count": 40,
+  "rdf_triple_count": 32436,
+  "named_graph_count": 28,
+  "validation_finding_count": 402,
+  "workflow_usage_count": 119,
+  "shacl_conforms": true,
+  "negative_tests": [
+    {
+      "scenario": "missing_measurement_subject",
+      "removed_triple": [
+        "https://w3id.org/h2kg/examples/characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+        "https://w3id.org/h2kg/hydrogen-ontology#hasMeasurementSubject",
+        "https://w3id.org/h2kg/examples/characterization/afm/matter/sample-8870a535e8"
+      ],
+      "conforms": false,
+      "expected": false,
+      "report": "Validation Report\nConforms: False\nResults (1):\nConstraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):\n\tSeverity: sh:Violation\n\tSource Shape: [ sh:class h2kg:Matter ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path h2kg:hasMeasurementSubject ]\n\tFocus Node: <https://w3id.org/h2kg/examples/characterization/afm/measurement/atomic-force-microscopy-652d6f492a>\n\tResult Path: h2kg:hasMeasurementSubject\n\tMessage: Less than 1 values on <https://w3id.org/h2kg/examples/characterization/afm/measurement/atomic-force-microscopy-652d6f492a>->h2kg:hasMeasurementSubject\n"
+    },
+    {
+      "scenario": "missing_parameter_property",
+      "removed_triple": [
+        "https://w3id.org/h2kg/examples/characterization/afm/parameter-record/brightness-factor-8a9e5d5926",
+        "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+        "https://w3id.org/h2kg/examples/characterization/afm/property-occurrence/brightness-factor-9f77a6b892"
+      ],
+      "conforms": false,
+      "expected": false,
+      "report": "Validation Report\nConforms: False\nResults (1):\nConstraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):\n\tSeverity: sh:Violation\n\tSource Shape: [ sh:class h2kg:Property ; sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path h2kg:ofProperty ]\n\tFocus Node: <https://w3id.org/h2kg/examples/characterization/afm/parameter-record/brightness-factor-8a9e5d5926>\n\tResult Path: h2kg:ofProperty\n\tMessage: Less than 1 values on <https://w3id.org/h2kg/examples/characterization/afm/parameter-record/brightness-factor-8a9e5d5926>->h2kg:ofProperty\n"
+    },
+    {
+      "scenario": "missing_result_provenance",
+      "removed_triple": [
+        "https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa",
+        "http://www.w3.org/ns/prov#wasGeneratedBy",
+        "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7"
+      ],
+      "conforms": false,
+      "expected": false,
+      "report": "Validation Report\nConforms: False\nResults (1):\nConstraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):\n\tSeverity: sh:Violation\n\tSource Shape: [ sh:class h2kg:Process ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path prov:wasGeneratedBy ]\n\tFocus Node: <https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa>\n\tResult Path: prov:wasGeneratedBy\n\tMessage: Less than 1 values on <https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa>->prov:wasGeneratedBy\n"
+    },
+    {
+      "scenario": "missing_quantity_unit",
+      "removed_triple": [
+        "https://w3id.org/h2kg/examples/characterization/afm/quantity-value/humidity-7450000c67c2a355-500663a64d",
+        "http://qudt.org/schema/qudt/unit",
+        "http://qudt.org/vocab/unit/PERCENT"
+      ],
+      "conforms": false,
+      "expected": false,
+      "report": "Validation Report\nConforms: False\nResults (1):\nConstraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):\n\tSeverity: sh:Violation\n\tSource Shape: [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:nodeKind sh:IRI ; sh:path qudt:unit ]\n\tFocus Node: <https://w3id.org/h2kg/examples/characterization/afm/quantity-value/humidity-7450000c67c2a355-500663a64d>\n\tResult Path: qudt:unit\n\tMessage: Less than 1 values on <https://w3id.org/h2kg/examples/characterization/afm/quantity-value/humidity-7450000c67c2a355-500663a64d>->qudt:unit\n"
+    }
+  ],
+  "turtle_jsonld_isomorphic": true,
+  "queries": [
+    {
+      "id": "q1_tem_specimen_preparation",
+      "title": "TEM specimen, preparation, and reported result",
+      "purpose": "Traverse the material chain from the TEM result and specimen to each preparation process that produced an upstream material.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT DISTINCT ?result ?resultLabel ?specimen ?specimenLabel ?preparation ?preparationLabel ?preparedMaterial ?preparedMaterialLabel\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; h2kg:fromMeasurement ?measurement ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .\n    ?measurement h2kg:hasMeasurementSubject ?specimen .\n    ?specimen rdfs:label ?specimenLabel .\n    ?property h2kg:isCharacteristicOf ?specimen .\n    ?preparation a h2kg:Manufacturing ; kg:case case:tem ; rdfs:label ?preparationLabel ; h2kg:hasOutputMaterial ?preparedMaterial .\n    ?preparedMaterial rdfs:label ?preparedMaterialLabel .\n    ?preparedMaterial (^h2kg:hasInputMaterial/h2kg:hasOutputMaterial)* ?specimen .\n  }\n}\nORDER BY ?preparationLabel ?preparedMaterialLabel",
+      "query_file": "q1_tem_specimen_preparation.rq",
+      "result_csv": "q1_tem_specimen_preparation.csv",
+      "result_json": "q1_tem_specimen_preparation.json",
+      "row_count": 6,
+      "variables": [
+        "result",
+        "resultLabel",
+        "specimen",
+        "specimenLabel",
+        "preparation",
+        "preparationLabel",
+        "preparedMaterial",
+        "preparedMaterialLabel"
+      ]
+    },
+    {
+      "id": "q2_tem_instrument_settings",
+      "title": "TEM instrument and acquisition settings",
+      "purpose": "Retrieve parameter records, values, units, and explicit missing or unconfirmed states.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?instrumentLabel ?parameterLabel ?status ?value ?unit\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?measurement a h2kg:TransmissionElectronMicroscopyImaging ; h2kg:usesInstrument ?instrument ; h2kg:hasParameter ?parameter .\n    ?instrument rdfs:label ?instrumentLabel .\n    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n  }\n}\nORDER BY ?parameterLabel",
+      "query_file": "q2_tem_instrument_settings.rq",
+      "result_csv": "q2_tem_instrument_settings.csv",
+      "result_json": "q2_tem_instrument_settings.json",
+      "row_count": 8,
+      "variables": [
+        "instrumentLabel",
+        "parameterLabel",
+        "status",
+        "value",
+        "unit"
+      ]
+    },
+    {
+      "id": "q3_tem_dataset_analysis",
+      "title": "TEM data and analysis provenance",
+      "purpose": "Retrieve the dataset, software, and analysis process that produced each TEM result.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?inputDataLabel ?analysisLabel ?softwareLabel ?resultLabel\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .\n    ?analysis rdfs:label ?analysisLabel ; h2kg:hasInputData ?inputData .\n    ?inputData rdfs:label ?inputDataLabel .\n    OPTIONAL { ?analysis h2kg:usesSoftware ?software . ?software rdfs:label ?softwareLabel . }\n  }\n}\nORDER BY ?resultLabel",
+      "query_file": "q3_tem_dataset_analysis.rq",
+      "result_csv": "q3_tem_dataset_analysis.csv",
+      "result_json": "q3_tem_dataset_analysis.json",
+      "row_count": 1,
+      "variables": [
+        "inputDataLabel",
+        "analysisLabel",
+        "softwareLabel",
+        "resultLabel"
+      ]
+    },
+    {
+      "id": "q4_all_reported_results",
+      "title": "Reported properties, values, units, and bearers",
+      "purpose": "Retrieve result provenance across all eight case graphs without inventing missing quantities.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?case ?resultLabel ?propertyLabel ?bearerLabel ?value ?unit\nWHERE {\n  GRAPH ?graph {\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property ; kg:case ?case .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n    ?bearer rdfs:label ?bearerLabel .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n  }\n}\nORDER BY ?case ?resultLabel",
+      "query_file": "q4_all_reported_results.rq",
+      "result_csv": "q4_all_reported_results.csv",
+      "result_json": "q4_all_reported_results.json",
+      "row_count": 24,
+      "variables": [
+        "case",
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ]
+    },
+    {
+      "id": "q5_quality_findings",
+      "title": "Missing, incompatible, and incomplete records",
+      "purpose": "Retrieve explicit quality findings rather than silently normalizing uncertain source values.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?case ?code ?severity ?description ?sourceCell\nWHERE {\n  GRAPH ?graph {\n    ?finding a kg:ValidationFinding ; kg:case ?case ; kg:findingCode ?code ; kg:severity ?severity ; dcterms:description ?description .\n    OPTIONAL { ?finding prov:wasDerivedFrom ?source . }\n  }\n  OPTIONAL { GRAPH ?sourceGraph { ?source kg:sourceCell ?sourceCell . } }\n}\nORDER BY ?case ?code ?sourceCell",
+      "query_file": "q5_quality_findings.rq",
+      "result_csv": "q5_quality_findings.csv",
+      "result_json": "q5_quality_findings.json",
+      "row_count": 402,
+      "variables": [
+        "case",
+        "code",
+        "severity",
+        "description",
+        "sourceCell"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "key": "tem",
+      "title": "Transmission electron microscopy",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/tem/matter/sample-5512c41548",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/tem/data/rawdata-56c3c72e53",
+      "source_record_count": 131,
+      "mapped_record_count": 131,
+      "source_status_counts": {
+        "reported": 102,
+        "missing": 16,
+        "not_applicable": 1,
+        "not_specified": 9,
+        "unconfirmed": 2,
+        "formula_unresolved": 1,
+        "semantic_conflict": 0
+      },
+      "result_count": 1,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/tem",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/tem",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/tem"
+    },
+    {
+      "key": "sem",
+      "title": "Scanning electron microscopy",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/sem/matter/sample-ce8e7c6fea",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/sem/data/rawdata-ddfca82185",
+      "source_record_count": 139,
+      "mapped_record_count": 139,
+      "source_status_counts": {
+        "reported": 103,
+        "missing": 18,
+        "not_applicable": 1,
+        "not_specified": 15,
+        "unconfirmed": 2,
+        "formula_unresolved": 0,
+        "semantic_conflict": 0
+      },
+      "result_count": 1,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/sem",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/sem",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/sem"
+    },
+    {
+      "key": "afm",
+      "title": "Atomic force microscopy",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/afm/instrument/atomic-force-microscopy-2e89e780a7",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/afm/matter/sample-8870a535e8",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/afm/data/rawdata-dc9e836707",
+      "source_record_count": 161,
+      "mapped_record_count": 161,
+      "source_status_counts": {
+        "reported": 123,
+        "missing": 26,
+        "not_applicable": 0,
+        "not_specified": 10,
+        "unconfirmed": 2,
+        "formula_unresolved": 0,
+        "semantic_conflict": 0
+      },
+      "result_count": 1,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/afm",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/afm",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/afm"
+    },
+    {
+      "key": "fib_sem",
+      "title": "FIB-SEM tomography",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/rawdata-d05e247d15",
+      "source_record_count": 304,
+      "mapped_record_count": 304,
+      "source_status_counts": {
+        "reported": 219,
+        "missing": 68,
+        "not_applicable": 0,
+        "not_specified": 15,
+        "unconfirmed": 1,
+        "formula_unresolved": 0,
+        "semantic_conflict": 1
+      },
+      "result_count": 6,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/fib_sem",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/fib_sem",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/fib_sem"
+    },
+    {
+      "key": "ic_sem",
+      "title": "Ion-cut scanning electron microscopy",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/rawdata-67387841a5",
+      "source_record_count": 221,
+      "mapped_record_count": 221,
+      "source_status_counts": {
+        "reported": 171,
+        "missing": 35,
+        "not_applicable": 0,
+        "not_specified": 13,
+        "unconfirmed": 1,
+        "formula_unresolved": 1,
+        "semantic_conflict": 0
+      },
+      "result_count": 3,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/ic_sem",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/ic_sem",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/ic_sem"
+    },
+    {
+      "key": "neutron_tomography",
+      "title": "Neutron tomography",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/rawdata-c9cd930f9e",
+      "source_record_count": 211,
+      "mapped_record_count": 211,
+      "source_status_counts": {
+        "reported": 164,
+        "missing": 30,
+        "not_applicable": 0,
+        "not_specified": 15,
+        "unconfirmed": 2,
+        "formula_unresolved": 0,
+        "semantic_conflict": 0
+      },
+      "result_count": 4,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/neutron_tomography",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/neutron_tomography",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/neutron_tomography"
+    },
+    {
+      "key": "synchrotron_radiography",
+      "title": "Synchrotron X-ray radiography",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8",
+      "source_record_count": 234,
+      "mapped_record_count": 234,
+      "source_status_counts": {
+        "reported": 189,
+        "missing": 37,
+        "not_applicable": 0,
+        "not_specified": 6,
+        "unconfirmed": 2,
+        "formula_unresolved": 0,
+        "semantic_conflict": 0
+      },
+      "result_count": 4,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/synchrotron_radiography",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_radiography",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/synchrotron_radiography"
+    },
+    {
+      "key": "synchrotron_tomography",
+      "title": "Synchrotron X-ray tomography",
+      "measurement": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10",
+      "instrument": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/instrument/synchrotron-x-ray-tomography-051258cb7a",
+      "specimen": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/matter/sample-1896269f22",
+      "raw_dataset": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/rawdata-fd82f69437",
+      "source_record_count": 234,
+      "mapped_record_count": 234,
+      "source_status_counts": {
+        "reported": 189,
+        "missing": 37,
+        "not_applicable": 0,
+        "not_specified": 6,
+        "unconfirmed": 2,
+        "formula_unresolved": 0,
+        "semantic_conflict": 0
+      },
+      "result_count": 4,
+      "source_graph": "https://w3id.org/h2kg/examples/characterization/graph/source/synchrotron_tomography",
+      "semantic_graph": "https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_tomography",
+      "validation_graph": "https://w3id.org/h2kg/examples/characterization/graph/validation/synchrotron_tomography"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
 - F / Findable: 100 / 100 (good)
 - A / Accessible: 100 / 100 (good)
 - I / Interoperable: 100 / 100 (good)
-- R / Reusable: 90 / 100 (good)
+- R / Reusable: 100 / 100 (good)
 
 ## Transparency Hooks
 
