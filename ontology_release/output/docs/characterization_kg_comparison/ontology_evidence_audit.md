@@ -1,0 +1,10 @@
+| Audited claim | Observed evidence | Benchmark interpretation |
+|---|---|---|
+| Complete CHAMEO/EMMO import closure loaded | 25 modules (12 direct; 13 transitive) | True |
+| MeasurementParameter is an EMMO mathematical Parameter | True | Parameter identity is native to CHAMEO/EMMO. |
+| MeasurementParameter is an EMMO Quantity | False | A quantity-value relation cannot be attached through the declared class ancestry. |
+| EMMO hasProperty domain applies to MeasurementParameter ancestry | False | The generic hasProperty relation is not counted as a native parameter-to-characteristic path. |
+| Declared ancestry-compatible parameter-to-Property relations | 0 | The pinned CHAMEO/EMMO closure supplies parameter identity but no declared, ancestry-compatible relation from MeasurementParameter to a distinct valued scientific characteristic. |
+| CHAMEO DataAnalysis entails EMMO Determination | False | The determination pattern is reported as an explicit declared-import application pattern, not a CHAMEO entailment. |
+| CHAMEO specialized workflow/task pattern present | True | CHAMEO receives direct-native credit for workflow grouping. |
+| CHAMEO technique-description pattern present | True | CHAMEO receives exact credit for separating technique descriptions from occurrences. |

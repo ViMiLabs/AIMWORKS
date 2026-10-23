@@ -1,0 +1,2242 @@
+{
+  "schema_version": "h2kg-chameo-query-evidence/v1",
+  "requirement_id": "b07_analysis_lineage",
+  "ontology": "h2kg",
+  "entries": [
+    {
+      "signature": "[\"afm\",\"Manual particle measurement\",\"Post-processed image\",\"Average size result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "afm",
+        "analysisLabel": "Manual particle measurement",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Average size result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa",
+            "label": "Average size result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/afm/data/post-processed-image-3efdbfdaba",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/afm/data/post-processed-image-3efdbfdaba"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+            "label": "Manual particle measurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/afm/software/imagej-68b67b77e0",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/afm/software/imagej-68b67b77e0"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+            "target": "https://w3id.org/h2kg/examples/characterization/afm/data/post-processed-image-3efdbfdaba",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+            "target": "https://w3id.org/h2kg/examples/characterization/afm/data-point/average-size-90f45bbcfa",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+            "target": "https://w3id.org/h2kg/examples/characterization/afm/software/imagej-68b67b77e0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Constrictivity calculation\",\"Post-processed image\",\"Constrictivity result\",\"\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Constrictivity calculation",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Constrictivity result",
+        "softwareLabel": ""
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/constrictivity-5189afe0d2",
+            "label": "Constrictivity result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/constrictivity-5189afe0d2"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34",
+            "label": "Constrictivity calculation",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/constrictivity-5189afe0d2",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Direction calculation\",\"Post-processed image\",\"Direction result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Direction calculation",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Direction result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/direction-55c2e204d0",
+            "label": "Direction result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/direction-55c2e204d0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "label": "Direction calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/direction-55c2e204d0",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Mean geodesic tortuosity calculation\",\"Post-processed image\",\"Mean geodesic torutosity result\",\"\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Mean geodesic tortuosity calculation",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Mean geodesic torutosity result",
+        "softwareLabel": ""
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/mean-geodesic-torutosity-a2012b2d5f",
+            "label": "Mean geodesic torutosity result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/mean-geodesic-torutosity-a2012b2d5f"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036",
+            "label": "Mean geodesic tortuosity calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/mean-geodesic-torutosity-a2012b2d5f",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Network relation analysis\",\"Post-processed image\",\"Network relation result\",\"\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Network relation analysis",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Network relation result",
+        "softwareLabel": ""
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/network-relation-992fd02bc0",
+            "label": "Network relation result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/network-relation-992fd02bc0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9",
+            "label": "Network relation analysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/network-relation-992fd02bc0",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Surface calculation\",\"Post-processed image\",\"Porosity result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Surface calculation",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Porosity result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/porosity-6c640364b6",
+            "label": "Porosity result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/porosity-6c640364b6"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "label": "Direction calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5",
+            "label": "Surface calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/porosity-6c640364b6",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"Volume fraction calculation\",\"Post-processed image\",\"Volume fraction result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "analysisLabel": "Volume fraction calculation",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Volume fraction result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/volume-fraction-7a2e36c0f4",
+            "label": "Volume fraction result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/volume-fraction-7a2e36c0f4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "label": "Direction calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1",
+            "label": "Volume fraction calculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/volume-fraction-7a2e36c0f4",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1",
+            "target": "https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"ic_sem\",\"Layer thickness measurement\",\"Post-processed image\",\"GDL thickness result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "ic_sem",
+        "analysisLabel": "Layer thickness measurement",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "GDL thickness result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/gdl-thickness-a4d7e3fb4c",
+            "label": "GDL thickness result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/gdl-thickness-a4d7e3fb4c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "label": "Layer thickness measurement",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/gdl-thickness-a4d7e3fb4c",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"ic_sem\",\"Layer thickness measurement\",\"Post-processed image\",\"MEA thickness result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "ic_sem",
+        "analysisLabel": "Layer thickness measurement",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "MEA thickness result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/mea-thickness-9d0fdd794b",
+            "label": "MEA thickness result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/mea-thickness-9d0fdd794b"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "label": "Layer thickness measurement",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/mea-thickness-9d0fdd794b",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"ic_sem\",\"Porosity measurement\",\"Post-processed image\",\"Porosity result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "ic_sem",
+        "analysisLabel": "Porosity measurement",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Porosity result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/porosity-16fc67a6c2",
+            "label": "Porosity result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/porosity-16fc67a6c2"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "label": "Layer thickness measurement",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2",
+            "label": "Porosity measurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/porosity-16fc67a6c2",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2",
+            "target": "https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageArea result\",\"Avizo\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageArea result",
+        "softwareLabel": "Avizo"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7",
+            "label": "AverageArea result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "Avizo",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageArea result\",\"LabelAnalysis\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageArea result",
+        "softwareLabel": "LabelAnalysis"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7",
+            "label": "AverageArea result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "LabelAnalysis",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageBaryCenter result\",\"Avizo\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageBaryCenter result",
+        "softwareLabel": "Avizo"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4",
+            "label": "AverageBaryCenter result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "Avizo",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageBaryCenter result\",\"LabelAnalysis\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageBaryCenter result",
+        "softwareLabel": "LabelAnalysis"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4",
+            "label": "AverageBaryCenter result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "LabelAnalysis",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageNumber result\",\"Avizo\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageNumber result",
+        "softwareLabel": "Avizo"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7",
+            "label": "AverageNumber result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "Avizo",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"DropletAnalysis\",\"Post-processed tomograph\",\"AverageNumber result\",\"LabelAnalysis\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "DropletAnalysis",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "AverageNumber result",
+        "softwareLabel": "LabelAnalysis"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7",
+            "label": "AverageNumber result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "label": "DropletAnalysis",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "label": "DropletAnalysis",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "LabelAnalysis",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:6",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:7",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"TortuosityMeasurement\",\"Post-processed tomograph\",\"Tortuosity Factor result\",\"MATLAB TauFactor\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "analysisLabel": "TortuosityMeasurement",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Tortuosity Factor result",
+        "softwareLabel": "MATLAB TauFactor"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/tortuosity-factor-3bf7ec4dcd",
+            "label": "Tortuosity Factor result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/tortuosity-factor-3bf7ec4dcd"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e",
+            "label": "TortuosityMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239",
+            "label": "MATLAB TauFactor",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/tortuosity-factor-3bf7ec4dcd",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e",
+            "target": "https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"sem\",\"Support sizing\",\"Post-processed image\",\"Support-needle length result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "sem",
+        "analysisLabel": "Support sizing",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Support-needle length result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43",
+            "label": "Post-processed image",
+            "type": "SEMMicrographDataset",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/sem/data-point/support-needle-length-ce1b145aaa",
+            "label": "Support-needle length result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/sem/data-point/support-needle-length-ce1b145aaa"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da",
+            "label": "Support sizing",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/sem/software/imagej-b94c2dbf05",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/sem/software/imagej-b94c2dbf05"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da",
+            "target": "https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da",
+            "target": "https://w3id.org/h2kg/examples/characterization/sem/data-point/support-needle-length-ce1b145aaa",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da",
+            "target": "https://w3id.org/h2kg/examples/characterization/sem/software/imagej-b94c2dbf05",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_radiography\",\"BeamPathDistanceMeasurement\",\"Post-processed tomograph\",\"Real distance in beam path result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_radiography",
+        "analysisLabel": "BeamPathDistanceMeasurement",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Real distance in beam path result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/real-distance-in-beam-path-1fdcf63638",
+            "label": "Real distance in beam path result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/real-distance-in-beam-path-1fdcf63638"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/real-distance-in-beam-path-1fdcf63638",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_radiography\",\"DecayFactorCalculation\",\"Post-processed tomograph\",\"Decay factor result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_radiography",
+        "analysisLabel": "DecayFactorCalculation",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Decay factor result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/decay-factor-db2ffd4479",
+            "label": "Decay factor result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/decay-factor-db2ffd4479"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd",
+            "label": "DecayFactorCalculation",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/decay-factor-db2ffd4479",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_radiography\",\"ElectrodeSegmentRatioCalculation\",\"Post-processed tomograph\",\"carbonfelt/electrolyte/air ratio result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_radiography",
+        "analysisLabel": "ElectrodeSegmentRatioCalculation",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "carbonfelt/electrolyte/air ratio result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/carbonfelt-electrolyte-air-ratio-d142495270",
+            "label": "carbonfelt/electrolyte/air ratio result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/carbonfelt-electrolyte-air-ratio-d142495270"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d",
+            "label": "ElectrodeSegmentRatioCalculation",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/carbonfelt-electrolyte-air-ratio-d142495270",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_radiography\",\"ElectrolyteSaturationMeasurement\",\"Post-processed tomograph\",\"Electrolyte saturation result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_radiography",
+        "analysisLabel": "ElectrolyteSaturationMeasurement",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Electrolyte saturation result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/electrolyte-saturation-c0fea393cb",
+            "label": "Electrolyte saturation result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/electrolyte-saturation-c0fea393cb"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538",
+            "label": "ElectrolyteSaturationMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/electrolyte-saturation-c0fea393cb",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_tomography\",\"BeamPathDistanceMeasurement\",\"Post-processed tomograph\",\"Real distance in beam path result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_tomography",
+        "analysisLabel": "BeamPathDistanceMeasurement",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Real distance in beam path result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/real-distance-in-beam-path-0466fd0553",
+            "label": "Real distance in beam path result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/real-distance-in-beam-path-0466fd0553"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/real-distance-in-beam-path-0466fd0553",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_tomography\",\"DecayFactorCalculation\",\"Post-processed tomograph\",\"Decay factor result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_tomography",
+        "analysisLabel": "DecayFactorCalculation",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Decay factor result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/decay-factor-daecc66ade",
+            "label": "Decay factor result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/decay-factor-daecc66ade"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/decayfactorcalculation-682101be68",
+            "label": "DecayFactorCalculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/decayfactorcalculation-682101be68"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/decayfactorcalculation-682101be68",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/decayfactorcalculation-682101be68",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/decay-factor-daecc66ade",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/decayfactorcalculation-682101be68",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_tomography\",\"ElectrodeSegmentRatioCalculation\",\"Post-processed tomograph\",\"carbonfelt/electrolyte/air ratio result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_tomography",
+        "analysisLabel": "ElectrodeSegmentRatioCalculation",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "carbonfelt/electrolyte/air ratio result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/carbonfelt-electrolyte-air-ratio-c65c0a3750",
+            "label": "carbonfelt/electrolyte/air ratio result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/carbonfelt-electrolyte-air-ratio-c65c0a3750"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrodesegmentratiocalculation-986a33e076",
+            "label": "ElectrodeSegmentRatioCalculation",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrodesegmentratiocalculation-986a33e076"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrodesegmentratiocalculation-986a33e076",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrodesegmentratiocalculation-986a33e076",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/carbonfelt-electrolyte-air-ratio-c65c0a3750",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrodesegmentratiocalculation-986a33e076",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_tomography\",\"ElectrolyteSaturationMeasurement\",\"Post-processed tomograph\",\"Electrolyte saturation result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "synchrotron_tomography",
+        "analysisLabel": "ElectrolyteSaturationMeasurement",
+        "inputDataLabel": "Post-processed tomograph",
+        "resultLabel": "Electrolyte saturation result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/electrolyte-saturation-b90694a6a0",
+            "label": "Electrolyte saturation result",
+            "type": "DataPoint",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/electrolyte-saturation-b90694a6a0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "Post-processed tomograph",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "label": "BeamPathDistanceMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrolytesaturationmeasurement-d1f4ca36ac",
+            "label": "ElectrolyteSaturationMeasurement",
+            "type": "Process",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrolytesaturationmeasurement-d1f4ca36ac"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/beampathdistancemeasurement-4ff3f4a4a5",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrolytesaturationmeasurement-d1f4ca36ac",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data/post-processed-tomograph-c096b4e42e",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:4",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrolytesaturationmeasurement-d1f4ca36ac",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/data-point/electrolyte-saturation-b90694a6a0",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:5",
+            "source": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/anal-process/electrolytesaturationmeasurement-d1f4ca36ac",
+            "target": "https://w3id.org/h2kg/examples/characterization/synchrotron_tomography/software/imagej-2fc017d6c2",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"tem\",\"Manual particle measurement\",\"Post-processed image\",\"Average size result\",\"ImageJ\"]",
+      "row": {
+        "caseKey": "tem",
+        "analysisLabel": "Manual particle measurement",
+        "inputDataLabel": "Post-processed image",
+        "resultLabel": "Average size result",
+        "softwareLabel": "ImageJ"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/tem/data-point/average-size-74050057d0",
+            "label": "Average size result",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/tem/data-point/average-size-74050057d0"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770",
+            "label": "Post-processed image",
+            "type": "Data",
+            "role": "data",
+            "iri": "https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564",
+            "label": "Manual particle measurement",
+            "type": "Analysis",
+            "role": "process",
+            "iri": "https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564"
+          },
+          {
+            "id": "https://w3id.org/h2kg/examples/characterization/tem/software/imagej-779709481e",
+            "label": "ImageJ",
+            "type": "SoftwareArtifact",
+            "role": "software",
+            "iri": "https://w3id.org/h2kg/examples/characterization/tem/software/imagej-779709481e"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564",
+            "target": "https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770",
+            "label": "has input data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564",
+            "target": "https://w3id.org/h2kg/examples/characterization/tem/data-point/average-size-74050057d0",
+            "label": "has output data",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#hasOutputData"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564",
+            "target": "https://w3id.org/h2kg/examples/characterization/tem/software/imagej-779709481e",
+            "label": "uses software",
+            "predicate": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  ]
+}

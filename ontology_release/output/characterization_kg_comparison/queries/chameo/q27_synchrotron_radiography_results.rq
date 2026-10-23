@@ -1,0 +1,18 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?resultLabel ?propertyLabel ?bearerLabel ?value ?unit WHERE {
+  GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/synchrotron_radiography> {
+    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;
+      chameo:hasCharacterisationOutput ?result ;
+      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .
+    ?result a chameo:SecondaryData .
+    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .
+    ?bearer chameo:hasCharacterisationProperty ?property .
+    ?result rdfs:label ?resultLabel . ?bearer rdfs:label ?bearerLabel . OPTIONAL { ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }
+  }
+} ORDER BY ?propertyLabel

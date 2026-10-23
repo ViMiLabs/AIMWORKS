@@ -1,0 +1,16 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?caseKey ?parameterLabel ?propertyLabel ?value ?unit WHERE {
+  GRAPH ?semanticGraph {
+    ?measurement a h2kg:Measurement ; h2kg:hasParameter ?parameter .
+    ?parameter rdfs:label ?parameterLabel ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:hasQuantityValue ?quantity .
+    ?quantity qudt:numericValue ?value ; qudt:unit ?unit .
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+  BIND(STRAFTER(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/") AS ?caseKey)
+} ORDER BY ?caseKey ?parameterLabel

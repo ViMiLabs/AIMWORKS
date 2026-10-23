@@ -1,0 +1,652 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/workflow> a h2kg:Process ;
+    rdfs:label "Ion-cut scanning electron microscopy characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/pre-process/scale-set-885f6e3491>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/pre-process/thresholding-5f329582fa>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/cut-820063d9e6>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/dispersion-c7d14c3eae>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/dry-0ed6f46680>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/fix-e739d7bd62>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-09d0b292cb>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-116fb290d1>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-54f652308e>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-6da4f24120>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dissolved-73af329c1e>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/doctor-blade-3013f55db9>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dry-86791ccdda> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/gdl-thickness-a4d7e3fb4c> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "GDL thickness result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/gdl-thickness-d187e5ffe4> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/mea-thickness-9d0fdd794b> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "MEA thickness result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/mea-thickness-2e98e0f633> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/porosity-16fc67a6c2> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Porosity result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/porosity-6d438a79a9> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49> a h2kg:ICSEMInstrument,
+        h2kg:Instrument ;
+    rdfs:label "Ion-cut scanning electron microscopy instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/aluminum-current-collector-f86c313f10> a h2kg:Matter ;
+    rdfs:label "Aluminum current collector" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/carbon-coated-copper-tem-grid-a627eccf3e> a h2kg:Matter ;
+    rdfs:label "Carbon coated copper TEM grid" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/hispec-4000-b7b140feab> a h2kg:Matter ;
+    rdfs:label "HiSPEC 4000" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/nafion-xl-membrane-890a2f8e94> a h2kg:Matter ;
+    rdfs:label "Nafion® XL membrane" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/si-wafer-fb4ec3dbdc> a h2kg:Matter ;
+    rdfs:label "Si-wafer" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/brightness-2a5335cd43> a h2kg:Parameter ;
+    rdfs:label "Brightness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/brightness-15e9d25d86> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-54ba99fc4b> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-ee11bc86be> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-740cad88a4> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-fcf586e0e4> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-d5434d6a0d> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-66dfd880d1> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/contrast-273e2a244d> a h2kg:Parameter ;
+    rdfs:label "Contrast parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/contrast-8aacfdf721> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cutthickness-dcba6df924> a h2kg:Parameter ;
+    rdfs:label "CutThickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cutthickness-9249a9b884> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/dwelltime-2100028a62> a h2kg:Parameter ;
+    rdfs:label "DwellTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/dwelltime-d44724b39d> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/electronbeamenergy-baaa093460> a h2kg:Parameter ;
+    rdfs:label "ElectronBeamEnergy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/electronbeamenergy-20f83eada1> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/electroncurrent-554400c563> a h2kg:Parameter ;
+    rdfs:label "ElectronCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/electroncurrent-9f0a4da8a1> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/humidity-368d5f9c5b> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/humidity-d1c579fb72> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/id-cbbf7f30c2> a h2kg:Parameter ;
+    rdfs:label "ID parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/id-2e088fd439> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/imageacquisitiontime-32176767e3> a h2kg:Parameter ;
+    rdfs:label "ImageAcquisitionTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/imageacquisitiontime-882d7c5114> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamcurrent-ac6a165520> a h2kg:Parameter ;
+    rdfs:label "IonBeamCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamcurrent-9c64c91174> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamcurrent-b0dbd5ac3b> a h2kg:Parameter ;
+    rdfs:label "IonBeamCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamcurrent-84c88aec11> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamenergy-7deda3e916> a h2kg:Parameter ;
+    rdfs:label "IonBeamEnergy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamenergy-a79bf26ff2> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-08a08daaf9> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-f45a140ac6> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-81ac2713ae> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-f2d0f85661> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-ad1230c407> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-868f9a4139> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/magnification-61bf94a279> a h2kg:Parameter ;
+    rdfs:label "Magnification parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/magnification-a8fd265e29> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/measuredarea-um2-24e56f3f1c> a h2kg:Parameter ;
+    rdfs:label "MeasuredArea / um2 parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/measuredarea-um2-3334226c72> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/pixelsize-0391a6c1aa> a h2kg:Parameter ;
+    rdfs:label "PixelSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/pixelsize-35d2bedd07> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/planespacing-7ce49058bd> a h2kg:Parameter ;
+    rdfs:label "PlaneSpacing parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/planespacing-fd4296471b> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/pressure-8cf2f83b3b> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/pressure-08b7e9297b> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/size-cb305bbd13> a h2kg:Parameter ;
+    rdfs:label "Size parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/size-30ccc95f8c> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/temperature-0ebab601b9> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/temperature-334938fcf3> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/temperature-b165bcc693> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/temperature-e629506af4> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/thickness-dd923ff6a7> a h2kg:Parameter ;
+    rdfs:label "Thickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/thickness-ac06d4120a> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/time-4213c9819a> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/time-aef369397d> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/time-8c173884cc> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/time-ce6a253dc8> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/totalacquisitiontime-0365e8bc5f> a h2kg:Parameter ;
+    rdfs:label "TotalAcquisitionTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/totalacquisitiontime-2e4b71c073> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/velocity-923f934a73> a h2kg:Parameter ;
+    rdfs:label "Velocity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/velocity-f9f6202d6a> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/viscosity-94ba5dcd57> a h2kg:Parameter ;
+    rdfs:label "Viscosity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/viscosity-3701b93721> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/pre-process/scale-set-885f6e3491> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Scale set" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/ppint1-7d5797be17> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/pre-process/thresholding-5f329582fa> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Thresholding" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/rawdata-67387841a5> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/ppint1-7d5797be17> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-algorithm-watershed-fe0c2341b9> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/brightness-15e9d25d86> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Brightness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/brightness-24bcdda0d7f20adc-3582fb4dfa> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-66dfd880d1> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-54f652308e> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-ee11bc86be> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-116fb290d1> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cas-number-fcf586e0e4> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-09d0b292cb> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/contrast-8aacfdf721> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Contrast" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/contrast-d97e00d47336edbb-4397cc8c57> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/cutthickness-9249a9b884> a h2kg:CutThickness ;
+    rdfs:label "CutThickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/cutthickness-96abe4cc3875f0de-ad7634c8f6> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/dwelltime-d44724b39d> a h2kg:DwellTime ;
+    rdfs:label "DwellTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/dwelltime-71b24b4ffd1bd9fc-48cba054cb> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/electronbeamenergy-20f83eada1> a h2kg:ElectronBeamEnergy ;
+    rdfs:label "ElectronBeamEnergy" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/electronbeamenergy-5bc8f89b39f0ddee-981e27ee78> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/electroncurrent-9f0a4da8a1> a h2kg:ElectronCurrent ;
+    rdfs:label "ElectronCurrent" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/electroncurrent-ed4322643d6ea1e1-2822598bed> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/humidity-d1c579fb72> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/humidity-00e9bb6ef7f87e31-985a025352> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/id-2e088fd439> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "ID" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-6da4f24120> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/imageacquisitiontime-882d7c5114> a h2kg:ExposureTime ;
+    rdfs:label "ImageAcquisitionTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/imageacquisitiontime-30d3c51c209cc426-0afcfc18cd> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamcurrent-84c88aec11> a h2kg:IonBeamCurrent ;
+    rdfs:label "IonBeamCurrent" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamcurrent-9c64c91174> a h2kg:IonBeamCurrent ;
+    rdfs:label "IonBeamCurrent" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/ionbeamcurrent-6b6629c22bc4803c-e716694418> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/ionbeamenergy-a79bf26ff2> a h2kg:IonBeamEnergy ;
+    rdfs:label "IonBeamEnergy" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/ionbeamenergy-58f30328059d2454-7621a82613> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-868f9a4139> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-116fb290d1> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-f2d0f85661> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-54f652308e> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/loot-number-f45a140ac6> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-09d0b292cb> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/magnification-a8fd265e29> a h2kg:Magnification ;
+    rdfs:label "Magnification" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/magnification-fc78dcf56536d5d5-a298097435> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/measuredarea-um2-3334226c72> a h2kg:MicroscopyMeasuredArea ;
+    rdfs:label "MeasuredArea / um2" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/pixelsize-35d2bedd07> a h2kg:PixelSize ;
+    rdfs:label "PixelSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/pixelsize-1fa919b4e61b239b-09c267f123> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/planespacing-fd4296471b> a h2kg:GeometricCharacteristic ;
+    rdfs:label "PlaneSpacing" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/pressure-08b7e9297b> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/pressure-b9360133116fd374-4b4214d9ec> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/size-30ccc95f8c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Size" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/cut-820063d9e6> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/temperature-334938fcf3> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dry-86791ccdda> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/temperature-e629506af4> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/temperature-be2113115eff970a-903eb534d5> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/thickness-ac06d4120a> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Thickness" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/doctor-blade-3013f55db9> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/time-aef369397d> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/dry-0ed6f46680> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/time-ce6a253dc8> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dry-86791ccdda> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/totalacquisitiontime-2e4b71c073> a h2kg:TotalAcquisitionTime ;
+    rdfs:label "TotalAcquisitionTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/totalacquisitiontime-7ece2dec57cb4212-388479a9d7> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/velocity-f9f6202d6a> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Velocity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/doctor-blade-3013f55db9> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/property-occurrence/viscosity-3701b93721> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Viscosity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dissolved-73af329c1e> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/brightness-24bcdda0d7f20adc-3582fb4dfa> a qudt:QuantityValue ;
+    rdfs:label "1 UNITLESS" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/contrast-d97e00d47336edbb-4397cc8c57> a qudt:QuantityValue ;
+    rdfs:label "1 UNITLESS" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/cutthickness-96abe4cc3875f0de-ad7634c8f6> a qudt:QuantityValue ;
+    rdfs:label "150 nm" ;
+    qudt:numericValue 150.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/dwelltime-71b24b4ffd1bd9fc-48cba054cb> a qudt:QuantityValue ;
+    rdfs:label "12 h" ;
+    qudt:numericValue 12.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/HR> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/electronbeamenergy-5bc8f89b39f0ddee-981e27ee78> a qudt:QuantityValue ;
+    rdfs:label "1.5 keV" ;
+    qudt:numericValue 1.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Energy> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloEV> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/electroncurrent-ed4322643d6ea1e1-2822598bed> a qudt:QuantityValue ;
+    rdfs:label "250 pA" ;
+    qudt:numericValue 250.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
+    qudt:unit <http://qudt.org/vocab/unit/PicoA> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/humidity-00e9bb6ef7f87e31-985a025352> a qudt:QuantityValue ;
+    rdfs:label "0 %" ;
+    qudt:numericValue 0.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
+    qudt:unit <http://qudt.org/vocab/unit/PERCENT> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/imageacquisitiontime-30d3c51c209cc426-0afcfc18cd> a qudt:QuantityValue ;
+    rdfs:label "60 s" ;
+    qudt:numericValue 60.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/ionbeamcurrent-6b6629c22bc4803c-e716694418> a qudt:QuantityValue ;
+    rdfs:label "700 pA" ;
+    qudt:numericValue 700.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
+    qudt:unit <http://qudt.org/vocab/unit/PicoA> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/ionbeamenergy-58f30328059d2454-7621a82613> a qudt:QuantityValue ;
+    rdfs:label "6 keV" ;
+    qudt:numericValue 6.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Energy> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloEV> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/magnification-fc78dcf56536d5d5-a298097435> a qudt:QuantityValue ;
+    rdfs:label "10 UNITLESS" ;
+    qudt:numericValue 10.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/pixelsize-1fa919b4e61b239b-09c267f123> a qudt:QuantityValue ;
+    rdfs:label "20 nm" ;
+    qudt:numericValue 20.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/pressure-b9360133116fd374-4b4214d9ec> a qudt:QuantityValue ;
+    rdfs:label "0.000001 atm" ;
+    qudt:numericValue 0.000001 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
+    qudt:unit <http://qudt.org/vocab/unit/ATM> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/result-103-mea-thickness-22660341ab> a qudt:QuantityValue ;
+    rdfs:label "80 nm" ;
+    qudt:numericValue 80.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/result-104-gdl-thickness-3d235036aa> a qudt:QuantityValue ;
+    rdfs:label "160 nm" ;
+    qudt:numericValue 160.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/temperature-be2113115eff970a-903eb534d5> a qudt:QuantityValue ;
+    rdfs:label "25 C" ;
+    qudt:numericValue 25.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/totalacquisitiontime-7ece2dec57cb4212-388479a9d7> a qudt:QuantityValue ;
+    rdfs:label "12 h" ;
+    qudt:numericValue 12.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/HR> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/gdl-thickness-d187e5ffe4> a h2kg:GasDiffusionLayerThickness ;
+    rdfs:label "GDL thickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/result-104-gdl-thickness-3d235036aa> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/mea-thickness-2e98e0f633> a h2kg:MembraneElectrodeAssemblyThickness ;
+    rdfs:label "MEA thickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/ic_sem/quantity-value/result-103-mea-thickness-22660341ab> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/result-property/porosity-6d438a79a9> a h2kg:TotalPorosity ;
+    rdfs:label "Porosity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-algorithm-watershed-fe0c2341b9> a h2kg:SoftwareArtifact ;
+    rdfs:label """ImageJ
+Algorithm = Watershed""" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/dispersion-c7d14c3eae> a h2kg:DispersionProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dispersion" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/carbon-coated-copper-tem-grid-a627eccf3e>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint2-53c19436d0> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint3-e75034229a> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/fix-e739d7bd62> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Fix" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/si-wafer-fb4ec3dbdc>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint1-96ff4172e5> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint2-53c19436d0> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/porosity-measurement-d1da4b39c2> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Porosity measurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/porosity-16fc67a6c2> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data/ppint1-7d5797be17> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data/rawdata-67387841a5> a h2kg:Data,
+        h2kg:SEMImageDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/gas-diffusion-layer-b83448342c> a h2kg:Matter ;
+    rdfs:label "Gas diffusion layer" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/mea-5c8476ade1> a h2kg:Matter ;
+    rdfs:label "MEA" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/nafion-ionomer-9849d0b6b7> a h2kg:Matter ;
+    rdfs:label "Nafion® ionomer" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint1-6b3a563f8e> a h2kg:Matter ;
+    rdfs:label "SInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint2-a85b68285f> a h2kg:Matter ;
+    rdfs:label "SInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint3-f241b36568> a h2kg:Matter ;
+    rdfs:label "SInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint4-de325ba5ab> a h2kg:Matter ;
+    rdfs:label "SInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint1-96ff4172e5> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint2-53c19436d0> a h2kg:Matter ;
+    rdfs:label "SPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint3-e75034229a> a h2kg:Matter ;
+    rdfs:label "SPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/cut-820063d9e6> a h2kg:MachiningProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Cut" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/mea-5c8476ade1> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint1-96ff4172e5> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/size-cb305bbd13> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/sp-process/dry-0ed6f46680> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ThermalTreatmentProcess ;
+    rdfs:label "Dry" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/spint3-e75034229a> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/time-4213c9819a> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-6da4f24120> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/gas-diffusion-layer-b83448342c> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/gas-diffusion-layer-b83448342c> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/id-cbbf7f30c2> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dissolved-73af329c1e> a h2kg:FormulationProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dissolved" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint1-6b3a563f8e>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint2-a85b68285f> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint3-f241b36568> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/viscosity-94ba5dcd57> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/anal-process/layer-thickness-measurement-405565738f> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Layer thickness measurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/gdl-thickness-a4d7e3fb4c>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/data-point/mea-thickness-9d0fdd794b> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/data/post-processed-image-d292aa4d80> a h2kg:Data,
+        h2kg:SEMMicrographDataset ;
+    rdfs:label "Post-processed image" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/software/imagej-c9edcb5af5> a h2kg:SoftwareArtifact ;
+    rdfs:label "ImageJ" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-09d0b292cb> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/nafion-xl-membrane-890a2f8e94> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint2-a85b68285f> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-740cad88a4>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-08a08daaf9> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-116fb290d1> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/hispec-4000-b7b140feab> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint1-6b3a563f8e> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-54ba99fc4b>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-ad1230c407> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/buy-54f652308e> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/nafion-ionomer-9849d0b6b7> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/nafion-ionomer-9849d0b6b7> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cas-number-d5434d6a0d>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/loot-number-81ac2713ae> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/doctor-blade-3013f55db9> a h2kg:DoctorBladeCoating,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Doctor blade" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/aluminum-current-collector-f86c313f10>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint3-f241b36568> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint4-de325ba5ab> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/thickness-dd923ff6a7>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/velocity-923f934a73> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/syn-process/dry-86791ccdda> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ThermalTreatmentProcess ;
+    rdfs:label "Dry" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sint4-de325ba5ab> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/mea-5c8476ade1> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/temperature-0ebab601b9>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/time-8c173884cc> .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "highly porous bulk material" .
+
+<https://w3id.org/h2kg/examples/characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50> a h2kg:ICSEMImagingMeasurement,
+        h2kg:Measurement ;
+    rdfs:label "Ion-cut scanning electron microscopy measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/ic_sem/matter/sample-b5f87c4c31> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/ic_sem/data/rawdata-67387841a5> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/brightness-2a5335cd43>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/contrast-273e2a244d>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/cutthickness-dcba6df924>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/dwelltime-2100028a62>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/electronbeamenergy-baaa093460>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/electroncurrent-554400c563>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/humidity-368d5f9c5b>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/imageacquisitiontime-32176767e3>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamcurrent-ac6a165520>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamcurrent-b0dbd5ac3b>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/ionbeamenergy-7deda3e916>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/magnification-61bf94a279>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/measuredarea-um2-24e56f3f1c>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/pixelsize-0391a6c1aa>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/planespacing-7ce49058bd>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/pressure-8cf2f83b3b>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/temperature-b165bcc693>,
+        <https://w3id.org/h2kg/examples/characterization/ic_sem/parameter-record/totalacquisitiontime-0365e8bc5f> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49> .

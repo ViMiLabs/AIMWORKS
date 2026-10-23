@@ -1,0 +1,12 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?caseKey ?analysisLabel ?inputDataLabel ?resultLabel ?softwareLabel WHERE { GRAPH ?semanticGraph { ?analysis a chameo:DataAnalysis ; rdfs:label ?analysisLabel ; chameo:hasCharacterisationInput ?inputData ; chameo:hasCharacterisationOutput ?result .
+?result a chameo:SecondaryData ; rdfs:label ?resultLabel . ?inputData rdfs:label ?inputDataLabel .
+OPTIONAL { ?analysis chameo:hasCharacterisationSoftware ?software . ?software rdfs:label ?softwareLabel . } }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/")) BIND(STRAFTER(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/") AS ?caseKey)
+} ORDER BY ?caseKey ?analysisLabel ?resultLabel ?inputDataLabel ?softwareLabel

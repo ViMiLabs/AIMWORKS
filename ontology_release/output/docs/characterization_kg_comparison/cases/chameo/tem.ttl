@@ -1,0 +1,220 @@
+@prefix chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/aimworks/chameo-characterization/tem/technique-description/transmission-electron-microscopy-c107c04898> a chameo:TransmissionElectronMicroscopy ;
+    rdfs:label "Transmission electron microscopy" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://example.org/aimworks/chameo-characterization/tem/workflow/transmission-electron-microscopy-d244862e66> a chameo:CharacterisationWorkflow ;
+    rdfs:label "Transmission electron microscopy characterization workflow" ;
+    chameo:hasCharacterisationTask <https://example.org/aimworks/chameo-characterization/tem/task-description/buy-dc60dbde9b>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/buy-f63c7f2f1f>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/dispersion-a0f4c3813d>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/dry-872e001929>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/format-conversion-12bb646d97>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/manual-particle-measurement-70c465a150>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/mix-e6ddb1c5f3>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/sonification-a6523fbf3e>,
+        <https://example.org/aimworks/chameo-characterization/tem/task-description/transmission-electron-microscopy-measurement-706409d763> .
+
+<https://example.org/aimworks/chameo-characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb> a chameo:CharacterisationMeasurementInstrument ;
+    rdfs:label "Transmission electron microscopy instrument" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/accelerationvoltage-b0b529c691> a chameo:MeasurementParameter ;
+    rdfs:label "AccelerationVoltage parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/cas-number-b82c5ce4a6> a chameo:MeasurementParameter ;
+    rdfs:label "CAS-number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/cas-number-c75d962903> a chameo:MeasurementParameter ;
+    rdfs:label "CAS-number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/dataadquisitionrate-5d6a074dfc> a chameo:MeasurementParameter ;
+    rdfs:label "DataAdquisitionRate parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/frequency-46bec3b790> a chameo:MeasurementParameter ;
+    rdfs:label "Frequency parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/humidity-3ef3a0f34c> a chameo:MeasurementParameter ;
+    rdfs:label "Humidity parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/loot-number-dc0958f6c4> a chameo:MeasurementParameter ;
+    rdfs:label "Loot number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/magnification-8ee622d943> a chameo:MeasurementParameter ;
+    rdfs:label "Magnification parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/pressure-0ae28c9ae5> a chameo:MeasurementParameter ;
+    rdfs:label "Pressure parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/temperature-31c87085e2> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/time-54cdcd3936> a chameo:MeasurementParameter ;
+    rdfs:label "Time parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/time-fc8e20c94b> a chameo:MeasurementParameter ;
+    rdfs:label "Time parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/timelapse-20e944853f> a chameo:MeasurementParameter ;
+    rdfs:label "TimeLapse parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/workingdistance-a5a29d1491> a chameo:MeasurementParameter ;
+    rdfs:label "WorkingDistance parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/tem/pre-process/format-conversion-04c686b030> a chameo:DataPreparation ;
+    rdfs:label "Format conversion" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/tem/data/post-processed-image-ae348ab770> .
+
+<https://example.org/aimworks/chameo-characterization/tem/quantity-value/result-78-average-size-ca88814f0c> a qudt:QuantityValue ;
+    rdfs:label "5 nm" ;
+    qudt:numericValue 5.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://example.org/aimworks/chameo-characterization/tem/result-data/average-size-7306d75aee> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "Average size result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/tem/anal-process/manual-particle-measurement-6d69b75564> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/liquid-mixture-71da385454> a chameo:Sample ;
+    rdfs:label "Liquid mixture" .
+
+<https://example.org/aimworks/chameo-characterization/tem/software/imagej-779709481e> a chameo:CharacterisationSoftware ;
+    rdfs:label "ImageJ" .
+
+<https://example.org/aimworks/chameo-characterization/tem/sp-process/dispersion-4227244ff4> a chameo:SamplePreparation ;
+    rdfs:label "Dispersion" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/spint3-a7bb660483> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/carbon-coated-copper-tem-grid-7b310680d9>,
+        <https://example.org/aimworks/chameo-characterization/tem/sample/spint2-34069614bb> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sp-process/dry-fb42064733> a chameo:SamplePreparation ;
+    rdfs:label "Dry" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/time-54cdcd3936> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/spint3-a7bb660483> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sp-process/mix-82c4906c89> a chameo:SamplePreparation ;
+    rdfs:label "Mix" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/spint1-aad0b2347c> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/liquid-mixture-71da385454>,
+        <https://example.org/aimworks/chameo-characterization/tem/sample/pd-c-5b041bb1a5> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sp-process/sonification-04b623e3a6> a chameo:SamplePreparation ;
+    rdfs:label "Sonification" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/spint2-34069614bb> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/frequency-46bec3b790>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/time-fc8e20c94b> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/spint1-aad0b2347c> .
+
+<https://example.org/aimworks/chameo-characterization/tem/syn-process/buy-46643f27b2> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/pd-c-5b041bb1a5> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/cas-number-c75d962903> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/pd-c-5b041bb1a5> .
+
+<https://example.org/aimworks/chameo-characterization/tem/syn-process/buy-6c291c1448> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/tem/sample/carbon-coated-copper-tem-grid-7b310680d9> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/cas-number-b82c5ce4a6>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/loot-number-dc0958f6c4> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/tem/sample/carbon-coated-copper-tem-grid-7b310680d9> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/buy-dc60dbde9b> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/syn-process/buy-46643f27b2> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/buy-f63c7f2f1f> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/syn-process/buy-6c291c1448> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/dispersion-a0f4c3813d> a chameo:CharacterisationTask ;
+    rdfs:label "Dispersion task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/sp-process/dispersion-4227244ff4> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/dry-872e001929> a chameo:CharacterisationTask ;
+    rdfs:label "Dry task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/sp-process/dry-fb42064733> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/format-conversion-12bb646d97> a chameo:CharacterisationTask ;
+    rdfs:label "Format conversion task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/pre-process/format-conversion-04c686b030> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/manual-particle-measurement-70c465a150> a chameo:CharacterisationTask ;
+    rdfs:label "Manual particle measurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/anal-process/manual-particle-measurement-6d69b75564> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/mix-e6ddb1c5f3> a chameo:CharacterisationTask ;
+    rdfs:label "Mix task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/sp-process/mix-82c4906c89> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/sonification-a6523fbf3e> a chameo:CharacterisationTask ;
+    rdfs:label "Sonification task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/sp-process/sonification-04b623e3a6> .
+
+<https://example.org/aimworks/chameo-characterization/tem/task-description/transmission-electron-microscopy-measurement-706409d763> a chameo:CharacterisationTask ;
+    rdfs:label "Transmission electron microscopy measurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://example.org/aimworks/chameo-characterization/tem/anal-process/manual-particle-measurement-6d69b75564> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "Manual particle measurement" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/tem/characterisation-property/average-size-10259c898c> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/tem/data/post-processed-image-ae348ab770> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/tem/result-data/average-size-7306d75aee> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/tem/software/imagej-779709481e> .
+
+<https://example.org/aimworks/chameo-characterization/tem/characterisation-property/average-size-10259c898c> a chameo:CharacterisationProperty ;
+    rdfs:label "Average size" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/tem/quantity-value/result-78-average-size-ca88814f0c> .
+
+<https://example.org/aimworks/chameo-characterization/tem/data/post-processed-image-ae348ab770> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "Post-processed image" .
+
+<https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53> a chameo:CharacterisationData,
+        chameo:RawData ;
+    rdfs:label "RawData" .
+
+<https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> a chameo:CharacterisationMeasurementProcess ;
+    rdfs:label "Transmission electron microscopy measurement" ;
+    chameo:hasCharacterisationMeasurementInstrument <https://example.org/aimworks/chameo-characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/accelerationvoltage-b0b529c691>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/dataadquisitionrate-5d6a074dfc>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/humidity-3ef3a0f34c>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/magnification-8ee622d943>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/pressure-0ae28c9ae5>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/temperature-31c87085e2>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/timelapse-20e944853f>,
+        <https://example.org/aimworks/chameo-characterization/tem/measurement-parameter/workingdistance-a5a29d1491> ;
+    chameo:hasMeasurementSample <https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "homogeneous powder" ;
+    chameo:hasCharacterisationProperty <https://example.org/aimworks/chameo-characterization/tem/characterisation-property/average-size-10259c898c> .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/spint1-aad0b2347c> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt1" .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/spint2-34069614bb> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt2" .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/spint3-a7bb660483> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt3" .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/carbon-coated-copper-tem-grid-7b310680d9> a chameo:Sample ;
+    rdfs:label "Carbon coated copper TEM grid" .
+
+<https://example.org/aimworks/chameo-characterization/tem/sample/pd-c-5b041bb1a5> a chameo:Sample ;
+    rdfs:label "Pd/C" .

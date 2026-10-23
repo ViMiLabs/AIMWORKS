@@ -1,0 +1,45 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?caseKey ?propertyLabel ?value ?unit WHERE { { GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("tem" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/sem> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("sem" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/afm> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("afm" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/fib_sem> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("fib_sem" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/ic_sem> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("ic_sem" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/neutron_tomography> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("neutron_tomography" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_radiography> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("synchrotron_radiography" AS ?caseKey)
+  } } UNION
+{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_tomography> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND("synchrotron_tomography" AS ?caseKey)
+  } } } ORDER BY ?caseKey ?propertyLabel

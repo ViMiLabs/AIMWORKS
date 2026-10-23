@@ -1,0 +1,28 @@
+@prefix chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+[] a sh:NodeShape ;
+    sh:property [ sh:class chameo:Sample ;
+            sh:minCount 1 ;
+            sh:path chameo:hasMeasurementSample ],
+        [ sh:class chameo:CharacterisationMeasurementInstrument ;
+            sh:minCount 1 ;
+            sh:path chameo:hasCharacterisationMeasurementInstrument ],
+        [ sh:class chameo:CharacterisationData ;
+            sh:minCount 1 ;
+            sh:path chameo:hasCharacterisationOutput ] ;
+    sh:targetClass chameo:CharacterisationMeasurementProcess .
+
+[] a sh:NodeShape ;
+    sh:property [ sh:class chameo:CharacterisationData ;
+            sh:minCount 1 ;
+            sh:path chameo:hasCharacterisationInput ],
+        [ sh:class chameo:CharacterisationData ;
+            sh:minCount 1 ;
+            sh:path chameo:hasCharacterisationOutput ],
+        [ sh:class chameo:CharacterisationProperty ;
+            sh:minCount 1 ;
+            sh:path emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ] ;
+    sh:targetClass chameo:DataAnalysis .

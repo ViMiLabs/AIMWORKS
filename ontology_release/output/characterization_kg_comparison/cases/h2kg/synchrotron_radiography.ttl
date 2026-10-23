@@ -1,0 +1,727 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/workflow> a h2kg:Process ;
+    rdfs:label "Synchrotron X-ray radiography characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/3dreconstruct-e970826e5d>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/backgroundcorrect-363d4505be>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/convert-04d39dc7a4>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/darkfieldcorrect-4dc6577d03>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/flatfieldcorrect-e4bd66bb06>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/manualsegment-a3c94c72a0>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cool-304fdef092>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cut-0b595458ac>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/heat-900845e6d5>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/bubble-9c6374fb99>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-716976399d>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-8345954830>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/dissolve-7f12c0a0d1>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/dissolve-a970a0a6ae> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/carbonfelt-electrolyte-air-ratio-d142495270> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "carbonfelt/electrolyte/air ratio result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/carbonfelt-electrolyte-air-ratio-03149428d9> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/decay-factor-db2ffd4479> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Decay factor result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/decay-factor-2830485433> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/electrolyte-saturation-c0fea393cb> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Electrolyte saturation result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/electrolyte-saturation-8dc9aab61d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/real-distance-in-beam-path-1fdcf63638> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Real distance in beam path result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/real-distance-in-beam-path-a2dd851a43> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d> a h2kg:Instrument,
+        h2kg:XRayCTInstrument ;
+    rdfs:label "Synchrotron X-ray radiography instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/carbon-felt-electrode-087cf6f19c> a h2kg:Matter ;
+    rdfs:label "Carbon felt electrode" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint1-a2d8cc57dd> a h2kg:Matter ;
+    rdfs:label "SInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint5-46e935bd55> a h2kg:Matter ;
+    rdfs:label "SInt5" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/binning-e48d9957a4> a h2kg:Parameter ;
+    rdfs:label "Binning parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/binning-c5f78fbda3> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/cas-number-661bc1ae6a> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/cas-number-b3a9b3de43> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/cas-number-9cfe9c5a51> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/cas-number-2c544734c6> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/dataadquisitionrate-f92c7ae58b> a h2kg:Parameter ;
+    rdfs:label "DataAdquisitionRate parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/dataadquisitionrate-ebbc0456f5> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/distancesampledetector-36793a7b08> a h2kg:Parameter ;
+    rdfs:label "DistanceSampleDetector parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/distancesampledetector-eba57fef4b> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/distancesamplesource-19aef225d1> a h2kg:Parameter ;
+    rdfs:label "DistanceSampleSource parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/distancesamplesource-c0f9d6981f> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/energyresolution-ad29be6c8a> a h2kg:Parameter ;
+    rdfs:label "EnergyResolution parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/energyresolution-76956236ae> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/exposuretime-78c53b5d6c> a h2kg:Parameter ;
+    rdfs:label "ExposureTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/exposuretime-92fc723609> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/fieldofviewx-d48b4d3b0f> a h2kg:Parameter ;
+    rdfs:label "FieldOfViewX parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/fieldofviewx-25c90f759e> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/fieldofviewy-d276fdd67e> a h2kg:Parameter ;
+    rdfs:label "FieldOfViewY parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/fieldofviewy-4eb5160d79> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/format-8e56ddb19a> a h2kg:Parameter ;
+    rdfs:label "Format parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/format-56ae5db352> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/humidity-2b4e7f410c> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/humidity-8a57454359> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/loot-number-1573893fa8> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/loot-number-c8ecf58dec> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/loot-number-4134da4fa9> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/loot-number-5fd77e6ee1> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/magnification-140e3bfb7c> a h2kg:Parameter ;
+    rdfs:label "Magnification parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/magnification-85eb1095ba> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofdarkfields-42da9174d7> a h2kg:Parameter ;
+    rdfs:label "NumberOfDarkFields parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofdarkfields-c09477ea51> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofflatfields-41d753931b> a h2kg:Parameter ;
+    rdfs:label "NumberOfFlatFields parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofflatfields-a985d4ea5c> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofradiograms-75539dd2b8> a h2kg:Parameter ;
+    rdfs:label "NumberOfRadiograms parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofradiograms-25bfe8e40a> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/pixelsize-b5b294ae25> a h2kg:Parameter ;
+    rdfs:label "PixelSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/pixelsize-93cf461b7d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/positionreferences-29804d1e27> a h2kg:Parameter ;
+    rdfs:label "PositionReferences parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/positionreferences-0e015a77bf> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/pressure-dc0638a82c> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/pressure-129bde8523> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/rotationdegree-89468a9e0c> a h2kg:Parameter ;
+    rdfs:label "RotationDegree parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/rotationdegree-b89b19486d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/sampleelevation-dbcfea4e13> a h2kg:Parameter ;
+    rdfs:label "SampleElevation parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/sampleelevation-2d294c721c> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/scintillatorthickness-666d4956ff> a h2kg:Parameter ;
+    rdfs:label "ScintillatorThickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/scintillatorthickness-cf577bbfd9> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/sourcemagneticfield-ec21340c61> a h2kg:Parameter ;
+    rdfs:label "SourceMagneticField parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/sourcemagneticfield-bffb8c9a05> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/spatialresolution-1ca481ecca> a h2kg:Parameter ;
+    rdfs:label "SpatialResolution parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/spatialresolution-f8460fb8e4> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-385c0484f6> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-03b78a3059> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-af2603b654> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-fb94e09132> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-ea2b45a778> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-089bb26b8d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/time-bad7daa926> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/time-d22e228335> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/timelapse-14c831bf84> a h2kg:Parameter ;
+    rdfs:label "TimeLapse parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/timelapse-e732124716> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/xrayenergy-534298067b> a h2kg:Parameter ;
+    rdfs:label "XrayEnergy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/xrayenergy-3e65d9772b> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/xyz-1435832698> a h2kg:Parameter ;
+    rdfs:label "XYZ parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/xyz-b4afc8a469> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/3dreconstruct-e970826e5d> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "3DReconstruct" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint4-36adb270e7> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint5-5ecb29b257> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/avizo-d0c60d5b60> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/backgroundcorrect-363d4505be> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "BackgroundCorrect" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint3-a12f82fc66> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint4-36adb270e7> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/darkfieldcorrect-4dc6577d03> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "DarkFieldCorrect" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint1-4f93f45a06> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint2-b3235d280a> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/flatfieldcorrect-e4bd66bb06> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "FlatFieldCorrect" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint2-b3235d280a> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint3-a12f82fc66> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/manualsegment-a3c94c72a0> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "ManualSegment" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint5-5ecb29b257> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/binning-c5f78fbda3> a h2kg:CountCharacteristic ;
+    rdfs:label "Binning" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/cas-number-2c544734c6> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/cas-number-b3a9b3de43> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-716976399d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/dataadquisitionrate-ebbc0456f5> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "DataAdquisitionRate" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/dataadquisitionrate-e8bb03e1e206af8e-5e3cac5c01> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/distancesampledetector-eba57fef4b> a h2kg:SampleDetectorDistance ;
+    rdfs:label "DistanceSampleDetector" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/distancesampledetector-23925908870572df-be3d425839> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/distancesamplesource-c0f9d6981f> a h2kg:GeometricCharacteristic ;
+    rdfs:label "DistanceSampleSource" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/distancesamplesource-e45957cf7634f44f-9abbaf2683> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/energyresolution-76956236ae> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "EnergyResolution" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/exposuretime-92fc723609> a h2kg:ExposureTime ;
+    rdfs:label "ExposureTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/exposuretime-bda7f0dc656b969a-d69c0720a1> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/fieldofviewx-25c90f759e> a h2kg:GeometricCharacteristic ;
+    rdfs:label "FieldOfViewX" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/fieldofviewy-4eb5160d79> a h2kg:GeometricCharacteristic ;
+    rdfs:label "FieldOfViewY" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/format-56ae5db352> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Format" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/convert-04d39dc7a4> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/humidity-8a57454359> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/humidity-a0a674ad049e92f3-b185614c40> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/loot-number-5fd77e6ee1> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/loot-number-c8ecf58dec> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-716976399d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/magnification-85eb1095ba> a h2kg:Magnification ;
+    rdfs:label "Magnification" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/magnification-9716c70d888dd7a6-96667e8274> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofdarkfields-c09477ea51> a h2kg:CountCharacteristic ;
+    rdfs:label "NumberOfDarkFields" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofdarkfields-fa81186dcf8175a5-c7ecd6144a> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofflatfields-a985d4ea5c> a h2kg:CountCharacteristic ;
+    rdfs:label "NumberOfFlatFields" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofflatfields-4f2ee6127f1093fb-a25506e07c> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/numberofradiograms-25bfe8e40a> a h2kg:ProjectionNumber ;
+    rdfs:label "NumberOfRadiograms" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofradiograms-8b6c4ef75abc0b4b-53ab2fa5a9> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/pixelsize-93cf461b7d> a h2kg:PixelSize ;
+    rdfs:label "PixelSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/pixelsize-6d277136b5043258-804b0ba921> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/positionreferences-0e015a77bf> a h2kg:CountCharacteristic ;
+    rdfs:label "PositionReferences" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/positionreferences-89649d0949b68abe-64a61ca9c4> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/pressure-129bde8523> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/pressure-81b7733d60e1077f-9bdef04512> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/rotationdegree-b89b19486d> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "RotationDegree" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/sampleelevation-2d294c721c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "SampleElevation" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/sampleelevation-43cffdba6cd560db-35ba90dbd2> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/scintillatorthickness-cf577bbfd9> a h2kg:GeometricCharacteristic ;
+    rdfs:label "ScintillatorThickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/scintillatorthickness-468fdb47b931d324-eebc130ed4> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/sourcemagneticfield-bffb8c9a05> a h2kg:MagneticFieldCharacteristic ;
+    rdfs:label "SourceMagneticField" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/sourcemagneticfield-23af2010cc144354-90fb41e5fb> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/spatialresolution-f8460fb8e4> a h2kg:SpatialResolution ;
+    rdfs:label "SpatialResolution" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/spatialresolution-a5b00bb45eb09beb-a0d2bfb889> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-03b78a3059> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/heat-900845e6d5> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-089bb26b8d> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cool-304fdef092> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/temperature-fb94e09132> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/temperature-dcb7d1ed45745f36-4ee8e786ac> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/time-d22e228335> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/heat-900845e6d5> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/timelapse-e732124716> a h2kg:TemporalCharacteristic ;
+    rdfs:label "TimeLapse" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/timelapse-6faf96c4556318e6-b853750961> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/xrayenergy-3e65d9772b> a h2kg:XRayBeamEnergy ;
+    rdfs:label "XrayEnergy" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/xrayenergy-d5ba51dc089af449-22dbc6e40a> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/property-occurrence/xyz-b4afc8a469> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "XYZ" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cut-0b595458ac> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/dataadquisitionrate-e8bb03e1e206af8e-5e3cac5c01> a qudt:QuantityValue ;
+    rdfs:label "1 s" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/distancesampledetector-23925908870572df-be3d425839> a qudt:QuantityValue ;
+    rdfs:label "40 cm" ;
+    qudt:numericValue 40.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/distancesamplesource-e45957cf7634f44f-9abbaf2683> a qudt:QuantityValue ;
+    rdfs:label "58 m" ;
+    qudt:numericValue 58.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/M> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/exposuretime-bda7f0dc656b969a-d69c0720a1> a qudt:QuantityValue ;
+    rdfs:label "50 ms" ;
+    qudt:numericValue 50.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliSEC> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/humidity-a0a674ad049e92f3-b185614c40> a qudt:QuantityValue ;
+    rdfs:label "50 %" ;
+    qudt:numericValue 50.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
+    qudt:unit <http://qudt.org/vocab/unit/PERCENT> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/magnification-9716c70d888dd7a6-96667e8274> a qudt:QuantityValue ;
+    rdfs:label "10 UNITLESS" ;
+    qudt:numericValue 10.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofdarkfields-fa81186dcf8175a5-c7ecd6144a> a qudt:QuantityValue ;
+    rdfs:label "10 UNITLESS" ;
+    qudt:numericValue 10.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofflatfields-4f2ee6127f1093fb-a25506e07c> a qudt:QuantityValue ;
+    rdfs:label "210 UNITLESS" ;
+    qudt:numericValue 210.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/numberofradiograms-8b6c4ef75abc0b4b-53ab2fa5a9> a qudt:QuantityValue ;
+    rdfs:label "2000 UNITLESS" ;
+    qudt:numericValue 2000.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/pixelsize-6d277136b5043258-804b0ba921> a qudt:QuantityValue ;
+    rdfs:label "13 um" ;
+    qudt:numericValue 13.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/positionreferences-89649d0949b68abe-64a61ca9c4> a qudt:QuantityValue ;
+    rdfs:label "6 UNITLESS" ;
+    qudt:numericValue 6.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/pressure-81b7733d60e1077f-9bdef04512> a qudt:QuantityValue ;
+    rdfs:label "1 atm" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
+    qudt:unit <http://qudt.org/vocab/unit/ATM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-116-decay-factor-cd877a79f2> a qudt:QuantityValue ;
+    rdfs:label "51 ms" ;
+    qudt:numericValue 51.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliSEC> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-117-real-distance-in-beam-path-e6b5d4b28e> a qudt:QuantityValue ;
+    rdfs:label "99 cm" ;
+    qudt:numericValue 99.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-118-electrolyte-saturation-2420e694a0> a qudt:QuantityValue ;
+    rdfs:label "47 mol/l" ;
+    qudt:numericValue 47.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration> ;
+    qudt:unit <http://qudt.org/vocab/unit/MOL-PER-L> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/sampleelevation-43cffdba6cd560db-35ba90dbd2> a qudt:QuantityValue ;
+    rdfs:label "81 mm" ;
+    qudt:numericValue 81.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/scintillatorthickness-468fdb47b931d324-eebc130ed4> a qudt:QuantityValue ;
+    rdfs:label "500 um" ;
+    qudt:numericValue 500.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/sourcemagneticfield-23af2010cc144354-90fb41e5fb> a qudt:QuantityValue ;
+    rdfs:label "8.5 T" ;
+    qudt:numericValue 8.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/MagneticFluxDensity> ;
+    qudt:unit <http://qudt.org/vocab/unit/T> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/spatialresolution-a5b00bb45eb09beb-a0d2bfb889> a qudt:QuantityValue ;
+    rdfs:label "1 um" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/temperature-dcb7d1ed45745f36-4ee8e786ac> a qudt:QuantityValue ;
+    rdfs:label "23 °C" ;
+    qudt:numericValue 23.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/timelapse-6faf96c4556318e6-b853750961> a qudt:QuantityValue ;
+    rdfs:label "1200 s" ;
+    qudt:numericValue 1200.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/xrayenergy-d5ba51dc089af449-22dbc6e40a> a qudt:QuantityValue ;
+    rdfs:label "30 keV" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Energy> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloEV> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/carbonfelt-electrolyte-air-ratio-03149428d9> a h2kg:CompositionCharacteristic ;
+    rdfs:label "carbonfelt/electrolyte/air ratio" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/decay-factor-2830485433> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Decay factor" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-116-decay-factor-cd877a79f2> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/electrolyte-saturation-8dc9aab61d> a h2kg:CompositionCharacteristic ;
+    rdfs:label "Electrolyte saturation" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-118-electrolyte-saturation-2420e694a0> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/result-property/real-distance-in-beam-path-a2dd851a43> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Real distance in beam path" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/quantity-value/result-117-real-distance-in-beam-path-e6b5d4b28e> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/avizo-d0c60d5b60> a h2kg:SoftwareArtifact ;
+    rdfs:label "Avizo" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/bubble-9c6374fb99> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Bubble" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint4-ba237c0ee4> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/cell-29548ceb88> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-8345954830> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/carbon-felt-electrode-087cf6f19c> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint1-a2d8cc57dd> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/dissolve-7f12c0a0d1> a h2kg:FormulationProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dissolve" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint3-f851a3f629> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint5-46e935bd55> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/dissolve-a970a0a6ae> a h2kg:FormulationProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dissolve" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint2-b0a7d4ccd7> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint4-ba237c0ee4> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "BeamPathDistanceMeasurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/real-distance-in-beam-path-1fdcf63638> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "DecayFactorCalculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/decay-factor-db2ffd4479> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "ElectrodeSegmentRatioCalculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/carbonfelt-electrolyte-air-ratio-d142495270> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "ElectrolyteSaturationMeasurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data-point/electrolyte-saturation-c0fea393cb> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint1-4f93f45a06> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint2-b3235d280a> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint3-a12f82fc66> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint4-36adb270e7> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint5-5ecb29b257> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt5" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> a h2kg:Data,
+        h2kg:TomographicProjectionDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/cell-29548ceb88> a h2kg:Matter ;
+    rdfs:label "Cell" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint2-b0a7d4ccd7> a h2kg:Matter ;
+    rdfs:label "SInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint3-f851a3f629> a h2kg:Matter ;
+    rdfs:label "SInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint4-ba237c0ee4> a h2kg:Matter ;
+    rdfs:label "SInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint1-60887fd282> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint2-592746b314> a h2kg:Matter ;
+    rdfs:label "SPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/voso4-89fa95d2bf> a h2kg:Matter ;
+    rdfs:label "VOSO4" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/pre-process/convert-04d39dc7a4> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Convert" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/ppint1-4f93f45a06> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/format-8e56ddb19a> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cool-304fdef092> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Cool" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint1-60887fd282> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint2-592746b314> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-ea2b45a778> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/cut-0b595458ac> a h2kg:MachiningProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Cut" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint2-592746b314> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/xyz-1435832698> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/sp-process/heat-900845e6d5> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Heat" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/cell-29548ceb88> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/spint1-60887fd282> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-385c0484f6>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/time-bad7daa926> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-716976399d> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/voso4-89fa95d2bf> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint3-f851a3f629> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/cas-number-661bc1ae6a>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/loot-number-1573893fa8> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/voso4-89fa95d2bf> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sint2-b0a7d4ccd7> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/cas-number-9cfe9c5a51>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/loot-number-4134da4fa9> .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/software/imagej-b4e7df961d> a h2kg:SoftwareArtifact ;
+    rdfs:label "ImageJ" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> a h2kg:Data,
+        h2kg:TomographicReconstructionDataset ;
+    rdfs:label "Post-processed tomograph" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "bulk material" .
+
+<https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> a h2kg:Measurement,
+        h2kg:XRayComputedTomographyMeasurement ;
+    rdfs:label "Synchrotron X-ray radiography measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/matter/sample-ec44a1c4ac> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/binning-e48d9957a4>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/dataadquisitionrate-f92c7ae58b>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/distancesampledetector-36793a7b08>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/distancesamplesource-19aef225d1>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/energyresolution-ad29be6c8a>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/exposuretime-78c53b5d6c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/fieldofviewx-d48b4d3b0f>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/fieldofviewy-d276fdd67e>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/humidity-2b4e7f410c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/magnification-140e3bfb7c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofdarkfields-42da9174d7>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofflatfields-41d753931b>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/numberofradiograms-75539dd2b8>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/pixelsize-b5b294ae25>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/positionreferences-29804d1e27>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/pressure-dc0638a82c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/rotationdegree-89468a9e0c>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/sampleelevation-dbcfea4e13>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/scintillatorthickness-666d4956ff>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/sourcemagneticfield-ec21340c61>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/spatialresolution-1ca481ecca>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/temperature-af2603b654>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/timelapse-14c831bf84>,
+        <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/parameter-record/xrayenergy-534298067b> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d> .

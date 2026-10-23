@@ -1,0 +1,13 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?resultLabel ?specimenLabel ?preparationLabel ?preparedMaterialLabel WHERE { GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
+  ?result a h2kg:DataPoint ; h2kg:fromMeasurement ?measurement ; h2kg:ofProperty ?property ; rdfs:label ?resultLabel .
+  ?measurement h2kg:hasMeasurementSubject ?specimen . ?specimen rdfs:label ?specimenLabel . ?property h2kg:isCharacteristicOf ?specimen .
+  ?preparation a h2kg:Manufacturing ; rdfs:label ?preparationLabel ; h2kg:hasOutputMaterial ?preparedMaterial .
+  ?preparedMaterial rdfs:label ?preparedMaterialLabel .
+  ?preparedMaterial (^h2kg:hasInputMaterial/h2kg:hasOutputMaterial)* ?specimen .
+} } ORDER BY ?preparationLabel ?preparedMaterialLabel

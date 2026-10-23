@@ -15,6 +15,7 @@ def characterization_body(
     report = report or {}
     data_href = _relative(page_path, docs_root / "characterization_kg" / "characterization_query_workbench.json")
     artifact_root = _relative(page_path, docs_root / "characterization_kg")
+    comparison_href = _relative(page_path, docs_root / "pages" / "characterization-benchmark.html")
     cases = report.get("case_count", 8)
     fields = report.get("represented_field_count", 0)
     findings = report.get("validation_finding_count", 0)
@@ -33,6 +34,7 @@ def characterization_body(
     <p class="eyebrow">Workbook-backed RDF application</p>
     <h2>Validated SPARQL competency workbench</h2>
     <p>Explore 50 release-tested questions over eight H₂KG-aligned characterization cases. Each plain-language question is paired with executable SPARQL, and every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
+    <p><a class="kg-comparison-link" href="{escape(comparison_href)}">Compare the same source cases with CHAMEO →</a></p>
   </div>
   <div class="kg-metrics" aria-label="Knowledge graph metrics">
     <span><strong>{passed}/{query_count}</strong> queries passed</span><span><strong>{matched:,}</strong> rows matched</span><span><strong>{fields:,}</strong> source fields</span><span><strong>{triples:,}</strong> RDF triples</span>
@@ -100,6 +102,7 @@ def characterization_css() -> str:
 :root { --kg-ink:#16313a; --kg-muted:#587078; --kg-line:#cadadd; --kg-teal:#167d70; --kg-blue:#356f9f; --kg-amber:#b26b12; --kg-red:#a44231; --kg-soft:#f5faf9; }
 .kg-intro { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2rem; align-items:end; margin:1.2rem 0; padding:1.45rem; border:1px solid var(--kg-line); border-radius:18px; background:radial-gradient(circle at 4% 5%,rgba(22,125,112,.13),transparent 28%),linear-gradient(130deg,#f4fbf9,#fff8eb); box-shadow:0 18px 45px rgba(23,55,65,.08); }
 .kg-intro h2,.kg-workbench h2,.kg-workbench h3 { margin:.2rem 0 .5rem; color:var(--kg-ink); }.kg-intro p { max-width:870px; }
+.kg-comparison-link { display:inline-flex; padding:.55rem .8rem; border:1px solid var(--kg-teal); border-radius:999px; color:var(--kg-teal); background:#fff; text-decoration:none; font-weight:750; }.kg-comparison-link:hover { color:#fff; background:var(--kg-teal); }
 .kg-metrics { display:grid; grid-template-columns:repeat(2,minmax(135px,1fr)); gap:.55rem; }.kg-metrics span { padding:.68rem .82rem; border:1px solid #d8e3e4; border-radius:12px; background:rgba(255,255,255,.92); color:var(--kg-muted); white-space:nowrap; }.kg-metrics strong { display:block; color:var(--kg-teal); font-size:1.3rem; }
 .kg-workbench { overflow:hidden; border:1px solid var(--kg-line); border-radius:18px; background:#fff; box-shadow:0 18px 48px rgba(19,48,57,.09); }
 .kg-validation-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:1.5rem; align-items:center; padding:1.15rem 1.25rem; background:linear-gradient(120deg,#eff9f6,#faf6ec); border-bottom:1px solid #dbe5e7; }.kg-validation-head p { margin:.25rem 0; max-width:820px; }

@@ -1,0 +1,62 @@
+{
+  "variables": [
+    "caseKey",
+    "methodLabel"
+  ],
+  "rows": [
+    {
+      "caseKey": "tem",
+      "methodLabel": "Transmission electron microscopy"
+    },
+    {
+      "caseKey": "sem",
+      "methodLabel": "Scanning electron microscopy"
+    },
+    {
+      "caseKey": "afm",
+      "methodLabel": "Atomic force microscopy"
+    }
+  ],
+  "comparison": {
+    "status": "fail",
+    "exact_match": false,
+    "expected_row_count": 8,
+    "observed_row_count": 3,
+    "matched_row_count": 3,
+    "missing_expected_row_count": 5,
+    "unexpected_row_count": 0,
+    "row_precision_percent": 100.0,
+    "row_recall_percent": 37.5,
+    "missing_expected_rows": [
+      {
+        "caseKey": "fib_sem",
+        "methodLabel": "FIB-SEM tomography",
+        "occurrences": 1
+      },
+      {
+        "caseKey": "ic_sem",
+        "methodLabel": "Ion-cut scanning electron microscopy",
+        "occurrences": 1
+      },
+      {
+        "caseKey": "neutron_tomography",
+        "methodLabel": "Neutron tomography",
+        "occurrences": 1
+      },
+      {
+        "caseKey": "synchrotron_radiography",
+        "methodLabel": "Synchrotron X-ray radiography",
+        "occurrences": 1
+      },
+      {
+        "caseKey": "synchrotron_tomography",
+        "methodLabel": "Synchrotron X-ray tomography",
+        "occurrences": 1
+      }
+    ],
+    "unexpected_rows": [],
+    "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+  },
+  "representation_tier": "native_class_coverage_audit",
+  "rationale": "Evaluated against the ontology class inventory and source method identity rather than an ABox query."
+}

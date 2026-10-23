@@ -1,0 +1,16 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?caseKey ?resultLabel ?propertyLabel ?bearerLabel WHERE {
+  GRAPH ?semanticGraph { ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;
+  chameo:hasCharacterisationOutput ?result ; emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .
+?result a chameo:SecondaryData ; rdfs:label ?resultLabel .
+?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .
+?bearer chameo:hasCharacterisationProperty ?property ; rdfs:label ?bearerLabel . }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/"))
+  BIND(STRAFTER(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/") AS ?caseKey)
+} ORDER BY ?caseKey ?resultLabel ?propertyLabel

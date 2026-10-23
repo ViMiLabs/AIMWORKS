@@ -1,0 +1,547 @@
+{
+  "schema_version": "h2kg-chameo-benchmark-contract/v1",
+  "source_manifest_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+  "question_count": 50,
+  "contract_sha256": "A1611EB141EB4E5B75BCDD98588996BC62DB71F9E28EDDFCD7ECAA470AFA94E5",
+  "design_provenance": "The 50 questions predate the CHAMEO encoding and were inherited from the H2KG characterization application. They are source-grounded but not blinded, independently authored, or neutral with respect to H2KG's design.",
+  "interpretation": "Historical asymmetric transfer diagnostic retained for reproducibility and excluded from the fair thirteen-requirement benchmark and its conclusion.",
+  "questions": [
+    {
+      "query_id": "q1_tem_specimen_preparation",
+      "plain_language_question": "Which specimen-preparation steps produced the TEM specimen associated with the reported particle-size result?",
+      "query_family": "preparation_traceability",
+      "variables": [
+        "resultLabel",
+        "specimenLabel",
+        "preparationLabel",
+        "preparedMaterialLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q2_tem_instrument_settings",
+      "plain_language_question": "Which TEM instrument and acquisition settings were recorded, including values that were unconfirmed or not applicable?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "instrumentLabel",
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q3_tem_dataset_analysis",
+      "plain_language_question": "Which image dataset, analysis process, and software produced the reported TEM result?",
+      "query_family": "data_processing_and_provenance",
+      "variables": [
+        "inputDataLabel",
+        "analysisLabel",
+        "softwareLabel",
+        "resultLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q4_tem_result_value",
+      "plain_language_question": "What TEM property was reported, for which specimen, and with what source value and normalized unit?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q5_all_measurement_contexts",
+      "plain_language_question": "What specimen, instrument, and raw dataset are linked to each characterization measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "caseKey",
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q6_all_result_records",
+      "plain_language_question": "Which properties were reported across all cases, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "caseKey",
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q7_source_status_summary",
+      "plain_language_question": "How many workbook fields in each case were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q8_all_measurement_parameters",
+      "plain_language_question": "Which measurement settings were recorded across all cases, and which have normalized QUDT values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "caseKey",
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q9_conservative_quantity_findings",
+      "plain_language_question": "Which reported quantities were deliberately not normalized because their units, labels, axes, or meanings were incomplete or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q10_source_provenance_coverage",
+      "plain_language_question": "Does every eligible workbook field have a traceable semantic representation in each case graph?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q11_software_provenance",
+      "plain_language_question": "Which software packages were linked to processing and analysis activities in each case?",
+      "query_family": "data_processing_and_provenance",
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "softwareLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q12_neutron_processing_chain",
+      "plain_language_question": "Which ordered preprocessing transformations connect the neutron-tomography raw projections to processed data?",
+      "query_family": "data_processing_and_provenance",
+      "variables": [
+        "processLabel",
+        "inputDataLabel",
+        "outputDataLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q13_tem_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Transmission electron microscopy measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q14_sem_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Scanning electron microscopy measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q15_afm_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Atomic force microscopy measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q16_fib_sem_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the FIB-SEM tomography measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q17_ic_sem_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Ion-cut scanning electron microscopy measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q18_neutron_tomography_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Neutron tomography measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q19_synchrotron_radiography_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Synchrotron X-ray radiography measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q20_synchrotron_tomography_measurement_context",
+      "plain_language_question": "What specimen, instrument, and raw dataset define the Synchrotron X-ray tomography measurement?",
+      "query_family": "measurement_context",
+      "variables": [
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q21_tem_results",
+      "plain_language_question": "Which results were reported for Transmission electron microscopy, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q22_sem_results",
+      "plain_language_question": "Which results were reported for Scanning electron microscopy, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q23_afm_results",
+      "plain_language_question": "Which results were reported for Atomic force microscopy, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q24_fib_sem_results",
+      "plain_language_question": "Which results were reported for FIB-SEM tomography, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q25_ic_sem_results",
+      "plain_language_question": "Which results were reported for Ion-cut scanning electron microscopy, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q26_neutron_tomography_results",
+      "plain_language_question": "Which results were reported for Neutron tomography, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q27_synchrotron_radiography_results",
+      "plain_language_question": "Which results were reported for Synchrotron X-ray radiography, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q28_synchrotron_tomography_results",
+      "plain_language_question": "Which results were reported for Synchrotron X-ray tomography, and what values, units, and specimen bearers were recorded?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q29_tem_source_status",
+      "plain_language_question": "How many Transmission electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q30_sem_source_status",
+      "plain_language_question": "How many Scanning electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q31_afm_source_status",
+      "plain_language_question": "How many Atomic force microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q32_fib_sem_source_status",
+      "plain_language_question": "How many FIB-SEM tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q33_ic_sem_source_status",
+      "plain_language_question": "How many Ion-cut scanning electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q34_neutron_tomography_source_status",
+      "plain_language_question": "How many Neutron tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q35_synchrotron_radiography_source_status",
+      "plain_language_question": "How many Synchrotron X-ray radiography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q36_synchrotron_tomography_source_status",
+      "plain_language_question": "How many Synchrotron X-ray tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q37_tem_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Transmission electron microscopy, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q38_sem_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Scanning electron microscopy, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q39_afm_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Atomic force microscopy, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q40_fib_sem_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for FIB-SEM tomography, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q41_ic_sem_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Ion-cut scanning electron microscopy, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q42_neutron_tomography_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Neutron tomography, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q43_synchrotron_radiography_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Synchrotron X-ray radiography, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q44_synchrotron_tomography_measurement_settings",
+      "plain_language_question": "Which acquisition settings were recorded for Synchrotron X-ray tomography, and which have normalized values and units?",
+      "query_family": "measurement_parameter_identity_and_value",
+      "variables": [
+        "parameterLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q45_case_measurement_result_counts",
+      "plain_language_question": "How many measurement occurrences and result records are represented for each characterization case?",
+      "query_family": "occurrence_accounting",
+      "variables": [
+        "caseKey",
+        "measurementCount",
+        "resultCount"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q46_normalized_result_quantities",
+      "plain_language_question": "Which reported scientific results have both a defensible numeric value and an explicit QUDT unit?",
+      "query_family": "result_property_and_value",
+      "variables": [
+        "caseKey",
+        "propertyLabel",
+        "value",
+        "unit"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q47_qualified_source_fields",
+      "plain_language_question": "Which workbook fields are not simply reported values, and why are they marked missing, inapplicable, unspecified, unconfirmed, unresolved, or conflicting?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q48_qualified_measurement_settings",
+      "plain_language_question": "Which acquisition settings are missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting rather than fully reported?",
+      "query_family": "source_quality_control",
+      "variables": [],
+      "assessment_scope": "unscored_source_or_quality_control"
+    },
+    {
+      "query_id": "q49_analysis_provenance_across_cases",
+      "plain_language_question": "Which input datasets, analysis processes, and software are linked to each reported result across all cases?",
+      "query_family": "data_processing_and_provenance",
+      "variables": [
+        "caseKey",
+        "analysisLabel",
+        "inputDataLabel",
+        "resultLabel",
+        "softwareLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    },
+    {
+      "query_id": "q50_preprocessing_transformations",
+      "plain_language_question": "Which preprocessing activities transformed which input datasets into which output datasets across the eight cases?",
+      "query_family": "data_processing_and_provenance",
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "inputDataLabel",
+        "outputDataLabel"
+      ],
+      "assessment_scope": "strict_ontology_semantics"
+    }
+  ]
+}

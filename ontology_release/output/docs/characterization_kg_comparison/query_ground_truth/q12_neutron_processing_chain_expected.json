@@ -1,0 +1,30 @@
+{
+  "variables": [
+    "processLabel",
+    "inputDataLabel",
+    "outputDataLabel"
+  ],
+  "rows": [
+    {
+      "processLabel": "Reconstruct",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "processLabel": "DarkFieldCorrect",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "PPInt2"
+    },
+    {
+      "processLabel": "3DReconstruct",
+      "inputDataLabel": "PPInt2",
+      "outputDataLabel": "PPInt3"
+    },
+    {
+      "processLabel": "Threshold",
+      "inputDataLabel": "PPInt3",
+      "outputDataLabel": "Post-processed tomograph"
+    }
+  ],
+  "derivation": "Projected directly from the sanitized workbook manifest before graph querying."
+}

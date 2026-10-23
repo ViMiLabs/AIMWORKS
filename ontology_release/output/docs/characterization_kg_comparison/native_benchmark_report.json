@@ -1,0 +1,2331 @@
+{
+  "schema_version": "h2kg-chameo-native-characterization-benchmark/v6",
+  "generated_at": "2026-10-23T18:59:17+00:00",
+  "source_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+  "case_count": 8,
+  "eligible_field_count": 1635,
+  "benchmark_contract": {
+    "schema_version": "h2kg-chameo-fair-characterization-contract/v3",
+    "source_manifest_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+    "requirement_count": 13,
+    "selection_strata": {
+      "analysis_lineage": 1,
+      "data_processing": 1,
+      "domain_terminology": 1,
+      "measurement_context": 1,
+      "measurement_settings": 2,
+      "methodology_description": 1,
+      "result_provenance": 1,
+      "result_semantics": 2,
+      "software_traceability": 1,
+      "specimen_preparation": 1,
+      "workflow_structure": 1
+    },
+    "contract_sha256": "F731088A30DE6148B526814F40C6E7E0718379FFBB1DB1A68237C0CA21237FEA",
+    "selection_protocol": [
+      "Enumerate the specimen-to-result information lifecycle present in the sanitized workbook.",
+      "Score each scientific relation or value pattern once over the full eight-case population; do not repeat it as global and per-case questions.",
+      "Derive every requirement from information present in the application lifecycle and label it by scientific function, never by ontology origin.",
+      "Include method-concept specificity as an explicit scored requirement rather than an unscored post hoc argument.",
+      "Generate expected rows from the manifest before executing ontology-specific SPARQL.",
+      "Disallow local semantic bridge predicates and report shared standards and declared imports separately.",
+      "Credit generic native patterns as successful while reporting their semantic specificity separately from specialised native patterns."
+    ],
+    "inference_scope": "The resulting decisions are conclusive for these thirteen frozen representation, retrieval, and terminology requirements across the eight source cases.",
+    "conclusion_rules": [
+      {
+        "id": "r1_chameo_broad_methodology",
+        "criterion": "CHAMEO is exact for measurement context, setting identity, preparation, processing, software, analysis lineage, result generation, workflow/task grouping, and technique/occurrence separation."
+      },
+      {
+        "id": "r2_chameo_unique_methodology_patterns",
+        "criterion": "CHAMEO supplies specialised workflow/task and technique-description patterns; H2KG can group activities generically but lacks a separate technique-description pattern."
+      },
+      {
+        "id": "r3_h2kg_valued_settings",
+        "criterion": "H2KG is exact and the complete pinned CHAMEO/EMMO import closure contains no declared, ancestry-compatible path from a measurement-parameter record to the distinct valued scientific characteristic that it denotes."
+      },
+      {
+        "id": "r4_h2kg_individual_results",
+        "criterion": "H2KG is exact for individual result/property/bearer associations and normalized result values, while CHAMEO is not exact for the individual association contract."
+      },
+      {
+        "id": "r5_h2kg_method_specificity",
+        "criterion": "The scored method-specificity requirement resolves more of the eight source methods to a specific native H2KG class than to a specific native CHAMEO technique class."
+      }
+    ],
+    "requirements": [
+      {
+        "id": "b01_measurement_context",
+        "question": "Which specimen, instrument, and raw dataset belong to each measurement?",
+        "selection_stratum": "measurement_context",
+        "source_basis": "Case identity, specimen field, method family, and raw-data output in the sanitized manifest.",
+        "variables": [
+          "caseKey",
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ]
+      },
+      {
+        "id": "b02_measurement_setting_identity",
+        "question": "Which named measurement settings are associated with each measurement?",
+        "selection_stratum": "measurement_settings",
+        "source_basis": "All characteristic and instrument fields classified as measurement settings in the sanitized manifest.",
+        "variables": [
+          "caseKey",
+          "parameterLabel"
+        ]
+      },
+      {
+        "id": "b03_valued_measurement_setting",
+        "question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
+        "selection_stratum": "measurement_settings",
+        "source_basis": "Reported measurement settings with a distinct scientific characteristic and defensible numeric and unit normalization in the sanitized manifest.",
+        "variables": [
+          "caseKey",
+          "parameterLabel",
+          "propertyLabel",
+          "value",
+          "unit"
+        ]
+      },
+      {
+        "id": "b04_preparation_input_output",
+        "question": "Which material input and output are connected by each specimen-preparation step?",
+        "selection_stratum": "specimen_preparation",
+        "source_basis": "Synthesis and specimen-preparation rows in all eight cases.",
+        "variables": [
+          "caseKey",
+          "processLabel",
+          "inputMaterialLabel",
+          "outputMaterialLabel"
+        ]
+      },
+      {
+        "id": "b05_processing_input_output",
+        "question": "Which input and output datasets are connected by each preprocessing step?",
+        "selection_stratum": "data_processing",
+        "source_basis": "Preprocessing rows in all eight cases.",
+        "variables": [
+          "caseKey",
+          "processLabel",
+          "inputDataLabel",
+          "outputDataLabel"
+        ]
+      },
+      {
+        "id": "b06_software_association",
+        "question": "Which software is associated with each preparation, processing, or analysis step?",
+        "selection_stratum": "software_traceability",
+        "source_basis": "Software fields in all workflow-table sections.",
+        "variables": [
+          "caseKey",
+          "processLabel",
+          "softwareLabel"
+        ]
+      },
+      {
+        "id": "b07_analysis_lineage",
+        "question": "Which input dataset, analysis step, software, and result form each analysis lineage?",
+        "selection_stratum": "analysis_lineage",
+        "source_basis": "Analysis rows and software fields in all eight cases.",
+        "variables": [
+          "caseKey",
+          "analysisLabel",
+          "inputDataLabel",
+          "resultLabel",
+          "softwareLabel"
+        ]
+      },
+      {
+        "id": "b08_individual_result_property_bearer",
+        "question": "Which property and specimen are linked to each individual reported result?",
+        "selection_stratum": "result_semantics",
+        "source_basis": "Every analysis target and the case specimen in the sanitized manifest.",
+        "variables": [
+          "caseKey",
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel"
+        ]
+      },
+      {
+        "id": "b09_normalized_result_value",
+        "question": "Which reported result properties have a normalized numeric value and unit?",
+        "selection_stratum": "result_semantics",
+        "source_basis": "Analysis outputs with defensible numeric and unit normalization in the sanitized manifest.",
+        "variables": [
+          "caseKey",
+          "propertyLabel",
+          "value",
+          "unit"
+        ]
+      },
+      {
+        "id": "b10_result_generation",
+        "question": "Which analysis step generated each individual result?",
+        "selection_stratum": "result_provenance",
+        "source_basis": "Analysis-step and target pairs in all eight cases.",
+        "variables": [
+          "caseKey",
+          "analysisLabel",
+          "resultLabel"
+        ]
+      },
+      {
+        "id": "b11_workflow_task_grouping",
+        "question": "Which named workflow groups the measurement and processing tasks for each case?",
+        "selection_stratum": "workflow_structure",
+        "source_basis": "Each case is one bounded characterization workflow containing one measurement and its distinct source-defined steps.",
+        "variables": [
+          "caseKey",
+          "workflowLabel",
+          "taskCount"
+        ]
+      },
+      {
+        "id": "b12_technique_occurrence_separation",
+        "question": "Which technique description is explicitly distinguished from, and linked to, each measurement occurrence?",
+        "selection_stratum": "methodology_description",
+        "source_basis": "The method-family descriptor and measurement occurrence recorded for every case.",
+        "variables": [
+          "caseKey",
+          "techniqueLabel",
+          "measurementLabel"
+        ]
+      },
+      {
+        "id": "b13_case_method_specificity",
+        "question": "Does each case resolve to a native ontology class at the specificity of the reported characterization method?",
+        "selection_stratum": "domain_terminology",
+        "source_basis": "The curated measurement-method identity recorded for each of the eight workbook cases.",
+        "variables": [
+          "caseKey",
+          "methodLabel"
+        ]
+      }
+    ]
+  },
+  "balanced_benchmark": {
+    "requirement_count": 13,
+    "selection_strata": {
+      "analysis_lineage": 1,
+      "data_processing": 1,
+      "domain_terminology": 1,
+      "measurement_context": 1,
+      "measurement_settings": 2,
+      "methodology_description": 1,
+      "result_provenance": 1,
+      "result_semantics": 2,
+      "software_traceability": 1,
+      "specimen_preparation": 1,
+      "workflow_structure": 1
+    },
+    "aggregation_policy": "Each requirement is counted once. Row counts are reported per requirement and are not pooled into a weighted quality score.",
+    "h2kg": {
+      "exact_requirements": 12,
+      "partial_requirements": 0,
+      "not_expressible_requirements": 1,
+      "no_match_requirements": 0
+    },
+    "chameo": {
+      "exact_requirements": 10,
+      "partial_requirements": 2,
+      "not_expressible_requirements": 1,
+      "no_match_requirements": 0
+    }
+  },
+  "balanced_requirement_matrix": [
+    {
+      "requirement_id": "b01_measurement_context",
+      "plain_language_question": "Which specimen, instrument, and raw dataset belong to each measurement?",
+      "selection_stratum": "measurement_context",
+      "expected_rows": 8,
+      "variables": "caseKey;measurementLabel;specimenLabel;instrumentLabel;rawDatasetLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 8,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Direct subject, instrument, and output-data relations.",
+      "h2kg_triple_patterns": 8,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 10,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 8,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Direct subject, instrument, and output-data relations.",
+      "chameo_triple_patterns": 9,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 11
+    },
+    {
+      "requirement_id": "b02_measurement_setting_identity",
+      "plain_language_question": "Which named measurement settings are associated with each measurement?",
+      "selection_stratum": "measurement_settings",
+      "expected_rows": 131,
+      "variables": "caseKey;parameterLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 131,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Direct measurement-to-parameter relation.",
+      "h2kg_triple_patterns": 3,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 10,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 131,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Direct measurement-to-parameter relation.",
+      "chameo_triple_patterns": 3,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 11
+    },
+    {
+      "requirement_id": "b03_valued_measurement_setting",
+      "plain_language_question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
+      "selection_stratum": "measurement_settings",
+      "expected_rows": 107,
+      "variables": "caseKey;parameterLabel;propertyLabel;value;unit",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native_plus_shared_standard",
+      "h2kg_matched": 107,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "H2KG binds a parameter record to a property occurrence; QUDT supplies value and unit terms.",
+      "h2kg_triple_patterns": 8,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 15,
+      "chameo_status": "not_expressible_without_extension",
+      "chameo_representation_tier": "requires_extension",
+      "chameo_matched": 0,
+      "chameo_missing": 107,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 0.0,
+      "chameo_recall_percent": 0.0,
+      "chameo_rationale": "The complete pinned CHAMEO/EMMO import closure places MeasurementParameter under EMMO mathematical Parameter, not Quantity or Referent, and declares no ancestry-compatible relation to a distinct valued scientific characteristic.",
+      "chameo_triple_patterns": 0,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 0
+    },
+    {
+      "requirement_id": "b04_preparation_input_output",
+      "plain_language_question": "Which material input and output are connected by each specimen-preparation step?",
+      "selection_stratum": "specimen_preparation",
+      "expected_rows": 83,
+      "variables": "caseKey;processLabel;inputMaterialLabel;outputMaterialLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 83,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Native preparation semantics; CHAMEO uses its declared EMMO output relation.",
+      "h2kg_triple_patterns": 6,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 13,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native_plus_declared_import",
+      "chameo_matched": 83,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Native preparation semantics; CHAMEO uses its declared EMMO output relation.",
+      "chameo_triple_patterns": 6,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 14
+    },
+    {
+      "requirement_id": "b05_processing_input_output",
+      "plain_language_question": "Which input and output datasets are connected by each preprocessing step?",
+      "selection_stratum": "data_processing",
+      "expected_rows": 29,
+      "variables": "caseKey;processLabel;inputDataLabel;outputDataLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 29,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Direct processing input and output relations.",
+      "h2kg_triple_patterns": 6,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 8,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 29,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Direct processing input and output relations.",
+      "chameo_triple_patterns": 6,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 9
+    },
+    {
+      "requirement_id": "b06_software_association",
+      "plain_language_question": "Which software is associated with each preparation, processing, or analysis step?",
+      "selection_stratum": "software_traceability",
+      "expected_rows": 31,
+      "variables": "caseKey;processLabel;softwareLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 31,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Direct process-to-software relation.",
+      "h2kg_triple_patterns": 3,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 8,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 31,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Direct process-to-software relation.",
+      "chameo_triple_patterns": 3,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 9
+    },
+    {
+      "requirement_id": "b07_analysis_lineage",
+      "plain_language_question": "Which input dataset, analysis step, software, and result form each analysis lineage?",
+      "selection_stratum": "analysis_lineage",
+      "expected_rows": 27,
+      "variables": "caseKey;analysisLabel;inputDataLabel;resultLabel;softwareLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 27,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Direct analysis input, output, and software relations.",
+      "h2kg_triple_patterns": 8,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 1,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 10,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 27,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Direct analysis input, output, and software relations.",
+      "chameo_triple_patterns": 9,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 1,
+      "chameo_property_paths": 0,
+      "chameo_lines": 11
+    },
+    {
+      "requirement_id": "b08_individual_result_property_bearer",
+      "plain_language_question": "Which property and specimen are linked to each individual reported result?",
+      "selection_stratum": "result_semantics",
+      "expected_rows": 24,
+      "variables": "caseKey;resultLabel;propertyLabel;bearerLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native",
+      "h2kg_matched": 24,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Each result record directly identifies one property occurrence and its bearer.",
+      "h2kg_triple_patterns": 6,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 11,
+      "chameo_status": "partial",
+      "chameo_representation_tier": "declared_import_process_level_pattern",
+      "chameo_matched": 24,
+      "chameo_missing": 0,
+      "chameo_unexpected": 2,
+      "chameo_precision_percent": 92.31,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "The imported process-level determination pattern can become ambiguous when one analysis has several outputs and properties.",
+      "chameo_triple_patterns": 10,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 15
+    },
+    {
+      "requirement_id": "b09_normalized_result_value",
+      "plain_language_question": "Which reported result properties have a normalized numeric value and unit?",
+      "selection_stratum": "result_semantics",
+      "expected_rows": 13,
+      "variables": "caseKey;propertyLabel;value;unit",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "direct_native_plus_shared_standard",
+      "h2kg_matched": 13,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "The ontology-specific result/property path is combined with shared QUDT value and unit terms.",
+      "h2kg_triple_patterns": 56,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 45,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "declared_import_plus_shared_standard",
+      "chameo_matched": 13,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "The ontology-specific result/property path is combined with shared QUDT value and unit terms.",
+      "chameo_triple_patterns": 88,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 78
+    },
+    {
+      "requirement_id": "b10_result_generation",
+      "plain_language_question": "Which analysis step generated each individual result?",
+      "selection_stratum": "result_provenance",
+      "expected_rows": 24,
+      "variables": "caseKey;analysisLabel;resultLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "shared_standard",
+      "h2kg_matched": 24,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Both graphs use the same PROV-O generation relation.",
+      "h2kg_triple_patterns": 4,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 13,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "shared_standard",
+      "chameo_matched": 24,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "Both graphs use the same PROV-O generation relation.",
+      "chameo_triple_patterns": 4,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 14
+    },
+    {
+      "requirement_id": "b11_workflow_task_grouping",
+      "plain_language_question": "Which named workflow groups the measurement and processing tasks for each case?",
+      "selection_stratum": "workflow_structure",
+      "expected_rows": 8,
+      "variables": "caseKey;workflowLabel;taskCount",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "generic_direct_native",
+      "h2kg_matched": 8,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "H2KG's generic Process/hasPart pattern groups the source-defined activities.",
+      "h2kg_triple_patterns": 3,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 12,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native",
+      "chameo_matched": 8,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "CHAMEO explicitly groups CharacterisationTask descriptions in a CharacterisationWorkflow.",
+      "chameo_triple_patterns": 3,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 13
+    },
+    {
+      "requirement_id": "b12_technique_occurrence_separation",
+      "plain_language_question": "Which technique description is explicitly distinguished from, and linked to, each measurement occurrence?",
+      "selection_stratum": "methodology_description",
+      "expected_rows": 8,
+      "variables": "caseKey;techniqueLabel;measurementLabel",
+      "h2kg_status": "not_expressible_without_extension",
+      "h2kg_representation_tier": "occurrence_class_pattern",
+      "h2kg_matched": 0,
+      "h2kg_missing": 8,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 0.0,
+      "h2kg_recall_percent": 0.0,
+      "h2kg_rationale": "H2KG identifies the method by typing the measurement occurrence; it has no separate technique-description resource and linking relation in the pinned core.",
+      "h2kg_triple_patterns": 0,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 0,
+      "chameo_status": "exact",
+      "chameo_representation_tier": "direct_native_plus_declared_import",
+      "chameo_matched": 8,
+      "chameo_missing": 0,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 100.0,
+      "chameo_rationale": "CHAMEO supplies the technique descriptor and its declared EMMO import supplies the description-to-occurrence relation.",
+      "chameo_triple_patterns": 5,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 15
+    },
+    {
+      "requirement_id": "b13_case_method_specificity",
+      "plain_language_question": "Does each case resolve to a native ontology class at the specificity of the reported characterization method?",
+      "selection_stratum": "domain_terminology",
+      "expected_rows": 8,
+      "variables": "caseKey;methodLabel",
+      "h2kg_status": "exact",
+      "h2kg_representation_tier": "native_class_coverage_audit",
+      "h2kg_matched": 8,
+      "h2kg_missing": 0,
+      "h2kg_unexpected": 0,
+      "h2kg_precision_percent": 100.0,
+      "h2kg_recall_percent": 100.0,
+      "h2kg_rationale": "Evaluated against the ontology class inventory and source method identity rather than an ABox query.",
+      "h2kg_triple_patterns": 0,
+      "h2kg_joins": 0,
+      "h2kg_optional_blocks": 0,
+      "h2kg_property_paths": 0,
+      "h2kg_lines": 0,
+      "chameo_status": "partial",
+      "chameo_representation_tier": "native_class_coverage_audit",
+      "chameo_matched": 3,
+      "chameo_missing": 5,
+      "chameo_unexpected": 0,
+      "chameo_precision_percent": 100.0,
+      "chameo_recall_percent": 37.5,
+      "chameo_rationale": "Evaluated against the ontology class inventory and source method identity rather than an ABox query.",
+      "chameo_triple_patterns": 0,
+      "chameo_joins": 0,
+      "chameo_optional_blocks": 0,
+      "chameo_property_paths": 0,
+      "chameo_lines": 0
+    }
+  ],
+  "balanced_conclusion": {
+    "rules": {
+      "chameo_broad_characterization_methodology": true,
+      "chameo_specialized_methodology_patterns": true,
+      "h2kg_direct_valued_parameter_pattern": true,
+      "h2kg_individual_result_pattern": true,
+      "h2kg_greater_case_method_specificity": true,
+      "h2kg_specific_method_count": 8,
+      "chameo_specific_method_count": 3,
+      "complementarity_conclusion_supported": true
+    },
+    "supported": true,
+    "statement": "The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.",
+    "scope": "This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured."
+  },
+  "legacy_h2kg_application_contract": {
+    "schema_version": "h2kg-chameo-benchmark-contract/v1",
+    "source_manifest_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+    "question_count": 50,
+    "contract_sha256": "A1611EB141EB4E5B75BCDD98588996BC62DB71F9E28EDDFCD7ECAA470AFA94E5",
+    "design_provenance": "The 50 questions predate the CHAMEO encoding and were inherited from the H2KG characterization application. They are source-grounded but not blinded, independently authored, or neutral with respect to H2KG's design.",
+    "interpretation": "Historical asymmetric transfer diagnostic retained for reproducibility and excluded from the fair thirteen-requirement benchmark and its conclusion.",
+    "questions": [
+      {
+        "query_id": "q1_tem_specimen_preparation",
+        "plain_language_question": "Which specimen-preparation steps produced the TEM specimen associated with the reported particle-size result?",
+        "query_family": "preparation_traceability",
+        "variables": [
+          "resultLabel",
+          "specimenLabel",
+          "preparationLabel",
+          "preparedMaterialLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q2_tem_instrument_settings",
+        "plain_language_question": "Which TEM instrument and acquisition settings were recorded, including values that were unconfirmed or not applicable?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "instrumentLabel",
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q3_tem_dataset_analysis",
+        "plain_language_question": "Which image dataset, analysis process, and software produced the reported TEM result?",
+        "query_family": "data_processing_and_provenance",
+        "variables": [
+          "inputDataLabel",
+          "analysisLabel",
+          "softwareLabel",
+          "resultLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q4_tem_result_value",
+        "plain_language_question": "What TEM property was reported, for which specimen, and with what source value and normalized unit?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q5_all_measurement_contexts",
+        "plain_language_question": "What specimen, instrument, and raw dataset are linked to each characterization measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "caseKey",
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q6_all_result_records",
+        "plain_language_question": "Which properties were reported across all cases, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "caseKey",
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q7_source_status_summary",
+        "plain_language_question": "How many workbook fields in each case were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q8_all_measurement_parameters",
+        "plain_language_question": "Which measurement settings were recorded across all cases, and which have normalized QUDT values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "caseKey",
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q9_conservative_quantity_findings",
+        "plain_language_question": "Which reported quantities were deliberately not normalized because their units, labels, axes, or meanings were incomplete or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q10_source_provenance_coverage",
+        "plain_language_question": "Does every eligible workbook field have a traceable semantic representation in each case graph?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q11_software_provenance",
+        "plain_language_question": "Which software packages were linked to processing and analysis activities in each case?",
+        "query_family": "data_processing_and_provenance",
+        "variables": [
+          "caseKey",
+          "processLabel",
+          "softwareLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q12_neutron_processing_chain",
+        "plain_language_question": "Which ordered preprocessing transformations connect the neutron-tomography raw projections to processed data?",
+        "query_family": "data_processing_and_provenance",
+        "variables": [
+          "processLabel",
+          "inputDataLabel",
+          "outputDataLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q13_tem_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Transmission electron microscopy measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q14_sem_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Scanning electron microscopy measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q15_afm_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Atomic force microscopy measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q16_fib_sem_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the FIB-SEM tomography measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q17_ic_sem_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Ion-cut scanning electron microscopy measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q18_neutron_tomography_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Neutron tomography measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q19_synchrotron_radiography_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Synchrotron X-ray radiography measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q20_synchrotron_tomography_measurement_context",
+        "plain_language_question": "What specimen, instrument, and raw dataset define the Synchrotron X-ray tomography measurement?",
+        "query_family": "measurement_context",
+        "variables": [
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q21_tem_results",
+        "plain_language_question": "Which results were reported for Transmission electron microscopy, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q22_sem_results",
+        "plain_language_question": "Which results were reported for Scanning electron microscopy, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q23_afm_results",
+        "plain_language_question": "Which results were reported for Atomic force microscopy, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q24_fib_sem_results",
+        "plain_language_question": "Which results were reported for FIB-SEM tomography, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q25_ic_sem_results",
+        "plain_language_question": "Which results were reported for Ion-cut scanning electron microscopy, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q26_neutron_tomography_results",
+        "plain_language_question": "Which results were reported for Neutron tomography, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q27_synchrotron_radiography_results",
+        "plain_language_question": "Which results were reported for Synchrotron X-ray radiography, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q28_synchrotron_tomography_results",
+        "plain_language_question": "Which results were reported for Synchrotron X-ray tomography, and what values, units, and specimen bearers were recorded?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q29_tem_source_status",
+        "plain_language_question": "How many Transmission electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q30_sem_source_status",
+        "plain_language_question": "How many Scanning electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q31_afm_source_status",
+        "plain_language_question": "How many Atomic force microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q32_fib_sem_source_status",
+        "plain_language_question": "How many FIB-SEM tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q33_ic_sem_source_status",
+        "plain_language_question": "How many Ion-cut scanning electron microscopy source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q34_neutron_tomography_source_status",
+        "plain_language_question": "How many Neutron tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q35_synchrotron_radiography_source_status",
+        "plain_language_question": "How many Synchrotron X-ray radiography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q36_synchrotron_tomography_source_status",
+        "plain_language_question": "How many Synchrotron X-ray tomography source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q37_tem_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Transmission electron microscopy, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q38_sem_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Scanning electron microscopy, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q39_afm_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Atomic force microscopy, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q40_fib_sem_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for FIB-SEM tomography, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q41_ic_sem_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Ion-cut scanning electron microscopy, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q42_neutron_tomography_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Neutron tomography, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q43_synchrotron_radiography_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Synchrotron X-ray radiography, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q44_synchrotron_tomography_measurement_settings",
+        "plain_language_question": "Which acquisition settings were recorded for Synchrotron X-ray tomography, and which have normalized values and units?",
+        "query_family": "measurement_parameter_identity_and_value",
+        "variables": [
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q45_case_measurement_result_counts",
+        "plain_language_question": "How many measurement occurrences and result records are represented for each characterization case?",
+        "query_family": "occurrence_accounting",
+        "variables": [
+          "caseKey",
+          "measurementCount",
+          "resultCount"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q46_normalized_result_quantities",
+        "plain_language_question": "Which reported scientific results have both a defensible numeric value and an explicit QUDT unit?",
+        "query_family": "result_property_and_value",
+        "variables": [
+          "caseKey",
+          "propertyLabel",
+          "value",
+          "unit"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q47_qualified_source_fields",
+        "plain_language_question": "Which workbook fields are not simply reported values, and why are they marked missing, inapplicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q48_qualified_measurement_settings",
+        "plain_language_question": "Which acquisition settings are missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting rather than fully reported?",
+        "query_family": "source_quality_control",
+        "variables": [],
+        "assessment_scope": "unscored_source_or_quality_control"
+      },
+      {
+        "query_id": "q49_analysis_provenance_across_cases",
+        "plain_language_question": "Which input datasets, analysis processes, and software are linked to each reported result across all cases?",
+        "query_family": "data_processing_and_provenance",
+        "variables": [
+          "caseKey",
+          "analysisLabel",
+          "inputDataLabel",
+          "resultLabel",
+          "softwareLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      },
+      {
+        "query_id": "q50_preprocessing_transformations",
+        "plain_language_question": "Which preprocessing activities transformed which input datasets into which output datasets across the eight cases?",
+        "query_family": "data_processing_and_provenance",
+        "variables": [
+          "caseKey",
+          "processLabel",
+          "inputDataLabel",
+          "outputDataLabel"
+        ],
+        "assessment_scope": "strict_ontology_semantics"
+      }
+    ]
+  },
+  "legacy_transfer_test": {
+    "question_count": 50,
+    "scored_query_count": 37,
+    "unscored_control_count": 13,
+    "expected_row_count": 460,
+    "h2kg": {
+      "queries_passed": 37,
+      "queries_partial_or_failed": 0,
+      "matched_rows": 460,
+      "observed_rows": 460,
+      "micro_precision_percent": 100.0,
+      "micro_recall_percent": 100.0,
+      "micro_f1_percent": 100.0
+    },
+    "chameo": {
+      "queries_passed": 24,
+      "queries_partial_or_failed": 13,
+      "matched_rows": 241,
+      "observed_rows": 466,
+      "micro_precision_percent": 51.72,
+      "micro_recall_percent": 52.39,
+      "micro_f1_percent": 52.05
+    },
+    "by_query_family": {
+      "data_processing_and_provenance": {
+        "query_count": 5,
+        "expected_rows": 92,
+        "h2kg": {
+          "queries_passed": 5,
+          "matched_rows": 92,
+          "observed_rows": 92,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 5,
+          "matched_rows": 92,
+          "observed_rows": 92,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "measurement_context": {
+        "query_count": 9,
+        "expected_rows": 16,
+        "h2kg": {
+          "queries_passed": 9,
+          "matched_rows": 16,
+          "observed_rows": 16,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 9,
+          "matched_rows": 16,
+          "observed_rows": 16,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "measurement_parameter_identity_and_value": {
+        "query_count": 10,
+        "expected_rows": 276,
+        "h2kg": {
+          "queries_passed": 10,
+          "matched_rows": 276,
+          "observed_rows": 276,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 0,
+          "matched_rows": 57,
+          "observed_rows": 276,
+          "precision_percent": 20.65,
+          "recall_percent": 20.65
+        }
+      },
+      "occurrence_accounting": {
+        "query_count": 1,
+        "expected_rows": 8,
+        "h2kg": {
+          "queries_passed": 1,
+          "matched_rows": 8,
+          "observed_rows": 8,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 1,
+          "matched_rows": 8,
+          "observed_rows": 8,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "preparation_traceability": {
+        "query_count": 1,
+        "expected_rows": 6,
+        "h2kg": {
+          "queries_passed": 1,
+          "matched_rows": 6,
+          "observed_rows": 6,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 1,
+          "matched_rows": 6,
+          "observed_rows": 6,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "result_property_and_value": {
+        "query_count": 11,
+        "expected_rows": 62,
+        "h2kg": {
+          "queries_passed": 11,
+          "matched_rows": 62,
+          "observed_rows": 62,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 8,
+          "matched_rows": 62,
+          "observed_rows": 68,
+          "precision_percent": 91.18,
+          "recall_percent": 100.0
+        }
+      }
+    },
+    "semantic_contract_diagnostics": [
+      {
+        "contract_id": "measurement_context",
+        "source_query_id": "q5_all_measurement_contexts",
+        "variables": [
+          "caseKey",
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "expected_rows": 8,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 8,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "pass",
+          "matched_rows": 8,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "measurement_parameter_identity",
+        "source_query_id": "q8_all_measurement_parameters",
+        "variables": [
+          "caseKey",
+          "parameterLabel"
+        ],
+        "expected_rows": 134,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 134,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "pass",
+          "matched_rows": 134,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "normalized_measurement_parameter_value",
+        "source_query_id": "q8_all_measurement_parameters",
+        "variables": [
+          "caseKey",
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "expected_rows": 107,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 107,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 0,
+          "missing_rows": 107,
+          "unexpected_rows": 0,
+          "precision_percent": 0.0,
+          "recall_percent": 0.0
+        }
+      },
+      {
+        "contract_id": "result_property_bearer_association",
+        "source_query_id": "q6_all_result_records",
+        "variables": [
+          "caseKey",
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel"
+        ],
+        "expected_rows": 24,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 24,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 24,
+          "missing_rows": 0,
+          "unexpected_rows": 2,
+          "precision_percent": 92.31,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "normalized_result_value",
+        "source_query_id": "q46_normalized_result_quantities",
+        "variables": [
+          "caseKey",
+          "propertyLabel",
+          "value",
+          "unit"
+        ],
+        "expected_rows": 13,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 13,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 13,
+          "missing_rows": 0,
+          "unexpected_rows": 2,
+          "precision_percent": 86.67,
+          "recall_percent": 100.0
+        }
+      }
+    ]
+  },
+  "benchmark_policy": {
+    "comparison_type": "balanced_ontology_neutral_characterization_record_benchmark",
+    "abox_construction": "independent_direct_mapping_from_the_same_sanitized_manifest",
+    "cross_graph_translation": false,
+    "ontology_tbox_modification": false,
+    "local_semantic_extensions_allowed": false,
+    "source_layer_allowed_in_scored_queries": false,
+    "ground_truth_source": "sanitized workbook manifest",
+    "ontology_specific_sparql": true,
+    "same_variables_and_expected_rows": true,
+    "declared_imports_allowed_and_reported_separately": true,
+    "shared_standards_not_credited_as_ontology_specific": true,
+    "requirement_selection": "Thirteen requirements derived from the source characterization lifecycle and named by scientific function; every requirement is scored once over all eight cases and none is selected by ontology origin.",
+    "conclusion_rule": "The complementarity statement is emitted only when every prespecified machine-checkable conclusion rule passes.",
+    "legacy_question_set_status": "Retained as a historical asymmetric transfer-test diagnostic and excluded from the primary conclusion."
+  },
+  "source_lock": {
+    "schema_version": "chameo-emmo-source-lock/v2",
+    "generated_at": "2026-10-23T18:58:58+00:00",
+    "network_required_for_build": false,
+    "chameo_version": "1.0.3",
+    "chameo_commit": "01520fd7bc6f76ec5ff32a051533326a198c499c",
+    "emmo_version": "1.0.3",
+    "emmo_commit": "b85a0803c47819fc4b53b9c9fd6c61878f714c5b",
+    "direct_import_count": 12,
+    "transitive_import_count": 13,
+    "resolved_import_count": 25,
+    "complete_import_closure": true,
+    "lock_fingerprint": "B12265A4950CDE1E4258572282FFEDAE34E85DDCD03944917EF9EA055FF312FF"
+  },
+  "graph_statistics": {
+    "h2kg": {
+      "named_graph_count": 9,
+      "triple_count": 3722,
+      "semantic_entity_count": 899,
+      "turtle_jsonld_isomorphic": true
+    },
+    "chameo": {
+      "named_graph_count": 9,
+      "triple_count": 2483,
+      "semantic_entity_count": 709,
+      "turtle_jsonld_isomorphic": true
+    }
+  },
+  "mapping_coverage": {
+    "eligible_source_fields": 1635,
+    "h2kg_mapping_assertions": 1659,
+    "h2kg_unique_source_fields": 1635,
+    "h2kg_additional_assertions_for_multimapped_fields": 24,
+    "chameo_mapping_rows": 1635,
+    "chameo_strict_assertion_status_counts": {
+      "asserted_without_local_bridge": 1030,
+      "identity_asserted_value_link_not_asserted": 134,
+      "source_evidence_only_excluded_from_scoring": 471
+    },
+    "chameo_primary_tier_counts": {
+      "native_generic": 1118,
+      "native_specific": 33,
+      "shared_standard": 13,
+      "source_only": 471
+    }
+  },
+  "query_benchmark": {
+    "question_count": 50,
+    "scored_query_count": 37,
+    "unscored_control_count": 13,
+    "expected_row_count": 460,
+    "h2kg": {
+      "queries_passed": 37,
+      "queries_partial_or_failed": 0,
+      "matched_rows": 460,
+      "observed_rows": 460,
+      "micro_precision_percent": 100.0,
+      "micro_recall_percent": 100.0,
+      "micro_f1_percent": 100.0
+    },
+    "chameo": {
+      "queries_passed": 24,
+      "queries_partial_or_failed": 13,
+      "matched_rows": 241,
+      "observed_rows": 466,
+      "micro_precision_percent": 51.72,
+      "micro_recall_percent": 52.39,
+      "micro_f1_percent": 52.05
+    },
+    "by_query_family": {
+      "data_processing_and_provenance": {
+        "query_count": 5,
+        "expected_rows": 92,
+        "h2kg": {
+          "queries_passed": 5,
+          "matched_rows": 92,
+          "observed_rows": 92,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 5,
+          "matched_rows": 92,
+          "observed_rows": 92,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "measurement_context": {
+        "query_count": 9,
+        "expected_rows": 16,
+        "h2kg": {
+          "queries_passed": 9,
+          "matched_rows": 16,
+          "observed_rows": 16,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 9,
+          "matched_rows": 16,
+          "observed_rows": 16,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "measurement_parameter_identity_and_value": {
+        "query_count": 10,
+        "expected_rows": 276,
+        "h2kg": {
+          "queries_passed": 10,
+          "matched_rows": 276,
+          "observed_rows": 276,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 0,
+          "matched_rows": 57,
+          "observed_rows": 276,
+          "precision_percent": 20.65,
+          "recall_percent": 20.65
+        }
+      },
+      "occurrence_accounting": {
+        "query_count": 1,
+        "expected_rows": 8,
+        "h2kg": {
+          "queries_passed": 1,
+          "matched_rows": 8,
+          "observed_rows": 8,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 1,
+          "matched_rows": 8,
+          "observed_rows": 8,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "preparation_traceability": {
+        "query_count": 1,
+        "expected_rows": 6,
+        "h2kg": {
+          "queries_passed": 1,
+          "matched_rows": 6,
+          "observed_rows": 6,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 1,
+          "matched_rows": 6,
+          "observed_rows": 6,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      "result_property_and_value": {
+        "query_count": 11,
+        "expected_rows": 62,
+        "h2kg": {
+          "queries_passed": 11,
+          "matched_rows": 62,
+          "observed_rows": 62,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "queries_passed": 8,
+          "matched_rows": 62,
+          "observed_rows": 68,
+          "precision_percent": 91.18,
+          "recall_percent": 100.0
+        }
+      }
+    },
+    "semantic_contract_diagnostics": [
+      {
+        "contract_id": "measurement_context",
+        "source_query_id": "q5_all_measurement_contexts",
+        "variables": [
+          "caseKey",
+          "measurementLabel",
+          "specimenLabel",
+          "instrumentLabel",
+          "rawDatasetLabel"
+        ],
+        "expected_rows": 8,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 8,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "pass",
+          "matched_rows": 8,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "measurement_parameter_identity",
+        "source_query_id": "q8_all_measurement_parameters",
+        "variables": [
+          "caseKey",
+          "parameterLabel"
+        ],
+        "expected_rows": 134,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 134,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "pass",
+          "matched_rows": 134,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "normalized_measurement_parameter_value",
+        "source_query_id": "q8_all_measurement_parameters",
+        "variables": [
+          "caseKey",
+          "parameterLabel",
+          "value",
+          "unit"
+        ],
+        "expected_rows": 107,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 107,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 0,
+          "missing_rows": 107,
+          "unexpected_rows": 0,
+          "precision_percent": 0.0,
+          "recall_percent": 0.0
+        }
+      },
+      {
+        "contract_id": "result_property_bearer_association",
+        "source_query_id": "q6_all_result_records",
+        "variables": [
+          "caseKey",
+          "resultLabel",
+          "propertyLabel",
+          "bearerLabel"
+        ],
+        "expected_rows": 24,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 24,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 24,
+          "missing_rows": 0,
+          "unexpected_rows": 2,
+          "precision_percent": 92.31,
+          "recall_percent": 100.0
+        }
+      },
+      {
+        "contract_id": "normalized_result_value",
+        "source_query_id": "q46_normalized_result_quantities",
+        "variables": [
+          "caseKey",
+          "propertyLabel",
+          "value",
+          "unit"
+        ],
+        "expected_rows": 13,
+        "h2kg": {
+          "status": "pass",
+          "matched_rows": 13,
+          "missing_rows": 0,
+          "unexpected_rows": 0,
+          "precision_percent": 100.0,
+          "recall_percent": 100.0
+        },
+        "chameo": {
+          "status": "fail",
+          "matched_rows": 13,
+          "missing_rows": 0,
+          "unexpected_rows": 2,
+          "precision_percent": 86.67,
+          "recall_percent": 100.0
+        }
+      }
+    ]
+  },
+  "capability_matrix": [
+    {
+      "capability": "Explicit workflow and task grouping",
+      "h2kg": "generic_direct_native",
+      "chameo": "specialized_direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#Process;https://w3id.org/h2kg/hydrogen-ontology#hasPart",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#CharacterisationWorkflow;https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationTask;https://w3id.org/emmo/domain/characterisation-methodology/chameo#CharacterisationTask"
+    },
+    {
+      "capability": "Measurement subject",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasMeasurementSubject",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+    },
+    {
+      "capability": "Instrument used",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#usesInstrument",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+    },
+    {
+      "capability": "Technique descriptor and occurrence",
+      "h2kg": "occurrence_class_without_separate_descriptor",
+      "chameo": "direct_via_declared_import",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#Measurement",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#CharacterisationTechnique;https://w3id.org/emmo#EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3;https://w3id.org/emmo/domain/characterisation-methodology/chameo#CharacterisationMeasurementProcess"
+    },
+    {
+      "capability": "Measurement parameter identity",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementParameter"
+    },
+    {
+      "capability": "Parameter-to-characteristic/value",
+      "h2kg": "direct_native_plus_shared_value",
+      "chameo": "requires_extension",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty;https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue",
+      "chameo_evidence": "In the complete pinned import closure, MeasurementParameter is an EMMO mathematical Parameter. No declared relation applicable to that ancestry links it to a distinct Property or Quantity; EMMO hasProperty has Referent as its domain."
+    },
+    {
+      "capability": "Raw and processed datasets",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasInputData;https://w3id.org/h2kg/hydrogen-ontology#hasOutputData",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationInput;https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+    },
+    {
+      "capability": "Data processing and analysis",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#DataProcessing;https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#DataPreparation;https://w3id.org/emmo/domain/characterisation-methodology/chameo#DataAnalysis"
+    },
+    {
+      "capability": "Software used",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#usesSoftware",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationSoftware"
+    },
+    {
+      "capability": "Sample-to-property bearer",
+      "h2kg": "direct_native",
+      "chameo": "direct_native",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf",
+      "chameo_evidence": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationProperty"
+    },
+    {
+      "capability": "Result-to-property association",
+      "h2kg": "direct_native_result_level",
+      "chameo": "declared_import_application_pattern",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#ofProperty",
+      "chameo_evidence": "The source analysis is typed as https://w3id.org/emmo/domain/characterisation-methodology/chameo#DataAnalysis and https://w3id.org/emmo#EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069; https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput identifies result data and https://w3id.org/emmo#EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 identifies the determined property. CHAMEO does not entail that additional EMMO type from DataAnalysis, and the process-level pattern is ambiguous when one analysis has multiple results and properties."
+    },
+    {
+      "capability": "Result generation provenance",
+      "h2kg": "direct_shared_standard",
+      "chameo": "direct_shared_standard",
+      "h2kg_evidence": "http://www.w3.org/ns/prov#wasGeneratedBy",
+      "chameo_evidence": "http://www.w3.org/ns/prov#wasGeneratedBy"
+    },
+    {
+      "capability": "Normalized value and unit",
+      "h2kg": "direct_native_plus_shared_standard",
+      "chameo": "direct_import_plus_shared_standard_for_property",
+      "h2kg_evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasQuantityValue;http://qudt.org/schema/qudt/unit",
+      "chameo_evidence": "https://w3id.org/emmo#EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8;http://qudt.org/schema/qudt/unit"
+    },
+    {
+      "capability": "Missingness and source-cell status",
+      "h2kg": "source_layer_only",
+      "chameo": "source_layer_only",
+      "h2kg_evidence": "Not counted in strict ontology benchmark",
+      "chameo_evidence": "Not counted in strict ontology benchmark"
+    }
+  ],
+  "capability_coverage": {
+    "h2kg": {
+      "direct_native": 7,
+      "direct_native_plus_shared_standard": 1,
+      "direct_native_plus_shared_value": 1,
+      "direct_native_result_level": 1,
+      "direct_shared_standard": 1,
+      "generic_direct_native": 1,
+      "occurrence_class_without_separate_descriptor": 1,
+      "source_layer_only": 1
+    },
+    "chameo": {
+      "declared_import_application_pattern": 1,
+      "direct_import_plus_shared_standard_for_property": 1,
+      "direct_native": 7,
+      "direct_shared_standard": 1,
+      "direct_via_declared_import": 1,
+      "requires_extension": 1,
+      "source_layer_only": 1,
+      "specialized_direct_native": 1
+    }
+  },
+  "ontology_evidence_audit": {
+    "schema_version": "h2kg-chameo-ontology-evidence-audit/v1",
+    "source_lock_fingerprint": "B12265A4950CDE1E4258572282FFEDAE34E85DDCD03944917EF9EA055FF312FF",
+    "complete_import_closure": true,
+    "direct_import_count": 12,
+    "transitive_import_count": 13,
+    "resolved_import_count": 25,
+    "tbox_triple_count": 16668,
+    "measurement_parameter": {
+      "class_iri": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#MeasurementParameter",
+      "ancestor_path": [
+        {
+          "iri": "https://w3id.org/emmo#EMMO_057e7d57_aff0_49de_911a_8861d85cef40",
+          "label": "Symbolic"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_1e877c70_3b01_45a8_a8f6_8ce4f6a24660",
+          "label": "Contrast"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_1eed0732_e3f1_4b2c_a9c4_b4e75eeb5895",
+          "label": "Variable"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_3e7add3d_e6ed_489a_a796_8e31fef9b490",
+          "label": "Data"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_49267eba_5548_4163_8f36_518d65b583f9",
+          "label": "Perspective"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_53ed8611_2cd7_4286_9ef0_36572117b963",
+          "label": "Fusion"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_54ee6b5e_5261_44a8_86eb_5717e7fdb9d0",
+          "label": "Mathematical"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_802d3e92_8770_4f98_a289_ccaaab7fdddf",
+          "label": "EMMO"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_9e029526_79a2_47a8_a151_dd0545db471b",
+          "label": "NumericalVariable"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_be8592a7_68d1_4a06_ad23_82f2b56ef926",
+          "label": "DiscreteData"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_c5ddfdba_c074_4aa4_ad6b_1ac4942d300d",
+          "label": "CausalStructure"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_c66ad523_3937_485e_91bb_ad488ddb373f",
+          "label": "DataByDiscretness"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_d1d436e7_72fc_49cd_863b_7bfb4ba5276a",
+          "label": "Parameter"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_d8d2144e_5c8d_455d_a643_5caf4d8d9df8",
+          "label": "Language"
+        },
+        {
+          "iri": "https://w3id.org/emmo#EMMO_eb3a768e_d53e_4be9_a23b_0714833c36de",
+          "label": "Item"
+        },
+        {
+          "iri": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#MeasurementParameter",
+          "label": "MeasurementParameter"
+        }
+      ],
+      "is_emmo_mathematical_parameter": true,
+      "is_emmo_quantity": false,
+      "is_emmo_referent": false,
+      "emmo_has_property_domain": [
+        "https://w3id.org/emmo#EMMO_6f5af708_f825_4feb_a0d1_a8d813d3022b"
+      ],
+      "emmo_has_property_domain_applicable": false,
+      "emmo_has_quantity_value_domain": [
+        "https://w3id.org/emmo#EMMO_0650c031_42b6_4f0a_b62d_d88f071da6bf"
+      ],
+      "emmo_has_quantity_value_domain_applicable": false,
+      "declared_applicable_property_relations": [],
+      "declared_applicable_value_relations": [],
+      "finding": "The pinned CHAMEO/EMMO closure supplies parameter identity but no declared, ancestry-compatible relation from MeasurementParameter to a distinct valued scientific characteristic."
+    },
+    "result_semantics": {
+      "data_analysis_is_declared_emmo_determination": false,
+      "chameo_has_sample_property_relation": true,
+      "emmo_has_determined_property_relation": true,
+      "finding": "CHAMEO supplies sample-to-property semantics. The scored result association uses an explicit EMMO Determination application pattern; CHAMEO DataAnalysis does not entail that type and the process-level pattern is ambiguous for multi-result analyses."
+    },
+    "workflow_and_technique": {
+      "chameo_workflow_class_present": true,
+      "chameo_task_relation_present": true,
+      "chameo_technique_class_present": true,
+      "emmo_description_relation_present": true
+    },
+    "scored_abox_assertions": {
+      "h2kg_measurement_to_parameter": 218,
+      "h2kg_parameter_to_property": 242,
+      "h2kg_property_to_quantity_value": 120,
+      "chameo_measurement_to_parameter": 218,
+      "chameo_parameter_to_distinct_property": 0,
+      "h2kg_workflow_parts": 127,
+      "chameo_workflow_tasks": 127,
+      "chameo_technique_to_occurrence": 135
+    },
+    "method_specificity": [
+      {
+        "case": "tem",
+        "method": "Transmission electron microscopy",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#TransmissionElectronMicroscopyImaging",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#TransmissionElectronMicroscopy",
+        "chameo_specificity": "specific_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "sem",
+        "method": "Scanning electron microscopy",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+        "chameo_specificity": "specific_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "afm",
+        "method": "Atomic force microscopy",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#AtomicForceMicroscopy",
+        "chameo_specificity": "specific_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "fib_sem",
+        "method": "FIB-SEM tomography",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#FIBSEMTomographyMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography;https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+        "chameo_specificity": "composite_broader_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "ic_sem",
+        "method": "Ion-cut scanning electron microscopy",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#ICSEMImagingMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+        "chameo_specificity": "broader_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "neutron_tomography",
+        "method": "Neutron tomography",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+        "chameo_specificity": "broader_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "synchrotron_radiography",
+        "method": "Synchrotron X-ray radiography",
+        "mapping_basis": "The sheet key says radiography, but the curated MeasurementMethod and 3D reconstruction chain identify tomography.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#XRayComputedTomographyMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+        "chameo_specificity": "broader_native",
+        "chameo_terms_present": true
+      },
+      {
+        "case": "synchrotron_tomography",
+        "method": "Synchrotron X-ray tomography",
+        "mapping_basis": "Source method label and workflow evidence.",
+        "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#XRayComputedTomographyMeasurement",
+        "h2kg_specificity": "specific_native",
+        "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+        "chameo_specificity": "broader_native",
+        "chameo_terms_present": true
+      }
+    ]
+  },
+  "method_specificity": [
+    {
+      "case": "tem",
+      "method": "Transmission electron microscopy",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#TransmissionElectronMicroscopyImaging",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#TransmissionElectronMicroscopy",
+      "chameo_specificity": "specific_native"
+    },
+    {
+      "case": "sem",
+      "method": "Scanning electron microscopy",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+      "chameo_specificity": "specific_native"
+    },
+    {
+      "case": "afm",
+      "method": "Atomic force microscopy",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#AtomicForceMicroscopy",
+      "chameo_specificity": "specific_native"
+    },
+    {
+      "case": "fib_sem",
+      "method": "FIB-SEM tomography",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#FIBSEMTomographyMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography;https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+      "chameo_specificity": "composite_broader_native"
+    },
+    {
+      "case": "ic_sem",
+      "method": "Ion-cut scanning electron microscopy",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#ICSEMImagingMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#ScanningElectronMicroscopy",
+      "chameo_specificity": "broader_native"
+    },
+    {
+      "case": "neutron_tomography",
+      "method": "Neutron tomography",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#NeutronTomographyMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+      "chameo_specificity": "broader_native"
+    },
+    {
+      "case": "synchrotron_radiography",
+      "method": "Synchrotron X-ray radiography",
+      "mapping_basis": "The sheet key says radiography, but the curated MeasurementMethod and 3D reconstruction chain identify tomography.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#XRayComputedTomographyMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+      "chameo_specificity": "broader_native"
+    },
+    {
+      "case": "synchrotron_tomography",
+      "method": "Synchrotron X-ray tomography",
+      "mapping_basis": "Source method label and workflow evidence.",
+      "h2kg_term": "https://w3id.org/h2kg/hydrogen-ontology#XRayComputedTomographyMeasurement",
+      "h2kg_specificity": "specific_native",
+      "chameo_term": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#Tomography",
+      "chameo_specificity": "broader_native"
+    }
+  ],
+  "extension_burden": [
+    {
+      "requirement": "Measurement parameter identity",
+      "h2kg": "no additional semantic relation",
+      "chameo": "no additional semantic relation",
+      "evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter;https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementParameter"
+    },
+    {
+      "requirement": "Measurement parameter characteristic, value, and unit",
+      "h2kg": "no application extension; H2KG relation plus shared QUDT",
+      "chameo": "application extension required",
+      "evidence": "CHAMEO MeasurementParameter is an EMMO mathematical Parameter. In the complete transitive import closure it is neither an EMMO Quantity nor a Referent, and no relation applicable to its ancestry links it to a distinct Property or value."
+    },
+    {
+      "requirement": "Analysis-level determined property",
+      "h2kg": "available through result-level ofProperty",
+      "chameo": "no new predicate; explicit application typing and assertion from the declared EMMO import",
+      "evidence": "https://w3id.org/emmo#EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069;https://w3id.org/emmo#EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85. CHAMEO DataAnalysis is not formally a subclass of EMMO Determination in the pinned graph."
+    },
+    {
+      "requirement": "Unambiguous result-data to property association",
+      "h2kg": "no application extension",
+      "chameo": "direct relation or a source-justified activity decomposition required for multi-result analyses",
+      "evidence": "The process-level EMMO pattern yields two additional result/property combinations for the IC-SEM multi-output analysis."
+    },
+    {
+      "requirement": "Source-cell status and missingness",
+      "h2kg": "neutral source layer required",
+      "chameo": "neutral source layer required",
+      "evidence": "Excluded from ontology-specific scoring for both graphs."
+    }
+  ],
+  "shacl": {
+    "chameo": {
+      "conforms": true,
+      "negative_tests": [
+        {
+          "requirement": "measurement_subject",
+          "removed_triples": [
+            [
+              "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+              "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample",
+              "https://example.org/aimworks/chameo-characterization/afm/sample/sample-a0d27d1adc"
+            ]
+          ],
+          "conforms": false
+        },
+        {
+          "requirement": "measurement_instrument",
+          "removed_triples": [
+            [
+              "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+              "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument",
+              "https://example.org/aimworks/chameo-characterization/afm/instrument/atomic-force-microscopy-2e89e780a7"
+            ]
+          ],
+          "conforms": false
+        },
+        {
+          "requirement": "measurement_output",
+          "removed_triples": [
+            [
+              "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+              "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput",
+              "https://example.org/aimworks/chameo-characterization/afm/data/rawdata-dc9e836707"
+            ]
+          ],
+          "conforms": false
+        },
+        {
+          "requirement": "analysis_input",
+          "removed_triples": [
+            [
+              "https://example.org/aimworks/chameo-characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+              "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationInput",
+              "https://example.org/aimworks/chameo-characterization/afm/data/post-processed-image-3efdbfdaba"
+            ]
+          ],
+          "conforms": false
+        },
+        {
+          "requirement": "analysis_determined_property",
+          "removed_triples": [
+            [
+              "https://example.org/aimworks/chameo-characterization/afm/anal-process/manual-particle-measurement-4128ca07e7",
+              "https://w3id.org/emmo#EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85",
+              "https://example.org/aimworks/chameo-characterization/afm/characterisation-property/average-size-fdbfa59eb2"
+            ]
+          ],
+          "conforms": false
+        }
+      ]
+    },
+    "comparison_limit": "Both graphs are tested against the same source-derived requirements. The complete CHAMEO/EMMO transitive import closure is available to CHAMEO. The parameter-record-to-valued-characteristic requirement is recorded as not expressible without an extension because the closure declares no ancestry-compatible path. The analysis-to-property constraint uses an explicit imported EMMO application pattern and is not described as a CHAMEO entailment."
+  },
+  "excluded_preliminary_method": {
+    "publication_status": "not_a_benchmark",
+    "reason": "An earlier adapter-assisted run used a neutral source layer and local bridge relations. Its scores are excluded rather than reported as ontology capability."
+  },
+  "interpretation": {
+    "complementarity": "The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.",
+    "conclusion_supported": true,
+    "limits": "This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured."
+  }
+}

@@ -1,0 +1,13 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?resultLabel ?propertyLabel ?bearerLabel ?value ?unit WHERE {
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_radiography> {
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .
+    ?result rdfs:label ?resultLabel . ?bearer rdfs:label ?bearerLabel . OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }
+  }
+} ORDER BY ?propertyLabel

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>H₂KG-CHAMEO Characterization Benchmark | H₂KG Domain Ontology for Hydrogen Electrochemical Systems</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/characterization-comparison.css">
+  <script defer src="../assets/characterization-comparison.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-head">
+        <div class="hero-copy">
+          <p class="eyebrow">H₂KG Ontology</p>
+          <h1>H₂KG-CHAMEO Characterization Benchmark</h1>
+          <p class="subtitle">Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment</p>
+        </div>
+        <div class='hero-brand'><img src='../assets/h2kg-logo.png' alt='H₂KG Ontology logo'><span class='hero-brand-mark'>Ontology release</span></div>
+      </div>
+      <div class='hero-support'><p class='hero-support-copy'>Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.</p><div class='support-strip'><a class='support-chip support-chip-logo' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'><span>DECODE</span></a><a class='support-chip' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'>HMC</a><a class='support-chip' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'>AIMWORKS</a></div></div>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="ontology-overview.html">Overview</a>
+      <a href="explore.html">Explore</a>
+      <a href="decode-workflows.html">DECODE Workflows</a>
+      <a href="characterization-knowledge-graph.html">Characterization KG</a>
+      <a href="../hydrogen-ontology.html">Reference</a>
+      <a href="architecture-workflow.html">Architecture</a>
+      <a href="class-index.html">Classes</a>
+      <a href="property-index.html">Properties</a>
+      <a href="alignment.html">Alignments</a>
+      <a href="examples.html">Examples</a>
+      <a href="import-guide.html">Import</a>
+      <a href="import-catalog.html">Import Catalog</a>
+      <a href="quality-dashboard.html">Quality</a>
+      <a href="tib-benchmark.html">TIB Benchmark</a>
+      <a href="developer-guide.html">Developer</a>
+      <a href="release.html">Release</a>
+    </nav>
+
+    </div>
+  </header>
+  <main class="wrap content">
+
+<section class="cb-intro">
+  <div class="cb-intro-copy">
+    <p class="eyebrow">Controlled ontology application benchmark</p>
+    <h2>One source corpus. Two native semantic models.</h2>
+    <p>H₂KG and CHAMEO were mapped independently from the same sanitized eight-case characterization manifest. The frozen requirements, expected rows, and conclusion rules were fixed before ontology-specific SPARQL was executed. Neither ontology was modified, and no local semantic bridge was admitted to either scored graph.</p>
+    <div class="cb-actions"><a class="cb-button primary" href="#comparison-workbench">Inspect the evidence</a><a class="cb-button" href="characterization-knowledge-graph.html">Open the H₂KG application</a></div>
+  </div>
+  <div class="cb-scoreboard" aria-label="Benchmark headline results">
+    <div><span>H₂KG exact</span><strong>12/13</strong><small>92.3%</small></div>
+    <div><span>CHAMEO exact</span><strong>10/13</strong><small>76.9%</small></div>
+    <div><span>Expected rows</span><strong>501</strong><small>across eight cases</small></div>
+    <div><span>Import closure</span><strong>25</strong><small>CHAMEO/EMMO modules</small></div>
+  </div>
+</section>
+
+<section class="cb-protocol" aria-labelledby="cb-protocol-title">
+  <div class="cb-section-head"><p class="eyebrow">Fairness controls</p><h2 id="cb-protocol-title">How the comparison was kept symmetric</h2></div>
+  <div class="cb-protocol-grid">
+    <article><span>01</span><h3>Common source</h3><p>Both ABoxes begin with the same 1,635 eligible workbook fields and eight cases.</p></article>
+    <article><span>02</span><h3>Independent mapping</h3><p>Each graph uses its own ontology and declared imports; neither graph is translated from the other.</p></article>
+    <article><span>03</span><h3>Frozen expectations</h3><p>Thirteen lifecycle requirements produce 501 manifest-derived expected rows before querying.</p></article>
+    <article><span>04</span><h3>Auditable decision</h3><p>Five hashed rules must all pass before the complementarity conclusion is emitted.</p></article>
+  </div>
+</section>
+
+<section class="cb-conclusion">
+  <p class="eyebrow">Computed outcome</p>
+  <blockquote>The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.</blockquote>
+  <p>This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured.</p>
+</section>
+
+<section class="cb-workbench" id="comparison-workbench" data-package="../characterization_kg_comparison/comparison_query_workbench.json" data-artifact-root="../characterization_kg_comparison">
+  <header class="cb-workbench-head">
+    <div><p class="eyebrow">SPARQL and RDF evidence</p><h2>Trace every benchmark outcome</h2><p>Select a plain-language requirement and ontology. The result table is the frozen RDFLib output; selecting a row renders only the RDF statements that support that answer.</p></div>
+    <div id="cb-load-status" class="cb-load-status" aria-live="polite">Loading benchmark package...</div>
+  </header>
+
+  <div id="cb-requirement-matrix" class="cb-table-wrap cb-matrix"></div>
+
+  <div class="cb-controls">
+    <label><span>Plain-language requirement</span><select id="cb-requirement-select"></select></label>
+    <label><span>Ontology model</span><select id="cb-ontology-select"><option value="h2kg">H₂KG</option><option value="chameo">CHAMEO</option></select></label>
+    <label><span>Filter result rows</span><input id="cb-result-filter" type="search" placeholder="Type any displayed value" autocomplete="off"></label>
+  </div>
+
+  <article class="cb-question-card">
+    <div><p class="eyebrow">Scientific question</p><h3 id="cb-question"></h3><p id="cb-source-basis"></p></div>
+    <div id="cb-outcome" class="cb-outcome"></div>
+  </article>
+
+  <div class="cb-query-grid">
+    <article class="cb-panel cb-query-panel">
+      <div class="cb-panel-head"><div><p class="eyebrow">Ontology-specific SPARQL</p><h3 id="cb-query-title">Validated query</h3></div><button id="cb-copy-query" type="button">Copy query</button></div>
+      <textarea id="cb-query" spellcheck="false" aria-label="Ontology-specific SPARQL"></textarea>
+      <p id="cb-rationale" class="cb-note"></p>
+    </article>
+    <aside class="cb-panel cb-downloads">
+      <p class="eyebrow">Reproducibility</p><h3>Download benchmark evidence</h3>
+      <a href="../characterization_kg_comparison/benchmark_contract.json" download>Frozen contract · JSON</a>
+      <a href="../characterization_kg_comparison/balanced_requirement_matrix.csv" download>Requirement matrix · CSV</a>
+      <a href="../characterization_kg_comparison/balanced_conclusion_rules.json" download>Conclusion rules · JSON</a>
+      <a href="../characterization_kg_comparison/ontology_evidence_audit.json" download>Ontology evidence audit</a>
+      <a href="../characterization_kg_comparison/strict_h2kg_semantic_graph.ttl" download>H₂KG scored graph · Turtle</a>
+      <a href="../characterization_kg_comparison/strict_chameo_semantic_graph.ttl" download>CHAMEO scored graph · Turtle</a>
+      <a href="../characterization_kg_comparison/native_benchmark_report.json" download>Complete report · JSON</a>
+    </aside>
+  </div>
+
+  <div class="cb-results-grid">
+    <article class="cb-panel"><div class="cb-panel-head"><div><p class="eyebrow">Observed</p><h3>SPARQL result rows</h3></div><button id="cb-results-csv" type="button">Download CSV</button></div><div id="cb-observed" class="cb-table-wrap"></div></article>
+    <article class="cb-panel"><div class="cb-panel-head"><div><p class="eyebrow">Expected</p><h3>Manifest-derived ground truth</h3></div></div><div id="cb-expected" class="cb-table-wrap"></div></article>
+  </div>
+
+  <section class="cb-evidence">
+    <header class="cb-evidence-head">
+      <div><p class="eyebrow">Query evidence subgraph</p><h2>Why this row is returned</h2><p>Choose a row to see its compact RDF support. Solid arrows are asserted predicates; absent required paths are reported as gaps rather than invented.</p></div>
+      <label><span>Result row</span><select id="cb-row-select"></select></label>
+    </header>
+    <div class="cb-graph-shell">
+      <svg id="cb-evidence-graph" role="img" aria-label="RDF evidence graph"></svg>
+      <aside id="cb-node-inspector" class="cb-node-inspector"><strong>Select a node</strong><span>Its type and IRI will appear here.</span></aside>
+    </div>
+    <p id="cb-graph-note" class="cb-note"></p>
+    <div class="cb-legend"><span class="workflow">Workflow</span><span class="process">Process</span><span class="measurement">Measurement</span><span class="matter">Matter</span><span class="parameter">Parameter</span><span class="data">Data/result</span><span class="property">Property</span><span class="instrument">Instrument/software</span><span class="literal">Value/unit</span></div>
+  </section>
+
+  <section class="cb-differences"><div><p class="eyebrow">Exact row-multiset comparison</p><h2>Missing and additional answers</h2></div><div id="cb-difference-summary"></div></section>
+</section>
+
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+
+      <section class="acknowledgement" aria-labelledby="acknowledgement-title">
+        <div class="acknowledgement-brand">
+          <p id="acknowledgement-title" class="eyebrow">Acknowledgement</p>
+          <div class="acknowledgement-brand-grid"><a class='acknowledgement-brand-item' href='https://decode-energy.eu/' target='_blank' rel='noopener noreferrer'><img src='../assets/decode-logo.png' alt='DECODE project logo'></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/' target='_blank' rel='noopener noreferrer'><span>HMC</span></a><a class='acknowledgement-brand-item' href='https://helmholtz-metadaten.de/inf-projects/aimworks' target='_blank' rel='noopener noreferrer'><span>AIMWORKS</span></a></div>
+        </div>
+        <div class="acknowledgement-copy">
+          <p>This publication is part of the DECODE project that has received funding from the European Union&#x27;s Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.</p><p>This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).</p>
+        </div>
+      </section>
+
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.3.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+    </div>
+  </footer>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+</body>
+</html>

@@ -9,6 +9,7 @@ from .characterization_kg import (
     ingest_characterization_workbook,
     write_characterization_manuscript_materials,
 )
+from .characterization_native_benchmark import build_native_characterization_benchmark
 from .docs import build_docs
 from .decode_workflows import apply_decode_alias_curation, build_decode_workflow_release, ingest_decode_graphml_directory
 from .decode_manual_overlay import ingest_decode_manual_json
@@ -67,6 +68,16 @@ def main() -> None:
     characterization_manuscript = subparsers.add_parser("characterization-manuscript")
     characterization_manuscript.add_argument("--kg-output", default="output/characterization_kg")
     characterization_manuscript.add_argument("--local-output", required=True)
+    characterization_comparison = subparsers.add_parser("characterization-compare-chameo")
+    characterization_comparison.add_argument("--manifest", default="input/characterization_workbook_manifest.json")
+    characterization_comparison.add_argument("--h2kg-output", default="output/characterization_kg")
+    characterization_comparison.add_argument("--chameo-source", default="cache/sources/chameo")
+    characterization_comparison.add_argument("--emmo-source", default="cache/sources/emmo-1.0.3")
+    characterization_comparison.add_argument("--output", default="output/characterization_kg_comparison")
+    characterization_comparison.add_argument(
+        "--local-manuscript-output",
+        default="../local_manuscript/characterization_kg_comparison",
+    )
     decode_ingest = subparsers.add_parser("decode-ingest")
     decode_ingest.add_argument("--source-dir", required=True)
     decode_ingest.add_argument("--snapshot", default="input/decode_workflows_source.json")
@@ -152,6 +163,26 @@ def main() -> None:
         if not local_output.is_absolute():
             local_output = project_root / local_output
         result = write_characterization_manuscript_materials(kg_output, local_output)
+    elif args.command == "characterization-compare-chameo":
+        paths = {
+            "manifest": Path(args.manifest),
+            "h2kg_output": Path(args.h2kg_output),
+            "chameo_source": Path(args.chameo_source),
+            "emmo_source": Path(args.emmo_source),
+            "comparison_output": Path(args.output),
+            "local_manuscript_output": Path(args.local_manuscript_output),
+        }
+        for key, value in list(paths.items()):
+            if not value.is_absolute():
+                paths[key] = project_root / value
+        result = build_native_characterization_benchmark(
+            paths["manifest"],
+            paths["h2kg_output"],
+            paths["chameo_source"],
+            paths["emmo_source"],
+            paths["comparison_output"],
+            paths["local_manuscript_output"],
+        )
     elif args.command == "evaluation-review-package":
         output_root = Path(args.output_root)
         itc_registry = Path(args.itc_registry)
@@ -363,7 +394,9 @@ def main() -> None:
             draft_llm=getattr(args, "draft_llm", False),
             rewrite=getattr(args, "rewrite", False),
         )
-    print(json.dumps(result, indent=2, ensure_ascii=False, default=str))
+    # Keep command output portable across Windows console encodings; generated
+    # artifacts retain their native Unicode text.
+    print(json.dumps(result, indent=2, ensure_ascii=True, default=str))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,34 @@
+{
+  "requirements": [
+    {
+      "requirement": "Measurement parameter identity",
+      "h2kg": "no additional semantic relation",
+      "chameo": "no additional semantic relation",
+      "evidence": "https://w3id.org/h2kg/hydrogen-ontology#hasParameter;https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementParameter"
+    },
+    {
+      "requirement": "Measurement parameter characteristic, value, and unit",
+      "h2kg": "no application extension; H2KG relation plus shared QUDT",
+      "chameo": "application extension required",
+      "evidence": "CHAMEO MeasurementParameter is an EMMO mathematical Parameter. In the complete transitive import closure it is neither an EMMO Quantity nor a Referent, and no relation applicable to its ancestry links it to a distinct Property or value."
+    },
+    {
+      "requirement": "Analysis-level determined property",
+      "h2kg": "available through result-level ofProperty",
+      "chameo": "no new predicate; explicit application typing and assertion from the declared EMMO import",
+      "evidence": "https://w3id.org/emmo#EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069;https://w3id.org/emmo#EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85. CHAMEO DataAnalysis is not formally a subclass of EMMO Determination in the pinned graph."
+    },
+    {
+      "requirement": "Unambiguous result-data to property association",
+      "h2kg": "no application extension",
+      "chameo": "direct relation or a source-justified activity decomposition required for multi-result analyses",
+      "evidence": "The process-level EMMO pattern yields two additional result/property combinations for the IC-SEM multi-output analysis."
+    },
+    {
+      "requirement": "Source-cell status and missingness",
+      "h2kg": "neutral source layer required",
+      "chameo": "neutral source layer required",
+      "evidence": "Excluded from ontology-specific scoring for both graphs."
+    }
+  ]
+}

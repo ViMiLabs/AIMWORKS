@@ -1,0 +1,204 @@
+{
+  "schema_version": "h2kg-chameo-fair-characterization-contract/v3",
+  "source_manifest_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+  "requirement_count": 13,
+  "selection_strata": {
+    "analysis_lineage": 1,
+    "data_processing": 1,
+    "domain_terminology": 1,
+    "measurement_context": 1,
+    "measurement_settings": 2,
+    "methodology_description": 1,
+    "result_provenance": 1,
+    "result_semantics": 2,
+    "software_traceability": 1,
+    "specimen_preparation": 1,
+    "workflow_structure": 1
+  },
+  "contract_sha256": "F731088A30DE6148B526814F40C6E7E0718379FFBB1DB1A68237C0CA21237FEA",
+  "selection_protocol": [
+    "Enumerate the specimen-to-result information lifecycle present in the sanitized workbook.",
+    "Score each scientific relation or value pattern once over the full eight-case population; do not repeat it as global and per-case questions.",
+    "Derive every requirement from information present in the application lifecycle and label it by scientific function, never by ontology origin.",
+    "Include method-concept specificity as an explicit scored requirement rather than an unscored post hoc argument.",
+    "Generate expected rows from the manifest before executing ontology-specific SPARQL.",
+    "Disallow local semantic bridge predicates and report shared standards and declared imports separately.",
+    "Credit generic native patterns as successful while reporting their semantic specificity separately from specialised native patterns."
+  ],
+  "inference_scope": "The resulting decisions are conclusive for these thirteen frozen representation, retrieval, and terminology requirements across the eight source cases.",
+  "conclusion_rules": [
+    {
+      "id": "r1_chameo_broad_methodology",
+      "criterion": "CHAMEO is exact for measurement context, setting identity, preparation, processing, software, analysis lineage, result generation, workflow/task grouping, and technique/occurrence separation."
+    },
+    {
+      "id": "r2_chameo_unique_methodology_patterns",
+      "criterion": "CHAMEO supplies specialised workflow/task and technique-description patterns; H2KG can group activities generically but lacks a separate technique-description pattern."
+    },
+    {
+      "id": "r3_h2kg_valued_settings",
+      "criterion": "H2KG is exact and the complete pinned CHAMEO/EMMO import closure contains no declared, ancestry-compatible path from a measurement-parameter record to the distinct valued scientific characteristic that it denotes."
+    },
+    {
+      "id": "r4_h2kg_individual_results",
+      "criterion": "H2KG is exact for individual result/property/bearer associations and normalized result values, while CHAMEO is not exact for the individual association contract."
+    },
+    {
+      "id": "r5_h2kg_method_specificity",
+      "criterion": "The scored method-specificity requirement resolves more of the eight source methods to a specific native H2KG class than to a specific native CHAMEO technique class."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "b01_measurement_context",
+      "question": "Which specimen, instrument, and raw dataset belong to each measurement?",
+      "selection_stratum": "measurement_context",
+      "source_basis": "Case identity, specimen field, method family, and raw-data output in the sanitized manifest.",
+      "variables": [
+        "caseKey",
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ]
+    },
+    {
+      "id": "b02_measurement_setting_identity",
+      "question": "Which named measurement settings are associated with each measurement?",
+      "selection_stratum": "measurement_settings",
+      "source_basis": "All characteristic and instrument fields classified as measurement settings in the sanitized manifest.",
+      "variables": [
+        "caseKey",
+        "parameterLabel"
+      ]
+    },
+    {
+      "id": "b03_valued_measurement_setting",
+      "question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
+      "selection_stratum": "measurement_settings",
+      "source_basis": "Reported measurement settings with a distinct scientific characteristic and defensible numeric and unit normalization in the sanitized manifest.",
+      "variables": [
+        "caseKey",
+        "parameterLabel",
+        "propertyLabel",
+        "value",
+        "unit"
+      ]
+    },
+    {
+      "id": "b04_preparation_input_output",
+      "question": "Which material input and output are connected by each specimen-preparation step?",
+      "selection_stratum": "specimen_preparation",
+      "source_basis": "Synthesis and specimen-preparation rows in all eight cases.",
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "inputMaterialLabel",
+        "outputMaterialLabel"
+      ]
+    },
+    {
+      "id": "b05_processing_input_output",
+      "question": "Which input and output datasets are connected by each preprocessing step?",
+      "selection_stratum": "data_processing",
+      "source_basis": "Preprocessing rows in all eight cases.",
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "inputDataLabel",
+        "outputDataLabel"
+      ]
+    },
+    {
+      "id": "b06_software_association",
+      "question": "Which software is associated with each preparation, processing, or analysis step?",
+      "selection_stratum": "software_traceability",
+      "source_basis": "Software fields in all workflow-table sections.",
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "softwareLabel"
+      ]
+    },
+    {
+      "id": "b07_analysis_lineage",
+      "question": "Which input dataset, analysis step, software, and result form each analysis lineage?",
+      "selection_stratum": "analysis_lineage",
+      "source_basis": "Analysis rows and software fields in all eight cases.",
+      "variables": [
+        "caseKey",
+        "analysisLabel",
+        "inputDataLabel",
+        "resultLabel",
+        "softwareLabel"
+      ]
+    },
+    {
+      "id": "b08_individual_result_property_bearer",
+      "question": "Which property and specimen are linked to each individual reported result?",
+      "selection_stratum": "result_semantics",
+      "source_basis": "Every analysis target and the case specimen in the sanitized manifest.",
+      "variables": [
+        "caseKey",
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel"
+      ]
+    },
+    {
+      "id": "b09_normalized_result_value",
+      "question": "Which reported result properties have a normalized numeric value and unit?",
+      "selection_stratum": "result_semantics",
+      "source_basis": "Analysis outputs with defensible numeric and unit normalization in the sanitized manifest.",
+      "variables": [
+        "caseKey",
+        "propertyLabel",
+        "value",
+        "unit"
+      ]
+    },
+    {
+      "id": "b10_result_generation",
+      "question": "Which analysis step generated each individual result?",
+      "selection_stratum": "result_provenance",
+      "source_basis": "Analysis-step and target pairs in all eight cases.",
+      "variables": [
+        "caseKey",
+        "analysisLabel",
+        "resultLabel"
+      ]
+    },
+    {
+      "id": "b11_workflow_task_grouping",
+      "question": "Which named workflow groups the measurement and processing tasks for each case?",
+      "selection_stratum": "workflow_structure",
+      "source_basis": "Each case is one bounded characterization workflow containing one measurement and its distinct source-defined steps.",
+      "variables": [
+        "caseKey",
+        "workflowLabel",
+        "taskCount"
+      ]
+    },
+    {
+      "id": "b12_technique_occurrence_separation",
+      "question": "Which technique description is explicitly distinguished from, and linked to, each measurement occurrence?",
+      "selection_stratum": "methodology_description",
+      "source_basis": "The method-family descriptor and measurement occurrence recorded for every case.",
+      "variables": [
+        "caseKey",
+        "techniqueLabel",
+        "measurementLabel"
+      ]
+    },
+    {
+      "id": "b13_case_method_specificity",
+      "question": "Does each case resolve to a native ontology class at the specificity of the reported characterization method?",
+      "selection_stratum": "domain_terminology",
+      "source_basis": "The curated measurement-method identity recorded for each of the eight workbook cases.",
+      "variables": [
+        "caseKey",
+        "methodLabel"
+      ]
+    }
+  ]
+}

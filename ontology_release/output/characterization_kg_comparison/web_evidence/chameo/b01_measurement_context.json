@@ -1,0 +1,551 @@
+{
+  "schema_version": "h2kg-chameo-query-evidence/v1",
+  "requirement_id": "b01_measurement_context",
+  "ontology": "chameo",
+  "entries": [
+    {
+      "signature": "[\"afm\",\"Atomic force microscopy measurement\",\"homogeneous powder\",\"Atomic force microscopy instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "afm",
+        "measurementLabel": "Atomic force microscopy measurement",
+        "specimenLabel": "homogeneous powder",
+        "instrumentLabel": "Atomic force microscopy instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/afm/data/rawdata-dc9e836707",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/afm/data/rawdata-dc9e836707"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/afm/instrument/atomic-force-microscopy-2e89e780a7",
+            "label": "Atomic force microscopy instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/afm/instrument/atomic-force-microscopy-2e89e780a7"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/afm/sample/sample-a0d27d1adc",
+            "label": "homogeneous powder",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/afm/sample/sample-a0d27d1adc"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+            "label": "Atomic force microscopy measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+            "target": "https://example.org/aimworks/chameo-characterization/afm/instrument/atomic-force-microscopy-2e89e780a7",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+            "target": "https://example.org/aimworks/chameo-characterization/afm/data/rawdata-dc9e836707",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/afm/measurement/atomic-force-microscopy-652d6f492a",
+            "target": "https://example.org/aimworks/chameo-characterization/afm/sample/sample-a0d27d1adc",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"fib_sem\",\"FIB-SEM tomography measurement\",\"highly porous bulk material\",\"FIB-SEM tomography instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "fib_sem",
+        "measurementLabel": "FIB-SEM tomography measurement",
+        "specimenLabel": "highly porous bulk material",
+        "instrumentLabel": "FIB-SEM tomography instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/fib_sem/data/rawdata-d05e247d15",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/fib_sem/data/rawdata-d05e247d15"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd",
+            "label": "FIB-SEM tomography instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/fib_sem/sample/sample-fde10c3631",
+            "label": "highly porous bulk material",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/fib_sem/sample/sample-fde10c3631"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/fib_sem/measurement/fib-sem-tomography-99977b4262",
+            "label": "FIB-SEM tomography measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/fib_sem/measurement/fib-sem-tomography-99977b4262"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/fib_sem/measurement/fib-sem-tomography-99977b4262",
+            "target": "https://example.org/aimworks/chameo-characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/fib_sem/measurement/fib-sem-tomography-99977b4262",
+            "target": "https://example.org/aimworks/chameo-characterization/fib_sem/data/rawdata-d05e247d15",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/fib_sem/measurement/fib-sem-tomography-99977b4262",
+            "target": "https://example.org/aimworks/chameo-characterization/fib_sem/sample/sample-fde10c3631",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"ic_sem\",\"Ion-cut scanning electron microscopy measurement\",\"highly porous bulk material\",\"Ion-cut scanning electron microscopy instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "ic_sem",
+        "measurementLabel": "Ion-cut scanning electron microscopy measurement",
+        "specimenLabel": "highly porous bulk material",
+        "instrumentLabel": "Ion-cut scanning electron microscopy instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/ic_sem/data/rawdata-67387841a5",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/ic_sem/data/rawdata-67387841a5"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49",
+            "label": "Ion-cut scanning electron microscopy instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/ic_sem/sample/sample-e98bad218f",
+            "label": "highly porous bulk material",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/ic_sem/sample/sample-e98bad218f"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50",
+            "label": "Ion-cut scanning electron microscopy measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50",
+            "target": "https://example.org/aimworks/chameo-characterization/ic_sem/instrument/ion-cut-scanning-electron-microscopy-c4e628ea49",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50",
+            "target": "https://example.org/aimworks/chameo-characterization/ic_sem/data/rawdata-67387841a5",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/ic_sem/measurement/ion-cut-scanning-electron-microscopy-4c1fcccc50",
+            "target": "https://example.org/aimworks/chameo-characterization/ic_sem/sample/sample-e98bad218f",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"neutron_tomography\",\"Neutron tomography measurement\",\"bulk material\",\"Neutron tomography instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "neutron_tomography",
+        "measurementLabel": "Neutron tomography measurement",
+        "specimenLabel": "bulk material",
+        "instrumentLabel": "Neutron tomography instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e",
+            "label": "RawData",
+            "type": "CharacterisationData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db",
+            "label": "Neutron tomography instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868",
+            "label": "bulk material",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a",
+            "label": "Neutron tomography measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a",
+            "target": "https://example.org/aimworks/chameo-characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a",
+            "target": "https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a",
+            "target": "https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"sem\",\"Scanning electron microscopy measurement\",\"homogeneous powder\",\"Scanning electron microscopy instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "sem",
+        "measurementLabel": "Scanning electron microscopy measurement",
+        "specimenLabel": "homogeneous powder",
+        "instrumentLabel": "Scanning electron microscopy instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/sem/data/rawdata-ddfca82185",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/sem/data/rawdata-ddfca82185"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669",
+            "label": "Scanning electron microscopy instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/sem/sample/sample-81fee52a4f",
+            "label": "homogeneous powder",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/sem/sample/sample-81fee52a4f"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2",
+            "label": "Scanning electron microscopy measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2",
+            "target": "https://example.org/aimworks/chameo-characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2",
+            "target": "https://example.org/aimworks/chameo-characterization/sem/data/rawdata-ddfca82185",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2",
+            "target": "https://example.org/aimworks/chameo-characterization/sem/sample/sample-81fee52a4f",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_radiography\",\"Synchrotron X-ray radiography measurement\",\"bulk material\",\"Synchrotron X-ray radiography instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "synchrotron_radiography",
+        "measurementLabel": "Synchrotron X-ray radiography measurement",
+        "specimenLabel": "bulk material",
+        "instrumentLabel": "Synchrotron X-ray radiography instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d",
+            "label": "Synchrotron X-ray radiography instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1",
+            "label": "bulk material",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2",
+            "label": "Synchrotron X-ray radiography measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"synchrotron_tomography\",\"Synchrotron X-ray tomography measurement\",\"bulk material\",\"Synchrotron X-ray tomography instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "synchrotron_tomography",
+        "measurementLabel": "Synchrotron X-ray tomography measurement",
+        "specimenLabel": "bulk material",
+        "instrumentLabel": "Synchrotron X-ray tomography instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/data/rawdata-fd82f69437",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/data/rawdata-fd82f69437"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/instrument/synchrotron-x-ray-tomography-051258cb7a",
+            "label": "Synchrotron X-ray tomography instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/instrument/synchrotron-x-ray-tomography-051258cb7a"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/sample/sample-6b3e006dc0",
+            "label": "bulk material",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/sample/sample-6b3e006dc0"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10",
+            "label": "Synchrotron X-ray tomography measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/instrument/synchrotron-x-ray-tomography-051258cb7a",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/data/rawdata-fd82f69437",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/measurement/synchrotron-x-ray-tomography-52e22ccf10",
+            "target": "https://example.org/aimworks/chameo-characterization/synchrotron_tomography/sample/sample-6b3e006dc0",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "signature": "[\"tem\",\"Transmission electron microscopy measurement\",\"homogeneous powder\",\"Transmission electron microscopy instrument\",\"RawData\"]",
+      "row": {
+        "caseKey": "tem",
+        "measurementLabel": "Transmission electron microscopy measurement",
+        "specimenLabel": "homogeneous powder",
+        "instrumentLabel": "Transmission electron microscopy instrument",
+        "rawDatasetLabel": "RawData"
+      },
+      "graph": {
+        "kind": "rdf_answer_evidence",
+        "message": "Only RDF resources and predicates participating in the selected answer are shown.",
+        "nodes": [
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53",
+            "label": "RawData",
+            "type": "RawData",
+            "role": "data",
+            "iri": "https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb",
+            "label": "Transmission electron microscopy instrument",
+            "type": "CharacterisationMeasurementInstrument",
+            "role": "instrument",
+            "iri": "https://example.org/aimworks/chameo-characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72",
+            "label": "homogeneous powder",
+            "type": "PreparedSample",
+            "role": "matter",
+            "iri": "https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72"
+          },
+          {
+            "id": "https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0",
+            "label": "Transmission electron microscopy measurement",
+            "type": "CharacterisationMeasurementProcess",
+            "role": "measurement",
+            "iri": "https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge:1",
+            "source": "https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0",
+            "target": "https://example.org/aimworks/chameo-characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb",
+            "label": "uses instrument",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationMeasurementInstrument"
+          },
+          {
+            "id": "edge:2",
+            "source": "https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0",
+            "target": "https://example.org/aimworks/chameo-characterization/tem/data/rawdata-56c3c72e53",
+            "label": "has characterization output",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasCharacterisationOutput"
+          },
+          {
+            "id": "edge:3",
+            "source": "https://example.org/aimworks/chameo-characterization/tem/measurement/transmission-electron-microscopy-09a0649be0",
+            "target": "https://example.org/aimworks/chameo-characterization/tem/sample/sample-24f78daf72",
+            "label": "has measurement sample",
+            "predicate": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#hasMeasurementSample"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fair H₂KG-CHAMEO characterization benchmark</title>
+<style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:0 auto;padding:38px;color:#19313a;background:#f4f7f6}h1,h2{color:#123f46}.card{background:#fff;border:1px solid #cfdbd8;border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 8px 24px #17343a12}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.metric{background:#e7f2ef;border-radius:10px;padding:16px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #d8e1df;text-align:left;vertical-align:top}th{background:#174b53;color:#fff}a{color:#086a75}</style></head>
+<body><h1>Fair H₂KG-CHAMEO characterization benchmark</h1>
+<p>Both ABoxes were constructed independently from one sanitized workbook manifest. Neither ontology was modified, neither graph was translated from the other, and no local bridge relation was admitted to a scored graph. CHAMEO was evaluated with its complete pinned EMMO transitive import closure.</p>
+<div class="metrics"><div class="metric"><strong>Cases</strong><br>8</div><div class="metric"><strong>Frozen requirements</strong><br>13</div><div class="metric"><strong>H₂KG exact requirements</strong><br>12/13</div><div class="metric"><strong>CHAMEO exact requirements</strong><br>10/13</div></div>
+<div class="card"><h2>Fair comparison protocol</h2><p>All thirteen requirements were derived from the same characterization-record lifecycle and named by scientific function rather than ontology origin. Both ABoxes were generated independently from the same frozen manifest. Each requirement was scored once over the full case population; native, generic, declared-import, and shared-standard support are distinguished explicitly. The contract and five decision rules were hashed before query execution, and the conclusion was emitted only because all five rules passed.</p></div>
+<div class="card"><h2>Requirement results</h2><table><thead><tr><th>ID</th><th>Plain-language requirement</th><th>Expected</th><th>H₂KG</th><th>CHAMEO</th></tr></thead><tbody><tr><td>b01_measurement_context</td><td>Which specimen, instrument, and raw dataset belong to each measurement?</td><td>8</td><td>exact</td><td>exact</td></tr><tr><td>b02_measurement_setting_identity</td><td>Which named measurement settings are associated with each measurement?</td><td>131</td><td>exact</td><td>exact</td></tr><tr><td>b03_valued_measurement_setting</td><td>Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?</td><td>107</td><td>exact</td><td>not_expressible_without_extension</td></tr><tr><td>b04_preparation_input_output</td><td>Which material input and output are connected by each specimen-preparation step?</td><td>83</td><td>exact</td><td>exact</td></tr><tr><td>b05_processing_input_output</td><td>Which input and output datasets are connected by each preprocessing step?</td><td>29</td><td>exact</td><td>exact</td></tr><tr><td>b06_software_association</td><td>Which software is associated with each preparation, processing, or analysis step?</td><td>31</td><td>exact</td><td>exact</td></tr><tr><td>b07_analysis_lineage</td><td>Which input dataset, analysis step, software, and result form each analysis lineage?</td><td>27</td><td>exact</td><td>exact</td></tr><tr><td>b08_individual_result_property_bearer</td><td>Which property and specimen are linked to each individual reported result?</td><td>24</td><td>exact</td><td>partial</td></tr><tr><td>b09_normalized_result_value</td><td>Which reported result properties have a normalized numeric value and unit?</td><td>13</td><td>exact</td><td>exact</td></tr><tr><td>b10_result_generation</td><td>Which analysis step generated each individual result?</td><td>24</td><td>exact</td><td>exact</td></tr><tr><td>b11_workflow_task_grouping</td><td>Which named workflow groups the measurement and processing tasks for each case?</td><td>8</td><td>exact</td><td>exact</td></tr><tr><td>b12_technique_occurrence_separation</td><td>Which technique description is explicitly distinguished from, and linked to, each measurement occurrence?</td><td>8</td><td>not_expressible_without_extension</td><td>exact</td></tr><tr><td>b13_case_method_specificity</td><td>Does each case resolve to a native ontology class at the specificity of the reported characterization method?</td><td>8</td><td>exact</td><td>partial</td></tr></tbody></table></div>
+<div class="card"><h2>Conclusion</h2><p><strong>The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.</strong></p><p>This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured.</p></div>
+<div class="card"><h2>Downloads</h2><p><a href="benchmark_contract.json">Frozen benchmark contract</a> | <a href="balanced_requirement_matrix.csv">Requirement result matrix</a> | <a href="balanced_conclusion_rules.json">Conclusion rules</a> | <a href="ontology_evidence_audit.json">Ontology evidence audit</a> | <a href="native_capability_matrix.csv">Capability matrix</a> | <a href="native_benchmark_report.json">Complete report</a></p></div>
+  <script data-h2kg-branding>
+(() => {
+  const brand = (value) => String(value || '').replace(/\bH2KG\b/g, 'H₂KG');
+  const skipped = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE']);
+  const updateText = (root) => {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      if (!skipped.has(root.parentElement?.tagName)) root.nodeValue = brand(root.nodeValue);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE || skipped.has(root.tagName)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!skipped.has(node.parentElement?.tagName)) node.nodeValue = brand(node.nodeValue);
+    }
+  };
+  const start = () => {
+    document.title = brand(document.title);
+    updateText(document.body);
+    new MutationObserver((records) => records.forEach((record) =>
+      record.addedNodes.forEach(updateText)
+    )).observe(document.body, {childList: true, subtree: true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+</body></html>

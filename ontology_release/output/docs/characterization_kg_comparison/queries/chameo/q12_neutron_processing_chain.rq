@@ -1,0 +1,10 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?processLabel ?inputDataLabel ?outputDataLabel WHERE { GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/neutron_tomography> {
+  ?process a chameo:DataPreparation ; rdfs:label ?processLabel ; chameo:hasCharacterisationInput ?inputData ; chameo:hasCharacterisationOutput ?outputData . ?inputData rdfs:label ?inputDataLabel . ?outputData rdfs:label ?outputDataLabel .
+}  } ORDER BY ?processLabel ?inputDataLabel ?outputDataLabel

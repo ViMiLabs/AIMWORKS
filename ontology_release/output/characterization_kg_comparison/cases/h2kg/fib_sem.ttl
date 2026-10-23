@@ -1,0 +1,916 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/workflow> a h2kg:Process ;
+    rdfs:label "FIB-SEM tomography characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/3d-reconstruct-80c6ca78fc>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/artefact-remove-ce9b3e2a02>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/clean-5766696c7d>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/driftcorrect-1bb3d6c127>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/threshold-39e481c394>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/visualize-aceb3e5a90>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/cut-34f98606e3>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/deposit-b94ed487dc>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/fix-1cf2cf7051>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-1bd8ac3b9f>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-39032dc11d>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-f9651cde6a>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dissolve-ed83be6b3d>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dissolved-897b2f6d63>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/doctor-blade-019776583c>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dry-407a55efcd> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/constrictivity-5189afe0d2> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Constrictivity result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/constrictivity-166f549b69> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/direction-55c2e204d0> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Direction result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/direction-709c5aa0b8> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/mean-geodesic-torutosity-a2012b2d5f> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Mean geodesic torutosity result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/mean-geodesic-torutosity-5843a2fd73> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/network-relation-992fd02bc0> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Network relation result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/network-relation-da9196c53b> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/porosity-6c640364b6> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Porosity result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/porosity-9f3f2aa5a0> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/volume-fraction-7a2e36c0f4> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Volume fraction result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/volume-fraction-9f46c31b61> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd> a h2kg:FIBSEMInstrument,
+        h2kg:Instrument ;
+    rdfs:label "FIB-SEM tomography instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/aluminum-current-collector-01cbbd5142> a h2kg:Matter ;
+    rdfs:label "Aluminum current collector" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/aluminum-pin-stub-817489afdf> a h2kg:Matter ;
+    rdfs:label "Aluminum pin stub" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/conductive-silver-59f9ba7fa3> a h2kg:Matter ;
+    rdfs:label "Conductive silver" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/nafion-ionomer-7c1a5ce398> a h2kg:Matter ;
+    rdfs:label "Nafion® ionomer" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/nmp-11215c2970> a h2kg:Matter ;
+    rdfs:label "NMP" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/pt-aa6b25e263> a h2kg:Matter ;
+    rdfs:label "Pt" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/ptma-a6dfe26ea8> a h2kg:Matter ;
+    rdfs:label "PTMA" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/pvdf-99316308d3> a h2kg:Matter ;
+    rdfs:label "PVdF" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint4-28ac34718a> a h2kg:Matter ;
+    rdfs:label "SInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint5-196feaa7b4> a h2kg:Matter ;
+    rdfs:label "SInt5" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/superp-f46b47fec6> a h2kg:Matter ;
+    rdfs:label "SuperP" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/area-d0b408fdf4> a h2kg:Parameter ;
+    rdfs:label "Area parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/area-e5ef75df30> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/brightness-84b61367fd> a h2kg:Parameter ;
+    rdfs:label "Brightness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/brightness-a9b565d919> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-70694e9f61> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-7df3774c42> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-b267653061> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-d2a3d2bc65> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-f5a1244b9c> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-4fa1b23771> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/contrast-6992e03d11> a h2kg:Parameter ;
+    rdfs:label "Contrast parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/contrast-6c5221e2bc> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/current-299559d0d8> a h2kg:Parameter ;
+    rdfs:label "Current parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/current-3018408da9> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/current-5eab0d152a> a h2kg:Parameter ;
+    rdfs:label "Current parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/current-31395a6df9> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cutthickness-3de0ded2c0> a h2kg:Parameter ;
+    rdfs:label "CutThickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cutthickness-d95fcbe8df> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/dwelltime-d951f231cd> a h2kg:Parameter ;
+    rdfs:label "DwellTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/dwelltime-9c56e0a5a6> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/dynamicfocus-7cbf529fd1> a h2kg:Parameter ;
+    rdfs:label "DynamicFocus parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/dynamicfocus-7dc04dcebc> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/electronbeamenergy-84d2e02867> a h2kg:Parameter ;
+    rdfs:label "ElectronBeamEnergy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/electronbeamenergy-f64e0e0606> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/electroncurrent-deafd4ed95> a h2kg:Parameter ;
+    rdfs:label "ElectronCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/electroncurrent-e071722339> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/energy-58438296d9> a h2kg:Parameter ;
+    rdfs:label "Energy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/energy-016665e73a> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/energy-74cc5087fc> a h2kg:Parameter ;
+    rdfs:label "Energy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/energy-7229d95372> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/humidity-5b39ba77ff> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/humidity-a547aaeeac> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/imageacquisitiontime-b8e3e623c0> a h2kg:Parameter ;
+    rdfs:label "ImageAcquisitionTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/imageacquisitiontime-496b9bb8e7> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamcurrent-57c43ca74a> a h2kg:Parameter ;
+    rdfs:label "IonBeamCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamcurrent-ed397ad8d4> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamcurrent-a487297583> a h2kg:Parameter ;
+    rdfs:label "IonBeamCurrent parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamcurrent-ffb023ab95> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamenergy-2642406a8d> a h2kg:Parameter ;
+    rdfs:label "IonBeamEnergy parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamenergy-eb32748e00> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-23ef8cd3f2> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-960c31ff26> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-80a2e177df> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-694012ecf0> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-a898762d69> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-6049a4393e> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/magnification-4c3f394b00> a h2kg:Parameter ;
+    rdfs:label "Magnification parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/magnification-39a31a3836> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/measuredarea-um2-39365fc901> a h2kg:Parameter ;
+    rdfs:label "MeasuredArea / um2 parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/measuredarea-um2-6772cccae0> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/pixelsize-c4ff2e9802> a h2kg:Parameter ;
+    rdfs:label "PixelSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/pixelsize-17e89b1d1f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/planespacing-205f1243db> a h2kg:Parameter ;
+    rdfs:label "PlaneSpacing parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/planespacing-5a9608df8c> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/pressure-e44a642abb> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/pressure-d0ddb37c7d> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/size-fb43273738> a h2kg:Parameter ;
+    rdfs:label "Size parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/size-12380910f3> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/slicenumber-e1cc0c1d51> a h2kg:Parameter ;
+    rdfs:label "SliceNumber parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/slicenumber-c144e9f392> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/stagetilt-deb1daddec> a h2kg:Parameter ;
+    rdfs:label "StageTilt parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/stagetilt-6b02df985b> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-18e9e8b20a> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-ca970a0c6f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-1ba09e87d7> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-5986bf6a9d> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-4d07984cd2> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-1487395ed0> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-fa2bf7219a> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-c2c0f39b95> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/thickness-4ed221e860> a h2kg:Parameter ;
+    rdfs:label "Thickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/thickness-7e52a1a94b> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/thickness-bd91552b9b> a h2kg:Parameter ;
+    rdfs:label "Thickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/thickness-621023fa4c> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/tiltcompensation-e7e88bee55> a h2kg:Parameter ;
+    rdfs:label "TiltCompensation parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/tiltcompensation-681a1bd98a> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-30c483255f> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-d19ab651d2> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-6d1aec8498> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-52848e66d3> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-87da6971c8> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-f8ce1392d8> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-e4a6a82579> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-c476029816> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/totalacquisitiontime-7101ce0b7b> a h2kg:Parameter ;
+    rdfs:label "TotalAcquisitionTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/totalacquisitiontime-ecee7e29ea> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/velocity-a04e907e7a> a h2kg:Parameter ;
+    rdfs:label "Velocity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/velocity-58a4d72eb4> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/viscosity-841c84e9a7> a h2kg:Parameter ;
+    rdfs:label "Viscosity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/viscosity-9357fbeba8> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/3d-reconstruct-80c6ca78fc> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "3D Reconstruct" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint1-cda1073996> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint2-39d3c4d8ec> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/astra-toolbox-89e553b438> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/artefact-remove-ce9b3e2a02> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Artefact remove" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint2-39d3c4d8ec> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint3-2b1d73b6f5> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/in-house-3d-unet-ea4b54a3ec> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/clean-5766696c7d> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Clean" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint3-2b1d73b6f5> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint4-c8833d5c94> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/driftcorrect-1bb3d6c127> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "DriftCorrect" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/rawdata-d05e247d15> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint1-cda1073996> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/sift-3c77b7db80> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/threshold-39e481c394> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Threshold" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint4-c8833d5c94> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint5-d61ad6c665> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-algorithm-watershed-b270e37467> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/pre-process/visualize-aceb3e5a90> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Visualize" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint5-d61ad6c665> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/blender3d-bc9e8cbcf7> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/area-e5ef75df30> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Area" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/deposit-b94ed487dc> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/brightness-a9b565d919> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Brightness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/brightness-b7cc05fac2b0838d-ea0bee414a> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-4fa1b23771> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-39032dc11d> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-7df3774c42> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-1bd8ac3b9f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cas-number-d2a3d2bc65> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-f9651cde6a> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/contrast-6c5221e2bc> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Contrast" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/contrast-9df6d050f51d94c6-cc216023a1> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/current-3018408da9> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Current" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/current-31395a6df9> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Current" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/cutthickness-d95fcbe8df> a h2kg:CutThickness ;
+    rdfs:label "CutThickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/cutthickness-1d9f16cb4368bf66-8f98a24880> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/dwelltime-9c56e0a5a6> a h2kg:DwellTime ;
+    rdfs:label "DwellTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/dwelltime-f75d1907e93cb33a-49ac61feec> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/dynamicfocus-7dc04dcebc> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "DynamicFocus" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/dynamicfocus-b74f4513f4682e02-5f111f8962> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/electronbeamenergy-f64e0e0606> a h2kg:ElectronBeamEnergy ;
+    rdfs:label "ElectronBeamEnergy" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/electronbeamenergy-dc8609ee13739602-dd50fa9374> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/electroncurrent-e071722339> a h2kg:ElectronCurrent ;
+    rdfs:label "ElectronCurrent" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/electroncurrent-b2b993f8345945fb-4af74e3e88> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/energy-016665e73a> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Energy" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/energy-7229d95372> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Energy" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/humidity-a547aaeeac> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/humidity-841c98d692da553f-075a44eceb> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/imageacquisitiontime-496b9bb8e7> a h2kg:ExposureTime ;
+    rdfs:label "ImageAcquisitionTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/imageacquisitiontime-c7e161037b41619a-91ac52fabd> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamcurrent-ed397ad8d4> a h2kg:IonBeamCurrent ;
+    rdfs:label "IonBeamCurrent" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/ionbeamcurrent-ce99e4cd16f08375-8223a02254> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamcurrent-ffb023ab95> a h2kg:IonBeamCurrent ;
+    rdfs:label "IonBeamCurrent" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/ionbeamenergy-eb32748e00> a h2kg:IonBeamEnergy ;
+    rdfs:label "IonBeamEnergy" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/ionbeamenergy-62eda03aef2b0d27-8c804464c0> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-6049a4393e> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-f9651cde6a> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-694012ecf0> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-1bd8ac3b9f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/loot-number-960c31ff26> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-39032dc11d> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/magnification-39a31a3836> a h2kg:Magnification ;
+    rdfs:label "Magnification" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/magnification-b9baafbee516876a-cd7d989a21> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/measuredarea-um2-6772cccae0> a h2kg:MicroscopyMeasuredArea ;
+    rdfs:label "MeasuredArea / um2" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/pixelsize-17e89b1d1f> a h2kg:PixelSize ;
+    rdfs:label "PixelSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/pixelsize-6839908921d9e6c2-81ce3b1b71> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/planespacing-5a9608df8c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "PlaneSpacing" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/pressure-d0ddb37c7d> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/pressure-2df6f832203aba44-263e141e0d> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/size-12380910f3> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Size" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/cut-34f98606e3> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/slicenumber-c144e9f392> a h2kg:SliceNumber ;
+    rdfs:label "SliceNumber" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/slicenumber-6bba70e7b09be152-e5d61fb561> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/stagetilt-6b02df985b> a h2kg:StageTilt ;
+    rdfs:label "StageTilt" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-1487395ed0> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-5986bf6a9d> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-c2c0f39b95> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dry-407a55efcd> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/temperature-ca970a0c6f> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/temperature-f2c68ebc60bf9a61-69fbab30d8> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/thickness-621023fa4c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Thickness" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/doctor-blade-019776583c> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/thickness-7e52a1a94b> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Thickness" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/deposit-b94ed487dc> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/tiltcompensation-681a1bd98a> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "TiltCompensation" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/tiltcompensation-85fc1c8d66f1a24b-439a02166a> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-52848e66d3> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/fix-1cf2cf7051> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-c476029816> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dry-407a55efcd> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-d19ab651d2> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/time-f8ce1392d8> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/totalacquisitiontime-ecee7e29ea> a h2kg:TotalAcquisitionTime ;
+    rdfs:label "TotalAcquisitionTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/totalacquisitiontime-42e6777085881f22-d8844079d9> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/velocity-58a4d72eb4> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Velocity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/doctor-blade-019776583c> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/property-occurrence/viscosity-9357fbeba8> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Viscosity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dissolve-ed83be6b3d> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/brightness-b7cc05fac2b0838d-ea0bee414a> a qudt:QuantityValue ;
+    rdfs:label "1 UNITLESS" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/contrast-9df6d050f51d94c6-cc216023a1> a qudt:QuantityValue ;
+    rdfs:label "1 UNITLESS" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/cutthickness-1d9f16cb4368bf66-8f98a24880> a qudt:QuantityValue ;
+    rdfs:label "150 nm" ;
+    qudt:numericValue 150.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/dwelltime-f75d1907e93cb33a-49ac61feec> a qudt:QuantityValue ;
+    rdfs:label "3 h" ;
+    qudt:numericValue 3.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/HR> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/dynamicfocus-b74f4513f4682e02-5f111f8962> a qudt:QuantityValue ;
+    rdfs:label "-3 UNITLESS" ;
+    qudt:numericValue -3.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/electronbeamenergy-dc8609ee13739602-dd50fa9374> a qudt:QuantityValue ;
+    rdfs:label "1.5 keV" ;
+    qudt:numericValue 1.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Energy> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloEV> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/electroncurrent-b2b993f8345945fb-4af74e3e88> a qudt:QuantityValue ;
+    rdfs:label "250 pA" ;
+    qudt:numericValue 250.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
+    qudt:unit <http://qudt.org/vocab/unit/PicoA> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/humidity-841c98d692da553f-075a44eceb> a qudt:QuantityValue ;
+    rdfs:label "0 %" ;
+    qudt:numericValue 0.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
+    qudt:unit <http://qudt.org/vocab/unit/PERCENT> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/imageacquisitiontime-c7e161037b41619a-91ac52fabd> a qudt:QuantityValue ;
+    rdfs:label "60 s" ;
+    qudt:numericValue 60.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/ionbeamcurrent-ce99e4cd16f08375-8223a02254> a qudt:QuantityValue ;
+    rdfs:label "700 pA" ;
+    qudt:numericValue 700.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
+    qudt:unit <http://qudt.org/vocab/unit/PicoA> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/ionbeamenergy-62eda03aef2b0d27-8c804464c0> a qudt:QuantityValue ;
+    rdfs:label "30 keV" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Energy> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloEV> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/magnification-b9baafbee516876a-cd7d989a21> a qudt:QuantityValue ;
+    rdfs:label "10 UNITLESS" ;
+    qudt:numericValue 10.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/pixelsize-6839908921d9e6c2-81ce3b1b71> a qudt:QuantityValue ;
+    rdfs:label "20 nm" ;
+    qudt:numericValue 20.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/pressure-2df6f832203aba44-263e141e0d> a qudt:QuantityValue ;
+    rdfs:label "0.00001 atm" ;
+    qudt:numericValue 0.00001 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
+    qudt:unit <http://qudt.org/vocab/unit/ATM> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/slicenumber-6bba70e7b09be152-e5d61fb561> a qudt:QuantityValue ;
+    rdfs:label "1300 UNITLESS" ;
+    qudt:numericValue 1300.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/temperature-f2c68ebc60bf9a61-69fbab30d8> a qudt:QuantityValue ;
+    rdfs:label "23 C" ;
+    qudt:numericValue 23.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/tiltcompensation-85fc1c8d66f1a24b-439a02166a> a qudt:QuantityValue ;
+    rdfs:label "36 UNITLESS" ;
+    qudt:numericValue 36.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/quantity-value/totalacquisitiontime-42e6777085881f22-d8844079d9> a qudt:QuantityValue ;
+    rdfs:label "12 h" ;
+    qudt:numericValue 12.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/HR> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/constrictivity-166f549b69> a h2kg:Constrictivity ;
+    rdfs:label "Constrictivity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/direction-709c5aa0b8> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Direction" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/mean-geodesic-torutosity-5843a2fd73> a h2kg:GeodesicTortuosity ;
+    rdfs:label "Mean geodesic torutosity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/network-relation-da9196c53b> a h2kg:Property ;
+    rdfs:label "Network relation" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/porosity-9f3f2aa5a0> a h2kg:TotalPorosity ;
+    rdfs:label "Porosity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/result-property/volume-fraction-9f46c31b61> a h2kg:CompositionCharacteristic ;
+    rdfs:label "Volume fraction" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/astra-toolbox-89e553b438> a h2kg:SoftwareArtifact ;
+    rdfs:label "Astra toolbox" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/blender3d-bc9e8cbcf7> a h2kg:SoftwareArtifact ;
+    rdfs:label "Blender3D" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-algorithm-watershed-b270e37467> a h2kg:SoftwareArtifact ;
+    rdfs:label """ImageJ
+Algorithm = Watershed""" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/in-house-3d-unet-ea4b54a3ec> a h2kg:SoftwareArtifact ;
+    rdfs:label "In-house 3D Unet" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/sift-3c77b7db80> a h2kg:SoftwareArtifact ;
+    rdfs:label "SIFT" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dissolved-897b2f6d63> a h2kg:FormulationProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dissolved" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint4-28ac34718a> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint3-2c9a0bfb90> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/constrictivity-calculation-725e6f7a34> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Constrictivity calculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/constrictivity-5189afe0d2> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/direction-calculation-5b06db43f8> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Direction calculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/direction-55c2e204d0> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/mean-geodesic-tortuosity-calculation-27ff3a7036> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Mean geodesic tortuosity calculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/mean-geodesic-torutosity-a2012b2d5f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/network-relation-analysis-736a0524d9> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Network relation analysis" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/network-relation-992fd02bc0> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/surface-calculation-240a3bb5b5> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Surface calculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/porosity-6c640364b6> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/anal-process/volume-fraction-calculation-13b90020b1> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Volume fraction calculation" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data-point/volume-fraction-7a2e36c0f4> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint1-cda1073996> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint2-39d3c4d8ec> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint3-2b1d73b6f5> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint4-c8833d5c94> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/ppint5-d61ad6c665> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt5" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/rawdata-d05e247d15> a h2kg:Data,
+        h2kg:SEMImageDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/cathode-electrode-8d2549dad6> a h2kg:Matter ;
+    rdfs:label "Cathode electrode" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint1-5c446d1f32> a h2kg:Matter ;
+    rdfs:label "SInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint2-226cf6c06d> a h2kg:Matter ;
+    rdfs:label "SInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint1-640869ca2f> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint2-50ea94a001> a h2kg:Matter ;
+    rdfs:label "SPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint3-0ec096ef15> a h2kg:Matter ;
+    rdfs:label "SPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint4-08ecef6441> a h2kg:Matter ;
+    rdfs:label "SPInt4" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/cut-34f98606e3> a h2kg:MachiningProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Cut" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/cathode-electrode-8d2549dad6> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint1-640869ca2f> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/size-fb43273738> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/fix-1cf2cf7051> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Fix" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/aluminum-pin-stub-817489afdf>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/conductive-silver-59f9ba7fa3>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint1-640869ca2f> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint2-50ea94a001> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-6d1aec8498> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dissolve-ed83be6b3d> a h2kg:FormulationProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dissolve" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/nmp-11215c2970>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint1-5c446d1f32>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint2-226cf6c06d>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint3-2c9a0bfb90> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/viscosity-841c84e9a7> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint3-2c9a0bfb90> a h2kg:Matter ;
+    rdfs:label "SInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/deposit-b94ed487dc> a h2kg:CoatingOrDepositionProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Deposit" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/pt-aa6b25e263>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint2-50ea94a001> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint3-0ec096ef15> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/area-d0b408fdf4>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/thickness-4ed221e860> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-1bd8ac3b9f> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/pvdf-99316308d3> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/nafion-ionomer-7c1a5ce398> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-70694e9f61>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-80a2e177df> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-39032dc11d> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/ptma-a6dfe26ea8> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint1-5c446d1f32> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-f5a1244b9c>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-23ef8cd3f2> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/buy-f9651cde6a> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/superp-f46b47fec6> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint2-226cf6c06d> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cas-number-b267653061>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/loot-number-a898762d69> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/doctor-blade-019776583c> a h2kg:DoctorBladeCoating,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Doctor blade" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/aluminum-current-collector-01cbbd5142> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint3-2c9a0bfb90> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/thickness-bd91552b9b>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/velocity-a04e907e7a> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/syn-process/dry-407a55efcd> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ThermalTreatmentProcess ;
+    rdfs:label "Dry" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sint5-196feaa7b4> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/cathode-electrode-8d2549dad6> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-fa2bf7219a>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-e4a6a82579> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/software/imagej-614b53a864> a h2kg:SoftwareArtifact ;
+    rdfs:label "ImageJ" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/electron-beam-c685ac40ab> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Electron beam" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint3-0ec096ef15> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint4-08ecef6441> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/current-5eab0d152a>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/energy-58438296d9>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-1ba09e87d7>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-87da6971c8> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/sp-process/gallium-current-c71bb3d005> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Gallium current" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/spint4-08ecef6441> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/current-299559d0d8>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/energy-74cc5087fc>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-4d07984cd2>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/time-30c483255f> .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/data/post-processed-image-2a1abb9d42> a h2kg:Data,
+        h2kg:TomographicReconstructionDataset ;
+    rdfs:label "Post-processed image" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "highly porous bulk material" .
+
+<https://w3id.org/h2kg/examples/characterization/fib_sem/measurement/fib-sem-tomography-99977b4262> a h2kg:FIBSEMTomographyMeasurement,
+        h2kg:Measurement ;
+    rdfs:label "FIB-SEM tomography measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/fib_sem/matter/sample-9a41864cdb> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/fib_sem/data/rawdata-d05e247d15> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/brightness-84b61367fd>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/contrast-6992e03d11>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/cutthickness-3de0ded2c0>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/dwelltime-d951f231cd>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/dynamicfocus-7cbf529fd1>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/electronbeamenergy-84d2e02867>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/electroncurrent-deafd4ed95>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/humidity-5b39ba77ff>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/imageacquisitiontime-b8e3e623c0>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamcurrent-57c43ca74a>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamcurrent-a487297583>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/ionbeamenergy-2642406a8d>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/magnification-4c3f394b00>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/measuredarea-um2-39365fc901>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/pixelsize-c4ff2e9802>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/planespacing-205f1243db>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/pressure-e44a642abb>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/slicenumber-e1cc0c1d51>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/stagetilt-deb1daddec>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/temperature-18e9e8b20a>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/tiltcompensation-e7e88bee55>,
+        <https://w3id.org/h2kg/examples/characterization/fib_sem/parameter-record/totalacquisitiontime-7101ce0b7b> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/fib_sem/instrument/fib-sem-tomography-40febac9cd> .

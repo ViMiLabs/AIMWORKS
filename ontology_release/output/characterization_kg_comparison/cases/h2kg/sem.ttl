@@ -1,0 +1,307 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/workflow> a h2kg:Process ;
+    rdfs:label "Scanning electron microscopy characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da>,
+        <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2>,
+        <https://w3id.org/h2kg/examples/characterization/sem/pre-process/brightness-adjustment-ee3afe33ac>,
+        <https://w3id.org/h2kg/examples/characterization/sem/pre-process/contrast-adjustment-6555338b69>,
+        <https://w3id.org/h2kg/examples/characterization/sem/sp-process/deposition-b5fcb0a159>,
+        <https://w3id.org/h2kg/examples/characterization/sem/sp-process/fix-c4468881d9>,
+        <https://w3id.org/h2kg/examples/characterization/sem/syn-process/buy-ff9c90add7>,
+        <https://w3id.org/h2kg/examples/characterization/sem/syn-process/dry-3609e05b0c>,
+        <https://w3id.org/h2kg/examples/characterization/sem/syn-process/sieve-742c85c26f> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/data-point/support-needle-length-ce1b145aaa> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Support-needle length result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/result-property/support-needle-length-f8182f1e2c> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669> a h2kg:Instrument,
+        h2kg:SEMInstrument ;
+    rdfs:label "Scanning electron microscopy instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/au-124dc8bdcd> a h2kg:Matter ;
+    rdfs:label "Au" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/pd-c-ca322c7c49> a h2kg:Matter ;
+    rdfs:label "Pd/C" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/sampleholder-plano-gmbh-c8337f019a> a h2kg:Matter ;
+    rdfs:label "Sampleholder (Plano GmbH)" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/tape-plano-gmbh-7899b85c4a> a h2kg:Matter ;
+    rdfs:label "Tape (Plano GmbH)" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/accelerationvoltage-82ea02e3dc> a h2kg:Parameter ;
+    rdfs:label "AccelerationVoltage parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/accelerationvoltage-8520b598bf> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/brightness-factor-dab052c13c> a h2kg:Parameter ;
+    rdfs:label "Brightness factor parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/brightness-factor-3b5fea0555> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/cas-number-252c95ea4f> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/cas-number-ed6e2b2ec3> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/contrast-factor-4e114c18e2> a h2kg:Parameter ;
+    rdfs:label "Contrast factor parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/contrast-factor-b8695e013a> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/dataadquisitionrate-a84406f8ec> a h2kg:Parameter ;
+    rdfs:label "DataAdquisitionRate parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/dataadquisitionrate-18ae597485> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/humidity-1acd56550d> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/humidity-1fbb7f37a8> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/loot-number-ded2041b81> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/loot-number-5a1263b523> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/magnification-42ce93acc9> a h2kg:Parameter ;
+    rdfs:label "Magnification parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/magnification-db85bc5c8d> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/pressure-db5151e76a> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/pressure-86a2804955> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/sieve-size-ccf5a08962> a h2kg:Parameter ;
+    rdfs:label "sieve size parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/sieve-size-d7f2ac96cf> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/temperature-1c2cbfa33c> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/temperature-dacfd6a745> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/temperature-60b831cdce> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/temperature-77713dc7d8> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/time-f76a3684f2> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/time-8da49d41b9> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/timelapse-250bb09c8c> a h2kg:Parameter ;
+    rdfs:label "TimeLapse parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/timelapse-2a1b0aa85a> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/parameter-record/workingdistance-9c028a3f7b> a h2kg:Parameter ;
+    rdfs:label "WorkingDistance parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/workingdistance-f1ad426f38> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/accelerationvoltage-8520b598bf> a h2kg:AcceleratingVoltage ;
+    rdfs:label "AccelerationVoltage" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/sem/quantity-value/accelerationvoltage-6cf5a3bb91f6e978-344ae8c110> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/brightness-factor-3b5fea0555> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Brightness factor" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/pre-process/brightness-adjustment-ee3afe33ac> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/cas-number-ed6e2b2ec3> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/syn-process/buy-ff9c90add7> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/contrast-factor-b8695e013a> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Contrast factor" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/pre-process/contrast-adjustment-6555338b69> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/dataadquisitionrate-18ae597485> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "DataAdquisitionRate" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/humidity-1fbb7f37a8> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/loot-number-5a1263b523> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/syn-process/buy-ff9c90add7> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/magnification-db85bc5c8d> a h2kg:Magnification ;
+    rdfs:label "Magnification" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/sem/quantity-value/magnification-eecddaf49a6635d8-634064126f> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/pressure-86a2804955> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/sieve-size-d7f2ac96cf> a h2kg:GeometricCharacteristic ;
+    rdfs:label "sieve size" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/syn-process/sieve-742c85c26f> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/temperature-77713dc7d8> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/sem/quantity-value/temperature-89a3dcf48732f484-c96c82c382> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/temperature-dacfd6a745> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/syn-process/dry-3609e05b0c> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/time-8da49d41b9> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/syn-process/dry-3609e05b0c> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/timelapse-2a1b0aa85a> a h2kg:TemporalCharacteristic ;
+    rdfs:label "TimeLapse" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/sem/quantity-value/timelapse-8c01a9b70bfeffed-4af5b1572d> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/property-occurrence/workingdistance-f1ad426f38> a h2kg:WorkingDistance ;
+    rdfs:label "WorkingDistance" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/sem/quantity-value/workingdistance-afa6f5b5d50de861-0146b6335e> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/quantity-value/accelerationvoltage-6cf5a3bb91f6e978-344ae8c110> a qudt:QuantityValue ;
+    rdfs:label "20 kV" ;
+    qudt:numericValue 20.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloV> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/quantity-value/magnification-eecddaf49a6635d8-634064126f> a qudt:QuantityValue ;
+    rdfs:label "250 UNITLESS" ;
+    qudt:numericValue 250.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/quantity-value/temperature-89a3dcf48732f484-c96c82c382> a qudt:QuantityValue ;
+    rdfs:label "23 C" ;
+    qudt:numericValue 23.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/quantity-value/timelapse-8c01a9b70bfeffed-4af5b1572d> a qudt:QuantityValue ;
+    rdfs:label "30 s" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/quantity-value/workingdistance-afa6f5b5d50de861-0146b6335e> a qudt:QuantityValue ;
+    rdfs:label "8.5 mm" ;
+    qudt:numericValue 8.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/result-property/support-needle-length-f8182f1e2c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Support-needle length" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/sem/matter/sample-ce8e7c6fea> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/software/imagej-b94c2dbf05> a h2kg:SoftwareArtifact ;
+    rdfs:label "ImageJ" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/sp-process/deposition-b5fcb0a159> a h2kg:CoatingOrDepositionProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Deposition" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/au-124dc8bdcd>,
+        <https://w3id.org/h2kg/examples/characterization/sem/matter/spint1-a6aed3d9bc> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/sample-ce8e7c6fea> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/sp-process/fix-c4468881d9> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Fix" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/mea-7ac83e02c1>,
+        <https://w3id.org/h2kg/examples/characterization/sem/matter/sampleholder-plano-gmbh-c8337f019a>,
+        <https://w3id.org/h2kg/examples/characterization/sem/matter/tape-plano-gmbh-7899b85c4a> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/spint1-a6aed3d9bc> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/anal-process/support-sizing-8152bd20da> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Support sizing" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/sem/data-point/support-needle-length-ce1b145aaa> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/sem/software/imagej-b94c2dbf05> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43> a h2kg:Data,
+        h2kg:SEMMicrographDataset ;
+    rdfs:label "Post-processed image" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/data/ppint1-ae2eb9ab42> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/data/rawdata-ddfca82185> a h2kg:Data,
+        h2kg:SEMImageDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/mea-7ac83e02c1> a h2kg:Matter ;
+    rdfs:label "MEA" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/sint1-f2824b469c> a h2kg:Matter ;
+    rdfs:label "SInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/sint2-6a65c69015> a h2kg:Matter ;
+    rdfs:label "SInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/spint1-a6aed3d9bc> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/pre-process/brightness-adjustment-ee3afe33ac> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Brightness adjustment" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/sem/data/ppint1-ae2eb9ab42> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/sem/data/post-processed-image-b10c3b1a43> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/brightness-factor-dab052c13c> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/pre-process/contrast-adjustment-6555338b69> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Contrast adjustment" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/sem/data/rawdata-ddfca82185> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/sem/data/ppint1-ae2eb9ab42> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/contrast-factor-4e114c18e2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/syn-process/sieve-742c85c26f> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Sieve" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/sint1-f2824b469c> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/sint2-6a65c69015> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/sieve-size-ccf5a08962> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/matter/sample-ce8e7c6fea> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "homogeneous powder" .
+
+<https://w3id.org/h2kg/examples/characterization/sem/syn-process/buy-ff9c90add7> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/pd-c-ca322c7c49> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/sint1-f2824b469c> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/cas-number-252c95ea4f>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/loot-number-ded2041b81> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/syn-process/dry-3609e05b0c> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ThermalTreatmentProcess ;
+    rdfs:label "Dry" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/sint2-6a65c69015> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/sem/matter/mea-7ac83e02c1> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/temperature-1c2cbfa33c>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/time-f76a3684f2> .
+
+<https://w3id.org/h2kg/examples/characterization/sem/measurement/scanning-electron-microscopy-2c218d0dd2> a h2kg:Measurement,
+        h2kg:ScanningElectronMicroscopyImaging ;
+    rdfs:label "Scanning electron microscopy measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/sem/matter/sample-ce8e7c6fea> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/sem/data/rawdata-ddfca82185> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/accelerationvoltage-82ea02e3dc>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/dataadquisitionrate-a84406f8ec>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/humidity-1acd56550d>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/magnification-42ce93acc9>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/pressure-db5151e76a>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/temperature-60b831cdce>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/timelapse-250bb09c8c>,
+        <https://w3id.org/h2kg/examples/characterization/sem/parameter-record/workingdistance-9c028a3f7b> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/sem/instrument/scanning-electron-microscopy-f91c6b2669> .

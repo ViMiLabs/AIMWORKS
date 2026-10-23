@@ -1,0 +1,200 @@
+{
+  "variables": [
+    "caseKey",
+    "processLabel",
+    "inputDataLabel",
+    "outputDataLabel"
+  ],
+  "rows": [
+    {
+      "caseKey": "afm",
+      "processLabel": "Brightness adjustment",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "Post-processed image"
+    },
+    {
+      "caseKey": "afm",
+      "processLabel": "Contrast adjustment",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "3D Reconstruct",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "PPInt2"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "Artefact remove",
+      "inputDataLabel": "PPInt2",
+      "outputDataLabel": "PPInt3"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "Clean",
+      "inputDataLabel": "PPInt3",
+      "outputDataLabel": "PPInt4"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "DriftCorrect",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "Threshold",
+      "inputDataLabel": "PPInt4",
+      "outputDataLabel": "PPInt5"
+    },
+    {
+      "caseKey": "fib_sem",
+      "processLabel": "Visualize",
+      "inputDataLabel": "PPInt5",
+      "outputDataLabel": "Post-processed image"
+    },
+    {
+      "caseKey": "ic_sem",
+      "processLabel": "Scale set",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "Post-processed image"
+    },
+    {
+      "caseKey": "ic_sem",
+      "processLabel": "Thresholding",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "neutron_tomography",
+      "processLabel": "3DReconstruct",
+      "inputDataLabel": "PPInt2",
+      "outputDataLabel": "PPInt3"
+    },
+    {
+      "caseKey": "neutron_tomography",
+      "processLabel": "DarkFieldCorrect",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "PPInt2"
+    },
+    {
+      "caseKey": "neutron_tomography",
+      "processLabel": "Reconstruct",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "neutron_tomography",
+      "processLabel": "Threshold",
+      "inputDataLabel": "PPInt3",
+      "outputDataLabel": "Post-processed tomograph"
+    },
+    {
+      "caseKey": "sem",
+      "processLabel": "Brightness adjustment",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "Post-processed image"
+    },
+    {
+      "caseKey": "sem",
+      "processLabel": "Contrast adjustment",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "3DReconstruct",
+      "inputDataLabel": "PPInt4",
+      "outputDataLabel": "PPInt5"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "BackgroundCorrect",
+      "inputDataLabel": "PPInt3",
+      "outputDataLabel": "PPInt4"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "Convert",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "DarkFieldCorrect",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "PPInt2"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "FlatFieldCorrect",
+      "inputDataLabel": "PPInt2",
+      "outputDataLabel": "PPInt3"
+    },
+    {
+      "caseKey": "synchrotron_radiography",
+      "processLabel": "ManualSegment",
+      "inputDataLabel": "PPInt5",
+      "outputDataLabel": "Post-processed tomograph"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "3DReconstruct",
+      "inputDataLabel": "PPInt4",
+      "outputDataLabel": "PPInt5"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "BackgroundCorrect",
+      "inputDataLabel": "PPInt3",
+      "outputDataLabel": "PPInt4"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "Convert",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "PPInt1"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "DarkFieldCorrect",
+      "inputDataLabel": "PPInt1",
+      "outputDataLabel": "PPInt2"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "FlatFieldCorrect",
+      "inputDataLabel": "PPInt2",
+      "outputDataLabel": "PPInt3"
+    },
+    {
+      "caseKey": "synchrotron_tomography",
+      "processLabel": "ManualSegment",
+      "inputDataLabel": "PPInt5",
+      "outputDataLabel": "Post-processed tomograph"
+    },
+    {
+      "caseKey": "tem",
+      "processLabel": "Format conversion",
+      "inputDataLabel": "RawData",
+      "outputDataLabel": "Post-processed image"
+    }
+  ],
+  "comparison": {
+    "status": "pass",
+    "exact_match": true,
+    "expected_row_count": 29,
+    "observed_row_count": 29,
+    "matched_row_count": 29,
+    "missing_expected_row_count": 0,
+    "unexpected_row_count": 0,
+    "row_precision_percent": 100.0,
+    "row_recall_percent": 100.0,
+    "missing_expected_rows": [],
+    "unexpected_rows": [],
+    "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+  },
+  "representation_tier": "direct_native",
+  "rationale": "Direct processing input and output relations."
+}

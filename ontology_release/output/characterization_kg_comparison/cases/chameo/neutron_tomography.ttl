@@ -1,0 +1,425 @@
+@prefix chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/technique-description/neutron-tomography-7620709ef0> a chameo:Tomography ;
+    rdfs:label "Neutron tomography" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/workflow/neutron-tomography-fe2c98de23> a chameo:CharacterisationWorkflow ;
+    rdfs:label "Neutron tomography characterization workflow" ;
+    chameo:hasCharacterisationTask <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/3dreconstruct-0e8772eaf5>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/buy-04cba8ee34>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/buy-e10425e943>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/darkfieldcorrect-6f514092c2>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-082ebd059a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-97d06cb6fa>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-ce1266275c>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/hotpress-248c92bfab>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/integrate-9b5427f9d7>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/lasercut-e1b9d71981>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/mount-0432f21a3a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/mount-ea0f1c3d44>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/neutron-tomography-measurement-2b0ef8c760>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/reconstruct-c99fc9fac4>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/threshold-ad6f3b0909>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/tortuositymeasurement-381ac89c4a> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db> a chameo:CharacterisationMeasurementInstrument ;
+    rdfs:label "Neutron tomography instrument" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/beamsize-f2b5f16549> a chameo:MeasurementParameter ;
+    rdfs:label "BeamSize parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/binning-790bd5f685> a chameo:MeasurementParameter ;
+    rdfs:label "Binning parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/collimatordiameter-41cccccb68> a chameo:MeasurementParameter ;
+    rdfs:label "CollimatorDiameter parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/dataacquisitionrate-0ec33fe226> a chameo:MeasurementParameter ;
+    rdfs:label "DataAcquisitionRate parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/exposuretime-6fe9279fb9> a chameo:MeasurementParameter ;
+    rdfs:label "ExposureTime parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/fieldofview-afc65ed49a> a chameo:MeasurementParameter ;
+    rdfs:label "FieldOfView parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/focus-c780d0d16a> a chameo:MeasurementParameter ;
+    rdfs:label "Focus parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/humidity-bd6fc4de93> a chameo:MeasurementParameter ;
+    rdfs:label "Humidity parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/imagefrequency-b9aa5717c0> a chameo:MeasurementParameter ;
+    rdfs:label "ImageFrequency parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/maximalwavelenght-d82659605d> a chameo:MeasurementParameter ;
+    rdfs:label "MaximalWavelenght parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/neutronflux-e08f9f2ef2> a chameo:MeasurementParameter ;
+    rdfs:label "NeutronFlux parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pinholesampledistance-7a81c2b3e2> a chameo:MeasurementParameter ;
+    rdfs:label "PinholeSampleDistance parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pinholesize-5634b5bb5f> a chameo:MeasurementParameter ;
+    rdfs:label "PinholeSize parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pixelsize-53cec8cc7a> a chameo:MeasurementParameter ;
+    rdfs:label "PixelSize parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pressure-3969d1a4c6> a chameo:MeasurementParameter ;
+    rdfs:label "Pressure parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pressure-ebda0c0655> a chameo:MeasurementParameter ;
+    rdfs:label "Pressure parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/projectionnumber-5992f065fd> a chameo:MeasurementParameter ;
+    rdfs:label "ProjectionNumber parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/ptloading-98d5c44c36> a chameo:MeasurementParameter ;
+    rdfs:label "PtLoading parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/resolution-47506084c8> a chameo:MeasurementParameter ;
+    rdfs:label "Resolution parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/sampledetectordistance-04390c3fee> a chameo:MeasurementParameter ;
+    rdfs:label "SampleDetectorDistance parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/scintillatorthickness-7b410f59bb> a chameo:MeasurementParameter ;
+    rdfs:label "ScintillatorThickness parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/scintillatorthickness-b397cd1d7d> a chameo:MeasurementParameter ;
+    rdfs:label "ScintillatorThickness parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/spatialresolution-129ee61a08> a chameo:MeasurementParameter ;
+    rdfs:label "SpatialResolution parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/temperature-5dbd16005a> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/temperature-62115dba84> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/time-cd9d051c2a> a chameo:MeasurementParameter ;
+    rdfs:label "Time parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/3dreconstruct-b58c2b8f1a> a chameo:DataPreparation ;
+    rdfs:label "3DReconstruct" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint2-06386f9c83> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint3-179081ea72> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/avizo-4f4f1e7e93> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/darkfieldcorrect-f831cdd9a1> a chameo:DataPreparation ;
+    rdfs:label "DarkFieldCorrect" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint1-48b60e84b9> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint2-06386f9c83> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/reconstruct-097f925b58> a chameo:DataPreparation ;
+    rdfs:label "Reconstruct" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint1-48b60e84b9> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/astra-toolbox-e0d2258a7e> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/threshold-9f0fdfb9b6> a chameo:DataPreparation ;
+    rdfs:label "Threshold" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint3-179081ea72> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-107-tortuosity-factor-f13b9be208> a qudt:QuantityValue ;
+    rdfs:label "1.5 UNITLESS" ;
+    qudt:numericValue 1.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-109-averagearea-162cb12156> a qudt:QuantityValue ;
+    rdfs:label "45 cm2" ;
+    qudt:numericValue 45.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Area> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM2> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-110-averagenumber-c7563992cc> a qudt:QuantityValue ;
+    rdfs:label "45 UNITLESS" ;
+    qudt:numericValue 45.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagearea-e84dc08c08> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "AverageArea result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagebarycenter-5b40046aee> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "AverageBaryCenter result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagenumber-9d95037c46> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "AverageNumber result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/tortuosity-factor-7cdd46ccf9> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "Tortuosity Factor result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/custom-built-holder-69b48553be> a chameo:Sample ;
+    rdfs:label "Custom-built holder" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/gas-diffusion-electrode-0e694eb1a6> a chameo:Sample ;
+    rdfs:label "Gas diffusion electrode" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/membrane-f999dda7fa> a chameo:Sample ;
+    rdfs:label "Membrane" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/slip-ring-bb07916cff> a chameo:Sample ;
+    rdfs:label "Slip ring" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/software/astra-toolbox-e0d2258a7e> a chameo:CharacterisationSoftware ;
+    rdfs:label "Astra Toolbox" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239> a chameo:CharacterisationSoftware ;
+    rdfs:label "MATLAB TauFactor" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/integrate-52b2d72719> a chameo:SamplePreparation ;
+    rdfs:label "Integrate" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/slip-ring-bb07916cff>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/spint1-0f9e65f358> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/mount-284882002c> a chameo:SamplePreparation ;
+    rdfs:label "Mount" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/spint1-0f9e65f358> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/custom-built-holder-69b48553be> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/mount-e05cc5d8fc> a chameo:SamplePreparation ;
+    rdfs:label "Mount" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/spint1-0f9e65f358> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/mea-0a67f0018b> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/buy-21870c5f47> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint1-2235a2f659> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/ptloading-98d5c44c36> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/gas-diffusion-electrode-0e694eb1a6> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/buy-2f2fabdf14> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint2-a29061cd9c> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/membrane-f999dda7fa> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> a chameo:SamplePreparation ;
+    rdfs:label "HotPress" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/mea-0a67f0018b> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pressure-ebda0c0655>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/temperature-5dbd16005a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/time-cd9d051c2a> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint1-2235a2f659>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint3-90ad8e596d> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/lasercut-c5f22226a0> a chameo:SamplePreparation ;
+    rdfs:label "LaserCut" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint3-90ad8e596d> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint2-a29061cd9c> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/3dreconstruct-0e8772eaf5> a chameo:CharacterisationTask ;
+    rdfs:label "3DReconstruct task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/3dreconstruct-b58c2b8f1a> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/buy-04cba8ee34> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/buy-2f2fabdf14> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/buy-e10425e943> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/buy-21870c5f47> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/darkfieldcorrect-6f514092c2> a chameo:CharacterisationTask ;
+    rdfs:label "DarkFieldCorrect task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/darkfieldcorrect-f831cdd9a1> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-082ebd059a> a chameo:CharacterisationTask ;
+    rdfs:label "DropletAnalysis task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-97d06cb6fa> a chameo:CharacterisationTask ;
+    rdfs:label "DropletAnalysis task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/dropletanalysis-ce1266275c> a chameo:CharacterisationTask ;
+    rdfs:label "DropletAnalysis task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/hotpress-248c92bfab> a chameo:CharacterisationTask ;
+    rdfs:label "HotPress task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/integrate-9b5427f9d7> a chameo:CharacterisationTask ;
+    rdfs:label "Integrate task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/integrate-52b2d72719> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/lasercut-e1b9d71981> a chameo:CharacterisationTask ;
+    rdfs:label "LaserCut task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/syn-process/lasercut-c5f22226a0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/mount-0432f21a3a> a chameo:CharacterisationTask ;
+    rdfs:label "Mount task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/mount-e05cc5d8fc> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/mount-ea0f1c3d44> a chameo:CharacterisationTask ;
+    rdfs:label "Mount task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/sp-process/mount-284882002c> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/neutron-tomography-measurement-2b0ef8c760> a chameo:CharacterisationTask ;
+    rdfs:label "Neutron tomography measurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/reconstruct-c99fc9fac4> a chameo:CharacterisationTask ;
+    rdfs:label "Reconstruct task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/reconstruct-097f925b58> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/threshold-ad6f3b0909> a chameo:CharacterisationTask ;
+    rdfs:label "Threshold task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/pre-process/threshold-9f0fdfb9b6> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/task-description/tortuositymeasurement-381ac89c4a> a chameo:CharacterisationTask ;
+    rdfs:label "TortuosityMeasurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "DropletAnalysis" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagenumber-01c7c85d34> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagenumber-9d95037c46> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "DropletAnalysis" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagebarycenter-87bf002aaa> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagebarycenter-5b40046aee> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "DropletAnalysis" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagearea-d124ed87c4> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/averagearea-e84dc08c08> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "TortuosityMeasurement" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/tortuosity-factor-43a4911d9a> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/result-data/tortuosity-factor-7cdd46ccf9> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagearea-d124ed87c4> a chameo:CharacterisationProperty ;
+    rdfs:label "AverageArea" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-109-averagearea-162cb12156> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagebarycenter-87bf002aaa> a chameo:CharacterisationProperty ;
+    rdfs:label "AverageBaryCenter" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagenumber-01c7c85d34> a chameo:CharacterisationProperty ;
+    rdfs:label "AverageNumber" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-110-averagenumber-c7563992cc> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/tortuosity-factor-43a4911d9a> a chameo:CharacterisationProperty ;
+    rdfs:label "Tortuosity Factor" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/neutron_tomography/quantity-value/result-107-tortuosity-factor-f13b9be208> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint1-48b60e84b9> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt1" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint2-06386f9c83> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt2" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/data/ppint3-179081ea72> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt3" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e> a chameo:CharacterisationData,
+        chameo:RawData ;
+    rdfs:label "RawData" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> a chameo:CharacterisationMeasurementProcess ;
+    rdfs:label "Neutron tomography measurement" ;
+    chameo:hasCharacterisationMeasurementInstrument <https://example.org/aimworks/chameo-characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/neutron_tomography/data/rawdata-c9cd930f9e> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/beamsize-f2b5f16549>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/binning-790bd5f685>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/collimatordiameter-41cccccb68>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/dataacquisitionrate-0ec33fe226>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/exposuretime-6fe9279fb9>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/fieldofview-afc65ed49a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/focus-c780d0d16a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/humidity-bd6fc4de93>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/imagefrequency-b9aa5717c0>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/maximalwavelenght-d82659605d>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/neutronflux-e08f9f2ef2>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pinholesampledistance-7a81c2b3e2>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pinholesize-5634b5bb5f>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pixelsize-53cec8cc7a>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/pressure-3969d1a4c6>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/projectionnumber-5992f065fd>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/resolution-47506084c8>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/sampledetectordistance-04390c3fee>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/scintillatorthickness-7b410f59bb>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/scintillatorthickness-b397cd1d7d>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/spatialresolution-129ee61a08>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/measurement-parameter/temperature-62115dba84> ;
+    chameo:hasMeasurementSample <https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/mea-0a67f0018b> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "MEA" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sample-28dc586868> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "bulk material" ;
+    chameo:hasCharacterisationProperty <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagearea-d124ed87c4>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagebarycenter-87bf002aaa>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/averagenumber-01c7c85d34>,
+        <https://example.org/aimworks/chameo-characterization/neutron_tomography/characterisation-property/tortuosity-factor-43a4911d9a> .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint1-2235a2f659> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt1" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint2-a29061cd9c> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt2" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/sint3-90ad8e596d> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt3" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/sample/spint1-0f9e65f358> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt1" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/software/labelanalysis-bb03852da0> a chameo:CharacterisationSoftware ;
+    rdfs:label "LabelAnalysis" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/software/avizo-4f4f1e7e93> a chameo:CharacterisationSoftware ;
+    rdfs:label "Avizo" .
+
+<https://example.org/aimworks/chameo-characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "Post-processed tomograph" .

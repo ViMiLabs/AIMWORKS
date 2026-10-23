@@ -1,0 +1,19 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?parameterLabel ?value ?unit WHERE {
+  GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/afm> {
+    ?measurement a chameo:CharacterisationMeasurementProcess ; chameo:hasMeasurementParameter ?parameter .
+    ?parameter rdfs:label ?parameterLabel .
+    OPTIONAL {
+      ?parameter emmo:EMMO_e1097637_70d2_4895_973f_2396f04fa204 ?property .
+      ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv .
+      ?qv qudt:numericValue ?value ; qudt:unit ?unit .
+    }
+
+  }
+} ORDER BY ?parameterLabel

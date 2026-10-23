@@ -21,6 +21,7 @@ except Exception:  # pragma: no cover
     OWL = None  # type: ignore[assignment]
 
 from .classify import classify_resources
+from .characterization_comparison_docs import comparison_body, comparison_css, comparison_js
 from .characterization_docs import characterization_body, characterization_css, characterization_js
 from .hdo import load_hdo_alignment_report
 from .io import load_json_document, merge_document_items
@@ -240,6 +241,8 @@ def build_docs(
     evaluation = load_json(evaluation_path) if evaluation_path.exists() else {}
     characterization_report_path = output_dir.parent / "characterization_kg" / "validation_report.json"
     characterization_report = load_json(characterization_report_path) if characterization_report_path.exists() else None
+    comparison_report_path = output_dir.parent / "characterization_kg_comparison" / "native_benchmark_report.json"
+    comparison_report = load_json(comparison_report_path) if comparison_report_path.exists() else None
     odk = load_odk_manifest(output_dir.parent)
     hdo = load_hdo_alignment_report(output_dir.parent / "reports")
     release = _release_snapshot_for_docs(output_dir, fair_snapshot, odk)
@@ -251,6 +254,7 @@ def build_docs(
         (output_dir / "pages" / "explore.html", "Explore H2KG", _explore_body(project, explorer, output_dir / "pages" / "explore.html", output_dir)),
         (output_dir / "pages" / "decode-workflows.html", "Explore DECODE Workflows", _decode_workflows_body(decode, output_dir / "pages" / "decode-workflows.html", output_dir)),
         (output_dir / "pages" / "characterization-knowledge-graph.html", "Characterization Knowledge Graph", characterization_body(characterization_report, output_dir / "pages" / "characterization-knowledge-graph.html", output_dir)),
+        (output_dir / "pages" / "characterization-benchmark.html", "H2KG-CHAMEO Characterization Benchmark", comparison_body(comparison_report, output_dir / "pages" / "characterization-benchmark.html", output_dir)),
         (output_dir / "pages" / "reference.html", "H2KG Namespace Reference", _namespace_reference_body(project, namespace_terms, output_dir / "pages" / "reference.html", output_dir)),
         (output_dir / "pages" / "core-reference.html", "Core H2KG Reference", _core_reference_body(project, core_terms, output_dir / "pages" / "core-reference.html", output_dir)),
         (output_dir / "pages" / "class-index.html", "Class Index", _class_body(classes)),
@@ -293,6 +297,13 @@ def build_docs(
                 f'<link rel="stylesheet" href="{kg_css}">\n'
                 f'  <script defer src="{kg_js}"></script>'
             )
+        if path.name == "characterization-benchmark.html":
+            comparison_css_href = _relative_href(path, output_dir / "assets" / "characterization-comparison.css")
+            comparison_js_href = _relative_href(path, output_dir / "assets" / "characterization-comparison.js")
+            extra_head = (
+                f'<link rel="stylesheet" href="{comparison_css_href}">\n'
+                f'  <script defer src="{comparison_js_href}"></script>'
+            )
         write_text(path, _page_template(project, title, body, path, output_dir, extra_head=extra_head))
 
     write_text(output_dir / "index.html", _legacy_profile_home())
@@ -312,6 +323,12 @@ def build_docs(
         if characterization_target.exists():
             shutil.rmtree(characterization_target)
         shutil.copytree(characterization_dir, characterization_target)
+    comparison_dir = output_dir.parent / "characterization_kg_comparison"
+    if comparison_dir.exists():
+        comparison_target = output_dir / "characterization_kg_comparison"
+        if comparison_target.exists():
+            shutil.rmtree(comparison_target)
+        shutil.copytree(comparison_dir, comparison_target)
     examples_dir = output_dir.parent / "examples"
     if examples_dir.exists():
         target_examples = output_dir / "examples"
@@ -329,6 +346,8 @@ def build_docs(
     write_text(output_dir / "assets" / "decode-workflows.js", _decode_workflows_js())
     write_text(output_dir / "assets" / "characterization-kg.css", characterization_css())
     write_text(output_dir / "assets" / "characterization-kg.js", characterization_js())
+    write_text(output_dir / "assets" / "characterization-comparison.css", comparison_css())
+    write_text(output_dir / "assets" / "characterization-comparison.js", comparison_js())
     dump_json(
         output_dir / "search-index.json",
         {
@@ -1617,6 +1636,7 @@ def _legacy_profile_home() -> str:
         <div class="links">
           <a href="./pages/explore.html">Explore H2KG</a>
           <a href="./pages/characterization-knowledge-graph.html">Characterization KG</a>
+          <a href="./pages/characterization-benchmark.html">H2KG-CHAMEO benchmark</a>
           <a href="./hydrogen-ontology.html">Open full reference</a>
           <a href="./pemfc/index.html">Explore PEMFC</a>
           <a href="./pemwe/index.html">Explore PEMWE</a>

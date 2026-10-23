@@ -1,0 +1,495 @@
+@prefix chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#> .
+@prefix emmo: <https://w3id.org/emmo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/technique-description/synchrotron-x-ray-radiography-a0211db193> a chameo:Tomography ;
+    rdfs:label "Synchrotron X-ray radiography" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/workflow/synchrotron-x-ray-radiography-64e20d7efd> a chameo:CharacterisationWorkflow ;
+    rdfs:label "Synchrotron X-ray radiography characterization workflow" ;
+    chameo:hasCharacterisationTask <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/3dreconstruct-f9d9d582d5>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/backgroundcorrect-14a1c8b1fd>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/beampathdistancemeasurement-fa21171bd4>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/bubble-3e32e0eb70>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-07bb62f69c>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-5adfe40b34>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-d8cf310fe7>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/convert-bd2d179e31>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/cool-4b5538d3e1>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/cut-e74d8450e1>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/darkfieldcorrect-1aba2d4b32>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/decayfactorcalculation-27be55f386>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/dissolve-03f8d9a748>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/dissolve-69f0c06ad2>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/electrodesegmentratiocalculation-267ef4b728>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/electrolytesaturationmeasurement-64033f5ff8>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/flatfieldcorrect-17ffe02ab0>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/heat-0d2da7d2d7>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/manualsegment-7e8d9608d3>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/synchrotron-x-ray-radiography-measurement-16292f046e> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d> a chameo:CharacterisationMeasurementInstrument ;
+    rdfs:label "Synchrotron X-ray radiography instrument" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/binning-0debb9eeba> a chameo:MeasurementParameter ;
+    rdfs:label "Binning parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/cas-number-7ed29e3786> a chameo:MeasurementParameter ;
+    rdfs:label "CAS-number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/cas-number-fb6a3f4329> a chameo:MeasurementParameter ;
+    rdfs:label "CAS-number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/dataadquisitionrate-0014fe7545> a chameo:MeasurementParameter ;
+    rdfs:label "DataAdquisitionRate parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/distancesampledetector-7bc73ab99d> a chameo:MeasurementParameter ;
+    rdfs:label "DistanceSampleDetector parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/distancesamplesource-fde8103fe2> a chameo:MeasurementParameter ;
+    rdfs:label "DistanceSampleSource parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/energyresolution-5961aa777e> a chameo:MeasurementParameter ;
+    rdfs:label "EnergyResolution parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/exposuretime-8a7f9419b4> a chameo:MeasurementParameter ;
+    rdfs:label "ExposureTime parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/fieldofviewx-b22e3e2da9> a chameo:MeasurementParameter ;
+    rdfs:label "FieldOfViewX parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/fieldofviewy-bf87da33dd> a chameo:MeasurementParameter ;
+    rdfs:label "FieldOfViewY parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/format-a639a62a73> a chameo:MeasurementParameter ;
+    rdfs:label "Format parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/humidity-a0d10fa142> a chameo:MeasurementParameter ;
+    rdfs:label "Humidity parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/loot-number-4294697552> a chameo:MeasurementParameter ;
+    rdfs:label "Loot number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/loot-number-efc3d37d3c> a chameo:MeasurementParameter ;
+    rdfs:label "Loot number parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/magnification-3177b771d3> a chameo:MeasurementParameter ;
+    rdfs:label "Magnification parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofdarkfields-217f903236> a chameo:MeasurementParameter ;
+    rdfs:label "NumberOfDarkFields parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofflatfields-69bd87c4ed> a chameo:MeasurementParameter ;
+    rdfs:label "NumberOfFlatFields parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofradiograms-5d4c604f81> a chameo:MeasurementParameter ;
+    rdfs:label "NumberOfRadiograms parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/pixelsize-ae06a4a72f> a chameo:MeasurementParameter ;
+    rdfs:label "PixelSize parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/positionreferences-ddea0d8dbf> a chameo:MeasurementParameter ;
+    rdfs:label "PositionReferences parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/pressure-a30e263f35> a chameo:MeasurementParameter ;
+    rdfs:label "Pressure parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/rotationdegree-b18dcd7d10> a chameo:MeasurementParameter ;
+    rdfs:label "RotationDegree parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/sampleelevation-f188808efd> a chameo:MeasurementParameter ;
+    rdfs:label "SampleElevation parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/scintillatorthickness-ed0cd8126d> a chameo:MeasurementParameter ;
+    rdfs:label "ScintillatorThickness parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/sourcemagneticfield-97135c7956> a chameo:MeasurementParameter ;
+    rdfs:label "SourceMagneticField parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/spatialresolution-1dfca8146a> a chameo:MeasurementParameter ;
+    rdfs:label "SpatialResolution parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-5bbce539ed> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-c68111dc7f> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-e6e68ebfae> a chameo:MeasurementParameter ;
+    rdfs:label "Temperature parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/time-b04fdc2876> a chameo:MeasurementParameter ;
+    rdfs:label "Time parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/timelapse-b154ba3b5b> a chameo:MeasurementParameter ;
+    rdfs:label "TimeLapse parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/xrayenergy-2d351e083c> a chameo:MeasurementParameter ;
+    rdfs:label "XrayEnergy parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/xyz-a88a414a4f> a chameo:MeasurementParameter ;
+    rdfs:label "XYZ parameter record" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/3dreconstruct-e970826e5d> a chameo:DataPreparation ;
+    rdfs:label "3DReconstruct" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint4-36adb270e7> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint5-5ecb29b257> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/avizo-d0c60d5b60> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/backgroundcorrect-363d4505be> a chameo:DataPreparation ;
+    rdfs:label "BackgroundCorrect" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint3-a12f82fc66> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint4-36adb270e7> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/convert-04d39dc7a4> a chameo:DataPreparation ;
+    rdfs:label "Convert" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint1-4f93f45a06> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/format-a639a62a73> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/darkfieldcorrect-4dc6577d03> a chameo:DataPreparation ;
+    rdfs:label "DarkFieldCorrect" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint1-4f93f45a06> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint2-b3235d280a> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/flatfieldcorrect-e4bd66bb06> a chameo:DataPreparation ;
+    rdfs:label "FlatFieldCorrect" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint2-b3235d280a> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint3-a12f82fc66> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/manualsegment-a3c94c72a0> a chameo:DataPreparation ;
+    rdfs:label "ManualSegment" ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint5-5ecb29b257> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-116-decay-factor-cd877a79f2> a qudt:QuantityValue ;
+    rdfs:label "51 ms" ;
+    qudt:numericValue 51.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliSEC> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-117-real-distance-in-beam-path-e6b5d4b28e> a qudt:QuantityValue ;
+    rdfs:label "99 cm" ;
+    qudt:numericValue 99.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-118-electrolyte-saturation-2420e694a0> a qudt:QuantityValue ;
+    rdfs:label "47 mol/l" ;
+    qudt:numericValue 47.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration> ;
+    qudt:unit <http://qudt.org/vocab/unit/MOL-PER-L> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/carbonfelt-electrolyte-air-ratio-b55cc6e16d> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "carbonfelt/electrolyte/air ratio result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/decay-factor-c7b8993d95> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "Decay factor result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/electrolyte-saturation-4b26f51054> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "Electrolyte saturation result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/real-distance-in-beam-path-918e3890f4> a chameo:CharacterisationData,
+        chameo:SecondaryData ;
+    rdfs:label "Real distance in beam path result" ;
+    prov:wasGeneratedBy <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/carbon-felt-electrode-88a6a931f8> a chameo:Sample ;
+    rdfs:label "Carbon felt electrode" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint1-f9939d04e2> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt1" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint5-825c93d700> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt5" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/avizo-d0c60d5b60> a chameo:CharacterisationSoftware ;
+    rdfs:label "Avizo" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/cool-304fdef092> a chameo:SamplePreparation ;
+    rdfs:label "Cool" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint2-58f3371659> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-5bbce539ed> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint1-e660afa909> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/cut-0b595458ac> a chameo:SamplePreparation ;
+    rdfs:label "Cut" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/xyz-a88a414a4f> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint2-58f3371659> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/heat-900845e6d5> a chameo:SamplePreparation ;
+    rdfs:label "Heat" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint1-e660afa909> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-c68111dc7f>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/time-b04fdc2876> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/cell-cd292158c7> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/bubble-9c6374fb99> a chameo:SamplePreparation ;
+    rdfs:label "Bubble" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/cell-cd292158c7> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint4-207f628315> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-716976399d> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint3-d225f19606> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/cas-number-7ed29e3786>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/loot-number-4294697552> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/voso4-922bc46dbc> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-8345954830> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint1-f9939d04e2> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/carbon-felt-electrode-88a6a931f8> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc> a chameo:SamplePreparation ;
+    rdfs:label "Buy" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint2-a90618ed29> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/cas-number-fb6a3f4329>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/loot-number-efc3d37d3c> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/voso4-922bc46dbc> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/dissolve-7f12c0a0d1> a chameo:SamplePreparation ;
+    rdfs:label "Dissolve" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint5-825c93d700> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint3-d225f19606> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/dissolve-a970a0a6ae> a chameo:SamplePreparation ;
+    rdfs:label "Dissolve" ;
+    emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint4-207f628315> ;
+    chameo:hasSampleForPreparation <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint2-a90618ed29> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/3dreconstruct-f9d9d582d5> a chameo:CharacterisationTask ;
+    rdfs:label "3DReconstruct task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/3dreconstruct-e970826e5d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/backgroundcorrect-14a1c8b1fd> a chameo:CharacterisationTask ;
+    rdfs:label "BackgroundCorrect task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/backgroundcorrect-363d4505be> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/beampathdistancemeasurement-fa21171bd4> a chameo:CharacterisationTask ;
+    rdfs:label "BeamPathDistanceMeasurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/bubble-3e32e0eb70> a chameo:CharacterisationTask ;
+    rdfs:label "Bubble task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/bubble-9c6374fb99> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-07bb62f69c> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-8345954830> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-5adfe40b34> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-716976399d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/buy-d8cf310fe7> a chameo:CharacterisationTask ;
+    rdfs:label "Buy task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/buy-90bd58d8dc> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/convert-bd2d179e31> a chameo:CharacterisationTask ;
+    rdfs:label "Convert task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/convert-04d39dc7a4> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/cool-4b5538d3e1> a chameo:CharacterisationTask ;
+    rdfs:label "Cool task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/cool-304fdef092> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/cut-e74d8450e1> a chameo:CharacterisationTask ;
+    rdfs:label "Cut task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/cut-0b595458ac> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/darkfieldcorrect-1aba2d4b32> a chameo:CharacterisationTask ;
+    rdfs:label "DarkFieldCorrect task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/darkfieldcorrect-4dc6577d03> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/decayfactorcalculation-27be55f386> a chameo:CharacterisationTask ;
+    rdfs:label "DecayFactorCalculation task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/dissolve-03f8d9a748> a chameo:CharacterisationTask ;
+    rdfs:label "Dissolve task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/dissolve-a970a0a6ae> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/dissolve-69f0c06ad2> a chameo:CharacterisationTask ;
+    rdfs:label "Dissolve task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/syn-process/dissolve-7f12c0a0d1> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/electrodesegmentratiocalculation-267ef4b728> a chameo:CharacterisationTask ;
+    rdfs:label "ElectrodeSegmentRatioCalculation task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/electrolytesaturationmeasurement-64033f5ff8> a chameo:CharacterisationTask ;
+    rdfs:label "ElectrolyteSaturationMeasurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/flatfieldcorrect-17ffe02ab0> a chameo:CharacterisationTask ;
+    rdfs:label "FlatFieldCorrect task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/flatfieldcorrect-e4bd66bb06> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/heat-0d2da7d2d7> a chameo:CharacterisationTask ;
+    rdfs:label "Heat task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sp-process/heat-900845e6d5> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/manualsegment-7e8d9608d3> a chameo:CharacterisationTask ;
+    rdfs:label "ManualSegment task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/pre-process/manualsegment-a3c94c72a0> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/task-description/synchrotron-x-ray-radiography-measurement-16292f046e> a chameo:CharacterisationTask ;
+    rdfs:label "Synchrotron X-ray radiography measurement task" ;
+    emmo:EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/beampathdistancemeasurement-2eb5fbdc6c> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "BeamPathDistanceMeasurement" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/real-distance-in-beam-path-b29256b434> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/real-distance-in-beam-path-918e3890f4> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/decayfactorcalculation-1e626332fd> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "DecayFactorCalculation" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/decay-factor-397c61bde0> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/decay-factor-c7b8993d95> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrodesegmentratiocalculation-d0882f552d> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "ElectrodeSegmentRatioCalculation" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/carbonfelt-electrolyte-air-ratio-84d59a975e> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/carbonfelt-electrolyte-air-ratio-b55cc6e16d> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/anal-process/electrolytesaturationmeasurement-0cec937538> a emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069,
+        chameo:DataAnalysis ;
+    rdfs:label "ElectrolyteSaturationMeasurement" ;
+    emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/electrolyte-saturation-429c378ae9> ;
+    chameo:hasCharacterisationInput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/result-data/electrolyte-saturation-4b26f51054> ;
+    chameo:hasCharacterisationSoftware <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/imagej-b4e7df961d> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/carbonfelt-electrolyte-air-ratio-84d59a975e> a chameo:CharacterisationProperty ;
+    rdfs:label "carbonfelt/electrolyte/air ratio" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/decay-factor-397c61bde0> a chameo:CharacterisationProperty ;
+    rdfs:label "Decay factor" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-116-decay-factor-cd877a79f2> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/electrolyte-saturation-429c378ae9> a chameo:CharacterisationProperty ;
+    rdfs:label "Electrolyte saturation" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-118-electrolyte-saturation-2420e694a0> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/real-distance-in-beam-path-b29256b434> a chameo:CharacterisationProperty ;
+    rdfs:label "Real distance in beam path" ;
+    emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/quantity-value/result-117-real-distance-in-beam-path-e6b5d4b28e> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint1-4f93f45a06> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt1" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint2-b3235d280a> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt2" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint3-a12f82fc66> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt3" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint4-36adb270e7> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt4" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/ppint5-5ecb29b257> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "PPInt5" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> a chameo:CharacterisationData,
+        chameo:RawData ;
+    rdfs:label "RawData" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement/synchrotron-x-ray-radiography-ee5c1c25d2> a chameo:CharacterisationMeasurementProcess ;
+    rdfs:label "Synchrotron X-ray radiography measurement" ;
+    chameo:hasCharacterisationMeasurementInstrument <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/instrument/synchrotron-x-ray-radiography-4dc358f36d> ;
+    chameo:hasCharacterisationOutput <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/rawdata-9cbb86b0e8> ;
+    chameo:hasMeasurementParameter <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/binning-0debb9eeba>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/dataadquisitionrate-0014fe7545>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/distancesampledetector-7bc73ab99d>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/distancesamplesource-fde8103fe2>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/energyresolution-5961aa777e>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/exposuretime-8a7f9419b4>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/fieldofviewx-b22e3e2da9>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/fieldofviewy-bf87da33dd>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/humidity-a0d10fa142>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/magnification-3177b771d3>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofdarkfields-217f903236>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofflatfields-69bd87c4ed>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/numberofradiograms-5d4c604f81>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/pixelsize-ae06a4a72f>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/positionreferences-ddea0d8dbf>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/pressure-a30e263f35>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/rotationdegree-b18dcd7d10>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/sampleelevation-f188808efd>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/scintillatorthickness-ed0cd8126d>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/sourcemagneticfield-97135c7956>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/spatialresolution-1dfca8146a>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/temperature-e6e68ebfae>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/timelapse-b154ba3b5b>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/measurement-parameter/xrayenergy-2d351e083c> ;
+    chameo:hasMeasurementSample <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/cell-cd292158c7> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "Cell" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sample-e46568d6a1> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "bulk material" ;
+    chameo:hasCharacterisationProperty <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/carbonfelt-electrolyte-air-ratio-84d59a975e>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/decay-factor-397c61bde0>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/electrolyte-saturation-429c378ae9>,
+        <https://example.org/aimworks/chameo-characterization/synchrotron_radiography/characterisation-property/real-distance-in-beam-path-b29256b434> .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint2-a90618ed29> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt2" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint3-d225f19606> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt3" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/sint4-207f628315> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SInt4" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint1-e660afa909> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt1" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/spint2-58f3371659> a chameo:PreparedSample,
+        chameo:Sample ;
+    rdfs:label "SPInt2" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/sample/voso4-922bc46dbc> a chameo:Sample ;
+    rdfs:label "VOSO4" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/software/imagej-b4e7df961d> a chameo:CharacterisationSoftware ;
+    rdfs:label "ImageJ" .
+
+<https://example.org/aimworks/chameo-characterization/synchrotron_radiography/data/post-processed-tomograph-b466014ee4> a chameo:CharacterisationData,
+        chameo:PrimaryData ;
+    rdfs:label "Post-processed tomograph" .

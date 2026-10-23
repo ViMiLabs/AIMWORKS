@@ -1,0 +1,634 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/workflow> a h2kg:Process ;
+    rdfs:label "Neutron tomography characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/3dreconstruct-b58c2b8f1a>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/darkfieldcorrect-f831cdd9a1>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/reconstruct-097f925b58>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/threshold-9f0fdfb9b6>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/integrate-52b2d72719>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/mount-284882002c>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/mount-e05cc5d8fc>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/buy-21870c5f47>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/buy-2f2fabdf14>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/lasercut-c5f22226a0> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "AverageArea result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagearea-6771dd1ca2> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "AverageBaryCenter result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagebarycenter-a621f66bc6> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "AverageNumber result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagenumber-99996b4cab> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/tortuosity-factor-3bf7ec4dcd> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Tortuosity Factor result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/tortuosity-factor-25e6df3020> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db> a h2kg:Instrument,
+        h2kg:NeutronTomographyInstrument ;
+    rdfs:label "Neutron tomography instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/custom-built-holder-c84eddd48e> a h2kg:Matter ;
+    rdfs:label "Custom-built holder" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/gas-diffusion-electrode-be2ff316b4> a h2kg:Matter ;
+    rdfs:label "Gas diffusion electrode" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/membrane-df355aefcd> a h2kg:Matter ;
+    rdfs:label "Membrane" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/slip-ring-326eb586e6> a h2kg:Matter ;
+    rdfs:label "Slip ring" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/beamsize-69b262fb97> a h2kg:Parameter ;
+    rdfs:label "BeamSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/beamsize-4e35045c81> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/binning-0b815dcce5> a h2kg:Parameter ;
+    rdfs:label "Binning parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/binning-b74d69cc08> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/collimatordiameter-5792f4125f> a h2kg:Parameter ;
+    rdfs:label "CollimatorDiameter parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/collimatordiameter-f76d0720d2> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/dataacquisitionrate-530272afa6> a h2kg:Parameter ;
+    rdfs:label "DataAcquisitionRate parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/dataacquisitionrate-ea3ab5dfbb> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/exposuretime-b2900d24cf> a h2kg:Parameter ;
+    rdfs:label "ExposureTime parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/exposuretime-a3b7018195> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/fieldofview-dd746a4cf1> a h2kg:Parameter ;
+    rdfs:label "FieldOfView parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/fieldofview-9a11dbdbd9> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/focus-52907caf85> a h2kg:Parameter ;
+    rdfs:label "Focus parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/focus-0e9cd71d73> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/humidity-1a1a614ec0> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/humidity-1feb6e1fee> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/imagefrequency-e3ed2a48ee> a h2kg:Parameter ;
+    rdfs:label "ImageFrequency parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/imagefrequency-2ea3399e25> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/maximalwavelenght-72a96c6316> a h2kg:Parameter ;
+    rdfs:label "MaximalWavelenght parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/maximalwavelenght-5c9954c448> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/neutronflux-0298f3a4ec> a h2kg:Parameter ;
+    rdfs:label "NeutronFlux parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/neutronflux-f2a1a5f618> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pinholesampledistance-693a27f8ba> a h2kg:Parameter ;
+    rdfs:label "PinholeSampleDistance parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pinholesampledistance-bc97d522d0> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pinholesize-b27affab31> a h2kg:Parameter ;
+    rdfs:label "PinholeSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pinholesize-56ea0a92e4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pixelsize-b2430c7058> a h2kg:Parameter ;
+    rdfs:label "PixelSize parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pixelsize-a36c4edf34> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pressure-7f585576cf> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pressure-aeae803047> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pressure-9bb11ff3aa> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pressure-2dfbb207d1> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/projectionnumber-c25eaf9a38> a h2kg:Parameter ;
+    rdfs:label "ProjectionNumber parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/projectionnumber-0fe977d07e> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/ptloading-c4adf13801> a h2kg:Parameter ;
+    rdfs:label "PtLoading parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/ptloading-cdb620e291> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/resolution-f3a3674331> a h2kg:Parameter ;
+    rdfs:label "Resolution parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/resolution-55f459f281> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/sampledetectordistance-5c46a436a1> a h2kg:Parameter ;
+    rdfs:label "SampleDetectorDistance parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/sampledetectordistance-c51ca29bc5> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/scintillatorthickness-e862e6760a> a h2kg:Parameter ;
+    rdfs:label "ScintillatorThickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/scintillatorthickness-bc6bc4851c> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/scintillatorthickness-e906e9eb63> a h2kg:Parameter ;
+    rdfs:label "ScintillatorThickness parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/scintillatorthickness-cd25810275> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/spatialresolution-32788548d5> a h2kg:Parameter ;
+    rdfs:label "SpatialResolution parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/spatialresolution-3186382b4b> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/temperature-082ff457e8> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/temperature-4dfa216bcf> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/temperature-578628b34d> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/temperature-d5f63288ff> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/time-169311a77a> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/time-da9646327d> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/3dreconstruct-b58c2b8f1a> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "3DReconstruct" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint2-06386f9c83> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint3-179081ea72> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/darkfieldcorrect-f831cdd9a1> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "DarkFieldCorrect" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint1-48b60e84b9> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint2-06386f9c83> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/reconstruct-097f925b58> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Reconstruct" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/rawdata-c9cd930f9e> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint1-48b60e84b9> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/astra-toolbox-e0d2258a7e> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/pre-process/threshold-9f0fdfb9b6> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Threshold" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint3-179081ea72> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/beamsize-4e35045c81> a h2kg:GeometricCharacteristic ;
+    rdfs:label "BeamSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/beamsize-9b467dad1c273fcc-967b0e8aeb> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/binning-b74d69cc08> a h2kg:CountCharacteristic ;
+    rdfs:label "Binning" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/binning-c6cea30934f981a5-2a876c1665> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/collimatordiameter-f76d0720d2> a h2kg:GeometricCharacteristic ;
+    rdfs:label "CollimatorDiameter" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/collimatordiameter-d4acdbaf2d79af1e-7fa89357c2> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/dataacquisitionrate-ea3ab5dfbb> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "DataAcquisitionRate" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/dataacquisitionrate-f45bf57ebf4c51bd-7f42dac107> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/exposuretime-a3b7018195> a h2kg:ExposureTime ;
+    rdfs:label "ExposureTime" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/exposuretime-2b1004127d4a184c-55dbc69ee3> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/fieldofview-9a11dbdbd9> a h2kg:GeometricCharacteristic ;
+    rdfs:label "FieldOfView" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/fieldofview-b5c5e7d58b0c081a-437e462e71> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/focus-0e9cd71d73> a h2kg:GeometricCharacteristic ;
+    rdfs:label "Focus" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/focus-c7ef81cd4cfaa28d-2daf3320e4> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/humidity-1feb6e1fee> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/humidity-16b5d931cc4e7f9f-4a70cc9ddf> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/imagefrequency-2ea3399e25> a h2kg:FrequencyCharacteristic ;
+    rdfs:label "ImageFrequency" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/imagefrequency-05ea3aa0d7901df5-98c1a9a595> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/maximalwavelenght-5c9954c448> a h2kg:GeometricCharacteristic ;
+    rdfs:label "MaximalWavelenght" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/neutronflux-f2a1a5f618> a h2kg:NeutronFlux ;
+    rdfs:label "NeutronFlux" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pinholesampledistance-bc97d522d0> a h2kg:GeometricCharacteristic ;
+    rdfs:label "PinholeSampleDistance" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pinholesampledistance-b5ab5db589052233-df4537fa55> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pinholesize-56ea0a92e4> a h2kg:GeometricCharacteristic ;
+    rdfs:label "PinholeSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pinholesize-409e1a87b778b92d-292fba73d6> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pixelsize-a36c4edf34> a h2kg:PixelSize ;
+    rdfs:label "PixelSize" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pixelsize-b6d9973de224242d-133ea65c52> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pressure-2dfbb207d1> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/pressure-aeae803047> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pressure-22bf824bab6c7624-2df6b4a574> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/projectionnumber-0fe977d07e> a h2kg:ProjectionNumber ;
+    rdfs:label "ProjectionNumber" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/projectionnumber-7ad741f6373f2c93-b64ee8ea2c> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/ptloading-cdb620e291> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "PtLoading" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/buy-21870c5f47> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/resolution-55f459f281> a h2kg:SpatialResolution ;
+    rdfs:label "Resolution" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/resolution-e102c187cf0101ba-f2f47b18e8> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/sampledetectordistance-c51ca29bc5> a h2kg:SampleDetectorDistance ;
+    rdfs:label "SampleDetectorDistance" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/sampledetectordistance-a25598c2c57ce4bd-c0789fac49> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/scintillatorthickness-bc6bc4851c> a h2kg:GeometricCharacteristic ;
+    rdfs:label "ScintillatorThickness" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/scintillatorthickness-cd25810275> a h2kg:GeometricCharacteristic ;
+    rdfs:label "ScintillatorThickness" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/scintillatorthickness-0506bad5c24183e4-c58f79beb5> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/spatialresolution-3186382b4b> a h2kg:SpatialResolution ;
+    rdfs:label "SpatialResolution" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/spatialresolution-711471716c88ad34-dc5895acb2> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/temperature-4dfa216bcf> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/temperature-8351d31997dcf7c8-5fa92a2ccf> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/temperature-d5f63288ff> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/property-occurrence/time-da9646327d> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/beamsize-9b467dad1c273fcc-967b0e8aeb> a qudt:QuantityValue ;
+    rdfs:label "30 cm2" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Area> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM2> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/binning-c6cea30934f981a5-2a876c1665> a qudt:QuantityValue ;
+    rdfs:label "4 UNITLESS" ;
+    qudt:numericValue 4.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/collimatordiameter-d4acdbaf2d79af1e-7fa89357c2> a qudt:QuantityValue ;
+    rdfs:label "30 mm" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/dataacquisitionrate-f45bf57ebf4c51bd-7f42dac107> a qudt:QuantityValue ;
+    rdfs:label "36 s" ;
+    qudt:numericValue 36.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/exposuretime-2b1004127d4a184c-55dbc69ee3> a qudt:QuantityValue ;
+    rdfs:label "9 s" ;
+    qudt:numericValue 9.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/fieldofview-b5c5e7d58b0c081a-437e462e71> a qudt:QuantityValue ;
+    rdfs:label "26 mm2" ;
+    qudt:numericValue 26.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Area> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM2> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/focus-c7ef81cd4cfaa28d-2daf3320e4> a qudt:QuantityValue ;
+    rdfs:label "20 mm" ;
+    qudt:numericValue 20.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/humidity-16b5d931cc4e7f9f-4a70cc9ddf> a qudt:QuantityValue ;
+    rdfs:label "50 %" ;
+    qudt:numericValue 50.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
+    qudt:unit <http://qudt.org/vocab/unit/PERCENT> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/imagefrequency-05ea3aa0d7901df5-98c1a9a595> a qudt:QuantityValue ;
+    rdfs:label "40 Hz" ;
+    qudt:numericValue 40.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Frequency> ;
+    qudt:unit <http://qudt.org/vocab/unit/HZ> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pinholesampledistance-b5ab5db589052233-df4537fa55> a qudt:QuantityValue ;
+    rdfs:label "20 um" ;
+    qudt:numericValue 20.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pinholesize-409e1a87b778b92d-292fba73d6> a qudt:QuantityValue ;
+    rdfs:label "30 mm" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pixelsize-b6d9973de224242d-133ea65c52> a qudt:QuantityValue ;
+    rdfs:label "63.6 um" ;
+    qudt:numericValue 63.6 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/pressure-22bf824bab6c7624-2df6b4a574> a qudt:QuantityValue ;
+    rdfs:label "1 atm" ;
+    qudt:numericValue 1.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
+    qudt:unit <http://qudt.org/vocab/unit/ATM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/projectionnumber-7ad741f6373f2c93-b64ee8ea2c> a qudt:QuantityValue ;
+    rdfs:label "1440 UNITLESS" ;
+    qudt:numericValue 1440.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/resolution-e102c187cf0101ba-f2f47b18e8> a qudt:QuantityValue ;
+    rdfs:label "0.5 mm" ;
+    qudt:numericValue 0.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-107-tortuosity-factor-f13b9be208> a qudt:QuantityValue ;
+    rdfs:label "1.5 UNITLESS" ;
+    qudt:numericValue 1.5 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-109-averagearea-162cb12156> a qudt:QuantityValue ;
+    rdfs:label "45 cm2" ;
+    qudt:numericValue 45.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Area> ;
+    qudt:unit <http://qudt.org/vocab/unit/CentiM2> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-110-averagenumber-c7563992cc> a qudt:QuantityValue ;
+    rdfs:label "45 UNITLESS" ;
+    qudt:numericValue 45.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Count> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/sampledetectordistance-a25598c2c57ce4bd-c0789fac49> a qudt:QuantityValue ;
+    rdfs:label "50 mm" ;
+    qudt:numericValue 50.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MilliM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/scintillatorthickness-0506bad5c24183e4-c58f79beb5> a qudt:QuantityValue ;
+    rdfs:label "10 um" ;
+    qudt:numericValue 10.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/spatialresolution-711471716c88ad34-dc5895acb2> a qudt:QuantityValue ;
+    rdfs:label "300 um" ;
+    qudt:numericValue 300.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/MicroM> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/temperature-8351d31997dcf7c8-5fa92a2ccf> a qudt:QuantityValue ;
+    rdfs:label "23 °C" ;
+    qudt:numericValue 23.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagearea-6771dd1ca2> a h2kg:AverageWaterDropletArea ;
+    rdfs:label "AverageArea" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-109-averagearea-162cb12156> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagebarycenter-a621f66bc6> a h2kg:GeometricCharacteristic ;
+    rdfs:label "AverageBaryCenter" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/averagenumber-99996b4cab> a h2kg:AverageWaterDropletCount ;
+    rdfs:label "AverageNumber" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-110-averagenumber-c7563992cc> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/result-property/tortuosity-factor-25e6df3020> a h2kg:TortuosityFactor ;
+    rdfs:label "Tortuosity Factor" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/neutron_tomography/quantity-value/result-107-tortuosity-factor-f13b9be208> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/astra-toolbox-e0d2258a7e> a h2kg:SoftwareArtifact ;
+    rdfs:label "Astra Toolbox" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239> a h2kg:SoftwareArtifact ;
+    rdfs:label "MATLAB TauFactor" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/integrate-52b2d72719> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Integrate" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/slip-ring-326eb586e6>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/spint1-e018f6e0bf> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/mount-284882002c> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Mount" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/custom-built-holder-c84eddd48e> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/spint1-e018f6e0bf> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/sp-process/mount-e05cc5d8fc> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Mount" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/mea-b3c433e56a> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/spint1-e018f6e0bf> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/buy-2f2fabdf14> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/membrane-df355aefcd> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint2-8bc333e086> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/lasercut-c5f22226a0> a h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "LaserCut" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint2-8bc333e086> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint3-e0b1e75a52> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-0ac3c242c0> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "DropletAnalysis" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagenumber-5dc14328b7> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-750e41e78c> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "DropletAnalysis" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagebarycenter-6f073451e4> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/dropletanalysis-ea3c5ac720> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "DropletAnalysis" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/averagearea-e657b022c7> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/anal-process/tortuositymeasurement-0e555f193e> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "TortuosityMeasurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data-point/tortuosity-factor-3bf7ec4dcd> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/matlab-taufactor-02cb6fc239> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint1-48b60e84b9> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint2-06386f9c83> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/ppint3-179081ea72> a h2kg:Data,
+        h2kg:Dataset ;
+    rdfs:label "PPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/rawdata-c9cd930f9e> a h2kg:Data,
+        h2kg:TomographicProjectionDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/mea-b3c433e56a> a h2kg:Matter ;
+    rdfs:label "MEA" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint1-474a05d4f5> a h2kg:Matter ;
+    rdfs:label "SInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint2-8bc333e086> a h2kg:Matter ;
+    rdfs:label "SInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint3-e0b1e75a52> a h2kg:Matter ;
+    rdfs:label "SInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/buy-21870c5f47> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/gas-diffusion-electrode-be2ff316b4> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint1-474a05d4f5> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/ptloading-c4adf13801> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/spint1-e018f6e0bf> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/labelanalysis-bb03852da0> a h2kg:SoftwareArtifact ;
+    rdfs:label "LabelAnalysis" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/software/avizo-4f4f1e7e93> a h2kg:SoftwareArtifact ;
+    rdfs:label "Avizo" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/syn-process/hotpress-bfeb57fffb> a h2kg:HotPressing,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "HotPress" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint1-474a05d4f5>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sint3-e0b1e75a52> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/mea-b3c433e56a> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pressure-9bb11ff3aa>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/temperature-578628b34d>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/time-169311a77a> .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/post-processed-tomograph-43091a9458> a h2kg:Data,
+        h2kg:TomographicReconstructionDataset ;
+    rdfs:label "Post-processed tomograph" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "bulk material" .
+
+<https://w3id.org/h2kg/examples/characterization/neutron_tomography/measurement/neutron-tomography-ffc707e50a> a h2kg:Measurement,
+        h2kg:NeutronTomographyMeasurement ;
+    rdfs:label "Neutron tomography measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/neutron_tomography/matter/sample-d0c898c7f4> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/neutron_tomography/data/rawdata-c9cd930f9e> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/beamsize-69b262fb97>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/binning-0b815dcce5>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/collimatordiameter-5792f4125f>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/dataacquisitionrate-530272afa6>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/exposuretime-b2900d24cf>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/fieldofview-dd746a4cf1>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/focus-52907caf85>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/humidity-1a1a614ec0>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/imagefrequency-e3ed2a48ee>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/maximalwavelenght-72a96c6316>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/neutronflux-0298f3a4ec>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pinholesampledistance-693a27f8ba>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pinholesize-b27affab31>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pixelsize-b2430c7058>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/pressure-7f585576cf>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/projectionnumber-c25eaf9a38>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/resolution-f3a3674331>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/sampledetectordistance-5c46a436a1>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/scintillatorthickness-e862e6760a>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/scintillatorthickness-e906e9eb63>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/spatialresolution-32788548d5>,
+        <https://w3id.org/h2kg/examples/characterization/neutron_tomography/parameter-record/temperature-082ff457e8> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/neutron_tomography/instrument/neutron-tomography-0ced4d29db> .

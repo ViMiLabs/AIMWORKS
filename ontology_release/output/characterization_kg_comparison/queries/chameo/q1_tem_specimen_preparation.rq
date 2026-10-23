@@ -1,0 +1,17 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?resultLabel ?specimenLabel ?preparationLabel ?preparedMaterialLabel WHERE { GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/tem> {
+  ?measurement a chameo:CharacterisationMeasurementProcess ; chameo:hasMeasurementSample ?specimen ; chameo:hasCharacterisationOutput ?rawData .
+  ?specimen rdfs:label ?specimenLabel .
+  ?analysis a chameo:DataAnalysis ; chameo:hasCharacterisationInput ?analysisInput ; chameo:hasCharacterisationOutput ?result .
+  ?result a chameo:SecondaryData ; rdfs:label ?resultLabel .
+  ?rawData (^chameo:hasCharacterisationInput/chameo:hasCharacterisationOutput)* ?analysisInput .
+  ?preparation a chameo:SamplePreparation ; rdfs:label ?preparationLabel ; emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840 ?preparedMaterial .
+  ?preparedMaterial rdfs:label ?preparedMaterialLabel .
+  ?preparedMaterial (^chameo:hasSampleForPreparation/emmo:EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840)* ?specimen .
+} } ORDER BY ?preparationLabel ?preparedMaterialLabel

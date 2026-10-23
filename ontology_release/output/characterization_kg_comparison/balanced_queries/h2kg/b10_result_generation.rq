@@ -1,0 +1,14 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?caseKey ?analysisLabel ?resultLabel WHERE {
+  GRAPH ?semanticGraph {
+    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .
+    ?analysis rdfs:label ?analysisLabel .
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+  BIND(STRAFTER(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/") AS ?caseKey)
+} ORDER BY ?caseKey ?analysisLabel ?resultLabel

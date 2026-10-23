@@ -1,0 +1,12 @@
+PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>
+PREFIX emmo: <https://w3id.org/emmo#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?caseKey ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel WHERE {
+  GRAPH ?semanticGraph { ?measurement a chameo:CharacterisationMeasurementProcess ; rdfs:label ?measurementLabel ; chameo:hasMeasurementSample ?specimen ; chameo:hasCharacterisationMeasurementInstrument ?instrument ; chameo:hasCharacterisationOutput ?rawDataset .
+?rawDataset a chameo:RawData . ?specimen rdfs:label ?specimenLabel . ?instrument rdfs:label ?instrumentLabel . ?rawDataset rdfs:label ?rawDatasetLabel . } FILTER(STRSTARTS(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/"))
+  BIND(STRAFTER(STR(?semanticGraph), "https://example.org/aimworks/chameo-characterization/graph/semantic/") AS ?caseKey)
+} ORDER BY ?caseKey

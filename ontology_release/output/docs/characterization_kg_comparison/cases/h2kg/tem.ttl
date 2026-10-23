@@ -1,0 +1,297 @@
+@prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/workflow> a h2kg:Process ;
+    rdfs:label "Transmission electron microscopy characterization workflow" ;
+    h2kg:hasPart <https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564>,
+        <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0>,
+        <https://w3id.org/h2kg/examples/characterization/tem/pre-process/format-conversion-04c686b030>,
+        <https://w3id.org/h2kg/examples/characterization/tem/sp-process/dispersion-4227244ff4>,
+        <https://w3id.org/h2kg/examples/characterization/tem/sp-process/dry-fb42064733>,
+        <https://w3id.org/h2kg/examples/characterization/tem/sp-process/mix-82c4906c89>,
+        <https://w3id.org/h2kg/examples/characterization/tem/sp-process/sonification-04b623e3a6>,
+        <https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-46643f27b2>,
+        <https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-6c291c1448> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/data-point/average-size-74050057d0> a h2kg:Data,
+        h2kg:DataPoint ;
+    rdfs:label "Average size result" ;
+    prov:wasGeneratedBy <https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564> ;
+    h2kg:fromMeasurement <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/result-property/average-size-adcf88a588> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb> a h2kg:Instrument,
+        h2kg:TEMInstrument ;
+    rdfs:label "Transmission electron microscopy instrument" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/liquid-mixture-aa679e5538> a h2kg:Matter ;
+    rdfs:label "Liquid mixture" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/accelerationvoltage-323290918f> a h2kg:Parameter ;
+    rdfs:label "AccelerationVoltage parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/accelerationvoltage-099484ea2b> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/cas-number-4245266f3c> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/cas-number-aafdf87166> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/cas-number-8b3b19f94f> a h2kg:Parameter ;
+    rdfs:label "CAS-number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/cas-number-84e31149b8> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/dataadquisitionrate-73e6214f9c> a h2kg:Parameter ;
+    rdfs:label "DataAdquisitionRate parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/dataadquisitionrate-414c18652b> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/frequency-47005822e7> a h2kg:Parameter ;
+    rdfs:label "Frequency parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/frequency-99ae22661c> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/humidity-b88121e2d2> a h2kg:Parameter ;
+    rdfs:label "Humidity parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/humidity-7042685776> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/loot-number-e7052a8d0a> a h2kg:Parameter ;
+    rdfs:label "Loot number parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/loot-number-92bf16ba06> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/magnification-6aa7551ffc> a h2kg:Parameter ;
+    rdfs:label "Magnification parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/magnification-c2ca9b3a54> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/pressure-8f2210870e> a h2kg:Parameter ;
+    rdfs:label "Pressure parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/pressure-d4f52319d6> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/temperature-07de2c6b6b> a h2kg:Parameter ;
+    rdfs:label "Temperature parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/temperature-1839a64b84> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/time-56e1b2f0cf> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/time-321d0f580a> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/time-c5039770a7> a h2kg:Parameter ;
+    rdfs:label "Time parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/time-dac84685eb> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/timelapse-eaa18fd831> a h2kg:Parameter ;
+    rdfs:label "TimeLapse parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/timelapse-fe7eefb18e> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/parameter-record/workingdistance-793b1dcf46> a h2kg:Parameter ;
+    rdfs:label "WorkingDistance parameter record" ;
+    h2kg:ofProperty <https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/workingdistance-fd0c7d0de2> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/pre-process/format-conversion-04c686b030> a h2kg:DataProcessing,
+        h2kg:Process ;
+    rdfs:label "Format conversion" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/tem/data/rawdata-56c3c72e53> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/accelerationvoltage-099484ea2b> a h2kg:AcceleratingVoltage ;
+    rdfs:label "AccelerationVoltage" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/accelerationvoltage-b7d5a8abcad9b061-24cd897397> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/cas-number-84e31149b8> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-46643f27b2> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/cas-number-aafdf87166> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "CAS-number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-6c291c1448> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/dataadquisitionrate-414c18652b> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "DataAdquisitionRate" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/frequency-99ae22661c> a h2kg:FrequencyCharacteristic ;
+    rdfs:label "Frequency" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/sp-process/sonification-04b623e3a6> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/humidity-7042685776> a h2kg:RelativeHumidity ;
+    rdfs:label "Humidity" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/loot-number-92bf16ba06> a h2kg:QuantitativeCharacteristic ;
+    rdfs:label "Loot number" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-6c291c1448> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/magnification-c2ca9b3a54> a h2kg:Magnification ;
+    rdfs:label "Magnification" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/magnification-c4e6e3e394b7650e-cc0a768f56> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/pressure-d4f52319d6> a h2kg:PressureCharacteristic ;
+    rdfs:label "Pressure" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/pressure-0706efbd4bf872e0-261d76a097> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/temperature-1839a64b84> a h2kg:Temperature ;
+    rdfs:label "Temperature" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/temperature-67b5c7e7893d7e0a-dcaaac7fc9> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/time-321d0f580a> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/sp-process/sonification-04b623e3a6> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/time-dac84685eb> a h2kg:TemporalCharacteristic ;
+    rdfs:label "Time" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/sp-process/dry-fb42064733> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/timelapse-fe7eefb18e> a h2kg:TemporalCharacteristic ;
+    rdfs:label "TimeLapse" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/timelapse-a3f1fed6787e9ce9-c88765aaf7> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/property-occurrence/workingdistance-fd0c7d0de2> a h2kg:WorkingDistance ;
+    rdfs:label "WorkingDistance" ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/accelerationvoltage-b7d5a8abcad9b061-24cd897397> a qudt:QuantityValue ;
+    rdfs:label "100 kV" ;
+    qudt:numericValue 100.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ElectricPotential> ;
+    qudt:unit <http://qudt.org/vocab/unit/KiloV> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/magnification-c4e6e3e394b7650e-cc0a768f56> a qudt:QuantityValue ;
+    rdfs:label "140000 UNITLESS" ;
+    qudt:numericValue 140000.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Dimensionless> ;
+    qudt:unit <http://qudt.org/vocab/unit/UNITLESS> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/pressure-0706efbd4bf872e0-261d76a097> a qudt:QuantityValue ;
+    rdfs:label "0.00001 atm" ;
+    qudt:numericValue 0.00001 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Pressure> ;
+    qudt:unit <http://qudt.org/vocab/unit/ATM> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/result-78-average-size-ca88814f0c> a qudt:QuantityValue ;
+    rdfs:label "5 nm" ;
+    qudt:numericValue 5.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Length> ;
+    qudt:unit <http://qudt.org/vocab/unit/NanoM> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/temperature-67b5c7e7893d7e0a-dcaaac7fc9> a qudt:QuantityValue ;
+    rdfs:label "25 C" ;
+    qudt:numericValue 25.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/ThermodynamicTemperature> ;
+    qudt:unit <http://qudt.org/vocab/unit/DEG_C> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/quantity-value/timelapse-a3f1fed6787e9ce9-c88765aaf7> a qudt:QuantityValue ;
+    rdfs:label "30 s" ;
+    qudt:numericValue 30.0 ;
+    qudt:quantityKind <http://qudt.org/vocab/quantitykind/Time> ;
+    qudt:unit <http://qudt.org/vocab/unit/SEC> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/result-property/average-size-adcf88a588> a h2kg:MeanParticleSize ;
+    rdfs:label "Average size" ;
+    h2kg:hasQuantityValue <https://w3id.org/h2kg/examples/characterization/tem/quantity-value/result-78-average-size-ca88814f0c> ;
+    h2kg:isCharacteristicOf <https://w3id.org/h2kg/examples/characterization/tem/matter/sample-5512c41548> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/software/imagej-779709481e> a h2kg:SoftwareArtifact ;
+    rdfs:label "ImageJ" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/sp-process/dispersion-4227244ff4> a h2kg:DispersionProcess,
+        h2kg:Manufacturing,
+        h2kg:Process ;
+    rdfs:label "Dispersion" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/carbon-coated-copper-tem-grid-caf24731f6>,
+        <https://w3id.org/h2kg/examples/characterization/tem/matter/spint2-2c3b4aa0d4> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/spint3-c140f2ebb0> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/sp-process/mix-82c4906c89> a h2kg:Manufacturing,
+        h2kg:MixingOrDispersionProcess,
+        h2kg:Process ;
+    rdfs:label "Mix" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/liquid-mixture-aa679e5538>,
+        <https://w3id.org/h2kg/examples/characterization/tem/matter/pd-c-a66feec5ba> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/spint1-c24f1471ed> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/anal-process/manual-particle-measurement-6d69b75564> a h2kg:Analysis,
+        h2kg:Process ;
+    rdfs:label "Manual particle measurement" ;
+    h2kg:hasInputData <https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/tem/data-point/average-size-74050057d0> ;
+    h2kg:usesSoftware <https://w3id.org/h2kg/examples/characterization/tem/software/imagej-779709481e> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/data/post-processed-image-ae348ab770> a h2kg:Data,
+        h2kg:MicrostructureImageDataset ;
+    rdfs:label "Post-processed image" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/data/rawdata-56c3c72e53> a h2kg:Data,
+        h2kg:MicrostructureImageDataset ;
+    rdfs:label "RawData" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/spint1-c24f1471ed> a h2kg:Matter ;
+    rdfs:label "SPInt1" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/spint2-2c3b4aa0d4> a h2kg:Matter ;
+    rdfs:label "SPInt2" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/spint3-c140f2ebb0> a h2kg:Matter ;
+    rdfs:label "SPInt3" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/sp-process/dry-fb42064733> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ThermalTreatmentProcess ;
+    rdfs:label "Dry" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/spint3-c140f2ebb0> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/sample-5512c41548> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/time-c5039770a7> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-46643f27b2> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/pd-c-a66feec5ba> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/pd-c-a66feec5ba> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/cas-number-8b3b19f94f> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/carbon-coated-copper-tem-grid-caf24731f6> a h2kg:Matter ;
+    rdfs:label "Carbon coated copper TEM grid" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/pd-c-a66feec5ba> a h2kg:Matter ;
+    rdfs:label "Pd/C" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/matter/sample-5512c41548> a h2kg:Matter,
+        h2kg:Specimen ;
+    rdfs:label "homogeneous powder" .
+
+<https://w3id.org/h2kg/examples/characterization/tem/sp-process/sonification-04b623e3a6> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:Sonication ;
+    rdfs:label "Sonification" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/spint1-c24f1471ed> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/spint2-2c3b4aa0d4> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/frequency-47005822e7>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/time-56e1b2f0cf> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/syn-process/buy-6c291c1448> a h2kg:Manufacturing,
+        h2kg:Process,
+        h2kg:ProcurementProcess ;
+    rdfs:label "Buy" ;
+    h2kg:hasInputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/carbon-coated-copper-tem-grid-caf24731f6> ;
+    h2kg:hasOutputMaterial <https://w3id.org/h2kg/examples/characterization/tem/matter/carbon-coated-copper-tem-grid-caf24731f6> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/cas-number-4245266f3c>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/loot-number-e7052a8d0a> .
+
+<https://w3id.org/h2kg/examples/characterization/tem/measurement/transmission-electron-microscopy-09a0649be0> a h2kg:Measurement,
+        h2kg:TransmissionElectronMicroscopyImaging ;
+    rdfs:label "Transmission electron microscopy measurement" ;
+    h2kg:hasMeasurementSubject <https://w3id.org/h2kg/examples/characterization/tem/matter/sample-5512c41548> ;
+    h2kg:hasOutputData <https://w3id.org/h2kg/examples/characterization/tem/data/rawdata-56c3c72e53> ;
+    h2kg:hasParameter <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/accelerationvoltage-323290918f>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/dataadquisitionrate-73e6214f9c>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/humidity-b88121e2d2>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/magnification-6aa7551ffc>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/pressure-8f2210870e>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/temperature-07de2c6b6b>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/timelapse-eaa18fd831>,
+        <https://w3id.org/h2kg/examples/characterization/tem/parameter-record/workingdistance-793b1dcf46> ;
+    h2kg:usesInstrument <https://w3id.org/h2kg/examples/characterization/tem/instrument/transmission-electron-microscopy-a8b6dea8bb> .
