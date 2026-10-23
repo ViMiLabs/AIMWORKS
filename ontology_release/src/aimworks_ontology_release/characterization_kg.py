@@ -1266,7 +1266,7 @@ PREFIX rdf: <{RDF}>
 PREFIX rdfs: <{RDFS}>
 PREFIX dcterms: <{DCTERMS}>
 """
-    return [
+    specs = [
         {
             "id": "q1_tem_specimen_preparation",
             "title": "TEM specimen, preparation, and reported result",
@@ -1522,6 +1522,306 @@ ORDER BY ?processLabel ?inputDataLabel ?outputDataLabel
         },
     ]
 
+    core_metadata = {
+        "q1_tem_specimen_preparation": (
+            "TEM traceability",
+            "Which specimen-preparation steps produced the TEM specimen associated with the reported particle-size result?",
+        ),
+        "q2_tem_instrument_settings": (
+            "TEM acquisition",
+            "Which TEM instrument and acquisition settings were recorded, including values that were unconfirmed or not applicable?",
+        ),
+        "q3_tem_dataset_analysis": (
+            "TEM provenance",
+            "Which image dataset, analysis process, and software produced the reported TEM result?",
+        ),
+        "q4_tem_result_value": (
+            "TEM result",
+            "What TEM property was reported, for which specimen, and with what source value and normalized unit?",
+        ),
+        "q5_all_measurement_contexts": (
+            "Cross-case measurement context",
+            "What specimen, instrument, and raw dataset are linked to each characterization measurement?",
+        ),
+        "q6_all_result_records": (
+            "Cross-case results",
+            "Which properties were reported across all cases, and what values, units, and specimen bearers were recorded?",
+        ),
+        "q7_source_status_summary": (
+            "Source completeness",
+            "How many workbook fields in each case were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+        ),
+        "q8_all_measurement_parameters": (
+            "Cross-case acquisition settings",
+            "Which measurement settings were recorded across all cases, and which have normalized QUDT values and units?",
+        ),
+        "q9_conservative_quantity_findings": (
+            "Semantic quality findings",
+            "Which reported quantities were deliberately not normalized because their units, labels, axes, or meanings were incomplete or conflicting?",
+        ),
+        "q10_source_provenance_coverage": (
+            "Source provenance",
+            "Does every eligible workbook field have a traceable semantic representation in each case graph?",
+        ),
+        "q11_software_provenance": (
+            "Software provenance",
+            "Which software packages were linked to processing and analysis activities in each case?",
+        ),
+        "q12_neutron_processing_chain": (
+            "Neutron-tomography processing",
+            "Which ordered preprocessing transformations connect the neutron-tomography raw projections to processed data?",
+        ),
+    }
+    for spec in specs:
+        spec["category"], spec["question"] = core_metadata[spec["id"]]
+
+    case_specs = list(CASE_SPECS)
+    for offset, case_spec in enumerate(case_specs, start=13):
+        semantic_graph = GRAPH[f"semantic/{case_spec.key}"]
+        specs.append({
+            "id": f"q{offset}_{case_spec.key}_measurement_context",
+            "category": "Method-specific measurement context",
+            "title": f"{case_spec.title} measurement context",
+            "question": f"What specimen, instrument, and raw dataset define the {case_spec.title} measurement?",
+            "purpose": "Retrieve the core subject, instrument, and raw-data context for one method-specific case.",
+            "ground_truth_basis": f"The {case_spec.sheet} final-specimen field and its measurement, instrument, and raw-dataset assignments.",
+            "query": prefixes + f"""
+SELECT ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel
+WHERE {{
+  GRAPH <{semantic_graph}> {{
+    ?measurement a h2kg:Measurement ; rdfs:label ?measurementLabel ;
+      h2kg:hasMeasurementSubject ?specimen ; h2kg:usesInstrument ?instrument ; h2kg:hasOutputData ?rawDataset .
+    ?specimen rdfs:label ?specimenLabel .
+    ?instrument rdfs:label ?instrumentLabel .
+    ?rawDataset rdfs:label ?rawDatasetLabel .
+  }}
+}}
+ORDER BY ?measurementLabel
+""",
+        })
+
+    for offset, case_spec in enumerate(case_specs, start=21):
+        semantic_graph = GRAPH[f"semantic/{case_spec.key}"]
+        source_graph = GRAPH[f"source/{case_spec.key}"]
+        specs.append({
+            "id": f"q{offset}_{case_spec.key}_results",
+            "category": "Method-specific results",
+            "title": f"{case_spec.title} result records",
+            "question": f"Which results were reported for {case_spec.title}, and what values, units, and specimen bearers were recorded?",
+            "purpose": "Retrieve every result for one case with its property, bearer, raw source value, and defensible normalized quantity.",
+            "ground_truth_basis": f"All analysis target and AmountTarget fields in the {case_spec.sheet} case plus its final-specimen field.",
+            "query": prefixes + f"""
+SELECT ?resultLabel ?propertyLabel ?bearerLabel ?sourceCell ?rawValue ?value ?unit
+WHERE {{
+  GRAPH <{semantic_graph}> {{
+    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer ; h2kg:hasMetadata ?source .
+    ?bearer rdfs:label ?bearerLabel .
+    OPTIONAL {{ ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }}
+  }}
+  GRAPH <{source_graph}> {{
+    ?source kg:fieldName "AmountTarget" ; kg:sourceCell ?sourceCell .
+    OPTIONAL {{ ?source rdf:value ?rawValue . }}
+  }}
+}}
+ORDER BY ?resultLabel
+""",
+        })
+
+    for offset, case_spec in enumerate(case_specs, start=29):
+        source_graph = GRAPH[f"source/{case_spec.key}"]
+        specs.append({
+            "id": f"q{offset}_{case_spec.key}_source_status",
+            "category": "Method-specific source completeness",
+            "title": f"{case_spec.title} source-status summary",
+            "question": f"How many {case_spec.title} source fields were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting?",
+            "purpose": "Summarize every explicit source-value status for one workbook case.",
+            "ground_truth_basis": f"The status assigned to every eligible field in the sanitized {case_spec.sheet} manifest record.",
+            "query": prefixes + f"""
+SELECT ?statusLabel (COUNT(?source) AS ?fieldCount)
+WHERE {{
+  GRAPH <{source_graph}> {{ ?source a kg:SourceField ; kg:valueStatus ?status . }}
+  BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+}}
+GROUP BY ?statusLabel
+ORDER BY ?statusLabel
+""",
+        })
+
+    for offset, case_spec in enumerate(case_specs, start=37):
+        semantic_graph = GRAPH[f"semantic/{case_spec.key}"]
+        source_graph = GRAPH[f"source/{case_spec.key}"]
+        specs.append({
+            "id": f"q{offset}_{case_spec.key}_measurement_settings",
+            "category": "Method-specific acquisition settings",
+            "title": f"{case_spec.title} measurement settings",
+            "question": f"Which acquisition settings were recorded for {case_spec.title}, and which have normalized values and units?",
+            "purpose": "Retrieve all direct measurement-setting records for one case, including qualified source states.",
+            "ground_truth_basis": f"Characterization and instrument fields recognized as settings in the {case_spec.sheet} manifest record.",
+            "query": prefixes + f"""
+SELECT ?parameterLabel ?statusLabel ?sourceCell ?rawValue ?value ?unit
+WHERE {{
+  GRAPH <{semantic_graph}> {{
+    ?measurement a h2kg:Measurement ; h2kg:hasParameter ?parameter .
+    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property ; h2kg:hasMetadata ?source .
+    OPTIONAL {{ ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }}
+    BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+  }}
+  GRAPH <{source_graph}> {{
+    ?source kg:sourceCell ?sourceCell .
+    OPTIONAL {{ ?source rdf:value ?rawValue . }}
+  }}
+}}
+ORDER BY ?parameterLabel ?sourceCell
+""",
+        })
+
+    specs.extend([
+        {
+            "id": "q45_case_measurement_result_counts",
+            "category": "Cross-case integrity",
+            "title": "Measurement and result counts by case",
+            "question": "How many measurement occurrences and result records are represented for each characterization case?",
+            "purpose": "Count distinct measurements and DataPoint results per case without conflating the two occurrence types.",
+            "ground_truth_basis": "One modeled measurement per case and the number of workbook analysis-output rows in each sanitized case record.",
+            "query": prefixes + """
+SELECT ?caseKey (COUNT(DISTINCT ?measurement) AS ?measurementCount) (COUNT(DISTINCT ?result) AS ?resultCount)
+WHERE {
+  GRAPH ?semanticGraph {
+    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .
+    ?measurement a h2kg:Measurement ; kg:case ?case .
+    OPTIONAL { ?result a h2kg:DataPoint ; kg:case ?case . }
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+}
+GROUP BY ?caseKey
+ORDER BY ?caseKey
+""",
+        },
+        {
+            "id": "q46_normalized_result_quantities",
+            "category": "Cross-case quantity validation",
+            "title": "Normalized result quantities",
+            "question": "Which reported scientific results have both a defensible numeric value and an explicit QUDT unit?",
+            "purpose": "Return only result properties for which the graph asserts a complete normalized quantity-value pattern.",
+            "ground_truth_basis": "Analysis outputs whose AmountTarget values parse to compatible numeric values, units, and quantity kinds without a semantic conflict.",
+            "query": prefixes + """
+SELECT ?caseKey ?propertyLabel ?sourceCell ?rawValue ?value ?unit
+WHERE {
+  GRAPH ?semanticGraph {
+    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .
+    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property ; kg:case ?case .
+    ?property rdfs:label ?propertyLabel ; h2kg:hasMetadata ?source ; h2kg:hasQuantityValue ?qv .
+    ?qv qudt:numericValue ?value ; qudt:unit ?unit .
+  }
+  GRAPH ?sourceGraph {
+    ?source kg:fieldName "AmountTarget" ; kg:sourceCell ?sourceCell .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+  FILTER(STRSTARTS(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/"))
+}
+ORDER BY ?caseKey ?propertyLabel
+""",
+        },
+        {
+            "id": "q47_qualified_source_fields",
+            "category": "Cross-case source completeness",
+            "title": "Qualified and missing source fields",
+            "question": "Which workbook fields are not simply reported values, and why are they marked missing, inapplicable, unspecified, unconfirmed, unresolved, or conflicting?",
+            "purpose": "Retrieve every source field whose explicit status is not reported, preserving its cell and raw lexical value.",
+            "ground_truth_basis": "All sanitized source records with a status other than reported.",
+            "query": prefixes + """
+SELECT ?caseKey ?fieldName ?sourceCell ?statusLabel ?rawValue
+WHERE {
+  GRAPH ?sourceGraph {
+    ?source a kg:SourceField ; kg:fieldName ?fieldName ; kg:sourceCell ?sourceCell ; kg:valueStatus ?status .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+  FILTER(STRSTARTS(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/"))
+  FILTER(?status != kg:reported)
+  BIND(STRAFTER(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/") AS ?caseKey)
+  BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+}
+ORDER BY ?caseKey ?sourceCell
+""",
+        },
+        {
+            "id": "q48_qualified_measurement_settings",
+            "category": "Cross-case acquisition settings",
+            "title": "Qualified measurement-setting records",
+            "question": "Which acquisition settings are missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting rather than fully reported?",
+            "purpose": "Retrieve measurement-setting records with a non-reported source status.",
+            "ground_truth_basis": "Recognized characterization and instrument settings whose sanitized source status is not reported.",
+            "query": prefixes + """
+SELECT ?caseKey ?parameterLabel ?statusLabel ?sourceCell ?rawValue
+WHERE {
+  GRAPH ?semanticGraph {
+    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .
+    ?measurement a h2kg:Measurement ; kg:case ?case ; h2kg:hasParameter ?parameter .
+    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:hasMetadata ?source .
+    FILTER(?status != kg:reported)
+    BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+  }
+  GRAPH ?sourceGraph {
+    ?source kg:sourceCell ?sourceCell .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+  FILTER(STRSTARTS(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/"))
+}
+ORDER BY ?caseKey ?parameterLabel ?sourceCell
+""",
+        },
+        {
+            "id": "q49_analysis_provenance_across_cases",
+            "category": "Cross-case analysis provenance",
+            "title": "Analysis provenance across all cases",
+            "question": "Which input datasets, analysis processes, and software are linked to each reported result across all cases?",
+            "purpose": "Traverse each DataPoint to its generating analysis process, input data, and source-reported software.",
+            "ground_truth_basis": "All analysis rows grouped by their source step and technique, including their precursor, target, and software fields.",
+            "query": prefixes + """
+SELECT DISTINCT ?caseKey ?analysisLabel ?inputDataLabel ?resultLabel ?softwareLabel
+WHERE {
+  GRAPH ?semanticGraph {
+    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .
+    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; kg:case ?case ; prov:wasGeneratedBy ?analysis .
+    ?analysis a h2kg:Process ; rdfs:label ?analysisLabel ; h2kg:hasInputData ?inputData .
+    ?inputData rdfs:label ?inputDataLabel .
+    OPTIONAL { ?analysis h2kg:usesSoftware ?software . ?software rdfs:label ?softwareLabel . }
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+}
+ORDER BY ?caseKey ?analysisLabel ?resultLabel ?inputDataLabel ?softwareLabel
+""",
+        },
+        {
+            "id": "q50_preprocessing_transformations",
+            "category": "Cross-case processing provenance",
+            "title": "Preprocessing transformations across all cases",
+            "question": "Which preprocessing activities transformed which input datasets into which output datasets across the eight cases?",
+            "purpose": "Retrieve source-described input-to-process-to-output transformations for all preprocessing stages.",
+            "ground_truth_basis": "All preprocessing rows grouped by their source step and technique, with precursor and target fields retained.",
+            "query": prefixes + """
+SELECT DISTINCT ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel
+WHERE {
+  GRAPH ?semanticGraph {
+    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .
+    ?process a h2kg:DataProcessing ; kg:case ?case ; rdfs:label ?processLabel ;
+      h2kg:hasInputData ?inputData ; h2kg:hasOutputData ?outputData .
+    ?inputData rdfs:label ?inputDataLabel .
+    ?outputData rdfs:label ?outputDataLabel .
+  }
+  FILTER(STRSTARTS(STR(?semanticGraph), "https://w3id.org/h2kg/examples/characterization/graph/semantic/"))
+}
+ORDER BY ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel
+""",
+        },
+    ])
+    if len(specs) != 50:
+        raise AssertionError(f"Expected 50 characterization competency queries, found {len(specs)}")
+    return specs
+
 
 def _manifest_case(manifest: dict[str, Any], case_key: str) -> dict[str, Any]:
     return next(case for case in manifest["cases"] if case["key"] == case_key)
@@ -1598,6 +1898,103 @@ def _expected_parameter_rows(case: dict[str, Any]) -> list[dict[str, str]]:
     return rows
 
 
+def _expected_measurement_context(case: dict[str, Any]) -> dict[str, str]:
+    specimen_record = _direct_record(case, "specimen")
+    return {
+        "caseKey": case["key"],
+        "measurementLabel": f"{case['title']} measurement",
+        "specimenLabel": str((specimen_record or {}).get("raw_value") or "Characterization specimen"),
+        "instrumentLabel": f"{case['title']} instrument",
+        "rawDatasetLabel": "RawData",
+    }
+
+
+def _expected_status_rows(case: dict[str, Any]) -> list[dict[str, str]]:
+    return [
+        {"caseKey": case["key"], "statusLabel": status, "fieldCount": str(count)}
+        for status, count in sorted(Counter(record["status"] for record in case["source_records"]).items())
+    ]
+
+
+def _source_data_label(value: Any) -> str:
+    return "RawData" if _norm_label(value) in {"rawdata", "raw data"} else str(value or "unspecified input data")
+
+
+def _expected_analysis_provenance_rows(case: dict[str, Any]) -> list[dict[str, str]]:
+    grouped: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for row in case["table_rows"]:
+        if row["section"] != "anal":
+            continue
+        values = row["values"]
+        stage = ("anal", str(values.get("Step") or "").strip(), str(values.get("Technique") or "").strip())
+        key: tuple[Any, ...] = stage if stage[1] and stage[2] else (*stage, row["row"])
+        item = grouped.setdefault(key, {
+            "label": str(values.get("Technique") or f"anal step {values.get('Step', row['row'])}"),
+            "inputs": set(),
+            "results": set(),
+            "software": set(),
+        })
+        item["inputs"].add(_source_data_label(values.get("Precursor")))
+        item["results"].add(f"{values.get('Target') or 'Unspecified result'} result")
+        item["software"].update(_split_software(values.get("Software")))
+    rows: list[dict[str, str]] = []
+    for item in grouped.values():
+        software_values = sorted(item["software"]) or [""]
+        for input_label in sorted(item["inputs"]):
+            for result_label in sorted(item["results"]):
+                for software_label in software_values:
+                    rows.append({
+                        "caseKey": case["key"],
+                        "analysisLabel": item["label"],
+                        "inputDataLabel": input_label,
+                        "resultLabel": result_label,
+                        "softwareLabel": software_label,
+                    })
+    return rows
+
+
+def _expected_preprocessing_rows(case: dict[str, Any]) -> list[dict[str, str]]:
+    stage_targets: dict[tuple[str, str, str], set[str]] = {}
+    for candidate in case["table_rows"]:
+        values = candidate["values"]
+        stage = (
+            candidate["section"],
+            str(values.get("Step") or "").strip(),
+            str(values.get("Technique") or "").strip(),
+        )
+        stage_targets.setdefault(stage, set()).add(_norm_label(values.get("Target")))
+    grouped: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for row in case["table_rows"]:
+        if row["section"] != "pre":
+            continue
+        values = row["values"]
+        stage = ("pre", str(values.get("Step") or "").strip(), str(values.get("Technique") or "").strip())
+        can_group = bool(stage[1] and stage[2]) and len(stage_targets[stage]) == 1
+        key: tuple[Any, ...] = stage if can_group else (*stage, row["row"])
+        item = grouped.setdefault(key, {
+            "label": str(values.get("Technique") or f"pre step {values.get('Step', row['row'])}"),
+            "inputs": set(),
+            "outputs": set(),
+        })
+        item["inputs"].add(_source_data_label(values.get("Precursor")))
+        item["outputs"].add(str(values.get("Target") or "Unspecified source entity"))
+    rows: list[dict[str, str]] = []
+    for item in grouped.values():
+        for input_label in sorted(item["inputs"]):
+            for output_label in sorted(item["outputs"]):
+                rows.append({
+                    "caseKey": case["key"],
+                    "processLabel": item["label"],
+                    "inputDataLabel": input_label,
+                    "outputDataLabel": output_label,
+                })
+    return rows
+
+
+def _case_for_number(query_number: int, start: int) -> str:
+    return CASE_SPECS[query_number - start].key
+
+
 def _expected_tem_preparation_rows(manifest: dict[str, Any]) -> list[dict[str, str]]:
     case = _manifest_case(manifest, "tem")
     specimen_record = _direct_record(case, "specimen")
@@ -1651,6 +2048,28 @@ def _expected_tem_preparation_rows(manifest: dict[str, Any]) -> list[dict[str, s
 
 def _ground_truth_rows(query_id: str, manifest: dict[str, Any]) -> list[dict[str, str]]:
     cases = manifest["cases"]
+    query_number = int(re.match(r"q(\d+)_", query_id).group(1))
+    if 13 <= query_number <= 20:
+        case = _manifest_case(manifest, _case_for_number(query_number, 13))
+        return [{key: value for key, value in _expected_measurement_context(case).items() if key != "caseKey"}]
+    if 21 <= query_number <= 28:
+        case = _manifest_case(manifest, _case_for_number(query_number, 21))
+        return [
+            {key: value for key, value in row.items() if key != "caseKey"}
+            for row in _expected_result_rows(case)
+        ]
+    if 29 <= query_number <= 36:
+        case = _manifest_case(manifest, _case_for_number(query_number, 29))
+        return [
+            {key: value for key, value in row.items() if key != "caseKey"}
+            for row in _expected_status_rows(case)
+        ]
+    if 37 <= query_number <= 44:
+        case = _manifest_case(manifest, _case_for_number(query_number, 37))
+        return [
+            {key: value for key, value in row.items() if key not in {"caseKey", "instrumentLabel"}}
+            for row in _expected_parameter_rows(case)
+        ]
     if query_id == "q1_tem_specimen_preparation":
         return _expected_tem_preparation_rows(manifest)
     if query_id == "q2_tem_instrument_settings":
@@ -1679,25 +2098,11 @@ def _ground_truth_rows(query_id: str, manifest: dict[str, Any]) -> list[dict[str
             for row in _expected_result_rows(_manifest_case(manifest, "tem"))
         ]
     if query_id == "q5_all_measurement_contexts":
-        result = []
-        for case in cases:
-            specimen_record = _direct_record(case, "specimen")
-            result.append({
-                "caseKey": case["key"],
-                "measurementLabel": f"{case['title']} measurement",
-                "specimenLabel": str((specimen_record or {}).get("raw_value") or "Characterization specimen"),
-                "instrumentLabel": f"{case['title']} instrument",
-                "rawDatasetLabel": "RawData",
-            })
-        return result
+        return [_expected_measurement_context(case) for case in cases]
     if query_id == "q6_all_result_records":
         return [row for case in cases for row in _expected_result_rows(case)]
     if query_id == "q7_source_status_summary":
-        return [
-            {"caseKey": case["key"], "statusLabel": status, "fieldCount": str(count)}
-            for case in cases
-            for status, count in sorted(Counter(record["status"] for record in case["source_records"]).items())
-        ]
+        return [row for case in cases for row in _expected_status_rows(case)]
     if query_id == "q8_all_measurement_parameters":
         return [
             {key: value for key, value in row.items() if key != "instrumentLabel"}
@@ -1749,6 +2154,59 @@ def _ground_truth_rows(query_id: str, manifest: dict[str, Any]) -> list[dict[str
             for row in case["table_rows"]
             if row["section"] == "pre"
         ]
+    if query_id == "q45_case_measurement_result_counts":
+        return [
+            {
+                "caseKey": case["key"],
+                "measurementCount": "1",
+                "resultCount": str(sum(row["section"] == "anal" for row in case["table_rows"])),
+            }
+            for case in cases
+        ]
+    if query_id == "q46_normalized_result_quantities":
+        return [
+            {
+                "caseKey": row["caseKey"],
+                "propertyLabel": row["propertyLabel"],
+                "sourceCell": row["sourceCell"],
+                "rawValue": row["rawValue"],
+                "value": row["value"],
+                "unit": row["unit"],
+            }
+            for case in cases
+            for row in _expected_result_rows(case)
+            if row["value"] and row["unit"]
+        ]
+    if query_id == "q47_qualified_source_fields":
+        return [
+            {
+                "caseKey": case["key"],
+                "fieldName": record["field"],
+                "sourceCell": record["cell"],
+                "statusLabel": record["status"],
+                "rawValue": _raw_lexical(record.get("raw_value")),
+            }
+            for case in cases
+            for record in case["source_records"]
+            if record["status"] != "reported"
+        ]
+    if query_id == "q48_qualified_measurement_settings":
+        return [
+            {
+                "caseKey": row["caseKey"],
+                "parameterLabel": row["parameterLabel"],
+                "statusLabel": row["statusLabel"],
+                "sourceCell": row["sourceCell"],
+                "rawValue": row["rawValue"],
+            }
+            for case in cases
+            for row in _expected_parameter_rows(case)
+            if row["statusLabel"] != "reported"
+        ]
+    if query_id == "q49_analysis_provenance_across_cases":
+        return [row for case in cases for row in _expected_analysis_provenance_rows(case)]
+    if query_id == "q50_preprocessing_transformations":
+        return [row for case in cases for row in _expected_preprocessing_rows(case)]
     raise KeyError(f"No ground-truth builder for {query_id}")
 
 
@@ -1788,7 +2246,7 @@ def _compare_query_rows(expected: list[dict[str, str]], observed: list[dict[str,
 def _query_workbench_payload(case_summaries: list[dict[str, Any]], queries: list[dict[str, Any]], source_sha256: str) -> dict[str, Any]:
     validations = [item["validation"] for item in queries]
     return {
-        "schema_version": "h2kg-characterization-query-workbench/v2",
+        "schema_version": "h2kg-characterization-query-workbench/v3",
         "default_query": "q1_tem_specimen_preparation",
         "source_sha256": source_sha256,
         "cases": [
@@ -1826,11 +2284,24 @@ def _run_queries(dataset: Dataset, output_dir: Path, manifest: dict[str, Any]) -
         _write_csv(result_dir / f"{spec['id']}.csv", observed_rows, variables)
         dump_json(result_dir / f"{spec['id']}.json", {"variables": variables, "rows": observed_rows})
         _write_csv(ground_truth_dir / f"{spec['id']}_expected.csv", expected_rows, variables)
-        dump_json(ground_truth_dir / f"{spec['id']}_expected.json", {"variables": variables, "basis": spec["ground_truth_basis"], "rows": expected_rows})
+        dump_json(ground_truth_dir / f"{spec['id']}_expected.json", {
+            "variables": variables,
+            "plain_language_question": spec["question"],
+            "basis": spec["ground_truth_basis"],
+            "rows": expected_rows,
+        })
         dump_json(ground_truth_dir / f"{spec['id']}_comparison.json", {"query_id": spec["id"], **validation})
-        validation_rows.append({"query_id": spec["id"], "title": spec["title"], **{key: value for key, value in validation.items() if not isinstance(value, list)}})
+        validation_rows.append({
+            "query_id": spec["id"],
+            "category": spec["category"],
+            "plain_language_question": spec["question"],
+            "title": spec["title"],
+            **{key: value for key, value in validation.items() if not isinstance(value, list)},
+        })
         summaries.append({
             "id": spec["id"],
+            "category": spec["category"],
+            "question": spec["question"],
             "title": spec["title"],
             "purpose": spec["purpose"],
             "ground_truth_basis": spec["ground_truth_basis"],
@@ -1848,7 +2319,7 @@ def _run_queries(dataset: Dataset, output_dir: Path, manifest: dict[str, Any]) -
             "validation": validation,
         })
     _write_csv(ground_truth_dir / "query_ground_truth_validation.csv", validation_rows)
-    dump_json(ground_truth_dir / "query_ground_truth_validation.json", {"schema_version": "h2kg-characterization-query-validation/v1", "queries": validation_rows})
+    dump_json(ground_truth_dir / "query_ground_truth_validation.json", {"schema_version": "h2kg-characterization-query-validation/v2", "queries": validation_rows})
     return summaries
 
 
@@ -2276,6 +2747,11 @@ def write_characterization_manuscript_materials(
     report = json.loads((kg_output_dir / "validation_report.json").read_text(encoding="utf-8"))
     write_text(local_output_dir / "methods_subsection.md", _methods_text(report))
     write_text(local_output_dir / "results_subsection.md", _results_text(report))
+    write_text(
+        local_output_dir / "manuscript_section_kg_construction_and_query_evaluation.md",
+        _manuscript_section(report),
+    )
+    write_text(local_output_dir / "representative_query_table.md", _representative_query_table(report))
     write_text(local_output_dir / "query_table.md", _query_table(report))
     write_text(local_output_dir / "figure_specification.md", _figure_specification())
     write_text(local_output_dir / "workflow_to_kg_figure.svg", _figure_svg())
@@ -2283,52 +2759,129 @@ def write_characterization_manuscript_materials(
 
 
 def _methods_text(report: dict[str, Any]) -> str:
-    return f"""## H₂KG-backed characterization knowledge graph
+    return f"""## Knowledge-graph construction and query evaluation
 
-A bounded knowledge-graph demonstration was constructed from a corrected characterization workbook containing eight cases from seven method families. The workbook was converted once into a sanitized manifest identified by SHA-256 `{report['source_sha256']}`; personal names, email addresses, and author-institution fields were excluded. RDFLib was used to construct separate named graphs for source-fidelity records, H₂KG semantic assertions, SHACL validation findings, and the referenced taxonomy subset. Measurement, specimen, instrument, parameter-record, dataset, process, result, property, quantity-value, and provenance resources were represented with H₂KG 2.3.0, PROV-O, DCTERMS, and QUDT identifiers. Every eligible workbook field was retained with its sheet, cell, raw lexical value, and explicit status. pySHACL validated required record patterns, and {report['query_validation']['query_count']} prespecified SPARQL queries were executed with RDFLib. Their results were compared as exact row multisets with expectations independently constructed from the sanitized manifest. This is a competency demonstration of representation, validation, and retrieval; it is not a search-performance study or evidence of workflow execution, scientific correctness, or automatic FAIRness.
+A bounded characterization knowledge graph was constructed from a corrected workbook containing eight cases from seven method families. The workbook was transformed into a sanitized manifest identified by SHA-256 `{report['source_sha256']}`; personal names, email addresses, and author-institution fields were excluded. An RDFLib `Dataset` separated source-fidelity statements, H₂KG semantic assertions, validation findings, and the referenced taxonomy subset into named graphs. Specimens, preparation activities, measurements, instruments, parameter records, datasets, analyses, results, scientific properties, quantity values, and provenance were represented using H₂KG 2.3.0 together with PROV-O, DCTERMS, and QUDT. Every eligible workbook field retained its sheet and cell reference, raw lexical value, parsed value where defensible, and an explicit status for reported, missing, not applicable, not specified, unconfirmed, unresolved-formula, or semantically conflicting content.
+
+H₂KG provided the common semantic paths that made heterogeneous workbook records searchable as one graph. Method-specific records were typed with shared classes for matter, manufacturing, measurement, instrument, data, process, DataPoint, and property. Relations such as `hasMeasurementSubject`, `usesInstrument`, `hasInputData`, and `hasOutputData` connected workflow stages consistently across methods. Acquisition settings were modeled as parameter records linked through `ofProperty` to scientific property occurrences, preventing a property such as temperature from being reclassified as a parameter merely because it was used as a setting. Result records linked a DataPoint to its measured property, specimen bearer, generating analysis, and measurement provenance; QUDT represented defensible values and units. Source-field resources and `prov:wasDerivedFrom` links retained the workbook evidence behind each semantic assertion. This ontology-driven structure did not infer new scientific facts. It supplied stable types and query paths through which differently named source records could be retrieved, compared, and checked without discarding missing or conflicting content.
+
+The evaluation combined source coverage, RDF serialization parity, SHACL validation, negative controls, and SPARQL competency questions. Fifty questions were prespecified in plain language and paired one-to-one with executable SPARQL. They covered TEM traceability, method-specific measurement context, reported results, source-status accounting, acquisition settings, normalized quantities, qualified or missing values, analysis provenance, and preprocessing transformations. Expected result rows were generated independently from the sanitized manifest rather than copied from SPARQL output. RDFLib results were compared with these expectations using exact row-multiset equality, so missing rows, unexpected rows, or duplicate-count differences caused a query to fail. pySHACL tested the valid graph and four deliberately invalid graphs with a missing measurement subject, parameter-property link, result provenance link, or quantity unit. These tests evaluate conformance to the encoded source and profile requirements. They do not establish scientific correctness, ontology completeness, workflow execution, general search performance, or automatic FAIRness.
 """
 
 
 def _results_text(report: dict[str, Any]) -> str:
-    return f"""## TEM retrieval and cross-case validation demonstration
+    return f"""## Query and validation results
 
-The generated dataset represented all {report['represented_field_count']} eligible workbook fields across eight cases, with {report['source_coverage_percent']:.2f}% source-record coverage. Turtle and JSON-LD serializations were RDF-isomorphic, the valid graph conformed to the SHACL profile, and four prespecified negative graphs failed as expected. TEM was used as the principal example. Queries 1-4 retrieved its six-step preparation context, eight acquisition-setting records, image-analysis provenance, and the workbook-reported 5 nm mean particle-size result. Queries 5-12 extended the checks to all eight measurement contexts, all 24 result records, field-status counts, 134 measurement-setting records, 27 conservative quantity findings, source-provenance coverage, software provenance, and the neutron-tomography processing chain. Across the full suite, {report['query_validation']['matched_row_count']} of {report['query_validation']['expected_row_count']} expected rows matched and no missing or unexpected rows were observed. The FIB-SEM `Volume fraction = 80 nm` entry and unresolved `pu` unit tokens remained findings rather than normalized scientific quantities. These outcomes establish source-conformant retrieval of explicitly encoded statements, not empirical accuracy or general retrieval performance.
+The dataset represented all {report['represented_field_count']:,} eligible workbook fields across eight cases ({report['source_coverage_percent']:.2f}% source coverage) as {report['rdf_triple_count']:,} RDF statements in {report['named_graph_count']} named graphs. Turtle and JSON-LD serializations were RDF-isomorphic. The valid graph conformed to the SHACL profile, whereas all four negative controls failed for the intended missing relation. TEM provided the principal traceability example: the queries recovered the six-step specimen-preparation chain, eight acquisition-setting records including qualified source states, image-analysis provenance, and the workbook-reported 5 nm mean-particle-size result with its specimen bearer and QUDT unit.
+
+All {report['query_validation']['query_count']} prespecified SPARQL questions passed exact comparison with their manifest-derived expectations. In total, {report['query_validation']['matched_row_count']:,} of {report['query_validation']['expected_row_count']:,} expected rows were recovered, with no missing or unexpected rows. The cross-case questions retrieved measurement contexts and results for every case, accounted for each source-value status, exposed normalized and withheld quantities, and traced analysis and preprocessing provenance. Conservative handling remained observable: the FIB-SEM entry `Volume fraction = 80 nm` was retained as a label-unit conflict, and unresolved `pu` tokens were preserved without assigning an unsupported QUDT unit. The agreement demonstrates that the graph and queries reproduce the curated source manifest under the stated competency questions. It is not an independently remeasured ground truth and does not quantify general retrieval accuracy or scientific validity.
+
+Ten representative questions are summarized in the accompanying table. They show how the shared ontology paths support both case-specific traversal and cross-method retrieval. The complete set of 50 questions, SPARQL text, expected rows, observed rows, and exact comparison reports is provided in the supplementary query package.
 """
 
 
+def _manuscript_section(report: dict[str, Any]) -> str:
+    return (
+        _methods_text(report)
+        + "\n"
+        + _results_text(report)
+        + "\n"
+        + _representative_query_table(report)
+        + "\n"
+        + """## Interpretation and limitations
+
+The evaluation uses complementary checks that answer different questions. Complete source-field representation tests whether eligible workbook content was retained. RDF isomorphism tests whether the Turtle and JSON-LD exports express the same graph. SHACL and its negative controls test explicit structural requirements. The SPARQL comparison tests whether prespecified scientific questions recover exactly the records expected from the same curated source manifest. Together, these checks provide reproducible evidence for source-conformant construction, constraint checking, and queryability of this bounded graph.
+
+The manifest-derived expectations are a reproducible reference for implementation testing, but they are not independent experimental measurements. Consequently, the 50 successful questions must not be interpreted as corpus-wide precision or recall, scientific verification of the workbook, or proof that H₂KG covers every characterization use case. Future evaluation should include blinded questions from independent laboratories, independently adjudicated relevance judgments, alternative data models, larger graphs, and runtime or scalability measurements. The present demonstration instead establishes a transparent baseline in which each answer can be traced to source cells and rerun with RDFLib, SPARQL, and pySHACL.
+"""
+    )
+
+
+def _representative_query_table(report: dict[str, Any]) -> str:
+    representative_ids = [
+        "q1_tem_specimen_preparation",
+        "q2_tem_instrument_settings",
+        "q3_tem_dataset_analysis",
+        "q4_tem_result_value",
+        "q5_all_measurement_contexts",
+        "q6_all_result_records",
+        "q9_conservative_quantity_findings",
+        "q46_normalized_result_quantities",
+        "q47_qualified_source_fields",
+        "q50_preprocessing_transformations",
+    ]
+    semantic_paths = {
+        "q1_tem_specimen_preparation": "Result to measurement subject, then upstream manufacturing and material handoffs",
+        "q2_tem_instrument_settings": "Measurement to instrument and parameter record to property and quantity value",
+        "q3_tem_dataset_analysis": "Result to generating analysis, input dataset, and software",
+        "q4_tem_result_value": "DataPoint to property, specimen bearer, source field, value, and unit",
+        "q5_all_measurement_contexts": "Shared Measurement to subject, instrument, and output-data pattern",
+        "q6_all_result_records": "Shared DataPoint to property, bearer, source evidence, value, and unit pattern",
+        "q9_conservative_quantity_findings": "Validation findings linked to source fields and affected properties",
+        "q46_normalized_result_quantities": "Property to complete QUDT quantity value with numeric value and unit",
+        "q47_qualified_source_fields": "Source records grouped by explicit missing or qualified status",
+        "q50_preprocessing_transformations": "Data-processing activity from input dataset to output dataset",
+    }
+    query_by_id = {item["id"]: item for item in report["queries"]}
+    if any(query_id not in query_by_id for query_id in representative_ids):
+        raise AssertionError("Representative manuscript query is missing from the validation report")
+
+    def cell(value: Any) -> str:
+        return str(value).replace("|", "\\|").replace("\n", " ")
+
+    rows = [
+        "### Representative ontology-backed competency queries",
+        "",
+        "| Query | Plain-language question | H₂KG-enabled path or check | Expected rows | Observed rows | Outcome |",
+        "|---|---|---|---:|---:|---|",
+    ]
+    for query_id in representative_ids:
+        item = query_by_id[query_id]
+        validation = item["validation"]
+        query_number = re.match(r"q(\d+)_", query_id).group(1)
+        rows.append(
+            "| "
+            + " | ".join(
+                [
+                    f"Q{query_number}",
+                    cell(item["question"]),
+                    cell(semantic_paths[query_id]),
+                    str(validation["expected_row_count"]),
+                    str(validation["observed_row_count"]),
+                    cell(validation["status"]),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(rows) + "\n"
+
+
 def _query_table(report: dict[str, Any]) -> str:
-    rows = ["| Query | Expected answer | Observed answer | Validation purpose |", "|---|---|---|---|"]
-    expected = {
-        "q1_tem_specimen_preparation": "The TEM result, its specimen, and six upstream preparation activities connected through material handoffs.",
-        "q2_tem_instrument_settings": "The TEM instrument and eight acquisition-setting records, including explicit unconfirmed and not-applicable states.",
-        "q3_tem_dataset_analysis": "The processed image, ImageJ-supported manual particle measurement, and resulting mean-size record.",
-        "q4_tem_result_value": "The TEM mean-size result, specimen bearer, raw 5 nm lexical value, and normalized QUDT value.",
-        "q5_all_measurement_contexts": "One subject, instrument, and raw dataset context for each of eight cases.",
-        "q6_all_result_records": "All 24 result records with their property, bearer, and any defensibly normalized value and unit.",
-        "q7_source_status_summary": "Per-case counts for every source-value status present in the manifest.",
-        "q8_all_measurement_parameters": "All 134 direct measurement-setting records with source and quantity context.",
-        "q9_conservative_quantity_findings": "All 27 result or setting quantities withheld from unsupported normalization.",
-        "q10_source_provenance_coverage": "Eligible and semantically linked source-field totals for every case.",
-        "q11_software_provenance": "All distinct source-reported processing and analysis software links.",
-        "q12_neutron_processing_chain": "The four neutron-tomography preprocessing transformations.",
-    }
-    roles = {
-        "q1_tem_specimen_preparation": "Checks specimen/result/preparation connectivity.",
-        "q2_tem_instrument_settings": "Checks settings and explicit missing states.",
-        "q3_tem_dataset_analysis": "Checks dataset, software, and analysis provenance.",
-        "q4_tem_result_value": "Checks TEM result/property/value/unit/bearer retrieval.",
-        "q5_all_measurement_contexts": "Checks cross-case measurement context.",
-        "q6_all_result_records": "Checks result retrieval across all cases.",
-        "q7_source_status_summary": "Checks missing and qualified source-state accounting.",
-        "q8_all_measurement_parameters": "Checks acquisition-setting retrieval and QUDT normalization.",
-        "q9_conservative_quantity_findings": "Checks conservative handling of incomplete or conflicting quantities.",
-        "q10_source_provenance_coverage": "Checks complete source-to-semantic traceability.",
-        "q11_software_provenance": "Checks processing and analysis software provenance.",
-        "q12_neutron_processing_chain": "Checks ordered reconstruction and preprocessing retrieval.",
-    }
+    rows = [
+        "| Query | Category | Plain-language question | Expected rows | Observed rows | Result | Ground-truth basis |",
+        "|---|---|---|---:|---:|---|---|",
+    ]
+
+    def cell(value: Any) -> str:
+        return str(value).replace("|", "\\|").replace("\n", " ")
+
     for item in report["queries"]:
-        observed = f"{item['row_count']} deterministic row{'s' if item['row_count'] != 1 else ''}."
-        rows.append(f"| {item['title']} | {expected[item['id']]} | {observed} | {roles[item['id']]} |")
+        validation = item["validation"]
+        rows.append(
+            "| "
+            + " | ".join(
+                [
+                    cell(item["title"]),
+                    cell(item["category"]),
+                    cell(item["question"]),
+                    str(validation["expected_row_count"]),
+                    str(validation["observed_row_count"]),
+                    cell(validation["status"]),
+                    cell(item["ground_truth_basis"]),
+                ]
+            )
+            + " |"
+        )
     return "\n".join(rows) + "\n"
 
 

@@ -4,7 +4,7 @@
   if (!root) return;
   const $ = (id) => document.getElementById(id);
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryPurpose=$('kg-query-purpose'), queryNote=$('kg-query-note');
+  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryQuestion=$('kg-query-question'), queryPurpose=$('kg-query-purpose'), queryNote=$('kg-query-note');
   const observedContainer=$('kg-query-results'), expectedContainer=$('kg-expected-results'), differences=$('kg-differences'), filter=$('kg-result-filter');
   let data=null, current=null;
 
@@ -15,7 +15,7 @@
     data=payload;
     renderSummary(payload.validation_summary);
     renderMatrix(payload.queries);
-    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=`${item.id.replace(/^q(\d+)_.*$/,'Q$1')} · ${item.title}`; querySelect.append(option); });
+    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=`${item.id.replace(/^q(\d+)_.*$/,'Q$1')} · ${item.question}`; querySelect.append(option); });
     querySelect.value=payload.default_query || payload.queries[0]?.id || '';
     syncQuery();
   }).catch((error) => {
@@ -39,15 +39,16 @@
     target.innerHTML=`<strong>${summary.passed_query_count}/${summary.query_count} queries passed</strong>${summary.matched_row_count} of ${summary.expected_row_count} expected rows matched exactly.<br><small>${esc(summary.method)}</small>`;
   }
   function renderMatrix(queries){
-    const variables=['Query','Competency example','Expected','Observed','Matched','Missing','Unexpected','Status'];
-    const rows=queries.map((query)=>{const v=query.validation;return {Query:query.id.replace(/^q(\d+)_.*$/,'Q$1'),'Competency example':query.title,Expected:v.expected_row_count,Observed:v.observed_row_count,Matched:v.matched_row_count,Missing:v.missing_expected_row_count,Unexpected:v.unexpected_row_count,Status:`<span class="kg-pill ${v.status}">${v.status}</span>`};});
+    const variables=['Query','Category','Plain-language question','Expected','Observed','Matched','Missing','Unexpected','Status'];
+    const rows=queries.map((query)=>{const v=query.validation;return {Query:query.id.replace(/^q(\d+)_.*$/,'Q$1'),Category:query.category,'Plain-language question':query.question,Expected:v.expected_row_count,Observed:v.observed_row_count,Matched:v.matched_row_count,Missing:v.missing_expected_row_count,Unexpected:v.unexpected_row_count,Status:`<span class="kg-pill ${v.status}">${v.status}</span>`};});
     renderTable($('kg-validation-matrix'),variables,rows,'No validation results.',true);
   }
   function syncQuery(){
     current=data?.queries.find((item)=>item.id===querySelect.value);
     if(!current)return;
     queryEditor.value=current.query;
-    queryPurpose.textContent=`${current.purpose} Ground truth: ${current.ground_truth_basis}`;
+    queryQuestion.textContent=current.question;
+    queryPurpose.textContent=`${current.purpose} Ground-truth basis: ${current.ground_truth_basis}`;
     filter.value='';
     queryNote.textContent=`Release-tested with RDFLib: ${current.validation.observed_row_count} observed row(s), ${current.validation.expected_row_count} expected row(s).`;
     renderSelected();

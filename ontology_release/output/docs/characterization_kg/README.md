@@ -15,7 +15,7 @@ The package uses H₂KG 2.3.0 classes and properties without changing the ontolo
 
 ## Query validation
 
-All 12 SPARQL competency queries are evaluated by exact row-multiset comparison with expectations independently derived from the sanitized manifest. The current build matched 289 of 289 expected rows, with 0 failed queries. Query-specific expected rows and comparison reports are in `query_ground_truth/`.
+All 50 SPARQL competency queries are evaluated by exact row-multiset comparison with expectations independently derived from the sanitized manifest. The current build matched 952 of 952 expected rows, with 0 failed queries. Query-specific expected rows and comparison reports are in `query_ground_truth/`.
 
 ## Run
 

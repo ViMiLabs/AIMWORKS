@@ -169,7 +169,21 @@ def test_conservative_source_conflicts_are_findings_not_quantities(characterizat
 def test_queries_and_browser_package_are_deterministic(characterization_build) -> None:
     target, report = characterization_build
     counts = {item["id"]: item["row_count"] for item in report["queries"]}
-    assert counts == {
+    assert len(counts) == 50
+    assert {key: counts[key] for key in [
+        "q1_tem_specimen_preparation",
+        "q2_tem_instrument_settings",
+        "q3_tem_dataset_analysis",
+        "q4_tem_result_value",
+        "q5_all_measurement_contexts",
+        "q6_all_result_records",
+        "q7_source_status_summary",
+        "q8_all_measurement_parameters",
+        "q9_conservative_quantity_findings",
+        "q10_source_provenance_coverage",
+        "q11_software_provenance",
+        "q12_neutron_processing_chain",
+    ]} == {
         "q1_tem_specimen_preparation": 6,
         "q2_tem_instrument_settings": 8,
         "q3_tem_dataset_analysis": 1,
@@ -183,25 +197,27 @@ def test_queries_and_browser_package_are_deterministic(characterization_build) -
         "q11_software_provenance": 31,
         "q12_neutron_processing_chain": 4,
     }
+    assert all(item["category"] and item["question"] for item in report["queries"])
     assert report["query_validation"] == {
-        "query_count": 12,
-        "passed_query_count": 12,
+        "query_count": 50,
+        "passed_query_count": 50,
         "failed_query_count": 0,
-        "expected_row_count": 289,
-        "observed_row_count": 289,
-        "matched_row_count": 289,
+        "expected_row_count": 952,
+        "observed_row_count": 952,
+        "matched_row_count": 952,
         "method": "SPARQL result rows compared exactly with manifest-derived ground truth",
     }
     workbench = json.loads((target / "characterization_query_workbench.json").read_text(encoding="utf-8"))
     assert workbench["default_query"] == "q1_tem_specimen_preparation"
     assert len(workbench["cases"]) == 8
-    assert len(workbench["queries"]) == 12
+    assert len(workbench["queries"]) == 50
     assert "nodes" not in workbench and "links" not in workbench
     assert all(item["query"].startswith("PREFIX h2kg:") for item in workbench["queries"])
+    assert all(item["category"] and item["question"] for item in workbench["queries"])
     assert all(item["validation"]["exact_match"] for item in workbench["queries"])
     assert not (target / "characterization_web_graph.json").exists()
-    assert len(list((target / "query_ground_truth").glob("q*_expected.csv"))) == 12
-    assert len(list((target / "query_ground_truth").glob("q*_comparison.json"))) == 12
+    assert len(list((target / "query_ground_truth").glob("q*_expected.csv"))) == 50
+    assert len(list((target / "query_ground_truth").glob("q*_comparison.json"))) == 50
     assert (target / "query_ground_truth" / "query_ground_truth_validation.csv").exists()
     assert (target / "run_demo.py").exists()
     assert (target / "characterization_kg_demo.ipynb").exists()
@@ -214,6 +230,8 @@ def test_characterization_page_is_dependency_free_and_downloadable(characterizat
     assert "Ground-truth validation" in page
     assert "Observed RDFLib result" in page
     assert "Workbook-derived ground truth" in page
+    assert "50 release-tested questions" in page
+    assert "Scientific question" in page
     assert "characterization_knowledge_graph.trig" in page
     assert "query_ground_truth_validation.csv" in page
     assert "cdn.jsdelivr" not in page
@@ -223,6 +241,8 @@ def test_characterization_page_is_dependency_free_and_downloadable(characterizat
     assert "default_query" in (target / "characterization_query_workbench.json").read_text(encoding="utf-8")
     assert "fetch(root.dataset.package)" in script
     assert "missing_expected_rows" in script
+    assert "item.question" in script
+    assert "queryQuestion" in script
     assert "data.nodes" not in script and "data.links" not in script
 
 
@@ -233,10 +253,23 @@ def test_local_manuscript_materials_are_generated_outside_release(characterizati
     assert result["status"] == "generated"
     assert (local / "methods_subsection.md").exists()
     assert (local / "results_subsection.md").exists()
+    assert (local / "manuscript_section_kg_construction_and_query_evaluation.md").exists()
+    assert (local / "representative_query_table.md").exists()
     assert (local / "query_table.md").exists()
     assert (local / "workflow_to_kg_figure.svg").exists()
-    assert "competency demonstration" in (local / "methods_subsection.md").read_text(encoding="utf-8")
+    assert "Fifty questions were prespecified" in (local / "methods_subsection.md").read_text(encoding="utf-8")
+    manuscript_section = (local / "manuscript_section_kg_construction_and_query_evaluation.md").read_text(encoding="utf-8")
+    assert "Fifty questions" in manuscript_section
+    assert "H₂KG provided the common semantic paths" in manuscript_section
+    assert "Representative ontology-backed competency queries" in manuscript_section
+    assert "not independent experimental measurements" in manuscript_section
+    representative_table = (local / "representative_query_table.md").read_text(encoding="utf-8")
+    assert "Plain-language question" in representative_table
+    assert len([
+        line for line in representative_table.splitlines()
+        if line.startswith("| Q") and not line.startswith("| Query")
+    ]) == 10
     query_table = (local / "query_table.md").read_text(encoding="utf-8")
-    assert "Expected answer" in query_table
-    assert "Observed answer" in query_table
+    assert "Plain-language question" in query_table
+    assert query_table.count("\n|") == 51
 

@@ -1,0 +1,23 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?resultLabel ?propertyLabel ?bearerLabel ?sourceCell ?rawValue ?value ?unit
+WHERE {
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_radiography> {
+    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .
+    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer ; h2kg:hasMetadata ?source .
+    ?bearer rdfs:label ?bearerLabel .
+    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }
+  }
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/source/synchrotron_radiography> {
+    ?source kg:fieldName "AmountTarget" ; kg:sourceCell ?sourceCell .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+}
+ORDER BY ?resultLabel

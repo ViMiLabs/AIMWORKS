@@ -50,10 +50,10 @@
   <div>
     <p class="eyebrow">Workbook-backed RDF application</p>
     <h2>Validated SPARQL competency workbench</h2>
-    <p>Explore release-tested queries over eight H₂KG-aligned characterization cases. Every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
+    <p>Explore 50 release-tested questions over eight H₂KG-aligned characterization cases. Each plain-language question is paired with executable SPARQL, and every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
   </div>
   <div class="kg-metrics" aria-label="Knowledge graph metrics">
-    <span><strong>12/12</strong> queries passed</span><span><strong>289</strong> rows matched</span><span><strong>1,635</strong> source fields</span><span><strong>32,436</strong> RDF triples</span>
+    <span><strong>50/50</strong> queries passed</span><span><strong>952</strong> rows matched</span><span><strong>1,635</strong> source fields</span><span><strong>32,436</strong> RDF triples</span>
   </div>
 </section>
 
@@ -69,9 +69,11 @@
       <p class="eyebrow">SPARQL query and result</p>
       <h2>Inspect a tested competency query</h2>
       <div class="kg-controls">
-        <div><label for="kg-query-select">Query example</label><select id="kg-query-select"></select></div>
+        <div><label for="kg-query-select">Plain-language question</label><select id="kg-query-select"></select></div>
         <div><label for="kg-result-filter">Filter displayed rows</label><input id="kg-result-filter" type="search" placeholder="Filter any result value" autocomplete="off"></div>
       </div>
+      <p class="eyebrow kg-question-label">Scientific question</p>
+      <h3 id="kg-query-question" class="kg-question"></h3>
       <p id="kg-query-purpose" class="kg-purpose"></p>
       <textarea id="kg-query-editor" spellcheck="false" aria-label="SPARQL query editor"></textarea>
       <div class="kg-query-actions">

@@ -1,0 +1,20 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel
+WHERE {
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
+    ?measurement a h2kg:Measurement ; rdfs:label ?measurementLabel ;
+      h2kg:hasMeasurementSubject ?specimen ; h2kg:usesInstrument ?instrument ; h2kg:hasOutputData ?rawDataset .
+    ?specimen rdfs:label ?specimenLabel .
+    ?instrument rdfs:label ?instrumentLabel .
+    ?rawDataset rdfs:label ?rawDatasetLabel .
+  }
+}
+ORDER BY ?measurementLabel

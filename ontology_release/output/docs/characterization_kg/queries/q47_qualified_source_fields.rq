@@ -1,0 +1,21 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?caseKey ?fieldName ?sourceCell ?statusLabel ?rawValue
+WHERE {
+  GRAPH ?sourceGraph {
+    ?source a kg:SourceField ; kg:fieldName ?fieldName ; kg:sourceCell ?sourceCell ; kg:valueStatus ?status .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+  FILTER(STRSTARTS(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/"))
+  FILTER(?status != kg:reported)
+  BIND(STRAFTER(STR(?sourceGraph), "https://w3id.org/h2kg/examples/characterization/graph/source/") AS ?caseKey)
+  BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+}
+ORDER BY ?caseKey ?sourceCell

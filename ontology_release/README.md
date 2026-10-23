@@ -67,7 +67,7 @@ python -m aimworks_ontology_release.cli --project-root . characterization-ingest
   --manifest input/characterization_workbook_manifest.json
 ```
 
-Build the RDFLib dataset, SHACL reports, 12 ground-truth-checked SPARQL
+Build the RDFLib dataset, SHACL reports, 50 ground-truth-checked SPARQL
 demonstrations, notebook, and compact query-workbench payload from the versioned
 manifest:
 

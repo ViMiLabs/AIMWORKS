@@ -32,7 +32,7 @@ def characterization_body(
   <div>
     <p class="eyebrow">Workbook-backed RDF application</p>
     <h2>Validated SPARQL competency workbench</h2>
-    <p>Explore release-tested queries over eight H₂KG-aligned characterization cases. Every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
+    <p>Explore 50 release-tested questions over eight H₂KG-aligned characterization cases. Each plain-language question is paired with executable SPARQL, and every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
   </div>
   <div class="kg-metrics" aria-label="Knowledge graph metrics">
     <span><strong>{passed}/{query_count}</strong> queries passed</span><span><strong>{matched:,}</strong> rows matched</span><span><strong>{fields:,}</strong> source fields</span><span><strong>{triples:,}</strong> RDF triples</span>
@@ -51,9 +51,11 @@ def characterization_body(
       <p class="eyebrow">SPARQL query and result</p>
       <h2>Inspect a tested competency query</h2>
       <div class="kg-controls">
-        <div><label for="kg-query-select">Query example</label><select id="kg-query-select"></select></div>
+        <div><label for="kg-query-select">Plain-language question</label><select id="kg-query-select"></select></div>
         <div><label for="kg-result-filter">Filter displayed rows</label><input id="kg-result-filter" type="search" placeholder="Filter any result value" autocomplete="off"></div>
       </div>
+      <p class="eyebrow kg-question-label">Scientific question</p>
+      <h3 id="kg-query-question" class="kg-question"></h3>
       <p id="kg-query-purpose" class="kg-purpose"></p>
       <textarea id="kg-query-editor" spellcheck="false" aria-label="SPARQL query editor"></textarea>
       <div class="kg-query-actions">
@@ -104,7 +106,7 @@ def characterization_css() -> str:
 .kg-validation-summary { min-width:235px; padding:.8rem 1rem; border:1px solid #afd2c8; border-radius:12px; background:#fff; color:#31565d; font-size:.82rem; }.kg-validation-summary strong { display:block; color:#0b6d61; font-size:1.45rem; }.kg-validation-summary.fail { border-color:#d7a59a; color:var(--kg-red); }
 .kg-validation-matrix { max-height:360px; margin:0; border:0; border-bottom:1px solid #dbe5e7; border-radius:0; }
 .kg-main-grid { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(285px,.65fr); gap:1rem; padding:1rem; background:#f7faf9; }.kg-query.card,.kg-downloads.card { margin:0; }
-.kg-controls { display:grid; grid-template-columns:minmax(260px,1fr) minmax(220px,.55fr); gap:.75rem; margin:.8rem 0; }.kg-query label { display:block; margin-bottom:.3rem; color:#36535c; font-size:.8rem; font-weight:750; }.kg-query select,.kg-query input { width:100%; padding:.65rem .72rem; border:1px solid #aebfc4; border-radius:8px; background:#fff; color:var(--kg-ink); }.kg-purpose { min-height:2.4rem; margin:.4rem 0; color:var(--kg-muted); }
+.kg-controls { display:grid; grid-template-columns:minmax(260px,1fr) minmax(220px,.55fr); gap:.75rem; margin:.8rem 0; }.kg-query label { display:block; margin-bottom:.3rem; color:#36535c; font-size:.8rem; font-weight:750; }.kg-query select,.kg-query input { width:100%; padding:.65rem .72rem; border:1px solid #aebfc4; border-radius:8px; background:#fff; color:var(--kg-ink); }.kg-question-label { margin:.85rem 0 .15rem; }.kg-question { margin:0; max-width:930px; font-size:1.15rem; line-height:1.42; }.kg-purpose { min-height:2.4rem; margin:.4rem 0; color:var(--kg-muted); }
 .kg-query textarea { width:100%; min-height:330px; padding:.85rem; resize:vertical; border:1px solid #829aa0; border-radius:10px; background:#10252d; color:#e8f6f4; font:12px/1.55 Consolas,monospace; tab-size:2; }.kg-query-actions { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.7rem; }.kg-query-actions button { min-height:40px; padding:.5rem .72rem; border:1px solid var(--kg-teal); border-radius:8px; background:#fff; color:#0b625b; font-weight:750; cursor:pointer; }.kg-query-actions button:hover { color:#fff; background:var(--kg-teal); }.kg-query .kg-status { margin:.65rem 0 0; padding:.65rem .75rem; border:1px solid #d7e4e4; border-radius:8px; background:#f8fbfb; color:var(--kg-muted); font-size:.82rem; }
 .kg-downloads { display:flex; flex-direction:column; gap:.45rem; align-self:start; }.kg-downloads a { padding:.57rem .68rem; border:1px solid #bdd1d4; border-radius:8px; color:#0a6967; text-decoration:none; font-weight:700; background:#fbfdfd; }.kg-downloads a:hover { background:#e8f6f3; }.kg-integrity { display:grid; grid-template-columns:auto 1fr; gap:.3rem .65rem; margin-top:.6rem; padding:.78rem; border-radius:10px; background:#edf4f3; }.kg-integrity strong { grid-column:1/-1; margin-bottom:.2rem; }.kg-integrity span { color:#5d7077; font-size:.75rem; }.kg-integrity code { overflow-wrap:anywhere; white-space:normal; font-size:.72rem; }
 .kg-selected-validation { display:grid; grid-template-columns:repeat(6,minmax(110px,1fr)); gap:.65rem; padding:1rem; border-top:1px solid #dbe5e7; border-bottom:1px solid #dbe5e7; background:#fff; }.kg-check { padding:.7rem; border:1px solid #cddddd; border-radius:10px; background:#f9fcfb; color:#587078; font-size:.74rem; }.kg-check strong { display:block; margin-top:.2rem; color:var(--kg-ink); font-size:1rem; }.kg-check.pass { border-color:#9acbbd; background:#eef9f5; }.kg-check.fail { border-color:#d8a69c; background:#fff4f1; }
@@ -124,7 +126,7 @@ def characterization_js() -> str:
   if (!root) return;
   const $ = (id) => document.getElementById(id);
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryPurpose=$('kg-query-purpose'), queryNote=$('kg-query-note');
+  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryQuestion=$('kg-query-question'), queryPurpose=$('kg-query-purpose'), queryNote=$('kg-query-note');
   const observedContainer=$('kg-query-results'), expectedContainer=$('kg-expected-results'), differences=$('kg-differences'), filter=$('kg-result-filter');
   let data=null, current=null;
 
@@ -135,7 +137,7 @@ def characterization_js() -> str:
     data=payload;
     renderSummary(payload.validation_summary);
     renderMatrix(payload.queries);
-    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=`${item.id.replace(/^q(\d+)_.*$/,'Q$1')} · ${item.title}`; querySelect.append(option); });
+    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=`${item.id.replace(/^q(\d+)_.*$/,'Q$1')} · ${item.question}`; querySelect.append(option); });
     querySelect.value=payload.default_query || payload.queries[0]?.id || '';
     syncQuery();
   }).catch((error) => {
@@ -159,15 +161,16 @@ def characterization_js() -> str:
     target.innerHTML=`<strong>${summary.passed_query_count}/${summary.query_count} queries passed</strong>${summary.matched_row_count} of ${summary.expected_row_count} expected rows matched exactly.<br><small>${esc(summary.method)}</small>`;
   }
   function renderMatrix(queries){
-    const variables=['Query','Competency example','Expected','Observed','Matched','Missing','Unexpected','Status'];
-    const rows=queries.map((query)=>{const v=query.validation;return {Query:query.id.replace(/^q(\d+)_.*$/,'Q$1'),'Competency example':query.title,Expected:v.expected_row_count,Observed:v.observed_row_count,Matched:v.matched_row_count,Missing:v.missing_expected_row_count,Unexpected:v.unexpected_row_count,Status:`<span class="kg-pill ${v.status}">${v.status}</span>`};});
+    const variables=['Query','Category','Plain-language question','Expected','Observed','Matched','Missing','Unexpected','Status'];
+    const rows=queries.map((query)=>{const v=query.validation;return {Query:query.id.replace(/^q(\d+)_.*$/,'Q$1'),Category:query.category,'Plain-language question':query.question,Expected:v.expected_row_count,Observed:v.observed_row_count,Matched:v.matched_row_count,Missing:v.missing_expected_row_count,Unexpected:v.unexpected_row_count,Status:`<span class="kg-pill ${v.status}">${v.status}</span>`};});
     renderTable($('kg-validation-matrix'),variables,rows,'No validation results.',true);
   }
   function syncQuery(){
     current=data?.queries.find((item)=>item.id===querySelect.value);
     if(!current)return;
     queryEditor.value=current.query;
-    queryPurpose.textContent=`${current.purpose} Ground truth: ${current.ground_truth_basis}`;
+    queryQuestion.textContent=current.question;
+    queryPurpose.textContent=`${current.purpose} Ground-truth basis: ${current.ground_truth_basis}`;
     filter.value='';
     queryNote.textContent=`Release-tested with RDFLib: ${current.validation.observed_row_count} observed row(s), ${current.validation.expected_row_count} expected row(s).`;
     renderSelected();
