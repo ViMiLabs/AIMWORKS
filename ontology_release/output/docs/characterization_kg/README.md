@@ -13,10 +13,14 @@ This package is generated from the sanitized, fingerprinted corrected workbook m
 
 The package uses H₂KG 2.3.0 classes and properties without changing the ontology taxonomy. Parameter records are distinct from intrinsic scientific properties. Missing, unconfirmed, inapplicable, unresolved-unit, and semantically conflicting source values remain explicit provenance records and are not silently normalized.
 
+## Query validation
+
+All 12 SPARQL competency queries are evaluated by exact row-multiset comparison with expectations independently derived from the sanitized manifest. The current build matched 289 of 289 expected rows, with 0 failed queries. Query-specific expected rows and comparison reports are in `query_ground_truth/`.
+
 ## Run
 
 ```bash
 python run_demo.py --query q1_tem_specimen_preparation
 ```
 
-The notebook and query files provide the equivalent RDFLib and SPARQL workflow. `validation_report.json` records SHACL conformance, negative tests, RDF serialization parity, and source coverage.
+The notebook and query files provide the equivalent RDFLib and SPARQL workflow. `validation_report.json` records query-ground-truth results, SHACL conformance, negative tests, RDF serialization parity, and source coverage.

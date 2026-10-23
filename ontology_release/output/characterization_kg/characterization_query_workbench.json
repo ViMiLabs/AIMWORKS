@@ -1,0 +1,4961 @@
+{
+  "schema_version": "h2kg-characterization-query-workbench/v2",
+  "default_query": "q1_tem_specimen_preparation",
+  "source_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
+  "cases": [
+    {
+      "key": "tem",
+      "title": "Transmission electron microscopy",
+      "source_record_count": 131,
+      "result_count": 1
+    },
+    {
+      "key": "sem",
+      "title": "Scanning electron microscopy",
+      "source_record_count": 139,
+      "result_count": 1
+    },
+    {
+      "key": "afm",
+      "title": "Atomic force microscopy",
+      "source_record_count": 161,
+      "result_count": 1
+    },
+    {
+      "key": "fib_sem",
+      "title": "FIB-SEM tomography",
+      "source_record_count": 304,
+      "result_count": 6
+    },
+    {
+      "key": "ic_sem",
+      "title": "Ion-cut scanning electron microscopy",
+      "source_record_count": 221,
+      "result_count": 3
+    },
+    {
+      "key": "neutron_tomography",
+      "title": "Neutron tomography",
+      "source_record_count": 211,
+      "result_count": 4
+    },
+    {
+      "key": "synchrotron_radiography",
+      "title": "Synchrotron X-ray radiography",
+      "source_record_count": 234,
+      "result_count": 4
+    },
+    {
+      "key": "synchrotron_tomography",
+      "title": "Synchrotron X-ray tomography",
+      "source_record_count": 234,
+      "result_count": 4
+    }
+  ],
+  "validation_summary": {
+    "query_count": 12,
+    "passed_query_count": 12,
+    "failed_query_count": 0,
+    "expected_row_count": 289,
+    "observed_row_count": 289,
+    "matched_row_count": 289,
+    "method": "SPARQL result rows compared exactly with manifest-derived ground truth"
+  },
+  "queries": [
+    {
+      "id": "q1_tem_specimen_preparation",
+      "title": "TEM specimen, preparation, and reported result",
+      "purpose": "Traverse the material chain from the TEM result and specimen to each preparation process that produced an upstream material.",
+      "ground_truth_basis": "TEM synthesis and specimen-preparation rows, final specimen field, and analysis target in the sanitized workbook manifest.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT DISTINCT ?resultLabel ?specimenLabel ?preparationLabel ?preparedMaterialLabel\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; h2kg:fromMeasurement ?measurement ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .\n    ?measurement h2kg:hasMeasurementSubject ?specimen .\n    ?specimen rdfs:label ?specimenLabel .\n    ?property h2kg:isCharacteristicOf ?specimen .\n    ?preparation a h2kg:Manufacturing ; kg:case case:tem ; rdfs:label ?preparationLabel ; h2kg:hasOutputMaterial ?preparedMaterial .\n    ?preparedMaterial rdfs:label ?preparedMaterialLabel .\n    ?preparedMaterial (^h2kg:hasInputMaterial/h2kg:hasOutputMaterial)* ?specimen .\n  }\n}\nORDER BY ?preparationLabel ?preparedMaterialLabel",
+      "query_file": "queries/q1_tem_specimen_preparation.rq",
+      "result_csv": "query_results/q1_tem_specimen_preparation.csv",
+      "result_json": "query_results/q1_tem_specimen_preparation.json",
+      "expected_csv": "query_ground_truth/q1_tem_specimen_preparation_expected.csv",
+      "expected_json": "query_ground_truth/q1_tem_specimen_preparation_expected.json",
+      "comparison_json": "query_ground_truth/q1_tem_specimen_preparation_comparison.json",
+      "row_count": 6,
+      "variables": [
+        "resultLabel",
+        "specimenLabel",
+        "preparationLabel",
+        "preparedMaterialLabel"
+      ],
+      "rows": [
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Buy",
+          "preparedMaterialLabel": "Carbon coated copper TEM grid"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Buy",
+          "preparedMaterialLabel": "Pd/C"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Dispersion",
+          "preparedMaterialLabel": "SPInt3"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Dry",
+          "preparedMaterialLabel": "homogeneous powder"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Mix",
+          "preparedMaterialLabel": "SPInt1"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Sonification",
+          "preparedMaterialLabel": "SPInt2"
+        }
+      ],
+      "expected_rows": [
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Sonification",
+          "preparedMaterialLabel": "SPInt2"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Dispersion",
+          "preparedMaterialLabel": "SPInt3"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Buy",
+          "preparedMaterialLabel": "Pd/C"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Mix",
+          "preparedMaterialLabel": "SPInt1"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Buy",
+          "preparedMaterialLabel": "Carbon coated copper TEM grid"
+        },
+        {
+          "resultLabel": "Average size result",
+          "specimenLabel": "homogeneous powder",
+          "preparationLabel": "Dry",
+          "preparedMaterialLabel": "homogeneous powder"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 6,
+        "observed_row_count": 6,
+        "matched_row_count": 6,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q2_tem_instrument_settings",
+      "title": "TEM instrument and acquisition settings",
+      "purpose": "Retrieve parameter records, values, units, and explicit missing or unconfirmed states.",
+      "ground_truth_basis": "TEM characterization and instrument fields, including raw values, source cells, and declared units.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?instrumentLabel ?parameterLabel ?statusLabel ?sourceCell ?rawValue ?value ?unit\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?measurement a h2kg:TransmissionElectronMicroscopyImaging ; h2kg:usesInstrument ?instrument ; h2kg:hasParameter ?parameter .\n    ?instrument rdfs:label ?instrumentLabel .\n    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property ; h2kg:hasMetadata ?source .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n    BIND(REPLACE(STR(?status), \"^.*[#/]\", \"\") AS ?statusLabel)\n  }\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/source/tem> {\n    ?source kg:sourceCell ?sourceCell .\n    OPTIONAL { ?source rdf:value ?rawValue . }\n  }\n}\nORDER BY ?parameterLabel",
+      "query_file": "queries/q2_tem_instrument_settings.rq",
+      "result_csv": "query_results/q2_tem_instrument_settings.csv",
+      "result_json": "query_results/q2_tem_instrument_settings.json",
+      "expected_csv": "query_ground_truth/q2_tem_instrument_settings_expected.csv",
+      "expected_json": "query_ground_truth/q2_tem_instrument_settings_expected.json",
+      "comparison_json": "query_ground_truth/q2_tem_instrument_settings_comparison.json",
+      "row_count": 8,
+      "variables": [
+        "instrumentLabel",
+        "parameterLabel",
+        "statusLabel",
+        "sourceCell",
+        "rawValue",
+        "value",
+        "unit"
+      ],
+      "rows": [
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C61",
+          "rawValue": "100",
+          "value": "100",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "TEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "TEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C63",
+          "rawValue": "140000",
+          "value": "140000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C56",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C50",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "unconfirmed",
+          "sourceCell": "TEM!C65",
+          "rawValue": "To be confirmed",
+          "value": "",
+          "unit": ""
+        }
+      ],
+      "expected_rows": [
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C50",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "TEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C56",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C61",
+          "rawValue": "100",
+          "value": "100",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C63",
+          "rawValue": "140000",
+          "value": "140000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "unconfirmed",
+          "sourceCell": "TEM!C65",
+          "rawValue": "To be confirmed",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "TEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 8,
+        "observed_row_count": 8,
+        "matched_row_count": 8,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q3_tem_dataset_analysis",
+      "title": "TEM data and analysis provenance",
+      "purpose": "Retrieve the dataset, software, and analysis process that produced each TEM result.",
+      "ground_truth_basis": "TEM analysis rows: precursor dataset, technique, software, and target output.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?inputDataLabel ?analysisLabel ?softwareLabel ?resultLabel\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .\n    ?analysis rdfs:label ?analysisLabel ; h2kg:hasInputData ?inputData .\n    ?inputData rdfs:label ?inputDataLabel .\n    OPTIONAL { ?analysis h2kg:usesSoftware ?software . ?software rdfs:label ?softwareLabel . }\n  }\n}\nORDER BY ?resultLabel",
+      "query_file": "queries/q3_tem_dataset_analysis.rq",
+      "result_csv": "query_results/q3_tem_dataset_analysis.csv",
+      "result_json": "query_results/q3_tem_dataset_analysis.json",
+      "expected_csv": "query_ground_truth/q3_tem_dataset_analysis_expected.csv",
+      "expected_json": "query_ground_truth/q3_tem_dataset_analysis_expected.json",
+      "comparison_json": "query_ground_truth/q3_tem_dataset_analysis_comparison.json",
+      "row_count": 1,
+      "variables": [
+        "inputDataLabel",
+        "analysisLabel",
+        "softwareLabel",
+        "resultLabel"
+      ],
+      "rows": [
+        {
+          "inputDataLabel": "Post-processed image",
+          "analysisLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ",
+          "resultLabel": "Average size result"
+        }
+      ],
+      "expected_rows": [
+        {
+          "inputDataLabel": "Post-processed image",
+          "analysisLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ",
+          "resultLabel": "Average size result"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 1,
+        "observed_row_count": 1,
+        "matched_row_count": 1,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q4_tem_result_value",
+      "title": "TEM result, value, unit, and bearer",
+      "purpose": "Retrieve the reported TEM result with its workbook lexical value, normalized QUDT value, property, and specimen bearer.",
+      "ground_truth_basis": "TEM analysis target and amount fields plus the final specimen field.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?resultLabel ?propertyLabel ?bearerLabel ?sourceCell ?rawValue ?value ?unit\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer ; h2kg:hasMetadata ?source .\n    ?bearer rdfs:label ?bearerLabel .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n  }\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/source/tem> {\n    ?source kg:fieldName \"AmountTarget\" ; kg:sourceCell ?sourceCell .\n    OPTIONAL { ?source rdf:value ?rawValue . }\n  }\n}\nORDER BY ?resultLabel",
+      "query_file": "queries/q4_tem_result_value.rq",
+      "result_csv": "query_results/q4_tem_result_value.csv",
+      "result_json": "query_results/q4_tem_result_value.json",
+      "expected_csv": "query_ground_truth/q4_tem_result_value_expected.csv",
+      "expected_json": "query_ground_truth/q4_tem_result_value_expected.json",
+      "comparison_json": "query_ground_truth/q4_tem_result_value_comparison.json",
+      "row_count": 1,
+      "variables": [
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "sourceCell",
+        "rawValue",
+        "value",
+        "unit"
+      ],
+      "rows": [
+        {
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "TEM!I78",
+          "rawValue": "5 nm",
+          "value": "5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ],
+      "expected_rows": [
+        {
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "TEM!I78",
+          "rawValue": "5 nm",
+          "value": "5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 1,
+        "observed_row_count": 1,
+        "matched_row_count": 1,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q5_all_measurement_contexts",
+      "title": "Measurement subjects, instruments, and raw datasets",
+      "purpose": "Retrieve the core measurement context for every workbook-backed case.",
+      "ground_truth_basis": "The eight case definitions, final specimen fields, and method-specific measurement and instrument assignments.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel\nWHERE {\n  GRAPH ?semanticGraph {\n    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .\n    ?measurement a h2kg:Measurement ; kg:case ?case ; rdfs:label ?measurementLabel ;\n      h2kg:hasMeasurementSubject ?specimen ; h2kg:usesInstrument ?instrument ; h2kg:hasOutputData ?rawDataset .\n    ?specimen rdfs:label ?specimenLabel .\n    ?instrument rdfs:label ?instrumentLabel .\n    ?rawDataset rdfs:label ?rawDatasetLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n}\nORDER BY ?caseKey",
+      "query_file": "queries/q5_all_measurement_contexts.rq",
+      "result_csv": "query_results/q5_all_measurement_contexts.csv",
+      "result_json": "query_results/q5_all_measurement_contexts.json",
+      "expected_csv": "query_ground_truth/q5_all_measurement_contexts_expected.csv",
+      "expected_json": "query_ground_truth/q5_all_measurement_contexts_expected.json",
+      "comparison_json": "query_ground_truth/q5_all_measurement_contexts_comparison.json",
+      "row_count": 8,
+      "variables": [
+        "caseKey",
+        "measurementLabel",
+        "specimenLabel",
+        "instrumentLabel",
+        "rawDatasetLabel"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "measurementLabel": "Atomic force microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Atomic force microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "fib_sem",
+          "measurementLabel": "FIB-SEM tomography measurement",
+          "specimenLabel": "highly porous bulk material",
+          "instrumentLabel": "FIB-SEM tomography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "ic_sem",
+          "measurementLabel": "Ion-cut scanning electron microscopy measurement",
+          "specimenLabel": "highly porous bulk material",
+          "instrumentLabel": "Ion-cut scanning electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "measurementLabel": "Neutron tomography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Neutron tomography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "sem",
+          "measurementLabel": "Scanning electron microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Scanning electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "measurementLabel": "Synchrotron X-ray radiography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Synchrotron X-ray radiography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "measurementLabel": "Synchrotron X-ray tomography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Synchrotron X-ray tomography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "tem",
+          "measurementLabel": "Transmission electron microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "tem",
+          "measurementLabel": "Transmission electron microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Transmission electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "sem",
+          "measurementLabel": "Scanning electron microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Scanning electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "afm",
+          "measurementLabel": "Atomic force microscopy measurement",
+          "specimenLabel": "homogeneous powder",
+          "instrumentLabel": "Atomic force microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "fib_sem",
+          "measurementLabel": "FIB-SEM tomography measurement",
+          "specimenLabel": "highly porous bulk material",
+          "instrumentLabel": "FIB-SEM tomography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "ic_sem",
+          "measurementLabel": "Ion-cut scanning electron microscopy measurement",
+          "specimenLabel": "highly porous bulk material",
+          "instrumentLabel": "Ion-cut scanning electron microscopy instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "measurementLabel": "Neutron tomography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Neutron tomography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "measurementLabel": "Synchrotron X-ray radiography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Synchrotron X-ray radiography instrument",
+          "rawDatasetLabel": "RawData"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "measurementLabel": "Synchrotron X-ray tomography measurement",
+          "specimenLabel": "bulk material",
+          "instrumentLabel": "Synchrotron X-ray tomography instrument",
+          "rawDatasetLabel": "RawData"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 8,
+        "observed_row_count": 8,
+        "matched_row_count": 8,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q6_all_result_records",
+      "title": "Result properties, values, units, and bearers",
+      "purpose": "Retrieve every analysis output across all eight cases while retaining raw workbook values beside defensible QUDT normalization.",
+      "ground_truth_basis": "All 24 workbook analysis rows, their AmountTarget cells, and each case's final specimen field.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey ?resultLabel ?propertyLabel ?bearerLabel ?sourceCell ?rawValue ?value ?unit\nWHERE {\n  GRAPH ?semanticGraph {\n    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property ; kg:case ?case .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer ; h2kg:hasMetadata ?source .\n    ?bearer rdfs:label ?bearerLabel .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n  }\n  GRAPH ?sourceGraph {\n    ?source kg:fieldName \"AmountTarget\" ; kg:sourceCell ?sourceCell .\n    OPTIONAL { ?source rdf:value ?rawValue . }\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  FILTER(STRSTARTS(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\"))\n}\nORDER BY ?caseKey ?resultLabel",
+      "query_file": "queries/q6_all_result_records.rq",
+      "result_csv": "query_results/q6_all_result_records.csv",
+      "result_json": "query_results/q6_all_result_records.json",
+      "expected_csv": "query_ground_truth/q6_all_result_records_expected.csv",
+      "expected_json": "query_ground_truth/q6_all_result_records_expected.json",
+      "comparison_json": "query_ground_truth/q6_all_result_records_comparison.json",
+      "row_count": 24,
+      "variables": [
+        "caseKey",
+        "resultLabel",
+        "propertyLabel",
+        "bearerLabel",
+        "sourceCell",
+        "rawValue",
+        "value",
+        "unit"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "AFM!I83",
+          "rawValue": "110 um",
+          "value": "110",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Constrictivity result",
+          "propertyLabel": "Constrictivity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I120",
+          "rawValue": "8 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Direction result",
+          "propertyLabel": "Direction",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I118",
+          "rawValue": "6 °",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Mean geodesic torutosity result",
+          "propertyLabel": "Mean geodesic torutosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I121",
+          "rawValue": "9 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Network relation result",
+          "propertyLabel": "Network relation",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I119",
+          "rawValue": "7 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Porosity result",
+          "propertyLabel": "Porosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I117",
+          "rawValue": "10 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Volume fraction result",
+          "propertyLabel": "Volume fraction",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I116",
+          "rawValue": "80 nm",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "GDL thickness result",
+          "propertyLabel": "GDL thickness",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I104",
+          "rawValue": "160 nm",
+          "value": "160",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "MEA thickness result",
+          "propertyLabel": "MEA thickness",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I103",
+          "rawValue": "80 nm",
+          "value": "80",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "Porosity result",
+          "propertyLabel": "Porosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I105",
+          "rawValue": "6 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageArea result",
+          "propertyLabel": "AverageArea",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I109",
+          "rawValue": "45 cm2",
+          "value": "45",
+          "unit": "http://qudt.org/vocab/unit/CentiM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageBaryCenter result",
+          "propertyLabel": "AverageBaryCenter",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I108",
+          "rawValue": "5",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageNumber result",
+          "propertyLabel": "AverageNumber",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I110",
+          "rawValue": "45",
+          "value": "45",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "Tortuosity Factor result",
+          "propertyLabel": "Tortuosity Factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I107",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "sem",
+          "resultLabel": "Support-needle length result",
+          "propertyLabel": "Support-needle length",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "SEM!I79",
+          "rawValue": "Up to ~110 µm",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Decay factor result",
+          "propertyLabel": "Decay factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I116",
+          "rawValue": "51 ms",
+          "value": "51",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Electrolyte saturation result",
+          "propertyLabel": "Electrolyte saturation",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I118",
+          "rawValue": "47 mol/l",
+          "value": "47",
+          "unit": "http://qudt.org/vocab/unit/MOL-PER-L"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Real distance in beam path result",
+          "propertyLabel": "Real distance in beam path",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I117",
+          "rawValue": "99 cm",
+          "value": "99",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "carbonfelt/electrolyte/air ratio result",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I119",
+          "rawValue": "03:02:01",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Decay factor result",
+          "propertyLabel": "Decay factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I116",
+          "rawValue": "51 ms",
+          "value": "51",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Electrolyte saturation result",
+          "propertyLabel": "Electrolyte saturation",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I118",
+          "rawValue": "47 mol/l",
+          "value": "47",
+          "unit": "http://qudt.org/vocab/unit/MOL-PER-L"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Real distance in beam path result",
+          "propertyLabel": "Real distance in beam path",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I117",
+          "rawValue": "99 cm",
+          "value": "99",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "carbonfelt/electrolyte/air ratio result",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I119",
+          "rawValue": "03:02:01",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "tem",
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "TEM!I78",
+          "rawValue": "5 nm",
+          "value": "5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "tem",
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "TEM!I78",
+          "rawValue": "5 nm",
+          "value": "5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "sem",
+          "resultLabel": "Support-needle length result",
+          "propertyLabel": "Support-needle length",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "SEM!I79",
+          "rawValue": "Up to ~110 µm",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "afm",
+          "resultLabel": "Average size result",
+          "propertyLabel": "Average size",
+          "bearerLabel": "homogeneous powder",
+          "sourceCell": "AFM!I83",
+          "rawValue": "110 um",
+          "value": "110",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Volume fraction result",
+          "propertyLabel": "Volume fraction",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I116",
+          "rawValue": "80 nm",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Porosity result",
+          "propertyLabel": "Porosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I117",
+          "rawValue": "10 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Direction result",
+          "propertyLabel": "Direction",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I118",
+          "rawValue": "6 °",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Network relation result",
+          "propertyLabel": "Network relation",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I119",
+          "rawValue": "7 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Constrictivity result",
+          "propertyLabel": "Constrictivity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I120",
+          "rawValue": "8 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "resultLabel": "Mean geodesic torutosity result",
+          "propertyLabel": "Mean geodesic torutosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "FIB-SEM!I121",
+          "rawValue": "9 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "MEA thickness result",
+          "propertyLabel": "MEA thickness",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I103",
+          "rawValue": "80 nm",
+          "value": "80",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "GDL thickness result",
+          "propertyLabel": "GDL thickness",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I104",
+          "rawValue": "160 nm",
+          "value": "160",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "resultLabel": "Porosity result",
+          "propertyLabel": "Porosity",
+          "bearerLabel": "highly porous bulk material",
+          "sourceCell": "IC-SEM!I105",
+          "rawValue": "6 pu",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "Tortuosity Factor result",
+          "propertyLabel": "Tortuosity Factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I107",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageBaryCenter result",
+          "propertyLabel": "AverageBaryCenter",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I108",
+          "rawValue": "5",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageArea result",
+          "propertyLabel": "AverageArea",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I109",
+          "rawValue": "45 cm2",
+          "value": "45",
+          "unit": "http://qudt.org/vocab/unit/CentiM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "resultLabel": "AverageNumber result",
+          "propertyLabel": "AverageNumber",
+          "bearerLabel": "bulk material",
+          "sourceCell": "NeutronTomo!I110",
+          "rawValue": "45",
+          "value": "45",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Decay factor result",
+          "propertyLabel": "Decay factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I116",
+          "rawValue": "51 ms",
+          "value": "51",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Real distance in beam path result",
+          "propertyLabel": "Real distance in beam path",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I117",
+          "rawValue": "99 cm",
+          "value": "99",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "Electrolyte saturation result",
+          "propertyLabel": "Electrolyte saturation",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I118",
+          "rawValue": "47 mol/l",
+          "value": "47",
+          "unit": "http://qudt.org/vocab/unit/MOL-PER-L"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "resultLabel": "carbonfelt/electrolyte/air ratio result",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronRadio!I119",
+          "rawValue": "03:02:01",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Decay factor result",
+          "propertyLabel": "Decay factor",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I116",
+          "rawValue": "51 ms",
+          "value": "51",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Real distance in beam path result",
+          "propertyLabel": "Real distance in beam path",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I117",
+          "rawValue": "99 cm",
+          "value": "99",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "Electrolyte saturation result",
+          "propertyLabel": "Electrolyte saturation",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I118",
+          "rawValue": "47 mol/l",
+          "value": "47",
+          "unit": "http://qudt.org/vocab/unit/MOL-PER-L"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "resultLabel": "carbonfelt/electrolyte/air ratio result",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "bearerLabel": "bulk material",
+          "sourceCell": "SynchrotronTomo!I119",
+          "rawValue": "03:02:01",
+          "value": "",
+          "unit": ""
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 24,
+        "observed_row_count": 24,
+        "matched_row_count": 24,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q7_source_status_summary",
+      "title": "Workbook field-status summary",
+      "purpose": "Count reported, missing, inapplicable, unspecified, unconfirmed, unresolved-formula, and conflicting fields by case.",
+      "ground_truth_basis": "The explicit status assigned to every eligible field in the sanitized workbook manifest.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey ?statusLabel (COUNT(?source) AS ?fieldCount)\nWHERE {\n  GRAPH ?sourceGraph { ?source a kg:SourceField ; kg:valueStatus ?status . }\n  FILTER(STRSTARTS(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\"))\n  BIND(STRAFTER(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\") AS ?caseKey)\n  BIND(REPLACE(STR(?status), \"^.*[#/]\", \"\") AS ?statusLabel)\n}\nGROUP BY ?caseKey ?statusLabel\nORDER BY ?caseKey ?statusLabel",
+      "query_file": "queries/q7_source_status_summary.rq",
+      "result_csv": "query_results/q7_source_status_summary.csv",
+      "result_json": "query_results/q7_source_status_summary.json",
+      "expected_csv": "query_ground_truth/q7_source_status_summary_expected.csv",
+      "expected_json": "query_ground_truth/q7_source_status_summary_expected.json",
+      "comparison_json": "query_ground_truth/q7_source_status_summary_comparison.json",
+      "row_count": 37,
+      "variables": [
+        "caseKey",
+        "statusLabel",
+        "fieldCount"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "statusLabel": "missing",
+          "fieldCount": "26"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "not_specified",
+          "fieldCount": "10"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "reported",
+          "fieldCount": "123"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "missing",
+          "fieldCount": "68"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "reported",
+          "fieldCount": "219"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "semantic_conflict",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "formula_unresolved",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "missing",
+          "fieldCount": "35"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "13"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "reported",
+          "fieldCount": "171"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "missing",
+          "fieldCount": "30"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "reported",
+          "fieldCount": "164"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "missing",
+          "fieldCount": "18"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "not_applicable",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "reported",
+          "fieldCount": "103"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "missing",
+          "fieldCount": "37"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "not_specified",
+          "fieldCount": "6"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "reported",
+          "fieldCount": "189"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "missing",
+          "fieldCount": "37"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "not_specified",
+          "fieldCount": "6"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "reported",
+          "fieldCount": "189"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "formula_unresolved",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "missing",
+          "fieldCount": "16"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "not_applicable",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "not_specified",
+          "fieldCount": "9"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "reported",
+          "fieldCount": "102"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "tem",
+          "statusLabel": "formula_unresolved",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "missing",
+          "fieldCount": "16"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "not_applicable",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "not_specified",
+          "fieldCount": "9"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "reported",
+          "fieldCount": "102"
+        },
+        {
+          "caseKey": "tem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "missing",
+          "fieldCount": "18"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "not_applicable",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "reported",
+          "fieldCount": "103"
+        },
+        {
+          "caseKey": "sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "missing",
+          "fieldCount": "26"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "not_specified",
+          "fieldCount": "10"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "reported",
+          "fieldCount": "123"
+        },
+        {
+          "caseKey": "afm",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "missing",
+          "fieldCount": "68"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "reported",
+          "fieldCount": "219"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "semantic_conflict",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "fib_sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "formula_unresolved",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "missing",
+          "fieldCount": "35"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "not_specified",
+          "fieldCount": "13"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "reported",
+          "fieldCount": "171"
+        },
+        {
+          "caseKey": "ic_sem",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "1"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "missing",
+          "fieldCount": "30"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "not_specified",
+          "fieldCount": "15"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "reported",
+          "fieldCount": "164"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "missing",
+          "fieldCount": "37"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "not_specified",
+          "fieldCount": "6"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "reported",
+          "fieldCount": "189"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "missing",
+          "fieldCount": "37"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "not_specified",
+          "fieldCount": "6"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "reported",
+          "fieldCount": "189"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "statusLabel": "unconfirmed",
+          "fieldCount": "2"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 37,
+        "observed_row_count": 37,
+        "matched_row_count": 37,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q8_all_measurement_parameters",
+      "title": "Measurement settings with source and QUDT values",
+      "purpose": "Retrieve all direct measurement-setting records across the eight cases with source cells, raw values, statuses, and normalized quantities where justified.",
+      "ground_truth_basis": "Characterization and instrument fields recognized as scientific settings, together with their declared units.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey ?parameterLabel ?statusLabel ?sourceCell ?rawValue ?value ?unit\nWHERE {\n  GRAPH ?semanticGraph {\n    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .\n    ?measurement a h2kg:Measurement ; kg:case ?case ; h2kg:hasParameter ?parameter .\n    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property ; h2kg:hasMetadata ?source .\n    OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }\n    BIND(REPLACE(STR(?status), \"^.*[#/]\", \"\") AS ?statusLabel)\n  }\n  GRAPH ?sourceGraph {\n    ?source kg:sourceCell ?sourceCell .\n    OPTIONAL { ?source rdf:value ?rawValue . }\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  FILTER(STRSTARTS(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\"))\n}\nORDER BY ?caseKey ?parameterLabel ?sourceCell",
+      "query_file": "queries/q8_all_measurement_parameters.rq",
+      "result_csv": "query_results/q8_all_measurement_parameters.csv",
+      "result_json": "query_results/q8_all_measurement_parameters.json",
+      "expected_csv": "query_ground_truth/q8_all_measurement_parameters_expected.csv",
+      "expected_json": "query_ground_truth/q8_all_measurement_parameters_expected.json",
+      "comparison_json": "query_ground_truth/q8_all_measurement_parameters_comparison.json",
+      "row_count": 134,
+      "variables": [
+        "caseKey",
+        "parameterLabel",
+        "statusLabel",
+        "sourceCell",
+        "rawValue",
+        "value",
+        "unit"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C77",
+          "rawValue": "1024",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C55",
+          "rawValue": "80",
+          "value": "80",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "MeasuringSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C70",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM2"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "NominalRadius parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C65",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C59",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Resolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C74",
+          "rawValue": "0.5",
+          "value": "0.5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "ScanSpeed parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C72",
+          "rawValue": "0.488",
+          "value": "0.488",
+          "unit": "http://qudt.org/vocab/unit/HZ"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C53",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Brightness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C102",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Contrast parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C103",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "CutThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C83",
+          "rawValue": "150",
+          "value": "150",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "DwellTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C86",
+          "rawValue": "3",
+          "value": "3",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "DynamicFocus parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C100",
+          "rawValue": "-3",
+          "value": "-3",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ElectronBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C92",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ElectronCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C90",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C62",
+          "rawValue": "0",
+          "value": "0",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ImageAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C104",
+          "rawValue": "60",
+          "value": "60",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C76",
+          "rawValue": "700",
+          "value": "700",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C77",
+          "rawValue": " pA",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C78",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C96",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "MeasuredArea / um2 parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C81",
+          "rawValue": "20",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C94",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "PlaneSpacing parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C80",
+          "rawValue": "10",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C66",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "SliceNumber parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C85",
+          "rawValue": "1300",
+          "value": "1300",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "StageTilt parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C99",
+          "rawValue": "54",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C60",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "TiltCompensation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C98",
+          "rawValue": "36",
+          "value": "36",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "TotalAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C106",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Brightness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C93",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Contrast parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C94",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "CutThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C79",
+          "rawValue": "150",
+          "value": "150",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "DwellTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C81",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ElectronBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C87",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ElectronCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C85",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C59",
+          "rawValue": "0",
+          "value": "0",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ImageAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C95",
+          "rawValue": "60",
+          "value": "60",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C72",
+          "rawValue": "700",
+          "value": "700",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C73",
+          "rawValue": " pA",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C74",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C91",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "MeasuredArea / um2 parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C77",
+          "rawValue": "20",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C89",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "PlaneSpacing parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C76",
+          "rawValue": "10",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C63",
+          "rawValue": "10^-6",
+          "value": "0.000001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C57",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "TotalAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C97",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "BeamSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/CentiM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C81",
+          "rawValue": "4",
+          "value": "4",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "CollimatorDiameter parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C90",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "DataAcquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C99",
+          "rawValue": "36",
+          "value": "36",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C69",
+          "rawValue": "9",
+          "value": "9",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "FieldOfView parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C88",
+          "rawValue": "26",
+          "value": "26",
+          "unit": "http://qudt.org/vocab/unit/MilliM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Focus parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C82",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ImageFrequency parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C96",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/HZ"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "MaximalWavelenght parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C63",
+          "rawValue": "44593",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "NeutronFlux parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C67",
+          "rawValue": "2.7 x 10^6",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PinholeSampleDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C94",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PinholeSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C92",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C86",
+          "rawValue": "63.6",
+          "value": "63.6",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ProjectionNumber parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C98",
+          "rawValue": "1440",
+          "value": "1440",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Resolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C74",
+          "rawValue": "0.5",
+          "value": "0.5",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "SampleDetectorDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C76",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C79",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C80",
+          "rawValue": "um",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C84",
+          "rawValue": "300",
+          "value": "300",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C61",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "SEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C63",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SEM!C56",
+          "rawValue": "Not specified",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C50",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SynchrotronRadio!C77",
+          "rawValue": "None",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C106",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DistanceSampleDetector parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C98",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DistanceSampleSource parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C96",
+          "rawValue": "58",
+          "value": "58",
+          "unit": "http://qudt.org/vocab/unit/M"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "EnergyResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C68",
+          "rawValue": "10^-2",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C81",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "FieldOfViewX parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C73",
+          "rawValue": "26.68",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "FieldOfViewY parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C74",
+          "rawValue": "8",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C76",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfDarkFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C85",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfFlatFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C84",
+          "rawValue": "210",
+          "value": "210",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfRadiograms parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C80",
+          "rawValue": "2000",
+          "value": "2000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C71",
+          "rawValue": "13",
+          "value": "13",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "PositionReferences parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C87",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "RotationDegree parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C83",
+          "rawValue": "180",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SampleElevation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C94",
+          "rawValue": "81",
+          "value": "81",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C89",
+          "rawValue": "500",
+          "value": "500",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SourceMagneticField parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/T"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C100",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C104",
+          "rawValue": "1200",
+          "value": "1200",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "XrayEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C69",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SynchrotronTomo!C77",
+          "rawValue": "None",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C106",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DistanceSampleDetector parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C98",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DistanceSampleSource parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C96",
+          "rawValue": "58",
+          "value": "58",
+          "unit": "http://qudt.org/vocab/unit/M"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "EnergyResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C68",
+          "rawValue": "10^-2",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C81",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "FieldOfViewX parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C73",
+          "rawValue": "26.68",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "FieldOfViewY parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C74",
+          "rawValue": "8",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C76",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfDarkFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C85",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfFlatFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C84",
+          "rawValue": "210",
+          "value": "210",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfRadiograms parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C80",
+          "rawValue": "2000",
+          "value": "2000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C71",
+          "rawValue": "13",
+          "value": "13",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "PositionReferences parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C87",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "RotationDegree parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C83",
+          "rawValue": "180",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SampleElevation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C94",
+          "rawValue": "81",
+          "value": "81",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C89",
+          "rawValue": "500",
+          "value": "500",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SourceMagneticField parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/T"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C100",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C104",
+          "rawValue": "1200",
+          "value": "1200",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "XrayEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C69",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C61",
+          "rawValue": "100",
+          "value": "100",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "TEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "TEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C63",
+          "rawValue": "140000",
+          "value": "140000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C56",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C50",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "unconfirmed",
+          "sourceCell": "TEM!C65",
+          "rawValue": "To be confirmed",
+          "value": "",
+          "unit": ""
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C50",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "TEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C56",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C61",
+          "rawValue": "100",
+          "value": "100",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C63",
+          "rawValue": "140000",
+          "value": "140000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "unconfirmed",
+          "sourceCell": "TEM!C65",
+          "rawValue": "To be confirmed",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "TEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "tem",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "TEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C50",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "not_applicable",
+          "sourceCell": "SEM!C52",
+          "rawValue": "Not applicable",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SEM!C56",
+          "rawValue": "Not specified",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "AccelerationVoltage parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C61",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/KiloV"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C63",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "WorkingDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SEM!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "sem",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SEM!C74",
+          "rawValue": "-",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C53",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C55",
+          "rawValue": "80",
+          "value": "80",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C59",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "NominalRadius parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C65",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "MeasuringSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C70",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM2"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "ScanSpeed parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C72",
+          "rawValue": "0.488",
+          "value": "0.488",
+          "unit": "http://qudt.org/vocab/unit/HZ"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "Resolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C74",
+          "rawValue": "0.5",
+          "value": "0.5",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "afm",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "AFM!C77",
+          "rawValue": "1024",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C60",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C62",
+          "rawValue": "0",
+          "value": "0",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C66",
+          "rawValue": "10^-5",
+          "value": "0.00001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C76",
+          "rawValue": "700",
+          "value": "700",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C77",
+          "rawValue": " pA",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "IonBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C78",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "PlaneSpacing parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C80",
+          "rawValue": "10",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "MeasuredArea / um2 parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C81",
+          "rawValue": "20",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "CutThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C83",
+          "rawValue": "150",
+          "value": "150",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "SliceNumber parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C85",
+          "rawValue": "1300",
+          "value": "1300",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "DwellTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C86",
+          "rawValue": "3",
+          "value": "3",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ElectronCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C90",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ElectronBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C92",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C94",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C96",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "TiltCompensation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C98",
+          "rawValue": "36",
+          "value": "36",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "StageTilt parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C99",
+          "rawValue": "54",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "DynamicFocus parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C100",
+          "rawValue": "-3",
+          "value": "-3",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Brightness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C102",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "Contrast parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C103",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "ImageAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C104",
+          "rawValue": "60",
+          "value": "60",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "fib_sem",
+          "parameterLabel": "TotalAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "FIB-SEM!C106",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C57",
+          "rawValue": "25",
+          "value": "25",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C59",
+          "rawValue": "0",
+          "value": "0",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C63",
+          "rawValue": "10^-6",
+          "value": "0.000001",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C72",
+          "rawValue": "700",
+          "value": "700",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C73",
+          "rawValue": " pA",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "IonBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C74",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "PlaneSpacing parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C76",
+          "rawValue": "10",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "MeasuredArea / um2 parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C77",
+          "rawValue": "20",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "CutThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C79",
+          "rawValue": "150",
+          "value": "150",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "DwellTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C81",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ElectronCurrent parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C85",
+          "rawValue": "250",
+          "value": "250",
+          "unit": "http://qudt.org/vocab/unit/PicoA"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ElectronBeamEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C87",
+          "rawValue": "1.5",
+          "value": "1.5",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C89",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/NanoM"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C91",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Brightness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C93",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "Contrast parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C94",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "ImageAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C95",
+          "rawValue": "60",
+          "value": "60",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "ic_sem",
+          "parameterLabel": "TotalAcquisitionTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "IC-SEM!C97",
+          "rawValue": "12",
+          "value": "12",
+          "unit": "http://qudt.org/vocab/unit/HR"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "MaximalWavelenght parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C63",
+          "rawValue": "44593",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "NeutronFlux parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C67",
+          "rawValue": "2.7 x 10^6",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C69",
+          "rawValue": "9",
+          "value": "9",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "BeamSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C71",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/CentiM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Resolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C74",
+          "rawValue": "0.5",
+          "value": "0.5",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "SampleDetectorDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C76",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C79",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C80",
+          "rawValue": "um",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C81",
+          "rawValue": "4",
+          "value": "4",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "Focus parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C82",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C84",
+          "rawValue": "300",
+          "value": "300",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C86",
+          "rawValue": "63.6",
+          "value": "63.6",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "FieldOfView parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C88",
+          "rawValue": "26",
+          "value": "26",
+          "unit": "http://qudt.org/vocab/unit/MilliM2"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "CollimatorDiameter parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C90",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PinholeSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C92",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "PinholeSampleDistance parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C94",
+          "rawValue": "20",
+          "value": "20",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ImageFrequency parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C96",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/HZ"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "ProjectionNumber parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C98",
+          "rawValue": "1440",
+          "value": "1440",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "parameterLabel": "DataAcquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "NeutronTomo!C99",
+          "rawValue": "36",
+          "value": "36",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SourceMagneticField parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/T"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "EnergyResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C68",
+          "rawValue": "10^-2",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "XrayEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C69",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C71",
+          "rawValue": "13",
+          "value": "13",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "FieldOfViewX parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C73",
+          "rawValue": "26.68",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "FieldOfViewY parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C74",
+          "rawValue": "8",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C76",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SynchrotronRadio!C77",
+          "rawValue": "None",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfRadiograms parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C80",
+          "rawValue": "2000",
+          "value": "2000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C81",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "RotationDegree parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C83",
+          "rawValue": "180",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfFlatFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C84",
+          "rawValue": "210",
+          "value": "210",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "NumberOfDarkFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C85",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "PositionReferences parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C87",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C89",
+          "rawValue": "500",
+          "value": "500",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SampleElevation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C94",
+          "rawValue": "81",
+          "value": "81",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DistanceSampleSource parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C96",
+          "rawValue": "58",
+          "value": "58",
+          "unit": "http://qudt.org/vocab/unit/M"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DistanceSampleDetector parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C98",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C100",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C104",
+          "rawValue": "1200",
+          "value": "1200",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronRadio!C106",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Temperature parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C51",
+          "rawValue": "23",
+          "value": "23",
+          "unit": "http://qudt.org/vocab/unit/DEG_C"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Humidity parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C53",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/PERCENT"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Pressure parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C57",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/ATM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SourceMagneticField parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C65",
+          "rawValue": "8.5",
+          "value": "8.5",
+          "unit": "http://qudt.org/vocab/unit/T"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "EnergyResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C68",
+          "rawValue": "10^-2",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "XrayEnergy parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C69",
+          "rawValue": "30",
+          "value": "30",
+          "unit": "http://qudt.org/vocab/unit/KiloEV"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "PixelSize parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C71",
+          "rawValue": "13",
+          "value": "13",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "FieldOfViewX parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C73",
+          "rawValue": "26.68",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "FieldOfViewY parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C74",
+          "rawValue": "8",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Magnification parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C76",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "Binning parameter record",
+          "statusLabel": "not_specified",
+          "sourceCell": "SynchrotronTomo!C77",
+          "rawValue": "None",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfRadiograms parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C80",
+          "rawValue": "2000",
+          "value": "2000",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "ExposureTime parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C81",
+          "rawValue": "50",
+          "value": "50",
+          "unit": "http://qudt.org/vocab/unit/MilliSEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "RotationDegree parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C83",
+          "rawValue": "180",
+          "value": "",
+          "unit": ""
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfFlatFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C84",
+          "rawValue": "210",
+          "value": "210",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "NumberOfDarkFields parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C85",
+          "rawValue": "10",
+          "value": "10",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "PositionReferences parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C87",
+          "rawValue": "6",
+          "value": "6",
+          "unit": "http://qudt.org/vocab/unit/UNITLESS"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "ScintillatorThickness parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C89",
+          "rawValue": "500",
+          "value": "500",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SampleElevation parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C94",
+          "rawValue": "81",
+          "value": "81",
+          "unit": "http://qudt.org/vocab/unit/MilliM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DistanceSampleSource parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C96",
+          "rawValue": "58",
+          "value": "58",
+          "unit": "http://qudt.org/vocab/unit/M"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DistanceSampleDetector parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C98",
+          "rawValue": "40",
+          "value": "40",
+          "unit": "http://qudt.org/vocab/unit/CentiM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "SpatialResolution parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C100",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/MicroM"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "TimeLapse parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C104",
+          "rawValue": "1200",
+          "value": "1200",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "parameterLabel": "DataAdquisitionRate parameter record",
+          "statusLabel": "reported",
+          "sourceCell": "SynchrotronTomo!C106",
+          "rawValue": "1",
+          "value": "1",
+          "unit": "http://qudt.org/vocab/unit/SEC"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 134,
+        "observed_row_count": 134,
+        "matched_row_count": 134,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q9_conservative_quantity_findings",
+      "title": "Conflicting or semantically incomplete result quantities",
+      "purpose": "Retrieve result values deliberately retained as source evidence without unsupported QUDT assertions.",
+      "ground_truth_basis": "Analysis outputs whose label, unit, metric, axis, or ratio basis is insufficient for defensible normalization.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey ?propertyLabel ?code ?sourceCell ?rawValue\nWHERE {\n  GRAPH ?validationGraph {\n    ?finding a kg:ValidationFinding ; kg:case ?case ; kg:findingCode ?code ;\n      dcterms:subject ?property ; prov:wasDerivedFrom ?source .\n  }\n  GRAPH ?semanticGraph {\n    ?case dcterms:identifier ?caseKey .\n    ?property rdfs:label ?propertyLabel .\n  }\n  GRAPH ?sourceGraph {\n    ?source kg:sourceCell ?sourceCell .\n    OPTIONAL { ?source rdf:value ?rawValue . }\n  }\n  FILTER(?code IN (\"label_unit_conflict\", \"incomplete_semantics\", \"unresolved_metric\", \"unit_unresolved\", \"ordered_ratio_basis_unspecified\", \"quantity-incomplete\"))\n}\nORDER BY ?caseKey ?propertyLabel ?sourceCell",
+      "query_file": "queries/q9_conservative_quantity_findings.rq",
+      "result_csv": "query_results/q9_conservative_quantity_findings.csv",
+      "result_json": "query_results/q9_conservative_quantity_findings.json",
+      "expected_csv": "query_ground_truth/q9_conservative_quantity_findings_expected.csv",
+      "expected_json": "query_ground_truth/q9_conservative_quantity_findings_expected.json",
+      "comparison_json": "query_ground_truth/q9_conservative_quantity_findings_comparison.json",
+      "row_count": 27,
+      "variables": [
+        "caseKey",
+        "propertyLabel",
+        "code",
+        "sourceCell",
+        "rawValue"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "propertyLabel": "DataAdquisitionRate",
+          "code": "unit_unresolved",
+          "sourceCell": "AFM!C77",
+          "rawValue": "1024"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Constrictivity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I120",
+          "rawValue": "8 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Direction",
+          "code": "incomplete_semantics",
+          "sourceCell": "FIB-SEM!I118",
+          "rawValue": "6 °"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Mean geodesic torutosity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I121",
+          "rawValue": "9 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "MeasuredArea / um2",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C81",
+          "rawValue": "20"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Network relation",
+          "code": "unresolved_metric",
+          "sourceCell": "FIB-SEM!I119",
+          "rawValue": "7 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "PlaneSpacing",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C80",
+          "rawValue": "10"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Porosity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I117",
+          "rawValue": "10 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "StageTilt",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C99",
+          "rawValue": "54"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Volume fraction",
+          "code": "label_unit_conflict",
+          "sourceCell": "FIB-SEM!I116",
+          "rawValue": "80 nm"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "MeasuredArea / um2",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!C77",
+          "rawValue": "20"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "PlaneSpacing",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!C76",
+          "rawValue": "10"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "Porosity",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!I105",
+          "rawValue": "6 pu"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "AverageBaryCenter",
+          "code": "incomplete_semantics",
+          "sourceCell": "NeutronTomo!I108",
+          "rawValue": "5"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "MaximalWavelenght",
+          "code": "unit_unresolved",
+          "sourceCell": "NeutronTomo!C63",
+          "rawValue": "44593"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "NeutronFlux",
+          "code": "unit_unresolved",
+          "sourceCell": "NeutronTomo!C67",
+          "rawValue": "2.7 x 10^6"
+        },
+        {
+          "caseKey": "sem",
+          "propertyLabel": "Support-needle length",
+          "code": "quantity-incomplete",
+          "sourceCell": "SEM!I79",
+          "rawValue": "Up to ~110 µm"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "EnergyResolution",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C68",
+          "rawValue": "10^-2"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "FieldOfViewX",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C73",
+          "rawValue": "26.68"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "FieldOfViewY",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C74",
+          "rawValue": "8"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "RotationDegree",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C83",
+          "rawValue": "180"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "code": "ordered_ratio_basis_unspecified",
+          "sourceCell": "SynchrotronRadio!I119",
+          "rawValue": "03:02:01"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "EnergyResolution",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C68",
+          "rawValue": "10^-2"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "FieldOfViewX",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C73",
+          "rawValue": "26.68"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "FieldOfViewY",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C74",
+          "rawValue": "8"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "RotationDegree",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C83",
+          "rawValue": "180"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "code": "ordered_ratio_basis_unspecified",
+          "sourceCell": "SynchrotronTomo!I119",
+          "rawValue": "03:02:01"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "sem",
+          "propertyLabel": "Support-needle length",
+          "code": "quantity-incomplete",
+          "sourceCell": "SEM!I79",
+          "rawValue": "Up to ~110 µm"
+        },
+        {
+          "caseKey": "afm",
+          "propertyLabel": "DataAdquisitionRate",
+          "code": "unit_unresolved",
+          "sourceCell": "AFM!C77",
+          "rawValue": "1024"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "PlaneSpacing",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C80",
+          "rawValue": "10"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "MeasuredArea / um2",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C81",
+          "rawValue": "20"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "StageTilt",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!C99",
+          "rawValue": "54"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Volume fraction",
+          "code": "label_unit_conflict",
+          "sourceCell": "FIB-SEM!I116",
+          "rawValue": "80 nm"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Porosity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I117",
+          "rawValue": "10 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Direction",
+          "code": "incomplete_semantics",
+          "sourceCell": "FIB-SEM!I118",
+          "rawValue": "6 °"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Network relation",
+          "code": "unresolved_metric",
+          "sourceCell": "FIB-SEM!I119",
+          "rawValue": "7 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Constrictivity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I120",
+          "rawValue": "8 pu"
+        },
+        {
+          "caseKey": "fib_sem",
+          "propertyLabel": "Mean geodesic torutosity",
+          "code": "unit_unresolved",
+          "sourceCell": "FIB-SEM!I121",
+          "rawValue": "9 pu"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "PlaneSpacing",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!C76",
+          "rawValue": "10"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "MeasuredArea / um2",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!C77",
+          "rawValue": "20"
+        },
+        {
+          "caseKey": "ic_sem",
+          "propertyLabel": "Porosity",
+          "code": "unit_unresolved",
+          "sourceCell": "IC-SEM!I105",
+          "rawValue": "6 pu"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "MaximalWavelenght",
+          "code": "unit_unresolved",
+          "sourceCell": "NeutronTomo!C63",
+          "rawValue": "44593"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "NeutronFlux",
+          "code": "unit_unresolved",
+          "sourceCell": "NeutronTomo!C67",
+          "rawValue": "2.7 x 10^6"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "propertyLabel": "AverageBaryCenter",
+          "code": "incomplete_semantics",
+          "sourceCell": "NeutronTomo!I108",
+          "rawValue": "5"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "EnergyResolution",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C68",
+          "rawValue": "10^-2"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "FieldOfViewX",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C73",
+          "rawValue": "26.68"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "FieldOfViewY",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C74",
+          "rawValue": "8"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "RotationDegree",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronRadio!C83",
+          "rawValue": "180"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "code": "ordered_ratio_basis_unspecified",
+          "sourceCell": "SynchrotronRadio!I119",
+          "rawValue": "03:02:01"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "EnergyResolution",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C68",
+          "rawValue": "10^-2"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "FieldOfViewX",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C73",
+          "rawValue": "26.68"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "FieldOfViewY",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C74",
+          "rawValue": "8"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "RotationDegree",
+          "code": "unit_unresolved",
+          "sourceCell": "SynchrotronTomo!C83",
+          "rawValue": "180"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "propertyLabel": "carbonfelt/electrolyte/air ratio",
+          "code": "ordered_ratio_basis_unspecified",
+          "sourceCell": "SynchrotronTomo!I119",
+          "rawValue": "03:02:01"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 27,
+        "observed_row_count": 27,
+        "matched_row_count": 27,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q10_source_provenance_coverage",
+      "title": "Source-to-semantic provenance coverage",
+      "purpose": "Verify that every eligible workbook source field is represented and linked to at least one semantic entity.",
+      "ground_truth_basis": "Per-case eligible-field totals in the sanitized workbook manifest.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?caseKey (COUNT(DISTINCT ?source) AS ?sourceFieldCount) (COUNT(DISTINCT ?mappedSource) AS ?mappedFieldCount)\nWHERE {\n  GRAPH ?sourceGraph { ?source a kg:SourceField . }\n  FILTER(STRSTARTS(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\"))\n  BIND(STRAFTER(STR(?sourceGraph), \"https://w3id.org/h2kg/examples/characterization/graph/source/\") AS ?caseKey)\n  OPTIONAL {\n    GRAPH ?semanticGraph { ?source kg:mappedEntity ?entity . }\n    BIND(?source AS ?mappedSource)\n  }\n}\nGROUP BY ?caseKey\nORDER BY ?caseKey",
+      "query_file": "queries/q10_source_provenance_coverage.rq",
+      "result_csv": "query_results/q10_source_provenance_coverage.csv",
+      "result_json": "query_results/q10_source_provenance_coverage.json",
+      "expected_csv": "query_ground_truth/q10_source_provenance_coverage_expected.csv",
+      "expected_json": "query_ground_truth/q10_source_provenance_coverage_expected.json",
+      "comparison_json": "query_ground_truth/q10_source_provenance_coverage_comparison.json",
+      "row_count": 8,
+      "variables": [
+        "caseKey",
+        "sourceFieldCount",
+        "mappedFieldCount"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "sourceFieldCount": "161",
+          "mappedFieldCount": "161"
+        },
+        {
+          "caseKey": "fib_sem",
+          "sourceFieldCount": "304",
+          "mappedFieldCount": "304"
+        },
+        {
+          "caseKey": "ic_sem",
+          "sourceFieldCount": "221",
+          "mappedFieldCount": "221"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "sourceFieldCount": "211",
+          "mappedFieldCount": "211"
+        },
+        {
+          "caseKey": "sem",
+          "sourceFieldCount": "139",
+          "mappedFieldCount": "139"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "sourceFieldCount": "234",
+          "mappedFieldCount": "234"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "sourceFieldCount": "234",
+          "mappedFieldCount": "234"
+        },
+        {
+          "caseKey": "tem",
+          "sourceFieldCount": "131",
+          "mappedFieldCount": "131"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "tem",
+          "sourceFieldCount": "131",
+          "mappedFieldCount": "131"
+        },
+        {
+          "caseKey": "sem",
+          "sourceFieldCount": "139",
+          "mappedFieldCount": "139"
+        },
+        {
+          "caseKey": "afm",
+          "sourceFieldCount": "161",
+          "mappedFieldCount": "161"
+        },
+        {
+          "caseKey": "fib_sem",
+          "sourceFieldCount": "304",
+          "mappedFieldCount": "304"
+        },
+        {
+          "caseKey": "ic_sem",
+          "sourceFieldCount": "221",
+          "mappedFieldCount": "221"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "sourceFieldCount": "211",
+          "mappedFieldCount": "211"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "sourceFieldCount": "234",
+          "mappedFieldCount": "234"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "sourceFieldCount": "234",
+          "mappedFieldCount": "234"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 8,
+        "observed_row_count": 8,
+        "matched_row_count": 8,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q11_software_provenance",
+      "title": "Software used in processing and analysis",
+      "purpose": "Retrieve source-reported software linked to processing and analysis activities across all cases.",
+      "ground_truth_basis": "Non-empty Software cells in preprocessing and analysis rows, parsed without inventing software names.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT DISTINCT ?caseKey ?processLabel ?softwareLabel\nWHERE {\n  GRAPH ?semanticGraph {\n    ?case a kg:CharacterizationCase ; dcterms:identifier ?caseKey .\n    ?process a h2kg:Process ; kg:case ?case ; rdfs:label ?processLabel ; h2kg:usesSoftware ?software .\n    ?software rdfs:label ?softwareLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n}\nORDER BY ?caseKey ?processLabel ?softwareLabel",
+      "query_file": "queries/q11_software_provenance.rq",
+      "result_csv": "query_results/q11_software_provenance.csv",
+      "result_json": "query_results/q11_software_provenance.json",
+      "expected_csv": "query_ground_truth/q11_software_provenance_expected.csv",
+      "expected_json": "query_ground_truth/q11_software_provenance_expected.json",
+      "comparison_json": "query_ground_truth/q11_software_provenance_comparison.json",
+      "row_count": 31,
+      "variables": [
+        "caseKey",
+        "processLabel",
+        "softwareLabel"
+      ],
+      "rows": [
+        {
+          "caseKey": "afm",
+          "processLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "3D Reconstruct",
+          "softwareLabel": "Astra toolbox"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Artefact remove",
+          "softwareLabel": "In-house 3D Unet"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Clean",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Direction calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "DriftCorrect",
+          "softwareLabel": "SIFT"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Surface calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Threshold",
+          "softwareLabel": "ImageJ\nAlgorithm = Watershed"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Visualize",
+          "softwareLabel": "Blender3D"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Volume fraction calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Layer thickness measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Porosity measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Scale set",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Thresholding",
+          "softwareLabel": "ImageJ\nAlgorithm = Watershed"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "DropletAnalysis",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "DropletAnalysis",
+          "softwareLabel": "LabelAnalysis"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "Reconstruct",
+          "softwareLabel": "Astra Toolbox"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "TortuosityMeasurement",
+          "softwareLabel": "MATLAB TauFactor"
+        },
+        {
+          "caseKey": "sem",
+          "processLabel": "Support sizing",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "BeamPathDistanceMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "DecayFactorCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "ElectrodeSegmentRatioCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "ElectrolyteSaturationMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "BeamPathDistanceMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "DecayFactorCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "ElectrodeSegmentRatioCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "ElectrolyteSaturationMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "tem",
+          "processLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ"
+        }
+      ],
+      "expected_rows": [
+        {
+          "caseKey": "afm",
+          "processLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "3D Reconstruct",
+          "softwareLabel": "Astra toolbox"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Artefact remove",
+          "softwareLabel": "In-house 3D Unet"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Clean",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Direction calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "DriftCorrect",
+          "softwareLabel": "SIFT"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Surface calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Threshold",
+          "softwareLabel": "ImageJ\nAlgorithm = Watershed"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Visualize",
+          "softwareLabel": "Blender3D"
+        },
+        {
+          "caseKey": "fib_sem",
+          "processLabel": "Volume fraction calculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Layer thickness measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Porosity measurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Scale set",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "ic_sem",
+          "processLabel": "Thresholding",
+          "softwareLabel": "ImageJ\nAlgorithm = Watershed"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "DropletAnalysis",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "DropletAnalysis",
+          "softwareLabel": "LabelAnalysis"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "Reconstruct",
+          "softwareLabel": "Astra Toolbox"
+        },
+        {
+          "caseKey": "neutron_tomography",
+          "processLabel": "TortuosityMeasurement",
+          "softwareLabel": "MATLAB TauFactor"
+        },
+        {
+          "caseKey": "sem",
+          "processLabel": "Support sizing",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "BeamPathDistanceMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "DecayFactorCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "ElectrodeSegmentRatioCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_radiography",
+          "processLabel": "ElectrolyteSaturationMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "3DReconstruct",
+          "softwareLabel": "Avizo"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "BeamPathDistanceMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "DecayFactorCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "ElectrodeSegmentRatioCalculation",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "synchrotron_tomography",
+          "processLabel": "ElectrolyteSaturationMeasurement",
+          "softwareLabel": "ImageJ"
+        },
+        {
+          "caseKey": "tem",
+          "processLabel": "Manual particle measurement",
+          "softwareLabel": "ImageJ"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 31,
+        "observed_row_count": 31,
+        "matched_row_count": 31,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    },
+    {
+      "id": "q12_neutron_processing_chain",
+      "title": "Neutron-tomography preprocessing chain",
+      "purpose": "Retrieve the ordered source-described data transformations from raw projections to the processed tomograph.",
+      "ground_truth_basis": "The four neutron-tomography preprocessing rows and their precursor, technique, and target fields.",
+      "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>\nPREFIX case: <https://w3id.org/h2kg/examples/characterization/>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?processLabel ?inputDataLabel ?outputDataLabel\nWHERE {\n  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/neutron_tomography> {\n    ?process a h2kg:DataProcessing ; rdfs:label ?processLabel ;\n      h2kg:hasInputData ?inputData ; h2kg:hasOutputData ?outputData .\n    ?inputData rdfs:label ?inputDataLabel .\n    ?outputData rdfs:label ?outputDataLabel .\n  }\n}\nORDER BY ?processLabel ?inputDataLabel ?outputDataLabel",
+      "query_file": "queries/q12_neutron_processing_chain.rq",
+      "result_csv": "query_results/q12_neutron_processing_chain.csv",
+      "result_json": "query_results/q12_neutron_processing_chain.json",
+      "expected_csv": "query_ground_truth/q12_neutron_processing_chain_expected.csv",
+      "expected_json": "query_ground_truth/q12_neutron_processing_chain_expected.json",
+      "comparison_json": "query_ground_truth/q12_neutron_processing_chain_comparison.json",
+      "row_count": 4,
+      "variables": [
+        "processLabel",
+        "inputDataLabel",
+        "outputDataLabel"
+      ],
+      "rows": [
+        {
+          "processLabel": "3DReconstruct",
+          "inputDataLabel": "PPInt2",
+          "outputDataLabel": "PPInt3"
+        },
+        {
+          "processLabel": "DarkFieldCorrect",
+          "inputDataLabel": "PPInt1",
+          "outputDataLabel": "PPInt2"
+        },
+        {
+          "processLabel": "Reconstruct",
+          "inputDataLabel": "RawData",
+          "outputDataLabel": "PPInt1"
+        },
+        {
+          "processLabel": "Threshold",
+          "inputDataLabel": "PPInt3",
+          "outputDataLabel": "Post-processed tomograph"
+        }
+      ],
+      "expected_rows": [
+        {
+          "processLabel": "Reconstruct",
+          "inputDataLabel": "RawData",
+          "outputDataLabel": "PPInt1"
+        },
+        {
+          "processLabel": "DarkFieldCorrect",
+          "inputDataLabel": "PPInt1",
+          "outputDataLabel": "PPInt2"
+        },
+        {
+          "processLabel": "3DReconstruct",
+          "inputDataLabel": "PPInt2",
+          "outputDataLabel": "PPInt3"
+        },
+        {
+          "processLabel": "Threshold",
+          "inputDataLabel": "PPInt3",
+          "outputDataLabel": "Post-processed tomograph"
+        }
+      ],
+      "validation": {
+        "status": "pass",
+        "exact_match": true,
+        "expected_row_count": 4,
+        "observed_row_count": 4,
+        "matched_row_count": 4,
+        "missing_expected_row_count": 0,
+        "unexpected_row_count": 0,
+        "row_precision_percent": 100.0,
+        "row_recall_percent": 100.0,
+        "missing_expected_rows": [],
+        "unexpected_rows": [],
+        "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+      }
+    }
+  ]
+}

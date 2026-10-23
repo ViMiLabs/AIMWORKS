@@ -173,15 +173,36 @@ def test_queries_and_browser_package_are_deterministic(characterization_build) -
         "q1_tem_specimen_preparation": 6,
         "q2_tem_instrument_settings": 8,
         "q3_tem_dataset_analysis": 1,
-        "q4_all_reported_results": 24,
-        "q5_quality_findings": report["validation_finding_count"],
+        "q4_tem_result_value": 1,
+        "q5_all_measurement_contexts": 8,
+        "q6_all_result_records": 24,
+        "q7_source_status_summary": 37,
+        "q8_all_measurement_parameters": 134,
+        "q9_conservative_quantity_findings": 27,
+        "q10_source_provenance_coverage": 8,
+        "q11_software_provenance": 31,
+        "q12_neutron_processing_chain": 4,
     }
-    web = json.loads((target / "characterization_web_graph.json").read_text(encoding="utf-8"))
-    assert web["default_case"] == "tem"
-    assert len(web["cases"]) == 8
-    assert len(web["queries"]) == 5
-    assert "quads" not in web
-    assert all(item["query"].startswith("PREFIX h2kg:") for item in web["queries"])
+    assert report["query_validation"] == {
+        "query_count": 12,
+        "passed_query_count": 12,
+        "failed_query_count": 0,
+        "expected_row_count": 289,
+        "observed_row_count": 289,
+        "matched_row_count": 289,
+        "method": "SPARQL result rows compared exactly with manifest-derived ground truth",
+    }
+    workbench = json.loads((target / "characterization_query_workbench.json").read_text(encoding="utf-8"))
+    assert workbench["default_query"] == "q1_tem_specimen_preparation"
+    assert len(workbench["cases"]) == 8
+    assert len(workbench["queries"]) == 12
+    assert "nodes" not in workbench and "links" not in workbench
+    assert all(item["query"].startswith("PREFIX h2kg:") for item in workbench["queries"])
+    assert all(item["validation"]["exact_match"] for item in workbench["queries"])
+    assert not (target / "characterization_web_graph.json").exists()
+    assert len(list((target / "query_ground_truth").glob("q*_expected.csv"))) == 12
+    assert len(list((target / "query_ground_truth").glob("q*_comparison.json"))) == 12
+    assert (target / "query_ground_truth" / "query_ground_truth_validation.csv").exists()
     assert (target / "run_demo.py").exists()
     assert (target / "characterization_kg_demo.ipynb").exists()
 
@@ -189,15 +210,20 @@ def test_queries_and_browser_package_are_deterministic(characterization_build) -
 def test_characterization_page_is_dependency_free_and_downloadable(characterization_build, tmp_path: Path) -> None:
     target, report = characterization_build
     page = characterization_body(report, tmp_path / "pages" / "characterization-knowledge-graph.html", tmp_path)
-    assert "Search the characterization workflow evidence" in page
-    assert "SPARQL competency workspace" in page
+    assert "Validated SPARQL competency workbench" in page
+    assert "Ground-truth validation" in page
+    assert "Observed RDFLib result" in page
+    assert "Workbook-derived ground truth" in page
     assert "characterization_knowledge_graph.trig" in page
+    assert "query_ground_truth_validation.csv" in page
     assert "cdn.jsdelivr" not in page
-    assert "#kg-graph" in characterization_css()
+    assert "kg-graph" not in page
+    assert "#kg-graph" not in characterization_css()
     script = characterization_js()
-    assert "default_case" in (target / "characterization_web_graph.json").read_text(encoding="utf-8")
-    assert "Run tested query" not in script  # label is HTML; behavior remains in the local script.
-    assert "fetch(root.dataset.graph)" in script
+    assert "default_query" in (target / "characterization_query_workbench.json").read_text(encoding="utf-8")
+    assert "fetch(root.dataset.package)" in script
+    assert "missing_expected_rows" in script
+    assert "data.nodes" not in script and "data.links" not in script
 
 
 def test_local_manuscript_materials_are_generated_outside_release(characterization_build, tmp_path: Path) -> None:

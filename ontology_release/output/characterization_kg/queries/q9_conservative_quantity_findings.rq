@@ -1,0 +1,26 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?caseKey ?propertyLabel ?code ?sourceCell ?rawValue
+WHERE {
+  GRAPH ?validationGraph {
+    ?finding a kg:ValidationFinding ; kg:case ?case ; kg:findingCode ?code ;
+      dcterms:subject ?property ; prov:wasDerivedFrom ?source .
+  }
+  GRAPH ?semanticGraph {
+    ?case dcterms:identifier ?caseKey .
+    ?property rdfs:label ?propertyLabel .
+  }
+  GRAPH ?sourceGraph {
+    ?source kg:sourceCell ?sourceCell .
+    OPTIONAL { ?source rdf:value ?rawValue . }
+  }
+  FILTER(?code IN ("label_unit_conflict", "incomplete_semantics", "unresolved_metric", "unit_unresolved", "ordered_ratio_basis_unspecified", "quantity-incomplete"))
+}
+ORDER BY ?caseKey ?propertyLabel ?sourceCell

@@ -4,63 +4,93 @@
   if (!root) return;
   const $ = (id) => document.getElementById(id);
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const short = (iri) => String(iri || '').split(/[#/]/).filter(Boolean).pop() || String(iri || '');
-  const caseSelect=$('kg-case'), search=$('kg-search'), svg=$('kg-graph'), inspector=$('kg-inspector'), status=$('kg-status');
-  const layerSemantic=$('kg-layer-semantic'), layerSource=$('kg-layer-source'), layerValidation=$('kg-layer-validation');
-  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryResults=$('kg-query-results'), queryNote=$('kg-query-note');
-  let data=null, selected=null, currentRows=[];
+  const querySelect=$('kg-query-select'), queryEditor=$('kg-query-editor'), queryPurpose=$('kg-query-purpose'), queryNote=$('kg-query-note');
+  const observedContainer=$('kg-query-results'), expectedContainer=$('kg-expected-results'), differences=$('kg-differences'), filter=$('kg-result-filter');
+  let data=null, current=null;
 
-  fetch(root.dataset.graph).then((response) => { if(!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); }).then((payload) => {
+  fetch(root.dataset.package).then((response) => {
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  }).then((payload) => {
     data=payload;
-    payload.cases.forEach((item) => { const option=document.createElement('option'); option.value=item.key; option.textContent=item.title; caseSelect.append(option); });
-    caseSelect.value=payload.default_case || 'tem';
-    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=item.title; querySelect.append(option); });
-    querySelect.value=payload.queries[0]?.id || '';
-    syncQuery(); render();
-  }).catch((error) => { status.textContent=`Knowledge graph unavailable: ${error.message}`; status.classList.add('bad'); });
+    renderSummary(payload.validation_summary);
+    renderMatrix(payload.queries);
+    payload.queries.forEach((item) => { const option=document.createElement('option'); option.value=item.id; option.textContent=`${item.id.replace(/^q(\d+)_.*$/,'Q$1')} · ${item.title}`; querySelect.append(option); });
+    querySelect.value=payload.default_query || payload.queries[0]?.id || '';
+    syncQuery();
+  }).catch((error) => {
+    $('kg-validation-summary').textContent=`Query package unavailable: ${error.message}`;
+    $('kg-validation-summary').classList.add('fail');
+  });
 
-  [caseSelect,layerSemantic,layerSource,layerValidation].forEach((element)=>element.addEventListener('change',render));
-  search.addEventListener('input',render);
-  $('kg-reset').addEventListener('click',()=>{search.value='';layerSemantic.checked=true;layerSource.checked=false;layerValidation.checked=false;selected=null;render();});
   querySelect.addEventListener('change',syncQuery);
-  $('kg-run-query').addEventListener('click',runQuery);
-  $('kg-download-query').addEventListener('click',()=>download(`${querySelect.value}.rq`,queryEditor.value,'application/sparql-query'));
-  $('kg-result-csv').addEventListener('click',()=>downloadRows('csv'));
-  $('kg-result-json').addEventListener('click',()=>downloadRows('json'));
+  filter.addEventListener('input',renderSelected);
+  $('kg-show-result').addEventListener('click',showValidatedResult);
+  $('kg-download-query').addEventListener('click',()=>current&&download(`${current.id}.rq`,queryEditor.value,'application/sparql-query'));
+  $('kg-observed-csv').addEventListener('click',()=>downloadRows('observed','csv'));
+  $('kg-observed-json').addEventListener('click',()=>downloadRows('observed','json'));
+  $('kg-expected-csv').addEventListener('click',()=>downloadRows('expected','csv'));
+  $('kg-expected-json').addEventListener('click',()=>downloadRows('expected','json'));
 
-  function layers(){return new Set([layerSemantic.checked&&'semantic',layerSource.checked&&'source',layerValidation.checked&&'validation'].filter(Boolean));}
-  function visibleNodes(){
-    const wanted=layers(), term=search.value.trim().toLowerCase();
-    return data.nodes.filter((node)=>node.case===caseSelect.value&&wanted.has(node.layer)).map((node)=>({...node,match:!term||JSON.stringify(node).toLowerCase().includes(term)}));
+  function renderSummary(summary){
+    const ok=summary.failed_query_count===0;
+    const target=$('kg-validation-summary');
+    target.classList.toggle('fail',!ok);
+    target.innerHTML=`<strong>${summary.passed_query_count}/${summary.query_count} queries passed</strong>${summary.matched_row_count} of ${summary.expected_row_count} expected rows matched exactly.<br><small>${esc(summary.method)}</small>`;
   }
-  function render(){
-    if(!data)return;
-    const nodes=visibleNodes(), nodeMap=new Map(nodes.map((node)=>[node.id,node])), ids=new Set(nodeMap.keys());
-    const links=data.links.filter((link)=>link.case===caseSelect.value&&ids.has(link.source)&&ids.has(link.target));
-    const positions=layout(nodes); svg.innerHTML=''; svg.setAttribute('viewBox','0 0 1800 900');
-    const defs=document.createElementNS('http://www.w3.org/2000/svg','defs'); defs.innerHTML='<marker id="kg-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#718990"/></marker>'; svg.append(defs);
-    links.forEach((link)=>{const a=positions.get(link.source),b=positions.get(link.target);if(!a||!b)return;const line=el('line',{x1:a.x+62,y1:a.y+17,x2:b.x-62,y2:b.y+17,class:`kg-edge ${link.layer}`,'marker-end':'url(#kg-arrow)'});const title=el('title');title.textContent=link.label;line.append(title);svg.append(line);});
-    nodes.forEach((node)=>{const pos=positions.get(node.id),group=el('g',{class:`kg-node ${node.role}${node.match?' is-match':''}${selected===node.id?' is-selected':''}`,transform:`translate(${pos.x-62},${pos.y})`,tabindex:'0',role:'button'});group.append(el('rect',{width:124,height:35}));const text=el('text',{x:62,y:22,'text-anchor':'middle'});text.textContent=truncate(node.label,19);group.append(text);const title=el('title');title.textContent=node.label;group.append(title);group.addEventListener('click',()=>inspect(node));group.addEventListener('keydown',(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();inspect(node);}});svg.append(group);});
-    const matches=nodes.filter((node)=>node.match).length;
-    status.textContent=`${nodes.length} nodes and ${links.length} relations shown for ${caseSelect.selectedOptions[0]?.textContent || caseSelect.value}${search.value?`; ${matches} search matches`:''}.`;
+  function renderMatrix(queries){
+    const variables=['Query','Competency example','Expected','Observed','Matched','Missing','Unexpected','Status'];
+    const rows=queries.map((query)=>{const v=query.validation;return {Query:query.id.replace(/^q(\d+)_.*$/,'Q$1'),'Competency example':query.title,Expected:v.expected_row_count,Observed:v.observed_row_count,Matched:v.matched_row_count,Missing:v.missing_expected_row_count,Unexpected:v.unexpected_row_count,Status:`<span class="kg-pill ${v.status}">${v.status}</span>`};});
+    renderTable($('kg-validation-matrix'),variables,rows,'No validation results.',true);
   }
-  function layout(nodes){
-    const roleOrder=['source','matter','manufacturing','measurement','instrument','parameter','process','data','datapoint','property','validation','semantic'];
-    const grouped=new Map(roleOrder.map((role)=>[role,[]]));nodes.forEach((node)=>(grouped.get(node.role)||grouped.get('semantic')).push(node));
-    const positions=new Map();let column=0;
-    roleOrder.forEach((role)=>{const items=grouped.get(role);if(!items?.length)return;const lanes=Math.max(1,Math.ceil(items.length/14));items.sort((a,b)=>a.label.localeCompare(b.label)).forEach((node,index)=>{const lane=Math.floor(index/14),row=index%14;positions.set(node.id,{x:100+(column+lane)*155,y:45+row*57});});column+=lanes;});
-    return positions;
+  function syncQuery(){
+    current=data?.queries.find((item)=>item.id===querySelect.value);
+    if(!current)return;
+    queryEditor.value=current.query;
+    queryPurpose.textContent=`${current.purpose} Ground truth: ${current.ground_truth_basis}`;
+    filter.value='';
+    queryNote.textContent=`Release-tested with RDFLib: ${current.validation.observed_row_count} observed row(s), ${current.validation.expected_row_count} expected row(s).`;
+    renderSelected();
   }
-  function inspect(node){
-    selected=node.id;render();const incoming=data.links.filter((link)=>link.case===node.case&&link.target===node.id),outgoing=data.links.filter((link)=>link.case===node.case&&link.source===node.id);const relations=[...incoming.map((link)=>({direction:'←',label:link.label,other:link.source})),...outgoing.map((link)=>({direction:'→',label:link.label,other:link.target}))].slice(0,40);
-    inspector.innerHTML=`<p class="eyebrow">${esc(node.layer)} layer · ${esc(node.role)}</p><h3>${esc(node.label)}</h3><dl><dt>IRI</dt><dd><code>${esc(node.id)}</code></dd><dt>Types</dt><dd>${node.types.map((item)=>`<code>${esc(short(item))}</code>`).join(', ')||'not asserted'}</dd>${Object.entries(node.details||{}).map(([key,value])=>`<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><h4>Visible relations</h4><div class="kg-relations">${relations.map((item)=>`<div class="kg-relation">${item.direction} <strong>${esc(item.label)}</strong><br><code>${esc(short(item.other))}</code></div>`).join('')||'<p>No visible relations in the selected layers.</p>'}</div>`;
+  function showValidatedResult(){
+    if(!current)return;
+    if(normalize(queryEditor.value)!==normalize(current.query)){
+      queryNote.textContent='The query has been edited. This static page displays only the release-tested snapshot. Download the query and use run_demo.py or the notebook to execute arbitrary SPARQL with RDFLib.';
+      return;
+    }
+    queryNote.textContent=`Validated snapshot loaded: ${current.validation.matched_row_count} matched, ${current.validation.missing_expected_row_count} missing, ${current.validation.unexpected_row_count} unexpected.`;
+    renderSelected();
   }
-  function syncQuery(){const query=data?.queries.find((item)=>item.id===querySelect.value);if(!query)return;queryEditor.value=query.query;queryNote.textContent=query.purpose;currentRows=query.rows||[];renderTable(query.variables||[],currentRows);}
+  function renderSelected(){
+    if(!current)return;
+    const term=filter.value.trim().toLowerCase();
+    const keep=(row)=>!term||JSON.stringify(row).toLowerCase().includes(term);
+    const observed=(current.rows||[]).filter(keep), expected=(current.expected_rows||[]).filter(keep), v=current.validation;
+    renderChecks(v);
+    renderTable(observedContainer,current.variables||[],observed,'No observed rows match the current filter.');
+    renderTable(expectedContainer,current.variables||[],expected,'No expected rows match the current filter.');
+    renderDifferences(v);
+  }
+  function renderChecks(v){
+    const checks=[['Overall',v.status],['Expected',v.expected_row_count],['Observed',v.observed_row_count],['Matched',v.matched_row_count],['Row precision',`${v.row_precision_percent}%`],['Row recall',`${v.row_recall_percent}%`]];
+    $('kg-selected-validation').innerHTML=checks.map(([label,value],index)=>`<div class="kg-check ${index===0?v.status:''}">${esc(label)}<strong>${esc(value)}</strong></div>`).join('');
+  }
+  function renderDifferences(v){
+    differences.innerHTML=`<div class="kg-difference-grid"><div><h4>Missing expected rows (${v.missing_expected_row_count})</h4><div id="kg-missing-table" class="kg-table-wrap"></div></div><div><h4>Unexpected observed rows (${v.unexpected_row_count})</h4><div id="kg-unexpected-table" class="kg-table-wrap"></div></div></div>`;
+    renderTable($('kg-missing-table'),[...(current.variables||[]),'occurrences'],v.missing_expected_rows||[],'None.');
+    renderTable($('kg-unexpected-table'),[...(current.variables||[]),'occurrences'],v.unexpected_rows||[],'None.');
+  }
+  function renderTable(container,variables,rows,emptyMessage,allowHtml=false){
+    if(!rows.length){container.innerHTML=`<p class="kg-empty">${esc(emptyMessage)}</p>`;return;}
+    container.innerHTML=`<table><thead><tr>${variables.map((item)=>`<th>${esc(item)}</th>`).join('')}</tr></thead><tbody>${rows.map((row)=>`<tr>${variables.map((item)=>`<td>${allowHtml&&item==='Status'?row[item]:esc(row[item]??'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  }
+  function downloadRows(kind,format){
+    if(!current)return;
+    const rows=kind==='expected'?(current.expected_rows||[]):(current.rows||[]), variables=current.variables||[];
+    if(format==='json'){download(`${current.id}_${kind}.json`,JSON.stringify({variables,rows},null,2),'application/json');return;}
+    const quote=(value)=>`"${String(value??'').replace(/"/g,'""')}"`;
+    download(`${current.id}_${kind}.csv`,[variables.map(quote).join(','),...rows.map((row)=>variables.map((key)=>quote(row[key])).join(','))].join('\n'),'text/csv');
+  }
   function normalize(value){return String(value||'').replace(/\s+/g,' ').trim();}
-  function runQuery(){const query=data?.queries.find((item)=>item.id===querySelect.value);if(!query)return;if(normalize(queryEditor.value)!==normalize(query.query)){queryNote.textContent='This query was edited. The static page executes only the release-tested snapshot; download the .rq file and use run_demo.py or the notebook to execute arbitrary SPARQL with RDFLib.';currentRows=[];renderTable([],[]);return;}currentRows=query.rows||[];queryNote.textContent=`Release-tested RDFLib result: ${currentRows.length} row${currentRows.length===1?'':'s'}.`;renderTable(query.variables||[],currentRows);}
-  function renderTable(variables,rows){if(!rows.length){queryResults.innerHTML='<p class="kg-status">No browser result rows to display.</p>';return;}queryResults.innerHTML=`<table><thead><tr>${variables.map((item)=>`<th>${esc(item)}</th>`).join('')}</tr></thead><tbody>${rows.map((row)=>`<tr>${variables.map((item)=>`<td>${esc(row[item]??'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;}
-  function downloadRows(format){const query=data?.queries.find((item)=>item.id===querySelect.value);if(!query||!currentRows.length)return;if(format==='json'){download(`${query.id}.json`,JSON.stringify(currentRows,null,2),'application/json');return;}const variables=query.variables||Object.keys(currentRows[0]||{}),quote=(value)=>`"${String(value??'').replace(/"/g,'""')}"`;download(`${query.id}.csv`,[variables.map(quote).join(','),...currentRows.map((row)=>variables.map((key)=>quote(row[key])).join(','))].join('\n'),'text/csv');}
   function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-  function truncate(value,max){const text=String(value||'');return text.length>max?`${text.slice(0,max-1)}…`:text;}
-  function el(name,attributes={}){const node=document.createElementNS('http://www.w3.org/2000/svg',name);Object.entries(attributes).forEach(([key,value])=>node.setAttribute(key,value));return node;}
 })();

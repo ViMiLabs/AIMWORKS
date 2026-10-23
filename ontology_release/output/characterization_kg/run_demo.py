@@ -18,7 +18,16 @@ def main() -> None:
     dataset.parse(root / "characterization_knowledge_graph.trig", format="trig")
     query = (root / "queries" / f"{args.query}.rq").read_text(encoding="utf-8")
     result = dataset.query(query)
-    print(json.dumps([dict(zip([str(v) for v in result.vars], [str(x) if x is not None else "" for x in row])) for row in result], indent=2))
+    observed = [dict(zip([str(v) for v in result.vars], [str(x) if x is not None else "" for x in row])) for row in result]
+    print(json.dumps(observed, indent=2))
+    comparison_path = root / "query_ground_truth" / f"{args.query}_comparison.json"
+    expected_path = root / "query_ground_truth" / f"{args.query}_expected.json"
+    if comparison_path.exists() and expected_path.exists():
+        comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+        expected = json.loads(expected_path.read_text(encoding="utf-8"))["rows"]
+        print(f"Ground-truth status: {comparison['status']} ({comparison['matched_row_count']}/{comparison['expected_row_count']} rows matched)")
+        if not comparison["exact_match"]:
+            print(json.dumps({"expected": expected, "comparison": comparison}, indent=2))
     flat = Graph().parse(root / "characterization_knowledge_graph.ttl", format="turtle")
     shapes = Graph().parse(root / "characterization_shapes.ttl", format="turtle")
     conforms, _, report = validate(flat, shacl_graph=shapes, inference="rdfs")

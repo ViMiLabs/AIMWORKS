@@ -1,0 +1,19 @@
+PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>
+PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
+PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?processLabel ?inputDataLabel ?outputDataLabel
+WHERE {
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/neutron_tomography> {
+    ?process a h2kg:DataProcessing ; rdfs:label ?processLabel ;
+      h2kg:hasInputData ?inputData ; h2kg:hasOutputData ?outputData .
+    ?inputData rdfs:label ?inputDataLabel .
+    ?outputData rdfs:label ?outputDataLabel .
+  }
+}
+ORDER BY ?processLabel ?inputDataLabel ?outputDataLabel

@@ -3,16 +3,22 @@ PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
 PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
-SELECT ?instrumentLabel ?parameterLabel ?status ?value ?unit
+SELECT ?instrumentLabel ?parameterLabel ?statusLabel ?sourceCell ?rawValue ?value ?unit
 WHERE {
   GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
     ?measurement a h2kg:TransmissionElectronMicroscopyImaging ; h2kg:usesInstrument ?instrument ; h2kg:hasParameter ?parameter .
     ?instrument rdfs:label ?instrumentLabel .
-    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property .
+    ?parameter rdfs:label ?parameterLabel ; kg:valueStatus ?status ; h2kg:ofProperty ?property ; h2kg:hasMetadata ?source .
     OPTIONAL { ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . }
+    BIND(REPLACE(STR(?status), "^.*[#/]", "") AS ?statusLabel)
+  }
+  GRAPH <https://w3id.org/h2kg/examples/characterization/graph/source/tem> {
+    ?source kg:sourceCell ?sourceCell .
+    OPTIONAL { ?source rdf:value ?rawValue . }
   }
 }
 ORDER BY ?parameterLabel

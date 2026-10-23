@@ -48,59 +48,65 @@
 
 <section class="kg-intro">
   <div>
-    <p class="eyebrow">Workbook-backed application graph</p>
-    <h2>Search the characterization workflow evidence</h2>
-    <p>Eight source-fidelity case graphs are connected to H₂KG 2.3.0 occurrence semantics without changing the ontology taxonomy. TEM opens by default. Missing, unconfirmed, unresolved-unit, and conflicting values remain visible instead of being normalized away.</p>
+    <p class="eyebrow">Workbook-backed RDF application</p>
+    <h2>Validated SPARQL competency workbench</h2>
+    <p>Explore release-tested queries over eight H₂KG-aligned characterization cases. Every observed row is checked against an expectation independently derived from the sanitized workbook manifest. This evaluates source-conformant retrieval, not scientific correctness or general search performance.</p>
   </div>
   <div class="kg-metrics" aria-label="Knowledge graph metrics">
-    <span><strong>8</strong> cases</span><span><strong>1,635</strong> source fields</span><span><strong>32,436</strong> RDF triples</span><span><strong>402</strong> explicit findings</span>
+    <span><strong>12/12</strong> queries passed</span><span><strong>289</strong> rows matched</span><span><strong>1,635</strong> source fields</span><span><strong>32,436</strong> RDF triples</span>
   </div>
 </section>
 
-<section class="kg-app" id="characterization-kg-root" data-graph="../characterization_kg/characterization_web_graph.json" data-artifact-root="../characterization_kg">
-  <header class="kg-toolbar">
-    <div><label for="kg-case">Method case</label><select id="kg-case"></select></div>
-    <div class="kg-search-wrap"><label for="kg-search">Search nodes and source values</label><input id="kg-search" type="search" placeholder="e.g. working distance, ImageJ, 5 nm" autocomplete="off"></div>
-    <fieldset><legend>Visible layers</legend><label><input id="kg-layer-semantic" type="checkbox" checked> Semantic</label><label><input id="kg-layer-source" type="checkbox"> Source fields</label><label><input id="kg-layer-validation" type="checkbox"> Findings</label></fieldset>
-    <button id="kg-reset" type="button">Reset view</button>
+<section class="kg-workbench" id="characterization-kg-root" data-package="../characterization_kg/characterization_query_workbench.json" data-artifact-root="../characterization_kg">
+  <header class="kg-validation-head">
+    <div><p class="eyebrow">Ground-truth validation</p><h2>Expected and observed results</h2><p>The build uses exact row-multiset comparison. Missing rows, unexpected rows, and duplicate-count differences cause publication to fail.</p></div>
+    <div id="kg-validation-summary" class="kg-validation-summary" aria-live="polite">Loading validation package...</div>
   </header>
-  <p id="kg-status" class="kg-status" aria-live="polite">Loading the local graph package...</p>
-  <div class="kg-stage">
-    <div class="kg-graph-panel">
-      <svg id="kg-graph" role="img" aria-label="Interactive characterization knowledge graph"></svg>
-      <div class="kg-legend"><span class="matter">Matter</span><span class="process">Process</span><span class="measurement">Measurement</span><span class="instrument">Instrument</span><span class="parameter">Parameter</span><span class="data">Data</span><span class="property">Property</span><span class="source">Source field</span><span class="validation">Finding</span></div>
-    </div>
-    <aside id="kg-inspector" class="kg-inspector"><p class="eyebrow">Node inspector</p><h3>Select a node</h3><p>Click a node to inspect its H₂KG types, source status, provenance, and connected relations.</p></aside>
-  </div>
-</section>
+  <div id="kg-validation-matrix" class="kg-table-wrap kg-validation-matrix"></div>
 
-<section class="kg-lower-grid">
-  <article class="kg-query card">
-    <p class="eyebrow">SPARQL competency workspace</p>
-    <h2>Run the release-tested queries</h2>
-    <p>The static page shows deterministic RDFLib results for the five published query files. Edit or download a query, then use the bundled script or notebook for unrestricted local SPARQL execution.</p>
-    <label for="kg-query-select">Query preset</label><select id="kg-query-select"></select>
-    <textarea id="kg-query-editor" spellcheck="false" aria-label="SPARQL query editor"></textarea>
-    <div class="kg-query-actions"><button id="kg-run-query" type="button">Run tested query</button><button id="kg-download-query" type="button">Download .rq</button><button id="kg-result-csv" type="button">Export CSV</button><button id="kg-result-json" type="button">Export JSON</button></div>
-    <p id="kg-query-note" class="kg-status"></p>
-    <div id="kg-query-results" class="kg-table-wrap"></div>
-  </article>
-  <aside class="kg-downloads card">
-    <p class="eyebrow">Reproducibility package</p><h2>Download artifacts</h2>
-    <a href="../characterization_kg/characterization_knowledge_graph.trig" download>Named graph dataset (.trig)</a>
-    <a href="../characterization_kg/characterization_knowledge_graph.nq" download>Named graph dataset (.nq)</a>
-    <a href="../characterization_kg/characterization_knowledge_graph.ttl" download>Flattened graph (.ttl)</a>
-    <a href="../characterization_kg/characterization_knowledge_graph.jsonld" download>Flattened graph (.jsonld)</a>
-    <a href="../characterization_kg/characterization_shapes.ttl" download>SHACL shapes</a>
-    <a href="../characterization_kg/characterization_source_manifest.json" download>Sanitized source manifest</a>
-    <a href="../characterization_kg/source_semantic_mapping_registry.csv" download>Source-to-semantic registry</a>
-    <a href="../characterization_kg/source_coverage_report.csv" download>Source coverage report</a>
-    <a href="../characterization_kg/unit_registry.csv" download>QUDT unit registry</a>
-    <a href="../characterization_kg/validation_report.json" download>Validation report</a>
-    <a href="../characterization_kg/run_demo.py" download>RDFLib demonstration script</a>
-    <a href="../characterization_kg/characterization_kg_demo.ipynb" download>Reproducible notebook</a>
-    <div class="kg-integrity"><strong>Source integrity</strong><span>Workbook SHA-256</span><code>C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6</code><span>Coverage</span><code>100.00%</code><span>SHACL</span><code>conforms</code><span>RDF parity</span><code>isomorphic</code></div>
-  </aside>
+  <div class="kg-main-grid">
+    <article class="kg-query card">
+      <p class="eyebrow">SPARQL query and result</p>
+      <h2>Inspect a tested competency query</h2>
+      <div class="kg-controls">
+        <div><label for="kg-query-select">Query example</label><select id="kg-query-select"></select></div>
+        <div><label for="kg-result-filter">Filter displayed rows</label><input id="kg-result-filter" type="search" placeholder="Filter any result value" autocomplete="off"></div>
+      </div>
+      <p id="kg-query-purpose" class="kg-purpose"></p>
+      <textarea id="kg-query-editor" spellcheck="false" aria-label="SPARQL query editor"></textarea>
+      <div class="kg-query-actions">
+        <button id="kg-show-result" type="button">Show validated result</button>
+        <button id="kg-download-query" type="button">Download SPARQL</button>
+        <button id="kg-observed-csv" type="button">Observed CSV</button>
+        <button id="kg-observed-json" type="button">Observed JSON</button>
+        <button id="kg-expected-csv" type="button">Ground truth CSV</button>
+        <button id="kg-expected-json" type="button">Ground truth JSON</button>
+      </div>
+      <p id="kg-query-note" class="kg-status" aria-live="polite"></p>
+    </article>
+
+    <aside class="kg-downloads card">
+      <p class="eyebrow">Reproducibility</p><h2>Download artifacts</h2>
+      <a href="../characterization_kg/characterization_knowledge_graph.trig" download>Named graphs · TriG</a>
+      <a href="../characterization_kg/characterization_knowledge_graph.ttl" download>Flattened graph · Turtle</a>
+      <a href="../characterization_kg/characterization_knowledge_graph.jsonld" download>Flattened graph · JSON-LD</a>
+      <a href="../characterization_kg/characterization_shapes.ttl" download>SHACL shapes</a>
+      <a href="../characterization_kg/query_ground_truth/query_ground_truth_validation.csv" download>Query validation · CSV</a>
+      <a href="../characterization_kg/query_ground_truth/query_ground_truth_validation.json" download>Query validation · JSON</a>
+      <a href="../characterization_kg/source_semantic_mapping_registry.csv" download>Source mapping registry</a>
+      <a href="../characterization_kg/characterization_source_manifest.json" download>Sanitized source manifest</a>
+      <a href="../characterization_kg/run_demo.py" download>RDFLib runner</a>
+      <a href="../characterization_kg/characterization_kg_demo.ipynb" download>Jupyter notebook</a>
+      <div class="kg-integrity"><strong>Release checks</strong><span>Cases</span><code>8</code><span>Source coverage</span><code>100.00%</code><span>Explicit findings</span><code>402</code><span>SHACL</span><code>conforms</code><span>RDF parity</span><code>isomorphic</code></div>
+    </aside>
+  </div>
+
+  <section id="kg-selected-validation" class="kg-selected-validation" aria-live="polite"></section>
+  <div class="kg-results-grid">
+    <article class="kg-result-panel"><div class="kg-panel-title"><p class="eyebrow">SPARQL output</p><h3>Observed RDFLib result</h3></div><div id="kg-query-results" class="kg-table-wrap"></div></article>
+    <article class="kg-result-panel"><div class="kg-panel-title"><p class="eyebrow">Independent expectation</p><h3>Workbook-derived ground truth</h3></div><div id="kg-expected-results" class="kg-table-wrap"></div></article>
+  </div>
+  <section class="kg-differences"><div class="kg-panel-title"><p class="eyebrow">Exact comparison</p><h3>Missing and unexpected rows</h3></div><div id="kg-differences"></div></section>
 </section>
 
   </main>

@@ -3,10 +3,11 @@ PREFIX kg: <https://w3id.org/h2kg/examples/characterization/schema#>
 PREFIX case: <https://w3id.org/h2kg/examples/characterization/>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
-SELECT DISTINCT ?result ?resultLabel ?specimen ?specimenLabel ?preparation ?preparationLabel ?preparedMaterial ?preparedMaterialLabel
+SELECT DISTINCT ?resultLabel ?specimenLabel ?preparationLabel ?preparedMaterialLabel
 WHERE {
   GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {
     ?result a h2kg:DataPoint ; h2kg:fromMeasurement ?measurement ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .

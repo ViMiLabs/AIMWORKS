@@ -67,8 +67,9 @@ python -m aimworks_ontology_release.cli --project-root . characterization-ingest
   --manifest input/characterization_workbook_manifest.json
 ```
 
-Build the RDFLib dataset, SHACL reports, SPARQL demonstrations, notebook, and web
-payload from the versioned manifest:
+Build the RDFLib dataset, SHACL reports, 12 ground-truth-checked SPARQL
+demonstrations, notebook, and compact query-workbench payload from the versioned
+manifest:
 
 ```bash
 python -m aimworks_ontology_release.cli --project-root . characterization-build \
@@ -78,7 +79,7 @@ python -m aimworks_ontology_release.cli --project-root . characterization-build 
   --taxonomy-ttl output/ontology/h2kg-v2-taxonomy.ttl
 ```
 
-The static documentation build publishes the searchable application at
+The static documentation build publishes the validated SPARQL workbench at
 `pages/characterization-knowledge-graph.html`. The source workbook and local
 manuscript material are deliberately excluded from public artifacts.
 
