@@ -51,7 +51,7 @@ from .characterization_kg import (
     GRAPH as HGRAPH,
     H2KG,
     KG,
-    _compare_query_rows,
+    _compare_query_rows as _compare_query_row_multisets,
     _ground_truth_rows,
     _query_specs,
     _write_csv,
@@ -59,7 +59,8 @@ from .characterization_kg import (
 from .utils import dump_json, ensure_dir, now_iso, write_text
 
 
-SCHEMA_VERSION = "h2kg-chameo-native-characterization-benchmark/v8"
+SCHEMA_VERSION = "h2kg-chameo-native-characterization-benchmark/v9"
+BENCHMARK_ARCHIVE_COMMIT = "5382ff03eb4200416770da2bb4b32317fea69ff6"
 H2KG_SEMANTIC_PREFIX = str(HGRAPH["semantic/"])
 CHAMEO_GRAPH_PREFIX = "https://example.org/aimworks/chameo-characterization/graph/semantic/"
 EMMO_PARAMETER = EMMO.EMMO_d1d436e7_72fc_49cd_863b_7bfb4ba5276a
@@ -90,10 +91,10 @@ BALANCED_REQUIREMENTS: tuple[dict[str, Any], ...] = (
     },
     {
         "id": "b03_valued_measurement_setting",
-        "question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
+        "question": "Which measurement-setting record denotes which scientific characteristic, with what parsed numeric value and recognized unit?",
         "selection_stratum": "measurement_settings",
         "assessment_type": "query_retrieval_and_native_pattern_assessment",
-        "source_basis": "Reported measurement settings with a distinct scientific characteristic and defensible numeric and unit normalization in the sanitized manifest.",
+        "source_basis": "Reported measurement settings with a distinct scientific characteristic, a parseable numeric value, and a recognized unit in the sanitized manifest.",
         "variables": ("caseKey", "parameterLabel", "propertyLabel", "value", "unit"),
     },
     {
@@ -137,11 +138,11 @@ BALANCED_REQUIREMENTS: tuple[dict[str, Any], ...] = (
         "variables": ("caseKey", "resultLabel", "propertyLabel", "bearerLabel"),
     },
     {
-        "id": "b09_normalized_result_value",
-        "question": "Which reported result properties have a normalized numeric value and unit?",
+        "id": "b09_parsed_result_value_and_unit",
+        "question": "Which reported result properties have a parsed numeric value and recognized unit?",
         "selection_stratum": "result_semantics",
         "assessment_type": "query_based_retrieval",
-        "source_basis": "Analysis outputs with defensible numeric and unit normalization in the sanitized manifest.",
+        "source_basis": "Analysis outputs with a parseable numeric value and recognized unit in the sanitized manifest; property-unit compatibility is audited separately.",
         "variables": ("caseKey", "propertyLabel", "value", "unit"),
     },
     {
@@ -762,6 +763,34 @@ def _sort_result_rows(
     return sorted(rows, key=lambda row: tuple(str(row.get(key, "")) for key in keys))
 
 
+def _compare_deduplicated_rows(
+    expected: list[dict[str, Any]],
+    observed: list[dict[str, Any]],
+    variables: Iterable[str],
+) -> dict[str, Any]:
+    """Compare exact normalized row sets and report the actual benchmark policy."""
+
+    keys = tuple(variables)
+
+    def unique(rows: list[dict[str, Any]]) -> list[dict[str, str]]:
+        signatures = {
+            tuple(_normalize_cell(key, row.get(key, "")) for key in keys)
+            for row in rows
+        }
+        return [dict(zip(keys, values)) for values in sorted(signatures)]
+
+    comparison = _compare_query_row_multisets(
+        unique(expected),
+        unique(observed),
+        list(keys),
+    )
+    comparison["comparison_method"] = (
+        "exact equality of deduplicated result sets after numeric lexical normalization, against expectations "
+        "independently derived from the sanitized workbook manifest"
+    )
+    return comparison
+
+
 def _f1(precision: float, recall: float) -> float:
     return round(2 * precision * recall / (precision + recall), 2) if precision + recall else 0.0
 
@@ -788,7 +817,7 @@ def _contract_diagnostic(
         "expected_rows": len(expected),
     }
     for ontology in ("h2kg", "chameo"):
-        comparison = _compare_query_rows(expected, project(evidence[query_id][ontology]), list(variables))
+        comparison = _compare_deduplicated_rows(expected, project(evidence[query_id][ontology]), variables)
         result[ontology] = {
             "status": comparison["status"],
             "matched_rows": comparison["matched_row_count"],
@@ -832,7 +861,7 @@ def _run_benchmark_queries(
             result_dir = ensure_dir(target / "query_results" / ontology)
             write_text(query_dir / f"{query_id}.rq", query + "\n")
             observed = _execute_query(dataset, query, variables)
-            comparison = _compare_query_rows(expected, observed, list(variables))
+            comparison = _compare_deduplicated_rows(expected, observed, variables)
             comparison["row_f1_percent"] = _f1(
                 comparison["row_precision_percent"], comparison["row_recall_percent"]
             )
@@ -1529,7 +1558,7 @@ def _row_evidence_graph(
             for triple in semantic_edges
             if triple[1] == part_predicate and triple[0] in seeds
         )
-    if requirement_id in {"b03_valued_measurement_setting", "b09_normalized_result_value"}:
+    if requirement_id in {"b03_valued_measurement_setting", "b09_parsed_result_value_and_unit"}:
         selected_terms = {
             term
             for subject, _, obj in selected
@@ -1830,7 +1859,7 @@ def _balanced_expected(requirement_id: str, manifest: dict[str, Any]) -> list[di
         rows = _ground_truth_rows("q49_analysis_provenance_across_cases", manifest)
     elif requirement_id == "b08_individual_result_property_bearer":
         rows = _ground_truth_rows("q6_all_result_records", manifest)
-    elif requirement_id == "b09_normalized_result_value":
+    elif requirement_id == "b09_parsed_result_value_and_unit":
         rows = _ground_truth_rows("q46_normalized_result_quantities", manifest)
     elif requirement_id == "b11_workflow_task_grouping":
         rows = _expected_workflow_rows(manifest)
@@ -1933,7 +1962,7 @@ def _benchmark_population_audit(manifest: dict[str, Any]) -> dict[str, Any]:
         reason = (
             status
             if status and status != "reported"
-            else "reported_without_complete_defensible_numeric_unit_pair"
+            else "reported_without_parseable_numeric_recognized_unit_pair"
         )
         setting_exclusions.append({
             "case_key": key[0],
@@ -1944,10 +1973,10 @@ def _benchmark_population_audit(manifest: dict[str, Any]) -> dict[str, Any]:
         })
 
     result_rows = _balanced_expected("b08_individual_result_property_bearer", manifest)
-    normalized_result_rows = _balanced_expected("b09_normalized_result_value", manifest)
-    normalized_result_keys = {
+    parsed_result_rows = _balanced_expected("b09_parsed_result_value_and_unit", manifest)
+    parsed_result_keys = {
         (row["caseKey"], row["propertyLabel"])
-        for row in normalized_result_rows
+        for row in parsed_result_rows
     }
     all_result_rows = _ground_truth_rows("q6_all_result_records", manifest)
     result_exclusions = [
@@ -1955,11 +1984,39 @@ def _benchmark_population_audit(manifest: dict[str, Any]) -> dict[str, Any]:
             "case_key": row["caseKey"],
             "property": row["propertyLabel"],
             "raw_value": row.get("rawValue", ""),
-            "exclusion_reason": "no_complete_defensible_numeric_unit_pair",
+            "exclusion_reason": "no_parseable_numeric_recognized_unit_pair",
         }
         for row in all_result_rows
-        if (row["caseKey"], row["propertyLabel"]) not in normalized_result_keys
+        if (row["caseKey"], row["propertyLabel"]) not in parsed_result_keys
     ]
+    quantity_compatibility = []
+    for row in parsed_result_rows:
+        saturation_concentration_conflict = (
+            _label_key(row["propertyLabel"]) == "electrolyte saturation"
+            and str(row["unit"]).endswith("MOL-PER-L")
+        )
+        quantity_compatibility.append({
+            "case_key": row["caseKey"],
+            "property": row["propertyLabel"],
+            "value": row["value"],
+            "unit": row["unit"],
+            "compatibility_status": (
+                "semantic_conflict"
+                if saturation_concentration_conflict
+                else "no_detected_property_unit_conflict"
+            ),
+            "verification_status": "not_independently_verified",
+            "rationale": (
+                "The source label denotes saturation, ordinarily a dimensionless fraction, "
+                "whereas mol/L denotes amount-of-substance concentration. The source value "
+                "remains queryable but is not treated as a scientifically compatible quantity."
+                if saturation_concentration_conflict
+                else "The explicit property/unit rule found no dimensional conflict; this does not verify the reported value scientifically."
+            ),
+        })
+    compatibility_counts = dict(sorted(Counter(
+        row["compatibility_status"] for row in quantity_compatibility
+    ).items()))
 
     profile_rows = []
     for profile_id, keys in sorted(profile_groups.items()):
@@ -1993,8 +2050,8 @@ def _benchmark_population_audit(manifest: dict[str, Any]) -> dict[str, Any]:
         },
         "measurement_settings": {
             "distinct_identities": len(setting_identity_rows),
-            "normalized_value_rows": len(valued_setting_rows),
-            "excluded_from_normalized_value_assessment": len(setting_exclusions),
+            "parsed_recognized_unit_rows": len(valued_setting_rows),
+            "excluded_from_parsed_unit_assessment": len(setting_exclusions),
             "exclusion_reason_counts": dict(sorted(Counter(
                 row["exclusion_reason"] for row in setting_exclusions
             ).items())),
@@ -2002,9 +2059,15 @@ def _benchmark_population_audit(manifest: dict[str, Any]) -> dict[str, Any]:
         },
         "reported_results": {
             "distinct_records": len(result_rows),
-            "normalized_value_rows": len(normalized_result_rows),
-            "excluded_from_normalized_value_assessment": len(result_exclusions),
+            "parsed_recognized_unit_rows": len(parsed_result_rows),
+            "excluded_from_parsed_unit_assessment": len(result_exclusions),
             "exclusions": result_exclusions,
+            "property_unit_compatibility_counts": compatibility_counts,
+            "property_unit_compatibility": quantity_compatibility,
+            "compatibility_scope": (
+                "Rule-based property/unit compatibility screening is separate from numeric parsing and unit recognition; "
+                "it is not independent verification of the reported measurements."
+            ),
         },
     }
 
@@ -2029,11 +2092,11 @@ def _balanced_contract(manifest: dict[str, Any]) -> dict[str, Any]:
         },
         {
             "id": "r4_h2kg_individual_results",
-            "criterion": "H2KG is exact for individual result/property/bearer associations and normalized result values, while CHAMEO is not exact for the individual association contract.",
+            "criterion": "H2KG is exact for individual result/property/bearer associations and parsed numeric values with recognized units, while CHAMEO is not exact for the individual association contract.",
         },
         {
             "id": "r5_h2kg_method_specificity",
-            "criterion": "The selected-profile vocabulary assessment resolves more source records to a dedicated native H2KG class than to a dedicated native CHAMEO technique class.",
+            "criterion": "H2KG has greater native class coverage at the predefined profile granularity than CHAMEO for the selected source records.",
         },
     ]
     canonical = json.dumps(
@@ -2044,7 +2107,7 @@ def _balanced_contract(manifest: dict[str, Any]) -> dict[str, Any]:
     )
     strata = Counter(item["selection_stratum"] for item in requirements)
     return {
-        "schema_version": "h2kg-chameo-fair-characterization-contract/v4",
+        "schema_version": "h2kg-chameo-fair-characterization-contract/v5",
         "source_manifest_sha256": manifest["source"]["sha256"],
         "requirement_count": len(requirements),
         "selection_strata": dict(sorted(strata.items())),
@@ -2055,7 +2118,8 @@ def _balanced_contract(manifest: dict[str, Any]) -> dict[str, Any]:
             "Derive every requirement from information present in the application lifecycle and label it by scientific function, never by ontology origin.",
             "Include selected-profile native vocabulary coverage as an explicit scored requirement rather than an unscored post hoc argument.",
             "Generate expected rows from the manifest before executing ontology-specific SPARQL or native-pattern assessment.",
-            "Compare normalized, deduplicated result sets; normalize numeric lexical forms only and preserve all other selected values exactly.",
+            "Compare deduplicated result sets after normalizing numeric lexical forms only; preserve all other selected values exactly.",
+            "Treat numeric parsing and recognized-unit mapping separately from rule-based property/unit compatibility screening.",
             "Disallow local semantic bridge predicates and report shared standards and declared imports separately.",
             "Credit generic native patterns as successful while reporting their semantic specificity separately from specialised native patterns.",
         ],
@@ -2147,7 +2211,7 @@ SELECT DISTINCT ?caseKey ?resultLabel ?propertyLabel ?bearerLabel WHERE {{
 }} ORDER BY ?caseKey ?resultLabel ?propertyLabel
 """
         return query, tier, rationale
-    if requirement_id == "b09_normalized_result_value":
+    if requirement_id == "b09_parsed_result_value_and_unit":
         return _query(ontology, "q46_normalized_result_quantities"), (
             "direct_native_plus_shared_standard" if h2kg else "declared_import_plus_shared_standard"
         ), "The ontology-specific result/property path is combined with shared QUDT value and unit terms."
@@ -2267,7 +2331,7 @@ def _run_balanced_benchmark(
                 write_text(query_dir / f"{requirement_id}.rq", query + "\n")
                 observed = _deduplicate_rows(_execute_query(dataset, query, variables), variables)
                 complexity = _query_complexity(query)
-            comparison = _compare_query_rows(expected, observed, list(variables))
+            comparison = _compare_deduplicated_rows(expected, observed, variables)
             status = (
                 "exact"
                 if comparison["exact_match"] else
@@ -2303,7 +2367,7 @@ def _run_balanced_benchmark(
         "requirement_count": len(matrix),
         "selection_strata": dict(sorted(Counter(row["selection_stratum"] for row in matrix).items())),
         "assessment_type_counts": dict(sorted(Counter(row["assessment_type"] for row in matrix).items())),
-        "aggregation_policy": "Each requirement is counted once. Query results are normalized and deduplicated before set comparison; row counts are reported per requirement and are not pooled into a weighted quality score.",
+        "aggregation_policy": "Each requirement is counted once. Numeric lexical forms are normalized and rows are deduplicated before set comparison; row counts are reported per requirement and are not pooled into a weighted quality score.",
     }
     for ontology in ("h2kg", "chameo"):
         summary[ontology] = {
@@ -2323,7 +2387,7 @@ def _run_balanced_benchmark(
         "b01_measurement_context", "b02_measurement_setting_identity",
         "b04_preparation_input_output", "b05_processing_input_output",
         "b06_software_association", "b07_analysis_lineage",
-        "b09_normalized_result_value", "b10_result_generation", "b11_workflow_task_grouping",
+        "b09_parsed_result_value_and_unit", "b10_result_generation", "b11_workflow_task_grouping",
         "b12_technique_occurrence_separation",
     }
     rules = {
@@ -2345,7 +2409,7 @@ def _run_balanced_benchmark(
         "h2kg_individual_result_pattern": (
             index["b08_individual_result_property_bearer"]["h2kg_status"] == "exact"
             and index["b08_individual_result_property_bearer"]["chameo_status"] != "exact"
-            and index["b09_normalized_result_value"]["h2kg_status"] == "exact"
+            and index["b09_parsed_result_value_and_unit"]["h2kg_status"] == "exact"
         ),
         "h2kg_greater_case_method_specificity": (
             index["b13_case_method_specificity"]["h2kg_status"] == "exact"
@@ -2369,7 +2433,7 @@ def _run_balanced_benchmark(
         "rules": rules,
         "supported": bool(rules["complementarity_conclusion_supported"]),
         "statement": (
-            "For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides broader dedicated profile-class coverage together with direct valued-parameter and individually provenance-linked result patterns."
+            "For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides greater native class coverage at the predefined profile granularity together with direct valued-parameter and individually provenance-linked result patterns."
             if rules["complementarity_conclusion_supported"] else
             "The frozen benchmark evidence did not satisfy every rule required for the proposed complementarity conclusion."
         ),
@@ -2431,7 +2495,7 @@ def _write_local_manuscript_legacy(local: Path, report: dict[str, Any], matrix: 
     summary = report["query_benchmark"]
     methods = f"""## Ontology-independent characterization benchmark
 
-The same sanitized workbook manifest (SHA-256 `{report['source_sha256']}`) was mapped independently to H₂KG and CHAMEO {CHAMEO_VERSION}. The CHAMEO graph used CHAMEO and its declared EMMO {EMMO_VERSION} imports; the H₂KG graph used H₂KG and its documented standards. No local semantic class or property was admitted to either scored graph. Ground-truth rows were generated directly from the manifest before SPARQL evaluation. Of 50 prespecified questions, {summary['scored_query_count']} tested ontology semantics and {summary['unscored_control_count']} source-fidelity or quality-status functions and were therefore retained as unscored controls. Ontology-specific SPARQL was permitted, but every scored query used the same variables; numeric lexical forms were normalized, duplicate rows were removed over all selected variables, and the resulting sets were compared.
+The same sanitized workbook manifest (SHA-256 `{report['source_sha256']}`) was mapped independently to H₂KG and CHAMEO {CHAMEO_VERSION}. The CHAMEO graph used CHAMEO and its declared EMMO {EMMO_VERSION} imports; the H₂KG graph used H₂KG and its documented standards. No local semantic class or property was admitted to either scored graph. Ground-truth rows were generated directly from the manifest before SPARQL evaluation. Of 50 explicit questions, {summary['scored_query_count']} tested ontology semantics and {summary['unscored_control_count']} source-fidelity or quality-status functions and were therefore retained as unscored controls. Ontology-specific SPARQL was permitted, but every scored query used the same variables; numeric lexical forms were normalized, duplicate rows were removed over all selected variables, and the resulting sets were compared.
 
 This historical question set used its recorded row comparison. Native, declared-import, shared-standard, and mapping-policy evidence was reported separately. Consequently, an absent permitted native relation produced a missing result rather than being repaired with an application bridge. Graph size and query complexity were descriptive only and were not combined into a ranking.
 """
@@ -2545,7 +2609,7 @@ This package supersedes the earlier adapter-assisted 50/50 comparison. Scored gr
 
 ## Evaluation boundary
 
-- Prespecified questions: {q['question_count']}
+- Explicit questions: {q['question_count']}
 - Strict ontology-semantic queries: {q['scored_query_count']}
 - Unscored source/quality controls: {q['unscored_control_count']}
 - H₂KG complete query contracts: {q['h2kg']['queries_passed']}/{q['scored_query_count']}
@@ -2575,11 +2639,12 @@ def _write_local_manuscript(
     rows = {row["requirement_id"]: row for row in balanced_matrix}
     parameter_values = rows["b03_valued_measurement_setting"]
     result_links = rows["b08_individual_result_property_bearer"]
-    result_values = rows["b09_normalized_result_value"]
+    result_values = rows["b09_parsed_result_value_and_unit"]
     workflow = rows["b11_workflow_task_grouping"]
     technique = rows["b12_technique_occurrence_separation"]
     specificity = report["balanced_conclusion"]["rules"]
     population = report["benchmark_population_audit"]
+    compatibility = population["reported_results"]["property_unit_compatibility_counts"]
     h2kg_exact_percent = 100 * summary["h2kg"]["exact_requirements"] / summary["requirement_count"]
     chameo_exact_percent = 100 * summary["chameo"]["exact_requirements"] / summary["requirement_count"]
 
@@ -2589,25 +2654,25 @@ Two application knowledge graphs were constructed independently from the same sa
 
 The manifest comprised {population['record_count']} source records from {population['method_family_count']} method families: TEM, SEM, AFM, FIB-SEM, IC-SEM, neutron tomography, and two synchrotron X-ray records. The two synchrotron sheets had identical acquisition/instrument fields and workflow-table values. Moreover, the sheet titled “Synchrotron X-ray radiography” reported “Synchrotron X-ray tomography” as its measurement method. They were retained as separate source records for fidelity but counted as one profile, giving {population['unique_profile_count']} unique profiles for profile-level reporting.
 
-The frozen contract contained {summary['requirement_count']} requirements spanning the characterization lifecycle. Ten were evaluated by ontology-specific SPARQL retrieval, two combined SPARQL retrieval for one graph with native-pattern assessment for the other, and one assessed native vocabulary coverage. Expected rows were generated from the manifest before graph interrogation. Query results were normalized only for numeric lexical equivalence, deduplicated over all selected variables, and compared as sets; labels, IRIs, and other selected values remained exact. Thus, the reported percentages are requirement-satisfaction rates under this protocol, not general accuracy scores.
+The frozen contract contained {summary['requirement_count']} requirements spanning the characterization lifecycle. Ten were evaluated by ontology-specific SPARQL retrieval, two combined SPARQL retrieval for one graph with native-pattern assessment for the other, and one assessed native vocabulary coverage. Expected rows were generated from the manifest before graph interrogation. Numeric lexical forms were normalized, rows were deduplicated over all selected variables, and the resulting sets were compared; labels, IRIs, and other selected values remained exact. Numeric parsing and recognized-unit mapping were evaluated separately from rule-based scientific property/unit compatibility. Thus, the reported percentages are requirement-satisfaction rates under this protocol, not general accuracy scores.
 
-Five prespecified criteria governed the scoped complementarity interpretation: (1) CHAMEO had to satisfy the common characterization-methodology requirements; (2) its dedicated workflow/task and technique-description patterns had to be demonstrated; (3) H₂KG had to support the valued-setting path while no corresponding path was identified in the CHAMEO encoding permitted by the protocol; (4) H₂KG had to preserve individual result–property–bearer identity where the tested CHAMEO process-level encoding was not exact; and (5) H₂KG had to provide dedicated classes for more selected profiles. The executable graph, mappings, ontology-specific queries, expected rows, and observed rows used as the numerical baseline are archived at immutable commit `{report.get('release_commit', '576c5276de6f8b138b759a5206fba657a68842bd')}`. The assessment-mode and population-audit artifacts introduced by this reporting revision must be cited from the immutable release commit assigned when they are deposited.
+Five explicit decision criteria governed the scoped complementarity interpretation: (1) CHAMEO had to satisfy the common characterization-methodology requirements; (2) its dedicated workflow/task and technique-description patterns had to be demonstrated; (3) H₂KG had to support the valued-setting path while no corresponding path was identified in the CHAMEO encoding permitted by the protocol; (4) H₂KG had to preserve individual result–property–bearer identity where the tested CHAMEO process-level encoding was not exact; and (5) H₂KG had to provide greater native class coverage at the predefined profile granularity. The executable graph, mappings, ontology-specific queries, expected rows, observed rows, assessment modes, and population audit are archived at immutable commit `{BENCHMARK_ARCHIVE_COMMIT}`.
 """
 
     results = f"""## Comparative benchmark results
 
-H₂KG satisfied {summary['h2kg']['exact_requirements']} of {summary['requirement_count']} requirements ({h2kg_exact_percent:.1f}%); CHAMEO satisfied {summary['chameo']['exact_requirements']} ({chameo_exact_percent:.1f}%), partially satisfied {summary['chameo']['partial_requirements']}, and did not support one requirement under the benchmark’s permitted native encoding. Both graphs returned the expected measurement contexts, setting identities, preparation and processing transformations, software associations, analysis lineage, normalized result values, result-generation provenance, and workflow grouping. H₂KG grouped activities with the generic `Process / hasPart` pattern, whereas CHAMEO provided the dedicated `CharacterisationWorkflow / hasCharacterisationTask` pattern. CHAMEO also explicitly distinguished a technique description from its measurement occurrence for all {technique['expected_rows']} records; no corresponding separate-description pattern was identified in the pinned H₂KG core under the same mapping policy.
+H₂KG satisfied {summary['h2kg']['exact_requirements']} of {summary['requirement_count']} requirements ({h2kg_exact_percent:.1f}%); CHAMEO satisfied {summary['chameo']['exact_requirements']} ({chameo_exact_percent:.1f}%), partially satisfied {summary['chameo']['partial_requirements']}, and did not support one requirement under the benchmark’s permitted native encoding. Both graphs returned the expected measurement contexts, setting identities, preparation and processing transformations, software associations, analysis lineage, parsed result values with recognized units, result-generation provenance, and workflow grouping. H₂KG grouped activities with the generic `Process / hasPart` pattern, whereas CHAMEO provided the dedicated `CharacterisationWorkflow / hasCharacterisationTask` pattern. CHAMEO also explicitly distinguished a technique description from its measurement occurrence for all {technique['expected_rows']} records; no corresponding separate-description pattern was identified in the pinned H₂KG core under the same mapping policy.
 
-Of {population['measurement_settings']['distinct_identities']} distinct setting identities, {parameter_values['expected_rows']} had a reported, defensibly normalized numeric value and unit and entered the valued-setting assessment. The other {population['measurement_settings']['excluded_from_normalized_value_assessment']} were retained but excluded because they were not applicable, unconfirmed, not specified, or lacked a complete defensible numeric/unit interpretation. H₂KG returned all {parameter_values['expected_rows']} through `hasParameter / ofProperty / hasQuantityValue`. CHAMEO returned all setting identities, but no declared ancestry-compatible link from `MeasurementParameter` to a separate valued scientific characteristic was identified under the permitted native encoding. No CHAMEO query was therefore executed for this requirement, and the outcome must not be interpreted as a general impossibility claim.
+Of {population['measurement_settings']['distinct_identities']} distinct setting identities, {parameter_values['expected_rows']} had a parseable numeric value and recognized unit and entered the valued-setting assessment. The other {population['measurement_settings']['excluded_from_parsed_unit_assessment']} were retained but excluded because they were not applicable, unconfirmed, not specified, or lacked a complete parseable numeric/recognized-unit pair. H₂KG returned all {parameter_values['expected_rows']} through `hasParameter / ofProperty / hasQuantityValue`. CHAMEO returned all setting identities, but no declared ancestry-compatible link from `MeasurementParameter` to a separate valued scientific characteristic was identified under the permitted native encoding. No CHAMEO query was therefore executed for this requirement, and the outcome must not be interpreted as a general impossibility claim.
 
-For results, H₂KG linked all {result_links['expected_rows']} individual result records directly to one property occurrence and bearer. The tested CHAMEO process-level encoding returned all expected associations but also produced {result_links['chameo_unexpected']} additional associations for one IC-SEM analysis. That analysis generated separate GDL-thickness and MEA-thickness result records. Joining both process outputs to both process-level determined properties produced the two correct pairs plus the crossed pairs “GDL thickness result–MEA thickness” and “MEA thickness result–GDL thickness.” H₂KG’s result-level `ofProperty` links retained one property per result. This distinction matters because the workbook associates 160 nm with GDL thickness and 80 nm with MEA thickness; losing result-level ownership can misattribute layer-resolved electrode or MEA data. This finding concerns the tested process-level CHAMEO encoding, not every permissible CHAMEO representation. Of {result_links['expected_rows']} result records, {result_values['expected_rows']} contained complete normalized values and units; the remaining {population['reported_results']['excluded_from_normalized_value_assessment']} were retained outside the normalized-value assessment.
+For results, H₂KG linked all {result_links['expected_rows']} individual result records directly to one property occurrence and bearer. The tested CHAMEO process-level encoding returned all expected associations but also produced {result_links['chameo_unexpected']} additional associations for one IC-SEM analysis. That analysis generated separate GDL-thickness and MEA-thickness result identities. Joining both process outputs to both process-level determined properties produced the two expected identity pairs plus the crossed pairs “GDL thickness result–MEA thickness” and “MEA thickness result–GDL thickness.” H₂KG’s result-level `ofProperty` links retained one property per result. The underlying IC-SEM measurements were not independently verified, so no numerical thickness values are used in this worked example. This finding concerns the tested process-level CHAMEO encoding, not every permissible CHAMEO representation. Of {result_links['expected_rows']} result records, {result_values['expected_rows']} contained a parseable numeric value and recognized unit; the remaining {population['reported_results']['excluded_from_parsed_unit_assessment']} were retained outside that assessment. A separate compatibility screen found {compatibility.get('no_detected_property_unit_conflict', 0)} rows with no detected property/unit conflict and {compatibility.get('semantic_conflict', 0)} conflicts. Both conflicts were the duplicated synchrotron source value labelled “electrolyte saturation” with unit mol/L; the value remains queryable as source evidence but is not treated as a scientifically compatible saturation quantity.
 
-Dedicated native classes were available for H₂KG in {specificity['h2kg_specific_method_count']}/{population['record_count']} records and {population['dedicated_class_coverage']['unique_profile_level']['h2kg']}/{population['unique_profile_count']} unique profiles, compared with {specificity['chameo_specific_method_count']}/{population['record_count']} records and {population['dedicated_class_coverage']['unique_profile_level']['chameo']}/{population['unique_profile_count']} profiles for CHAMEO. This is native vocabulary coverage for the selected characterization profiles; it does not establish hydrogen-domain specificity or inability to model the remaining profiles compositionally. All five prespecified criteria were met. Within this bounded scope, **{conclusion['statement']}**
+Native class coverage at the predefined profile granularity was {specificity['h2kg_specific_method_count']}/{population['record_count']} records and {population['dedicated_class_coverage']['unique_profile_level']['h2kg']}/{population['unique_profile_count']} unique profiles for H₂KG, compared with {specificity['chameo_specific_method_count']}/{population['record_count']} records and {population['dedicated_class_coverage']['unique_profile_level']['chameo']}/{population['unique_profile_count']} profiles for CHAMEO. This does not establish hydrogen-domain specificity or inability to model the remaining profiles compositionally. All five explicit decision criteria were met. Within this bounded scope, **{conclusion['statement']}**
 """
 
     limitations = f"""## Scope of inference
 
-{conclusion['scope']} Expected answers and both ABoxes derive from the same curated manifest, so the benchmark tests representation and deterministic retrieval rather than scientific truth or experimental repeatability. It combines query-based retrieval, native-pattern assessment, and vocabulary coverage and must not be read as a single homogeneous performance test. Workflow execution and automatic FAIRness were also outside scope. The working distance in the TEM record remains explicitly unconfirmed and is excluded from normalized-value evaluation. The workbook-supplied TEM instrument model, publication metadata, and 5 nm value were not independently verified and must be described as illustrative source content rather than validated experimental evidence. Independent replication should freeze the contract before mapping and include additional, independently sourced characterization profiles.
+{conclusion['scope']} Expected answers and both ABoxes derive from the same curated manifest, so the benchmark tests representation and deterministic retrieval rather than scientific truth or experimental repeatability. It combines query-based retrieval, native-pattern assessment, and vocabulary coverage and must not be read as a single homogeneous performance test. Workflow execution and automatic FAIRness were also outside scope. Numeric parsing and unit recognition do not establish scientific property/unit compatibility or verify a measurement. The working distance in the TEM record remains explicitly unconfirmed and is excluded from parsed-value evaluation. The workbook-supplied TEM instrument model, publication metadata, 5 nm value, and IC-SEM measurements were not independently verified and must be described as illustrative source content rather than validated experimental evidence. Independent replication should freeze the contract before mapping and include additional, independently sourced characterization profiles.
 """
 
     write_text(local / "methods_subsection.md", methods)
@@ -2670,7 +2735,7 @@ Dedicated native classes were available for H₂KG in {specificity['h2kg_specifi
     ]))
     write_text(local / "comparison_figure_specification.md", """# Figure specification
 
-Use three panels. Panel A shows one sanitized manifest branching into independently constructed H2KG and CHAMEO ABoxes, with three evaluation modes above them: SPARQL retrieval, native-pattern assessment, and native vocabulary coverage. State `8 source records / 7 method families / 7 unique profiles` and mark the two identical synchrotron records as one profile. Panel B contrasts supported native patterns: CHAMEO's dedicated workflow/task and technique-description structures, and H2KG's parameter-record/property/value and result/property/bearer structures. Panel C shows the IC-SEM worked example. Draw one analysis with GDL-thickness and MEA-thickness outputs. For the tested CHAMEO process-level encoding, show the two expected and two additional crossed associations in distinct styles. For H2KG, show one `ofProperty` edge per DataPoint. Annotate `GDL thickness = 160 nm` and `MEA thickness = 80 nm`. Caption every comparison as applying to the tested encoding and frozen mapping rules, not all possible ontology uses.
+Use three panels. Panel A shows one sanitized manifest branching into independently constructed H2KG and CHAMEO ABoxes, with three evaluation modes above them: SPARQL retrieval, native-pattern assessment, and native vocabulary coverage. State `8 source records / 7 method families / 7 unique profiles` and mark the two identical synchrotron records as one profile. Panel B contrasts supported native patterns: CHAMEO's dedicated workflow/task and technique-description structures, and H2KG's parameter-record/property/value and result/property/bearer structures. Panel C shows the IC-SEM worked example. Draw one analysis with separate GDL-thickness-result and MEA-thickness-result identities. For the tested CHAMEO process-level encoding, show the two expected and two additional crossed identity associations in distinct styles. For H2KG, show one `ofProperty` edge per DataPoint. Do not annotate numerical thickness values; add `workbook measurements not independently verified`. Caption every comparison as applying to the tested encoding and frozen mapping rules, not all possible ontology uses.
 """)
     write_text(local / "manuscript_integration_edits.md", f"""# Manuscript integration edits
 
@@ -2680,14 +2745,14 @@ Two independently constructed H₂KG- and CHAMEO-backed graphs were assessed aga
 
 ## Conclusion replacement paragraph
 
-The comparison does not rank either ontology globally. Across eight source records representing seven unique characterization profiles, CHAMEO supplied dedicated workflow/task and technique-description patterns, while H₂KG provided broader dedicated-class coverage for these profiles and direct paths from parameter records to valued characteristics and from individual results to properties and bearers. The IC-SEM example demonstrates the practical consequence: the tested process-level CHAMEO encoding returned two crossed thickness-result associations, whereas H₂KG retained the GDL and MEA thickness identities separately. These findings are limited to the frozen mapping rules, source manifest, and requirements evaluated here.
+The comparison does not rank either ontology globally. Across eight source records representing seven unique characterization profiles, CHAMEO supplied dedicated workflow/task and technique-description patterns, while H₂KG provided greater native class coverage at the predefined profile granularity and direct paths from parameter records to valued characteristics and from individual results to properties and bearers. The IC-SEM example demonstrates the practical consequence without relying on unverified numerical measurements: the tested process-level CHAMEO encoding returned two crossed thickness-result identity associations, whereas H₂KG retained the GDL and MEA thickness result identities separately. These findings are limited to the frozen mapping rules, source manifest, and requirements evaluated here.
 
 ## TEM corrections
 
 - Write `working distance: unconfirmed`; do not present a numeric working distance.
 - Describe `5 nm` as a workbook-supplied illustrative value pending independent source verification.
 - Do not claim that the listed TEM instrument model or publication metadata has been independently verified. State this limitation in Table 2 and the text.
-- Replace the malformed QUDT sentence with: `Only source values with a defensible numeric interpretation and unit mapping were represented as QUDT quantity values; unresolved or qualified values were retained lexically with an explicit status.`
+- Replace the malformed QUDT sentence with: `Parseable source numbers with recognized units were represented using QUDT; scientific property/unit compatibility was screened separately, and unresolved, qualified, or conflicting values were retained with an explicit status.`
 
 ## Editorial corrections
 
@@ -2698,7 +2763,7 @@ The comparison does not rank either ontology globally. Across eight source recor
 ## Reproducibility links
 
 - Interactive benchmark: https://vimilabs.github.io/AIMWORKS/pages/characterization-benchmark.html
-- Immutable package: https://github.com/ViMiLabs/AIMWORKS/tree/576c5276de6f8b138b759a5206fba657a68842bd/ontology_release/output/characterization_kg_comparison
+- Immutable package: https://github.com/ViMiLabs/AIMWORKS/tree/{BENCHMARK_ARCHIVE_COMMIT}/ontology_release/output/characterization_kg_comparison
 - Contract: `benchmark_contract.json`
 - Manifest: `characterization_source_manifest.json`
 - H2KG mappings: `h2kg_source_semantic_mapping_registry.csv`
@@ -2711,14 +2776,15 @@ The comparison does not rank either ontology globally. Across eight source recor
 |---|---|
 | `Extension required` overstates the evidence | Replaced with `not supported under the benchmark's permitted native encoding`; the text explicitly rejects a general impossibility interpretation. |
 | Mixed evaluation methods were not disclosed | Every requirement now records `query_based_retrieval`, `query_retrieval_and_native_pattern_assessment`, or `native_vocabulary_coverage`. |
-| `Row multiset` contradicted implementation | Corrected to normalized, deduplicated result-set comparison; numeric lexical normalization and duplicate handling are documented. |
+| `Row multiset` contradicted implementation | Corrected to deduplicated result-set comparison after numeric lexical normalization; duplicate handling is documented. |
 | Percentages could be read as accuracy | Recast as requirement-satisfaction rates under the frozen protocol. |
 | Specificity claim exceeded the evidence | Replaced with native vocabulary coverage for the selected profiles; compositional representation is distinguished from dedicated class availability. |
 | Eight cases were insufficiently described | Reported as eight source records, seven method families, and seven unique profiles; the radiography/tomography conflict and duplicate synchrotron profile are explicit. |
 | Reproducibility package was weakly connected | Added immutable commit and direct artifact links plus a population/eligibility audit. |
 | 107/131 settings and 13/24 results were unexplained | Added eligibility criteria and exclusion counts; excluded values remain represented in the source layer. |
 | TEM scientific qualification was incomplete | Working distance is explicitly unconfirmed; instrument/publication metadata and 5 nm are identified as workbook-supplied illustrative content pending independent verification. |
-| IC-SEM ambiguity was overgeneralized | Reworded as two additional associations produced by the tested CHAMEO process-level encoding and added a worked example. |
+| Quantity normalization implied scientific compatibility | Reframed as numeric parsing and recognized-unit mapping; added a separate property/unit compatibility audit that flags the two duplicated `electrolyte saturation = 47 mol/L` records as semantic conflicts. |
+| IC-SEM ambiguity was overgeneralized | Reworded as two additional identity associations produced by the tested CHAMEO process-level encoding; removed the unverified thickness numbers from the text and figure specification. |
 | Abstract/conclusion and copy-editing remained stale | Added exact replacement text and a checklist for typo, QUDT sentence, punctuation, placeholders, and figure synchronization. |
 """)
     write_text(local / "README.md", """# Local manuscript material
@@ -2793,12 +2859,16 @@ def _write_report_files(
     _write_csv(target / "benchmark_case_inventory.csv", population["cases"])
     _write_csv(target / "benchmark_unique_profiles.csv", population["profiles"])
     _write_csv(
-        target / "measurement_setting_normalization_exclusions.csv",
+        target / "measurement_setting_parsing_exclusions.csv",
         population["measurement_settings"]["exclusions"],
     )
     _write_csv(
-        target / "result_normalization_exclusions.csv",
+        target / "result_parsing_exclusions.csv",
         population["reported_results"]["exclusions"],
+    )
+    _write_csv(
+        target / "result_property_unit_compatibility.csv",
+        population["reported_results"]["property_unit_compatibility"],
     )
     write_text(
         target / "benchmark_population_audit.md",
@@ -2807,9 +2877,13 @@ def _write_report_files(
         f"- Method families: {population['method_family_count']}\n"
         f"- Unique characterization profiles: {population['unique_profile_count']}\n"
         f"- Distinct measurement-setting identities: {population['measurement_settings']['distinct_identities']}\n"
-        f"- Settings eligible for normalized-value assessment: {population['measurement_settings']['normalized_value_rows']}\n"
+        f"- Settings with a parseable number and recognized unit: {population['measurement_settings']['parsed_recognized_unit_rows']}\n"
         f"- Reported result records: {population['reported_results']['distinct_records']}\n"
-        f"- Results eligible for normalized-value assessment: {population['reported_results']['normalized_value_rows']}\n\n"
+        f"- Results with a parseable number and recognized unit: {population['reported_results']['parsed_recognized_unit_rows']}\n"
+        f"- Result property/unit conflicts: {population['reported_results']['property_unit_compatibility_counts'].get('semantic_conflict', 0)}\n\n"
+        "Numeric parsing and unit recognition do not establish scientific compatibility. "
+        "The separate compatibility audit flags both duplicated `electrolyte saturation = 47 mol/L` records because saturation is ordinarily dimensionless whereas mol/L denotes concentration. "
+        "The raw values remain queryable and are not treated as validated saturation quantities.\n\n"
         "The two synchrotron sheets contain identical acquisition/instrument fields and workflow-table values. "
         "The sheet titled radiography reports `Synchrotron X-ray tomography` as its measurement method; both records are therefore one unique tomography profile for profile-level reporting.\n",
     )
@@ -2972,7 +3046,7 @@ The two scored ABoxes are constructed independently from the same sanitized mani
 
 {conclusion['scope']}
 
-`balanced_requirement_matrix.*` contains the primary evidence, `benchmark_population_audit.*` documents record/profile accounting and value eligibility, `ontology_evidence_audit.*` records the pinned TBox evidence, and `balanced_conclusion_rules.json` records every prespecified rule behind the conclusion. Query outcomes use normalized, deduplicated result-set comparison. The conclusion is emitted only when all five rules pass. The earlier 50-question H2KG application set remains in `native_query_matrix.*` only as a labelled historical asymmetric diagnostic and is excluded from the conclusion.
+`balanced_requirement_matrix.*` contains the primary evidence, `benchmark_population_audit.*` documents record/profile accounting, parsing eligibility, and property/unit compatibility, `ontology_evidence_audit.*` records the pinned TBox evidence, and `balanced_conclusion_rules.json` records every explicit decision rule behind the conclusion. Query outcomes use deduplicated result-set comparison after numeric lexical normalization. The conclusion is emitted only when all five rules pass. The earlier 50-question H2KG application set remains in `native_query_matrix.*` only as a labelled historical asymmetric diagnostic and is excluded from the conclusion.
 """
     write_text(target / "README.md", readme)
 
@@ -3126,8 +3200,9 @@ def build_native_characterization_benchmark(
             "declared_imports_allowed_and_reported_separately": True,
             "shared_standards_not_credited_as_ontology_specific": True,
             "requirement_selection": "Thirteen requirements derived from the source characterization lifecycle and named by scientific function; every requirement is scored once over all eight source records, representing seven unique profiles, and none is selected by ontology origin.",
-            "comparison_method": "Normalized, deduplicated result-set equality for query-based requirements; explicit native-pattern assessment for unsupported-query cases; native vocabulary coverage for the selected profiles.",
-            "conclusion_rule": "The complementarity statement is emitted only when every prespecified machine-checkable conclusion rule passes.",
+            "comparison_method": "Deduplicated result-set equality after numeric lexical normalization for query-based requirements; explicit native-pattern assessment for unsupported-query cases; native vocabulary coverage for the selected profiles.",
+            "quantity_interpretation": "Numeric parsing and recognized-unit mapping are distinct from rule-based scientific property/unit compatibility screening.",
+            "conclusion_rule": "The complementarity statement is emitted only when every explicit machine-checkable decision rule passes.",
             "legacy_question_set_status": "Retained as a historical asymmetric transfer-test diagnostic and excluded from the primary conclusion.",
         },
         "source_lock": {key: value for key, value in source_lock.items() if key != "files"},

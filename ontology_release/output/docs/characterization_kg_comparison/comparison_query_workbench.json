@@ -1,6 +1,6 @@
 {
   "schema_version": "h2kg-chameo-query-workbench/v2",
-  "generated_at": "2026-10-26T11:31:04+00:00",
+  "generated_at": "2026-10-26T12:02:00+00:00",
   "source_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
   "default_requirement": "b03_valued_measurement_setting",
   "default_ontology": "h2kg",
@@ -24,7 +24,7 @@
       "query_based_retrieval": 10,
       "query_retrieval_and_native_pattern_assessment": 2
     },
-    "aggregation_policy": "Each requirement is counted once. Query results are normalized and deduplicated before set comparison; row counts are reported per requirement and are not pooled into a weighted quality score.",
+    "aggregation_policy": "Each requirement is counted once. Numeric lexical forms are normalized and rows are deduplicated before set comparison; row counts are reported per requirement and are not pooled into a weighted quality score.",
     "h2kg": {
       "exact_requirements": 12,
       "partial_requirements": 0,
@@ -50,7 +50,7 @@
       "complementarity_conclusion_supported": true
     },
     "supported": true,
-    "statement": "For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides broader dedicated profile-class coverage together with direct valued-parameter and individually provenance-linked result patterns.",
+    "statement": "For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides greater native class coverage at the predefined profile granularity together with direct valued-parameter and individually provenance-linked result patterns.",
     "scope": "The 12/13 and 10/13 values are requirement-satisfaction rates under this frozen protocol, not general ontology-accuracy or quality scores. The benchmark covers eight source records representing seven unique profiles; governance, maintainability, reasoning performance, usability, and scalability were not measured."
   },
   "requirements": [
@@ -203,7 +203,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b01_measurement_context.json"
         },
@@ -284,7 +284,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b01_measurement_context.json"
         }
@@ -1372,7 +1372,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b02_measurement_setting_identity.json"
         },
@@ -1921,7 +1921,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b02_measurement_setting_identity.json"
         }
@@ -1929,10 +1929,10 @@
     },
     {
       "id": "b03_valued_measurement_setting",
-      "question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
+      "question": "Which measurement-setting record denotes which scientific characteristic, with what parsed numeric value and recognized unit?",
       "selection_stratum": "measurement_settings",
       "assessment_type": "query_retrieval_and_native_pattern_assessment",
-      "source_basis": "Reported measurement settings with a distinct scientific characteristic and defensible numeric and unit normalization in the sanitized manifest.",
+      "source_basis": "Reported measurement settings with a distinct scientific characteristic, a parseable numeric value, and a recognized unit in the sanitized manifest.",
       "variables": [
         "caseKey",
         "parameterLabel",
@@ -3462,7 +3462,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b03_valued_measurement_setting.json"
         },
@@ -4343,7 +4343,7 @@
               }
             ],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b03_valued_measurement_setting.json"
         }
@@ -5381,7 +5381,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b04_preparation_input_output.json"
         },
@@ -5904,7 +5904,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b04_preparation_input_output.json"
         }
@@ -6294,7 +6294,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b05_processing_input_output.json"
         },
@@ -6493,7 +6493,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b05_processing_input_output.json"
         }
@@ -6844,7 +6844,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b06_software_association.json"
         },
@@ -7024,7 +7024,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b06_software_association.json"
         }
@@ -7445,7 +7445,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b07_analysis_lineage.json"
         },
@@ -7659,7 +7659,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b07_analysis_lineage.json"
         }
@@ -7989,7 +7989,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b08_individual_result_property_bearer.json"
         },
@@ -8185,18 +8185,18 @@
                 "occurrences": 1
               }
             ],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b08_individual_result_property_bearer.json"
         }
       }
     },
     {
-      "id": "b09_normalized_result_value",
-      "question": "Which reported result properties have a normalized numeric value and unit?",
+      "id": "b09_parsed_result_value_and_unit",
+      "question": "Which reported result properties have a parsed numeric value and recognized unit?",
       "selection_stratum": "result_semantics",
       "assessment_type": "query_based_retrieval",
-      "source_basis": "Analysis outputs with defensible numeric and unit normalization in the sanitized manifest.",
+      "source_basis": "Analysis outputs with a parseable numeric value and recognized unit in the sanitized manifest; property-unit compatibility is audited separately.",
       "variables": [
         "caseKey",
         "propertyLabel",
@@ -8383,9 +8383,9 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
-          "evidence_path": "web_evidence/h2kg/b09_normalized_result_value.json"
+          "evidence_path": "web_evidence/h2kg/b09_parsed_result_value_and_unit.json"
         },
         "chameo": {
           "status": "exact",
@@ -8486,9 +8486,9 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
-          "evidence_path": "web_evidence/chameo/b09_normalized_result_value.json"
+          "evidence_path": "web_evidence/chameo/b09_parsed_result_value_and_unit.json"
         }
       }
     },
@@ -8767,7 +8767,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b10_result_generation.json"
         },
@@ -8912,7 +8912,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b10_result_generation.json"
         }
@@ -9033,7 +9033,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b11_workflow_task_grouping.json"
         },
@@ -9098,7 +9098,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b11_workflow_task_grouping.json"
         }
@@ -9227,7 +9227,7 @@
               }
             ],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b12_technique_occurrence_separation.json"
         },
@@ -9292,7 +9292,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b12_technique_occurrence_separation.json"
         }
@@ -9396,7 +9396,7 @@
             "row_recall_percent": 100.0,
             "missing_expected_rows": [],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/h2kg/b13_case_method_specificity.json"
         },
@@ -9459,7 +9459,7 @@
               }
             ],
             "unexpected_rows": [],
-            "comparison_method": "exact row-multiset equality against expectations independently derived from the sanitized workbook manifest"
+            "comparison_method": "exact equality of deduplicated result sets after numeric lexical normalization, against expectations independently derived from the sanitized workbook manifest"
           },
           "evidence_path": "web_evidence/chameo/b13_case_method_specificity.json"
         }

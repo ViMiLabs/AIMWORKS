@@ -18,12 +18,12 @@ The two scored ABoxes are constructed independently from the same sanitized mani
 - H2KG exact requirements: 12/13
 - CHAMEO exact requirements: 10/13
 - CHAMEO partial requirements: 2/13
-- Contract fingerprint: `BF6C5D2F4EA8F504F813464BDC5641F9C0ACC1B3020B42A6C48072A2384924FD`
+- Contract fingerprint: `1DF11D480C1CC8AFAE618B5C7299C20E4EA0DB9FCD6B6188413B32CC373A352E`
 
 ## Computed conclusion
 
-For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides broader dedicated profile-class coverage together with direct valued-parameter and individually provenance-linked result patterns.
+For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides greater native class coverage at the predefined profile granularity together with direct valued-parameter and individually provenance-linked result patterns.
 
 The 12/13 and 10/13 values are requirement-satisfaction rates under this frozen protocol, not general ontology-accuracy or quality scores. The benchmark covers eight source records representing seven unique profiles; governance, maintainability, reasoning performance, usability, and scalability were not measured.
 
-`balanced_requirement_matrix.*` contains the primary evidence, `benchmark_population_audit.*` documents record/profile accounting and value eligibility, `ontology_evidence_audit.*` records the pinned TBox evidence, and `balanced_conclusion_rules.json` records every prespecified rule behind the conclusion. Query outcomes use normalized, deduplicated result-set comparison. The conclusion is emitted only when all five rules pass. The earlier 50-question H2KG application set remains in `native_query_matrix.*` only as a labelled historical asymmetric diagnostic and is excluded from the conclusion.
+`balanced_requirement_matrix.*` contains the primary evidence, `benchmark_population_audit.*` documents record/profile accounting, parsing eligibility, and property/unit compatibility, `ontology_evidence_audit.*` records the pinned TBox evidence, and `balanced_conclusion_rules.json` records every explicit decision rule behind the conclusion. Query outcomes use deduplicated result-set comparison after numeric lexical normalization. The conclusion is emitted only when all five rules pass. The earlier 50-question H2KG application set remains in `native_query_matrix.*` only as a labelled historical asymmetric diagnostic and is excluded from the conclusion.

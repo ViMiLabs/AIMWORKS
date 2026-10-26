@@ -7,7 +7,7 @@
 | q5_all_measurement_contexts | strict_ontology_semantics | What specimen, instrument, and raw dataset are linked to each characterization measurement? | 8 | pass | pass | 0 | 0 |
 | q6_all_result_records | strict_ontology_semantics | Which properties were reported across all cases, and what values, units, and specimen bearers were recorded? | 24 | pass | fail | 0 | 2 |
 | q7_source_status_summary | unscored_source_or_quality_control | How many workbook fields in each case were reported, missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting? | 37 | not_scored | not_scored |  |  |
-| q8_all_measurement_parameters | strict_ontology_semantics | Which measurement settings were recorded across all cases, and which have normalized QUDT values and units? | 134 | pass | fail | 107 | 107 |
+| q8_all_measurement_parameters | strict_ontology_semantics | Which measurement settings were recorded across all cases, and which have normalized QUDT values and units? | 134 | pass | fail | 107 | 104 |
 | q9_conservative_quantity_findings | unscored_source_or_quality_control | Which reported quantities were deliberately not normalized because their units, labels, axes, or meanings were incomplete or conflicting? | 27 | not_scored | not_scored |  |  |
 | q10_source_provenance_coverage | unscored_source_or_quality_control | Does every eligible workbook field have a traceable semantic representation in each case graph? | 8 | not_scored | not_scored |  |  |
 | q11_software_provenance | strict_ontology_semantics | Which software packages were linked to processing and analysis activities in each case? | 31 | pass | pass | 0 | 0 |
@@ -39,13 +39,13 @@
 | q37_tem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Transmission electron microscopy, and which have normalized values and units? | 8 | pass | fail | 5 | 5 |
 | q38_sem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Scanning electron microscopy, and which have normalized values and units? | 8 | pass | fail | 5 | 5 |
 | q39_afm_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Atomic force microscopy, and which have normalized values and units? | 8 | pass | fail | 7 | 7 |
-| q40_fib_sem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for FIB-SEM tomography, and which have normalized values and units? | 22 | pass | fail | 18 | 18 |
-| q41_ic_sem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Ion-cut scanning electron microscopy, and which have normalized values and units? | 18 | pass | fail | 15 | 15 |
-| q42_neutron_tomography_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Neutron tomography, and which have normalized values and units? | 22 | pass | fail | 19 | 19 |
+| q40_fib_sem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for FIB-SEM tomography, and which have normalized values and units? | 22 | pass | fail | 18 | 17 |
+| q41_ic_sem_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Ion-cut scanning electron microscopy, and which have normalized values and units? | 18 | pass | fail | 15 | 14 |
+| q42_neutron_tomography_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Neutron tomography, and which have normalized values and units? | 22 | pass | fail | 19 | 18 |
 | q43_synchrotron_radiography_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Synchrotron X-ray radiography, and which have normalized values and units? | 24 | pass | fail | 19 | 19 |
 | q44_synchrotron_tomography_measurement_settings | strict_ontology_semantics | Which acquisition settings were recorded for Synchrotron X-ray tomography, and which have normalized values and units? | 24 | pass | fail | 19 | 19 |
 | q45_case_measurement_result_counts | strict_ontology_semantics | How many measurement occurrences and result records are represented for each characterization case? | 8 | pass | pass | 0 | 0 |
-| q46_normalized_result_quantities | strict_ontology_semantics | Which reported scientific results have both a defensible numeric value and an explicit QUDT unit? | 13 | pass | fail | 0 | 2 |
+| q46_normalized_result_quantities | strict_ontology_semantics | Which reported scientific results have both a defensible numeric value and an explicit QUDT unit? | 13 | pass | pass | 0 | 0 |
 | q47_qualified_source_fields | unscored_source_or_quality_control | Which workbook fields are not simply reported values, and why are they marked missing, inapplicable, unspecified, unconfirmed, unresolved, or conflicting? | 375 | not_scored | not_scored |  |  |
 | q48_qualified_measurement_settings | unscored_source_or_quality_control | Which acquisition settings are missing, not applicable, unspecified, unconfirmed, unresolved, or conflicting rather than fully reported? | 8 | not_scored | not_scored |  |  |
 | q49_analysis_provenance_across_cases | strict_ontology_semantics | Which input datasets, analysis processes, and software are linked to each reported result across all cases? | 27 | pass | pass | 0 | 0 |

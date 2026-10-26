@@ -205,9 +205,24 @@ def test_pinned_sources_validation_and_local_material(native_build) -> None:
     assert population["method_family_count"] == 7
     assert population["unique_profile_count"] == 7
     assert population["measurement_settings"]["distinct_identities"] == 131
-    assert population["measurement_settings"]["normalized_value_rows"] == 107
+    assert population["measurement_settings"]["parsed_recognized_unit_rows"] == 107
     assert population["reported_results"]["distinct_records"] == 24
-    assert population["reported_results"]["normalized_value_rows"] == 13
+    assert population["reported_results"]["parsed_recognized_unit_rows"] == 13
+    assert population["reported_results"]["property_unit_compatibility_counts"] == {
+        "no_detected_property_unit_conflict": 11,
+        "semantic_conflict": 2,
+    }
+    conflicts = [
+        row for row in population["reported_results"]["property_unit_compatibility"]
+        if row["compatibility_status"] == "semantic_conflict"
+    ]
+    assert {row["case_key"] for row in conflicts} == {
+        "synchrotron_radiography",
+        "synchrotron_tomography",
+    }
+    assert all(row["property"] == "Electrolyte saturation" for row in conflicts)
+    assert all(row["unit"].endswith("MOL-PER-L") for row in conflicts)
+    assert (output / "result_property_unit_compatibility.csv").exists()
     assert (output / "comparison_report.html").exists()
     assert (output / "cases" / "h2kg" / "tem.ttl").exists()
     assert (output / "cases" / "chameo" / "tem.ttl").exists()
@@ -221,6 +236,22 @@ def test_pinned_sources_validation_and_local_material(native_build) -> None:
     assert "constructed independently" in manuscript.lower()
     assert "no local class or relation was admitted" in manuscript
     assert "not an overall ontology ranking" not in manuscript.lower()
+    complete_manuscript = (local / "manuscript_ready_benchmark_section.md").read_text(encoding="utf-8")
+    figure_spec = (local / "comparison_figure_specification.md").read_text(encoding="utf-8")
+    integration = (local / "manuscript_integration_edits.md").read_text(encoding="utf-8")
+    assert "160 nm" not in complete_manuscript + figure_spec + integration
+    assert "80 nm" not in complete_manuscript + figure_spec + integration
+    assert "explicit decision criteria" in complete_manuscript
+    assert "native class coverage at the predefined profile granularity" in complete_manuscript
+    assert "must be cited" not in complete_manuscript
+    assert "5382ff03eb4200416770da2bb4b32317fea69ff6" in complete_manuscript + integration
+
+    result_files = list((output / "balanced_results").rglob("*.json"))
+    assert result_files
+    for path in result_files:
+        result = json.loads(path.read_text(encoding="utf-8"))
+        assert "row-multiset" not in result["comparison"]["comparison_method"]
+        assert "deduplicated result sets" in result["comparison"]["comparison_method"]
 
 
 def test_complete_import_closure_supports_parameter_gap_finding(native_build) -> None:
