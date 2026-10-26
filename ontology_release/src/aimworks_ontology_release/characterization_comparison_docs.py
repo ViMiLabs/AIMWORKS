@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Static documentation for the fair H2KG-CHAMEO benchmark."""
+"""Static documentation for the controlled H2KG-CHAMEO benchmark."""
 
 from html import escape
 from pathlib import Path
@@ -37,18 +37,19 @@ def comparison_body(
     h2kg_exact = summary["h2kg"]["exact_requirements"]
     chameo_exact = summary["chameo"]["exact_requirements"]
     requirement_count = summary["requirement_count"]
+    population = report["benchmark_population_audit"]
     return f"""
 <section class="cb-intro">
   <div class="cb-intro-copy">
     <p class="eyebrow">Controlled ontology application benchmark</p>
     <h2>One source corpus. Two native semantic models.</h2>
-    <p>H₂KG and CHAMEO were mapped independently from the same sanitized eight-case characterization manifest. The frozen requirements, expected rows, and conclusion rules were fixed before ontology-specific SPARQL was executed. Neither ontology was modified, and no local semantic bridge was admitted to either scored graph.</p>
+    <p>H₂KG and CHAMEO were mapped independently from the same sanitized characterization manifest. It contains {population['record_count']} source records across {population['method_family_count']} method families and {population['unique_profile_count']} unique profiles. The frozen requirements, expected rows, and conclusion rules were fixed before query retrieval or native-pattern assessment. Neither ontology was modified, and no local semantic bridge was admitted to either scored graph.</p>
     <div class="cb-actions"><a class="cb-button primary" href="#comparison-workbench">Inspect the evidence</a><a class="cb-button" href="{escape(kg_href)}">Open the H₂KG application</a></div>
   </div>
   <div class="cb-scoreboard" aria-label="Benchmark headline results">
     <div><span>H₂KG exact</span><strong>{h2kg_exact}/{requirement_count}</strong><small>{100*h2kg_exact/requirement_count:.1f}%</small></div>
     <div><span>CHAMEO exact</span><strong>{chameo_exact}/{requirement_count}</strong><small>{100*chameo_exact/requirement_count:.1f}%</small></div>
-    <div><span>Expected rows</span><strong>{expected_rows}</strong><small>across eight cases</small></div>
+    <div><span>Expected rows</span><strong>{expected_rows}</strong><small>across eight source records</small></div>
     <div><span>Import closure</span><strong>{report['source_lock']['resolved_import_count']}</strong><small>CHAMEO/EMMO modules</small></div>
   </div>
 </section>
@@ -56,9 +57,9 @@ def comparison_body(
 <section class="cb-protocol" aria-labelledby="cb-protocol-title">
   <div class="cb-section-head"><p class="eyebrow">Fairness controls</p><h2 id="cb-protocol-title">How the comparison was kept symmetric</h2></div>
   <div class="cb-protocol-grid">
-    <article><span>01</span><h3>Common source</h3><p>Both ABoxes begin with the same 1,635 eligible workbook fields and eight cases.</p></article>
+    <article><span>01</span><h3>Common source</h3><p>Both ABoxes begin with the same 1,635 eligible fields from eight records representing seven unique profiles.</p></article>
     <article><span>02</span><h3>Independent mapping</h3><p>Each graph uses its own ontology and declared imports; neither graph is translated from the other.</p></article>
-    <article><span>03</span><h3>Frozen expectations</h3><p>Thirteen lifecycle requirements produce 501 manifest-derived expected rows before querying.</p></article>
+    <article><span>03</span><h3>Mixed assessment</h3><p>Thirteen lifecycle requirements use query retrieval, native-pattern assessment, or native vocabulary coverage.</p></article>
     <article><span>04</span><h3>Auditable decision</h3><p>Five hashed rules must all pass before the complementarity conclusion is emitted.</p></article>
   </div>
 </section>
@@ -71,7 +72,7 @@ def comparison_body(
 
 <section class="cb-workbench" id="comparison-workbench" data-package="{escape(package_href)}" data-artifact-root="{escape(artifact_root)}">
   <header class="cb-workbench-head">
-    <div><p class="eyebrow">SPARQL and RDF evidence</p><h2>Trace every benchmark outcome</h2><p>Select a plain-language requirement and ontology. The result table is the frozen RDFLib output; selecting a row renders only the RDF statements that support that answer.</p></div>
+    <div><p class="eyebrow">Query and structural evidence</p><h2>Trace every benchmark outcome</h2><p>Select a plain-language requirement and ontology. Query-based requirements show frozen RDFLib output; native-pattern and vocabulary assessments show their recorded evidence and rationale.</p></div>
     <div id="cb-load-status" class="cb-load-status" aria-live="polite">Loading benchmark package...</div>
   </header>
 
@@ -90,7 +91,7 @@ def comparison_body(
 
   <div class="cb-query-grid">
     <article class="cb-panel cb-query-panel">
-      <div class="cb-panel-head"><div><p class="eyebrow">Ontology-specific SPARQL</p><h3 id="cb-query-title">Validated query</h3></div><button id="cb-copy-query" type="button">Copy query</button></div>
+      <div class="cb-panel-head"><div><p class="eyebrow">Ontology-specific evidence</p><h3 id="cb-query-title">Query or assessment note</h3></div><button id="cb-copy-query" type="button">Copy evidence text</button></div>
       <textarea id="cb-query" spellcheck="false" aria-label="Ontology-specific SPARQL"></textarea>
       <p id="cb-rationale" class="cb-note"></p>
     </article>
@@ -99,6 +100,8 @@ def comparison_body(
       <a href="{artifact_root}/benchmark_contract.json" download>Frozen contract · JSON</a>
       <a href="{artifact_root}/balanced_requirement_matrix.csv" download>Requirement matrix · CSV</a>
       <a href="{artifact_root}/balanced_conclusion_rules.json" download>Conclusion rules · JSON</a>
+      <a href="{artifact_root}/benchmark_population_audit.json" download>Population audit · JSON</a>
+      <a href="{artifact_root}/benchmark_case_inventory.csv" download>Case inventory · CSV</a>
       <a href="{artifact_root}/ontology_evidence_audit.json" download>Ontology evidence audit</a>
       <a href="{artifact_root}/strict_h2kg_semantic_graph.ttl" download>H₂KG scored graph · Turtle</a>
       <a href="{artifact_root}/strict_chameo_semantic_graph.ttl" download>CHAMEO scored graph · Turtle</a>
@@ -124,7 +127,7 @@ def comparison_body(
     <div class="cb-legend"><span class="workflow">Workflow</span><span class="process">Process</span><span class="measurement">Measurement</span><span class="matter">Matter</span><span class="parameter">Parameter</span><span class="data">Data/result</span><span class="property">Property</span><span class="instrument">Instrument/software</span><span class="literal">Value/unit</span></div>
   </section>
 
-  <section class="cb-differences"><div><p class="eyebrow">Exact row-multiset comparison</p><h2>Missing and additional answers</h2></div><div id="cb-difference-summary"></div></section>
+  <section class="cb-differences"><div><p class="eyebrow">Normalized, deduplicated set comparison</p><h2>Missing and additional answers</h2></div><div id="cb-difference-summary"></div></section>
 </section>
 """
 
@@ -139,7 +142,7 @@ def comparison_css() -> str:
 .cb-conclusion{margin:1.5rem 0;padding:1.35rem 1.5rem;border-left:5px solid var(--cb-teal);border-radius:0 18px 18px 0;background:linear-gradient(120deg,#eaf7f3,#fff)}.cb-conclusion blockquote{margin:.25rem 0 .7rem;font:700 clamp(1.18rem,2.2vw,1.65rem)/1.35 "Iowan Old Style",Georgia,serif;color:var(--cb-ink)}.cb-conclusion p:last-child{margin-bottom:0;color:var(--cb-muted)}
 .cb-workbench{overflow:hidden;border:1px solid var(--cb-line);border-radius:22px;background:#fff;box-shadow:0 22px 58px rgba(20,46,54,.1)}.cb-workbench-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1.2rem;align-items:center;padding:1.25rem;background:linear-gradient(120deg,#eff9f6,#fff8ed);border-bottom:1px solid var(--cb-line)}.cb-workbench-head p{max-width:850px;margin:.25rem 0}.cb-load-status{min-width:230px;padding:.8rem 1rem;border:1px solid #acd0c6;border-radius:12px;background:#fff;color:var(--cb-muted)}.cb-load-status strong{display:block;color:var(--cb-teal);font-size:1.15rem}
 .cb-table-wrap{overflow:auto;max-height:450px}.cb-table-wrap table{width:100%;border-collapse:collapse;font-size:.78rem}.cb-table-wrap th{position:sticky;top:0;z-index:2;padding:.58rem;text-align:left;background:#e6f1ef;color:#26464e;white-space:nowrap}.cb-table-wrap td{padding:.52rem .58rem;border-top:1px solid #e0e8e8;vertical-align:top;max-width:310px;overflow-wrap:anywhere}.cb-table-wrap tr:nth-child(even) td{background:#fbfdfc}.cb-table-wrap tr[data-row-key]{cursor:pointer}.cb-table-wrap tr[data-row-key]:hover td,.cb-table-wrap tr.selected td{background:#e8f6f2}.cb-matrix{max-height:390px;border-bottom:1px solid var(--cb-line)}
-.cb-status{display:inline-flex;padding:.2rem .48rem;border-radius:999px;font-size:.68rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}.cb-status.exact{color:#075e54;background:#dff3ed}.cb-status.partial{color:#80510b;background:#fff0ce}.cb-status.not_expressible_without_extension{color:#893725;background:#fde7df}
+.cb-status{display:inline-flex;padding:.2rem .48rem;border-radius:999px;font-size:.68rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}.cb-status.exact{color:#075e54;background:#dff3ed}.cb-status.partial{color:#80510b;background:#fff0ce}.cb-status.not_supported_under_benchmark_mapping_rules{color:#893725;background:#fde7df}
 .cb-controls{display:grid;grid-template-columns:minmax(300px,1.4fr) minmax(170px,.45fr) minmax(220px,.65fr);gap:.8rem;padding:1rem;background:#f7faf9;border-bottom:1px solid var(--cb-line)}.cb-controls label,.cb-evidence-head label{display:grid;gap:.32rem;color:#3c5961;font-size:.78rem;font-weight:750}.cb-controls select,.cb-controls input,.cb-evidence-head select{width:100%;padding:.68rem .75rem;border:1px solid #aebfc2;border-radius:9px;background:#fff;color:var(--cb-ink)}
 .cb-question-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.42fr);gap:1rem;align-items:center;padding:1.1rem 1.2rem;border-bottom:1px solid var(--cb-line)}.cb-question-card h3{margin:.15rem 0;font-size:1.22rem}.cb-question-card p{margin:.35rem 0;color:var(--cb-muted)}.cb-outcome{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}.cb-outcome div{padding:.58rem;border:1px solid #d5e1e2;border-radius:10px;background:#f9fcfb;font-size:.72rem;color:var(--cb-muted)}.cb-outcome strong{display:block;margin-top:.15rem;color:var(--cb-ink);font-size:.92rem}
 .cb-query-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.55fr);gap:1rem;padding:1rem;background:#f7faf9}.cb-panel{min-width:0;overflow:hidden;border:1px solid #d3e0e1;border-radius:14px;background:#fff}.cb-panel-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.75rem .9rem;border-bottom:1px solid #d8e3e4;background:#f2f7f6}.cb-panel-head h3{margin:.12rem 0}.cb-panel-head p{margin:0}.cb-panel-head button,.cb-results-grid button{padding:.48rem .68rem;border:1px solid var(--cb-teal);border-radius:8px;background:#fff;color:var(--cb-teal);font-weight:750;cursor:pointer}.cb-query-panel textarea{width:100%;min-height:315px;padding:.85rem;border:0;resize:vertical;background:#10272e;color:#eaf7f4;font:12px/1.55 Consolas,monospace}.cb-note{margin:0;padding:.72rem .85rem;color:var(--cb-muted);font-size:.82rem;line-height:1.5}.cb-downloads{display:flex;flex-direction:column;gap:.45rem;padding:.9rem;align-self:start}.cb-downloads h3{margin:.15rem 0 .45rem}.cb-downloads a{padding:.57rem .68rem;border:1px solid #bdd1d3;border-radius:8px;color:#096b68;text-decoration:none;font-weight:700;background:#fbfdfd}.cb-downloads a:hover{background:#e8f6f3}
@@ -180,8 +183,8 @@ def comparison_js() -> str:
   $('cb-results-csv').addEventListener('click',()=>{if(!current||!currentModel)return;downloadRows(current.id,current.variables,currentModel.rows);});
 
   function renderMatrix(){
-    const rows=data.requirements.map((item)=>({id:item.id,question:item.question,expected:item.expected_rows.length,h2kg:item.ontologies.h2kg.status,chameo:item.ontologies.chameo.status}));
-    $('cb-requirement-matrix').innerHTML=`<table><thead><tr><th>ID</th><th>Plain-language requirement</th><th>Expected rows</th><th>H₂KG</th><th>CHAMEO</th></tr></thead><tbody>${rows.map((row)=>`<tr><td>${esc(row.id.slice(0,3).toUpperCase())}</td><td>${esc(row.question)}</td><td>${row.expected}</td><td>${statusPill(row.h2kg)}</td><td>${statusPill(row.chameo)}</td></tr>`).join('')}</tbody></table>`;
+    const rows=data.requirements.map((item)=>({id:item.id,question:item.question,assessment:item.assessment_type,expected:item.expected_rows.length,h2kg:item.ontologies.h2kg.status,chameo:item.ontologies.chameo.status}));
+    $('cb-requirement-matrix').innerHTML=`<table><thead><tr><th>ID</th><th>Assessment</th><th>Plain-language requirement</th><th>Expected rows</th><th>H₂KG</th><th>CHAMEO</th></tr></thead><tbody>${rows.map((row)=>`<tr><td>${esc(row.id.slice(0,3).toUpperCase())}</td><td>${esc(row.assessment.replaceAll('_',' '))}</td><td>${esc(row.question)}</td><td>${row.expected}</td><td>${statusPill(row.h2kg)}</td><td>${statusPill(row.chameo)}</td></tr>`).join('')}</tbody></table>`;
   }
   async function syncRequirement(){
     current=data.requirements.find((item)=>item.id===reqSelect.value);
@@ -189,12 +192,15 @@ def comparison_js() -> str:
     if(!current||!currentModel)return;
     filter.value='';
     $('cb-question').textContent=current.question;
-    $('cb-source-basis').textContent=`Ground-truth basis: ${current.source_basis}`;
-    $('cb-query-title').textContent=`${ontologySelect.value==='h2kg'?'H₂KG':'CHAMEO'} query`;
+    $('cb-source-basis').textContent=`Assessment: ${current.assessment_type.replaceAll('_',' ')}. Evidence basis: ${current.source_basis}`;
+    $('cb-query-title').textContent=`${ontologySelect.value==='h2kg'?'H₂KG':'CHAMEO'} query or assessment note`;
     $('cb-query').value=currentModel.query;
     $('cb-rationale').textContent=currentModel.rationale;
     const c=currentModel.comparison;
-    $('cb-outcome').innerHTML=`<div>Status<strong>${statusPill(currentModel.status)}</strong></div><div>Representation<strong>${esc(currentModel.representation_tier.replaceAll('_',' '))}</strong></div><div>Matched<strong>${c.matched_row_count}/${c.expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div>`;
+    const evidenceCards=currentModel.query_executed
+      ? `<div>Matched<strong>${c.matched_row_count}/${c.expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div>`
+      : `<div>Assessment<strong>${esc(currentModel.assessment_mode.replaceAll('_',' '))}</strong></div><div>SPARQL executed<strong>No</strong></div>`;
+    $('cb-outcome').innerHTML=`<div>Status<strong>${statusPill(currentModel.status)}</strong></div><div>Representation<strong>${esc(currentModel.representation_tier.replaceAll('_',' '))}</strong></div>${evidenceCards}`;
     renderTables();
     const href=`${root.dataset.artifactRoot}/${currentModel.evidence_path}`;
     try{
@@ -212,14 +218,14 @@ def comparison_js() -> str:
     const observed=new Map(currentModel.rows.map((row)=>[signature(row),row]));
     const expected=new Map(current.expected_rows.map((row)=>[signature(row),row]));
     const keys=[...observed.keys(),...expected.keys()].filter((key,index,array)=>array.indexOf(key)===index);
-    keys.forEach((key)=>{const row=observed.get(key)||expected.get(key);const option=document.createElement('option');option.value=key;const state=observed.has(key)?(expected.has(key)?'Matched':'Additional'):'Missing';option.textContent=`${state} · ${rowSummary(row)}`;rowSelect.append(option);});
+    keys.forEach((key)=>{const row=observed.get(key)||expected.get(key);const option=document.createElement('option');option.value=key;const state=currentModel.query_executed?(observed.has(key)?(expected.has(key)?'Matched':'Additional'):'Missing'):'Assessment target';option.textContent=`${state} · ${rowSummary(row)}`;rowSelect.append(option);});
     if(keys.length)rowSelect.value=keys[0];
   }
   function renderTables(){
     if(!current||!currentModel)return;
     const term=filter.value.trim().toLowerCase();
     const keep=(row)=>!term||JSON.stringify(row).toLowerCase().includes(term);
-    renderTable($('cb-observed'),current.variables,currentModel.rows.filter(keep),'No observed rows.',true);
+    renderTable($('cb-observed'),current.variables,currentModel.rows.filter(keep),currentModel.query_executed?'No observed rows.':'No SPARQL query was executed; consult the native assessment rationale.',true);
     renderTable($('cb-expected'),current.variables,current.expected_rows.filter(keep),'No expected rows.',true);
   }
   function renderTable(container,variables,rows,empty,clickable){
@@ -229,7 +235,9 @@ def comparison_js() -> str:
   }
   function renderDifferences(){
     const c=currentModel.comparison;
-    $('cb-difference-summary').innerHTML=`<div class="cb-difference-cards"><div>Expected<strong>${c.expected_row_count}</strong></div><div>Observed<strong>${c.observed_row_count}</strong></div><div>Missing<strong>${c.missing_expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div></div>`;
+    $('cb-difference-summary').innerHTML=currentModel.query_executed
+      ? `<div class="cb-difference-cards"><div>Expected<strong>${c.expected_row_count}</strong></div><div>Observed<strong>${c.observed_row_count}</strong></div><div>Missing<strong>${c.missing_expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div></div>`
+      : `<div class="cb-difference-cards"><div>Target population<strong>${c.expected_row_count}</strong></div><div>Assessment<strong>${esc(currentModel.assessment_mode.replaceAll('_',' '))}</strong></div><div>SPARQL executed<strong>No</strong></div><div>Status<strong>${esc(currentModel.status.replaceAll('_',' '))}</strong></div></div>`;
   }
   function renderEvidence(){
     if(!evidence||!current)return;

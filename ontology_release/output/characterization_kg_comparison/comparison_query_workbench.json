@@ -1,6 +1,6 @@
 {
-  "schema_version": "h2kg-chameo-query-workbench/v1",
-  "generated_at": "2026-10-23T18:59:17+00:00",
+  "schema_version": "h2kg-chameo-query-workbench/v2",
+  "generated_at": "2026-10-26T11:31:04+00:00",
   "source_sha256": "C3A66E75FABDAF61C60949FFC7B0E08AAD324A1F77D6137BDE60FA20797001E6",
   "default_requirement": "b03_valued_measurement_setting",
   "default_ontology": "h2kg",
@@ -9,27 +9,32 @@
     "selection_strata": {
       "analysis_lineage": 1,
       "data_processing": 1,
-      "domain_terminology": 1,
       "measurement_context": 1,
       "measurement_settings": 2,
       "methodology_description": 1,
       "result_provenance": 1,
       "result_semantics": 2,
+      "selected_profile_vocabulary": 1,
       "software_traceability": 1,
       "specimen_preparation": 1,
       "workflow_structure": 1
     },
-    "aggregation_policy": "Each requirement is counted once. Row counts are reported per requirement and are not pooled into a weighted quality score.",
+    "assessment_type_counts": {
+      "native_vocabulary_coverage": 1,
+      "query_based_retrieval": 10,
+      "query_retrieval_and_native_pattern_assessment": 2
+    },
+    "aggregation_policy": "Each requirement is counted once. Query results are normalized and deduplicated before set comparison; row counts are reported per requirement and are not pooled into a weighted quality score.",
     "h2kg": {
       "exact_requirements": 12,
       "partial_requirements": 0,
-      "not_expressible_requirements": 1,
+      "native_pattern_not_supported_requirements": 1,
       "no_match_requirements": 0
     },
     "chameo": {
       "exact_requirements": 10,
       "partial_requirements": 2,
-      "not_expressible_requirements": 1,
+      "native_pattern_not_supported_requirements": 1,
       "no_match_requirements": 0
     }
   },
@@ -45,14 +50,15 @@
       "complementarity_conclusion_supported": true
     },
     "supported": true,
-    "statement": "The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.",
-    "scope": "This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured."
+    "statement": "For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides broader dedicated profile-class coverage together with direct valued-parameter and individually provenance-linked result patterns.",
+    "scope": "The 12/13 and 10/13 values are requirement-satisfaction rates under this frozen protocol, not general ontology-accuracy or quality scores. The benchmark covers eight source records representing seven unique profiles; governance, maintainability, reasoning performance, usability, and scalability were not measured."
   },
   "requirements": [
     {
       "id": "b01_measurement_context",
       "question": "Which specimen, instrument, and raw dataset belong to each measurement?",
       "selection_stratum": "measurement_context",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "Case identity, specimen field, method family, and raw-data output in the sanitized manifest.",
       "variables": [
         "caseKey",
@@ -122,6 +128,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct subject, instrument, and output-data relations.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?caseKey ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel WHERE {\n  GRAPH ?semanticGraph { ?measurement a h2kg:Measurement ; rdfs:label ?measurementLabel ; h2kg:hasMeasurementSubject ?specimen ; h2kg:usesInstrument ?instrument ; h2kg:hasOutputData ?rawDataset .\n?specimen rdfs:label ?specimenLabel . ?instrument rdfs:label ?instrumentLabel . ?rawDataset rdfs:label ?rawDatasetLabel . } FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey",
@@ -201,6 +209,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct subject, instrument, and output-data relations.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?caseKey ?measurementLabel ?specimenLabel ?instrumentLabel ?rawDatasetLabel WHERE {\n  GRAPH ?semanticGraph { ?measurement a chameo:CharacterisationMeasurementProcess ; rdfs:label ?measurementLabel ; chameo:hasMeasurementSample ?specimen ; chameo:hasCharacterisationMeasurementInstrument ?instrument ; chameo:hasCharacterisationOutput ?rawDataset .\n?rawDataset a chameo:RawData . ?specimen rdfs:label ?specimenLabel . ?instrument rdfs:label ?instrumentLabel . ?rawDataset rdfs:label ?rawDatasetLabel . } FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey",
@@ -284,6 +294,7 @@
       "id": "b02_measurement_setting_identity",
       "question": "Which named measurement settings are associated with each measurement?",
       "selection_stratum": "measurement_settings",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "All characteristic and instrument fields classified as measurement settings in the sanitized manifest.",
       "variables": [
         "caseKey",
@@ -818,6 +829,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct measurement-to-parameter relation.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?parameterLabel WHERE {\n  GRAPH ?semanticGraph { ?measurement a h2kg:Measurement ; h2kg:hasParameter ?parameter . ?parameter rdfs:label ?parameterLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?parameterLabel",
@@ -1365,6 +1378,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct measurement-to-parameter relation.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?parameterLabel WHERE {\n  GRAPH ?semanticGraph { ?measurement a chameo:CharacterisationMeasurementProcess ; chameo:hasMeasurementParameter ?parameter . ?parameter rdfs:label ?parameterLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?parameterLabel",
@@ -1916,6 +1931,7 @@
       "id": "b03_valued_measurement_setting",
       "question": "Which measurement-setting record denotes which scientific characteristic, with what normalized numeric value and unit?",
       "selection_stratum": "measurement_settings",
+      "assessment_type": "query_retrieval_and_native_pattern_assessment",
       "source_basis": "Reported measurement settings with a distinct scientific characteristic and defensible numeric and unit normalization in the sanitized manifest.",
       "variables": [
         "caseKey",
@@ -2678,6 +2694,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native_plus_shared_standard",
           "rationale": "H2KG binds a parameter record to a property occurrence; QUDT supplies value and unit terms.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?parameterLabel ?propertyLabel ?value ?unit WHERE {\n  GRAPH ?semanticGraph {\n    ?measurement a h2kg:Measurement ; h2kg:hasParameter ?parameter .\n    ?parameter rdfs:label ?parameterLabel ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:hasQuantityValue ?quantity .\n    ?quantity qudt:numericValue ?value ; qudt:unit ?unit .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?parameterLabel",
@@ -3449,10 +3467,12 @@
           "evidence_path": "web_evidence/h2kg/b03_valued_measurement_setting.json"
         },
         "chameo": {
-          "status": "not_expressible_without_extension",
-          "representation_tier": "requires_extension",
-          "rationale": "The complete pinned CHAMEO/EMMO import closure places MeasurementParameter under EMMO mathematical Parameter, not Quantity or Referent, and declares no ancestry-compatible relation to a distinct valued scientific characteristic.",
-          "query": "# No SPARQL query emitted.\n# The complete pinned CHAMEO/EMMO import closure places MeasurementParameter under EMMO mathematical Parameter, not Quantity or Referent, and declares no ancestry-compatible relation to a distinct valued scientific characteristic.",
+          "status": "not_supported_under_benchmark_mapping_rules",
+          "assessment_mode": "native_pattern_assessment",
+          "query_executed": false,
+          "representation_tier": "native_pattern_not_identified_under_mapping_rules",
+          "rationale": "Under the benchmark's permitted native encoding, no declared ancestry-compatible relation was identified from CHAMEO MeasurementParameter to a distinct valued scientific characteristic. This bounded finding does not establish that every possible CHAMEO/EMMO representation is prohibited.",
+          "query": "# No SPARQL query emitted.\n# Under the benchmark's permitted native encoding, no declared ancestry-compatible relation was identified from CHAMEO MeasurementParameter to a distinct valued scientific characteristic. This bounded finding does not establish that every possible CHAMEO/EMMO representation is prohibited.",
           "rows": [],
           "comparison": {
             "status": "fail",
@@ -4333,7 +4353,8 @@
       "id": "b04_preparation_input_output",
       "question": "Which material input and output are connected by each specimen-preparation step?",
       "selection_stratum": "specimen_preparation",
-      "source_basis": "Synthesis and specimen-preparation rows in all eight cases.",
+      "assessment_type": "query_based_retrieval",
+      "source_basis": "Synthesis and specimen-preparation rows in all eight source records.",
       "variables": [
         "caseKey",
         "processLabel",
@@ -4843,6 +4864,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Native preparation semantics; CHAMEO uses its declared EMMO output relation.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?inputMaterialLabel ?outputMaterialLabel WHERE {\n  GRAPH ?semanticGraph {\n    ?process a h2kg:Manufacturing ; rdfs:label ?processLabel ; h2kg:hasInputMaterial ?input ; h2kg:hasOutputMaterial ?output .\n    ?input rdfs:label ?inputMaterialLabel . ?output rdfs:label ?outputMaterialLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?processLabel ?inputMaterialLabel ?outputMaterialLabel",
@@ -5364,6 +5387,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native_plus_declared_import",
           "rationale": "Native preparation semantics; CHAMEO uses its declared EMMO output relation.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?inputMaterialLabel ?outputMaterialLabel WHERE {\n  GRAPH ?semanticGraph {\n    ?process a chameo:SamplePreparation ; rdfs:label ?processLabel ; chameo:hasSampleForPreparation ?input ; <https://w3id.org/emmo#EMMO_c4bace1d_4db0_4cd3_87e9_18122bae2840> ?output .\n    ?input rdfs:label ?inputMaterialLabel . ?output rdfs:label ?outputMaterialLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?processLabel ?inputMaterialLabel ?outputMaterialLabel",
@@ -5889,7 +5914,8 @@
       "id": "b05_processing_input_output",
       "question": "Which input and output datasets are connected by each preprocessing step?",
       "selection_stratum": "data_processing",
-      "source_basis": "Preprocessing rows in all eight cases.",
+      "assessment_type": "query_based_retrieval",
+      "source_basis": "Preprocessing rows in all eight source records.",
       "variables": [
         "caseKey",
         "processLabel",
@@ -6075,6 +6101,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct processing input and output relations.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel WHERE { GRAPH ?semanticGraph {\n  ?process a h2kg:DataProcessing ; rdfs:label ?processLabel ; h2kg:hasInputData ?inputData ; h2kg:hasOutputData ?outputData . ?inputData rdfs:label ?inputDataLabel . ?outputData rdfs:label ?outputDataLabel .\n} FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey) } ORDER BY ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel",
@@ -6272,6 +6300,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct processing input and output relations.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel WHERE { GRAPH ?semanticGraph {\n  ?process a chameo:DataPreparation ; rdfs:label ?processLabel ; chameo:hasCharacterisationInput ?inputData ; chameo:hasCharacterisationOutput ?outputData . ?inputData rdfs:label ?inputDataLabel . ?outputData rdfs:label ?outputDataLabel .\n} FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey) } ORDER BY ?caseKey ?processLabel ?inputDataLabel ?outputDataLabel",
@@ -6473,6 +6503,7 @@
       "id": "b06_software_association",
       "question": "Which software is associated with each preparation, processing, or analysis step?",
       "selection_stratum": "software_traceability",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "Software fields in all workflow-table sections.",
       "variables": [
         "caseKey",
@@ -6639,6 +6670,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct process-to-software relation.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?softwareLabel WHERE { GRAPH ?semanticGraph { ?process h2kg:usesSoftware ?software ; rdfs:label ?processLabel . ?software rdfs:label ?softwareLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?processLabel ?softwareLabel",
@@ -6817,6 +6850,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct process-to-software relation.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?processLabel ?softwareLabel WHERE { GRAPH ?semanticGraph { ?process chameo:hasCharacterisationSoftware ?software ; rdfs:label ?processLabel . ?software rdfs:label ?softwareLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?processLabel ?softwareLabel",
@@ -6999,7 +7034,8 @@
       "id": "b07_analysis_lineage",
       "question": "Which input dataset, analysis step, software, and result form each analysis lineage?",
       "selection_stratum": "analysis_lineage",
-      "source_basis": "Analysis rows and software fields in all eight cases.",
+      "assessment_type": "query_based_retrieval",
+      "source_basis": "Analysis rows and software fields in all eight source records.",
       "variables": [
         "caseKey",
         "analysisLabel",
@@ -7201,6 +7237,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct analysis input, output, and software relations.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?analysisLabel ?inputDataLabel ?resultLabel ?softwareLabel WHERE { GRAPH ?semanticGraph { ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .\n?analysis rdfs:label ?analysisLabel ; h2kg:hasInputData ?inputData . ?inputData rdfs:label ?inputDataLabel .\nOPTIONAL { ?analysis h2kg:usesSoftware ?software . ?software rdfs:label ?softwareLabel . } }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?analysisLabel ?resultLabel ?inputDataLabel ?softwareLabel",
@@ -7413,6 +7451,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Direct analysis input, output, and software relations.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?analysisLabel ?inputDataLabel ?resultLabel ?softwareLabel WHERE { GRAPH ?semanticGraph { ?analysis a chameo:DataAnalysis ; rdfs:label ?analysisLabel ; chameo:hasCharacterisationInput ?inputData ; chameo:hasCharacterisationOutput ?result .\n?result a chameo:SecondaryData ; rdfs:label ?resultLabel . ?inputData rdfs:label ?inputDataLabel .\nOPTIONAL { ?analysis chameo:hasCharacterisationSoftware ?software . ?software rdfs:label ?softwareLabel . } }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\")) BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?analysisLabel ?resultLabel ?inputDataLabel ?softwareLabel",
@@ -7629,6 +7669,7 @@
       "id": "b08_individual_result_property_bearer",
       "question": "Which property and specimen are linked to each individual reported result?",
       "selection_stratum": "result_semantics",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "Every analysis target and the case specimen in the sanitized manifest.",
       "variables": [
         "caseKey",
@@ -7785,6 +7826,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "Each result record directly identifies one property occurrence and its bearer.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?resultLabel ?propertyLabel ?bearerLabel WHERE {\n  GRAPH ?semanticGraph { ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; h2kg:ofProperty ?property .\n?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer . ?bearer rdfs:label ?bearerLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?resultLabel ?propertyLabel",
@@ -7952,6 +7995,8 @@
         },
         "chameo": {
           "status": "partial",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "declared_import_process_level_pattern",
           "rationale": "The imported process-level determination pattern can become ambiguous when one analysis has several outputs and properties.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?resultLabel ?propertyLabel ?bearerLabel WHERE {\n  GRAPH ?semanticGraph { ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n  chameo:hasCharacterisationOutput ?result ; emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n?result a chameo:SecondaryData ; rdfs:label ?resultLabel .\n?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n?bearer chameo:hasCharacterisationProperty ?property ; rdfs:label ?bearerLabel . }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?resultLabel ?propertyLabel",
@@ -8150,6 +8195,7 @@
       "id": "b09_normalized_result_value",
       "question": "Which reported result properties have a normalized numeric value and unit?",
       "selection_stratum": "result_semantics",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "Analysis outputs with defensible numeric and unit normalization in the sanitized manifest.",
       "variables": [
         "caseKey",
@@ -8240,6 +8286,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native_plus_shared_standard",
           "rationale": "The ontology-specific result/property path is combined with shared QUDT value and unit terms.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?caseKey ?propertyLabel ?value ?unit WHERE { { GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/tem> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"tem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/sem> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/afm> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"afm\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/fib_sem> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"fib_sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/ic_sem> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"ic_sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/neutron_tomography> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"neutron_tomography\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_radiography> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"synchrotron_radiography\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://w3id.org/h2kg/examples/characterization/graph/semantic/synchrotron_tomography> {\n    ?result a h2kg:DataPoint ; h2kg:ofProperty ?property .\n    ?property rdfs:label ?propertyLabel ; h2kg:isCharacteristicOf ?bearer .\n     ?property h2kg:hasQuantityValue ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"synchrotron_tomography\" AS ?caseKey)\n  } } } ORDER BY ?caseKey ?propertyLabel",
@@ -8341,6 +8389,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "declared_import_plus_shared_standard",
           "rationale": "The ontology-specific result/property path is combined with shared QUDT value and unit terms.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?caseKey ?propertyLabel ?value ?unit WHERE { { GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/tem> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"tem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/sem> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/afm> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"afm\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/fib_sem> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"fib_sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/ic_sem> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"ic_sem\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/neutron_tomography> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"neutron_tomography\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/synchrotron_radiography> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"synchrotron_radiography\" AS ?caseKey)\n  } } UNION\n{ GRAPH <https://example.org/aimworks/chameo-characterization/graph/semantic/synchrotron_tomography> {\n    ?analysis a chameo:DataAnalysis, emmo:EMMO_10a5fd39_06aa_4648_9e70_f962a9cb2069 ;\n      chameo:hasCharacterisationOutput ?result ;\n      emmo:EMMO_802b7639_9498_4b47_ad45_1a087fe8fb85 ?property .\n    ?result a chameo:SecondaryData .\n    ?property a chameo:CharacterisationProperty ; rdfs:label ?propertyLabel .\n    ?bearer chameo:hasCharacterisationProperty ?property .\n     ?property emmo:EMMO_88b84515_a0df_47bb_8166_c7c8b893c1d8 ?qv . ?qv qudt:numericValue ?value ; qudt:unit ?unit . BIND(\"synchrotron_tomography\" AS ?caseKey)\n  } } } ORDER BY ?caseKey ?propertyLabel",
@@ -8446,7 +8496,8 @@
       "id": "b10_result_generation",
       "question": "Which analysis step generated each individual result?",
       "selection_stratum": "result_provenance",
-      "source_basis": "Analysis-step and target pairs in all eight cases.",
+      "assessment_type": "query_based_retrieval",
+      "source_basis": "Analysis-step and target pairs in all eight source records.",
       "variables": [
         "caseKey",
         "analysisLabel",
@@ -8577,6 +8628,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "shared_standard",
           "rationale": "Both graphs use the same PROV-O generation relation.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?analysisLabel ?resultLabel WHERE {\n  GRAPH ?semanticGraph {\n    ?result a h2kg:DataPoint ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .\n    ?analysis rdfs:label ?analysisLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?analysisLabel ?resultLabel",
@@ -8720,6 +8773,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "shared_standard",
           "rationale": "Both graphs use the same PROV-O generation relation.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?analysisLabel ?resultLabel WHERE {\n  GRAPH ?semanticGraph {\n    ?result a chameo:SecondaryData ; rdfs:label ?resultLabel ; prov:wasGeneratedBy ?analysis .\n    ?analysis rdfs:label ?analysisLabel .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey ?analysisLabel ?resultLabel",
@@ -8867,6 +8922,7 @@
       "id": "b11_workflow_task_grouping",
       "question": "Which named workflow groups the measurement and processing tasks for each case?",
       "selection_stratum": "workflow_structure",
+      "assessment_type": "query_based_retrieval",
       "source_basis": "Each case is one bounded characterization workflow containing one measurement and its distinct source-defined steps.",
       "variables": [
         "caseKey",
@@ -8918,6 +8974,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "generic_direct_native",
           "rationale": "H2KG's generic Process/hasPart pattern groups the source-defined activities.",
           "query": "PREFIX h2kg: <https://w3id.org/h2kg/hydrogen-ontology#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?caseKey ?workflowLabel (COUNT(DISTINCT ?task) AS ?taskCount) WHERE {\n  GRAPH ?semanticGraph {\n    ?workflow a h2kg:Process ; rdfs:label ?workflowLabel ; h2kg:hasPart ?task .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://w3id.org/h2kg/examples/characterization/graph/semantic/\") AS ?caseKey)\n} GROUP BY ?caseKey ?workflowLabel ORDER BY ?caseKey",
@@ -8981,6 +9039,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native",
           "rationale": "CHAMEO explicitly groups CharacterisationTask descriptions in a CharacterisationWorkflow.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?caseKey ?workflowLabel (COUNT(DISTINCT ?task) AS ?taskCount) WHERE {\n  GRAPH ?semanticGraph {\n    ?workflow a chameo:CharacterisationWorkflow ; rdfs:label ?workflowLabel ; chameo:hasCharacterisationTask ?task .\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} GROUP BY ?caseKey ?workflowLabel ORDER BY ?caseKey",
@@ -9048,6 +9108,7 @@
       "id": "b12_technique_occurrence_separation",
       "question": "Which technique description is explicitly distinguished from, and linked to, each measurement occurrence?",
       "selection_stratum": "methodology_description",
+      "assessment_type": "query_retrieval_and_native_pattern_assessment",
       "source_basis": "The method-family descriptor and measurement occurrence recorded for every case.",
       "variables": [
         "caseKey",
@@ -9098,10 +9159,12 @@
       ],
       "ontologies": {
         "h2kg": {
-          "status": "not_expressible_without_extension",
-          "representation_tier": "occurrence_class_pattern",
-          "rationale": "H2KG identifies the method by typing the measurement occurrence; it has no separate technique-description resource and linking relation in the pinned core.",
-          "query": "# No SPARQL query emitted.\n# H2KG identifies the method by typing the measurement occurrence; it has no separate technique-description resource and linking relation in the pinned core.",
+          "status": "not_supported_under_benchmark_mapping_rules",
+          "assessment_mode": "native_pattern_assessment",
+          "query_executed": false,
+          "representation_tier": "native_pattern_not_identified_under_mapping_rules",
+          "rationale": "Under the benchmark's permitted native encoding, H2KG identifies the method by typing the measurement occurrence; no separate technique-description resource and linking relation was identified in the pinned core. This is not a general impossibility claim.",
+          "query": "# No SPARQL query emitted.\n# Under the benchmark's permitted native encoding, H2KG identifies the method by typing the measurement occurrence; no separate technique-description resource and linking relation was identified in the pinned core. This is not a general impossibility claim.",
           "rows": [],
           "comparison": {
             "status": "fail",
@@ -9170,6 +9233,8 @@
         },
         "chameo": {
           "status": "exact",
+          "assessment_mode": "sparql_query",
+          "query_executed": true,
           "representation_tier": "direct_native_plus_declared_import",
           "rationale": "CHAMEO supplies the technique descriptor and its declared EMMO import supplies the description-to-occurrence relation.",
           "query": "PREFIX chameo: <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>\nPREFIX emmo: <https://w3id.org/emmo#>\nPREFIX qudt: <http://qudt.org/schema/qudt/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?caseKey ?techniqueLabel ?measurementLabel WHERE {\n  GRAPH ?semanticGraph {\n    ?technique a ?techniqueType ; rdfs:label ?techniqueLabel ; <https://w3id.org/emmo#EMMO_f702bad4_fc77_41f0_a26d_79f6444fd4f3> ?measurement .\n    ?measurement a chameo:CharacterisationMeasurementProcess ; rdfs:label ?measurementLabel .\n    FILTER(?techniqueType != chameo:CharacterisationTask)\n  }\n  FILTER(STRSTARTS(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\"))\n  BIND(STRAFTER(STR(?semanticGraph), \"https://example.org/aimworks/chameo-characterization/graph/semantic/\") AS ?caseKey)\n} ORDER BY ?caseKey",
@@ -9235,9 +9300,10 @@
     },
     {
       "id": "b13_case_method_specificity",
-      "question": "Does each case resolve to a native ontology class at the specificity of the reported characterization method?",
-      "selection_stratum": "domain_terminology",
-      "source_basis": "The curated measurement-method identity recorded for each of the eight workbook cases.",
+      "question": "Does each source record resolve to a dedicated native ontology class at the specificity of its selected characterization profile?",
+      "selection_stratum": "selected_profile_vocabulary",
+      "assessment_type": "native_vocabulary_coverage",
+      "source_basis": "The curated characterization-profile identity recorded for each of the eight workbook records.",
       "variables": [
         "caseKey",
         "methodLabel"
@@ -9279,6 +9345,8 @@
       "ontologies": {
         "h2kg": {
           "status": "exact",
+          "assessment_mode": "native_vocabulary_coverage",
+          "query_executed": false,
           "representation_tier": "native_class_coverage_audit",
           "rationale": "Evaluated against the ontology class inventory and source method identity rather than an ABox query.",
           "query": "# No SPARQL query emitted.\n# Evaluated against the ontology class inventory and source method identity rather than an ABox query.",
@@ -9334,6 +9402,8 @@
         },
         "chameo": {
           "status": "partial",
+          "assessment_mode": "native_vocabulary_coverage",
+          "query_executed": false,
           "representation_tier": "native_class_coverage_audit",
           "rationale": "Evaluated against the ontology class inventory and source method identity rather than an ABox query.",
           "query": "# No SPARQL query emitted.\n# Evaluated against the ontology class inventory and source method identity rather than an ABox query.",

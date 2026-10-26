@@ -26,8 +26,8 @@
   $('cb-results-csv').addEventListener('click',()=>{if(!current||!currentModel)return;downloadRows(current.id,current.variables,currentModel.rows);});
 
   function renderMatrix(){
-    const rows=data.requirements.map((item)=>({id:item.id,question:item.question,expected:item.expected_rows.length,h2kg:item.ontologies.h2kg.status,chameo:item.ontologies.chameo.status}));
-    $('cb-requirement-matrix').innerHTML=`<table><thead><tr><th>ID</th><th>Plain-language requirement</th><th>Expected rows</th><th>H₂KG</th><th>CHAMEO</th></tr></thead><tbody>${rows.map((row)=>`<tr><td>${esc(row.id.slice(0,3).toUpperCase())}</td><td>${esc(row.question)}</td><td>${row.expected}</td><td>${statusPill(row.h2kg)}</td><td>${statusPill(row.chameo)}</td></tr>`).join('')}</tbody></table>`;
+    const rows=data.requirements.map((item)=>({id:item.id,question:item.question,assessment:item.assessment_type,expected:item.expected_rows.length,h2kg:item.ontologies.h2kg.status,chameo:item.ontologies.chameo.status}));
+    $('cb-requirement-matrix').innerHTML=`<table><thead><tr><th>ID</th><th>Assessment</th><th>Plain-language requirement</th><th>Expected rows</th><th>H₂KG</th><th>CHAMEO</th></tr></thead><tbody>${rows.map((row)=>`<tr><td>${esc(row.id.slice(0,3).toUpperCase())}</td><td>${esc(row.assessment.replaceAll('_',' '))}</td><td>${esc(row.question)}</td><td>${row.expected}</td><td>${statusPill(row.h2kg)}</td><td>${statusPill(row.chameo)}</td></tr>`).join('')}</tbody></table>`;
   }
   async function syncRequirement(){
     current=data.requirements.find((item)=>item.id===reqSelect.value);
@@ -35,12 +35,15 @@
     if(!current||!currentModel)return;
     filter.value='';
     $('cb-question').textContent=current.question;
-    $('cb-source-basis').textContent=`Ground-truth basis: ${current.source_basis}`;
-    $('cb-query-title').textContent=`${ontologySelect.value==='h2kg'?'H₂KG':'CHAMEO'} query`;
+    $('cb-source-basis').textContent=`Assessment: ${current.assessment_type.replaceAll('_',' ')}. Evidence basis: ${current.source_basis}`;
+    $('cb-query-title').textContent=`${ontologySelect.value==='h2kg'?'H₂KG':'CHAMEO'} query or assessment note`;
     $('cb-query').value=currentModel.query;
     $('cb-rationale').textContent=currentModel.rationale;
     const c=currentModel.comparison;
-    $('cb-outcome').innerHTML=`<div>Status<strong>${statusPill(currentModel.status)}</strong></div><div>Representation<strong>${esc(currentModel.representation_tier.replaceAll('_',' '))}</strong></div><div>Matched<strong>${c.matched_row_count}/${c.expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div>`;
+    const evidenceCards=currentModel.query_executed
+      ? `<div>Matched<strong>${c.matched_row_count}/${c.expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div>`
+      : `<div>Assessment<strong>${esc(currentModel.assessment_mode.replaceAll('_',' '))}</strong></div><div>SPARQL executed<strong>No</strong></div>`;
+    $('cb-outcome').innerHTML=`<div>Status<strong>${statusPill(currentModel.status)}</strong></div><div>Representation<strong>${esc(currentModel.representation_tier.replaceAll('_',' '))}</strong></div>${evidenceCards}`;
     renderTables();
     const href=`${root.dataset.artifactRoot}/${currentModel.evidence_path}`;
     try{
@@ -58,14 +61,14 @@
     const observed=new Map(currentModel.rows.map((row)=>[signature(row),row]));
     const expected=new Map(current.expected_rows.map((row)=>[signature(row),row]));
     const keys=[...observed.keys(),...expected.keys()].filter((key,index,array)=>array.indexOf(key)===index);
-    keys.forEach((key)=>{const row=observed.get(key)||expected.get(key);const option=document.createElement('option');option.value=key;const state=observed.has(key)?(expected.has(key)?'Matched':'Additional'):'Missing';option.textContent=`${state} · ${rowSummary(row)}`;rowSelect.append(option);});
+    keys.forEach((key)=>{const row=observed.get(key)||expected.get(key);const option=document.createElement('option');option.value=key;const state=currentModel.query_executed?(observed.has(key)?(expected.has(key)?'Matched':'Additional'):'Missing'):'Assessment target';option.textContent=`${state} · ${rowSummary(row)}`;rowSelect.append(option);});
     if(keys.length)rowSelect.value=keys[0];
   }
   function renderTables(){
     if(!current||!currentModel)return;
     const term=filter.value.trim().toLowerCase();
     const keep=(row)=>!term||JSON.stringify(row).toLowerCase().includes(term);
-    renderTable($('cb-observed'),current.variables,currentModel.rows.filter(keep),'No observed rows.',true);
+    renderTable($('cb-observed'),current.variables,currentModel.rows.filter(keep),currentModel.query_executed?'No observed rows.':'No SPARQL query was executed; consult the native assessment rationale.',true);
     renderTable($('cb-expected'),current.variables,current.expected_rows.filter(keep),'No expected rows.',true);
   }
   function renderTable(container,variables,rows,empty,clickable){
@@ -75,7 +78,9 @@
   }
   function renderDifferences(){
     const c=currentModel.comparison;
-    $('cb-difference-summary').innerHTML=`<div class="cb-difference-cards"><div>Expected<strong>${c.expected_row_count}</strong></div><div>Observed<strong>${c.observed_row_count}</strong></div><div>Missing<strong>${c.missing_expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div></div>`;
+    $('cb-difference-summary').innerHTML=currentModel.query_executed
+      ? `<div class="cb-difference-cards"><div>Expected<strong>${c.expected_row_count}</strong></div><div>Observed<strong>${c.observed_row_count}</strong></div><div>Missing<strong>${c.missing_expected_row_count}</strong></div><div>Additional<strong>${c.unexpected_row_count}</strong></div></div>`
+      : `<div class="cb-difference-cards"><div>Target population<strong>${c.expected_row_count}</strong></div><div>Assessment<strong>${esc(currentModel.assessment_mode.replaceAll('_',' '))}</strong></div><div>SPARQL executed<strong>No</strong></div><div>Status<strong>${esc(currentModel.status.replaceAll('_',' '))}</strong></div></div>`;
   }
   function renderEvidence(){
     if(!evidence||!current)return;

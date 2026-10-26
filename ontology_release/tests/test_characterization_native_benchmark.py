@@ -97,12 +97,12 @@ def test_balanced_contract_drives_the_conclusion(native_build) -> None:
     assert contract["selection_strata"] == {
         "analysis_lineage": 1,
         "data_processing": 1,
-        "domain_terminology": 1,
         "measurement_context": 1,
         "measurement_settings": 2,
         "methodology_description": 1,
         "result_provenance": 1,
         "result_semantics": 2,
+        "selected_profile_vocabulary": 1,
         "software_traceability": 1,
         "specimen_preparation": 1,
         "workflow_structure": 1,
@@ -112,6 +112,11 @@ def test_balanced_contract_drives_the_conclusion(native_build) -> None:
         for stratum in contract["selection_strata"]
     )
     assert summary["requirement_count"] == 13
+    assert summary["assessment_type_counts"] == {
+        "native_vocabulary_coverage": 1,
+        "query_based_retrieval": 10,
+        "query_retrieval_and_native_pattern_assessment": 2,
+    }
     assert conclusion["supported"] is True
     assert all(
         value is True
@@ -123,15 +128,23 @@ def test_balanced_contract_drives_the_conclusion(native_build) -> None:
         for row in report["balanced_requirement_matrix"]
     }
     assert matrix["b03_valued_measurement_setting"]["h2kg_status"] == "exact"
-    assert matrix["b03_valued_measurement_setting"]["chameo_status"] == "not_expressible_without_extension"
+    assert matrix["b03_valued_measurement_setting"]["chameo_status"] == "not_supported_under_benchmark_mapping_rules"
+    assert matrix["b03_valued_measurement_setting"]["assessment_type"] == "query_retrieval_and_native_pattern_assessment"
+    assert matrix["b03_valued_measurement_setting"]["h2kg_query_executed"] is True
+    assert matrix["b03_valued_measurement_setting"]["chameo_query_executed"] is False
+    assert matrix["b03_valued_measurement_setting"]["chameo_assessment_mode"] == "native_pattern_assessment"
     assert matrix["b11_workflow_task_grouping"]["chameo_status"] == "exact"
     assert matrix["b11_workflow_task_grouping"]["h2kg_status"] == "exact"
     assert matrix["b11_workflow_task_grouping"]["h2kg_representation_tier"] == "generic_direct_native"
     assert matrix["b11_workflow_task_grouping"]["chameo_representation_tier"] == "direct_native"
     assert matrix["b12_technique_occurrence_separation"]["chameo_status"] == "exact"
-    assert matrix["b12_technique_occurrence_separation"]["h2kg_status"] == "not_expressible_without_extension"
+    assert matrix["b12_technique_occurrence_separation"]["h2kg_status"] == "not_supported_under_benchmark_mapping_rules"
+    assert matrix["b12_technique_occurrence_separation"]["h2kg_query_executed"] is False
+    assert matrix["b12_technique_occurrence_separation"]["chameo_query_executed"] is True
     assert matrix["b13_case_method_specificity"]["h2kg_status"] == "exact"
     assert matrix["b13_case_method_specificity"]["chameo_status"] == "partial"
+    assert matrix["b13_case_method_specificity"]["h2kg_assessment_mode"] == "native_vocabulary_coverage"
+    assert matrix["b13_case_method_specificity"]["chameo_assessment_mode"] == "native_vocabulary_coverage"
     assert matrix["b13_case_method_specificity"]["h2kg_matched"] == 8
     assert matrix["b13_case_method_specificity"]["chameo_matched"] == 3
     assert (output / "balanced_requirement_matrix.csv").exists()
@@ -141,7 +154,7 @@ def test_balanced_contract_drives_the_conclusion(native_build) -> None:
 def test_native_capability_gaps_are_reported_not_inserted(native_build) -> None:
     output, _, report = native_build
     capabilities = {row["capability"]: row for row in report["capability_matrix"]}
-    assert capabilities["Parameter-to-characteristic/value"]["chameo"] == "requires_extension"
+    assert capabilities["Parameter-to-characteristic/value"]["chameo"] == "native_pattern_not_identified_under_mapping_rules"
     assert capabilities["Result-to-property association"]["chameo"] == "declared_import_application_pattern"
     chameo = Graph().parse(output / "strict_chameo_semantic_graph.ttl", format="turtle")
     assert not set(chameo.triples((None, APP.describesCharacteristic, None)))
@@ -185,15 +198,27 @@ def test_pinned_sources_validation_and_local_material(native_build) -> None:
     assert (output / "benchmark_contract.json").exists()
     assert (output / "ontology_evidence_audit.json").exists()
     assert (output / "ontology_evidence_audit.md").exists()
-    assert (output / "extension_burden.csv").exists()
+    assert (output / "mapping_policy_constraints.csv").exists()
+    assert (output / "benchmark_population_audit.json").exists()
+    population = report["benchmark_population_audit"]
+    assert population["record_count"] == 8
+    assert population["method_family_count"] == 7
+    assert population["unique_profile_count"] == 7
+    assert population["measurement_settings"]["distinct_identities"] == 131
+    assert population["measurement_settings"]["normalized_value_rows"] == 107
+    assert population["reported_results"]["distinct_records"] == 24
+    assert population["reported_results"]["normalized_value_rows"] == 13
     assert (output / "comparison_report.html").exists()
     assert (output / "cases" / "h2kg" / "tem.ttl").exists()
     assert (output / "cases" / "chameo" / "tem.ttl").exists()
     assert (local / "methods_subsection.md").exists()
     assert (local / "results_subsection.md").exists()
+    assert (local / "manuscript_ready_benchmark_section.md").exists()
+    requirement_table = (local / "fair_13_requirement_table.md").read_text(encoding="utf-8")
+    assert "Native-pattern assessment; no SPARQL query executed" in requirement_table
     manuscript = (local / "methods_subsection.md").read_text(encoding="utf-8")
     assert "13 requirements" in manuscript.lower()
-    assert "fair" in manuscript.lower()
+    assert "constructed independently" in manuscript.lower()
     assert "no local class or relation was admitted" in manuscript
     assert "not an overall ontology ranking" not in manuscript.lower()
 
@@ -243,7 +268,11 @@ def test_web_workbench_exposes_plain_questions_results_and_rdf_evidence(native_b
 
     valued = next(item for item in package["requirements"] if item["id"] == "b03_valued_measurement_setting")
     assert valued["ontologies"]["h2kg"]["status"] == "exact"
-    assert valued["ontologies"]["chameo"]["status"] == "not_expressible_without_extension"
+    assert valued["assessment_type"] == "query_retrieval_and_native_pattern_assessment"
+    assert valued["ontologies"]["chameo"]["status"] == "not_supported_under_benchmark_mapping_rules"
+    assert valued["ontologies"]["h2kg"]["query_executed"] is True
+    assert valued["ontologies"]["chameo"]["query_executed"] is False
+    assert valued["ontologies"]["chameo"]["assessment_mode"] == "native_pattern_assessment"
     valued_evidence = json.loads(
         (output / valued["ontologies"]["h2kg"]["evidence_path"]).read_text(encoding="utf-8")
     )

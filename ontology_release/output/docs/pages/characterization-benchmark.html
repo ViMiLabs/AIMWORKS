@@ -50,13 +50,13 @@
   <div class="cb-intro-copy">
     <p class="eyebrow">Controlled ontology application benchmark</p>
     <h2>One source corpus. Two native semantic models.</h2>
-    <p>H₂KG and CHAMEO were mapped independently from the same sanitized eight-case characterization manifest. The frozen requirements, expected rows, and conclusion rules were fixed before ontology-specific SPARQL was executed. Neither ontology was modified, and no local semantic bridge was admitted to either scored graph.</p>
+    <p>H₂KG and CHAMEO were mapped independently from the same sanitized characterization manifest. It contains 8 source records across 7 method families and 7 unique profiles. The frozen requirements, expected rows, and conclusion rules were fixed before query retrieval or native-pattern assessment. Neither ontology was modified, and no local semantic bridge was admitted to either scored graph.</p>
     <div class="cb-actions"><a class="cb-button primary" href="#comparison-workbench">Inspect the evidence</a><a class="cb-button" href="characterization-knowledge-graph.html">Open the H₂KG application</a></div>
   </div>
   <div class="cb-scoreboard" aria-label="Benchmark headline results">
     <div><span>H₂KG exact</span><strong>12/13</strong><small>92.3%</small></div>
     <div><span>CHAMEO exact</span><strong>10/13</strong><small>76.9%</small></div>
-    <div><span>Expected rows</span><strong>501</strong><small>across eight cases</small></div>
+    <div><span>Expected rows</span><strong>501</strong><small>across eight source records</small></div>
     <div><span>Import closure</span><strong>25</strong><small>CHAMEO/EMMO modules</small></div>
   </div>
 </section>
@@ -64,22 +64,22 @@
 <section class="cb-protocol" aria-labelledby="cb-protocol-title">
   <div class="cb-section-head"><p class="eyebrow">Fairness controls</p><h2 id="cb-protocol-title">How the comparison was kept symmetric</h2></div>
   <div class="cb-protocol-grid">
-    <article><span>01</span><h3>Common source</h3><p>Both ABoxes begin with the same 1,635 eligible workbook fields and eight cases.</p></article>
+    <article><span>01</span><h3>Common source</h3><p>Both ABoxes begin with the same 1,635 eligible fields from eight records representing seven unique profiles.</p></article>
     <article><span>02</span><h3>Independent mapping</h3><p>Each graph uses its own ontology and declared imports; neither graph is translated from the other.</p></article>
-    <article><span>03</span><h3>Frozen expectations</h3><p>Thirteen lifecycle requirements produce 501 manifest-derived expected rows before querying.</p></article>
+    <article><span>03</span><h3>Mixed assessment</h3><p>Thirteen lifecycle requirements use query retrieval, native-pattern assessment, or native vocabulary coverage.</p></article>
     <article><span>04</span><h3>Auditable decision</h3><p>Five hashed rules must all pass before the complementarity conclusion is emitted.</p></article>
   </div>
 </section>
 
 <section class="cb-conclusion">
   <p class="eyebrow">Computed outcome</p>
-  <blockquote>The benchmark supports the conclusion that CHAMEO provides broad characterization methodology, while H₂KG complements it with hydrogen-domain specificity and direct valued-parameter and individually provenance-linked result patterns.</blockquote>
-  <p>This is a conclusive result for the frozen thirteen-requirement characterization knowledge-graph benchmark over the eight workbook-derived cases. Governance, maintainability, reasoning performance, usability, and scalability were not measured.</p>
+  <blockquote>For the selected characterization profiles, the benchmark supports a scoped complementarity conclusion: CHAMEO provides explicit characterization-methodology structures, while H₂KG provides broader dedicated profile-class coverage together with direct valued-parameter and individually provenance-linked result patterns.</blockquote>
+  <p>The 12/13 and 10/13 values are requirement-satisfaction rates under this frozen protocol, not general ontology-accuracy or quality scores. The benchmark covers eight source records representing seven unique profiles; governance, maintainability, reasoning performance, usability, and scalability were not measured.</p>
 </section>
 
 <section class="cb-workbench" id="comparison-workbench" data-package="../characterization_kg_comparison/comparison_query_workbench.json" data-artifact-root="../characterization_kg_comparison">
   <header class="cb-workbench-head">
-    <div><p class="eyebrow">SPARQL and RDF evidence</p><h2>Trace every benchmark outcome</h2><p>Select a plain-language requirement and ontology. The result table is the frozen RDFLib output; selecting a row renders only the RDF statements that support that answer.</p></div>
+    <div><p class="eyebrow">Query and structural evidence</p><h2>Trace every benchmark outcome</h2><p>Select a plain-language requirement and ontology. Query-based requirements show frozen RDFLib output; native-pattern and vocabulary assessments show their recorded evidence and rationale.</p></div>
     <div id="cb-load-status" class="cb-load-status" aria-live="polite">Loading benchmark package...</div>
   </header>
 
@@ -98,7 +98,7 @@
 
   <div class="cb-query-grid">
     <article class="cb-panel cb-query-panel">
-      <div class="cb-panel-head"><div><p class="eyebrow">Ontology-specific SPARQL</p><h3 id="cb-query-title">Validated query</h3></div><button id="cb-copy-query" type="button">Copy query</button></div>
+      <div class="cb-panel-head"><div><p class="eyebrow">Ontology-specific evidence</p><h3 id="cb-query-title">Query or assessment note</h3></div><button id="cb-copy-query" type="button">Copy evidence text</button></div>
       <textarea id="cb-query" spellcheck="false" aria-label="Ontology-specific SPARQL"></textarea>
       <p id="cb-rationale" class="cb-note"></p>
     </article>
@@ -107,6 +107,8 @@
       <a href="../characterization_kg_comparison/benchmark_contract.json" download>Frozen contract · JSON</a>
       <a href="../characterization_kg_comparison/balanced_requirement_matrix.csv" download>Requirement matrix · CSV</a>
       <a href="../characterization_kg_comparison/balanced_conclusion_rules.json" download>Conclusion rules · JSON</a>
+      <a href="../characterization_kg_comparison/benchmark_population_audit.json" download>Population audit · JSON</a>
+      <a href="../characterization_kg_comparison/benchmark_case_inventory.csv" download>Case inventory · CSV</a>
       <a href="../characterization_kg_comparison/ontology_evidence_audit.json" download>Ontology evidence audit</a>
       <a href="../characterization_kg_comparison/strict_h2kg_semantic_graph.ttl" download>H₂KG scored graph · Turtle</a>
       <a href="../characterization_kg_comparison/strict_chameo_semantic_graph.ttl" download>CHAMEO scored graph · Turtle</a>
@@ -132,7 +134,7 @@
     <div class="cb-legend"><span class="workflow">Workflow</span><span class="process">Process</span><span class="measurement">Measurement</span><span class="matter">Matter</span><span class="parameter">Parameter</span><span class="data">Data/result</span><span class="property">Property</span><span class="instrument">Instrument/software</span><span class="literal">Value/unit</span></div>
   </section>
 
-  <section class="cb-differences"><div><p class="eyebrow">Exact row-multiset comparison</p><h2>Missing and additional answers</h2></div><div id="cb-difference-summary"></div></section>
+  <section class="cb-differences"><div><p class="eyebrow">Normalized, deduplicated set comparison</p><h2>Missing and additional answers</h2></div><div id="cb-difference-summary"></div></section>
 </section>
 
   </main>
