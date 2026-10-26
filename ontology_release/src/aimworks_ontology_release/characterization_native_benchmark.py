@@ -60,7 +60,7 @@ from .utils import dump_json, ensure_dir, now_iso, write_text
 
 
 SCHEMA_VERSION = "h2kg-chameo-native-characterization-benchmark/v9"
-BENCHMARK_ARCHIVE_COMMIT = "5382ff03eb4200416770da2bb4b32317fea69ff6"
+BENCHMARK_ARCHIVE_COMMIT = "f21d461a003fddd5bb9cb29b8c4207b18675a307"
 H2KG_SEMANTIC_PREFIX = str(HGRAPH["semantic/"])
 CHAMEO_GRAPH_PREFIX = "https://example.org/aimworks/chameo-characterization/graph/semantic/"
 EMMO_PARAMETER = EMMO.EMMO_d1d436e7_72fc_49cd_863b_7bfb4ba5276a

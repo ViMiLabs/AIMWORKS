@@ -244,7 +244,7 @@ def test_pinned_sources_validation_and_local_material(native_build) -> None:
     assert "explicit decision criteria" in complete_manuscript
     assert "native class coverage at the predefined profile granularity" in complete_manuscript
     assert "must be cited" not in complete_manuscript
-    assert "5382ff03eb4200416770da2bb4b32317fea69ff6" in complete_manuscript + integration
+    assert "f21d461a003fddd5bb9cb29b8c4207b18675a307" in complete_manuscript + integration
 
     result_files = list((output / "balanced_results").rglob("*.json"))
     assert result_files
