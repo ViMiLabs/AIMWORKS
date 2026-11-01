@@ -1,22 +1,43 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix h2kg: <https://w3id.org/h2kg/hydrogen-ontology#> .
+@prefix ns1: <http://purl.obolibrary.org/obo/> .
+@prefix ns2: <http://purl.org/ontology/bibo/> .
+@prefix ns3: <https://w3id.org/mod#> .
+@prefix ns4: <http://www.loc.gov/premis/rdf/v3/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix profile: <https://w3id.org/h2kg/hydrogen-ontology/profile/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://w3id.org/h2kg/hydrogen-ontology> a owl:Ontology ;
-    dcterms:contributor "Institute of Energy Technologies (IET), Theory and Computation of Energy Materials (IET-3), Forschungszentrum Juelich GmbH, 52428 Juelich, Germany" ;
-    dcterms:creator "Electrochemistry Research Group" ;
-    dcterms:description "A modular ontology for materials, components, processes, measurements, information entities, characteristics, and provenance in hydrogen electrochemical research."@en ;
+    ns1:IAO_0000700 h2kg:Agent,
+        h2kg:Characteristic,
+        h2kg:InformationEntity,
+        h2kg:Matter,
+        h2kg:Process ;
+    dcterms:abstract "Domain-specific ontology for hydrogen electrochemical systems, materials, manufacturing, measurements, computational models, scientific characteristics, datasets, quantity values, and provenance. H2KG separates intrinsic scientific classification from contextual workflow use and publishes external semantic alignments separately."@en ;
+    dcterms:bibliographicCitation "Kohandani, M.; Eslamibidgoli, M. J.; Malek, K.; Eikerling, M.; Forschungszentrum Jülich GmbH (2026). H₂KG Domain Ontology for Hydrogen Electrochemical Systems, version 2.3.1."@en ;
+    dcterms:contributor <https://orcid.org/0000-0002-0764-8948>,
+        <https://orcid.org/0000-0002-5057-2993>,
+        <https://orcid.org/0009-0005-5173-202X>,
+        <https://www.fz-juelich.de/profile/malek_k> ;
+    dcterms:created "2026-03-19"^^xsd:date ;
+    dcterms:creator <https://ror.org/02nv7yv05> ;
+    dcterms:description "Domain-specific ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance."@en ;
+    dcterms:language <http://id.loc.gov/vocabulary/iso639-2/eng> ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    dcterms:publisher "Forschungszentrum Juelich GmbH" ;
+    dcterms:modified "2026-11-01"^^xsd:date ;
+    dcterms:publisher <https://ror.org/02nv7yv05> ;
     dcterms:references <http://purl.org/holy/ns#>,
         <https://w3id.org/emmo>,
         <https://w3id.org/emmo/domain/characterisation-methodology/chameo#>,
@@ -26,7 +47,18 @@
         <https://w3id.org/emmo/domain/manufacturing#>,
         <https://w3id.org/emmo/domain/microscopy#>,
         <https://w3id.org/emmo/domain/pemfc> ;
+    dcterms:subject h2kg:ElectrochemicalSystem,
+        h2kg:ElectrolyzerSystem,
+        h2kg:FuelCellSystem ;
     dcterms:title "H₂KG Domain Ontology for Hydrogen Electrochemical Systems"@en ;
+    ns2:status "active"@en ;
+    vann:example <https://vimilabs.github.io/AIMWORKS/pages/characterization-knowledge-graph.html> ;
+    vann:preferredNamespacePrefix "h2kg" ;
+    vann:preferredNamespaceUri h2kg: ;
+    doap:audience "Researchers, data stewards, ontology engineers, and software developers working with hydrogen electrochemical research data."@en ;
+    doap:bug-database <https://github.com/ViMiLabs/AIMWORKS/issues> ;
+    doap:repository <https://github.com/ViMiLabs/AIMWORKS> ;
+    ns4:documentation <https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html> ;
     rdfs:seeAlso <http://purl.org/holy/ns#BipolarPlate>,
         <http://purl.org/holy/ns#CatalystLayer>,
         <http://purl.org/holy/ns#FuelCellStack>,
@@ -57,9 +89,17 @@
         <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
     owl:imports <http://qudt.org/2.1/schema/qudt>,
         <https://www.w3.org/ns/prov-o> ;
-    owl:versionIRI <https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0> ;
-    owl:versionInfo "2.3.0" ;
-    foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> .
+    owl:priorVersion <https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0> ;
+    owl:versionIRI <https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1> ;
+    owl:versionInfo "2.3.1" ;
+    dcat:distribution <https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld>,
+        <https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl> ;
+    foaf:homepage <https://www.fz-juelich.de/en/iet/iet-3/divisions-1/artificial-material-intelligence> ;
+    schema:funder <https://doi.org/10.13039/501100000780> ;
+    schema:funding <https://doi.org/10.3030/101135537> ;
+    schema:inLanguage <http://id.loc.gov/vocabulary/iso639-2/eng> ;
+    ns3:hasFormalityLevel "OWL 2"@en ;
+    ns3:hasSyntax <http://www.w3.org/ns/formats/Turtle> .
 
 h2kg:AFMScanSpeed a owl:Class ;
     rdfs:label "AFM Scan Speed"@en ;
@@ -1976,22 +2016,6 @@ h2kg:Electrolyte a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
 
-h2kg:ElectrolyzerSystem a owl:Class ;
-    rdfs:label "Electrolyzer system"@en ;
-    dcterms:description "An electrochemical system that uses electrical energy to drive a non-spontaneous reaction that produces hydrogen or another chemical product."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:ElectrochemicalSystem ;
-    skos:definition "An electrochemical system that uses electrical energy to drive a non-spontaneous reaction that produces hydrogen or another chemical product."@en ;
-    skos:prefLabel "Electrolyzer system"@en ;
-    h2kg:canonicalSemanticRole "Matter" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "pemwe" ;
-    h2kg:taxonomyTopBranch "Matter" ;
-    h2kg:technologyApplicability "pemwe" .
-
 h2kg:ElectrospinningInkFlowRate a owl:Class ;
     rdfs:label "Electrospinning Ink Flow Rate"@en ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
@@ -3571,12 +3595,11 @@ h2kg:MATLABSoftware a owl:Class ;
 
 h2kg:MEAPolarization a owl:Class ;
     rdfs:label "MEA Polarization"@en ;
-    dcterms:description "Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement."@en ;
+    dcterms:description "An electrochemical measurement performed on a membrane electrode assembly to determine the relation between cell voltage and current density under specified operating conditions."@en ;
     dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
     rdfs:seeAlso h2kg:FuelCellPolarizationMeasurement ;
     rdfs:subClassOf h2kg:ElectrochemicalMeasurement ;
-    owl:deprecated "true" ;
-    skos:definition "Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement."@en ;
+    skos:definition "An electrochemical measurement performed on a membrane electrode assembly to determine the relation between cell voltage and current density under specified operating conditions."@en ;
     skos:prefLabel "MEA Polarization"@en ;
     h2kg:canonicalSemanticRole "Measurement" ;
     h2kg:correctionAction "retain" ;
@@ -7139,13 +7162,15 @@ h2kg:ZrB2VolumePercent a owl:Class ;
 
 h2kg:appliesToProfile a owl:AnnotationProperty ;
     rdfs:label "appliesToProfile"@en ;
-    dcterms:description "An annotation property stating which H2KG application profile or profiles explicitly include a term in their published module."@en .
+    dcterms:description "An annotation property stating which H2KG application profile or profiles explicitly include a term in their published module."@en ;
+    skos:definition "An annotation property stating which H2KG application profile or profiles explicitly include a term in their published module."@en .
 
 h2kg:atCurrentDensity a owl:ObjectProperty ;
     rdfs:label "atCurrentDensity"@en ;
     dcterms:description "An object property relating a data point to the current-density value at which it is reported."@en ;
     rdfs:domain h2kg:DataPoint ;
-    rdfs:range qudt:QuantityValue .
+    rdfs:range qudt:QuantityValue ;
+    skos:definition "An object property relating a data point to the current-density value at which it is reported."@en .
 
 h2kg:canonicalSemanticRole a owl:AnnotationProperty ;
     rdfs:label "canonical semantic role"@en ;
@@ -7163,7 +7188,8 @@ h2kg:fromMeasurement a owl:ObjectProperty ;
     rdfs:label "fromMeasurement"@en ;
     dcterms:description "An object property relating a data point to the measurement from which it was generated."@en ;
     rdfs:domain h2kg:DataPoint ;
-    rdfs:range h2kg:Measurement .
+    rdfs:range h2kg:Measurement ;
+    skos:definition "An object property relating a data point to the measurement from which it was generated."@en .
 
 h2kg:governanceStatus a owl:AnnotationProperty ;
     rdfs:label "governance status"@en ;
@@ -7172,12 +7198,14 @@ h2kg:governanceStatus a owl:AnnotationProperty ;
 h2kg:hasIdentifier a owl:DatatypeProperty ;
     rdfs:label "hasIdentifier"@en ;
     dcterms:description "A datatype property relating a resource to a literal identifier used to distinguish or reference it."@en ;
-    rdfs:range rdfs:Literal .
+    rdfs:range rdfs:Literal ;
+    skos:definition "A datatype property relating a resource to a literal identifier used to distinguish or reference it."@en .
 
 h2kg:hasMetadata a owl:ObjectProperty ;
     rdfs:label "hasMetadata"@en ;
     dcterms:description "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."@en ;
-    rdfs:range h2kg:Metadata .
+    rdfs:range h2kg:Metadata ;
+    skos:definition "An object property relating a resource to metadata that describes its identity, provenance, structure, or contextual information."@en .
 
 h2kg:isCharacteristicOf a owl:ObjectProperty ;
     rdfs:label "is characteristic of"@en ;
@@ -7209,7 +7237,8 @@ h2kg:referenceElectrode a owl:ObjectProperty ;
     dcterms:description "An object property relating an electrochemical measurement setup or process to the reference electrode it uses."@en ;
     dcterms:isReplacedBy h2kg:hasReferenceScale,
         h2kg:usesReferenceElectrode ;
-    owl:deprecated true .
+    owl:deprecated true ;
+    skos:definition "An object property relating an electrochemical measurement setup or process to the reference electrode it uses."@en .
 
 h2kg:sPPB a owl:Class ;
     rdfs:label "s PPB"@en ;
@@ -16971,8 +17000,17 @@ profile:Shape_pH a sh:NodeShape ;
 <https://w3id.org/h2kg/hydrogen-ontology/profiles> a owl:Ontology ;
     dcterms:description "Value-free SHACL profiles that represent contextual workflow use without changing the intrinsic taxonomy of H2KG concepts."@en ;
     dcterms:title "H2KG workflow-use profiles"@en ;
-    owl:imports <https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0> ;
-    owl:versionInfo "2.3.0" .
+    owl:imports <https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1> ;
+    owl:versionInfo "2.3.1" .
+
+<https://orcid.org/0000-0002-0764-8948> a foaf:Person ;
+    rdfs:label "Michael Eikerling"@en .
+
+<https://orcid.org/0000-0002-5057-2993> a foaf:Person ;
+    rdfs:label "Mohammad J. Eslamibidgoli"@en .
+
+<https://orcid.org/0009-0005-5173-202X> a foaf:Person ;
+    rdfs:label "Marjan Kohandani"@en .
 
 h2kg:AFMInstrument a owl:Class ;
     rdfs:label "AFM Instrument"@en ;
@@ -20271,6 +20309,22 @@ h2kg:ElectrolessCopperPlatingProcess a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Process" .
+
+h2kg:ElectrolyzerSystem a owl:Class ;
+    rdfs:label "Electrolyzer system"@en ;
+    dcterms:description "An electrochemical system that uses electrical energy to drive a non-spontaneous reaction that produces hydrogen or another chemical product."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:ElectrochemicalSystem ;
+    skos:definition "An electrochemical system that uses electrical energy to drive a non-spontaneous reaction that produces hydrogen or another chemical product."@en ;
+    skos:prefLabel "Electrolyzer system"@en ;
+    h2kg:canonicalSemanticRole "Matter" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "pemwe" ;
+    h2kg:taxonomyTopBranch "Matter" ;
+    h2kg:technologyApplicability "pemwe" .
 
 h2kg:ElectronBeamEvaporationDeposition a owl:Class ;
     rdfs:label "Electron Beam Evaporation Deposition"@en ;
@@ -69164,6 +69218,22 @@ profile:Record_fdf91db92b276767 a sh:PropertyShape ;
     sh:path h2kg:hasParameter ;
     sh:severity sh:Info .
 
+<https://www.fz-juelich.de/profile/malek_k> a foaf:Person ;
+    rdfs:label "Kourosh Malek"@en .
+
+<https://ror.org/02nv7yv05> a foaf:Organization ;
+    rdfs:label "Forschungszentrum Jülich GmbH"@en .
+
+<https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld> a dcat:Distribution ;
+    dcterms:title "H2KG 2.3.1 JSON-LD distribution"@en ;
+    dcat:downloadURL <https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> .
+
+<https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl> a dcat:Distribution ;
+    dcterms:title "H2KG 2.3.1 Turtle distribution"@en ;
+    dcat:downloadURL <https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
+
 h2kg:ACInputAmplitude a owl:Class ;
     rdfs:label "AC Input Amplitude"@en ;
     dcterms:description "Magnitude of the sinusoidal electrical excitation applied when acquiring an impedance-based strain-sensing signal, with the excitation quantity identified as voltage or current and the amplitude convention identified as peak, peak-to-peak, or root-mean-square."@en ;
@@ -71091,21 +71161,6 @@ h2kg:ChannelToSpacerAreaRatio a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
 
-h2kg:Characteristic a owl:Class ;
-    rdfs:label "Characteristic"@en ;
-    dcterms:description "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Entity ;
-    skos:definition "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
-    skos:prefLabel "Characteristic"@en ;
-    h2kg:canonicalSemanticRole "Characteristic" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Characteristic" .
-
 h2kg:ChargeStorageCapacity a owl:Class ;
     rdfs:label "Charge Storage Capacity"@en ;
     dcterms:description "A property denoting integrated charge per area obtained from cyclic voltammograms; used as indicator of electrode charge storage and percolation onset."@en ;
@@ -72882,22 +72937,6 @@ h2kg:FrequencyRange a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
-
-h2kg:FuelCellSystem a owl:Class ;
-    rdfs:label "Fuel-cell system"@en ;
-    dcterms:description "An electrochemical system that converts the chemical energy of a continuously supplied fuel and oxidant into electrical energy."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:ElectrochemicalSystem ;
-    skos:definition "An electrochemical system that converts the chemical energy of a continuously supplied fuel and oxidant into electrical energy."@en ;
-    skos:prefLabel "Fuel-cell system"@en ;
-    h2kg:canonicalSemanticRole "Matter" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "pemfc" ;
-    h2kg:taxonomyTopBranch "Matter" ;
-    h2kg:technologyApplicability "pemfc" .
 
 h2kg:FumedSilica a owl:Class ;
     rdfs:label "Fumed Silica"@en ;
@@ -80288,21 +80327,6 @@ h2kg:ActivatedCarbon a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
 
-h2kg:Agent a owl:Class ;
-    rdfs:label "Agent"@en ;
-    dcterms:description "An entity that bears responsibility for an activity, decision, contribution, or generated resource."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Agent ;
-    skos:definition "An entity that bears responsibility for an activity, decision, contribution, or generated resource."@en ;
-    skos:prefLabel "Agent"@en ;
-    h2kg:canonicalSemanticRole "Agent" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Agent" .
-
 h2kg:AlcoholMoleFractionInSolventMixture a owl:Class ;
     rdfs:label "Alcohol Mole Fraction In Solvent Mixture"@en ;
     dcterms:description "A composition characteristic expressing the stated fractional composition identified as Alcohol Mole Fraction In Solvent Mixture."@en ;
@@ -80541,6 +80565,21 @@ h2kg:CentrifugationTime a owl:Class ;
     h2kg:canonicalSemanticRole "Characteristic" ;
     h2kg:correctionAction "retain" ;
     h2kg:definitionStatus "curated" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Characteristic" .
+
+h2kg:Characteristic a owl:Class ;
+    rdfs:label "Characteristic"@en ;
+    dcterms:description "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Entity ;
+    skos:definition "A dependent feature that can characterize a material, component, process, dataset, or system."@en ;
+    skos:prefLabel "Characteristic"@en ;
+    h2kg:canonicalSemanticRole "Characteristic" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
     h2kg:governanceStatus "approved" ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
@@ -80822,21 +80861,6 @@ h2kg:ElectricalResistivity a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
 
-h2kg:ElectrochemicalSystem a owl:Class ;
-    rdfs:label "Electrochemical system"@en ;
-    dcterms:description "A device in which electrochemical reactions and charge transport are arranged to convert, store, produce, or consume energy or chemical species."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf h2kg:Device ;
-    skos:definition "A device in which electrochemical reactions and charge transport are arranged to convert, store, produce, or consume energy or chemical species."@en ;
-    skos:prefLabel "Electrochemical system"@en ;
-    h2kg:canonicalSemanticRole "Matter" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Matter" .
-
 h2kg:ElectronBeamEnergy a owl:Class ;
     rdfs:label "Electron Beam Energy"@en ;
     dcterms:description "An energy characteristic specifying the energy associated with electron beam."@en ;
@@ -81094,6 +81118,22 @@ h2kg:FuelCellPolarizationMeasurement a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "pemfc" ;
     h2kg:taxonomyTopBranch "Process" ;
+    h2kg:technologyApplicability "pemfc" .
+
+h2kg:FuelCellSystem a owl:Class ;
+    rdfs:label "Fuel-cell system"@en ;
+    dcterms:description "An electrochemical system that converts the chemical energy of a continuously supplied fuel and oxidant into electrical energy."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:ElectrochemicalSystem ;
+    skos:definition "An electrochemical system that converts the chemical energy of a continuously supplied fuel and oxidant into electrical energy."@en ;
+    skos:prefLabel "Fuel-cell system"@en ;
+    h2kg:canonicalSemanticRole "Matter" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "pemfc" ;
+    h2kg:taxonomyTopBranch "Matter" ;
     h2kg:technologyApplicability "pemfc" .
 
 h2kg:GasDiffusionLayerPorosity a owl:Class ;
@@ -82927,7 +82967,8 @@ h2kg:hasInputData a owl:ObjectProperty ;
     dcterms:description "An object property relating a process or measurement to data used as an input."@en ;
     rdfs:domain h2kg:Process ;
     rdfs:range h2kg:Data ;
-    rdfs:subPropertyOf prov:used .
+    rdfs:subPropertyOf prov:used ;
+    skos:definition "An object property relating a process or measurement to data used as an input."@en .
 
 h2kg:ACAmplitude a owl:Class ;
     rdfs:label "ACAmplitude"@en ;
@@ -82980,6 +83021,21 @@ h2kg:AcousticFrequency a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
+
+h2kg:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    dcterms:description "An entity that bears responsibility for an activity, decision, contribution, or generated resource."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Agent ;
+    skos:definition "An entity that bears responsibility for an activity, decision, contribution, or generated resource."@en ;
+    skos:prefLabel "Agent"@en ;
+    h2kg:canonicalSemanticRole "Agent" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Agent" .
 
 h2kg:AirBreathingCathode a owl:Class ;
     rdfs:label "Air Breathing Cathode"@en ;
@@ -83301,6 +83357,21 @@ h2kg:EISPerturbationAmplitude a owl:Class ;
     h2kg:migrationAction "apply" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
+
+h2kg:ElectrochemicalSystem a owl:Class ;
+    rdfs:label "Electrochemical system"@en ;
+    dcterms:description "A device in which electrochemical reactions and charge transport are arranged to convert, store, produce, or consume energy or chemical species."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf h2kg:Device ;
+    skos:definition "A device in which electrochemical reactions and charge transport are arranged to convert, store, produce, or consume energy or chemical species."@en ;
+    skos:prefLabel "Electrochemical system"@en ;
+    h2kg:canonicalSemanticRole "Matter" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Matter" .
 
 h2kg:ElectrolytePH a owl:Class ;
     rdfs:label "Electrolyte PH"@en ;
@@ -85601,7 +85672,10 @@ h2kg:ZetaPotential a owl:Class ;
 h2kg:isSubProcessOf a owl:ObjectProperty ;
     rdfs:label "isSubProcessOf"@en ;
     dcterms:description "An object property relating a subprocess to the larger process of which it forms a part."@en ;
-    owl:inverseOf h2kg:hasSubProcess .
+    rdfs:domain h2kg:Process ;
+    rdfs:range h2kg:Process ;
+    owl:inverseOf h2kg:hasSubProcess ;
+    skos:definition "An object property relating a subprocess to the larger process of which it forms a part."@en .
 
 h2kg:nButylAcetate a owl:Class ;
     rdfs:label "n Butyl Acetate"@en ;
@@ -86062,21 +86136,6 @@ h2kg:MassTransportResistance a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
-
-h2kg:Matter a owl:Class ;
-    rdfs:label "Matter"@en ;
-    dcterms:description "A physical entity that can participate in a hydrogen-electrochemical process, measurement, or system configuration."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Entity ;
-    skos:definition "A physical entity that can participate in a hydrogen-electrochemical process, measurement, or system configuration."@en ;
-    skos:prefLabel "Matter"@en ;
-    h2kg:canonicalSemanticRole "Matter" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Matter" .
 
 h2kg:MeasurementGap a owl:Class ;
     rdfs:label "Measurement Gap"@en ;
@@ -86667,6 +86726,21 @@ h2kg:LaserWavelength a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
 
+h2kg:Matter a owl:Class ;
+    rdfs:label "Matter"@en ;
+    dcterms:description "A physical entity that can participate in a hydrogen-electrochemical process, measurement, or system configuration."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Entity ;
+    skos:definition "A physical entity that can participate in a hydrogen-electrochemical process, measurement, or system configuration."@en ;
+    skos:prefLabel "Matter"@en ;
+    h2kg:canonicalSemanticRole "Matter" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Matter" .
+
 h2kg:Nitrogen a owl:Class ;
     rdfs:label "Nitrogen"@en ;
     dcterms:description "A material entity corresponding to a nitrogen and used as an input in MEAPolarization, Cyclic Voltammetry, and Nitrogen Physisorption Measurement."@en ;
@@ -86973,21 +87047,6 @@ h2kg:ImagingInstrument a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
-
-h2kg:InformationEntity a owl:Class ;
-    rdfs:label "Information entity"@en ;
-    dcterms:description "An entity whose identity is determined by information content that can be recorded, communicated, or processed."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Entity ;
-    skos:definition "An entity whose identity is determined by information content that can be recorded, communicated, or processed."@en ;
-    skos:prefLabel "Information entity"@en ;
-    h2kg:canonicalSemanticRole "Class" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "InformationEntity" .
 
 h2kg:LowerPotentialLimit a owl:Class ;
     rdfs:label "Lower Potential Limit"@en ;
@@ -87311,6 +87370,21 @@ h2kg:FluidHandlingInstrument a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
+
+h2kg:InformationEntity a owl:Class ;
+    rdfs:label "Information entity"@en ;
+    dcterms:description "An entity whose identity is determined by information content that can be recorded, communicated, or processed."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Entity ;
+    skos:definition "An entity whose identity is determined by information content that can be recorded, communicated, or processed."@en ;
+    skos:prefLabel "Information entity"@en ;
+    h2kg:canonicalSemanticRole "Class" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "InformationEntity" .
 
 h2kg:LimitingCurrentDensity a owl:Class ;
     rdfs:label "Limiting Current Density"@en ;
@@ -87748,7 +87822,10 @@ h2kg:Viscosity a owl:Class ;
 
 h2kg:hasSubProcess a owl:ObjectProperty ;
     rdfs:label "hasSubProcess"@en ;
-    dcterms:description "An object property relating a process to a subprocess that forms part of its overall execution."@en .
+    dcterms:description "An object property relating a process to a subprocess that forms part of its overall execution."@en ;
+    rdfs:domain h2kg:Process ;
+    rdfs:range h2kg:Process ;
+    skos:definition "An object property relating a process to a subprocess that forms part of its overall execution."@en .
 
 h2kg:AlcoholMassFractionInSolventMixture a owl:Class ;
     rdfs:label "Alcohol Mass Fraction In Solvent Mixture"@en ;
@@ -88109,21 +88186,6 @@ h2kg:PressureCharacteristic a owl:Class ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Characteristic" .
 
-h2kg:Process a owl:Class ;
-    rdfs:label "Process"@en ;
-    dcterms:description "An activity or temporal development in which matter or information is transformed, measured, analyzed, or used."@en ;
-    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
-    rdfs:subClassOf prov:Activity ;
-    skos:definition "An activity or temporal development in which matter or information is transformed, measured, analyzed, or used."@en ;
-    skos:prefLabel "Process"@en ;
-    h2kg:canonicalSemanticRole "Process" ;
-    h2kg:correctionAction "retain" ;
-    h2kg:definitionStatus "structural" ;
-    h2kg:governanceStatus "approved" ;
-    h2kg:migrationAction "retain" ;
-    h2kg:taxonomyModule "core" ;
-    h2kg:taxonomyTopBranch "Process" .
-
 h2kg:Property a owl:Class ;
     rdfs:label "Property"@en ;
     dcterms:description "A characteristic that can be measured, computed, specified, or otherwise attributed to an entity."@en ;
@@ -88190,7 +88252,8 @@ h2kg:SpectroscopyMeasurement a owl:Class ;
 h2kg:isPartOf a owl:ObjectProperty ;
     rdfs:label "isPartOf"@en ;
     dcterms:description "An object property relating an entity or process to a larger entity or process of which it forms a part."@en ;
-    owl:inverseOf h2kg:hasPart .
+    owl:inverseOf h2kg:hasPart ;
+    skos:definition "An object property relating an entity or process to a larger entity or process of which it forms a part."@en .
 
 h2kg:CurrentDensity a owl:Class ;
     rdfs:label "Current Density"@en ;
@@ -88456,6 +88519,21 @@ h2kg:Dispersion a owl:Class ;
     h2kg:migrationAction "retain" ;
     h2kg:taxonomyModule "core" ;
     h2kg:taxonomyTopBranch "Matter" .
+
+h2kg:Process a owl:Class ;
+    rdfs:label "Process"@en ;
+    dcterms:description "An activity or temporal development in which matter or information is transformed, measured, analyzed, or used."@en ;
+    dcterms:provenance "Migrated from the asserted H2KG v1 source through the versioned taxonomy registry."@en ;
+    rdfs:subClassOf prov:Activity ;
+    skos:definition "An activity or temporal development in which matter or information is transformed, measured, analyzed, or used."@en ;
+    skos:prefLabel "Process"@en ;
+    h2kg:canonicalSemanticRole "Process" ;
+    h2kg:correctionAction "retain" ;
+    h2kg:definitionStatus "structural" ;
+    h2kg:governanceStatus "approved" ;
+    h2kg:migrationAction "retain" ;
+    h2kg:taxonomyModule "core" ;
+    h2kg:taxonomyTopBranch "Process" .
 
 h2kg:CatalystLayerThickness a owl:Class ;
     rdfs:label "Catalyst Layer Thickness"@en ;
@@ -88760,7 +88838,8 @@ h2kg:CatalystMaterial a owl:Class ;
 h2kg:normalizedTo a owl:ObjectProperty ;
     rdfs:label "normalizedTo"@en ;
     dcterms:description "An object property relating a property or result to the basis used for its normalization."@en ;
-    rdfs:range h2kg:NormalizationBasis .
+    rdfs:range h2kg:NormalizationBasis ;
+    skos:definition "An object property relating a property or result to the basis used for its normalization."@en .
 
 h2kg:CatalystInk a owl:Class ;
     rdfs:label "Catalyst Ink"@en ;
@@ -88797,7 +88876,8 @@ h2kg:Dataset a owl:Class ;
 
 h2kg:hasPart a owl:ObjectProperty ;
     rdfs:label "hasPart"@en ;
-    dcterms:description "An object property relating an entity or process to a constituent part."@en .
+    dcterms:description "An object property relating an entity or process to a constituent part."@en ;
+    skos:definition "An object property relating an entity or process to a constituent part."@en .
 
 h2kg:PerformanceCharacteristic a owl:Class ;
     rdfs:label "Performance characteristic"@en ;
@@ -88961,14 +89041,16 @@ h2kg:hasOutputData a owl:ObjectProperty ;
     dcterms:description "An object property relating a measurement or process to data generated as an output."@en ;
     rdfs:domain h2kg:Process ;
     rdfs:range h2kg:Data ;
-    rdfs:subPropertyOf prov:generated .
+    rdfs:subPropertyOf prov:generated ;
+    skos:definition "An object property relating a measurement or process to data generated as an output."@en .
 
 h2kg:hasOutputMaterial a owl:ObjectProperty ;
     rdfs:label "hasOutputMaterial"@en ;
     dcterms:description "An object property relating a process to a material entity produced as an output."@en ;
     rdfs:domain h2kg:Process ;
     rdfs:range h2kg:Matter ;
-    rdfs:subPropertyOf prov:generated .
+    rdfs:subPropertyOf prov:generated ;
+    skos:definition "An object property relating a process to a material entity produced as an output."@en .
 
 h2kg:Parameter a owl:Class ;
     rdfs:label "Parameter"@en ;
@@ -89037,20 +89119,23 @@ h2kg:usesInstrument a owl:ObjectProperty ;
     dcterms:description "An object property relating a process or measurement to an instrument used to carry it out or support it."@en ;
     rdfs:domain h2kg:Process ;
     rdfs:range h2kg:Instrument ;
-    rdfs:subPropertyOf prov:used .
+    rdfs:subPropertyOf prov:used ;
+    skos:definition "An object property relating a process or measurement to an instrument used to carry it out or support it."@en .
 
 h2kg:hasInputMaterial a owl:ObjectProperty ;
     rdfs:label "hasInputMaterial"@en ;
     dcterms:description "An object property relating a process or measurement to a material entity that serves as an input."@en ;
     rdfs:domain h2kg:Process ;
     rdfs:range h2kg:Matter ;
-    rdfs:subPropertyOf prov:used .
+    rdfs:subPropertyOf prov:used ;
+    skos:definition "An object property relating a process or measurement to a material entity that serves as an input."@en .
 
 h2kg:measures a owl:ObjectProperty ;
     rdfs:label "measures"@en ;
     dcterms:description "An object property relating a measurement to a property that it determines."@en ;
     rdfs:domain h2kg:Measurement ;
-    rdfs:range h2kg:Property .
+    rdfs:range h2kg:Property ;
+    skos:definition "An object property relating a measurement to a property that it determines."@en .
 
 h2kg:hasQuantityValue a owl:ObjectProperty ;
     rdfs:label "hasQuantityValue"@en ;

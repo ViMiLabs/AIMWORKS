@@ -31,7 +31,9 @@ from .split import split_ontology
 from .taxonomy import build_taxonomy_release
 from .tib_benchmark import build_tib_benchmark_package
 from .tib_collections import apply_harmonization_registry, build_collection_benchmark
+from .tib_submission import build_tib_submission_package, write_release_citation_metadata
 from .validate import validate_release
+from .w3id import generate_w3id_artifacts
 
 
 def main() -> None:
@@ -127,6 +129,11 @@ def main() -> None:
         default="output/benchmarks/tib_collections/automatic_harmonization_registry.json",
     )
     tib_harmonize.add_argument("--output-registry", default="config/tib_auto_harmonization.json")
+    tib_submission = subparsers.add_parser("tib-submission")
+    tib_submission.add_argument("--taxonomy-ttl", default="output/ontology/h2kg-v2-taxonomy.ttl")
+    tib_submission.add_argument("--taxonomy-jsonld", default="output/ontology/h2kg-v2-taxonomy.jsonld")
+    tib_submission.add_argument("--check-live", action="store_true")
+    tib_submission.add_argument("--require-live", action="store_true")
     review_package = subparsers.add_parser("evaluation-review-package")
     review_package.add_argument("--output-root", default="output")
     review_package.add_argument("--itc-registry", default="input/itc_curated_interface.json")
@@ -274,6 +281,23 @@ def main() -> None:
         if not output_registry.is_absolute():
             output_registry = project_root / output_registry
         result = apply_harmonization_registry(benchmark_registry, output_registry)
+    elif args.command == "tib-submission":
+        taxonomy_ttl = Path(args.taxonomy_ttl)
+        taxonomy_jsonld = Path(args.taxonomy_jsonld)
+        if not taxonomy_ttl.is_absolute():
+            taxonomy_ttl = project_root / taxonomy_ttl
+        if not taxonomy_jsonld.is_absolute():
+            taxonomy_jsonld = project_root / taxonomy_jsonld
+        generate_w3id_artifacts(output / "w3id", config_dir)
+        write_release_citation_metadata(project_root, config_dir)
+        result = build_tib_submission_package(
+            taxonomy_ttl,
+            taxonomy_jsonld,
+            output,
+            config_dir,
+            check_live_urls=args.check_live or args.require_live,
+            require_live_urls=args.require_live,
+        )
     elif args.command == "repair-doc-prefixes":
         docs_root = Path(args.docs_root)
         if not docs_root.is_absolute():

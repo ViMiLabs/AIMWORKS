@@ -62,7 +62,7 @@ def test_manifest_is_sanitized_complete_and_fingerprinted() -> None:
 
 def test_build_preserves_every_eligible_field_and_serialization_parity(characterization_build) -> None:
     target, report = characterization_build
-    assert report["ontology_version"] == "2.3.0"
+    assert report["ontology_version"] == "2.3.1"
     assert report["ontology_modified"] is False
     assert report["case_count"] == 8
     assert report["represented_field_count"] == report["eligible_field_count"] == 1635

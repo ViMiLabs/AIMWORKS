@@ -169,7 +169,7 @@ def test_full_taxonomy_is_complete_and_preserves_stable_anchors(tmp_path: Path) 
     assert (_iri("XRayPhotoelectronSpectrometer"), DCTERMS.isReplacedBy, _iri("XPSInstrument")) in graph
 
     registry = json.loads(Path(result["registry"]).read_text(encoding="utf-8"))
-    assert registry["version"] == "2.3.0"
+    assert registry["version"] == "2.3.1"
     assert registry["correction_decision_counts"] == {
         "parent": 156,
         "definition": 470,

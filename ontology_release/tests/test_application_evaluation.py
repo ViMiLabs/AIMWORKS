@@ -65,7 +65,11 @@ def test_application_evaluation_is_reproducible_and_traceable(tmp_path: Path) ->
     assert strata["decode_concept"] == 573
     assert strata["decode_edge"] == 4463
     assert strata["h2kg_taxonomy_sample"] == 150
-    assert result["automated_consistency"]["check_count"] == 5486
+    alignment_registry = json.loads(
+        (output / "ontology" / "external_alignment_registry.json").read_text(encoding="utf-8")
+    )
+    assert strata["asserted_external_mapping"] == len(alignment_registry["mappings"])
+    assert result["automated_consistency"]["check_count"] == sum(strata.values())
     assert result["retrieval"]["rq1_target_input_concept_count"] == 24
     assert result["retrieval"]["rq1_common_population_output_occurrence_count"] == 917
     assert result["retrieval"]["rq1_semantic_result_count"] == 3

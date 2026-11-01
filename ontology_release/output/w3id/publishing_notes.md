@@ -8,9 +8,10 @@ This route update does not require a new W3ID registration.
 
 ## Resolver targets
 
-- Shared H2KG HTML target: `https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html`
-- Shared H2KG Turtle target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.ttl`
-- Shared H2KG JSON-LD target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.jsonld`
+- Canonical H2KG HTML target: `https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html`
+- Canonical H2KG Turtle target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
+- Canonical H2KG JSON-LD target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`
+- Shared-core module Turtle target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.ttl`
 - PEMFC HTML target: `https://vimilabs.github.io/AIMWORKS/pemfc/hydrogen-ontology.html`
 - PEMWE HTML target: `https://vimilabs.github.io/AIMWORKS/pemwe/hydrogen-ontology.html`
 - H2KG v2 taxonomy target: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`

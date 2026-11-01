@@ -8,6 +8,6 @@ These deterministic checks verify registry representation and traceability. They
 | decode_concept | 573 |
 | decode_edge | 4463 |
 | h2kg_taxonomy_sample | 150 |
-| asserted_external_mapping | 256 |
+| asserted_external_mapping | 265 |
 
-Total: **5486** automated checks.
+Total: **5495** automated checks.

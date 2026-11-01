@@ -24,6 +24,15 @@ H2KG_ONTOLOGY = URIRef("https://w3id.org/h2kg/hydrogen-ontology")
 H2KG = Namespace("https://w3id.org/h2kg/hydrogen-ontology#")
 QUDT = Namespace("http://qudt.org/schema/qudt/")
 SH = Namespace("http://www.w3.org/ns/shacl#")
+VANN = Namespace("http://purl.org/vocab/vann/")
+DOAP = Namespace("http://usefulinc.com/ns/doap#")
+PREMIS = Namespace("http://www.loc.gov/premis/rdf/v3/")
+MOD = Namespace("https://w3id.org/mod#")
+DCAT = Namespace("http://www.w3.org/ns/dcat#")
+BIBO = Namespace("http://purl.org/ontology/bibo/")
+SCHEMA = Namespace("https://schema.org/")
+FOAF = Namespace("http://xmlns.com/foaf/0.1/")
+IAO_HAS_ONTOLOGY_ROOT_TERM = URIRef("http://purl.obolibrary.org/obo/IAO_0000700")
 
 ROLE_NAMES = {
     "Agent",
@@ -120,6 +129,16 @@ def build_taxonomy_release(
     config_root = Path(config_dir or input_path.parent.parent / "config")
     config_path = config_root / "taxonomy.yaml"
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    release_profile_path = config_root / "release_profile.yaml"
+    release_document = yaml.safe_load(release_profile_path.read_text(encoding="utf-8")) or {}
+    release_profile = dict(release_document.get("project", {}))
+    if not release_profile:
+        raise ValueError(f"Missing project metadata in {release_profile_path}")
+    config["release_profile"] = release_profile
+    # Release identity and ontology metadata have one authoritative source.
+    config["version"] = str(release_profile["version"])
+    config["version_iri"] = str(release_profile["version_iri"])
+    config["allowed_foundational_imports"] = list(release_profile.get("imports", []))
     controlled_corrections = _load_controlled_corrections(config_root / "tib_h2kg_corrections.json")
     term_registry_path = config_root / "h2kg_term_registry_2_2.json"
     correction_registry_path = config_root / "h2kg_taxonomy_corrections_2_2.json"
@@ -197,7 +216,7 @@ def build_taxonomy_release(
     registry_payload = {
         "schema_version": "h2kg-taxonomy-registry/v2.2",
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.3.0")),
+        "version": str(config["version"]),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sha256": _sha256(input_path),
         "taxonomy_config_sha256": _sha256(config_path),
@@ -236,6 +255,7 @@ def build_taxonomy_release(
     )
     competency = _run_competency_checks(clean, compatibility, decisions)
     write_text(competency_path, json.dumps(competency, indent=2, ensure_ascii=False))
+    property_constraints = _write_property_constraint_report(clean, reports_dir)
 
     validation = _validate_taxonomy(
         clean,
@@ -250,22 +270,24 @@ def build_taxonomy_release(
         semantic_profiles,
         bool(shacl_conforms),
         str(shacl_text),
+        property_constraints,
     )
     write_text(validation_path, json.dumps(validation, indent=2, ensure_ascii=False))
-    write_text(report_path, _taxonomy_report(validation, decisions))
+    write_text(report_path, _taxonomy_report(validation, decisions, str(config["version"])))
     correction_report = _write_h2kg_22_correction_report(
         reports_dir,
         correction_registry,
         decisions,
         validation,
         bridge,
+        str(config["version"]),
     )
     if not validation["conforms"]:
         raise ValueError("H2KG taxonomy validation failed: " + "; ".join(validation["errors"][:8]))
 
     return {
         "ontology_iri": str(H2KG_ONTOLOGY),
-        "version": str(config.get("version", "2.3.0")),
+        "version": str(config["version"]),
         "active_local_classes": validation["counts"]["active_local_classes"],
         "deprecated_compatibility_classes": validation["counts"]["deprecated_compatibility_classes"],
         "new_structural_classes": validation["counts"]["new_structural_classes"],
@@ -282,6 +304,7 @@ def build_taxonomy_release(
         "external_bridge": bridge,
         "semantic_profiles": semantic_profiles,
         "competency_report": str(competency_path),
+        "property_constraint_report": property_constraints,
         "correction_report": correction_report,
         "validation": str(validation_path),
         "publication_ready": validation["publication_ready"],
@@ -642,6 +665,9 @@ def _build_graphs_from_registry(
                 rationale = "Deprecated safely because the source does not establish one unambiguous scientific identity."
         else:
             _copy_term_annotations(source, source_subject, clean)
+            # The authoritative registry, not a stale source annotation,
+            # controls whether a class is active in the current release.
+            clean.remove((subject, OWL.deprecated, None))
             clean.set((subject, DCTERMS.description, Literal(definition, lang="en")))
             scope_note = str(row.get("scope_note", "")).strip()
             if scope_note:
@@ -868,9 +894,44 @@ def _keyword_matches(text: str, keyword: str) -> bool:
 
 
 def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) -> None:
+    profile = dict(config.get("release_profile", {}))
     allowed_imports = {str(value).rstrip("#") for value in config.get("allowed_foundational_imports", [])}
+    managed_predicates = {
+        RDF.type,
+        OWL.versionIRI,
+        OWL.versionInfo,
+        OWL.priorVersion,
+        DCTERMS.title,
+        DCTERMS.description,
+        DCTERMS.abstract,
+        DCTERMS.license,
+        DCTERMS.creator,
+        DCTERMS.contributor,
+        DCTERMS.publisher,
+        DCTERMS.created,
+        DCTERMS.modified,
+        DCTERMS.language,
+        DCTERMS.subject,
+        DCTERMS.bibliographicCitation,
+        DCTERMS.hasVersion,
+        DCTERMS.isVersionOf,
+        VANN.preferredNamespacePrefix,
+        VANN.preferredNamespaceUri,
+        VANN.example,
+        DOAP["bug-database"],
+        DOAP.repository,
+        DOAP.audience,
+        PREMIS.documentation,
+        MOD.hasFormalityLevel,
+        MOD.hasSyntax,
+        BIBO.status,
+        DCAT.distribution,
+        SCHEMA.funder,
+        SCHEMA.funding,
+        IAO_HAS_ONTOLOGY_ROOT_TERM,
+    }
     for predicate, obj in source.predicate_objects(H2KG_ONTOLOGY):
-        if predicate in {OWL.versionIRI, OWL.versionInfo, DCTERMS.hasVersion, DCTERMS.isVersionOf}:
+        if predicate in managed_predicates:
             continue
         if predicate == OWL.imports:
             # Domain ontologies are aligned selectively in the external bridge.
@@ -880,19 +941,86 @@ def _copy_ontology_header(source: Graph, target: Graph, config: dict[str, Any]) 
     for import_iri in sorted(allowed_imports):
         target.add((H2KG_ONTOLOGY, OWL.imports, URIRef(import_iri)))
     target.add((H2KG_ONTOLOGY, RDF.type, OWL.Ontology))
-    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(config.get("version", "2.3.0")))))
-    target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(config.get("version_iri")))))
-    target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal("H₂KG Domain Ontology for Hydrogen Electrochemical Systems", lang="en")))
+    target.set((H2KG_ONTOLOGY, OWL.versionInfo, Literal(str(profile["version"]))))
+    target.set((H2KG_ONTOLOGY, OWL.versionIRI, URIRef(str(profile["version_iri"]))))
+    target.set((H2KG_ONTOLOGY, OWL.priorVersion, URIRef(str(profile["prior_version"]))))
+    target.set((H2KG_ONTOLOGY, DCTERMS.title, Literal(str(profile["title"]), lang="en")))
+    target.set((H2KG_ONTOLOGY, DCTERMS.description, Literal(str(profile["description"]), lang="en")))
+    abstract = str(profile["abstract"]).strip()
+    if len(abstract) > 500:
+        raise ValueError("TIB ontology abstract must not exceed 500 characters")
+    target.set((H2KG_ONTOLOGY, DCTERMS.abstract, Literal(abstract, lang="en")))
+    target.set((H2KG_ONTOLOGY, DCTERMS.license, URIRef(str(profile["license"]))))
+    target.set((H2KG_ONTOLOGY, DCTERMS.created, Literal(str(profile["created"]), datatype=XSD.date)))
+    target.set((H2KG_ONTOLOGY, DCTERMS.modified, Literal(str(profile["modified"]), datatype=XSD.date)))
+    target.set((H2KG_ONTOLOGY, VANN.preferredNamespacePrefix, Literal(str(profile["namespace_prefix"]))))
+    target.set((H2KG_ONTOLOGY, VANN.preferredNamespaceUri, URIRef(str(profile["namespace_uri"]))))
+    target.set((H2KG_ONTOLOGY, DOAP["bug-database"], URIRef(str(profile["issue_tracker_url"]))))
+    target.set((H2KG_ONTOLOGY, PREMIS.documentation, URIRef(str(profile["documentation_url"]))))
+    target.set((H2KG_ONTOLOGY, DOAP.repository, URIRef(str(profile["repository_url"]))))
+    target.set((H2KG_ONTOLOGY, DOAP.audience, Literal(str(profile["audience"]), lang="en")))
+    target.set((H2KG_ONTOLOGY, MOD.hasFormalityLevel, Literal(str(profile["logical_framework"]), lang="en")))
+    target.set((H2KG_ONTOLOGY, BIBO.status, Literal(str(profile["maintenance_status"]), lang="en")))
+    target.add((H2KG_ONTOLOGY, DCTERMS.language, URIRef("http://id.loc.gov/vocabulary/iso639-2/eng")))
+    target.add((H2KG_ONTOLOGY, SCHEMA.inLanguage, URIRef("http://id.loc.gov/vocabulary/iso639-2/eng")))
+    target.add((H2KG_ONTOLOGY, MOD.hasSyntax, URIRef("http://www.w3.org/ns/formats/Turtle")))
     target.set(
         (
             H2KG_ONTOLOGY,
-            DCTERMS.description,
-            Literal(
-                "A modular ontology for materials, components, processes, measurements, information entities, characteristics, and provenance in hydrogen electrochemical research.",
-                lang="en",
-            ),
+            DCTERMS.bibliographicCitation,
+            Literal(str(profile["citation"]["preferred_citation"]), lang="en"),
         )
     )
+    for entry in profile.get("creators", []):
+        _add_attribution_resource(target, DCTERMS.creator, entry)
+    for entry in profile.get("contributors", []):
+        _add_attribution_resource(target, DCTERMS.contributor, entry)
+    publisher = dict(profile["publisher"])
+    _add_attribution_resource(target, DCTERMS.publisher, publisher)
+    for subject in profile.get("subjects", []):
+        target.add((H2KG_ONTOLOGY, DCTERMS.subject, URIRef(str(subject))))
+    media_types = {
+        "turtle": "https://www.iana.org/assignments/media-types/text/turtle",
+        "jsonld": "https://www.iana.org/assignments/media-types/application/ld+json",
+    }
+    distribution_labels = {
+        "turtle": "Turtle",
+        "jsonld": "JSON-LD",
+    }
+    for distribution_name, distribution in profile.get("distributions", {}).items():
+        distribution_iri = URIRef(str(distribution))
+        target.add((H2KG_ONTOLOGY, DCAT.distribution, distribution_iri))
+        target.add((distribution_iri, RDF.type, DCAT.Distribution))
+        target.add((distribution_iri, DCAT.downloadURL, distribution_iri))
+        target.add(
+            (
+                distribution_iri,
+                DCTERMS.title,
+                Literal(
+                    f"H2KG {profile['version']} "
+                    f"{distribution_labels.get(str(distribution_name), str(distribution_name))} distribution",
+                    lang="en",
+                ),
+            )
+        )
+        if distribution_name in media_types:
+            target.add((distribution_iri, DCAT.mediaType, URIRef(media_types[distribution_name])))
+    target.add((H2KG_ONTOLOGY, VANN.example, URIRef(str(profile["application_example"]))))
+    target.add((H2KG_ONTOLOGY, SCHEMA.funder, URIRef("https://doi.org/10.13039/501100000780")))
+    for funding in profile.get("funding", []):
+        target.add((H2KG_ONTOLOGY, SCHEMA.funding, URIRef(str(funding))))
+    for local_name in profile.get("root_classes", []):
+        target.add((H2KG_ONTOLOGY, IAO_HAS_ONTOLOGY_ROOT_TERM, H2KG[str(local_name)]))
+
+
+def _add_attribution_resource(graph: Graph, predicate: URIRef, entry: dict[str, Any]) -> None:
+    if not entry.get("confirmed") and predicate != DCTERMS.publisher:
+        raise ValueError(f"Unconfirmed attribution PID: {entry.get('iri', '<missing>')}")
+    iri = URIRef(str(entry["iri"]))
+    graph.add((H2KG_ONTOLOGY, predicate, iri))
+    graph.add((iri, RDFS.label, Literal(str(entry["label"]), lang="en")))
+    kind = str(entry.get("kind", "organization"))
+    graph.add((iri, RDF.type, FOAF.Person if kind == "person" else FOAF.Organization))
 
 
 def _copy_properties(source: Graph, target: Graph) -> None:
@@ -929,6 +1057,10 @@ def _copy_properties(source: Graph, target: Graph) -> None:
     target.set((H2KG.ofProperty, RDFS.range, H2KG.Property))
     target.set((H2KG.hasQuantityValue, RDFS.domain, H2KG.Property))
     target.set((H2KG.hasQuantityValue, RDFS.range, QUDT.QuantityValue))
+    target.set((H2KG.hasSubProcess, RDFS.domain, H2KG.Process))
+    target.set((H2KG.hasSubProcess, RDFS.range, H2KG.Process))
+    target.set((H2KG.isSubProcessOf, RDFS.domain, H2KG.Process))
+    target.set((H2KG.isSubProcessOf, RDFS.range, H2KG.Process))
     canonical_property_definitions = {
         H2KG.ofProperty: (
             "Relates an information record, such as a Parameter or DataPoint, to the property occurrence that the record specifies or reports."
@@ -944,6 +1076,21 @@ def _copy_properties(source: Graph, target: Graph) -> None:
         value = Literal(definition, lang="en")
         target.set((predicate, SKOS.definition, value))
         target.set((predicate, DCTERMS.description, value))
+    # The source ontology already contains curated descriptions for every
+    # public property. Expose those descriptions as SKOS definitions without
+    # changing the properties' logical constraints.
+    for property_iri in _property_resources(target):
+        if target.value(property_iri, SKOS.definition) is not None:
+            continue
+        description = target.value(property_iri, DCTERMS.description)
+        if isinstance(description, Literal) and str(description).strip():
+            target.set(
+                (
+                    property_iri,
+                    SKOS.definition,
+                    Literal(str(description), lang=description.language or "en"),
+                )
+            )
 
 
 def _add_support_properties(target: Graph) -> None:
@@ -1111,7 +1258,7 @@ def _build_compatibility_graph(source: Graph, target: Graph, taxonomy: Graph, co
 
     target.add((compatibility_iri, RDF.type, OWL.Ontology))
     target.add((compatibility_iri, OWL.imports, URIRef(str(config.get("version_iri", H2KG_ONTOLOGY)))))
-    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config.get("version", "2.3.0")))))
+    target.add((compatibility_iri, OWL.versionInfo, Literal(str(config["version"]))))
     target.add((compatibility_iri, DCTERMS.title, Literal("H₂KG 2.2 Legacy Compatibility Layer", lang="en")))
     target.add(
         (
@@ -1670,7 +1817,7 @@ def _build_external_bridge(
     snapshot_sha256 = str((auto_harmonization or {}).get("snapshot_sha256") or _json_payload_sha256(snapshot))
     snapshot_date = str(snapshot.get("retrieved_at", "snapshot-not-available"))
     snapshot_slug = re.sub(r"[^0-9]", "", snapshot_date[:10]) or "undated"
-    version = str(config.get("version", "2.3.0"))
+    version = str(config["version"])
     immutable_stem = f"h2kg-external-bridge-{snapshot_slug}-{snapshot_sha256[:12]}"
     bridge_iri = URIRef("https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-external-bridge.ttl")
     version_iri = URIRef(
@@ -2473,6 +2620,116 @@ def _run_competency_checks(
     }
 
 
+def _write_property_constraint_report(graph: Graph, reports_dir: Path) -> dict[str, Any]:
+    """Document deliberate open-world property constraints and reject omissions."""
+
+    intentional: dict[str, dict[str, Any]] = {
+        str(H2KG.hasMetadata): {
+            "allowed_missing": ["domain"],
+            "rationale": "Metadata can describe resources in every H2KG top branch; a single OWL domain would create unintended classifications.",
+        },
+        str(H2KG.hasPart): {
+            "allowed_missing": ["domain", "range"],
+            "rationale": "This generic part-whole relation is used across matter, processes, information entities, and characteristics.",
+        },
+        str(H2KG.isPartOf): {
+            "allowed_missing": ["domain", "range"],
+            "rationale": "This inverse generic part-whole relation is intentionally cross-branch.",
+        },
+        str(H2KG.normalizedTo): {
+            "allowed_missing": ["domain"],
+            "rationale": "Properties and result information records may both declare a normalization basis; profiles provide the contextual constraint.",
+        },
+        str(H2KG.referenceElectrode): {
+            "allowed_missing": ["domain", "range"],
+            "rationale": "This deprecated compatibility predicate is unconstrained; canonical records use usesReferenceElectrode or hasReferenceScale.",
+        },
+        str(H2KG.hasIdentifier): {
+            "allowed_missing": ["domain"],
+            "rationale": "Identifiers can be attached to any scientific or information resource without changing its OWL classification.",
+        },
+    }
+    rows: list[dict[str, Any]] = []
+    properties = sorted(
+        {
+            subject
+            for property_type in (OWL.ObjectProperty, OWL.DatatypeProperty)
+            for subject in graph.subjects(RDF.type, property_type)
+            if isinstance(subject, URIRef) and str(subject).startswith(str(H2KG))
+        },
+        key=str,
+    )
+    for property_iri in properties:
+        domains = sorted(str(value) for value in graph.objects(property_iri, RDFS.domain))
+        ranges = sorted(str(value) for value in graph.objects(property_iri, RDFS.range))
+        missing = [name for name, values in (("domain", domains), ("range", ranges)) if not values]
+        policy = intentional.get(str(property_iri), {})
+        allowed_missing = sorted(str(value) for value in policy.get("allowed_missing", []))
+        unexpected_missing = sorted(set(missing) - set(allowed_missing))
+        policy_mismatch = sorted(set(allowed_missing) - set(missing))
+        has_definition = graph.value(property_iri, SKOS.definition) is not None
+        rows.append(
+            {
+                "property_iri": str(property_iri),
+                "property_type": (
+                    "object_property"
+                    if (property_iri, RDF.type, OWL.ObjectProperty) in graph
+                    else "datatype_property"
+                ),
+                "label": str(graph.value(property_iri, RDFS.label) or _local_name(property_iri)),
+                "domains": domains,
+                "ranges": ranges,
+                "missing_constraints": missing,
+                "constraint_status": (
+                    "complete"
+                    if not missing
+                    else "intentional_unconstrained"
+                    if not unexpected_missing
+                    else "accidental_omission"
+                ),
+                "rationale": str(policy.get("rationale", "Explicit domain and range are declared.")),
+                "has_definition": has_definition,
+                "policy_mismatch": policy_mismatch,
+            }
+        )
+
+    accidental_rows = [row for row in rows if row["constraint_status"] == "accidental_omission"]
+    missing_definitions = [row for row in rows if not row["has_definition"]]
+    policy_mismatches = [row for row in rows if row["policy_mismatch"]]
+    payload = {
+        "schema_version": "h2kg-property-constraint-audit/v1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "property_count": len(rows),
+        "intentional_unconstrained_count": sum(
+            1 for row in rows if row["constraint_status"] == "intentional_unconstrained"
+        ),
+        "accidental_omission_count": len(accidental_rows),
+        "missing_definition_count": len(missing_definitions),
+        "policy_mismatch_count": len(policy_mismatches),
+        "conforms": not accidental_rows and not missing_definitions and not policy_mismatches,
+        "properties": rows,
+    }
+    json_path = reports_dir / "property_constraint_audit.json"
+    csv_path = reports_dir / "property_constraint_audit.csv"
+    write_text(json_path, json.dumps(payload, indent=2, ensure_ascii=False))
+    _write_dict_csv(
+        csv_path,
+        [
+            {
+                **row,
+                "domains": " | ".join(row["domains"]),
+                "ranges": " | ".join(row["ranges"]),
+                "missing_constraints": " | ".join(row["missing_constraints"]),
+                "policy_mismatch": " | ".join(row["policy_mismatch"]),
+            }
+            for row in rows
+        ],
+    )
+    payload["json"] = str(json_path)
+    payload["csv"] = str(csv_path)
+    return payload
+
+
 def _validate_taxonomy(
     graph: Graph,
     compatibility: Graph,
@@ -2486,6 +2743,7 @@ def _validate_taxonomy(
     semantic_profiles: dict[str, Any],
     shacl_conforms: bool,
     shacl_report: str,
+    property_constraints: dict[str, Any],
 ) -> dict[str, Any]:
     active = [item for item in decisions if item.disposition == "active_local_class"]
     deprecated = [item for item in decisions if item.disposition != "active_local_class"]
@@ -2582,6 +2840,14 @@ def _validate_taxonomy(
         errors.append(f"{len(failed)} taxonomy competency checks failed: {', '.join(failed)}.")
     if not semantic_profiles.get("conforms", False):
         errors.append("The parameter-property semantic-role migration did not conform.")
+    if property_constraints.get("accidental_omission_count", 0):
+        errors.append(
+            f"{property_constraints['accidental_omission_count']} property domain/range omissions lack an explicit policy decision."
+        )
+    if property_constraints.get("missing_definition_count", 0):
+        errors.append(
+            f"{property_constraints['missing_definition_count']} public properties lack definitions."
+        )
 
     ttl_graph = Graph().parse(ttl_path, format="turtle")
     json_graph = Graph().parse(jsonld_path, format="json-ld")
@@ -2656,6 +2922,11 @@ def _validate_taxonomy(
             "technical_validation": "passed" if not errors else "failed",
         },
         "serialization_parity": set(ttl_graph) == set(json_graph),
+        "property_constraints": {
+            "intentional_unconstrained_count": property_constraints.get("intentional_unconstrained_count", 0),
+            "accidental_omission_count": property_constraints.get("accidental_omission_count", 0),
+            "missing_definition_count": property_constraints.get("missing_definition_count", 0),
+        },
         "shacl_conforms": shacl_conforms,
         "shacl_report": shacl_report,
         "competency_checks": competency,
@@ -2693,10 +2964,14 @@ def _taxonomy_cycles(graph: Graph) -> list[list[str]]:
     return [list(cycle) for cycle in sorted(cycles)]
 
 
-def _taxonomy_report(validation: dict[str, Any], decisions: list[TaxonomyDecision]) -> str:
+def _taxonomy_report(
+    validation: dict[str, Any],
+    decisions: list[TaxonomyDecision],
+    version: str,
+) -> str:
     counts = validation["counts"]
     branches = "\n".join(f"- {branch}: {count}" for branch, count in validation["top_branch_counts"].items())
-    return f"""# H₂KG 2.3 Taxonomy Report
+    return f"""# H₂KG {version} Taxonomy Report
 
 - Validation conforms: {validation['conforms']}
 - Active local classes: {counts['active_local_classes']}
@@ -2743,6 +3018,7 @@ def _write_h2kg_22_correction_report(
     decisions: list[TaxonomyDecision],
     validation: dict[str, Any],
     bridge: dict[str, Any],
+    release_version: str,
 ) -> dict[str, Any]:
     """Write the complete decision ledger and release-level pre/post summary."""
 
@@ -2801,7 +3077,7 @@ def _write_h2kg_22_correction_report(
     post_counts = validation.get("counts", {})
     summary = {
         "schema_version": "h2kg-2.2-correction-report/v1",
-        "release_version": "2.3.0",
+        "release_version": release_version,
         "source_provenance": correction_registry.get("source_provenance", {}),
         "decision_counts": {
             "total": len(source_rows),

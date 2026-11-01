@@ -14,7 +14,6 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `ontology_summary.csv`: manuscript-ready percentages for every ontology under each collection.
 - `ontology_benchmark.csv` and `.md`: the complete 165-row count-and-percentage supplementary table.
 - `h2kg_tib_collection_benchmark.xlsx`: complete documented benchmark.
-- `h2kg_tib_manuscript_tables.xlsx`: compact manuscript tables.
 - `candidate_decisions.csv`: evidence for every discovered correspondence.
 - `retrieval_failures.csv`: blocking API failures; empty in a publishable build.
 - `ambiguity_resolution_history.csv`: every former semantic abstention and its deterministic final result.
@@ -24,4 +23,4 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `imported_availability.csv`: secondary import-inclusive evidence.
 - `automatic_harmonization_registry.json`: exact, machine-safe mappings and non-destructive label actions.
 
-Frozen inputs: `ontology_release\input\tib_collection_snapshot.json` and `ontology_release\input\tib_collection_candidate_cache.json`.
+Frozen inputs: `C:\Users\mehrt\Desktop\h2kg\AIMWORKS\.publish_tmp\AIMWORKS\ontology_release\input\tib_collection_snapshot.json` and `C:\Users\mehrt\Desktop\h2kg\AIMWORKS\.publish_tmp\AIMWORKS\ontology_release\input\tib_collection_candidate_cache.json`.

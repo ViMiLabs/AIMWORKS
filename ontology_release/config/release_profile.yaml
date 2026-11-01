@@ -2,7 +2,7 @@ project:
   title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems
   short_title: H₂KG Ontology
   subtitle: Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment
-  description: Domain-specific application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.
+  description: Domain-specific ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.
   ontology_iri: https://w3id.org/h2kg/hydrogen-ontology
   namespace_prefix: h2kg
   namespace_uri: https://w3id.org/h2kg/hydrogen-ontology#
@@ -12,14 +12,99 @@ project:
   docs_publication_status: published
   artifact_publication_status: published
   resolver_status: established
+  attribution_complete: true
   release_series: 2
-  version: 2.3.0
-  version_tag: v2.3.0
-  version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0
-  prior_version: https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0
+  version: 2.3.1
+  version_tag: v2.3.1
+  version_iri: https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1
+  prior_version: https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0
   license: https://creativecommons.org/licenses/by/4.0/
+  created: 2026-03-19
+  modified: 2026-11-01
+  abstract: Domain-specific ontology for hydrogen electrochemical systems, materials, manufacturing, measurements, computational models, scientific characteristics, datasets, quantity values, and provenance. H2KG separates intrinsic scientific classification from contextual workflow use and publishes external semantic alignments separately.
+  issue_tracker_url: https://github.com/ViMiLabs/AIMWORKS/issues
+  documentation_url: https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html
+  maintenance_status: active
+  audience: Researchers, data stewards, ontology engineers, and software developers working with hydrogen electrochemical research data.
+  annotation_languages: [en]
+  logical_framework: OWL 2
+  imports:
+    - https://www.w3.org/ns/prov-o
+    - http://qudt.org/2.1/schema/qudt
+  creators:
+    - iri: https://ror.org/02nv7yv05
+      label: Forschungszentrum Jülich GmbH
+      kind: organization
+      confirmed: true
+  affiliations:
+    a:
+      label: Theory and Computation of Energy Materials (IET-3), Institute of Energy Technologies, Forschungszentrum Jülich GmbH, 52425 Jülich, Germany
+      organization_iri: https://ror.org/02nv7yv05
+    b:
+      label: Centre for Advanced Simulation and Analytics (CASA), Simulation and Data Science Lab for Energy Materials (SDL-EM), Forschungszentrum Jülich GmbH, 52425 Jülich, Germany
+      organization_iri: https://ror.org/02nv7yv05
+    c:
+      label: Chair of Theory and Computation of Energy Materials, Faculty of Georesources and Materials Engineering, RWTH Aachen University, 52062 Aachen, Germany
+  contributors:
+    - iri: https://orcid.org/0009-0005-5173-202X
+      label: Marjan Kohandani
+      kind: person
+      given_names: Marjan
+      family_names: Kohandani
+      affiliation_ids: [a, b, c]
+      confirmed: true
+      contribution_order: 1
+    - iri: https://orcid.org/0000-0002-5057-2993
+      label: Mohammad J. Eslamibidgoli
+      kind: person
+      given_names: Mohammad J.
+      family_names: Eslamibidgoli
+      affiliation_ids: [a, b]
+      confirmed: true
+      contribution_order: 2
+    - iri: https://www.fz-juelich.de/profile/malek_k
+      label: Kourosh Malek
+      kind: person
+      given_names: Kourosh
+      family_names: Malek
+      affiliation_ids: [a, b]
+      confirmed: true
+      contribution_order: 3
+      identifier_type: institutional_profile
+      identifier_authority: Forschungszentrum Jülich GmbH
+      orcid_status: unavailable
+    - iri: https://orcid.org/0000-0002-0764-8948
+      label: Michael Eikerling
+      kind: person
+      given_names: Michael
+      family_names: Eikerling
+      affiliation_ids: [a, b, c]
+      confirmed: true
+      contribution_order: 4
+  publisher:
+    iri: https://ror.org/02nv7yv05
+    label: Forschungszentrum Jülich GmbH
+  subjects:
+    - https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalSystem
+    - https://w3id.org/h2kg/hydrogen-ontology#FuelCellSystem
+    - https://w3id.org/h2kg/hydrogen-ontology#ElectrolyzerSystem
+  distributions:
+    turtle: https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl
+    jsonld: https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld
+  application_example: https://vimilabs.github.io/AIMWORKS/pages/characterization-knowledge-graph.html
+  funding:
+    - https://doi.org/10.3030/101135537
+  root_classes: [Agent, Characteristic, InformationEntity, Matter, Process]
+  expected_counts:
+    active_classes: 2226
+    deprecated_classes: 160
+    total_classes: 2386
+    object_properties: 23
+    datatype_properties: 1
+    annotation_properties: 9
+    taxonomy_individuals: 0
   citation:
-    preferred_citation: AIMWORKS Maintainers (2026). H₂KG Domain Ontology for Hydrogen Electrochemical Systems.
+    preferred_citation: Kohandani, M.; Eslamibidgoli, M. J.; Malek, K.; Eikerling, M.; Forschungszentrum Jülich GmbH (2026). H₂KG Domain Ontology for Hydrogen Electrochemical Systems, version 2.3.1.
   profiles:
     core:
       title: H₂KG Shared Core Ontology
@@ -67,9 +152,9 @@ project:
       - This publication is part of the DECODE project that has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101135537. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HADEA. Neither the European Union nor the granting authority can be held responsible for them.
       - This work was also funded by the Helmholtz Metadata Collaboration (HMC), an incubator platform of the Helmholtz Association within its Information and Data Science strategic initiative, through the Initiative and Networking Fund (INF) - AIMWORKS (grant no. ZT-I-PF-3-099, project no. D.B.002807).
 maintainers:
-  creator: [AIMWORKS Maintainers]
-  contributor: [Electrochemistry Research Group]
-  publisher: [AIMWORKS]
+  creator: [https://ror.org/02nv7yv05]
+  contributor: [https://orcid.org/0009-0005-5173-202X, https://orcid.org/0000-0002-5057-2993, https://www.fz-juelich.de/profile/malek_k, https://orcid.org/0000-0002-0764-8948]
+  publisher: [https://ror.org/02nv7yv05]
 release:
   preserve_term_iris: true
   preserve_hash_namespace: true

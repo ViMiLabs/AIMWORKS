@@ -246,7 +246,8 @@ def default_release_profile() -> dict[str, Any]:
             "title": "H₂KG Domain Ontology for Hydrogen Electrochemical Systems",
             "short_title": "H₂KG Ontology",
             "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
-            "description": "Domain-specific application ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.",
+            "description": "Domain-specific ontology for hydrogen electrochemical systems, including PEMFC and PEMWE materials, manufacturing, processes, measurements, instruments, parameter records, datasets, properties, and FAIR provenance.",
+            "abstract": "Domain-specific ontology for hydrogen electrochemical systems, materials, manufacturing, measurements, computational models, scientific characteristics, datasets, quantity values, and provenance.",
             "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
             "namespace_prefix": "h2kg",
             "namespace_uri": "https://w3id.org/h2kg/hydrogen-ontology#",
@@ -257,11 +258,21 @@ def default_release_profile() -> dict[str, Any]:
             "artifact_publication_status": "published",
             "resolver_status": "established",
             "release_series": 2,
-            "version": "2.3.0",
-            "version_tag": "v2.3.0",
-            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0",
-            "prior_version": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.2.0",
+            "version": "2.3.1",
+            "version_tag": "v2.3.1",
+            "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1",
+            "prior_version": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0",
             "license": "https://creativecommons.org/licenses/by/4.0/",
+            "created": "2026-03-19",
+            "modified": "2026-11-01",
+            "annotation_languages": ["en"],
+            "imports": [
+                "https://www.w3.org/ns/prov-o",
+                "http://qudt.org/2.1/schema/qudt",
+            ],
+            "creators": [],
+            "contributors": [],
+            "publisher": {},
             "acknowledgements": {
                 "support_copy": "Developed through DECODE, the Helmholtz Metadata Collaboration (HMC), and AIMWORKS to support FAIR ontology publication and reusable metadata infrastructure for hydrogen electrochemical systems.",
                 "initiatives": [
@@ -386,18 +397,6 @@ def profile_registry(release_profile: dict[str, Any]) -> dict[str, dict[str, Any
 
 def default_metadata_defaults() -> dict[str, Any]:
     return {
-        "ontology": {
-            "title": "H₂KG Domain Ontology for Hydrogen Electrochemical Systems",
-            "subtitle": "Domain-specific ontology for hydrogen electrochemical systems, FAIR workflow representation, and external semantic alignment",
-            "abstract": "Domain-specific ontology for hydrogen electrochemical systems, experiments, materials, manufacturing conditions, measurements, quantities, datasets, properties, and FAIR provenance.",
-            "description": "The ontology captures hydrogen electrochemical concepts spanning PEMFC and PEMWE profiles, preserves stable H2KG IRIs, reuses foundational vocabularies, and publishes external SKOS alignments separately.",
-            "created": "2026-03-19",
-            "modified": "2026-10-15",
-            "language": "en",
-            "creators": ["AIMWORKS Maintainers"],
-            "contributors": ["Electrochemistry Research Group"],
-            "source": ["ONTOLOGY_extended.jsonld"],
-        },
         "term_annotations": {
             "label_language": "en",
             "comment_language": "en",

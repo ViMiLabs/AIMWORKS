@@ -120,22 +120,38 @@ def enrich_ontology(
 
 
 def _enrich_ontology_header(item: dict[str, Any], profile: dict[str, Any], metadata_defaults: dict[str, Any]) -> dict[str, Any]:
-    ontology = metadata_defaults["ontology"]
     project = profile["project"]
-    item.setdefault("http://purl.org/dc/terms/title", [{"@value": ontology["title"], "@language": ontology["language"]}])
-    item.setdefault("http://purl.org/dc/terms/description", [{"@value": ontology["description"], "@language": ontology["language"]}])
-    item.setdefault("http://purl.org/dc/terms/abstract", [{"@value": ontology["abstract"], "@language": ontology["language"]}])
-    item.setdefault("http://purl.org/dc/terms/creator", [{"@value": name, "@language": "en"} for name in ontology["creators"]])
-    item.setdefault("http://purl.org/dc/terms/contributor", [{"@value": name, "@language": "en"} for name in ontology["contributors"]])
-    item.setdefault("http://purl.org/dc/terms/created", [{"@value": ontology["created"]}])
-    item["http://purl.org/dc/terms/modified"] = [{"@value": ontology["modified"]}]
+    language = str((project.get("annotation_languages") or ["en"])[0])
+    item["http://purl.org/dc/terms/title"] = [{"@value": project["title"], "@language": language}]
+    item["http://purl.org/dc/terms/description"] = [{"@value": project["description"], "@language": language}]
+    item["http://purl.org/dc/terms/abstract"] = [{"@value": project["abstract"], "@language": language}]
+    creators = [{"@id": str(entry["iri"])} for entry in project.get("creators", [])]
+    contributors = [{"@id": str(entry["iri"])} for entry in project.get("contributors", [])]
+    if creators:
+        item["http://purl.org/dc/terms/creator"] = creators
+    else:
+        item.pop("http://purl.org/dc/terms/creator", None)
+    if contributors:
+        item["http://purl.org/dc/terms/contributor"] = contributors
+    else:
+        item.pop("http://purl.org/dc/terms/contributor", None)
+    publisher = project.get("publisher", {})
+    if publisher.get("iri"):
+        item["http://purl.org/dc/terms/publisher"] = [{"@id": str(publisher["iri"])}]
+    else:
+        item.pop("http://purl.org/dc/terms/publisher", None)
+    item["http://purl.org/dc/terms/created"] = [{"@value": str(project["created"])}]
+    item["http://purl.org/dc/terms/modified"] = [{"@value": str(project["modified"])}]
     item.setdefault("http://purl.org/dc/terms/license", [{"@id": project["license"]}])
     item["http://www.w3.org/2002/07/owl#versionIRI"] = [{"@id": project["version_iri"]}]
     item["http://www.w3.org/2002/07/owl#versionInfo"] = [{"@value": project["version"], "@language": "en"}]
     item["http://www.w3.org/2002/07/owl#priorVersion"] = [{"@id": project["prior_version"]}]
+    item["http://www.w3.org/2002/07/owl#imports"] = [
+        {"@id": str(value)} for value in project.get("imports", [])
+    ]
     item["http://purl.org/vocab/vann/preferredNamespacePrefix"] = [{"@value": project["namespace_prefix"]}]
     item["http://purl.org/vocab/vann/preferredNamespaceUri"] = [{"@id": project["namespace_uri"]}]
-    item[RDFS_COMMENT] = [{"@value": ontology["description"], "@language": ontology["language"]}]
+    item[RDFS_COMMENT] = [{"@value": project["description"], "@language": language}]
     return item
 
 
@@ -156,9 +172,9 @@ def _definition_for(label: str, kind: str) -> str:
     if label in SCHEMA_DEFINITIONS:
         return SCHEMA_DEFINITIONS[label]
     if kind == "class":
-        return f"Class representing {label.lower()} in the H2KG PEMFC catalyst-layer application ontology."
+        return f"Class representing {label.lower()} in the H2KG domain ontology for hydrogen electrochemical systems."
     if kind == "object_property":
-        return f"Object property used to relate two resources within the H2KG PEMFC catalyst-layer application ontology."
+        return f"Object property used to relate two resources within the H2KG domain ontology for hydrogen electrochemical systems."
     return f"Datatype property used to attach literal metadata or values related to {label.lower()}."
 
 

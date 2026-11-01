@@ -14,9 +14,15 @@ current H2KG release targets.
 
 ## Redirect targets
 
-### Shared H2KG namespace
+### Canonical H2KG namespace
 
 - Browser / HTML: `https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html`
+- Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
+- JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`
+
+### Shared core module
+
+- Route: `https://w3id.org/h2kg/hydrogen-ontology/core`
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/core_schema.jsonld`
 
@@ -34,7 +40,7 @@ current H2KG release targets.
 
 ### H2KG v2 taxonomy release
 
-- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0`
+- Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1`
 - Browser / HTML: `https://vimilabs.github.io/AIMWORKS/pages/explore.html?view=taxonomy`
 - Turtle: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl`
 - JSON-LD: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/main/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld`
@@ -46,8 +52,14 @@ current H2KG release targets.
 - Repository: `https://github.com/ViMiLabs/AIMWORKS`
 - Docs base: `https://vimilabs.github.io/AIMWORKS/`
 - Maintainers:
-  - Marjan Kohandani (`@Marjanknd`) - Theory and Computation of Energy Materials (IET-3), Institute of Energy Technologies, Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
-  - Mohammad J. Eslamibidgoli (`@meslamib3`) - Centre for Advanced Simulation and Analytics (CASA), Simulation and Data Science Lab for Energy Materials (SDL-EM), Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
+  - [Marjan Kohandani](https://orcid.org/0009-0005-5173-202X) - affiliations a, b, c
+  - [Mohammad J. Eslamibidgoli](https://orcid.org/0000-0002-5057-2993) - affiliations a, b
+  - [Kourosh Malek](https://www.fz-juelich.de/profile/malek_k) - affiliations a, b
+  - [Michael Eikerling](https://orcid.org/0000-0002-0764-8948) - affiliations a, b, c
+- Affiliations:
+  - `a`: Theory and Computation of Energy Materials (IET-3), Institute of Energy Technologies, Forschungszentrum Jülich GmbH, 52425 Jülich, Germany
+  - `b`: Centre for Advanced Simulation and Analytics (CASA), Simulation and Data Science Lab for Energy Materials (SDL-EM), Forschungszentrum Jülich GmbH, 52425 Jülich, Germany
+  - `c`: Chair of Theory and Computation of Energy Materials, Faculty of Georesources and Materials Engineering, RWTH Aachen University, 52062 Aachen, Germany
 
 ## Notes
 

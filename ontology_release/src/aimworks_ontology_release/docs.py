@@ -127,6 +127,8 @@ def build_docs(
     alignment_report = load_json(alignment_report_path) if alignment_report_path.exists() else {}
     correction_report_path = output_dir.parent / "reports" / "h2kg_2_2_correction_report.json"
     correction_report = load_json(correction_report_path) if correction_report_path.exists() else {}
+    tib_submission_path = output_dir.parent / "reports" / "tib_submission_validation.json"
+    tib_submission = load_json(tib_submission_path) if tib_submission_path.exists() else {}
     mapping_summary.update(alignment_report)
     # The whole-ontology Explorer must expose the current asserted source, not
     # a potentially stale compact-module artifact.
@@ -191,7 +193,7 @@ def build_docs(
             if term.get("category") in schema_categories
         ]
         properties.sort(key=lambda item: item["label"].casefold())
-    core_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "schema.ttl", items, mappings)
+    core_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "core_schema.ttl", items, mappings)
     pemfc_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemfc_schema.ttl", items, mappings)
     pemwe_terms = _reference_terms_from_artifact(output_dir.parent / "ontology" / "pemwe_schema.ttl", items, mappings)
     if not core_terms:
@@ -261,8 +263,8 @@ def build_docs(
         (output_dir / "pages" / "property-index.html", "Property Index", _property_body(properties)),
         (output_dir / "pages" / "alignment.html", "Alignment", _alignment_body(mappings, mapping_summary, alignment_registry)),
         (output_dir / "pages" / "examples.html", "Examples", _examples_body(examples)),
-        (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo, evaluation)),
-        (output_dir / "pages" / "release.html", "Release", _release_body(release, odk, hdo, alignment_report, correction_report, evaluation, output_dir / "pages" / "release.html", output_dir)),
+        (output_dir / "pages" / "quality-dashboard.html", "Quality Dashboard", _quality_body(release, odk, hdo, evaluation, tib_submission)),
+        (output_dir / "pages" / "release.html", "Release", _release_body(project, release, odk, hdo, alignment_report, correction_report, evaluation, tib_submission, output_dir / "pages" / "release.html", output_dir)),
         (output_dir / "pages" / "import-guide.html", "Import Guide", _import_guide_body(odk, hdo)),
         (output_dir / "pages" / "import-catalog.html", "Import Catalog", _import_catalog_body(odk)),
         (output_dir / "pages" / "developer-guide.html", "Developer Guide", _developer_body(odk, hdo)),
@@ -371,7 +373,7 @@ def build_docs(
             "represented_field_count": characterization_report.get("represented_field_count", 0),
             "shacl_conforms": characterization_report.get("shacl_conforms", False),
         }
-    _modernize_legacy_profile_content(output_dir)
+    _modernize_legacy_profile_content(output_dir, project)
     _normalize_visible_branding(output_dir)
     return summary
 
@@ -405,18 +407,44 @@ def _replace_brand_in_html_text_nodes(content: str) -> str:
     )
 
 
-def _modernize_legacy_profile_content(output_dir: Path) -> None:
+def _modernize_legacy_profile_content(output_dir: Path, project: dict[str, Any]) -> None:
     """Preserve established profile pages while removing superseded v1 wording."""
+    creator_labels = [
+        str(entry.get("label", "")).strip()
+        for entry in project.get("creators", [])
+        if str(entry.get("label", "")).strip()
+    ]
+    creator_text = "; ".join(creator_labels) or "See canonical ontology metadata"
+    contributor_labels = [
+        str(entry.get("label", "")).strip()
+        for entry in project.get("contributors", [])
+        if str(entry.get("label", "")).strip()
+    ]
+    attribution_text = "; ".join([*creator_labels, *contributor_labels]) or creator_text
     replacements = {
         "FAIR, EMMO-aligned documentation": "Domain-specific H2KG documentation",
-        "An EMMO-aligned application ontology release profile": "A domain-specific H2KG ontology profile",
-        "A release-ready, FAIR-oriented, EMMO-aligned application ontology": "A domain-specific H2KG application ontology",
+        "H₂KG stays in the EMMO universe and remains focused on hydrogen electrochemical systems, especially PEMFC and PEMWE application profiles.": "H₂KG uses its own stable namespace and remains focused on hydrogen electrochemical systems, including PEMFC and PEMWE application profiles.",
+        "Conservative alignment of generic scientific and electrochemistry concepts to EMMO, ECHO, QUDT, ChEBI, PROV-O, and Dublin Core Terms.": "Foundational reuse of QUDT and PROV-O, with external semantic alignments published separately.",
+        "No. H₂KG reuses and aligns to those ontologies. Local terms are preserved for PEMFC catalyst-layer concepts that are not safely covered elsewhere.": "No. H₂KG imports QUDT and PROV-O and publishes separate external alignment evidence. Local terms are retained for hydrogen-electrochemistry concepts not safely covered elsewhere.",
+        "PEMFC remains an EMMO-based domain ontology. Local H₂KG terms are kept only where the imported EMMO and EMMO-based domains do not safely cover the intended hydrogen/PEMFC semantics.": "The PEMFC portal is a focused profile of the H₂KG domain ontology. EMMO correspondences are published as external alignment evidence rather than logical imports.",
+        "PEMWE remains an EMMO-based domain ontology. Local H₂KG terms are kept only where the imported EMMO and EMMO-based domains do not safely cover the intended hydrogen/PEMFC semantics.": "The PEMWE portal is a focused profile of the H₂KG domain ontology. EMMO correspondences are published as external alignment evidence rather than logical imports.",
+        "<h3>EMMO Universe</h3><p>The release stays in the EMMO universe by reusing EMMO core and selected EMMO-based domain ontologies as imports, while keeping H₂KG-local terms narrow and application-specific.</p>": "<h3>External alignment</h3><p>The canonical taxonomy imports only QUDT and PROV-O. EMMO and domain ontologies are linked through separate mappings where scientifically justified.</p>",
+        "<h3>Imported domain-specific H₂KG sources</h3>": "<h3>Recorded external alignment sources</h3><p>This inventory records mapping evidence; it does not list logical imports.</p>",
+        "<th>Enabled</th><th>Category</th>": "<th>Recorded</th><th>Evidence role</th>",
+        "Reuse EMMO and relevant EMMO-based domains first; only keep H₂KG-local terms where the external semantics are not specific enough.": "Reuse established external concepts through explicit mappings; retain H₂KG-local terms where external semantics are not specific enough.",
         "EMMO-aligned ontology": "domain-specific ontology",
         "EMMO-aligned": "domain-specific",
         "domain-review-required": "approved",
         "pending-domain-review": "approved",
         "release candidate": "release",
         "release-candidate": "release",
+        "ontology\\schema.ttl": "ontology\\core_schema.ttl",
+        "ontology/schema.ttl": "ontology/core_schema.ttl",
+        "2026.3.0": str(project.get("version", "2.3.1")),
+        "Electrochemistry Research Group": creator_text,
+        "Forschungszentrum Jülich GmbH; Mohammad J. Eslamibidgoli": attribution_text,
+        "Forschungszentrum Juelich GmbH; Mohammad J. Eslamibidgoli": attribution_text,
+        "The generated asserted release stays compact and reuses imported EMMO and EMMO-based ontologies externally rather than vendoring them into the local namespace.": "The canonical taxonomy imports only QUDT and PROV-O; other ontologies are referenced or aligned through separate bridge artifacts.",
     }
     for profile_key in ("pemfc", "pemwe"):
         profile_root = output_dir / profile_key
@@ -434,6 +462,27 @@ def _modernize_legacy_profile_content(output_dir: Path) -> None:
                 updated = updated.replace('"file:///"', '"file:" + "///"')
             for old, new in replacements.items():
                 updated = updated.replace(old, new)
+            updated = re.sub(r"\bapplication\s+ontology\b", "domain ontology", updated, flags=re.IGNORECASE)
+            for old, new in {
+                "H2KG PEMFC Catalyst Layer Domain Ontology": "H2KG Domain Ontology for Hydrogen Electrochemical Systems",
+                "H₂KG PEMFC Catalyst Layer Domain Ontology": "H₂KG Domain Ontology for Hydrogen Electrochemical Systems",
+                "A domain-specific H2KG domain ontology": "The H2KG domain ontology",
+                "A domain-specific H₂KG domain ontology": "The H₂KG domain ontology",
+                "PEMFC remains a focused EMMO-based hydrogen and PEMFC domain ontology.": "The PEMFC portal is a focused application profile of the H₂KG domain ontology.",
+                "PEMWE remains a focused EMMO-based hydrogen and PEMFC domain ontology.": "The PEMWE portal is a focused application profile of the H₂KG domain ontology.",
+            }.items():
+                updated = updated.replace(old, new)
+            if path.suffix == ".html":
+                updated = re.sub(
+                    r"<li>Creators:.*?</li>",
+                    f"<li>Attribution: {escape(attribution_text)}</li>",
+                    updated,
+                )
+                updated = re.sub(
+                    r"<li>Imports:.*?</li>",
+                    "<li>Imports: http://qudt.org/2.1/schema/qudt, https://www.w3.org/ns/prov-o</li>",
+                    updated,
+                )
             if updated != content:
                 write_text(path, updated)
 
@@ -2644,6 +2693,32 @@ def _examples_body(examples: list[dict[str, Any]]) -> str:
     return f"<section class='list-grid'>{cards}</section>"
 
 
+def _release_metadata_html(project: dict[str, Any]) -> str:
+    attribution_rows: list[str] = []
+    for role, entries in (
+        ("Creator", project.get("creators", [])),
+        ("Contributor", project.get("contributors", [])),
+    ):
+        for entry in entries:
+            iri = str(entry.get("iri", ""))
+            label = str(entry.get("label", iri))
+            attribution_rows.append(
+                f'<li><strong>{escape(role)}:</strong> <a href="{escape(iri)}">{escape(label)}</a></li>'
+            )
+    license_iri = str(project.get("license", ""))
+    repository = str(project.get("repository_url", ""))
+    return f"""
+        <ul class="stats">
+          <li><strong>Version:</strong> {escape(str(project.get('version', '')))}</li>
+          <li><strong>Created:</strong> {escape(str(project.get('created', '')))}</li>
+          <li><strong>Modified:</strong> {escape(str(project.get('modified', '')))}</li>
+          {''.join(attribution_rows)}
+          <li><strong>License:</strong> <a href="{escape(license_iri)}">CC BY 4.0</a></li>
+          <li><strong>Repository:</strong> <a href="{escape(repository)}">AIMWORKS</a></li>
+        </ul>
+    """
+
+
 def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], page_path: Path, docs_root: Path) -> str:
     release_link = _relative_href(page_path, docs_root / "pages" / "release.html")
     core_link = _relative_href(page_path, docs_root / "pages" / "core-reference.html")
@@ -2654,7 +2729,7 @@ def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any
     <section class="grid">
       <article class="card">
         <h2>H2KG Namespace Reference</h2>
-        <p>This page is the canonical human-readable reference for the full H2KG namespace. It is intended to be the future browser landing page for <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code> once the namespace is registered in w3id.</p>
+        <p>This page is the canonical human-readable reference for the full H2KG namespace and the browser landing page for the established ontology IRI <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code>.</p>
         <p><strong>Ontology IRI:</strong> <code>{escape(project.get('ontology_iri', H2KG_ONTOLOGY_IRI))}</code></p>
         <p><strong>Namespace:</strong> <code>{escape(project.get('namespace_uri', H2KG_NS))}</code></p>
         <p><strong>Rendered terms:</strong> {len(terms)}</p>
@@ -2665,8 +2740,9 @@ def _namespace_reference_body(project: dict[str, Any], terms: list[dict[str, Any
         </div>
       </article>
       <article class="card">
-        <h2>Resolver Readiness</h2>
-        <p>When <code>/h2kg/hydrogen-ontology</code> is registered in w3id, browser requests should resolve to this page, while RDF-aware requests should resolve to the full namespace artefacts rather than the smaller schema-only subset.</p>
+        <h2>Resolver and release metadata</h2>
+        <p>The established <code>/h2kg/hydrogen-ontology</code> resolver sends browser requests to this page and RDF requests to the complete taxonomy. The smaller shared core remains an explicitly named secondary module.</p>
+        {_release_metadata_html(project)}
         <p class="muted">Profile-specific namespace views remain available separately for PEMFC and PEMWE.</p>
         <div class="button-row">
           <a class="inline-button" href="{pemfc_link}">PEMFC reference</a>
@@ -2698,7 +2774,7 @@ def _core_reference_body(project: dict[str, Any], terms: list[dict[str, Any]], p
       </article>
       <article class="card">
         <h2>Schema Scope</h2>
-        <p>This page remains valuable for ontology engineering, governance, and lightweight schema browsing. The future resolver target for <code>/h2kg/hydrogen-ontology</code> should instead be the full namespace reference page.</p>
+        <p>This page remains valuable for ontology engineering, governance, and lightweight schema browsing. The stable ontology resolver targets the full namespace reference and complete taxonomy instead.</p>
         <p class="muted">Current state: documentation, machine artefacts, and resolver infrastructure are publicly established, and the full namespace reference page is the active resolver target.</p>
       </article>
     </section>
@@ -2857,12 +2933,14 @@ def _reference_optional_block(title: str, content: str) -> str:
 
 
 def _release_body(
+    project: dict[str, Any],
     release: dict[str, Any],
     odk: dict[str, Any],
     hdo: dict[str, Any],
     alignment: dict[str, Any],
     correction: dict[str, Any],
     evaluation: dict[str, Any],
+    tib_submission: dict[str, Any],
     page_path: Path,
     docs_root: Path,
 ) -> str:
@@ -2905,6 +2983,27 @@ def _release_body(
         "comparator_md": _relative_href(page_path, docs_root / "evaluation" / "comparator_matrix.md"),
         "comparator_xlsx": _relative_href(page_path, docs_root / "evaluation" / "focused_comparator_matrix.xlsx"),
     }
+    tib_links = {
+        "taxonomy_ttl": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.ttl"),
+        "taxonomy_jsonld": _relative_href(page_path, docs_root / "ontology" / "h2kg-v2-taxonomy.jsonld"),
+        "validation_json": _relative_href(page_path, docs_root / "reports" / "tib_submission_validation.json"),
+        "validation_md": _relative_href(page_path, docs_root / "reports" / "tib_submission_validation.md"),
+        "manifest_json": _relative_href(page_path, docs_root / "reports" / "tib_submission_manifest.json"),
+        "manifest_md": _relative_href(page_path, docs_root / "reports" / "tib_submission_manifest.md"),
+        "property_audit": _relative_href(page_path, docs_root / "reports" / "property_constraint_audit.json"),
+    }
+    tib_blockers = [
+        row for row in tib_submission.get("checks", [])
+        if row.get("blocking") and not row.get("passed")
+    ]
+    tib_blocker_html = (
+        "<ul>" + "".join(
+            f"<li><code>{escape(str(row.get('id', 'check')))}</code>: {escape(str(row.get('detail', '')))}</li>"
+            for row in tib_blockers
+        ) + "</ul>"
+        if tib_blockers
+        else "<p class='muted'>No blocking pre-release findings.</p>"
+    )
     inventory = evaluation.get("automated_consistency", {})
     independent_audit = evaluation.get("independent_application_audit", {})
     retrieval = evaluation.get("retrieval", {})
@@ -2948,7 +3047,30 @@ def _release_body(
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H2KG 2.3 release; independent application audit pending</p>
+        <p class="eyebrow">TIB Terminology Service submission</p>
+        <h2>Canonical H₂KG {escape(str(tib_submission.get('version', '2.3.1')))} distribution</h2>
+        <p>The full taxonomy is the canonical TIB artifact. The shared core, complete workflow distribution, compatibility graph, examples, profiles, and external-alignment bridge remain separate modules and are not submitted as the primary ontology.</p>
+        <ul class="stats">
+          <li><strong>Pre-release checks:</strong> {escape('passed' if tib_submission.get('pre_release_ready') else 'blocked')}</li>
+          <li><strong>TIB mandatory warnings:</strong> {tib_submission.get('tib_shape', {}).get('mandatory_result_count', 'not assessed')}</li>
+          <li><strong>Classes:</strong> {tib_submission.get('counts', {}).get('active_classes', 0)} active + {tib_submission.get('counts', {}).get('deprecated_classes', 0)} deprecated</li>
+          <li><strong>Properties:</strong> {tib_submission.get('counts', {}).get('object_properties', 0)} object, {tib_submission.get('counts', {}).get('datatype_properties', 0)} datatype, {tib_submission.get('counts', {}).get('annotation_properties', 0)} annotation</li>
+        </ul>
+        {_release_metadata_html(project)}
+        <h3>Current preflight status</h3>
+        {tib_blocker_html}
+        <div class="button-row">
+          <a class="inline-button" href="{tib_links['taxonomy_ttl']}" download>Canonical taxonomy TTL</a>
+          <a class="inline-button" href="{tib_links['taxonomy_jsonld']}" download>Canonical taxonomy JSON-LD</a>
+          <a class="inline-button" href="{tib_links['validation_json']}" download>TIB validation JSON</a>
+          <a class="inline-button" href="{tib_links['manifest_json']}" download>Submission manifest</a>
+          <a class="inline-button inline-button--ghost" href="{tib_links['property_audit']}" download>Property-constraint audit</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <p class="eyebrow">H2KG {escape(str(tib_submission.get('version', '2.3.1')))} release</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H2KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
         <p>The 2.2 correction ledger records <strong>{correction.get('decision_counts', {}).get('total', 0)}</strong> parent and definition decisions across <strong>{correction.get('decision_counts', {}).get('unique_classes', 0)}</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
@@ -2993,7 +3115,7 @@ def _release_body(
       <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H₂KG {escape(str(alignment.get('h2kg_version', '2.3.0')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H₂KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
+        <p>H₂KG {escape(str(alignment.get('h2kg_version', '2.3.1')))} publishes a separate semantic bridge derived from the frozen TIB snapshot dated {escape(str(alignment.get('tib_snapshot_retrieved_at', 'not available')))}. The bridge contains <strong>{alignment.get('mapping_count', 0)}</strong> asserted mappings covering <strong>{alignment.get('mapped_h2kg_class_count', 0)}</strong> H₂KG classes and <strong>{alignment.get('external_ontology_count', 0)}</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> {alignment.get('tib_collection_count', 0)} TIB collections, {alignment.get('tib_unique_ontology_count', 0)} unique ontologies, {alignment.get('tib_collection_membership_count', 0)} collection memberships</li>
           <li><strong>TIB benchmark assertions:</strong> {alignment.get('tib_benchmark_asserted_mapping_count', alignment.get('machine_safe_mapping_count', 0))} ({escape(', '.join(f'{key}={value}' for key, value in alignment.get('tib_asserted_mapping_counts', {}).items()) or 'none')})</li>
@@ -3063,6 +3185,7 @@ def _quality_body(
     odk: dict[str, Any],
     hdo: dict[str, Any],
     evaluation: dict[str, Any],
+    tib_submission: dict[str, Any],
 ) -> str:
     explanations = release.get("section_explanations", {})
     freshness = release.get("freshness", {})
@@ -3074,6 +3197,12 @@ def _quality_body(
     retrieval = evaluation.get("retrieval", {})
     comparator = evaluation.get("comparator_evaluation", {})
     current_status_rows = [
+        {
+            "label": "TIB metadata preflight",
+            "status": "good" if tib_submission.get("pre_release_ready") else "action",
+            "value": "passed" if tib_submission.get("pre_release_ready") else "blocked",
+            "detail": f"Official TIB mandatory warnings/violations: {tib_submission.get('tib_shape', {}).get('mandatory_result_count', 'not assessed')}; recommendation notices remain reported separately.",
+        },
         {
             "label": "Overall validation",
             "status": _row_status(release.get("validation_signals", []), "Overall validation status", "watch"),
@@ -3445,6 +3574,10 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
     profile_cfg = profiles.get(profile_key, {})
     ontology_base = docs_root.parent / "ontology"
     canonical_file = ontology_base / f"{profile_key}_schema.ttl"
+    artifact_label = "Profile module download"
+    if profile_key == "core":
+        canonical_file = ontology_base / "core_schema.ttl"
+        artifact_label = "Shared-core module download"
     if not canonical_file.exists():
         canonical_file = ontology_base / "schema.ttl"
     canonical_href = _relative_href(page_path, canonical_file)
@@ -3462,7 +3595,7 @@ def _reference_body(project: dict[str, Any], profile_key: str, odk: dict[str, An
       <article class="card">
         <h2>Machine Artefacts</h2>
         <ul class="stats">
-          <li><a href="{canonical_href}">Canonical AIMWORKS ontology download</a></li>
+          <li><a href="{canonical_href}">{artifact_label}</a></li>
           {_artifact_line(odk, 'base', odk_base)}
           {_artifact_line(odk, 'full', odk_base)}
           {_artifact_line(odk, 'simple', odk_base)}
@@ -3855,6 +3988,12 @@ def _copy_correction_reports(output_dir: Path) -> None:
         "h2kg_2_2_correction_report.json",
         "h2kg_2_2_correction_decisions.csv",
         "h2kg_2_2_correction_report.md",
+        "property_constraint_audit.json",
+        "property_constraint_audit.csv",
+        "tib_submission_validation.json",
+        "tib_submission_validation.md",
+        "tib_submission_manifest.json",
+        "tib_submission_manifest.md",
     ):
         source = source_dir / filename
         if source.exists():

@@ -15,7 +15,7 @@ def test_docs_generation(mini_ontology_file, output_dir):
     legacy_data = output_dir / "docs" / "pemfc" / "data" / "graph_explorer.json"
     legacy_data.parent.mkdir(parents=True)
     legacy_data.write_text(
-        '{"description": "A release-ready, FAIR-oriented, EMMO-aligned application ontology", '
+        '{"description": "A release-ready, FAIR-oriented, EMMO-aligned domain ontology", '
         '"legacy_value": "file:///C:/MARJAN/H2KG/AIMWORKS/ontology_release/_Example_QV"}',
         encoding="utf-8",
     )

@@ -29,7 +29,7 @@ Each cell is an author-curated capability judgment. Automated checks parse the f
 
 | Resource | Version | SHA-256 | Triples |
 |---|---|---|---:|
-| H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | `A0D6276812659804DBAB1AD009CF1A5D08C71397D402C7F0A41B11C7007421C9` | 78619 |
+| H2KG Domain Ontology for Hydrogen Electrochemical Systems | 2.3.0 | `CEAD12FA1E430397665E26378955707728DB7E7AF57E7ADEDF007A9AEC39FF86` | 78683 |
 | Electrochemistry Domain Ontology | 0.39.0 | `78E58F277B707F271DB91BA119286F66D555B2CAA62AB046E876082F4557C2A7` | 67104 |
 | Helmholtz Digitisation Ontology | 2026-09-25 | `6517B7B030D7DDF427977CD22F7FC31BFBE0C4107B21D6053BE4E2C4F36D0986` | 4387 |
 | Hydrogen Ontology (HOLY) | 1.1.0 | `6A3CD2D4604D1436E95A2A93299CE8F694F07E2EFB7B2A514265FFC416764D7B` | 3529 |

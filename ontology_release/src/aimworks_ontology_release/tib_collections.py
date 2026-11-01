@@ -820,6 +820,7 @@ Generate the H2KG taxonomy before running the collection benchmark.
     exact_label_review = [row for row in decision_rows if _decision_has_exact_label(row)]
     pre_post_rows = _pre_post_comparison_rows(baseline_summaries, summaries)
     ontology_publication_rows = _ontology_publication_rows(summaries["ontology_summary"])
+    local_manuscript_target = ensure_dir(output_root.parent / "local_manuscript" / "tib_benchmark")
 
     _write_csv(target / "candidate_decisions.csv", decision_rows, DECISION_COLUMNS)
     _write_csv(target / "collection_summary.csv", summaries["collection_summary"], SUMMARY_COLUMNS)
@@ -836,7 +837,7 @@ Generate the H2KG taxonomy before running the collection benchmark.
     dump_json(target / "automatic_harmonization_registry.json", harmonization)
     dump_json(target / "h2kg_corrections.json", {"corrections": corrections})
     write_text(target / "matching_rules.md", collection_matching_rules())
-    write_text(target / "manuscript_table.md", manuscript_table(summaries, snapshot))
+    write_text(local_manuscript_target / "manuscript_table.md", manuscript_table(summaries, snapshot))
     write_text(target / "ontology_benchmark.md", _ontology_publication_markdown(ontology_publication_rows))
     write_text(target / "README.md", collection_readme(summaries, snapshot, snapshot_path, candidate_cache_path))
     write_text(target / "tib_collection_benchmark.html", benchmark_html(summaries, snapshot))
@@ -853,12 +854,12 @@ Generate the H2KG taxonomy before running the collection benchmark.
         ambiguity_history,
         pre_post_rows,
         corrections,
+        local_manuscript_target,
     )
 
     docs_assets = ensure_dir(output_root / "docs" / "benchmarks" / "tib_collections")
     for name in [
         "h2kg_tib_collection_benchmark.xlsx",
-        "h2kg_tib_manuscript_tables.xlsx",
         "candidate_decisions.csv",
         "collection_summary.csv",
         "ontology_summary.csv",
@@ -877,7 +878,6 @@ Generate the H2KG taxonomy before running the collection benchmark.
         "h2kg_corrections.json",
         "automatic_harmonization_registry.json",
         "benchmark_summary.json",
-        "manuscript_table.md",
         "matching_rules.md",
         "README.md",
         "tib_collection_benchmark.html",
@@ -2786,7 +2786,6 @@ The analysis is fully automated and conservative. Exact machine decisions are no
 - `ontology_summary.csv`: manuscript-ready percentages for every ontology under each collection.
 - `ontology_benchmark.csv` and `.md`: the complete 165-row count-and-percentage supplementary table.
 - `h2kg_tib_collection_benchmark.xlsx`: complete documented benchmark.
-- `h2kg_tib_manuscript_tables.xlsx`: compact manuscript tables.
 - `candidate_decisions.csv`: evidence for every discovered correspondence.
 - `retrieval_failures.csv`: blocking API failures; empty in a publishable build.
 - `ambiguity_resolution_history.csv`: every former semantic abstention and its deterministic final result.
@@ -2898,12 +2897,10 @@ def benchmark_html(
   <p><strong>TIB snapshot:</strong> {html.escape(str(snapshot.get('retrieved_at', 'unknown')))}</p>
   <div class="actions">
     <a href="{prefix}h2kg_tib_collection_benchmark.xlsx" download>Complete Excel benchmark</a>
-    <a href="{prefix}h2kg_tib_manuscript_tables.xlsx" download>Manuscript Excel tables</a>
     <a href="{prefix}candidate_decisions.csv" download>Decision evidence</a>
     <a href="{prefix}ontology_benchmark.csv" download>Ontology table CSV</a>
     <a href="{prefix}pre_post_harmonization.csv" download>Pre/post comparison</a>
     <a href="{prefix}retrieval_failures.csv" download>Retrieval audit</a>
-    <a href="{prefix}manuscript_table.md" download>Manuscript table</a>
   </div>
   <section><h2>Collection summary</h2><div class="table-wrap">{_html_table_header('collection-table')}{collection_rows}</tbody></table></div></section>
   <section><h2>Ontology-by-ontology summary</h2><p>Every assessed row assigns all active H2KG classes exactly once. BattINFO remains visible as a not-assessed catalogue membership. Percentages are rounded independently; exact counts are authoritative.</p>
@@ -2978,6 +2975,7 @@ def _write_benchmark_workbooks(
     ambiguity_history: list[dict[str, Any]],
     pre_post_rows: list[dict[str, Any]],
     corrections: list[dict[str, Any]],
+    local_manuscript_target: Path,
 ) -> None:
     try:
         from openpyxl import Workbook
@@ -3103,7 +3101,7 @@ def _write_benchmark_workbooks(
     add_collection_publication_sheet(manuscript, "Collection summary")
     add_grouped_ontology_sheet(manuscript, "Ontology benchmark")
     add_sheet(manuscript, "H2KG branch summary", summaries["category_summary"], CATEGORY_SUMMARY_COLUMNS)
-    manuscript.save(target / "h2kg_tib_manuscript_tables.xlsx")
+    manuscript.save(local_manuscript_target / "h2kg_tib_manuscript_tables.xlsx")
 
 
 def _excel_value(value: Any) -> Any:

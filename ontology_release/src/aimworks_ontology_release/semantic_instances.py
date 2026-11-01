@@ -53,7 +53,7 @@ def normalize_generated_example_instances(
     if not taxonomy_registry_path.exists():
         report = {
             "schema_version": "h2kg-instance-role-normalization/v1",
-            "profile_version": "2.3.0",
+            "profile_version": "unknown",
             "status": "skipped_missing_taxonomy_registry",
             "taxonomy_registry": str(taxonomy_registry_path),
             "file_pair_count": 0,
@@ -69,6 +69,7 @@ def normalize_generated_example_instances(
         )
         return report
     registry = load_json(taxonomy_registry_path)
+    profile_version = str(registry.get("version", "unknown"))
     characteristic_iris = {
         str(row["iri"])
         for row in registry.get("terms", [])
@@ -103,7 +104,7 @@ def normalize_generated_example_instances(
 
     report = {
         "schema_version": "h2kg-instance-role-normalization/v1",
-        "profile_version": "2.3.0",
+        "profile_version": profile_version,
         "status": "passed" if all(row["conforms"] for row in rows) else "failed",
         "file_pair_count": len(rows),
         "parameter_record_count": sum(row["parameter_record_count"] for row in rows),

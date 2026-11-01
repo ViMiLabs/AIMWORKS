@@ -210,11 +210,17 @@ def test_collection_benchmark_generates_percentages_excel_and_safe_overlay(tmp_p
 
     assert summary["h2kg_active_classes_assessed"] == 3
     assert (target / "h2kg_tib_collection_benchmark.xlsx").exists()
-    assert (target / "h2kg_tib_manuscript_tables.xlsx").exists()
+    local_manuscript = tmp_path / "local_manuscript" / "tib_benchmark"
+    assert (local_manuscript / "h2kg_tib_manuscript_tables.xlsx").exists()
     assert (target / "ontology_summary.csv").exists()
     assert (target / "ontology_benchmark.csv").exists()
-    assert (target / "manuscript_table.md").exists()
-    workbook = load_workbook(target / "h2kg_tib_manuscript_tables.xlsx", read_only=False)
+    assert (local_manuscript / "manuscript_table.md").exists()
+    assert not (target / "h2kg_tib_manuscript_tables.xlsx").exists()
+    assert not (target / "manuscript_table.md").exists()
+    public_page = (tmp_path / "output" / "docs" / "pages" / "tib-benchmark.html").read_text(encoding="utf-8")
+    assert "Manuscript Excel tables" not in public_page
+    assert "Manuscript table" not in public_page
+    workbook = load_workbook(local_manuscript / "h2kg_tib_manuscript_tables.xlsx", read_only=False)
     assert workbook.sheetnames == [
         "Read me",
         "Collection summary",

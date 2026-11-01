@@ -26,4 +26,15 @@ def test_w3id_keeps_established_routes_without_a_new_bridge_route(tmp_path: Path
     assert "external_bridge_ttl" not in result["rdf_targets"]
     assert "hydrogen-ontology/releases/([0-9]+\\.[0-9]+\\.[0-9]+)" in htaccess
     assert "AIMWORKS/v$1/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl" in htaccess
+    assert "^hydrogen-ontology$" in htaccess
+    assert "h2kg-v2-taxonomy.ttl" in htaccess
+    assert "application/ld\\+json" in htaccess
+    assert "application/ld\\\\+json" not in htaccess
+    assert "^hydrogen-ontology/core$" in htaccess
+    assert "core_schema.ttl" in htaccess
+    canonical_rule = next(
+        line for line in htaccess.splitlines()
+        if line.startswith("RewriteRule ^hydrogen-ontology$") and "ttl" in line
+    )
+    assert "h2kg-v2-taxonomy.ttl" in canonical_rule
     assert "releases/X.Y.Z" in readme

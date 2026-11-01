@@ -1,17 +1,17 @@
-# H₂KG 2.3 Taxonomy Report
+# H₂KG 2.3.1 Taxonomy Report
 
 - Validation conforms: True
 - Active local classes: 2226
 - Deprecated compatibility classes: 160
 - Curated structural classes: 157
 - Asserted subclass axioms: 2226
-- Definitions: 2402
+- Definitions: 2419
 - Turtle/JSON-LD parity: True
 - Taxonomy SHACL conforms: True
 - All source resources classified: 2324 / 2324
 - Profile/workflow fields retained outside the class taxonomy: 66
 - Named individuals retained outside the class taxonomy: 0
-- Selective external mappings: 256
+- Selective external mappings: 265
 - Competency checks: 9 / 9
 - Publication ready: True
 

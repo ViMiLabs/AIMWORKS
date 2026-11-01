@@ -2455,6 +2455,8 @@ def build_characterization_kg(
 
     registry_path = Path(taxonomy_registry_path) if taxonomy_registry_path else output_root / "ontology" / "taxonomy_registry.json"
     taxonomy_path = Path(taxonomy_ttl_path) if taxonomy_ttl_path else output_root / "ontology" / "h2kg-v2-taxonomy.ttl"
+    registry_payload = json.loads(registry_path.read_text(encoding="utf-8")) if registry_path.exists() else {}
+    ontology_version = str(registry_payload.get("version", "unknown"))
     active_terms = _active_terms(registry_path)
     dataset = Dataset(default_union=False)
     _bind(dataset)
@@ -2525,7 +2527,7 @@ def build_characterization_kg(
         target / "characterization_workflow_usage_registry.json",
         {
             "schema_version": "h2kg-characterization-workflow-usage/v1",
-            "ontology_version": "2.3.0",
+            "ontology_version": ontology_version,
             "usage_count": len(workflow_usage),
             "usage_edges": workflow_usage,
         },
@@ -2547,7 +2549,7 @@ def build_characterization_kg(
     report = {
         "schema_version": BUILD_SCHEMA,
         "generated_at": now_iso(),
-        "ontology_version": "2.3.0",
+        "ontology_version": ontology_version,
         "ontology_modified": False,
         "source_manifest": manifest_path.name,
         "source_sha256": manifest["source"]["sha256"],
@@ -2719,7 +2721,7 @@ This package is generated from the sanitized, fingerprinted corrected workbook m
 
 ## Modeling policy
 
-The package uses H₂KG 2.3.0 classes and properties without changing the ontology taxonomy. Parameter records are distinct from intrinsic scientific properties. Missing, unconfirmed, inapplicable, unresolved-unit, and semantically conflicting source values remain explicit provenance records and are not silently normalized.
+The package uses H₂KG {report['ontology_version']} classes and properties without changing the ontology taxonomy. Parameter records are distinct from intrinsic scientific properties. Missing, unconfirmed, inapplicable, unresolved-unit, and semantically conflicting source values remain explicit provenance records and are not silently normalized.
 
 ## Query validation
 
@@ -2761,7 +2763,7 @@ def write_characterization_manuscript_materials(
 def _methods_text(report: dict[str, Any]) -> str:
     return f"""## Knowledge-graph construction and query evaluation
 
-A bounded characterization knowledge graph was constructed from a corrected workbook containing eight cases from seven method families. The workbook was transformed into a sanitized manifest identified by SHA-256 `{report['source_sha256']}`; personal names, email addresses, and author-institution fields were excluded. An RDFLib `Dataset` separated source-fidelity statements, H₂KG semantic assertions, validation findings, and the referenced taxonomy subset into named graphs. Specimens, preparation activities, measurements, instruments, parameter records, datasets, analyses, results, scientific properties, quantity values, and provenance were represented using H₂KG 2.3.0 together with PROV-O, DCTERMS, and QUDT. Every eligible workbook field retained its sheet and cell reference, raw lexical value, parsed value where defensible, and an explicit status for reported, missing, not applicable, not specified, unconfirmed, unresolved-formula, or semantically conflicting content.
+A bounded characterization knowledge graph was constructed from a corrected workbook containing eight cases from seven method families. The workbook was transformed into a sanitized manifest identified by SHA-256 `{report['source_sha256']}`; personal names, email addresses, and author-institution fields were excluded. An RDFLib `Dataset` separated source-fidelity statements, H₂KG semantic assertions, validation findings, and the referenced taxonomy subset into named graphs. Specimens, preparation activities, measurements, instruments, parameter records, datasets, analyses, results, scientific properties, quantity values, and provenance were represented using H₂KG {report['ontology_version']} together with PROV-O, DCTERMS, and QUDT. Every eligible workbook field retained its sheet and cell reference, raw lexical value, parsed value where defensible, and an explicit status for reported, missing, not applicable, not specified, unconfirmed, unresolved-formula, or semantically conflicting content.
 
 H₂KG provided the common semantic paths that made heterogeneous workbook records searchable as one graph. Method-specific records were typed with shared classes for matter, manufacturing, measurement, instrument, data, process, DataPoint, and property. Relations such as `hasMeasurementSubject`, `usesInstrument`, `hasInputData`, and `hasOutputData` connected workflow stages consistently across methods. Acquisition settings were modeled as parameter records linked through `ofProperty` to scientific property occurrences, preventing a property such as temperature from being reclassified as a parameter merely because it was used as a setting. Result records linked a DataPoint to its measured property, specimen bearer, generating analysis, and measurement provenance; QUDT represented defensible values and units. Source-field resources and `prov:wasDerivedFrom` links retained the workbook evidence behind each semantic assertion. This ontology-driven structure did not infer new scientific facts. It supplied stable types and query paths through which differently named source records could be retrieved, compared, and checked without discarding missing or conflicting content.
 

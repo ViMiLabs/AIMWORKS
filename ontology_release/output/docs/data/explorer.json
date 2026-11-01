@@ -3,10 +3,10 @@
   "referencePage": "hydrogen-ontology.html",
   "overview": {
     "localNodeCount": 2487,
-    "externalNodeCount": 1366,
-    "edgeCount": 7218,
+    "externalNodeCount": 1372,
+    "edgeCount": 7231,
     "activeClassCount": 2226,
-    "taxonomyVersion": "2.3.0",
+    "taxonomyVersion": "2.3.1",
     "taxonomyGovernanceStatus": "approved",
     "workflowUsageCount": 4535
   },
@@ -16,7 +16,7 @@
       "label": "Asserted schema",
       "description": "Classes, properties, domains, ranges, and asserted taxonomy links.",
       "nodeCount": 2412,
-      "edgeCount": 47
+      "edgeCount": 51
     },
     {
       "id": "vocabulary",
@@ -29,8 +29,8 @@
       "id": "alignments",
       "label": "Asserted alignments",
       "description": "Reviewed mappings and directly linked external semantic anchors.",
-      "nodeCount": 1546,
-      "edgeCount": 256
+      "nodeCount": 1560,
+      "edgeCount": 265
     },
     {
       "id": "taxonomy",
@@ -615,14 +615,56 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "Voltage",
+        "Voltage"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+          "target_label": "Voltage",
+          "ontology_id": "emmo",
+          "ontology_title": "The European Materials Modelling Ontology",
+          "ontology_version": "1.0.0-beta4",
+          "collections": [
+            "NFDI4Cat",
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (accelerating); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/emmo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        },
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage",
+          "target_label": "Voltage",
+          "ontology_id": "sargon",
+          "ontology_title": "SARGON (SmArt eneRGy dOmain oNtology)",
+          "ontology_version": "2.1.2",
+          "collections": [
+            "NFDI4Energy"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (accelerating); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sargon",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#ElectronMicroscopyImaging",
@@ -698,7 +740,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Accelerating Voltage AcceleratingVoltage h2kg:AcceleratingVoltage https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage Electric potential difference through which charged particles are accelerated in an instrument, including the electron beam in an electron microscope or the electron beam incident on an X-ray tube target. SEM operating voltage TEM accelerating voltage acceleration voltage Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic http://qudt.org/vocab/quantitykind/ElectricPotential Electric potential difference through which charged particles are accelerated in an instrument, including the electron beam in an electron microscope or the electron beam incident on an X-ray tube target. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "search_text": "Accelerating Voltage AcceleratingVoltage h2kg:AcceleratingVoltage https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage Electric potential difference through which charged particles are accelerated in an instrument, including the electron beam in an electron microscope or the electron beam incident on an X-ray tube target. SEM operating voltage TEM accelerating voltage acceleration voltage Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic Voltage http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee skos:broadMatch https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage http://qudt.org/vocab/quantitykind/ElectricPotential Electric potential difference through which charged particles are accelerated in an instrument, including the electron beam in an electron microscope or the electron beam incident on an X-ray tube target. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent_label": "Quantitative characteristic",
       "taxonomy_path": [
@@ -716,7 +758,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 10
+      "degree": 12
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AceticAcidSolution",
@@ -889,38 +931,16 @@
       "category": "Classes",
       "display_class": "Matter",
       "modules": [
-        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "acetonitrile"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHEBI_38472",
-          "target_label": "acetonitrile",
-          "ontology_id": "chebi",
-          "ontology_title": "Chemical Entities of Biological Interest",
-          "ontology_version": "255",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (group, nitrile).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chebi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Acetonitrile h2kg:Acetonitrile https://w3id.org/h2kg/hydrogen-ontology#Acetonitrile Acetonitrile (CH₃CN), a polar aprotic organic compound containing a nitrile group and used as a solvent. Class Matter Solvent https://w3id.org/h2kg/hydrogen-ontology#Solvent acetonitrile http://purl.obolibrary.org/obo/CHEBI_38472 skos:exactMatch Acetonitrile (CH₃CN), a polar aprotic organic compound containing a nitrile group and used as a solvent. Solvent Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance https://w3id.org/h2kg/hydrogen-ontology#Solvent",
+      "search_text": "Acetonitrile h2kg:Acetonitrile https://w3id.org/h2kg/hydrogen-ontology#Acetonitrile Acetonitrile (CH₃CN), a polar aprotic organic compound containing a nitrile group and used as a solvent. Class Matter Solvent https://w3id.org/h2kg/hydrogen-ontology#Solvent Acetonitrile (CH₃CN), a polar aprotic organic compound containing a nitrile group and used as a solvent. Solvent Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance https://w3id.org/h2kg/hydrogen-ontology#Solvent",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#Solvent",
       "taxonomy_parent_label": "Solvent",
       "taxonomy_path": [
@@ -939,7 +959,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 1
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AcetyleneBlackCarbonBlack",
@@ -3043,16 +3063,57 @@
       "category": "Classes",
       "display_class": "Compatibility",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Deprecated",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "speed",
+        "Speed"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://semanticscience.org/resource/SIO_001368",
+          "target_label": "speed",
+          "ontology_id": "sio",
+          "ontology_title": "Semanticscience Integrated Ontology (SIO)",
+          "ontology_version": "1.61",
+          "collections": [
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (atomic, force, microscopy, scan); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sio",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        },
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+          "target_label": "Speed",
+          "ontology_id": "kitmtxx",
+          "ontology_title": "Vocabulary of Materials Tribology Lab at KIT",
+          "ontology_version": "version-not-reported-in-TIB-snapshot",
+          "collections": [
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (atomic, force, microscopy, scan); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/kitmtxx",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "AFM Scan Speed AFMScanSpeed h2kg:AFMScanSpeed https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed A scan-rate characteristic specifying the spatial or linewise rate at which an atomic-force-microscopy probe traverses a specimen during acquisition. AFM line scan rate scan speed Class Compatibility http://qudt.org/vocab/unit/HZ http://qudt.org/vocab/quantitykind/Frequency A scan-rate characteristic specifying the spatial or linewise rate at which an atomic-force-microscopy probe traverses a specimen during acquisition. Compatibility core",
+      "search_text": "AFM Scan Speed AFMScanSpeed h2kg:AFMScanSpeed https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed A scan-rate characteristic specifying the spatial or linewise rate at which an atomic-force-microscopy probe traverses a specimen during acquisition. AFM line scan rate scan speed Class Compatibility speed http://semanticscience.org/resource/SIO_001368 skos:broadMatch Speed https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp http://qudt.org/vocab/unit/HZ http://qudt.org/vocab/quantitykind/Frequency A scan-rate characteristic specifying the spatial or linewise rate at which an atomic-force-microscopy probe traverses a specimen during acquisition. Compatibility core",
       "taxonomy_parent": "",
       "taxonomy_parent_label": "",
       "taxonomy_path": [],
@@ -3066,7 +3127,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
-      "degree": 1
+      "degree": 3
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AFMTipNominalRadius",
@@ -3279,16 +3340,39 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "Density"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+          "target_label": "Density",
+          "ontology_id": "emmo",
+          "ontology_title": "The European Materials Modelling Ontology",
+          "ontology_version": "1.0.0-beta4",
+          "collections": [
+            "NFDI4Cat",
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (ag, nw, surface); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/emmo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Ag NW Surface Density AgNWSurfaceDensity h2kg:AgNWSurfaceDensity https://w3id.org/h2kg/hydrogen-ontology#AgNWSurfaceDensity Mass of deposited silver nanowires divided by the coated substrate area. mg/m² percolation threshold surface density surface density Class Characteristic Density characteristic https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic http://qudt.org/vocab/quantitykind/MassPerArea Mass of deposited silver nanowires divided by the coated substrate area. Density characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic",
+      "search_text": "Ag NW Surface Density AgNWSurfaceDensity h2kg:AgNWSurfaceDensity https://w3id.org/h2kg/hydrogen-ontology#AgNWSurfaceDensity Mass of deposited silver nanowires divided by the coated substrate area. mg/m² percolation threshold surface density surface density Class Characteristic Density characteristic https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic Density http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044 skos:broadMatch http://qudt.org/vocab/quantitykind/MassPerArea Mass of deposited silver nanowires divided by the coated substrate area. Density characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic",
       "taxonomy_parent_label": "Density characteristic",
       "taxonomy_path": [
@@ -3307,7 +3391,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AgNWWeightFraction",
@@ -4159,38 +4243,16 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
-        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "ratio"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:broadMatch",
-          "target_iri": "http://semanticscience.org/resource/SIO_001018",
-          "target_label": "ratio",
-          "ontology_id": "sio",
-          "ontology_title": "Semanticscience Integrated Ontology (SIO)",
-          "ontology_version": "1.61",
-          "collections": [
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aggregate, aspect); the external genus is supported by the H2KG definition and external definition or hierarchy.",
-          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sio",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Aggregate Aspect Ratio AggregateAspectRatio h2kg:AggregateAspectRatio https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio Ratio of an aggregate’s major characteristic dimension to its minor characteristic dimension, evaluated using the same specified shape-fitting or image-analysis convention. a_R Class Characteristic Geometric characteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic ratio http://semanticscience.org/resource/SIO_001018 skos:broadMatch http://qudt.org/vocab/quantitykind/AspectRatio Ratio of an aggregate’s major characteristic dimension to its minor characteristic dimension, evaluated using the same specified shape-fitting or image-analysis convention. Geometric characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
+      "search_text": "Aggregate Aspect Ratio AggregateAspectRatio h2kg:AggregateAspectRatio https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio Ratio of an aggregate’s major characteristic dimension to its minor characteristic dimension, evaluated using the same specified shape-fitting or image-analysis convention. a_R Class Characteristic Geometric characteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic http://qudt.org/vocab/quantitykind/AspectRatio Ratio of an aggregate’s major characteristic dimension to its minor characteristic dimension, evaluated using the same specified shape-fitting or image-analysis convention. Geometric characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
       "taxonomy_parent_label": "Geometric characteristic",
       "taxonomy_path": [
@@ -4209,7 +4271,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 3
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#Air",
@@ -5366,16 +5428,57 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "thickness",
+        "Thickness"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://semanticscience.org/resource/SIO_000043",
+          "target_label": "thickness",
+          "ontology_id": "sio",
+          "ontology_title": "Semanticscience Integrated Ontology (SIO)",
+          "ontology_version": "1.61",
+          "collections": [
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aluminum, layer); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sio",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        },
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+          "target_label": "Thickness",
+          "ontology_id": "kitmtxx",
+          "ontology_title": "Vocabulary of Materials Tribology Lab at KIT",
+          "ontology_version": "version-not-reported-in-TIB-snapshot",
+          "collections": [
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aluminum, layer); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/kitmtxx",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Aluminum Layer Thickness AluminumLayerThickness h2kg:AluminumLayerThickness https://w3id.org/h2kg/hydrogen-ontology#AluminumLayerThickness A geometric characteristic specifying the distance between the opposing bounding surfaces of aluminum layer. Al layer thickness Class Characteristic Layer thickness https://w3id.org/h2kg/hydrogen-ontology#LayerThickness http://qudt.org/vocab/quantitykind/Length A geometric characteristic specifying the distance between the opposing bounding surfaces of aluminum layer. Layer thickness Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
+      "search_text": "Aluminum Layer Thickness AluminumLayerThickness h2kg:AluminumLayerThickness https://w3id.org/h2kg/hydrogen-ontology#AluminumLayerThickness A geometric characteristic specifying the distance between the opposing bounding surfaces of aluminum layer. Al layer thickness Class Characteristic Layer thickness https://w3id.org/h2kg/hydrogen-ontology#LayerThickness thickness http://semanticscience.org/resource/SIO_000043 skos:broadMatch Thickness https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp http://qudt.org/vocab/quantitykind/Length A geometric characteristic specifying the distance between the opposing bounding surfaces of aluminum layer. Layer thickness Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
       "taxonomy_parent_label": "Layer thickness",
       "taxonomy_path": [
@@ -5395,7 +5498,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 4
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateAdditive",
@@ -5499,14 +5602,75 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "Concentration",
+        "concentration",
+        "concentration"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://edamontology.org/data_2140",
+          "target_label": "Concentration",
+          "ontology_id": "edam",
+          "ontology_title": "EDAM - The ontology of data analysis and management",
+          "ontology_version": "1.25-20260626T1230Z",
+          "collections": [
+            "NFDI4Cat",
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aluminum, molar, nitrate); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/edam",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        },
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/CHMO_0002820",
+          "target_label": "concentration",
+          "ontology_id": "chmo",
+          "ontology_title": "Chemical Methods Ontology",
+          "ontology_version": "2026-05-28",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aluminum, molar, nitrate); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chmo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        },
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://w3id.org/nfdi4cat/voc4cat_0007244",
+          "target_label": "concentration",
+          "ontology_id": "voc4cat",
+          "ontology_title": "Voc4Cat - A SKOS vocabulary for Catalysis",
+          "ontology_version": "version-not-reported-in-TIB-snapshot",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (aluminum, molar, nitrate); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/voc4cat",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#InkjetPrintingProcess",
@@ -5522,7 +5686,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Aluminum Nitrate Molar Concentration AluminumNitrateMolarConcentration h2kg:AluminumNitrateMolarConcentration https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateMolarConcentration A composition characteristic specifying the amount of aluminum nitrate molar per stated quantity of mixture or solution. Al(NO3)3 concentration Class Characteristic Composition characteristic https://w3id.org/h2kg/hydrogen-ontology#CompositionCharacteristic http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration A composition characteristic specifying the amount of aluminum nitrate molar per stated quantity of mixture or solution. Composition characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#CompositionCharacteristic",
+      "search_text": "Aluminum Nitrate Molar Concentration AluminumNitrateMolarConcentration h2kg:AluminumNitrateMolarConcentration https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateMolarConcentration A composition characteristic specifying the amount of aluminum nitrate molar per stated quantity of mixture or solution. Al(NO3)3 concentration Class Characteristic Composition characteristic https://w3id.org/h2kg/hydrogen-ontology#CompositionCharacteristic Concentration http://edamontology.org/data_2140 skos:broadMatch concentration http://purl.obolibrary.org/obo/CHMO_0002820 https://w3id.org/nfdi4cat/voc4cat_0007244 http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration A composition characteristic specifying the amount of aluminum nitrate molar per stated quantity of mixture or solution. Composition characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#CompositionCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#CompositionCharacteristic",
       "taxonomy_parent_label": "Composition characteristic",
       "taxonomy_path": [
@@ -5541,7 +5705,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 3
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateSolutionVolumeFraction",
@@ -11928,36 +12092,14 @@
       "category": "Classes",
       "display_class": "Manufacturing",
       "modules": [
-        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "ball milling"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHMO_0001654",
-          "target_label": "ball milling",
-          "ontology_id": "chmo",
-          "ontology_title": "Chemical Methods Ontology",
-          "ontology_version": "2026-05-28",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (mechanical).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chmo",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#BallMilling",
@@ -12061,7 +12203,7 @@
         }
       ],
       "workflow_badges": [],
-      "search_text": "Ball Milling BallMilling h2kg:BallMilling https://w3id.org/h2kg/hydrogen-ontology#BallMilling A mechanical material-processing operation in which moving milling media impart impact and shear to comminute solids or disperse particulate constituents in a suspension. Fritsch planetary mill planetary milling roller mill Class Manufacturing Milling process https://w3id.org/h2kg/hydrogen-ontology#MillingProcess ball milling http://purl.obolibrary.org/obo/CHMO_0001654 skos:exactMatch A mechanical material-processing operation in which moving milling media impart impact and shear to comminute solids or disperse particulate constituents in a suspension. Milling process Process core https://w3id.org/h2kg/hydrogen-ontology#Process https://w3id.org/h2kg/hydrogen-ontology#Manufacturing https://w3id.org/h2kg/hydrogen-ontology#MaterialProcessing https://w3id.org/h2kg/hydrogen-ontology#MillingProcess",
+      "search_text": "Ball Milling BallMilling h2kg:BallMilling https://w3id.org/h2kg/hydrogen-ontology#BallMilling A mechanical material-processing operation in which moving milling media impart impact and shear to comminute solids or disperse particulate constituents in a suspension. Fritsch planetary mill planetary milling roller mill Class Manufacturing Milling process https://w3id.org/h2kg/hydrogen-ontology#MillingProcess A mechanical material-processing operation in which moving milling media impart impact and shear to comminute solids or disperse particulate constituents in a suspension. Milling process Process core https://w3id.org/h2kg/hydrogen-ontology#Process https://w3id.org/h2kg/hydrogen-ontology#Manufacturing https://w3id.org/h2kg/hydrogen-ontology#MaterialProcessing https://w3id.org/h2kg/hydrogen-ontology#MillingProcess",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#MillingProcess",
       "taxonomy_parent_label": "Milling process",
       "taxonomy_path": [
@@ -12080,7 +12222,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 12
+      "degree": 11
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#BallMillingTime",
@@ -18146,38 +18288,16 @@
       "category": "Classes",
       "display_class": "Matter",
       "modules": [
-        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "carbon nanotube"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHEBI_50594",
-          "target_label": "carbon nanotube",
-          "ontology_id": "chebi",
-          "ontology_title": "Chemical Entities of Biological Interest",
-          "ontology_version": "255",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (consisting, graphene, more).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chebi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Carbon Nanotube CarbonNanotube h2kg:CarbonNanotube https://w3id.org/h2kg/hydrogen-ontology#CarbonNanotube A tubular carbon nanostructure consisting of one or more approximately cylindrical graphene-like walls. carbon nanotube array Class Matter Carbon material https://w3id.org/h2kg/hydrogen-ontology#CarbonMaterial carbon nanotube http://purl.obolibrary.org/obo/CHEBI_50594 skos:exactMatch A tubular carbon nanostructure consisting of one or more approximately cylindrical graphene-like walls. Carbon material Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#CarbonMaterial",
+      "search_text": "Carbon Nanotube CarbonNanotube h2kg:CarbonNanotube https://w3id.org/h2kg/hydrogen-ontology#CarbonNanotube A tubular carbon nanostructure consisting of one or more approximately cylindrical graphene-like walls. carbon nanotube array Class Matter Carbon material https://w3id.org/h2kg/hydrogen-ontology#CarbonMaterial A tubular carbon nanostructure consisting of one or more approximately cylindrical graphene-like walls. Carbon material Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#CarbonMaterial",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#CarbonMaterial",
       "taxonomy_parent_label": "Carbon material",
       "taxonomy_path": [
@@ -18195,7 +18315,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 1
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CarbonNanotubeCompleteDecompositionTemperature",
@@ -19966,14 +20086,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "Flow"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow",
+          "target_label": "Flow",
+          "ontology_id": "sargon",
+          "ontology_title": "SARGON (SmArt eneRGy dOmain oNtology)",
+          "ontology_version": "2.1.2",
+          "collections": [
+            "NFDI4Energy"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (carrier, gas); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sargon",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#CarbonMonoxideStrippingVoltammetry",
@@ -20029,7 +20171,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Carrier Gas Flow CarrierGasFlow h2kg:CarrierGasFlow https://w3id.org/h2kg/hydrogen-ontology#CarrierGasFlow Rate at which an identified carrier gas is supplied through the specified process boundary, expressed on a declared volumetric, amount-of-substance, or mass basis. H2 flow N2 flow air flow Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic http://qudt.org/vocab/unit/CentiM3-PER-MIN http://qudt.org/vocab/quantitykind/VolumeFlowRate Rate at which an identified carrier gas is supplied through the specified process boundary, expressed on a declared volumetric, amount-of-substance, or mass basis. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "search_text": "Carrier Gas Flow CarrierGasFlow h2kg:CarrierGasFlow https://w3id.org/h2kg/hydrogen-ontology#CarrierGasFlow Rate at which an identified carrier gas is supplied through the specified process boundary, expressed on a declared volumetric, amount-of-substance, or mass basis. H2 flow N2 flow air flow Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic Flow https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow skos:broadMatch http://qudt.org/vocab/unit/CentiM3-PER-MIN http://qudt.org/vocab/quantitykind/VolumeFlowRate Rate at which an identified carrier gas is supplied through the specified process boundary, expressed on a declared volumetric, amount-of-substance, or mass basis. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent_label": "Quantitative characteristic",
       "taxonomy_path": [
@@ -20047,7 +20189,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 7
+      "degree": 8
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#CastorOil",
@@ -46962,38 +47104,16 @@
       "category": "Classes",
       "display_class": "Matter",
       "modules": [
-        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "diacetone alcohol"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHEBI_55381",
-          "target_label": "diacetone alcohol",
-          "ontology_id": "chebi",
-          "ontology_title": "Chemical Entities of Biological Interest",
-          "ontology_version": "255",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (hydroxy, methylpentan, one).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chebi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Diacetone Alcohol DiacetoneAlcohol h2kg:DiacetoneAlcohol https://w3id.org/h2kg/hydrogen-ontology#DiacetoneAlcohol Diacetone alcohol, or 4-hydroxy-4-methylpentan-2-one, an organic hydroxyketone used as a solvent. Class Matter Solvent https://w3id.org/h2kg/hydrogen-ontology#Solvent diacetone alcohol http://purl.obolibrary.org/obo/CHEBI_55381 skos:exactMatch Diacetone alcohol, or 4-hydroxy-4-methylpentan-2-one, an organic hydroxyketone used as a solvent. Solvent Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance https://w3id.org/h2kg/hydrogen-ontology#Solvent",
+      "search_text": "Diacetone Alcohol DiacetoneAlcohol h2kg:DiacetoneAlcohol https://w3id.org/h2kg/hydrogen-ontology#DiacetoneAlcohol Diacetone alcohol, or 4-hydroxy-4-methylpentan-2-one, an organic hydroxyketone used as a solvent. Class Matter Solvent https://w3id.org/h2kg/hydrogen-ontology#Solvent Diacetone alcohol, or 4-hydroxy-4-methylpentan-2-one, an organic hydroxyketone used as a solvent. Solvent Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance https://w3id.org/h2kg/hydrogen-ontology#Solvent",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#Solvent",
       "taxonomy_parent_label": "Solvent",
       "taxonomy_path": [
@@ -47012,7 +47132,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 1
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#DialysisBathChangeInterval",
@@ -53371,7 +53491,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (dwell, time).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (acquisition, during, dwell, time).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -54515,7 +54635,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (mass, sorption, vapor).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (dynamic, sorption, vapor).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -67507,16 +67627,39 @@
       "category": "Classes",
       "display_class": "Compatibility",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Deprecated",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "Density"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+          "target_label": "Density",
+          "ontology_id": "emmo",
+          "ontology_title": "The European Materials Modelling Ontology",
+          "ontology_version": "1.0.0-beta4",
+          "collections": [
+            "NFDI4Cat",
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (fe, site); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/emmo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Fe N 4 Site Density FeN4SiteDensity h2kg:FeN4SiteDensity https://w3id.org/h2kg/hydrogen-ontology#FeN4SiteDensity A property denoting estimated density of Fe–N4 sites from N 1s XPS fitting (assumption: 399.5 eV component originates from Fe–N4). active site density site density (SD) Class Compatibility http://qudt.org/vocab/quantitykind/AmountOfSubstancePerMass A property denoting estimated density of Fe–N4 sites from N 1s XPS fitting (assumption: 399.5 eV component originates from Fe–N4). Compatibility core",
+      "search_text": "Fe N 4 Site Density FeN4SiteDensity h2kg:FeN4SiteDensity https://w3id.org/h2kg/hydrogen-ontology#FeN4SiteDensity A property denoting estimated density of Fe–N4 sites from N 1s XPS fitting (assumption: 399.5 eV component originates from Fe–N4). active site density site density (SD) Class Compatibility Density http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044 skos:broadMatch http://qudt.org/vocab/quantitykind/AmountOfSubstancePerMass A property denoting estimated density of Fe–N4 sites from N 1s XPS fitting (assumption: 399.5 eV component originates from Fe–N4). Compatibility core",
       "taxonomy_parent": "",
       "taxonomy_parent_label": "",
       "taxonomy_path": [],
@@ -67530,7 +67673,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#DensityCharacteristic",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#FeNCCatalyst",
@@ -75514,7 +75657,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (mobile, phase).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (chromatography, column, gas).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -75532,7 +75675,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (mobile, phase).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (chromatography, column, gas).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -75550,7 +75693,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (phase, separates).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (gas).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -76377,16 +76520,38 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "flow rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+          "target_label": "flow rate",
+          "ontology_id": "envo",
+          "ontology_title": "The Environment Ontology",
+          "ontology_version": "2026-06-26",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (gas); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/envo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Gas Flow Rate GasFlowRate h2kg:GasFlowRate https://w3id.org/h2kg/hydrogen-ontology#GasFlowRate A transport characteristic specifying the quantity of gas passing a reference boundary per unit time. L/min flow rate mL/min Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of gas passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
+      "search_text": "Gas Flow Rate GasFlowRate h2kg:GasFlowRate https://w3id.org/h2kg/hydrogen-ontology#GasFlowRate A transport characteristic specifying the quantity of gas passing a reference boundary per unit time. L/min flow rate mL/min Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://purl.obolibrary.org/obo/PATO_0001574 skos:broadMatch http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of gas passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent_label": "Transport characteristic",
       "taxonomy_path": [
@@ -76404,7 +76569,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#GasHourlySpaceVelocity",
@@ -77690,75 +77855,14 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
-        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "Area",
-        "area",
-        "Area"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:broadMatch",
-          "target_iri": "http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890",
-          "target_label": "Area",
-          "ontology_id": "emmo",
-          "ontology_title": "The European Materials Modelling Ontology",
-          "ontology_version": "1.0.0-beta4",
-          "collections": [
-            "NFDI4Cat",
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "H2KG adds explicit scientifically meaningful restrictions (geometric); the external genus is supported by the H2KG definition and external definition or hierarchy.",
-          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/emmo",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        },
-        {
-          "relation": "skos:broadMatch",
-          "target_iri": "http://semanticscience.org/resource/SIO_000045",
-          "target_label": "area",
-          "ontology_id": "sio",
-          "ontology_title": "Semanticscience Integrated Ontology (SIO)",
-          "ontology_version": "1.61",
-          "collections": [
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "H2KG adds explicit scientifically meaningful restrictions (geometric); the external genus is supported by the H2KG definition and external definition or hierarchy.",
-          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sio",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        },
-        {
-          "relation": "skos:broadMatch",
-          "target_iri": "https://saref.etsi.org/saref4inma/Area",
-          "target_label": "Area",
-          "ontology_id": "s4inma",
-          "ontology_title": "SAREF4INMA: an extension of SAREF for the industry and manufacturing domain",
-          "ontology_version": "v2.1.1",
-          "collections": [
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "H2KG adds explicit scientifically meaningful restrictions (geometric); the external genus is supported by the H2KG definition and external definition or hierarchy.",
-          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/s4inma",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#AnodeCatalystLoading",
@@ -77894,7 +77998,7 @@
       "workflow_badges": [
         "Normalization property"
       ],
-      "search_text": "Geometric Area GeometricArea h2kg:GeometricArea https://w3id.org/h2kg/hydrogen-ontology#GeometricArea A geometric characteristic specifying the area associated with geometric. active area active area (geometric) printed area Class Characteristic Geometric characteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic Area http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890 skos:broadMatch area http://semanticscience.org/resource/SIO_000045 https://saref.etsi.org/saref4inma/Area http://qudt.org/vocab/quantitykind/Area A geometric characteristic specifying the area associated with geometric. Geometric characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
+      "search_text": "Geometric Area GeometricArea h2kg:GeometricArea https://w3id.org/h2kg/hydrogen-ontology#GeometricArea A geometric characteristic specifying the area associated with geometric. active area active area (geometric) printed area Class Characteristic Geometric characteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic http://qudt.org/vocab/quantitykind/Area A geometric characteristic specifying the area associated with geometric. Geometric characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
       "taxonomy_parent_label": "Geometric characteristic",
       "taxonomy_path": [
@@ -77913,7 +78017,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 17
+      "degree": 14
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
@@ -79063,16 +79167,38 @@
       "category": "Classes",
       "display_class": "Compatibility",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Deprecated",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "grain size"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:exactMatch",
+          "target_iri": "https://w3id.org/pmd/co/PMD_0020243",
+          "target_label": "grain size",
+          "ontology_id": "mwo",
+          "ontology_title": "NFDI Matwerk Ontology",
+          "ontology_version": "3.0.2",
+          "collections": [
+            "NFDI4Ing"
+          ],
+          "confidence": "high",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (size).",
+          "rule_id": "EQUIV-SCOPE-002",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/mwo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Grain Size GrainSize h2kg:GrainSize https://w3id.org/h2kg/hydrogen-ontology#GrainSize A property denoting characteristic grain/crystallite size estimated from XRD using Scherrer formula (reported ~5 nm for β-SiC at 1600°C). La Lc crystallite size Class Compatibility http://qudt.org/vocab/quantitykind/Length A property denoting characteristic grain/crystallite size estimated from XRD using Scherrer formula (reported ~5 nm for β-SiC at 1600°C). Compatibility core",
+      "search_text": "Grain Size GrainSize h2kg:GrainSize https://w3id.org/h2kg/hydrogen-ontology#GrainSize A property denoting characteristic grain/crystallite size estimated from XRD using Scherrer formula (reported ~5 nm for β-SiC at 1600°C). La Lc crystallite size Class Compatibility grain size https://w3id.org/pmd/co/PMD_0020243 skos:exactMatch http://qudt.org/vocab/quantitykind/Length A property denoting characteristic grain/crystallite size estimated from XRD using Scherrer formula (reported ~5 nm for β-SiC at 1600°C). Compatibility core",
       "taxonomy_parent": "",
       "taxonomy_parent_label": "",
       "taxonomy_path": [],
@@ -79086,7 +79212,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#GrapheneFewLayerFraction",
@@ -82339,8 +82465,8 @@
       "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "hasSubProcess h2kg:hasSubProcess https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess An object property relating a process to a subprocess that forms part of its overall execution. ObjectProperty",
-      "degree": 0
+      "search_text": "hasSubProcess h2kg:hasSubProcess https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess An object property relating a process to a subprocess that forms part of its overall execution. ObjectProperty Process https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#HeatGun",
@@ -86781,36 +86907,14 @@
       "category": "Classes",
       "display_class": "Matter",
       "modules": [
-        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "hydrogen peroxide"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHEBI_16240",
-          "target_label": "hydrogen peroxide",
-          "ontology_id": "chebi",
-          "ontology_title": "Chemical Entities of Biological Interest",
-          "ontology_version": "255",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (peroxide).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chebi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#PhotocatalyticDegradationMeasurement",
@@ -86826,7 +86930,7 @@
       "workflow_badges": [
         "Has input material"
       ],
-      "search_text": "Hydrogen Peroxide HydrogenPeroxide h2kg:HydrogenPeroxide https://w3id.org/h2kg/hydrogen-ontology#HydrogenPeroxide Hydrogen peroxide (H₂O₂), a reactive peroxide compound that can participate in oxidation–reduction and radical-generating reactions. Class Matter Chemical substance https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance hydrogen peroxide http://purl.obolibrary.org/obo/CHEBI_16240 skos:exactMatch Hydrogen peroxide (H₂O₂), a reactive peroxide compound that can participate in oxidation–reduction and radical-generating reactions. Chemical substance Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance",
+      "search_text": "Hydrogen Peroxide HydrogenPeroxide h2kg:HydrogenPeroxide https://w3id.org/h2kg/hydrogen-ontology#HydrogenPeroxide Hydrogen peroxide (H₂O₂), a reactive peroxide compound that can participate in oxidation–reduction and radical-generating reactions. Class Matter Chemical substance https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance Hydrogen peroxide (H₂O₂), a reactive peroxide compound that can participate in oxidation–reduction and radical-generating reactions. Chemical substance Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#ChemicalSubstance",
       "taxonomy_parent_label": "Chemical substance",
       "taxonomy_path": [
@@ -86844,7 +86948,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 3
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#HydrogenPeroxideVolume",
@@ -87202,14 +87306,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "flow rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+          "target_label": "flow rate",
+          "ontology_id": "envo",
+          "ontology_title": "The Environment Ontology",
+          "ontology_version": "2026-06-26",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (hydrogen, volumetric); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/envo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#AmbientPressureChemicalVaporDepositionSynthesis",
@@ -87225,7 +87351,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Hydrogen Volumetric Flow Rate HydrogenVolumetricFlowRate h2kg:HydrogenVolumetricFlowRate https://w3id.org/h2kg/hydrogen-ontology#HydrogenVolumetricFlowRate A transport characteristic specifying the quantity of hydrogen volumetric passing a reference boundary per unit time. flow rate hydrogen flow hydrogen flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of hydrogen volumetric passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
+      "search_text": "Hydrogen Volumetric Flow Rate HydrogenVolumetricFlowRate h2kg:HydrogenVolumetricFlowRate https://w3id.org/h2kg/hydrogen-ontology#HydrogenVolumetricFlowRate A transport characteristic specifying the quantity of hydrogen volumetric passing a reference boundary per unit time. flow rate hydrogen flow hydrogen flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://purl.obolibrary.org/obo/PATO_0001574 skos:broadMatch http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of hydrogen volumetric passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent_label": "Transport characteristic",
       "taxonomy_path": [
@@ -87243,7 +87369,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 3
+      "degree": 4
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#HydroiodicAcid",
@@ -96167,7 +96293,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (all, concentration, half, ionic, multiplied, over).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (ionic, strength).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -96185,7 +96311,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (all, charge, concentration, ionic, number, over).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (ionic, strength).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -99502,14 +99628,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "thin film thickness"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "https://w3id.org/nfdi4cat/voc4cat_0000042",
+          "target_label": "thin film thickness",
+          "ontology_id": "voc4cat",
+          "ontology_title": "Voc4Cat - A SKOS vocabulary for Catalysis",
+          "ontology_version": "version-not-reported-in-TIB-snapshot",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (ionomer); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/voc4cat",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#AtomicForceMicroscopyMeasurement",
@@ -99535,7 +99683,7 @@
       "workflow_badges": [
         "Measured property"
       ],
-      "search_text": "Ionomer Thin Film Thickness IonomerThinFilmThickness h2kg:IonomerThinFilmThickness https://w3id.org/h2kg/hydrogen-ontology#IonomerThinFilmThickness A geometric characteristic specifying the distance between the opposing bounding surfaces of ionomer thin film. Nafion ionomer film thickness Nafion thin film thickness thin film thickness Class Characteristic Layer thickness https://w3id.org/h2kg/hydrogen-ontology#LayerThickness http://qudt.org/vocab/quantitykind/Length A geometric characteristic specifying the distance between the opposing bounding surfaces of ionomer thin film. Layer thickness Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
+      "search_text": "Ionomer Thin Film Thickness IonomerThinFilmThickness h2kg:IonomerThinFilmThickness https://w3id.org/h2kg/hydrogen-ontology#IonomerThinFilmThickness A geometric characteristic specifying the distance between the opposing bounding surfaces of ionomer thin film. Nafion ionomer film thickness Nafion thin film thickness thin film thickness Class Characteristic Layer thickness https://w3id.org/h2kg/hydrogen-ontology#LayerThickness https://w3id.org/nfdi4cat/voc4cat_0000042 skos:broadMatch http://qudt.org/vocab/quantitykind/Length A geometric characteristic specifying the distance between the opposing bounding surfaces of ionomer thin film. Layer thickness Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#GeometricCharacteristic https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#LayerThickness",
       "taxonomy_parent_label": "Layer thickness",
       "taxonomy_path": [
@@ -99555,7 +99703,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 4
+      "degree": 5
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#IonomerToCatalystMassRatio",
@@ -101638,8 +101786,8 @@
       "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "isSubProcessOf h2kg:isSubProcessOf https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf An object property relating a subprocess to the larger process of which it forms a part. ObjectProperty",
-      "degree": 0
+      "search_text": "isSubProcessOf h2kg:isSubProcessOf https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf An object property relating a subprocess to the larger process of which it forms a part. ObjectProperty Process https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ITCCarbonDensityInputField",
@@ -104880,7 +105028,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (dimensionless, free, length, mean, molecular, path).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (free, knudsen, mean, number, path).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -110327,14 +110475,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "flow rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+          "target_label": "flow rate",
+          "ontology_id": "envo",
+          "ontology_title": "The Environment Ontology",
+          "ontology_version": "2026-06-26",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (liquid); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/envo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#ApparatusSpecificationMeasurement",
@@ -110421,7 +110591,7 @@
         "Measured property",
         "Used as parameter"
       ],
-      "search_text": "Liquid Flow Rate LiquidFlowRate h2kg:LiquidFlowRate https://w3id.org/h2kg/hydrogen-ontology#LiquidFlowRate A transport characteristic specifying the quantity of liquid passing a reference boundary per unit time. anode feed flow rate flow rate ink flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of liquid passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
+      "search_text": "Liquid Flow Rate LiquidFlowRate h2kg:LiquidFlowRate https://w3id.org/h2kg/hydrogen-ontology#LiquidFlowRate A transport characteristic specifying the quantity of liquid passing a reference boundary per unit time. anode feed flow rate flow rate ink flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://purl.obolibrary.org/obo/PATO_0001574 skos:broadMatch http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of liquid passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent_label": "Transport characteristic",
       "taxonomy_path": [
@@ -110439,7 +110609,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 10
+      "degree": 11
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#LiquidNitrogenFreezingTreatment",
@@ -112644,14 +112814,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "flow rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+          "target_label": "flow rate",
+          "ontology_id": "envo",
+          "ontology_title": "The Environment Ontology",
+          "ontology_version": "2026-06-26",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (mass); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/envo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#ColdStartTest",
@@ -112687,7 +112879,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Mass Flow Rate MassFlowRate h2kg:MassFlowRate https://w3id.org/h2kg/hydrogen-ontology#MassFlowRate A transport characteristic specifying the quantity of mass passing a reference boundary per unit time. flow rate mass flow rate H2 nL/min Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://qudt.org/vocab/quantitykind/MassFlowRate A transport characteristic specifying the quantity of mass passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
+      "search_text": "Mass Flow Rate MassFlowRate h2kg:MassFlowRate https://w3id.org/h2kg/hydrogen-ontology#MassFlowRate A transport characteristic specifying the quantity of mass passing a reference boundary per unit time. flow rate mass flow rate H2 nL/min Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://purl.obolibrary.org/obo/PATO_0001574 skos:broadMatch http://qudt.org/vocab/quantitykind/MassFlowRate A transport characteristic specifying the quantity of mass passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent_label": "Transport characteristic",
       "taxonomy_path": [
@@ -112705,7 +112897,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 5
+      "degree": 6
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#MassFractalDimension",
@@ -115057,7 +115249,7 @@
       "label": "MEA Polarization",
       "localName": "MEAPolarization",
       "qname": "h2kg:MEAPolarization",
-      "description": "Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement.",
+      "description": "An electrochemical measurement performed on a membrane electrode assembly to determine the relation between cell voltage and current density under specified operating conditions.",
       "alt_labels": [],
       "notations": [],
       "sources": [],
@@ -115079,7 +115271,7 @@
       "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "MEA Polarization MEAPolarization h2kg:MEAPolarization https://w3id.org/h2kg/hydrogen-ontology#MEAPolarization Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement. Class Measurement Electrochemical measurement https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement Deprecated legacy label retained for backward compatibility. Use Fuel Cell Polarization Measurement as the canonical public term for PEMFC polarization and IV-curve measurement. Electrochemical measurement Process core https://w3id.org/h2kg/hydrogen-ontology#Process https://w3id.org/h2kg/hydrogen-ontology#Measurement https://w3id.org/h2kg/hydrogen-ontology#CharacterizationMeasurement https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement",
+      "search_text": "MEA Polarization MEAPolarization h2kg:MEAPolarization https://w3id.org/h2kg/hydrogen-ontology#MEAPolarization An electrochemical measurement performed on a membrane electrode assembly to determine the relation between cell voltage and current density under specified operating conditions. Class Measurement Electrochemical measurement https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement An electrochemical measurement performed on a membrane electrode assembly to determine the relation between cell voltage and current density under specified operating conditions. Electrochemical measurement Process core https://w3id.org/h2kg/hydrogen-ontology#Process https://w3id.org/h2kg/hydrogen-ontology#Measurement https://w3id.org/h2kg/hydrogen-ontology#CharacterizationMeasurement https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#ElectrochemicalMeasurement",
       "taxonomy_parent_label": "Electrochemical measurement",
       "taxonomy_path": [
@@ -123563,7 +123755,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (amount, mixture, molar).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (concentration, molar).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -123781,7 +123973,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (molecular).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (molecular, simulation).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -129597,14 +129789,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "flow rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:broadMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+          "target_label": "flow rate",
+          "ontology_id": "envo",
+          "ontology_title": "The Environment Ontology",
+          "ontology_version": "2026-06-26",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "H2KG adds explicit scientifically meaningful restrictions (nitrogen, volumetric); the external genus is supported by the H2KG definition and external definition or hierarchy.",
+          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/envo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#AmbientPressureChemicalVaporDepositionSynthesis",
@@ -129620,7 +129834,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Nitrogen Volumetric Flow Rate NitrogenVolumetricFlowRate h2kg:NitrogenVolumetricFlowRate https://w3id.org/h2kg/hydrogen-ontology#NitrogenVolumetricFlowRate A transport characteristic specifying the quantity of nitrogen volumetric passing a reference boundary per unit time. flow rate nitrogen flow nitrogen flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of nitrogen volumetric passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
+      "search_text": "Nitrogen Volumetric Flow Rate NitrogenVolumetricFlowRate h2kg:NitrogenVolumetricFlowRate https://w3id.org/h2kg/hydrogen-ontology#NitrogenVolumetricFlowRate A transport characteristic specifying the quantity of nitrogen volumetric passing a reference boundary per unit time. flow rate nitrogen flow nitrogen flow rate Class Characteristic Transport characteristic https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic http://purl.obolibrary.org/obo/PATO_0001574 skos:broadMatch http://qudt.org/vocab/quantitykind/VolumetricFlowRate A transport characteristic specifying the quantity of nitrogen volumetric passing a reference boundary per unit time. Transport characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TransportCharacteristic",
       "taxonomy_parent_label": "Transport characteristic",
       "taxonomy_path": [
@@ -129638,7 +129852,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 3
+      "degree": 4
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#NMRMeasurement",
@@ -133928,47 +134142,9 @@
       "local": true,
       "deprecated": "Active",
       "mapping_labels": [
-        "organization",
-        "organization",
         "Organization"
       ],
       "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/OBI_0000245",
-          "target_label": "organization",
-          "ontology_id": "obi",
-          "ontology_title": "Ontology for Biomedical Investigations",
-          "ontology_version": "2026-07-27",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (bear, can, organization).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/obi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        },
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://semanticscience.org/resource/SIO_000012",
-          "target_label": "organization",
-          "ontology_id": "sio",
-          "ontology_title": "Semanticscience Integrated Ontology (SIO)",
-          "ontology_version": "1.61",
-          "collections": [
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (collective, organization).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sio",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        },
         {
           "relation": "skos:exactMatch",
           "target_iri": "http://www.w3.org/ns/prov#Organization",
@@ -133980,7 +134156,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (company, institution, organization, such).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (company, institution, such).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -133990,7 +134166,7 @@
       ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Organization h2kg:Organization https://w3id.org/h2kg/hydrogen-ontology#Organization A collective agent with an organized identity that can bear responsibility for activities or resources, such as a research institution, company, consortium, facility organization, or project team. Class Agent https://w3id.org/h2kg/hydrogen-ontology#Agent organization http://purl.obolibrary.org/obo/OBI_0000245 skos:exactMatch http://semanticscience.org/resource/SIO_000012 http://www.w3.org/ns/prov#Organization A collective agent with an organized identity that can bear responsibility for activities or resources, such as a research institution, company, consortium, facility organization, or project team. Agent Agent core https://w3id.org/h2kg/hydrogen-ontology#Agent",
+      "search_text": "Organization h2kg:Organization https://w3id.org/h2kg/hydrogen-ontology#Organization A collective agent with an organized identity that can bear responsibility for activities or resources, such as a research institution, company, consortium, facility organization, or project team. Class Agent https://w3id.org/h2kg/hydrogen-ontology#Agent http://www.w3.org/ns/prov#Organization skos:exactMatch A collective agent with an organized identity that can bear responsibility for activities or resources, such as a research institution, company, consortium, facility organization, or project team. Agent Agent core https://w3id.org/h2kg/hydrogen-ontology#Agent",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
       "taxonomy_parent_label": "Agent",
       "taxonomy_path": [
@@ -134006,7 +134182,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 4
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ORRPerformanceDataset",
@@ -154083,7 +154259,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 14
+      "degree": 18
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ProcurementProcess",
@@ -161733,38 +161909,16 @@
       "category": "Classes",
       "display_class": "Matter",
       "modules": [
-        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "quantum dot"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:exactMatch",
-          "target_iri": "http://purl.obolibrary.org/obo/CHEBI_50853",
-          "target_label": "quantum dot",
-          "ontology_id": "chebi",
-          "ontology_title": "Chemical Entities of Biological Interest",
-          "ontology_version": "255",
-          "collections": [
-            "NFDI4Cat"
-          ],
-          "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (are, confined, dimensions, spatial, three).",
-          "rule_id": "EQUIV-SCOPE-002",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chebi",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Quantum Dot QuantumDot h2kg:QuantumDot https://w3id.org/h2kg/hydrogen-ontology#QuantumDot A nanoscale material structure in which charge carriers are confined in all three spatial dimensions, resulting in discrete, size-dependent electronic states. QD colloidal quantum dot Class Matter Material entity https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity quantum dot http://purl.obolibrary.org/obo/CHEBI_50853 skos:exactMatch A nanoscale material structure in which charge carriers are confined in all three spatial dimensions, resulting in discrete, size-dependent electronic states. Material entity Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity",
+      "search_text": "Quantum Dot QuantumDot h2kg:QuantumDot https://w3id.org/h2kg/hydrogen-ontology#QuantumDot A nanoscale material structure in which charge carriers are confined in all three spatial dimensions, resulting in discrete, size-dependent electronic states. QD colloidal quantum dot Class Matter Material entity https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity A nanoscale material structure in which charge carriers are confined in all three spatial dimensions, resulting in discrete, size-dependent electronic states. Material entity Matter core https://w3id.org/h2kg/hydrogen-ontology#Matter https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#MaterialEntity",
       "taxonomy_parent_label": "Material entity",
       "taxonomy_path": [
@@ -161781,7 +161935,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 2
+      "degree": 1
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#QuantumDotInk",
@@ -171796,14 +171950,36 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
+        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "scan rate"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:exactMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/MS_1000015",
+          "target_label": "scan rate",
+          "ontology_id": "ms",
+          "ontology_title": "Mass Spectrometry",
+          "ontology_version": "version-not-reported-in-TIB-snapshot",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (rate).",
+          "rule_id": "EQUIV-SCOPE-002",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/ms",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#AcceleratedStressTestVoltageCycling",
@@ -171899,7 +172075,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "Scan Rate ScanRate h2kg:ScanRate https://w3id.org/h2kg/hydrogen-ontology#ScanRate A quantitative characteristic specifying the change in scan per stated unit of time or progression variable. CV scan rate scan rate (mV s−1) scanning rate Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic http://qudt.org/vocab/unit/MilliV-PER-SEC http://qudt.org/vocab/quantitykind/Frequency http://qudt.org/vocab/quantitykind/ElectricPotentialScanRate A quantitative characteristic specifying the change in scan per stated unit of time or progression variable. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
+      "search_text": "Scan Rate ScanRate h2kg:ScanRate https://w3id.org/h2kg/hydrogen-ontology#ScanRate A quantitative characteristic specifying the change in scan per stated unit of time or progression variable. CV scan rate scan rate (mV s−1) scanning rate Class Characteristic Quantitative characteristic https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic scan rate http://purl.obolibrary.org/obo/MS_1000015 skos:exactMatch http://qudt.org/vocab/unit/MilliV-PER-SEC http://qudt.org/vocab/quantitykind/Frequency http://qudt.org/vocab/quantitykind/ElectricPotentialScanRate A quantitative characteristic specifying the change in scan per stated unit of time or progression variable. Quantitative characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic",
       "taxonomy_parent_label": "Quantitative characteristic",
       "taxonomy_path": [
@@ -171917,7 +172093,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 12
+      "degree": 13
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
@@ -177099,7 +177275,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (oxide, silicon).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (silicon).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -183190,16 +183366,38 @@
       "category": "Classes",
       "display_class": "Compatibility",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Deprecated",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "specific activity"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:exactMatch",
+          "target_iri": "http://biomodels.net/SBO/SBO_0000558",
+          "target_label": "specific activity",
+          "ontology_id": "sbo",
+          "ontology_title": "Systems Biology Ontology",
+          "ontology_version": "28:08:2021 03:13",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (specific).",
+          "rule_id": "EQUIV-SCOPE-002",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/sbo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "Specific Activity SpecificActivity h2kg:SpecificActivity https://w3id.org/h2kg/hydrogen-ontology#SpecificActivity A property denoting specific activity. Class Compatibility http://qudt.org/vocab/quantitykind/ElectricCurrentDensity A property denoting specific activity. Compatibility core",
+      "search_text": "Specific Activity SpecificActivity h2kg:SpecificActivity https://w3id.org/h2kg/hydrogen-ontology#SpecificActivity A property denoting specific activity. Class Compatibility specific activity http://biomodels.net/SBO/SBO_0000558 skos:exactMatch http://qudt.org/vocab/quantitykind/ElectricCurrentDensity A property denoting specific activity. Compatibility core",
       "taxonomy_parent": "",
       "taxonomy_parent_label": "",
       "taxonomy_path": [],
@@ -183213,7 +183411,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#PerformanceCharacteristic",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#SpecificAreaActivityAt0p9V",
@@ -186515,7 +186713,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (stage, tilt).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (angle, stage, tilt).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -195049,7 +195247,7 @@
             "NFDI4Cat"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (controlled, mass, temperature, thermal, under).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (analysis).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -202328,36 +202526,14 @@
       "category": "Classes",
       "display_class": "Characteristic",
       "modules": [
-        "alignments",
         "profiles",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Active",
-      "mapping_labels": [
-        "Exposure Time"
-      ],
-      "external_alignments": [
-        {
-          "relation": "skos:broadMatch",
-          "target_iri": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp",
-          "target_label": "Exposure Time",
-          "ontology_id": "kitmtxx",
-          "ontology_title": "Vocabulary of Materials Tribology Lab at KIT",
-          "ontology_version": "version-not-reported-in-TIB-snapshot",
-          "collections": [
-            "NFDI4Ing"
-          ],
-          "confidence": "high",
-          "evidence": "H2KG adds explicit scientifically meaningful restrictions (uv); the external genus is supported by the H2KG definition and external definition or hierarchy.",
-          "rule_id": "SUBSUMPTION-H2KG-NARROWER-003",
-          "alignment_category": "tib_benchmark_alignment",
-          "publication_status": "asserted-machine-safe",
-          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/kitmtxx",
-          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
-        }
-      ],
+      "mapping_labels": [],
+      "external_alignments": [],
       "workflow_usages": [
         {
           "source_iri": "https://w3id.org/h2kg/hydrogen-ontology#PhotolithographyPatterning",
@@ -202373,7 +202549,7 @@
       "workflow_badges": [
         "Used as parameter"
       ],
-      "search_text": "UV Exposure Time UVExposureTime h2kg:UVExposureTime https://w3id.org/h2kg/hydrogen-ontology#UVExposureTime A temporal characteristic specifying the elapsed time associated with uv exposure. exposure time Class Characteristic Temporal characteristic https://w3id.org/h2kg/hydrogen-ontology#TemporalCharacteristic Exposure Time https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp skos:broadMatch http://qudt.org/vocab/unit/SEC http://qudt.org/vocab/quantitykind/Time A temporal characteristic specifying the elapsed time associated with uv exposure. Temporal characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#TemporalCharacteristic",
+      "search_text": "UV Exposure Time UVExposureTime h2kg:UVExposureTime https://w3id.org/h2kg/hydrogen-ontology#UVExposureTime A temporal characteristic specifying the elapsed time associated with uv exposure. exposure time Class Characteristic Temporal characteristic https://w3id.org/h2kg/hydrogen-ontology#TemporalCharacteristic http://qudt.org/vocab/unit/SEC http://qudt.org/vocab/quantitykind/Time A temporal characteristic specifying the elapsed time associated with uv exposure. Temporal characteristic Characteristic core https://w3id.org/h2kg/hydrogen-ontology#Characteristic https://w3id.org/h2kg/hydrogen-ontology#Property https://w3id.org/h2kg/hydrogen-ontology#QuantitativeCharacteristic https://w3id.org/h2kg/hydrogen-ontology#TemporalCharacteristic",
       "taxonomy_parent": "https://w3id.org/h2kg/hydrogen-ontology#TemporalCharacteristic",
       "taxonomy_parent_label": "Temporal characteristic",
       "taxonomy_path": [
@@ -202392,7 +202568,7 @@
       "replacement_iri": "",
       "migration_target_iris": [],
       "profile_fallback_iri": "",
-      "degree": 4
+      "degree": 3
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#UVIrradiance",
@@ -207930,7 +208106,7 @@
             "NFDI4Ing"
           ],
           "confidence": "high",
-          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (distance).",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (distance, lens).",
           "rule_id": "EQUIV-SCOPE-002",
           "alignment_category": "tib_benchmark_alignment",
           "publication_status": "asserted-machine-safe",
@@ -209121,16 +209297,38 @@
       "category": "Classes",
       "display_class": "Compatibility",
       "modules": [
+        "alignments",
         "schema",
         "taxonomy"
       ],
       "local": true,
       "deprecated": "Deprecated",
-      "mapping_labels": [],
-      "external_alignments": [],
+      "mapping_labels": [
+        "X-ray photoelectron spectrometer"
+      ],
+      "external_alignments": [
+        {
+          "relation": "skos:exactMatch",
+          "target_iri": "http://purl.obolibrary.org/obo/CHMO_0002648",
+          "target_label": "X-ray photoelectron spectrometer",
+          "ontology_id": "chmo",
+          "ontology_title": "Chemical Methods Ontology",
+          "ontology_version": "2026-05-28",
+          "collections": [
+            "NFDI4Cat"
+          ],
+          "confidence": "high",
+          "evidence": "Equivalent preferred/alternate labels are supported by active native-class status, compatible semantic roles, compatible state and granularity, and preferred-label identity plus shared definition scope (photoelectron, ray).",
+          "rule_id": "EQUIV-SCOPE-002",
+          "alignment_category": "tib_benchmark_alignment",
+          "publication_status": "asserted-machine-safe",
+          "tib_catalogue_url": "https://terminology.tib.eu/ts/ontologies/chmo",
+          "snapshot_retrieved_at": "2026-10-14T07:32:20+00:00"
+        }
+      ],
       "workflow_usages": [],
       "workflow_badges": [],
-      "search_text": "X Ray Photoelectron Spectrometer XRayPhotoelectronSpectrometer h2kg:XRayPhotoelectronSpectrometer https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectrometer An instrument that irradiates a specimen with X-rays and measures emitted photoelectron kinetic energies to obtain elemental and chemical-state information about the near-surface region. Multilab 2000 spectrometer XPS spectrometer photoelectron spectrometer Class Compatibility An instrument that irradiates a specimen with X-rays and measures emitted photoelectron kinetic energies to obtain elemental and chemical-state information about the near-surface region. Compatibility core",
+      "search_text": "X Ray Photoelectron Spectrometer XRayPhotoelectronSpectrometer h2kg:XRayPhotoelectronSpectrometer https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectrometer An instrument that irradiates a specimen with X-rays and measures emitted photoelectron kinetic energies to obtain elemental and chemical-state information about the near-surface region. Multilab 2000 spectrometer XPS spectrometer photoelectron spectrometer Class Compatibility X-ray photoelectron spectrometer http://purl.obolibrary.org/obo/CHMO_0002648 skos:exactMatch An instrument that irradiates a specimen with X-rays and measures emitted photoelectron kinetic energies to obtain elemental and chemical-state information about the near-surface region. Compatibility core",
       "taxonomy_parent": "",
       "taxonomy_parent_label": "",
       "taxonomy_path": [],
@@ -209146,7 +209344,7 @@
         "https://w3id.org/h2kg/hydrogen-ontology#XPSInstrument"
       ],
       "profile_fallback_iri": "https://w3id.org/h2kg/hydrogen-ontology#XPSInstrument",
-      "degree": 0
+      "degree": 1
     },
     {
       "id": "https://w3id.org/h2kg/hydrogen-ontology#XRayWavelength",
@@ -243676,34 +243874,6 @@
       "degree": 1
     },
     {
-      "id": "http://purl.obolibrary.org/obo/CHEBI_38472",
-      "iri": "http://purl.obolibrary.org/obo/CHEBI_38472",
-      "anchor": "CHEBI_38472",
-      "label": "acetonitrile",
-      "localName": "CHEBI_38472",
-      "qname": "chebi:38472",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "acetonitrile CHEBI_38472 chebi:38472 http://purl.obolibrary.org/obo/CHEBI_38472 Reviewed skos:exactMatch target.",
-      "degree": 1
-    },
-    {
       "id": "http://purl.allotrope.org/ontologies/process#AFP_0001510",
       "iri": "http://purl.allotrope.org/ontologies/process#AFP_0001510",
       "anchor": "AFP_0001510",
@@ -243925,7 +244095,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Area EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890 http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890 http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890 Reviewed skos:broadMatch target.",
-      "degree": 6
+      "degree": 5
     },
     {
       "id": "http://semanticscience.org/resource/SIO_000045",
@@ -243953,7 +244123,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "area SIO_000045 http://semanticscience.org/resource/SIO_000045 http://semanticscience.org/resource/SIO_000045 Reviewed skos:broadMatch target.",
-      "degree": 6
+      "degree": 5
     },
     {
       "id": "https://saref.etsi.org/saref4inma/Area",
@@ -243981,7 +244151,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Area Area https://saref.etsi.org/saref4inma/Area https://saref.etsi.org/saref4inma/Area Reviewed skos:broadMatch target.",
-      "degree": 6
+      "degree": 5
     },
     {
       "id": "http://purl.allotrope.org/ontologies/material#AFM_0001130",
@@ -244152,34 +244322,6 @@
       "degree": 1
     },
     {
-      "id": "http://purl.obolibrary.org/obo/CHMO_0001654",
-      "iri": "http://purl.obolibrary.org/obo/CHMO_0001654",
-      "anchor": "CHMO_0001654",
-      "label": "ball milling",
-      "localName": "CHMO_0001654",
-      "qname": "http://purl.obolibrary.org/obo/CHMO_0001654",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "ball milling CHMO_0001654 http://purl.obolibrary.org/obo/CHMO_0001654 http://purl.obolibrary.org/obo/CHMO_0001654 Reviewed skos:exactMatch target.",
-      "degree": 1
-    },
-    {
       "id": "https://w3id.org/nfdi4cat/voc4cat_0007108",
       "iri": "https://w3id.org/nfdi4cat/voc4cat_0007108",
       "anchor": "voc4cat_0007108",
@@ -244317,34 +244459,6 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "carbon dioxide gas AFM_0001116 http://purl.allotrope.org/ontologies/material#AFM_0001116 http://purl.allotrope.org/ontologies/material#AFM_0001116 Reviewed skos:narrowMatch target.",
-      "degree": 1
-    },
-    {
-      "id": "http://purl.obolibrary.org/obo/CHEBI_50594",
-      "iri": "http://purl.obolibrary.org/obo/CHEBI_50594",
-      "anchor": "CHEBI_50594",
-      "label": "carbon nanotube",
-      "localName": "CHEBI_50594",
-      "qname": "chebi:50594",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "carbon nanotube CHEBI_50594 chebi:50594 http://purl.obolibrary.org/obo/CHEBI_50594 Reviewed skos:exactMatch target.",
       "degree": 1
     },
     {
@@ -244804,7 +244918,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Concentration data_2140 http://edamontology.org/data_2140 http://edamontology.org/data_2140 Reviewed skos:broadMatch target.",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "http://purl.obolibrary.org/obo/CHMO_0002820",
@@ -244832,7 +244946,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "concentration CHMO_0002820 http://purl.obolibrary.org/obo/CHMO_0002820 http://purl.obolibrary.org/obo/CHMO_0002820 Reviewed skos:broadMatch target.",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "https://w3id.org/nfdi4cat/voc4cat_0007244",
@@ -244860,7 +244974,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "concentration voc4cat_0007244 https://w3id.org/nfdi4cat/voc4cat_0007244 https://w3id.org/nfdi4cat/voc4cat_0007244 Reviewed skos:broadMatch target.",
-      "degree": 1
+      "degree": 2
     },
     {
       "id": "http://purl.obolibrary.org/obo/CHMO_0001125",
@@ -245199,6 +245313,34 @@
       "degree": 4
     },
     {
+      "id": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "iri": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "anchor": "EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "label": "Density",
+      "localName": "EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "qname": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Density EMMO_06448f64_8db6_4304_8b2c_e785dba82044 http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044 http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044 Reviewed skos:broadMatch target.",
+      "degree": 2
+    },
+    {
       "id": "http://www.bioassayontology.org/bao#BAO_0000697",
       "iri": "http://www.bioassayontology.org/bao#BAO_0000697",
       "anchor": "BAO_0000697",
@@ -245224,34 +245366,6 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "detection instrument BAO_0000697 http://www.bioassayontology.org/bao#BAO_0000697 http://www.bioassayontology.org/bao#BAO_0000697 Reviewed skos:narrowMatch target.",
-      "degree": 1
-    },
-    {
-      "id": "http://purl.obolibrary.org/obo/CHEBI_55381",
-      "iri": "http://purl.obolibrary.org/obo/CHEBI_55381",
-      "anchor": "CHEBI_55381",
-      "label": "diacetone alcohol",
-      "localName": "CHEBI_55381",
-      "qname": "chebi:55381",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "diacetone alcohol CHEBI_55381 chebi:55381 http://purl.obolibrary.org/obo/CHEBI_55381 Reviewed skos:exactMatch target.",
       "degree": 1
     },
     {
@@ -246829,7 +246943,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "Exposure Time exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp Reviewed skos:exactMatch target.",
-      "degree": 2
+      "degree": 1
     },
     {
       "id": "http://www.w3id.org/ecsel-dr-SO#Fab",
@@ -246858,6 +246972,62 @@
       "mapping_labels": [],
       "search_text": "Fabrication Fab http://www.w3id.org/ecsel-dr-SO#Fab http://www.w3id.org/ecsel-dr-SO#Fab Reviewed skos:broadMatch target.",
       "degree": 1
+    },
+    {
+      "id": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow",
+      "iri": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow",
+      "anchor": "Flow",
+      "label": "Flow",
+      "localName": "Flow",
+      "qname": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Flow Flow https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "iri": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "anchor": "PATO_0001574",
+      "label": "flow rate",
+      "localName": "PATO_0001574",
+      "qname": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "flow rate PATO_0001574 http://purl.obolibrary.org/obo/PATO_0001574 http://purl.obolibrary.org/obo/PATO_0001574 Reviewed skos:broadMatch target.",
+      "degree": 5
     },
     {
       "id": "http://purl.obolibrary.org/obo/CHMO_0001095",
@@ -247196,6 +247366,34 @@
       "degree": 2
     },
     {
+      "id": "https://w3id.org/pmd/co/PMD_0020243",
+      "iri": "https://w3id.org/pmd/co/PMD_0020243",
+      "anchor": "PMD_0020243",
+      "label": "grain size",
+      "localName": "PMD_0020243",
+      "qname": "https://w3id.org/pmd/co/PMD_0020243",
+      "description": "Reviewed skos:exactMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "grain size PMD_0020243 https://w3id.org/pmd/co/PMD_0020243 https://w3id.org/pmd/co/PMD_0020243 Reviewed skos:exactMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://purl.obolibrary.org/obo/CHEBI_132889",
       "iri": "http://purl.obolibrary.org/obo/CHEBI_132889",
       "anchor": "CHEBI_132889",
@@ -247501,34 +247699,6 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "hydrogen gas AFM_0001112 http://purl.allotrope.org/ontologies/material#AFM_0001112 http://purl.allotrope.org/ontologies/material#AFM_0001112 Reviewed skos:narrowMatch target.",
-      "degree": 1
-    },
-    {
-      "id": "http://purl.obolibrary.org/obo/CHEBI_16240",
-      "iri": "http://purl.obolibrary.org/obo/CHEBI_16240",
-      "anchor": "CHEBI_16240",
-      "label": "hydrogen peroxide",
-      "localName": "CHEBI_16240",
-      "qname": "chebi:16240",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "hydrogen peroxide CHEBI_16240 chebi:16240 http://purl.obolibrary.org/obo/CHEBI_16240 Reviewed skos:exactMatch target.",
       "degree": 1
     },
     {
@@ -248659,62 +248829,6 @@
       "degree": 1
     },
     {
-      "id": "http://purl.obolibrary.org/obo/OBI_0000245",
-      "iri": "http://purl.obolibrary.org/obo/OBI_0000245",
-      "anchor": "OBI_0000245",
-      "label": "organization",
-      "localName": "OBI_0000245",
-      "qname": "http://purl.obolibrary.org/obo/OBI_0000245",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "organization OBI_0000245 http://purl.obolibrary.org/obo/OBI_0000245 http://purl.obolibrary.org/obo/OBI_0000245 Reviewed skos:exactMatch target.",
-      "degree": 1
-    },
-    {
-      "id": "http://semanticscience.org/resource/SIO_000012",
-      "iri": "http://semanticscience.org/resource/SIO_000012",
-      "anchor": "SIO_000012",
-      "label": "organization",
-      "localName": "SIO_000012",
-      "qname": "http://semanticscience.org/resource/SIO_000012",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "organization SIO_000012 http://semanticscience.org/resource/SIO_000012 http://semanticscience.org/resource/SIO_000012 Reviewed skos:exactMatch target.",
-      "degree": 1
-    },
-    {
       "id": "http://www.w3.org/ns/prov#Organization",
       "iri": "http://www.w3.org/ns/prov#Organization",
       "anchor": "Organization",
@@ -249135,34 +249249,6 @@
       "degree": 46
     },
     {
-      "id": "http://purl.obolibrary.org/obo/CHEBI_50853",
-      "iri": "http://purl.obolibrary.org/obo/CHEBI_50853",
-      "anchor": "CHEBI_50853",
-      "label": "quantum dot",
-      "localName": "CHEBI_50853",
-      "qname": "chebi:50853",
-      "description": "Reviewed skos:exactMatch target.",
-      "alt_labels": [],
-      "notations": [],
-      "sources": [],
-      "quantity_guidance": [],
-      "examples": [],
-      "notes": [],
-      "type_labels": [
-        "External"
-      ],
-      "category": "External Terms",
-      "display_class": "External",
-      "modules": [
-        "alignments"
-      ],
-      "local": false,
-      "deprecated": "Active",
-      "mapping_labels": [],
-      "search_text": "quantum dot CHEBI_50853 chebi:50853 http://purl.obolibrary.org/obo/CHEBI_50853 Reviewed skos:exactMatch target.",
-      "degree": 1
-    },
-    {
       "id": "http://purl.obolibrary.org/obo/CHMO_0001077",
       "iri": "http://purl.obolibrary.org/obo/CHMO_0001077",
       "anchor": "CHMO_0001077",
@@ -249440,7 +249526,7 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "ratio SIO_001018 http://semanticscience.org/resource/SIO_001018 http://semanticscience.org/resource/SIO_001018 Reviewed skos:broadMatch target.",
-      "degree": 3
+      "degree": 2
     },
     {
       "id": "https://w3id.org/nfdi4cat/voc4cat_0007013",
@@ -249580,6 +249666,34 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "saturation vapor pressure (quality) AFQ_0000275 http://purl.allotrope.org/ontologies/quality#AFQ_0000275 http://purl.allotrope.org/ontologies/quality#AFQ_0000275 Reviewed skos:narrowMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "http://purl.obolibrary.org/obo/MS_1000015",
+      "iri": "http://purl.obolibrary.org/obo/MS_1000015",
+      "anchor": "MS_1000015",
+      "label": "scan rate",
+      "localName": "MS_1000015",
+      "qname": "http://purl.obolibrary.org/obo/MS_1000015",
+      "description": "Reviewed skos:exactMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "scan rate MS_1000015 http://purl.obolibrary.org/obo/MS_1000015 http://purl.obolibrary.org/obo/MS_1000015 Reviewed skos:exactMatch target.",
       "degree": 1
     },
     {
@@ -250003,6 +250117,34 @@
       "degree": 1
     },
     {
+      "id": "http://biomodels.net/SBO/SBO_0000558",
+      "iri": "http://biomodels.net/SBO/SBO_0000558",
+      "anchor": "SBO_0000558",
+      "label": "specific activity",
+      "localName": "SBO_0000558",
+      "qname": "http://biomodels.net/SBO/SBO_0000558",
+      "description": "Reviewed skos:exactMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "specific activity SBO_0000558 http://biomodels.net/SBO/SBO_0000558 http://biomodels.net/SBO/SBO_0000558 Reviewed skos:exactMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://semanticscience.org/resource/SIO_000090",
       "iri": "http://semanticscience.org/resource/SIO_000090",
       "anchor": "SIO_000090",
@@ -250084,6 +250226,62 @@
       "deprecated": "Active",
       "mapping_labels": [],
       "search_text": "spectroscopic ellipsometer CHMO_0002683 http://purl.obolibrary.org/obo/CHMO_0002683 http://purl.obolibrary.org/obo/CHMO_0002683 Reviewed skos:exactMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "http://semanticscience.org/resource/SIO_001368",
+      "iri": "http://semanticscience.org/resource/SIO_001368",
+      "anchor": "SIO_001368",
+      "label": "speed",
+      "localName": "SIO_001368",
+      "qname": "http://semanticscience.org/resource/SIO_001368",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "speed SIO_001368 http://semanticscience.org/resource/SIO_001368 http://semanticscience.org/resource/SIO_001368 Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "iri": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "anchor": "spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "label": "Speed",
+      "localName": "spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "qname": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Speed spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp Reviewed skos:broadMatch target.",
       "degree": 1
     },
     {
@@ -250479,6 +250677,90 @@
       "degree": 1
     },
     {
+      "id": "http://semanticscience.org/resource/SIO_000043",
+      "iri": "http://semanticscience.org/resource/SIO_000043",
+      "anchor": "SIO_000043",
+      "label": "thickness",
+      "localName": "SIO_000043",
+      "qname": "http://semanticscience.org/resource/SIO_000043",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "thickness SIO_000043 http://semanticscience.org/resource/SIO_000043 http://semanticscience.org/resource/SIO_000043 Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "iri": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "anchor": "thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "label": "Thickness",
+      "localName": "thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "qname": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Thickness thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "https://w3id.org/nfdi4cat/voc4cat_0000042",
+      "iri": "https://w3id.org/nfdi4cat/voc4cat_0000042",
+      "anchor": "voc4cat_0000042",
+      "label": "thin film thickness",
+      "localName": "voc4cat_0000042",
+      "qname": "https://w3id.org/nfdi4cat/voc4cat_0000042",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "thin film thickness voc4cat_0000042 https://w3id.org/nfdi4cat/voc4cat_0000042 https://w3id.org/nfdi4cat/voc4cat_0000042 Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://www.w3.org/2002/07/owl#Thing",
       "iri": "http://www.w3.org/2002/07/owl#Thing",
       "anchor": "Thing",
@@ -250843,6 +251125,62 @@
       "degree": 1
     },
     {
+      "id": "http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "iri": "http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "anchor": "EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "label": "Voltage",
+      "localName": "EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "qname": "http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Voltage EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
+      "id": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage",
+      "iri": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage",
+      "anchor": "Voltage",
+      "label": "Voltage",
+      "localName": "Voltage",
+      "qname": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage",
+      "description": "Reviewed skos:broadMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "Voltage Voltage https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage Reviewed skos:broadMatch target.",
+      "degree": 1
+    },
+    {
       "id": "http://purl.obolibrary.org/obo/CHEBI_15377",
       "iri": "http://purl.obolibrary.org/obo/CHEBI_15377",
       "anchor": "CHEBI_15377",
@@ -251039,6 +251377,34 @@
       "degree": 1
     },
     {
+      "id": "http://purl.obolibrary.org/obo/CHMO_0002648",
+      "iri": "http://purl.obolibrary.org/obo/CHMO_0002648",
+      "anchor": "CHMO_0002648",
+      "label": "X-ray photoelectron spectrometer",
+      "localName": "CHMO_0002648",
+      "qname": "http://purl.obolibrary.org/obo/CHMO_0002648",
+      "description": "Reviewed skos:exactMatch target.",
+      "alt_labels": [],
+      "notations": [],
+      "sources": [],
+      "quantity_guidance": [],
+      "examples": [],
+      "notes": [],
+      "type_labels": [
+        "External"
+      ],
+      "category": "External Terms",
+      "display_class": "External",
+      "modules": [
+        "alignments"
+      ],
+      "local": false,
+      "deprecated": "Active",
+      "mapping_labels": [],
+      "search_text": "X-ray photoelectron spectrometer CHMO_0002648 http://purl.obolibrary.org/obo/CHMO_0002648 http://purl.obolibrary.org/obo/CHMO_0002648 Reviewed skos:exactMatch target.",
+      "degree": 1
+    },
+    {
       "id": "https://w3id.org/nfdi4cat/voc4cat_0000076",
       "iri": "https://w3id.org/nfdi4cat/voc4cat_0000076",
       "anchor": "voc4cat_0000076",
@@ -251177,6 +251543,22 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed",
+      "target": "http://semanticscience.org/resource/SIO_001368",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AFMScanSpeed",
+      "target": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/spe_xxx_xxx-bdea72a69b0c46f68f7f850f01d8cf78-vp",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#AFMTipNominalRadius",
       "target": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/rad_xxx_xxx-39e050dffbd342e199b7330a964f3dc6-vp",
       "predicate": "skos:broadMatch",
@@ -251217,10 +251599,18 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#Acetonitrile",
-      "target": "http://purl.obolibrary.org/obo/CHEBI_38472",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage",
+      "target": "http://emmo.info/emmo#EMMO_17b031fb_4695_49b6_bb69_189ec63df3ee",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AcceleratingVoltage",
+      "target": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Voltage",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -251305,6 +251695,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AgNWSurfaceDensity",
+      "target": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#Agent",
       "target": "http://www.w3.org/ns/prov#Agent",
       "predicate": "rdfs:subClassOf",
@@ -251369,14 +251767,6 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#AggregateAspectRatio",
-      "target": "http://semanticscience.org/resource/SIO_001018",
-      "predicate": "skos:broadMatch",
-      "value": "H2KG narrower than",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#AirBreathingCathodeFabrication",
       "target": "http://www.w3id.org/ecsel-dr-SO#Fab",
       "predicate": "skos:broadMatch",
@@ -251385,8 +251775,48 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumLayerThickness",
+      "target": "http://semanticscience.org/resource/SIO_000043",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumLayerThickness",
+      "target": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/thi_xxx_xxx-77b111de120249639ca22b4853dc8b47-vp",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateAdditive",
       "target": "https://w3id.org/nfdi4cat/voc4cat_0007793",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateMolarConcentration",
+      "target": "http://edamontology.org/data_2140",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateMolarConcentration",
+      "target": "http://purl.obolibrary.org/obo/CHMO_0002820",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#AluminumNitrateMolarConcentration",
+      "target": "https://w3id.org/nfdi4cat/voc4cat_0007244",
       "predicate": "skos:broadMatch",
       "value": "H2KG narrower than",
       "module": "alignments",
@@ -251497,14 +251927,6 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#BallMilling",
-      "target": "http://purl.obolibrary.org/obo/CHMO_0001654",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#BulkDensity",
       "target": "http://purl.allotrope.org/ontologies/process#AFP_0003781",
       "predicate": "skos:exactMatch",
@@ -251537,10 +251959,10 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#CarbonNanotube",
-      "target": "http://purl.obolibrary.org/obo/CHEBI_50594",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#CarrierGasFlow",
+      "target": "https://sargon-n5geh.netlify.app/ontology/1.0/classes/Flow",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -251765,14 +252187,6 @@
       "target": "https://saref.etsi.org/saref4inma/Area",
       "predicate": "skos:broadMatch",
       "value": "H2KG narrower than",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#DiacetoneAlcohol",
-      "target": "http://purl.obolibrary.org/obo/CHEBI_55381",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -252073,6 +252487,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#FeN4SiteDensity",
+      "target": "http://emmo.info/emmo#EMMO_06448f64_8db6_4304_8b2c_e785dba82044",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#FilmThickness",
       "target": "http://purl.allotrope.org/ontologies/result#AFR_0002609",
       "predicate": "skos:narrowMatch",
@@ -252153,26 +252575,18 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea",
-      "target": "http://emmo.info/emmo#EMMO_96f39f77_44dc_491b_8fa7_30d887fe0890",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#GasFlowRate",
+      "target": "http://purl.obolibrary.org/obo/PATO_0001574",
       "predicate": "skos:broadMatch",
       "value": "H2KG narrower than",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea",
-      "target": "http://semanticscience.org/resource/SIO_000045",
-      "predicate": "skos:broadMatch",
-      "value": "H2KG narrower than",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#GeometricArea",
-      "target": "https://saref.etsi.org/saref4inma/Area",
-      "predicate": "skos:broadMatch",
-      "value": "H2KG narrower than",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#GrainSize",
+      "target": "https://w3id.org/pmd/co/PMD_0020243",
+      "predicate": "skos:exactMatch",
+      "value": "exact equivalent",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -252249,10 +252663,10 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#HydrogenPeroxide",
-      "target": "http://purl.obolibrary.org/obo/CHEBI_16240",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#HydrogenVolumetricFlowRate",
+      "target": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -252337,6 +252751,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#IonomerThinFilmThickness",
+      "target": "https://w3id.org/nfdi4cat/voc4cat_0000042",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#KnudsenNumber",
       "target": "http://www.ontology-of-units-of-measure.org/resource/om-2/KnudsenNumber",
       "predicate": "skos:exactMatch",
@@ -252353,6 +252775,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#LiquidFlowRate",
+      "target": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#MESBuffer",
       "target": "http://purl.obolibrary.org/obo/CHMO_0001760",
       "predicate": "skos:exactMatch",
@@ -252365,6 +252795,14 @@
       "target": "http://purl.allotrope.org/ontologies/equipment#AFE_0000374",
       "predicate": "skos:exactMatch",
       "value": "exact equivalent",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#MassFlowRate",
+      "target": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
       "module": "alignments",
       "edgeFamily": "mapping"
     },
@@ -252497,6 +252935,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#NitrogenVolumetricFlowRate",
+      "target": "http://purl.obolibrary.org/obo/PATO_0001574",
+      "predicate": "skos:broadMatch",
+      "value": "H2KG narrower than",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#OpenCircuitVoltage",
       "target": "https://w3id.org/nfdi4cat/voc4cat_0007210",
       "predicate": "skos:exactMatch",
@@ -252547,22 +252993,6 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#OpticalMicroscopyImagingMeasurement",
       "target": "https://w3id.org/emmo/domain/characterisation-methodology/chameo#OpticalMicroscopy",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#Organization",
-      "target": "http://purl.obolibrary.org/obo/OBI_0000245",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#Organization",
-      "target": "http://semanticscience.org/resource/SIO_000012",
       "predicate": "skos:exactMatch",
       "value": "exact equivalent",
       "module": "alignments",
@@ -252659,14 +253089,6 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#PulsedLaserDepositionProcess",
       "target": "http://purl.obolibrary.org/obo/CHMO_0001363",
-      "predicate": "skos:exactMatch",
-      "value": "exact equivalent",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#QuantumDot",
-      "target": "http://purl.obolibrary.org/obo/CHEBI_50853",
       "predicate": "skos:exactMatch",
       "value": "exact equivalent",
       "module": "alignments",
@@ -252785,6 +253207,14 @@
       "edgeFamily": "mapping"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanRate",
+      "target": "http://purl.obolibrary.org/obo/MS_1000015",
+      "predicate": "skos:exactMatch",
+      "value": "exact equivalent",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#ScanningElectronMicroscopyImaging",
       "target": "http://edamontology.org/topic_0611",
       "predicate": "skos:broadMatch",
@@ -252851,6 +253281,14 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#Solvent",
       "target": "https://w3id.org/nfdi4cat/voc4cat_0007246",
+      "predicate": "skos:exactMatch",
+      "value": "exact equivalent",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#SpecificActivity",
+      "target": "http://biomodels.net/SBO/SBO_0000558",
       "predicate": "skos:exactMatch",
       "value": "exact equivalent",
       "module": "alignments",
@@ -253049,14 +253487,6 @@
       "edgeFamily": "mapping"
     },
     {
-      "source": "https://w3id.org/h2kg/hydrogen-ontology#UVExposureTime",
-      "target": "https://purls.helmholtz-metadaten.de/vp/kitmtxx-41732562-vp/exp_tim_xxx-d06c7708430f446398944d57f6465b3c-vp",
-      "predicate": "skos:broadMatch",
-      "value": "H2KG narrower than",
-      "module": "alignments",
-      "edgeFamily": "mapping"
-    },
-    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#VacuumDrying",
       "target": "http://purl.obolibrary.org/obo/CHMO_0001557",
       "predicate": "skos:exactMatch",
@@ -253171,6 +253601,14 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#XRayDiffractometer",
       "target": "http://purl.obolibrary.org/obo/CHMO_0002105",
+      "predicate": "skos:exactMatch",
+      "value": "exact equivalent",
+      "module": "alignments",
+      "edgeFamily": "mapping"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#XRayPhotoelectronSpectrometer",
+      "target": "http://purl.obolibrary.org/obo/CHMO_0002648",
       "predicate": "skos:exactMatch",
       "value": "exact equivalent",
       "module": "alignments",
@@ -289788,6 +290226,22 @@
       "edgeFamily": "range"
     },
     {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "predicate": "domain",
+      "value": "domain",
+      "module": "schema",
+      "edgeFamily": "domain"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#hasSubProcess",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "predicate": "range",
+      "value": "range",
+      "module": "schema",
+      "edgeFamily": "range"
+    },
+    {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf",
       "target": "https://w3id.org/h2kg/hydrogen-ontology#Characteristic",
       "predicate": "domain",
@@ -289798,6 +290252,22 @@
     {
       "source": "https://w3id.org/h2kg/hydrogen-ontology#isCharacteristicOf",
       "target": "http://www.w3.org/2002/07/owl#Thing",
+      "predicate": "range",
+      "value": "range",
+      "module": "schema",
+      "edgeFamily": "range"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Process",
+      "predicate": "domain",
+      "value": "domain",
+      "module": "schema",
+      "edgeFamily": "domain"
+    },
+    {
+      "source": "https://w3id.org/h2kg/hydrogen-ontology#isSubProcessOf",
+      "target": "https://w3id.org/h2kg/hydrogen-ontology#Process",
       "predicate": "range",
       "value": "range",
       "module": "schema",

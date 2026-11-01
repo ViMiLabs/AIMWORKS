@@ -123,7 +123,7 @@ The benchmark reports NFDI4Cat, NFDI4Energy, and NFDI4Ing separately and produce
    - keep the heuristics config-driven and reviewable
 
 3. Split the ontology into release modules.
-   - write `schema.ttl` and `schema.jsonld` for the TBox-centric release module
+   - write `schema.ttl` and `schema.jsonld` as legacy TBox build products; the canonical public/TIB distribution is `h2kg-v2-taxonomy.ttl` and `.jsonld`
    - write `controlled_vocabulary.ttl` for curated domain vocabulary
    - write `examples.ttl` for example and data-like content
    - produce a split report that explains why resources landed in each module

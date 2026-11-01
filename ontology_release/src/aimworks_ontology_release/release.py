@@ -7,6 +7,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from .docs import build_docs
 from .decode_workflows import build_decode_workflow_release
 from .enrich import enrich_ontology
@@ -34,9 +36,10 @@ from .taxonomy import build_taxonomy_release
 from .tem_pilot import build_tem_pilot_package
 from .tib_benchmark import build_tib_benchmark_package
 from .tib_collections import build_collection_benchmark
+from .tib_submission import build_tib_submission_package, write_release_citation_metadata
 from .xps_pilot import build_xps_pilot_package
 from .xrd_pilot import build_xrd_pilot_package
-from .utils import ensure_dir, write_text
+from .utils import default_release_profile, ensure_dir, write_text
 from .validate import validate_release
 from .w3id import generate_w3id_artifacts
 
@@ -48,6 +51,12 @@ def run_release(
     rewrite: bool = False,
 ) -> dict[str, Any]:
     project_root = Path(project_root)
+    release_profile_path = project_root / "config" / "release_profile.yaml"
+    citation_metadata = (
+        write_release_citation_metadata(project_root, project_root / "config")
+        if release_profile_path.exists()
+        else {"status": "skipped_missing_release_profile"}
+    )
     output_root = project_root / "output"
     prior_alignment_registry_path = output_root / "ontology" / "external_alignment_registry.json"
     prior_alignment_registry_text = (
@@ -199,6 +208,17 @@ def run_release(
             prefer_actual_outputs=False,
         )
     w3id = generate_w3id_artifacts(output_root / "w3id", project_root / "config")
+    tib_shape_path = project_root / "config" / "tib" / "OntoMetadataShape4TS.ttl"
+    tib_submission = (
+        build_tib_submission_package(
+            taxonomy_path,
+            output_root / "ontology" / "h2kg-v2-taxonomy.jsonld",
+            output_root,
+            project_root / "config",
+        )
+        if taxonomy_path.exists() and release_profile_path.exists() and tib_shape_path.exists()
+        else {"status": "skipped_missing_tib_release_inputs"}
+    )
     build_docs(input_path, output_root / "docs", project_root / "config", None)
     fair = compute_fair_readiness(input_path, reports_dir, project_root / "config")
     docs = build_docs(input_path, output_root / "docs", project_root / "config", fair)
@@ -233,6 +253,8 @@ def run_release(
         "odk": odk,
         "docs": docs,
         "w3id": w3id,
+        "citation_metadata": citation_metadata,
+        "tib_submission": tib_submission,
         "bundle": str(bundle),
     }
     write_text(project_root / "output" / "release_bundle" / "release_summary.json", json.dumps(summary, indent=2, ensure_ascii=False))
@@ -253,8 +275,14 @@ def build_release_bundle(project_root: str | Path) -> Path:
             shutil.rmtree(target)
         if source.exists():
             shutil.copytree(source, target)
-    write_text(bundle_dir / "RELEASE_NOTES.md", _release_notes())
-    _validate_public_release_content(bundle_dir)
+    release_profile_path = project_root / "config" / "release_profile.yaml"
+    profile = (
+        yaml.safe_load(release_profile_path.read_text(encoding="utf-8")) or {}
+        if release_profile_path.exists()
+        else default_release_profile()
+    )
+    write_text(bundle_dir / "RELEASE_NOTES.md", _release_notes(profile.get("project", {})))
+    _validate_public_release_content(bundle_dir, profile.get("project", {}).get("expected_counts"))
     return bundle_dir
 
 
@@ -283,7 +311,10 @@ def _reset_directory_except(path: Path, retained_names: set[str]) -> None:
             child.unlink()
 
 
-def _validate_public_release_content(bundle_dir: Path) -> None:
+def _validate_public_release_content(
+    bundle_dir: Path,
+    expected_counts: dict[str, Any] | None = None,
+) -> None:
     """Reject reviewer-origin labels while allowing legitimate scientific AI terminology."""
 
     prohibited = (
@@ -331,6 +362,54 @@ def _validate_public_release_content(bundle_dir: Path) -> None:
             "Public release contains prohibited reviewer-origin language: "
             + "; ".join(violations[:20])
         )
+    if expected_counts:
+        _validate_release_metrics(bundle_dir, expected_counts)
+
+
+def _validate_release_metrics(bundle_dir: Path, expected_counts: dict[str, Any]) -> None:
+    """Reject stale active-release denominators without rewriting frozen evidence."""
+
+    active = int(expected_counts["active_classes"])
+    deprecated = int(expected_counts["deprecated_classes"])
+    total = int(expected_counts["total_classes"])
+    failures: list[str] = []
+
+    taxonomy_report = bundle_dir / "reports" / "taxonomy_validation.json"
+    tib_report = bundle_dir / "reports" / "tib_submission_validation.json"
+    benchmark_report = bundle_dir / "benchmarks" / "tib_collections" / "benchmark_summary.json"
+    release_page = bundle_dir / "docs" / "pages" / "release.html"
+    for path in (taxonomy_report, tib_report, benchmark_report, release_page):
+        if not path.exists():
+            failures.append(f"missing current release artifact: {path.relative_to(bundle_dir).as_posix()}")
+
+    if taxonomy_report.exists():
+        data = json.loads(taxonomy_report.read_text(encoding="utf-8"))
+        counts = data.get("counts", {})
+        if int(counts.get("active_local_classes", -1)) != active:
+            failures.append("taxonomy_validation active class count is stale")
+        if int(counts.get("deprecated_compatibility_classes", -1)) != deprecated:
+            failures.append("taxonomy_validation deprecated class count is stale")
+    if tib_report.exists():
+        counts = json.loads(tib_report.read_text(encoding="utf-8")).get("counts", {})
+        if int(counts.get("active_classes", -1)) != active:
+            failures.append("TIB validation active class count is stale")
+        if int(counts.get("deprecated_classes", -1)) != deprecated:
+            failures.append("TIB validation deprecated class count is stale")
+        if int(counts.get("total_classes", -1)) != total:
+            failures.append("TIB validation total class count is stale")
+    if benchmark_report.exists():
+        data = json.loads(benchmark_report.read_text(encoding="utf-8"))
+        if int(data.get("h2kg_active_classes_assessed", -1)) != active:
+            failures.append("TIB collection benchmark active denominator is stale")
+        if int(data.get("deprecated_h2kg_classes_excluded", -1)) != deprecated:
+            failures.append("TIB collection benchmark deprecated denominator is stale")
+    if release_page.exists():
+        page = release_page.read_text(encoding="utf-8")
+        expected_text = f"{active} active + {deprecated} deprecated"
+        if expected_text not in page:
+            failures.append("release page class counts are stale")
+    if failures:
+        raise ValueError("Current release metrics are inconsistent: " + "; ".join(failures))
 
 
 def _office_package_text(path: Path) -> str:
@@ -379,11 +458,15 @@ def _odk_public_artifacts_are_clean(artifact_dir: Path) -> bool:
     return checked
 
 
-def _release_notes() -> str:
-    return """# H₂KG 2.3.0 Release Notes
+def _release_notes(profile: dict[str, Any]) -> str:
+    version = str(profile.get("version", "unversioned"))
+    title = str(profile.get("title", "H₂KG Domain Ontology for Hydrogen Electrochemical Systems"))
+    return f"""# H₂KG {version} Release Notes
 
-- Release title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems
+- Release title: {title}
 - Namespace policy: existing H2KG hash IRIs are preserved
+- Canonical TIB distribution: the full taxonomy in RDF-isomorphic Turtle and JSON-LD
+- Resolver policy: unversioned RDF requests return the full taxonomy; the shared core is an explicit secondary module
 - Semantic correction: scientific characteristics retain intrinsic Property identity while Parameter and DataPoint records express contextual workflow roles
 - Workflow profiles: class-level workflow assertions are migrated to value-free SHACL profiles with complete provenance
 - Compatibility: legacy assertions remain available only in the versioned compatibility artifact

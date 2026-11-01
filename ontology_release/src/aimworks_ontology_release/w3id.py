@@ -73,18 +73,30 @@ RewriteEngine On
 # Project home under /h2kg/
 RewriteRule ^$ {html_targets['root']} [R=302,L]
 
-# Core H2KG namespace document
+# Canonical H2KG ontology. RDF requests receive the complete public taxonomy;
+# the smaller shared core remains available as an explicitly named module.
 RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
-RewriteRule ^hydrogen-ontology$ {rdf_targets['core_ttl']} [R=302,L]
+RewriteRule ^hydrogen-ontology$ {rdf_targets['v2_taxonomy_ttl']} [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
-RewriteRule ^hydrogen-ontology$ {rdf_targets['core_jsonld']} [R=302,L]
+RewriteRule ^hydrogen-ontology$ {rdf_targets['v2_taxonomy_jsonld']} [R=302,L]
 
 RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
-RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
+RewriteCond %{{HTTP_ACCEPT}} application/xhtml\+xml
 RewriteRule ^hydrogen-ontology$ {html_targets['core']} [R=302,L]
+
+# Shared 13-class core module
+RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
+RewriteRule ^hydrogen-ontology/core$ {rdf_targets['core_ttl']} [R=302,L]
+
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/json
+RewriteRule ^hydrogen-ontology/core$ {rdf_targets['core_jsonld']} [R=302,L]
+
+RewriteRule ^hydrogen-ontology/core$ {html_targets['core']}#core-module [R=302,L,NE]
 
 # Immutable tagged H2KG releases. One rule serves every semantic version;
 # stable class IRIs under the unversioned namespace remain unchanged.
@@ -111,12 +123,12 @@ RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
 RewriteRule ^pemfc/hydrogen-ontology$ {rdf_targets['pemfc_ttl']} [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
 RewriteRule ^pemfc/hydrogen-ontology$ {rdf_targets['pemfc_jsonld']} [R=302,L]
 
 RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
-RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
+RewriteCond %{{HTTP_ACCEPT}} application/xhtml\+xml
 RewriteRule ^pemfc/hydrogen-ontology$ {html_targets['pemfc']} [R=302,L]
 
 RewriteRule ^pemfc/hydrogen-ontology$ {html_targets['pemfc']} [R=302,L]
@@ -126,12 +138,12 @@ RewriteCond %{{HTTP_ACCEPT}} text/turtle [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/x-turtle
 RewriteRule ^pemwe/hydrogen-ontology$ {rdf_targets['pemwe_ttl']} [R=302,L]
 
-RewriteCond %{{HTTP_ACCEPT}} application/ld\\+json [OR]
+RewriteCond %{{HTTP_ACCEPT}} application/ld\+json [OR]
 RewriteCond %{{HTTP_ACCEPT}} application/json
 RewriteRule ^pemwe/hydrogen-ontology$ {rdf_targets['pemwe_jsonld']} [R=302,L]
 
 RewriteCond %{{HTTP_ACCEPT}} text/html [OR]
-RewriteCond %{{HTTP_ACCEPT}} application/xhtml\\+xml
+RewriteCond %{{HTTP_ACCEPT}} application/xhtml\+xml
 RewriteRule ^pemwe/hydrogen-ontology$ {html_targets['pemwe']} [R=302,L]
 
 RewriteRule ^pemwe/hydrogen-ontology$ {html_targets['pemwe']} [R=302,L]
@@ -156,6 +168,18 @@ targets use their original ontology IRIs and bridge files are served by GitHub P
 
 
 def _w3id_readme(strategy: str, profile: dict[str, Any], html_targets: dict[str, str], rdf_targets: dict[str, str]) -> str:
+    contributors = sorted(
+        profile.get("contributors", []),
+        key=lambda row: int(row.get("contribution_order", 9999)),
+    )
+    maintainer_lines = "\n".join(
+        f"  - [{row['label']}]({row['iri']}) - affiliations {', '.join(map(str, row.get('affiliation_ids', [])))}"
+        for row in contributors
+    )
+    affiliation_lines = "\n".join(
+        f"  - `{identifier}`: {record.get('label', '')}"
+        for identifier, record in profile.get("affiliations", {}).items()
+    )
     return f"""# H2KG w3id Redirect Configuration
 
 Project: `{profile['title']}`
@@ -172,9 +196,15 @@ current H2KG release targets.
 
 ## Redirect targets
 
-### Shared H2KG namespace
+### Canonical H2KG namespace
 
 - Browser / HTML: `{html_targets['core']}`
+- Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
+- JSON-LD: `{rdf_targets['v2_taxonomy_jsonld']}`
+
+### Shared core module
+
+- Route: `https://w3id.org/h2kg/hydrogen-ontology/core`
 - Turtle: `{rdf_targets['core_ttl']}`
 - JSON-LD: `{rdf_targets['core_jsonld']}`
 
@@ -204,8 +234,9 @@ current H2KG release targets.
 - Repository: `{profile['repository_url']}`
 - Docs base: `{profile['docs_url']}`
 - Maintainers:
-  - Marjan Kohandani (`@Marjanknd`) - Theory and Computation of Energy Materials (IET-3), Institute of Energy Technologies, Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
-  - Mohammad J. Eslamibidgoli (`@meslamib3`) - Centre for Advanced Simulation and Analytics (CASA), Simulation and Data Science Lab for Energy Materials (SDL-EM), Forschungszentrum Juelich GmbH, 52425 Juelich, Germany
+{maintainer_lines}
+- Affiliations:
+{affiliation_lines}
 
 ## Notes
 
@@ -232,9 +263,10 @@ This route update does not require a new W3ID registration.
 
 ## Resolver targets
 
-- Shared H2KG HTML target: `{html_targets['core']}`
-- Shared H2KG Turtle target: `{rdf_targets['core_ttl']}`
-- Shared H2KG JSON-LD target: `{rdf_targets['core_jsonld']}`
+- Canonical H2KG HTML target: `{html_targets['core']}`
+- Canonical H2KG Turtle target: `{rdf_targets['v2_taxonomy_ttl']}`
+- Canonical H2KG JSON-LD target: `{rdf_targets['v2_taxonomy_jsonld']}`
+- Shared-core module Turtle target: `{rdf_targets['core_ttl']}`
 - PEMFC HTML target: `{html_targets['pemfc']}`
 - PEMWE HTML target: `{html_targets['pemwe']}`
 - H2KG v2 taxonomy target: `{rdf_targets['v2_taxonomy_ttl']}`
@@ -251,13 +283,14 @@ This route update does not require a new W3ID registration.
 
 
 def _curl_tests(profile: dict[str, Any]) -> str:
-    version_iri = str(profile.get("version_iri", "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0"))
+    version_iri = str(profile["version_iri"])
     return f"""#!/usr/bin/env sh
 set -eu
 
 curl -I -H "Accept: text/html" https://w3id.org/h2kg/hydrogen-ontology
 curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/hydrogen-ontology
 curl -I -H "Accept: application/ld+json" https://w3id.org/h2kg/hydrogen-ontology
+curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/hydrogen-ontology/core
 
 curl -I -H "Accept: text/html" https://w3id.org/h2kg/pemfc/hydrogen-ontology
 curl -I -H "Accept: text/turtle" https://w3id.org/h2kg/pemfc/hydrogen-ontology

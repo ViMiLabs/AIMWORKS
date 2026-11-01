@@ -1,0 +1,354 @@
+{
+  "schema_version": "h2kg-tib-submission-validation/v1",
+  "generated_at": "2026-11-01T18:45:57.947446+00:00",
+  "ontology_iri": "https://w3id.org/h2kg/hydrogen-ontology",
+  "version": "2.3.1",
+  "version_iri": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1",
+  "canonical_turtle": "C:\\Users\\mehrt\\Desktop\\h2kg\\AIMWORKS\\.publish_tmp\\AIMWORKS\\ontology_release\\output\\ontology\\h2kg-v2-taxonomy.ttl",
+  "canonical_jsonld": "C:\\Users\\mehrt\\Desktop\\h2kg\\AIMWORKS\\.publish_tmp\\AIMWORKS\\ontology_release\\output\\ontology\\h2kg-v2-taxonomy.jsonld",
+  "tib_shape": {
+    "name": "OntoMetadataShape4TS.ttl",
+    "source_repository": "https://github.com/TIBHannover/terminology-metadata",
+    "source_commit": "26c0582449a7019e285aa191c3b2dddc1f5c4d0a",
+    "source_url": "https://raw.githubusercontent.com/TIBHannover/terminology-metadata/26c0582449a7019e285aa191c3b2dddc1f5c4d0a/OntoMetadataShape4TS.ttl",
+    "sha256": "1FB6BD869F2E48F7248D87B26BD2D3D5035A5E79C470909E478F4E011A94A6FF",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "retrieved_at": "2026-11-01",
+    "local_path": "C:\\Users\\mehrt\\Desktop\\h2kg\\AIMWORKS\\.publish_tmp\\AIMWORKS\\ontology_release\\config\\tib\\OntoMetadataShape4TS.ttl",
+    "actual_sha256": "1FB6BD869F2E48F7248D87B26BD2D3D5035A5E79C470909E478F4E011A94A6FF",
+    "mandatory_result_count": 0,
+    "recommendation_result_count": 1,
+    "results": [
+      {
+        "severity": "http://www.w3.org/ns/shacl#Info",
+        "focus_node": "https://w3id.org/h2kg/hydrogen-ontology",
+        "path": "n094f967acbe049139942205841309326b333",
+        "name": "n094f967acbe049139942205841309326b332",
+        "message": "<p>\nThe ontology should specify whether and from which other ontologies it has been derived.\n</p>\n<p>\nThe reference should be made by an owl:versionIRI of the ontology from which the current ontology has been derived.\n</p>\n<p>\nRecommended property: http://purl.org/pav/derivedFrom\n</p>\n<p>\nExample statement (text/turtle):\n</p>\n<p>\n<pre><code class=\"language-Turtle\">&lt;https:<span>//</span>www.purl.org/SomeOntology&gt; &lt;http:<span>//</span>purl.org/pav/derivedFrom&gt; &lt;https:<span>//</span>www.purl.org/SomeOtherOntology/3.1.2&gt; .\n</code></pre>\n</p>"
+      }
+    ],
+    "report_text": "Validation Report\nConforms: True\nResults (1):\nValidation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):\n\tSeverity: sh:Info\n\tSource Shape: [ sh:message Literal(\"\n<p>\nThe ontology should specify whether and from which other ontologies it has been derived.\n</p>\n<p>\nThe reference should be made by an owl:versionIRI of the ontology from which the current ontology has been derived.\n</p>\n<p>\nRecommended property: http://purl.org/pav/derivedFrom\n</p>\n<p>\nExample statement (text/turtle):\n</p>\n<p>\n<pre><code class=\"language-Turtle\">&lt;https:<span>//</span>www.purl.org/SomeOntology&gt; &lt;http:<span>//</span>purl.org/pav/derivedFrom&gt; &lt;https:<span>//</span>www.purl.org/SomeOtherOntology/3.1.2&gt; .\n</code></pre>\n</p>\n\", lang=en) ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:name Literal(\"Ontology sources (derived from)\", lang=en) ; sh:nodeKind sh:IRI ; sh:path [ sh:alternativePath ( pav:derivedFrom prov:wasDerivedFrom ) ] ; sh:severity sh:Info ]\n\tFocus Node: <https://w3id.org/h2kg/hydrogen-ontology>\n\tResult Path: [ sh:alternativePath ( pav:derivedFrom prov:wasDerivedFrom ) ]\n\tMessage: \n<p>\nThe ontology should specify whether and from which other ontologies it has been derived.\n</p>\n<p>\nThe reference should be made by an owl:versionIRI of the ontology from which the current ontology has been derived.\n</p>\n<p>\nRecommended property: http://purl.org/pav/derivedFrom\n</p>\n<p>\nExample statement (text/turtle):\n</p>\n<p>\n<pre><code class=\"language-Turtle\">&lt;https:<span>//</span>www.purl.org/SomeOntology&gt; &lt;http:<span>//</span>purl.org/pav/derivedFrom&gt; &lt;https:<span>//</span>www.purl.org/SomeOtherOntology/3.1.2&gt; .\n</code></pre>\n</p>\n\n"
+  },
+  "counts": {
+    "active_classes": 2226,
+    "deprecated_classes": 160,
+    "total_classes": 2386,
+    "object_properties": 23,
+    "datatype_properties": 1,
+    "annotation_properties": 9,
+    "taxonomy_individuals": 0
+  },
+  "serialization_parity": true,
+  "checks": [
+    {
+      "id": "tib-metadata-shape-lock",
+      "passed": true,
+      "blocking": true,
+      "detail": "Pinned TIB metadata shape SHA-256: 1FB6BD869F2E48F7248D87B26BD2D3D5035A5E79C470909E478F4E011A94A6FF."
+    },
+    {
+      "id": "canonical-serialization-parity",
+      "passed": true,
+      "blocking": true,
+      "detail": "Canonical Turtle and JSON-LD graphs are RDF-isomorphic."
+    },
+    {
+      "id": "tib-mandatory-metadata",
+      "passed": true,
+      "blocking": true,
+      "detail": "Official TIB shape results: 0 mandatory warning/violation(s), 1 recommendation notice(s)."
+    },
+    {
+      "id": "count-active-classes",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 2226; canonical graph contains 2226."
+    },
+    {
+      "id": "count-deprecated-classes",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 160; canonical graph contains 160."
+    },
+    {
+      "id": "count-total-classes",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 2386; canonical graph contains 2386."
+    },
+    {
+      "id": "count-object-properties",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 23; canonical graph contains 23."
+    },
+    {
+      "id": "count-datatype-properties",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 1; canonical graph contains 1."
+    },
+    {
+      "id": "count-annotation-properties",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 9; canonical graph contains 9."
+    },
+    {
+      "id": "count-taxonomy-individuals",
+      "passed": true,
+      "blocking": true,
+      "detail": "Expected 0; canonical graph contains 0."
+    },
+    {
+      "id": "single-ontology-header",
+      "passed": true,
+      "blocking": true,
+      "detail": "Ontology headers: https://w3id.org/h2kg/hydrogen-ontology."
+    },
+    {
+      "id": "ontology-title",
+      "passed": true,
+      "blocking": true,
+      "detail": "The ontology title is generated from the release profile."
+    },
+    {
+      "id": "lowercase-prefix",
+      "passed": true,
+      "blocking": true,
+      "detail": "Preferred namespace prefix: h2kg."
+    },
+    {
+      "id": "preferred-namespace",
+      "passed": true,
+      "blocking": true,
+      "detail": "Preferred namespace URI: https://w3id.org/h2kg/hydrogen-ontology#."
+    },
+    {
+      "id": "license",
+      "passed": true,
+      "blocking": true,
+      "detail": "License: https://creativecommons.org/licenses/by/4.0/."
+    },
+    {
+      "id": "created-date",
+      "passed": true,
+      "blocking": true,
+      "detail": "Creation date: 2026-03-19."
+    },
+    {
+      "id": "modified-date",
+      "passed": true,
+      "blocking": true,
+      "detail": "Modification date: 2026-11-01."
+    },
+    {
+      "id": "abstract",
+      "passed": true,
+      "blocking": true,
+      "detail": "English abstract length: 330 characters."
+    },
+    {
+      "id": "issue-tracker",
+      "passed": true,
+      "blocking": true,
+      "detail": "Issue tracker: https://github.com/ViMiLabs/AIMWORKS/issues."
+    },
+    {
+      "id": "documentation",
+      "passed": true,
+      "blocking": true,
+      "detail": "Documentation: https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html."
+    },
+    {
+      "id": "confirmed-attribution",
+      "passed": true,
+      "blocking": true,
+      "detail": "Configured attribution resources: 5; unconfirmed: 0."
+    },
+    {
+      "id": "attribution-list-complete",
+      "passed": true,
+      "blocking": true,
+      "detail": "Contributor order complete: True; configured orders: [1, 2, 3, 4]; missing: none; duplicates: none."
+    },
+    {
+      "id": "creator-orcid",
+      "passed": true,
+      "blocking": true,
+      "detail": "Valid ORCID attribution IRIs: 3; malformed: 0."
+    },
+    {
+      "id": "affiliation-assignments",
+      "passed": true,
+      "blocking": true,
+      "detail": "People without affiliation assignment: none; unknown affiliation identifiers: none."
+    },
+    {
+      "id": "personal-pid-attribution",
+      "passed": true,
+      "blocking": true,
+      "detail": "Named people without an ORCID or documented institutional identifier: none"
+    },
+    {
+      "id": "organization-ror",
+      "passed": true,
+      "blocking": true,
+      "detail": "Valid ROR attribution IRIs: 1."
+    },
+    {
+      "id": "attribution-labels",
+      "passed": true,
+      "blocking": true,
+      "detail": "Attribution resources without display labels: 0."
+    },
+    {
+      "id": "version-metadata",
+      "passed": true,
+      "blocking": true,
+      "detail": "Version IRI: https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1."
+    },
+    {
+      "id": "prior-version",
+      "passed": true,
+      "blocking": true,
+      "detail": "Prior version: https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.0."
+    },
+    {
+      "id": "foundational-imports-only",
+      "passed": true,
+      "blocking": true,
+      "detail": "Declared imports: http://qudt.org/2.1/schema/qudt, https://www.w3.org/ns/prov-o."
+    },
+    {
+      "id": "explicit-root-classes",
+      "passed": true,
+      "blocking": true,
+      "detail": "Declared root classes: 5."
+    },
+    {
+      "id": "no-local-file-iris",
+      "passed": true,
+      "blocking": true,
+      "detail": "Local file IRIs: 0."
+    },
+    {
+      "id": "canonical-distributions",
+      "passed": true,
+      "blocking": true,
+      "detail": "Canonical distributions: https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld, https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl."
+    },
+    {
+      "id": "canonical-resolver-template",
+      "passed": true,
+      "blocking": true,
+      "detail": "Stable RDF routes target the taxonomy and the shared core has an explicit secondary route."
+    },
+    {
+      "id": "immutable-version-route-template",
+      "passed": true,
+      "blocking": true,
+      "detail": "The semantic-version route targets immutable Git tags."
+    },
+    {
+      "id": "citation-cff-version",
+      "passed": true,
+      "blocking": true,
+      "detail": "CITATION.cff version: 2.3.1."
+    },
+    {
+      "id": "citation-cff-title",
+      "passed": true,
+      "blocking": true,
+      "detail": "CITATION.cff title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems."
+    },
+    {
+      "id": "zenodo-version",
+      "passed": true,
+      "blocking": true,
+      "detail": "Zenodo version: 2.3.1."
+    },
+    {
+      "id": "zenodo-title",
+      "passed": true,
+      "blocking": true,
+      "detail": "Zenodo title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems."
+    },
+    {
+      "id": "citation-cff-attribution",
+      "passed": true,
+      "blocking": true,
+      "detail": "CITATION.cff attribution records: 5."
+    },
+    {
+      "id": "zenodo-attribution",
+      "passed": true,
+      "blocking": true,
+      "detail": "Zenodo attribution records: 5."
+    },
+    {
+      "id": "live-documentation",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html."
+    },
+    {
+      "id": "live-issue-tracker",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://github.com/ViMiLabs/AIMWORKS/issues returned HTTP 200; final URL https://github.com/ViMiLabs/AIMWORKS/issues."
+    },
+    {
+      "id": "live-canonical-turtle",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl."
+    },
+    {
+      "id": "live-canonical-jsonld",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld."
+    },
+    {
+      "id": "live-version-iri",
+      "passed": false,
+      "blocking": false,
+      "detail": "https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1 returned HTTP 404; final URL https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1."
+    },
+    {
+      "id": "live-attribution-pid-1",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://ror.org/02nv7yv05 was verified through the official ROR registry API (https://api.ror.org/v2/organizations/02nv7yv05, HTTP 200); resolver endpoint HTTP 429."
+    },
+    {
+      "id": "live-attribution-pid-2",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://orcid.org/0009-0005-5173-202X returned HTTP 200; final URL https://orcid.org/0009-0005-5173-202X."
+    },
+    {
+      "id": "live-attribution-pid-3",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://orcid.org/0000-0002-5057-2993 returned HTTP 200; final URL https://orcid.org/0000-0002-5057-2993."
+    },
+    {
+      "id": "live-attribution-pid-4",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://www.fz-juelich.de/profile/malek_k returned HTTP 200; final URL https://www.fz-juelich.de/profile/malek_k."
+    },
+    {
+      "id": "live-attribution-pid-5",
+      "passed": true,
+      "blocking": false,
+      "detail": "https://orcid.org/0000-0002-0764-8948 returned HTTP 200; final URL https://orcid.org/0000-0002-0764-8948."
+    }
+  ],
+  "blocking_failure_count": 0,
+  "pre_release_ready": true,
+  "live_url_checks_executed": true,
+  "submission_ready": false
+}

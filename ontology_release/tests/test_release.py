@@ -6,7 +6,11 @@ from pathlib import Path
 from aimworks_ontology_release.normalize_source import normalize_source_document
 import pytest
 
-from aimworks_ontology_release.release import _validate_public_release_content, run_release
+from aimworks_ontology_release.release import (
+    _validate_public_release_content,
+    _validate_release_metrics,
+    run_release,
+)
 
 
 def test_release_runs_end_to_end(mini_ontology_file, tmp_path):
@@ -60,6 +64,53 @@ def test_public_release_language_gate_is_recursive_and_allows_scientific_ai(tmp_
     prohibited.write_text('{"status": "needs_human_review"}', encoding="utf-8")
     with pytest.raises(ValueError, match="prohibited reviewer-origin language"):
         _validate_public_release_content(bundle)
+
+
+def test_release_metric_gate_rejects_stale_active_denominators(tmp_path):
+    bundle = tmp_path / "release_bundle"
+    reports = bundle / "reports"
+    benchmark = bundle / "benchmarks" / "tib_collections"
+    pages = bundle / "docs" / "pages"
+    reports.mkdir(parents=True)
+    benchmark.mkdir(parents=True)
+    pages.mkdir(parents=True)
+    counts = {
+        "active_classes": 2226,
+        "deprecated_classes": 160,
+        "total_classes": 2386,
+    }
+    (reports / "taxonomy_validation.json").write_text(
+        json.dumps(
+            {
+                "counts": {
+                    "active_local_classes": 2226,
+                    "deprecated_compatibility_classes": 160,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    (reports / "tib_submission_validation.json").write_text(
+        json.dumps({"counts": counts}),
+        encoding="utf-8",
+    )
+    (benchmark / "benchmark_summary.json").write_text(
+        json.dumps(
+            {
+                "h2kg_active_classes_assessed": 2226,
+                "deprecated_h2kg_classes_excluded": 160,
+            }
+        ),
+        encoding="utf-8",
+    )
+    release_page = pages / "release.html"
+    release_page.write_text("2226 active + 160 deprecated", encoding="utf-8")
+
+    _validate_release_metrics(bundle, counts)
+
+    release_page.write_text("2221 active + 165 deprecated", encoding="utf-8")
+    with pytest.raises(ValueError, match="release page class counts are stale"):
+        _validate_release_metrics(bundle, counts)
 
 
 def test_normalize_source_repairs_legacy_h2kg_refs(tmp_path):

@@ -67,7 +67,39 @@
     </section>
     <section class="stack">
       <article class="card">
-        <p class="eyebrow">H₂KG 2.3 release; independent application audit pending</p>
+        <p class="eyebrow">TIB Terminology Service submission</p>
+        <h2>Canonical H₂KG 2.3.1 distribution</h2>
+        <p>The full taxonomy is the canonical TIB artifact. The shared core, complete workflow distribution, compatibility graph, examples, profiles, and external-alignment bridge remain separate modules and are not submitted as the primary ontology.</p>
+        <ul class="stats">
+          <li><strong>Pre-release checks:</strong> passed</li>
+          <li><strong>TIB mandatory warnings:</strong> 0</li>
+          <li><strong>Classes:</strong> 2226 active + 160 deprecated</li>
+          <li><strong>Properties:</strong> 23 object, 1 datatype, 9 annotation</li>
+        </ul>
+
+        <ul class="stats">
+          <li><strong>Version:</strong> 2.3.1</li>
+          <li><strong>Created:</strong> 2026-03-19</li>
+          <li><strong>Modified:</strong> 2026-11-01</li>
+          <li><strong>Creator:</strong> <a href="https://ror.org/02nv7yv05">Forschungszentrum Jülich GmbH</a></li><li><strong>Contributor:</strong> <a href="https://orcid.org/0009-0005-5173-202X">Marjan Kohandani</a></li><li><strong>Contributor:</strong> <a href="https://orcid.org/0000-0002-5057-2993">Mohammad J. Eslamibidgoli</a></li><li><strong>Contributor:</strong> <a href="https://www.fz-juelich.de/profile/malek_k">Kourosh Malek</a></li><li><strong>Contributor:</strong> <a href="https://orcid.org/0000-0002-0764-8948">Michael Eikerling</a></li>
+          <li><strong>License:</strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+          <li><strong>Repository:</strong> <a href="https://github.com/ViMiLabs/AIMWORKS">AIMWORKS</a></li>
+        </ul>
+
+        <h3>Current preflight status</h3>
+        <p class='muted'>No blocking pre-release findings.</p>
+        <div class="button-row">
+          <a class="inline-button" href="../ontology/h2kg-v2-taxonomy.ttl" download>Canonical taxonomy TTL</a>
+          <a class="inline-button" href="../ontology/h2kg-v2-taxonomy.jsonld" download>Canonical taxonomy JSON-LD</a>
+          <a class="inline-button" href="../reports/tib_submission_validation.json" download>TIB validation JSON</a>
+          <a class="inline-button" href="../reports/tib_submission_manifest.json" download>Submission manifest</a>
+          <a class="inline-button inline-button--ghost" href="../reports/property_constraint_audit.json" download>Property-constraint audit</a>
+        </div>
+      </article>
+    </section>
+    <section class="stack">
+      <article class="card">
+        <p class="eyebrow">H₂KG 2.3.1 release</p>
         <h2>Intrinsic taxonomy and contextual workflow use</h2>
         <p>The recommended complete distribution combines the H₂KG taxonomy, value-free SHACL workflow profiles, and QUDT guidance. Scientific quantities remain Properties or Characteristics; their use as selected inputs is represented through Parameter records and the <code>hasParameter / ofProperty</code> path.</p>
         <p>The 2.2 correction ledger records <strong>626</strong> parent and definition decisions across <strong>544</strong> classes. It distinguishes applied corrections, replacements, splits, retained decisions, and source-ambiguous compatibility terms.</p>
@@ -90,7 +122,7 @@
       <article class="card">
         <p class="eyebrow">Evaluation</p>
         <h2>Machine checks separated from independent review</h2>
-        <p>The release records <strong>5486</strong> automated registry-consistency and traceability checks. These are machine checks, not reviewer judgments. A focused audit of <strong>134</strong> prespecified application items by two external experts is <strong>review pending</strong>.</p>
+        <p>The release records <strong>5495</strong> automated registry-consistency and traceability checks. These are machine checks, not reviewer judgments. A focused audit of <strong>134</strong> prespecified application items by two external experts is <strong>review pending</strong>.</p>
         <ul class="stats">
           <li><strong>Review design:</strong> 44 ITC fields, 34 asserted public mappings plus one withheld negative control, 7 diameter/radius occurrences, 24 DECODE-local concepts, and 24 edge projections</li>
           <li><strong>RQ1:</strong> independent semantic-anchor and normalized exact-label queries over one source-output population and the same 24 ITC inputs</li>
@@ -112,15 +144,15 @@
       <article class="card">
         <p class="eyebrow">Interoperability</p>
         <h2>External semantic alignment</h2>
-        <p>H₂KG 2.3.0 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>256</strong> asserted mappings covering <strong>168</strong> H₂KG classes and <strong>31</strong> external ontologies.</p>
+        <p>H₂KG 2.3.1 publishes a separate semantic bridge derived from the frozen TIB snapshot dated 2026-10-14T07:32:20+00:00. The bridge contains <strong>265</strong> asserted mappings covering <strong>176</strong> H₂KG classes and <strong>32</strong> external ontologies.</p>
         <ul class="stats">
           <li><strong>Discovery scope:</strong> 3 TIB collections, 143 unique ontologies, 165 collection memberships</li>
-          <li><strong>TIB benchmark assertions:</strong> 245 (skos:broadMatch=83, skos:exactMatch=140, skos:narrowMatch=22)</li>
+          <li><strong>TIB benchmark assertions:</strong> 254 (skos:broadMatch=96, skos:exactMatch=136, skos:narrowMatch=22)</li>
           <li><strong>Foundational mappings:</strong> 11</li>
-          <li><strong>Asserted relations:</strong> rdfs:subClassOf=2, rdfs:subPropertyOf=1, skos:broadMatch=83, skos:exactMatch=148, skos:narrowMatch=22</li>
-          <li><strong>Principal benchmark ontologies:</strong> afo (36), chmo (32), voc4cat (26), chebi (16), sio (16), kitmtxx (14), bao (11), emmo (11)</li>
+          <li><strong>Asserted relations:</strong> rdfs:subClassOf=2, rdfs:subPropertyOf=1, skos:broadMatch=96, skos:exactMatch=144, skos:narrowMatch=22</li>
+          <li><strong>Principal benchmark ontologies:</strong> afo (36), chmo (33), voc4cat (28), kitmtxx (15), sio (15), emmo (13), bao (11), chebi (11)</li>
         </ul>
-        <p>The <strong>256 alignment records</strong> comprise <strong>245 TIB-derived SKOS mappings</strong> and <strong>11 foundational reuse/alignment records</strong>. Foundational dependencies and reused vocabularies such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
+        <p>The <strong>265 alignment records</strong> comprise <strong>254 TIB-derived SKOS mappings</strong> and <strong>11 foundational reuse/alignment records</strong>. Foundational dependencies and reused vocabularies such as HDO, EMMO, QUDT, ChEBI, PROV-O, and DCTERMS remain distinct from ontologies aligned through the TIB benchmark. Asserted bridge links use the original external ontology IRIs; TIB catalogue URLs are retained only as provenance and discovery links. No NFDI collection is imported wholesale.</p>
         <div class="button-row">
           <a class="inline-button" href="alignment.html">Browse alignments</a>
           <a class="inline-button" href="tib-benchmark.html">Benchmark</a>
@@ -210,7 +242,7 @@
         </div>
       </section>
 
-      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.3.0 | https://w3id.org/h2kg/hydrogen-ontology#</p>
+      <p>H₂KG Domain Ontology for Hydrogen Electrochemical Systems | Version 2.3.1 | https://w3id.org/h2kg/hydrogen-ontology#</p>
     </div>
   </footer>
   <script data-h2kg-branding>
