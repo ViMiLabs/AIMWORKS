@@ -215,6 +215,8 @@ def run_release(
             output_root / "ontology" / "h2kg-v2-taxonomy.jsonld",
             output_root,
             project_root / "config",
+            check_live_urls=True,
+            require_live_urls=True,
         )
         if taxonomy_path.exists() and release_profile_path.exists() and tib_shape_path.exists()
         else {"status": "skipped_missing_tib_release_inputs"}

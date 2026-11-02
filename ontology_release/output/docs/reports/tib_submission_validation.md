@@ -1,7 +1,7 @@
 # H2KG 2.3.1 TIB Submission Validation
 
 - Pre-release ready: **True**
-- Submission ready: **False**
+- Submission ready: **True**
 - TIB mandatory warnings/violations: **0**
 - TIB recommendation notices: **1**
 - Canonical serialization parity: **True**
@@ -49,13 +49,13 @@
 | `zenodo-title` | PASS | yes | Zenodo title: H₂KG Domain Ontology for Hydrogen Electrochemical Systems. |
 | `citation-cff-attribution` | PASS | yes | CITATION.cff attribution records: 5. |
 | `zenodo-attribution` | PASS | yes | Zenodo attribution records: 5. |
-| `live-documentation` | PASS | no | https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html. |
-| `live-issue-tracker` | PASS | no | https://github.com/ViMiLabs/AIMWORKS/issues returned HTTP 200; final URL https://github.com/ViMiLabs/AIMWORKS/issues. |
-| `live-canonical-turtle` | PASS | no | https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl. |
-| `live-canonical-jsonld` | PASS | no | https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld. |
-| `live-version-iri` | FAIL | no | https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1 returned HTTP 404; final URL https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1. |
-| `live-attribution-pid-1` | PASS | no | https://ror.org/02nv7yv05 was verified through the official ROR registry API (https://api.ror.org/v2/organizations/02nv7yv05, HTTP 200); resolver endpoint HTTP 429. |
-| `live-attribution-pid-2` | PASS | no | https://orcid.org/0009-0005-5173-202X returned HTTP 200; final URL https://orcid.org/0009-0005-5173-202X. |
-| `live-attribution-pid-3` | PASS | no | https://orcid.org/0000-0002-5057-2993 returned HTTP 200; final URL https://orcid.org/0000-0002-5057-2993. |
-| `live-attribution-pid-4` | PASS | no | https://www.fz-juelich.de/profile/malek_k returned HTTP 200; final URL https://www.fz-juelich.de/profile/malek_k. |
-| `live-attribution-pid-5` | PASS | no | https://orcid.org/0000-0002-0764-8948 returned HTTP 200; final URL https://orcid.org/0000-0002-0764-8948. |
+| `live-documentation` | PASS | yes | https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/hydrogen-ontology.html. |
+| `live-issue-tracker` | PASS | yes | https://github.com/ViMiLabs/AIMWORKS/issues returned HTTP 200; final URL https://github.com/ViMiLabs/AIMWORKS/issues. |
+| `live-canonical-turtle` | PASS | yes | https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.ttl. |
+| `live-canonical-jsonld` | PASS | yes | https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld returned HTTP 200; final URL https://vimilabs.github.io/AIMWORKS/ontology/h2kg-v2-taxonomy.jsonld. |
+| `live-version-iri` | PASS | yes | https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1 returned HTTP 200; final URL https://github.com/ViMiLabs/AIMWORKS/releases/tag/v2.3.1. |
+| `live-attribution-pid-1` | PASS | yes | https://ror.org/02nv7yv05 was verified through the official ROR registry API (https://api.ror.org/v2/organizations/02nv7yv05, HTTP 200); resolver endpoint HTTP 429. |
+| `live-attribution-pid-2` | PASS | yes | https://orcid.org/0009-0005-5173-202X returned HTTP 200; final URL https://orcid.org/0009-0005-5173-202X. |
+| `live-attribution-pid-3` | PASS | yes | https://orcid.org/0000-0002-5057-2993 returned HTTP 200; final URL https://orcid.org/0000-0002-5057-2993. |
+| `live-attribution-pid-4` | PASS | yes | https://www.fz-juelich.de/profile/malek_k returned HTTP 200; final URL https://www.fz-juelich.de/profile/malek_k. |
+| `live-attribution-pid-5` | PASS | yes | https://orcid.org/0000-0002-0764-8948 returned HTTP 200; final URL https://orcid.org/0000-0002-0764-8948. |

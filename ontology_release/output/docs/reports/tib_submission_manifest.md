@@ -1,6 +1,6 @@
 # H2KG 2.3.1 TIB Submission Manifest
 
-- Status: **pre_release_ready**
+- Status: **ready**
 - Ontology IRI: `https://w3id.org/h2kg/hydrogen-ontology`
 - Version IRI: `https://w3id.org/h2kg/hydrogen-ontology/releases/2.3.1`
 - Prefix: `h2kg`
