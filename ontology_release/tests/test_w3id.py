@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
+from aimworks_ontology_release.utils import default_release_profile
 from aimworks_ontology_release.w3id import generate_w3id_artifacts
 
 
@@ -9,6 +11,27 @@ def test_w3id_keeps_established_routes_without_a_new_bridge_route(tmp_path: Path
     output_root = tmp_path / "output"
     config_dir = tmp_path / "config"
     config_dir.mkdir()
+    profile = default_release_profile()
+    profile["project"]["contributors"] = [
+        {
+            "iri": "https://orcid.org/0009-0005-5173-202X",
+            "label": "Marjan Kohandani",
+            "github_handle": "Marjanknd",
+            "affiliation_ids": ["a", "b", "c"],
+            "contribution_order": 1,
+        },
+        {
+            "iri": "https://orcid.org/0000-0002-5057-2993",
+            "label": "Mohammad J. Eslamibidgoli",
+            "github_handle": "meslamib3",
+            "affiliation_ids": ["a", "b"],
+            "contribution_order": 2,
+        },
+    ]
+    (config_dir / "release_profile.yaml").write_text(
+        json.dumps(profile),
+        encoding="utf-8",
+    )
 
     result = generate_w3id_artifacts(output_root / "w3id", config_dir)
 
@@ -40,4 +63,6 @@ def test_w3id_keeps_established_routes_without_a_new_bridge_route(tmp_path: Path
     assert "releases/X.Y.Z" in readme
     assert "https://github.com/ViMiLabs/AIMWORKS/releases/tag/v2.3.1" in readme
     assert "AIMWORKS/v2.3.1/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl" in readme
+    assert "(`@Marjanknd`)" in readme
+    assert "(`@meslamib3`)" in readme
     assert "pages/explore.html?view=taxonomy" not in readme

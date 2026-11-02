@@ -174,10 +174,15 @@ def _w3id_readme(strategy: str, profile: dict[str, Any], html_targets: dict[str,
         profile.get("contributors", []),
         key=lambda row: int(row.get("contribution_order", 9999)),
     )
-    maintainer_lines = "\n".join(
-        f"  - [{row['label']}]({row['iri']}) - affiliations {', '.join(map(str, row.get('affiliation_ids', [])))}"
-        for row in contributors
-    )
+    maintainer_rows = []
+    for row in contributors:
+        handle = str(row.get("github_handle", "")).strip().lstrip("@")
+        handle_text = f" (`@{handle}`)" if handle else ""
+        maintainer_rows.append(
+            f"  - [{row['label']}]({row['iri']}){handle_text} - affiliations "
+            f"{', '.join(map(str, row.get('affiliation_ids', [])))}"
+        )
+    maintainer_lines = "\n".join(maintainer_rows)
     affiliation_lines = "\n".join(
         f"  - `{identifier}`: {record.get('label', '')}"
         for identifier, record in profile.get("affiliations", {}).items()
