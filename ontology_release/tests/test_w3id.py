@@ -38,3 +38,6 @@ def test_w3id_keeps_established_routes_without_a_new_bridge_route(tmp_path: Path
     )
     assert "h2kg-v2-taxonomy.ttl" in canonical_rule
     assert "releases/X.Y.Z" in readme
+    assert "https://github.com/ViMiLabs/AIMWORKS/releases/tag/v2.3.1" in readme
+    assert "AIMWORKS/v2.3.1/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl" in readme
+    assert "pages/explore.html?view=taxonomy" not in readme

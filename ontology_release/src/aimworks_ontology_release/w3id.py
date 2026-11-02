@@ -23,7 +23,7 @@ def generate_w3id_artifacts(
         "core": f"{html_base}hydrogen-ontology.html",
         "pemfc": f"{html_base}pemfc/hydrogen-ontology.html",
         "pemwe": f"{html_base}pemwe/hydrogen-ontology.html",
-        "v2_taxonomy": f"{html_base}pages/explore.html?view=taxonomy",
+        "version_release": f"https://github.com/ViMiLabs/AIMWORKS/releases/tag/v{profile['version']}",
     }
     rdf_targets = {
         "core_ttl": f"{rdf_base}core_schema.ttl",
@@ -36,6 +36,8 @@ def generate_w3id_artifacts(
         "v2_taxonomy_jsonld": f"{rdf_base}h2kg-v2-taxonomy.jsonld",
         "v2_compatibility_ttl": f"{rdf_base}h2kg-v2-compatibility.ttl",
         "v2_compatibility_jsonld": f"{rdf_base}h2kg-v2-compatibility.jsonld",
+        "version_taxonomy_ttl": f"https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/v{profile['version']}/ontology_release/output/ontology/h2kg-v2-taxonomy.ttl",
+        "version_taxonomy_jsonld": f"https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/v{profile['version']}/ontology_release/output/ontology/h2kg-v2-taxonomy.jsonld",
     }
 
     htaccess = _htaccess(html_targets, rdf_targets, profile)
@@ -151,10 +153,10 @@ RewriteRule ^pemwe/hydrogen-ontology$ {html_targets['pemwe']} [R=302,L]
 
 
 def _root_readme() -> str:
-    return """# H2KG Resolver Reference
+    return """# H₂KG Resolver Reference
 
-This directory is a generated reference copy of the established H2KG resolver
-configuration. Existing H2KG ontology and term IRIs remain unchanged.
+This directory is a generated reference copy of the established H₂KG resolver
+configuration. Existing H₂KG ontology and term IRIs remain unchanged.
 
 The resolver configuration is represented by:
 
@@ -180,12 +182,12 @@ def _w3id_readme(strategy: str, profile: dict[str, Any], html_targets: dict[str,
         f"  - `{identifier}`: {record.get('label', '')}"
         for identifier, record in profile.get("affiliations", {}).items()
     )
-    return f"""# H2KG w3id Redirect Configuration
+    return f"""# H₂KG W3ID Redirect Configuration
 
 Project: `{profile['title']}`
 
-This file documents the established `https://w3id.org/h2kg/` namespace and its
-current H2KG release targets.
+This directory documents the established `https://w3id.org/h2kg/` namespace
+and its current H₂KG release targets.
 
 ## Namespace policy
 
@@ -196,7 +198,7 @@ current H2KG release targets.
 
 ## Redirect targets
 
-### Canonical H2KG namespace
+### Canonical H₂KG namespace
 
 - Browser / HTML: `{html_targets['core']}`
 - Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
@@ -220,14 +222,14 @@ current H2KG release targets.
 - Turtle: `{rdf_targets['pemwe_ttl']}`
 - JSON-LD: `{rdf_targets['pemwe_jsonld']}`
 
-### H2KG v2 taxonomy release
+### H₂KG {profile['version']} release
 
 - Version IRI: `{profile['version_iri']}`
-- Browser / HTML: `{html_targets['v2_taxonomy']}`
-- Turtle: `{rdf_targets['v2_taxonomy_ttl']}`
-- JSON-LD: `{rdf_targets['v2_taxonomy_jsonld']}`
+- Browser / HTML: `{html_targets['version_release']}`
+- Turtle: `{rdf_targets['version_taxonomy_ttl']}`
+- JSON-LD: `{rdf_targets['version_taxonomy_jsonld']}`
 - Compatibility Turtle: `{rdf_targets['v2_compatibility_ttl']}`
-- Version routing: one semantic-version rule resolves `releases/X.Y.Z` to immutable Git tag `vX.Y.Z`
+- Version routing: one semantic-version rule resolves `releases/X.Y.Z` to immutable Git tag `vX.Y.Z`.
 
 ## Contact and maintenance
 
@@ -255,21 +257,21 @@ def _publishing_notes(
 ) -> str:
     return f"""# Resolver and Publishing Notes
 
-The H2KG namespace is already established. This generated configuration adds a
+The H₂KG namespace is already established. This generated configuration adds a
 reusable semantic-version route while preserving every existing ontology and
-term IRI. Activating the updated route requires updating the existing H2KG
+term IRI. Activating the updated route requires updating the existing H₂KG
 resolver configuration, not registering a new namespace.
 This route update does not require a new W3ID registration.
 
 ## Resolver targets
 
-- Canonical H2KG HTML target: `{html_targets['core']}`
-- Canonical H2KG Turtle target: `{rdf_targets['v2_taxonomy_ttl']}`
-- Canonical H2KG JSON-LD target: `{rdf_targets['v2_taxonomy_jsonld']}`
+- Canonical H₂KG HTML target: `{html_targets['core']}`
+- Canonical H₂KG Turtle target: `{rdf_targets['v2_taxonomy_ttl']}`
+- Canonical H₂KG JSON-LD target: `{rdf_targets['v2_taxonomy_jsonld']}`
 - Shared-core module Turtle target: `{rdf_targets['core_ttl']}`
 - PEMFC HTML target: `{html_targets['pemfc']}`
 - PEMWE HTML target: `{html_targets['pemwe']}`
-- H2KG v2 taxonomy target: `{rdf_targets['v2_taxonomy_ttl']}`
+- H₂KG v2 taxonomy target: `{rdf_targets['v2_taxonomy_ttl']}`
 - Immutable version target pattern: `https://raw.githubusercontent.com/ViMiLabs/AIMWORKS/vX.Y.Z/ontology_release/output/ontology/`
 
 ## Policy reminders

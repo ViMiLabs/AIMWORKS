@@ -1,7 +1,7 @@
-# H2KG Resolver Reference
+# H₂KG Resolver Reference
 
-This directory is a generated reference copy of the established H2KG resolver
-configuration. Existing H2KG ontology and term IRIs remain unchanged.
+This directory is a generated reference copy of the established H₂KG resolver
+configuration. Existing H₂KG ontology and term IRIs remain unchanged.
 
 The resolver configuration is represented by:
 
